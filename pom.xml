@@ -1,0 +1,193 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>adimpression</groupId>
+    <artifactId>ilikeplaces</artifactId>
+    <packaging>war</packaging>
+    <version>1.6-SNAPSHOT</version>
+    <name>ilikeplaces JEE5 Webapp</name>
+    <url>http://maven.apache.org</url>
+    <dependencies>
+        <!--dependency>
+            <groupId>maven</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>1.6.3</version>
+            <type>plugin</type>
+            <scope>system</scope>
+            <systemPath>C:\Program Files\Apache Software Foundation\Apache Tomcat 6.0.18\lib\</systemPath>
+        </dependency-->
+
+
+        <dependency>
+            <groupId>Java</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>1+</version>
+            <scope>system</scope>
+            <systemPath>C:\Program Files\Apache Software Foundation\Apache Tomcat 6.0.18\lib\servlet-api.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>Java</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>1+</version>
+            <scope>system</scope>
+            <systemPath>C:\Program Files\Apache Software Foundation\Apache Tomcat 6.0.18\lib\jsp-api.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>Java</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>1+</version>
+            <scope>system</scope>
+            <systemPath>C:\glassfishv3\glassfish\modules\javax.ejb.jar</systemPath>
+        </dependency>
+    
+        <dependency>
+            <groupId>ItsNat0.6</groupId>
+            <artifactId>ItsNat</artifactId>
+            <version>0.6</version>
+            <scope>system</scope>
+            <systemPath>D:\1\adimpression\feasibility tests\downloads\ItsNat_0.6\fw_dist\lib\ItsNat.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ItsNat0.6</groupId>
+            <artifactId>ItsNat</artifactId>
+            <version>0.6</version>
+            <scope>system</scope>
+            <systemPath>D:\1\adimpression\feasibility tests\downloads\ItsNat_0.6\fw_dist\lib\ItsNat.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ItsNat0.6</groupId>
+            <artifactId>nekohtml</artifactId>
+            <version>0.6</version>
+            <scope>system</scope>
+            <systemPath>D:\1\adimpression\feasibility tests\downloads\ItsNat_0.6\fw_dist\lib\nekohtml.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ItsNat0.6</groupId>
+            <artifactId>serializer</artifactId>
+            <version>0.6</version>
+            <scope>system</scope>
+            <systemPath>D:\1\adimpression\feasibility tests\downloads\ItsNat_0.6\fw_dist\lib\serializer.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ItsNat0.6</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>0.6</version>
+            <scope>system</scope>
+            <systemPath>D:\1\adimpression\feasibility tests\downloads\ItsNat_0.6\fw_dist\lib\xercesImpl.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ItsNat0.6</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>0.6</version>
+            <scope>system</scope>
+            <systemPath>D:\1\adimpression\feasibility tests\downloads\ItsNat_0.6\fw_dist\lib\xml-apis.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.5</version>
+            <scope>test</scope>
+        </dependency>
+
+    <!--dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency-->
+ 
+    
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate</artifactId>
+            <version>3.2.5.ga</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>ejb3-persistence</artifactId>
+            <version>1.0.1.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.3.2.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.sql</groupId>
+            <artifactId>jdbc-stdext</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.0.1B</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>jsr250-api</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>D</groupId>
+            <artifactId>derbyclient</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>C:\Program Files\Sun\JavaDB\lib\derbyclient.jar</systemPath>
+        </dependency>
+
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <classpathLayoutType>repository</classpathLayoutType>
+
+               <!-- NOTE: Deprecated in version 2.4. Use 'classpathLayoutType' instead.
+               <classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout>
+               -->
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+        <finalName>ilikeplaces</finalName>
+    </build>
+    <repositories>
+        <repository>
+            <url>http://download.java.net/maven/2</url>
+            <id>hibernate-persistence</id>
+            <layout>default</layout>
+            <name>Repository for library Library[hibernate-persistence]</name>
+        </repository>
+    </repositories>
+    <properties>
+        <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
+    </properties>
+</project>
+
+
+
+
+
+
+
+
