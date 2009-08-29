@@ -1,22 +1,15 @@
 package ai.ilikeplaces.entities;
 
-import org.junit.Assert;
-import org.junit.Test;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import org.junit.*;
 
-public class BasicPersistenceTest {
+public class BasicPersistenceTest extends AbstractPersistenceTest {
+
+    String locationName_ = "Sigiriya";
+    String locationInfo_ = "Sigiriya is a world heritage in located Sri Lanka.";
+    Location location_ = new Location();
 
     @Test
-    public void testBasicPersistence() throws Exception {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("adimpression_ilikeplaces_war_1.6-SNAPSHOTPU");
-        EntityManager manager = factory.createEntityManager();
-
-        String locationName_ = "Sigiriya";
-        String locationInfo_ = "Sigiriya is a world heritage in located Sri Lanka.";
-
-        Location location_ = new Location();
+    public void runTest() throws Exception {
 
         location_.setLocationName(locationName_);
         location_.setLocationInfo(locationInfo_);
@@ -29,8 +22,12 @@ public class BasicPersistenceTest {
 
         Assert.assertEquals(locationName_, result.getLocationName());
         Assert.assertEquals(locationInfo_, result.getLocationInfo());
+    }
 
-        manager.close();
-        factory.close();
+    @After
+    public void revertTest() {
+        manager.getTransaction().begin();
+        manager.remove(location_);
+        manager.getTransaction().commit();
     }
 }
