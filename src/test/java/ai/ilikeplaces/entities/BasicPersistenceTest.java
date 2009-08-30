@@ -1,5 +1,6 @@
 package ai.ilikeplaces.entities;
 
+import ai.ilikeplaces.CrudService;
 import org.junit.*;
 
 public class BasicPersistenceTest extends AbstractPersistenceTest {
@@ -14,11 +15,12 @@ public class BasicPersistenceTest extends AbstractPersistenceTest {
         location_.setLocationName(locationName_);
         location_.setLocationInfo(locationInfo_);
 
-        manager.getTransaction().begin();
-        manager.persist(location_);
-        manager.getTransaction().commit();
+        CrudService<Location> cs = new CrudService<Location>();
 
-        Location result = (Location) manager.createQuery("SELECT location FROM Location location WHERE location.locationName = :locationName").setParameter("locationName", locationName_).getSingleResult();
+        cs.em.getTransaction().begin();
+        location_ = cs.update(location_);
+        cs.em.getTransaction().commit();
+        Location result = (Location) cs.em.createQuery("SELECT location FROM Location location WHERE location.locationName = :locationName").setParameter("locationName", locationName_).getSingleResult();
 
         Assert.assertEquals(locationName_, result.getLocationName());
         Assert.assertEquals(locationInfo_, result.getLocationInfo());
@@ -26,8 +28,10 @@ public class BasicPersistenceTest extends AbstractPersistenceTest {
 
     @After
     public void revertTest() {
-        manager.getTransaction().begin();
-        manager.remove(location_);
-        manager.getTransaction().commit();
+        CrudService<Location> cs = new CrudService<Location>();
+
+        cs.em.getTransaction().begin();
+        cs.delete(Location.class, locationName_);
+        cs.em.getTransaction().commit();
     }
 }
