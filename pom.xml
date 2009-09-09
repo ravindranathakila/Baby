@@ -33,21 +33,20 @@
             <scope>system</scope>
             <systemPath>C:\Program Files\Apache Software Foundation\Apache Tomcat 6.0.18\lib\jsp-api.jar</systemPath>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>Java</groupId>
             <artifactId>javaee-api</artifactId>
             <version>1+</version>
             <scope>system</scope>
             <systemPath>C:\glassfishv3\glassfish\modules\javax.ejb.jar</systemPath>
+        </dependency-->
+        <dependency>
+            <groupId>org.apache.openejb</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>5.0-1</version>
+            <scope>provided</scope>
         </dependency>
     
-        <dependency>
-            <groupId>ItsNat0.6</groupId>
-            <artifactId>ItsNat</artifactId>
-            <version>0.6</version>
-            <scope>system</scope>
-            <systemPath>D:\1\adimpression\feasibility tests\downloads\ItsNat_0.6\fw_dist\lib\ItsNat.jar</systemPath>
-        </dependency>
         <dependency>
             <groupId>ItsNat0.6</groupId>
             <artifactId>ItsNat</artifactId>
@@ -97,46 +96,12 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency-->
- 
-    
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate</artifactId>
-            <version>3.2.5.ga</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>ejb3-persistence</artifactId>
-            <version>1.0.1.GA</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.3.2.GA</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.sql</groupId>
-            <artifactId>jdbc-stdext</artifactId>
-            <version>2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>jta</artifactId>
-            <version>1.0.1B</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>jsr250-api</artifactId>
-            <version>1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
-            <version>1.0</version>
-            <scope>provided</scope>
-        </dependency>
+<!--dependency>
+    <groupId>javax.persistence</groupId>
+    <artifactId>persistence-api</artifactId>
+    <version>1.0</version>
+    <scope>provided</scope>
+</dependency-->
         <dependency>
             <groupId>D</groupId>
             <artifactId>derbyclient</artifactId>
@@ -183,6 +148,7 @@
         <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
     </properties>
 </project>
+
 
 
 

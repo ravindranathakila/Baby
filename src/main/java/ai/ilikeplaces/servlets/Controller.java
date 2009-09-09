@@ -6,7 +6,6 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import org.itsnat.core.ClientErrorMode;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletConfig;
 import org.itsnat.core.ItsNatServletRequest;
@@ -31,7 +30,7 @@ public class Controller extends HttpServletWrapper {
     public static enum Page {
 
         main("ai/ilikeplaces/Main.xhtml", "Main_temp1", "Main_temp2", "Main_sidebar"),
-        Photo$Description("ai/ilikeplaces/fragments/Photo-Description.xhtml"),
+        Photo$Description("ai/ilikeplaces/fragments/Photo-Description.xhtml","pd"),
         login("ai/ilikeplaces/security/login.xhtml"),
         include("ai/ilikeplaces/security/include.xhtml");
 
@@ -115,7 +114,7 @@ public class Controller extends HttpServletWrapper {
         final String location__ = ((HttpServletRequest) request__.getServletRequest()).getPathInfo().substring(1);//Removes preceeding slash
         System.out.println("LOCATION1:" + location__);
         if (isCorrectLocationFormat(location__)) {
-        System.out.println("LOCATION2:" + location__);
+            System.out.println("LOCATION2:" + location__);
             request__.getServletRequest().setAttribute("location", location__);
         } else {
             request__.getServletRequest().setAttribute("location", null);
