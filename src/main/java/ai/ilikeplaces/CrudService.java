@@ -4,16 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import javax.annotation.Resource;
-import javax.ejb.EJB;
-import javax.ejb.Local;
 import javax.ejb.Stateful;
-import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
@@ -24,7 +18,7 @@ import javax.persistence.Query;
  * @author Ravindranath Akila
  */
 @Stateful
-@TransactionAttribute(TransactionAttributeType.SUPPORTS)
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class CrudService<T> implements CrudServiceLocal<T> {
 
     @PersistenceContext(unitName = "adimpression_ilikeplaces_war_1.6-SNAPSHOTPU", type = PersistenceContextType.EXTENDED)
@@ -53,8 +47,8 @@ public class CrudService<T> implements CrudServiceLocal<T> {
         entityManager.remove(ref);
     }
 
-    public T update(T t) {
-        return (T) entityManager.merge(t);
+    public T update(final T t) {
+        return entityManager.merge(t);
     }
 
     public List findWithNamedQuery(final String namedQueryName) {

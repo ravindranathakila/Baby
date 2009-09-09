@@ -17,10 +17,10 @@ public class BasicPersistenceTest extends AbstractPersistenceTest {
 
         CrudService<Location> cs = new CrudService<Location>();
 
-        cs.em.getTransaction().begin();
+        cs.entityManager.getTransaction().begin();
         location_ = cs.update(location_);
-        cs.em.getTransaction().commit();
-        Location result = (Location) cs.em.createQuery("SELECT location FROM Location location WHERE location.locationName = :locationName").setParameter("locationName", locationName_).getSingleResult();
+        cs.entityManager.getTransaction().commit();
+        Location result = (Location) cs.entityManager.createQuery("SELECT location FROM Location location WHERE location.locationName = :locationName").setParameter("locationName", locationName_).getSingleResult();
 
         Assert.assertEquals(locationName_, result.getLocationName());
         Assert.assertEquals(locationInfo_, result.getLocationInfo());
@@ -30,8 +30,8 @@ public class BasicPersistenceTest extends AbstractPersistenceTest {
     public void revertTest() {
         CrudService<Location> cs = new CrudService<Location>();
 
-        cs.em.getTransaction().begin();
+        cs.entityManager.getTransaction().begin();
         cs.delete(Location.class, locationName_);
-        cs.em.getTransaction().commit();
+        cs.entityManager.getTransaction().commit();
     }
 }
