@@ -14,6 +14,8 @@ import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.http.HttpServletWrapper;
 import org.itsnat.core.http.ItsNatHttpServlet;
 import org.itsnat.core.ClientErrorMode;
+import org.itsnat.core.SyncMode;
+import org.itsnat.core.UseGZip;
 
 /**
  * @TODO Code to disable url calls with itsnat_doc_name=### type urls if possible
@@ -30,11 +32,11 @@ public class Controller extends HttpServletWrapper {
     public static enum Page {
 
         main("ai/ilikeplaces/Main.xhtml", "Main_temp1", "Main_temp2", "Main_sidebar"),
-        Photo$Description("ai/ilikeplaces/fragments/Photo-Description.xhtml","pd"),
+        Photo$Description("ai/ilikeplaces/fragments/Photo-Description.xhtml", "pd"),
         login("ai/ilikeplaces/security/login.xhtml"),
         include("ai/ilikeplaces/security/include.xhtml");
 
-        private Page(final String path__, String... ids__) {
+        private Page(final String path__, final String... ids__) {
             PrettyURLMap_.put(this, path__);
             PutAllPageElementIds(ids__);
         }
@@ -72,6 +74,9 @@ public class Controller extends HttpServletWrapper {
         itsNatServletConfig.setDebugMode(true);
         itsNatServletConfig.setClientErrorMode(ClientErrorMode.SHOW_SERVER_AND_CLIENT_ERRORS);
         itsNatServletConfig.setLoadScriptInline(true);
+        itsNatServletConfig.setUseGZip(UseGZip.SCRIPT);
+        itsNatServletConfig.setDefaultSyncMode(SyncMode.ASYNC);
+        itsNatServletConfig.setAutoCleanEventListeners(true);
 
         /*Add a listner to convert pretty urls to proper urls*/
         inhs__.addItsNatServletRequestListener(new ItsNatServletRequestListener() {
