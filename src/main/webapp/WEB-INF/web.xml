@@ -5,10 +5,18 @@
         <servlet-name>Home</servlet-name>
         <servlet-class>ai.ilikeplaces.servlets.Controller</servlet-class>
         </servlet>
+    <servlet>
+        <servlet-name>FileUploads</servlet-name>
+        <servlet-class>ai.ilikeplaces.servlets.FileUploads</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/page/*</url-pattern>
         <url-pattern>/Home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileUploads</servlet-name>
+        <url-pattern>/fileuploads</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
