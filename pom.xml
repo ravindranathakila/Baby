@@ -96,10 +96,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.0.2</version>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
@@ -116,25 +115,7 @@
         </plugins>
         <finalName>ilikeplaces</finalName>
     </build>
-    <repositories>
-        <repository>
-            <url>http://download.java.net/maven/2</url>
-            <id>hibernate-persistence</id>
-            <layout>default</layout>
-            <name>Repository for library Library[hibernate-persistence]</name>
-        </repository>
-    </repositories>
     <properties>
         <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
     </properties>
 </project>
-
-
-
-
-
-
-
-
-
-
