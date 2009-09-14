@@ -7,6 +7,7 @@ import org.itsnat.core.ItsNatServlet;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocFragmentTemplate;
 import org.itsnat.core.html.ItsNatHTMLDocument;
+import org.itsnat.core.http.ItsNatHttpSession;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.html.HTMLDocument;
 import org.w3c.dom.Element;
@@ -24,6 +25,7 @@ public abstract class AbstractListener {
     protected final ItsNatHTMLDocument itsNatHTMLDocument_;
     protected final HTMLDocument hTMLDocument_;
     protected final ItsNatServlet itsNatServlet_;
+    protected final ItsNatHttpSession itsNatHttpSession;
     protected final String location_;
     protected final static String Click = "click";
 
@@ -32,8 +34,8 @@ public abstract class AbstractListener {
         this.itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument_;
         this.hTMLDocument_ = itsNatHTMLDocument_.getHTMLDocument();
         this.itsNatServlet_ = itsNatDocument_.getItsNatDocumentTemplate().getItsNatServlet();
+        this.itsNatHttpSession = (ItsNatHttpSession) request_.getItsNatSession();
         this.location_ = (String) request_.getServletRequest().getAttribute("location");
-        System.out.println("LOCATION:3" + location_);
         init();
         registerEventListeners();
     }
@@ -74,7 +76,7 @@ public abstract class AbstractListener {
     /**
      * This Map is static as Id's in html documents should be universally identical, i.e. as htmldocname_elementId
      */
-    protected final static Map<String, String> GlobalHTMLIdRegistry_ = Controller.GlobalHTMLIdRegistry_;//new IdentityHashMap<String, String>();
+    protected final static Map<String, String> GlobalHTMLIdRegistry_ = Controller.GlobalHTMLIdRegistry;//new IdentityHashMap<String, String>();
 
     /**
      * Id registry should be globally visible to callers

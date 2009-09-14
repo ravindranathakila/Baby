@@ -2,10 +2,15 @@ package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.ListenerLogin;
 import ai.ilikeplaces.ListenerMain;
+import java.io.IOException;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletConfig;
 import org.itsnat.core.ItsNatServletRequest;
@@ -39,6 +44,7 @@ public class Controller extends HttpServletWrapper {
         private Page(final String path__, final String... ids__) {
             PrettyURLMap_.put(this, path__);
             PutAllPageElementIds(ids__);
+            PutAllPageElementIdsByPage(this,ids__);
         }
 
         @Override
@@ -75,7 +81,7 @@ public class Controller extends HttpServletWrapper {
         itsNatServletConfig.setClientErrorMode(ClientErrorMode.SHOW_SERVER_AND_CLIENT_ERRORS);
         itsNatServletConfig.setLoadScriptInline(true);
         itsNatServletConfig.setUseGZip(UseGZip.SCRIPT);
-        itsNatServletConfig.setDefaultSyncMode(SyncMode.ASYNC);
+        itsNatServletConfig.setDefaultSyncMode(SyncMode.SYNC);
         itsNatServletConfig.setAutoCleanEventListeners(true);
 
         /*Add a listner to convert pretty urls to proper urls*/
@@ -105,11 +111,54 @@ public class Controller extends HttpServletWrapper {
 
         inhs__.registerItsNatDocFragmentTemplate(Page.Photo$Description.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(Page.Photo$Description));
 
-        //inhs__.registerItsNatDocumentTemplate("include", "text/html", pathPrefix__ + PrettyURLMap_.get("include"));
 
         inhs__.registerItsNatDocFragmentTemplate("include2", "text/html", pathPrefix__ + PrettyURLMap_.get(Page.include));
     }
 
+//    @Override
+//    public void doGet(HttpServletRequest request__, HttpServletResponse response__) throws ServletException, IOException{
+//
+//        final HttpSession UserSession = request__.getSession(false);
+//
+//        /**
+//         * We have two types of users.
+//         * > Users who do not wish to login to this site(just browse)
+//         * and
+//         * > who have an account.
+//         *      Users who have an account are either
+//         * >> Logged in
+//         * >> Logged out(normal or timeout)
+//         * Login is handled by the login servlet, which will set "User" parameter
+//         * to be true. i.e. this is a user which has an account.
+//         * That servlet will also add the relevant stateful session bean to the
+//         * users session.
+//         *
+//         * Now in this servlet,
+//         * 1. We have to let web users pass by without interfereing their
+//         * request.
+//         * 2. We have to make sure the "user" is logged in if not, by verifying
+//         * that the stateful session bean is present. If not, redirect him to the
+//         * login page.
+//         *
+//         */
+//        if(UserSession != null){/*Do not process a general user, proceed at the earliest (e.g. Refered from a search page*/
+//            /*Ok the httpsession is live, is this user logged in?*/
+//            if(UserSession.getAttribute(ServletLogin.User) != null){
+//                //This is a user.
+//                //Put so in the request and itsnathttpsession too.
+//                //do all this in the sign in servlet, except itsnathttpsession
+//
+//            } else {/*Web user who somehow had a session object*/
+//                super.doGet(request__, response__);
+//            }
+//        } else {/*Ok user came directly to pages, he does not want to login, and did not visit the login page*/
+//            super.doGet(request__, response__);
+//        }
+//    }
+    @Override
+    public void doPost(HttpServletRequest request__, HttpServletResponse response__) throws ServletException, IOException{
+        super.doPost(request__, response__);
+    }
     /**
      * We have a URL of type say www.ilikeplaces.com/page/Egypt
      * where we are supposed to recieve the /Egypt part.
@@ -117,9 +166,7 @@ public class Controller extends HttpServletWrapper {
      */
     private static void pathResolver(final ItsNatServletRequest request__) {
         final String location__ = ((HttpServletRequest) request__.getServletRequest()).getPathInfo().substring(1);//Removes preceeding slash
-        System.out.println("LOCATION1:" + location__);
         if (isCorrectLocationFormat(location__)) {
-            System.out.println("LOCATION2:" + location__);
             request__.getServletRequest().setAttribute("location", location__);
         } else {
             request__.getServletRequest().setAttribute("location", null);
@@ -139,24 +186,41 @@ public class Controller extends HttpServletWrapper {
     /**
      * This Map is static as Id's in html documents should be universally identical, i.e. as htmldocname_elementId
      */
-    public final static Map<String, String> GlobalHTMLIdRegistry_ = new IdentityHashMap<String, String>();
+    public final static Map<String, String> GlobalHTMLIdRegistry = new IdentityHashMap<String, String>();
 
     /**
      * Register all your document keys before using. Acceps variable argument length.
      * Usage: putAllPageElementIds("id1","id2","id3");
-     * @param ids_
+     * @param ids__ 
      */
-    public final static void PutAllPageElementIds(final String... ids_) {
-        for (String id_ : ids_) {
-            if (!GlobalHTMLIdRegistry_.containsKey(id_)) {
+    public final static void PutAllPageElementIds(final String... ids__) {
+        for (final String id_ : ids__) {
+            if (!GlobalHTMLIdRegistry.containsKey(id_)) {
                 /**
-                 * Do not verify if element exists in document here as elements
+                 * Do not verify if element exists in "document" here as elements
                  * can be dynamically created
                  */
-                GlobalHTMLIdRegistry_.put(id_, id_);
+                GlobalHTMLIdRegistry.put(id_, id_);
             } else {
                 throw new java.lang.SecurityException("MAP ALREADY CONTAINS THIS \"" + id_ + "\" KEY!");
             }
         }
+    }
+    
+    /**
+     * Retrievable list of all element Ids by Page
+     */
+    public final static Map<Page, HashSet<String>>  GlobalPageIdRegistry = new IdentityHashMap<Page, HashSet<String>>();
+
+    private final static void PutAllPageElementIdsByPage(final Page page__, final String... ids__) {
+        final HashSet<String> ids_ = new HashSet<String>();
+        for (final String id_ : ids__) {
+                /**
+                 * Do not verify if element exists in "document" here as elements
+                 * can be dynamically created
+                 */
+                ids_.add(id_);
+        }
+        GlobalPageIdRegistry.put(page__, ids_);
     }
 }

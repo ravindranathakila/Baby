@@ -1,12 +1,13 @@
 package ai.ilikeplaces.widgets;
 
 import ai.ilikeplaces.servlets.Controller.Page;
-import java.math.BigInteger;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.Element;
+import org.w3c.dom.html.HTMLDocument;
 
 /**
  *
@@ -14,36 +15,17 @@ import org.w3c.dom.Element;
  */
 public abstract class Photo$Description extends AbstractWidgetListener {
 
-    /**
-     * As a widget may have many instances within a document, we register each
-     * instance with unique ids. i.e. the existing id is appended with the
-     * instance number
-     */
-    protected BigInteger instanceId;
-
     public Photo$Description(final ItsNatDocument itsNatDocument__, final Element appendToElement__) {
-        super(itsNatDocument__, Page.Photo$Description.toString(), appendToElement__);
-    }
-
-    @Override
-    protected void setInstanceId(final BigInteger instance_) {
-        instanceId = instance_;//We get a reference to a new instance on this call, as per implementation, so we directly point to it.
-    }
-
-    @Override
-    protected BigInteger getInstanceId() {
-        return instanceId;
+        super(itsNatDocument__, Page.Photo$Description, appendToElement__);
     }
 
     @Override
     protected void init() {
-        //hTMLDocument_.getElementById("pd").setAttribute("id", "pd" + instanceId);
-        setWidgetElementIds("pd");
         getWidgetElementById("pd").setAttribute("style", "color:red");
     }
 
     @Override
-    protected void registerEventListeners() {
+    protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
         itsNatHTMLDocument_.addEventListener((EventTarget) getWidgetElementById("pd"), "click", new EventListener() {
 
             public void handleEvent(final Event evt_) {
