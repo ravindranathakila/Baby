@@ -16,3 +16,20 @@
         </properties>
     </persistence-unit>
 </persistence>
+
+<!--
+<Resource id="ilp" type="javax.sql.DataSource">
+  JdbcDriver org.apache.derby.jdbc.ClientDriver
+  JdbcUrl jdbc:derby://localhost:1527/ilp;create=true
+  UserName ilp
+  Password ilp
+</Resource>
+
+<Resource id="ilpUn" type="javax.sql.DataSource">
+  JdbcDriver org.apache.derby.jdbc.ClientDriver
+  JdbcUrl jdbc:derby://localhost:1527/ilp;create=true
+  UserName ilp
+  Password ilp
+  JtaManaged false
+</Resource>
+-->
