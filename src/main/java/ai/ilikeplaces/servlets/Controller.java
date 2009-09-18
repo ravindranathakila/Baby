@@ -34,8 +34,12 @@ public class Controller extends HttpServletWrapper {
     public Controller() {
     }
 
-    public static enum Page {
+    /**
+     * Initializer for pages with their ids and paths
+     */
+    public enum Page {
 
+        home(""),
         main("ai/ilikeplaces/Main.xhtml", "Main_temp1", "Main_temp2", "Main_sidebar"),
         Photo$Description("ai/ilikeplaces/fragments/Photo-Description.xhtml", "pd"),
         login("ai/ilikeplaces/security/login.xhtml"),
@@ -51,6 +55,9 @@ public class Controller extends HttpServletWrapper {
         public String toString() {
             String returnVal = null;
             switch (this) {
+                case home:
+                    returnVal = "/ilikeplaces/page/main";
+                    break;
                 case main:
                     returnVal = "main";
                     break;
@@ -222,5 +229,16 @@ public class Controller extends HttpServletWrapper {
                 ids_.add(id_);
         }
         GlobalPageIdRegistry.put(page__, ids_);
+    }
+
+    /**
+     *
+     * @param showChangeLog__
+     * @return changeLog
+     */
+    public String toString(final boolean showChangeLog__) {
+        String changeLog = new String(toString() + "\n");
+        changeLog += "20090918 Inluded home link in the enum, to be used by everybody. \n";
+        return showChangeLog__ ? changeLog : toString();
     }
 }
