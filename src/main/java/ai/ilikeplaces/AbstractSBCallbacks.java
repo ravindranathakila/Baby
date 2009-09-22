@@ -17,11 +17,11 @@ public class AbstractSBCallbacks {
 
     @PostConstruct
     public void postConstruct() {
-        logger.info(MsgConstruct + className);
+        logger.info(MsgConstruct + className + this.hashCode());
     }
 
     @PreDestroy
     public void preDestroy() {
-        logger.info(MsgDestroy + className);
+        logger.info(MsgDestroy + className + this.hashCode());
     }
 }
