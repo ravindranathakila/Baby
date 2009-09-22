@@ -2,6 +2,7 @@ package ai.ilikeplaces;
 
 import javax.ejb.PostActivate;
 import javax.ejb.PrePassivate;
+import javax.ejb.Remove;
 
 /**
  *
@@ -9,16 +10,22 @@ import javax.ejb.PrePassivate;
  */
 public class AbstractSFBCallbacks extends AbstractSBCallbacks {
 
-    final static private String MsgPassivate = "HELLO, I JUST PASSIVATED ";
-    final static private String MsgActivate = "HELLO, I JUST ACTIVATED ";
+    final static private String MsgPassivate = "HELLO, I JUST PASSIVATED AN INSTANCE OF ";
+    final static private String MsgActivate = "HELLO, I JUST ACTIVATED AN INSTANCE OF ";
+    final static private String MsgRemove = "HELLO, I JUST REMOVED AN INSTANCE OF ";
 
     @PrePassivate
     public void prePassivate() {
-        logger.info(MsgPassivate + className);
+        logger.info(MsgPassivate + className + this.hashCode());
     }
 
     @PostActivate
     public void postActivate() {
-        logger.info(MsgActivate + className);
+        logger.info(MsgActivate + className + this.hashCode());
+    }
+
+    @Remove
+    public void remove() {
+        logger.info(MsgRemove + className + this.hashCode());
     }
 }
