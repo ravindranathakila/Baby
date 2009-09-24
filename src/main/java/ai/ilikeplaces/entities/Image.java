@@ -2,6 +2,8 @@ package ai.ilikeplaces.entities;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
