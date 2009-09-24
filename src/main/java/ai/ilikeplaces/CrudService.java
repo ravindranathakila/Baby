@@ -1,13 +1,11 @@
 package ai.ilikeplaces;
 
-import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import javax.ejb.EJBException;
-import javax.ejb.SessionContext;
-import javax.ejb.Stateful;
+import java.util.logging.Logger;
+import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
@@ -20,9 +18,9 @@ import javax.persistence.Query;
  * @param <T>
  * @author Ravindranath Akila
  */
-@Stateful
-@TransactionAttribute(TransactionAttributeType.REQUIRED)
-public class CrudService<T> implements CrudServiceLocal<T>, javax.ejb.SessionBean {
+@Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+final public class CrudService<T> extends AbstractSLBCallbacks implements CrudServiceLocal<T> {
 
     @PersistenceContext(unitName = "adimpression_ilikeplaces_war_1.6-SNAPSHOTPU", type = PersistenceContextType.TRANSACTION)
     public EntityManager entityManager;
@@ -34,10 +32,6 @@ public class CrudService<T> implements CrudServiceLocal<T>, javax.ejb.SessionBea
         entityManager.flush();
         entityManager.refresh(t);
         return t;
-    }
-
-    public boolean is() {
-        return entityManager == null;
     }
 
     @SuppressWarnings("unchecked")
@@ -90,26 +84,6 @@ public class CrudService<T> implements CrudServiceLocal<T>, javax.ejb.SessionBea
             query.setParameter((String) entry.getKey(), entry.getValue());
         }
         return query.getResultList();
-    }
-
-    @Override
-    public void ejbActivate() throws EJBException, RemoteException {
-        //throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void ejbPassivate() throws EJBException, RemoteException {
-        //throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void ejbRemove() throws EJBException, RemoteException {
-        //throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void setSessionContext(SessionContext arg0) throws EJBException, RemoteException {
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 }
 
