@@ -5,18 +5,20 @@ import java.util.logging.Logger;
 import javax.naming.NamingException;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
-import org.itsnat.core.http.ItsNatHttpSession;
 import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import ai.ilikeplaces.widgets.*;
 import ai.ilikeplaces.entities.*;
-import ai.ilikeplaces.servlets.ServletLogin;
+import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
 import java.util.List;
 import java.util.Properties;
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.html.ItsNatHTMLDocument;
+import org.w3c.dom.html.HTMLDocument;
 
 /**
  *
@@ -24,18 +26,51 @@ import javax.naming.InitialContext;
  */
 public class ListenerMain implements ItsNatServletRequestListener {
 
-    private CrudServiceLocal<Location> crudServiceLocal;
     final protected static String JsCodeToSend = "document.monitor = new EventMonitor(); \n" + "document.getItsNatDoc().addEventMonitor(document.monitor); \n";
+    final private Properties p_ = new Properties();
+    private Context context = null;
+    private CrudServiceLocal<Location> crudServiceLocal = null;
+    final private Logger logger = Logger.getLogger(ListenerMain.class.getName());
 
     @SuppressWarnings("unchecked")
     public ListenerMain() {
-        try {
-            final Properties p = new Properties();
-            p.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
-            final Context context = new InitialContext(p);
-            crudServiceLocal = (CrudServiceLocal) context.lookup("CrudServiceLocal");
-        } catch (NamingException ex) {
-            Logger.getLogger(ListenerMain.class.getName()).log(Level.SEVERE, null, ex);
+        boolean initializeFailed = true;
+        final StringBuilder log = new StringBuilder();
+        init:
+        {
+            try {
+                p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
+                context = new InitialContext(p_);
+                if (context == null) {
+                    log.append("\nVARIABLE context IS NULL! ");
+                    log.append(context);
+                    break init;
+                }
+
+                crudServiceLocal = (CrudServiceLocal) context.lookup("CrudServiceLocal");
+                logger.info("LISTNER MAIN CRUD SERVICE:"+crudServiceLocal.hashCode());
+                if (crudServiceLocal == null) {
+                    log.append("\nVARIABLE crudServiceLocal_ IS NULL! ");
+                    log.append(crudServiceLocal);
+                    break init;
+
+                }
+            } catch (NamingException ex) {
+                log.append("\nSORRY! COULD NOT INITIALIZE "+getClass().getName()+" SERVLET DUE TO A NAMING EXCEPTION!");
+                logger.log(Level.SEVERE, "\nSORRY! COULD NOT INITIALIZE "+getClass().getName()+" DUE TO A NAMING EXCEPTION!", ex);
+                break init;
+            }
+
+            /**
+             * break. Do not let this statement be reachable if initialization
+             * failed. Instead, break immediately where initialization failed.
+             * At this point, we set the initializeFailed to false and thereby,
+             * allow initialization of an instance
+             */
+            initializeFailed = false;
+        }
+        if (initializeFailed) {
+            throw new ExceptionConstructorInvokation(log.toString());
         }
     }
 
@@ -85,16 +120,15 @@ public class ListenerMain implements ItsNatServletRequestListener {
              * Use ItsNatHTMLDocument variable stored in the AbstractListener class
              */
             @Override
-            protected void registerEventListeners() {
+            protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
                 /*Abstract implementation*/
-                itsNatHTMLDocument_.addEventListener((EventTarget) getElementById("Main_temp1"), Click, new EventListener() {
+                itsNatHTMLDocument__.addEventListener((EventTarget) getElementById("Main_temp1"), Click, new EventListener() {
 
                     @Override
                     public void handleEvent(final Event evt_) {
-                        final String userId = (String) itsNatHttpSession.getAttribute(ServletLogin.User);
-                        getElementById("Main_sidebar").appendChild(itsNatDocument_.getDocument().createTextNode(userId == null ? "NULL" : userId));
-                        getElementById("Main_sidebar").appendChild(itsNatDocument_.getDocument().createTextNode("COOL! "));
-                        new Photo$Description(itsNatDocument_, getElementById("Main_temp1")) {
+                        getElementById("Main_sidebar").appendChild(hTMLDocument__.createTextNode(sBLoggedOnUserFace == null ? "NULL" : sBLoggedOnUserFace.getLoggedOnUserId()));
+                        getElementById("Main_sidebar").appendChild(hTMLDocument__.createTextNode("COOL! "));
+                        new Photo$Description(itsNatDocument__, getElementById("Main_temp1")) {
                         };
                     }
                 }, false);
@@ -111,5 +145,19 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 }, false);
             }
         };
+    }
+
+    /**
+     *
+     * @param showChangeLog__
+     * @return changeLog
+     */
+    public String toString(final boolean showChangeLog__) {
+        String changeLog = new String(toString() + "\n");
+        changeLog += "20090918 crudServiceLocal was throwing a bug(exception). Should be due to garbage colection of outer class." +
+                "Moved it to init. Did not pursue reason as now implementation is sane and previous was not.\n";
+        changeLog += "20090924 crudServiceLocal was shifter back to the original position with validation. Not a bug. " +
+                "Outer class has a reference from the inner class so never gets garbage collected."
+        return showChangeLog__ ? changeLog : toString();
     }
 }
