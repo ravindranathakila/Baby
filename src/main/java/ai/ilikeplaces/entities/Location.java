@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,7 +28,7 @@ public class Location implements Serializable {
 
     final static public String FindAllLocationsByName = "FindAllLocationsByName";
     final static private long serialVersionUID = 1L;
-    private long locationId;
+    private Long locationId;
     private String locationName;
     private String locationInfo;
     private Location locationSuperSet;
@@ -38,7 +39,7 @@ public class Location implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    public long getLocationId() {
+    public Long getLocationId() {
         return locationId;
     }
 
@@ -46,7 +47,7 @@ public class Location implements Serializable {
      *
      * @param locationId__
      */
-    public void setLocationId(long locationId__) {
+    public void setLocationId(final Long locationId__) {
         this.locationId = locationId__;
     }
 
@@ -54,6 +55,7 @@ public class Location implements Serializable {
      * 
      * @return locationName
      */
+    @Column(unique = false, nullable = false)
     public String getLocationName() {
         return locationName;
     }
@@ -74,6 +76,7 @@ public class Location implements Serializable {
      * i.e. Made to have the same id.
      * @return locationInfo
      */
+    @Column(unique = false, nullable = false)
     public String getLocationInfo() {
         return locationInfo;
     }
@@ -147,6 +150,10 @@ public class Location implements Serializable {
         changeLog += "20090914 Added locationSuperSet \n";
         changeLog += "20090914 Added toString \n";
         changeLog += "20090914 Added NamedQuery \n";
+        changeLog += "20090915 Added Basic Validation \n";
+        changeLog += "20090915 Removed Basic Validation \n";
+        changeLog += "20090915 Added Annotated Validation \n";
+        changeLog += "20090924 Changed locationId type to Long from long \n";
         return showChangeLog__ ? changeLog : toString();
     }
 }
