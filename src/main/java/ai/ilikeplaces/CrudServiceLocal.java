@@ -12,8 +12,6 @@ import javax.ejb.Local;
 @Local
 public interface CrudServiceLocal<T> {
 
-    public boolean is();
-
     public T create(T t);
 
     public T find(Class type, Object id);
