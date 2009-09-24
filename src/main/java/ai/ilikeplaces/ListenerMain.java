@@ -157,7 +157,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
         changeLog += "20090918 crudServiceLocal was throwing a bug(exception). Should be due to garbage colection of outer class." +
                 "Moved it to init. Did not pursue reason as now implementation is sane and previous was not.\n";
         changeLog += "20090924 crudServiceLocal was shifter back to the original position with validation. Not a bug. " +
-                "Outer class has a reference from the inner class so never gets garbage collected."
+                "Outer class has a reference from the inner class so never gets garbage collected.";
         return showChangeLog__ ? changeLog : toString();
     }
 }
