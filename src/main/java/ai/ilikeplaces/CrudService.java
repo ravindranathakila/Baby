@@ -1,5 +1,6 @@
 package ai.ilikeplaces;
 
+import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;

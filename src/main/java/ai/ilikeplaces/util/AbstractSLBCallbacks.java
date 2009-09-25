@@ -1,4 +1,4 @@
-package ai.ilikeplaces;
+package ai.ilikeplaces.util;
 
 import javax.ejb.Remove;
 
