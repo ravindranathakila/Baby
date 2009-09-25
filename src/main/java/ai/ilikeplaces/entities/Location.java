@@ -26,8 +26,12 @@ import javax.persistence.OneToOne;
                 query = "SELECT loc FROM Location loc WHERE loc.locationName = :locationName"))
 public class Location implements Serializable {
 
+    final Logger logger = Logger.getLogger(Location.class.getName());
+
     final static public String FindAllLocationsByName = "FindAllLocationsByName";
+    
     final static private long serialVersionUID = 1L;
+
     private Long locationId;
     private String locationName;
     private String locationInfo;
@@ -94,7 +98,7 @@ public class Location implements Serializable {
      * @return locationSuperSet
      */
     @OneToOne(optional = true,
-                fetch = FetchType.EAGER,
+                fetch = FetchType.LAZY,
                 targetEntity = Location.class)
     public Location getLocationSuperSet() {
         return locationSuperSet;
@@ -125,15 +129,15 @@ public class Location implements Serializable {
                 try {
                     toString_ += "\n{" + field.getName() + "," + field.get(this) + "}";
                 } catch (IllegalArgumentException ex) {
-                    Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+                    logger.log(Level.SEVERE, null, ex);
                 } catch (IllegalAccessException ex) {
-                    Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+                    logger.log(Level.SEVERE, null, ex);
                 }
             }
         } catch (NoSuchFieldException ex) {
-            Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, null, ex);
         } catch (SecurityException ex) {
-            Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, null, ex);
         }
 
         return toString_;
@@ -154,6 +158,8 @@ public class Location implements Serializable {
         changeLog += "20090915 Removed Basic Validation \n";
         changeLog += "20090915 Added Annotated Validation \n";
         changeLog += "20090924 Changed locationId type to Long from long \n";
+        changeLog += "20090925 Changed Superset fetch type to lazy\n";
+        changeLog += "20090925 Added logger as a class field\n";
         return showChangeLog__ ? changeLog : toString();
     }
 }
