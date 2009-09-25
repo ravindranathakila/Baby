@@ -1,5 +1,6 @@
-package ai.ilikeplaces;
+package ai.ilikeplaces.logic.Listeners;
 
+import ai.ilikeplaces.*;
 import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.ServletLogin;
@@ -24,14 +25,39 @@ public abstract class AbstractListener {
      * Use this ItsNatDocument in your code for handling the page
      */
     final protected ItsNatDocument itsNatDocument_;
+    /**
+     *
+     */
     final protected ItsNatHTMLDocument itsNatHTMLDocument_;
+    /**
+     *
+     */
     final protected HTMLDocument hTMLDocument_;
+    /**
+     *
+     */
     final protected ItsNatServlet itsNatServlet_;
+    /**
+     *
+     */
     final protected  ItsNatHttpSession itsNatHttpSession;
+    /**
+     *
+     */
     final protected String location_;
+    /**
+     *
+     */
     final static protected String Click = "click";
+    /**
+     *
+     */
     final protected SBLoggedOnUserFace sBLoggedOnUserFace;
 
+    /**
+     *
+     * @param request_
+     */
     public AbstractListener(final ItsNatServletRequest request_) {
         boolean initializeFailed = true;
         final StringBuilder log = new StringBuilder();

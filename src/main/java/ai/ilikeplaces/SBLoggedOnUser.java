@@ -14,11 +14,20 @@ public class SBLoggedOnUser extends AbstractSFBCallbacks implements SBLoggedOnUs
 
     private  String loggedOnUserId;
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String getLoggedOnUserId() {
         return loggedOnUserId;
     }
 
+    /**
+     *
+     * @param loggedOnUserId__
+     * @throws IllegalStateException
+     */
     @Override
     public void setLoggedOnUserId(final String loggedOnUserId__) throws IllegalStateException {
         if (loggedOnUserId == null) {
@@ -33,17 +42,28 @@ public class SBLoggedOnUser extends AbstractSFBCallbacks implements SBLoggedOnUs
         }
     }
 
+    /**
+     *
+     */
     @Remove
     @Override
     public void remove() {
         logger.info("REMOVING BEAN");
     }
 
+    /**
+     *
+     * @param event
+     */
     @Override
     public void valueBound(final HttpSessionBindingEvent event) {
         logger.info("BINDING BEAN TO SESSION.");
     }
 
+    /**
+     *
+     * @param event
+     */
     @Override
     public void valueUnbound(final HttpSessionBindingEvent event) {
         logger.info("UNBINDING BEAN FROM SESSION AND MAKING AS REMOVE.");

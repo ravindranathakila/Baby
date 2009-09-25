@@ -1,7 +1,7 @@
 package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.ListenerLogin;
-import ai.ilikeplaces.ListenerMain;
+import ai.ilikeplaces.logic.Listeners.ListenerMain;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
@@ -94,6 +94,11 @@ public class Controller extends HttpServletWrapper {
         }
     }
 
+    /**
+     *
+     * @param serveletConfig__
+     * @throws ServletException
+     */
     @Override
     public void init(final ServletConfig serveletConfig__) throws ServletException {
 

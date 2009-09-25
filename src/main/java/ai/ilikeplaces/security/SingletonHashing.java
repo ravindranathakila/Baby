@@ -18,7 +18,14 @@ public class SingletonHashing extends AbstractSNGLTNBCallbacks implements Single
     @EJB
     private BlowFishLocal blowFishLocal;
 
+    /**
+     *
+     */
+    /**
+     *
+     */
     @PostConstruct
+    @Override
     public void postConstruct(){
         boolean initializeFailed = true;
         final StringBuilder log = new StringBuilder();
@@ -43,6 +50,18 @@ public class SingletonHashing extends AbstractSNGLTNBCallbacks implements Single
         System.out.println(log);
     }
 
+    /**
+     *
+     * @param plaintext__
+     * @param salt__
+     * @return
+     */
+    /**
+     *
+     * @param plaintext__
+     * @param salt__
+     * @return
+     */
     @Override
     synchronized public String getHash(final String plaintext__, final String salt__) {
         return blowFishLocal.getHash(new String(plaintext__), new String(salt__));/*We would not want an interned string here for hashing! So we use new.*/

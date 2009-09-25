@@ -11,6 +11,9 @@ import javax.persistence.Persistence;
 public class GlobalEntityManager {
 
     final private EntityManagerFactory emf = Persistence.createEntityManagerFactory("adimpression_ilikeplaces_war_1.6-SNAPSHOTPU");
+    /**
+     *
+     */
     final public EntityManager em = emf.createEntityManager();
     private static GlobalEntityManager Singleton;
     final private static boolean Initialized = false;
@@ -18,6 +21,10 @@ public class GlobalEntityManager {
     private GlobalEntityManager() {
     }
 
+    /**
+     *
+     * @return
+     */
     final public static GlobalEntityManager getSingleton() {
         if (Initialized) {
             return Singleton;
