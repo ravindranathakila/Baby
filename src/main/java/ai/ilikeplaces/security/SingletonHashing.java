@@ -1,6 +1,6 @@
 package ai.ilikeplaces.security;
 
-import ai.ilikeplaces.AbstractSNGLTNBCallbacks;
+import ai.ilikeplaces.util.AbstractSNGLTNBCallbacks;
 import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
 import ai.ilikeplaces.security.blowfish.BlowFishLocal;
 import ai.ilikeplaces.security.face.SingletonHashingFace;

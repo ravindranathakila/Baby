@@ -1,4 +1,4 @@
-package ai.ilikeplaces;
+package ai.ilikeplaces.util;
 
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;

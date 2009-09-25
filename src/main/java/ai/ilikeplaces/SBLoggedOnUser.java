@@ -1,5 +1,6 @@
 package ai.ilikeplaces;
 
+import ai.ilikeplaces.util.AbstractSFBCallbacks;
 import java.util.logging.Logger;
 import javax.ejb.Stateful;
 import javax.ejb.Remove;
