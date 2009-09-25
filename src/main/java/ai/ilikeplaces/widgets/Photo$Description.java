@@ -15,10 +15,26 @@ import org.w3c.dom.html.HTMLDocument;
  */
 public abstract class Photo$Description extends AbstractWidgetListener {
 
+    /**
+     *
+     * @param itsNatDocument__
+     * @param appendToElement__
+     */
+    /**
+     *
+     * @param itsNatDocument__
+     * @param appendToElement__
+     */
     public Photo$Description(final ItsNatDocument itsNatDocument__, final Element appendToElement__) {
         super(itsNatDocument__, Page.Photo$Description, appendToElement__);
     }
 
+    /**
+     *
+     */
+    /**
+     *
+     */
     @Override
     protected void init() {
         getWidgetElementById("pd").setAttribute("style", "color:red");
@@ -28,6 +44,7 @@ public abstract class Photo$Description extends AbstractWidgetListener {
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
         itsNatHTMLDocument_.addEventListener((EventTarget) getWidgetElementById("pd"), "click", new EventListener() {
 
+            @Override
             public void handleEvent(final Event evt_) {
                 getWidgetElementById("pd").getParentNode().appendChild(hTMLDocument_.createTextNode("Clicked BD!" + instanceId));
             }

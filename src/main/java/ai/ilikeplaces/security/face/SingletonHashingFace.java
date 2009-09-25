@@ -8,5 +8,17 @@ import javax.ejb.Local;
  */
 @Local
 public interface SingletonHashingFace {
+    /**
+     *
+     * @param plaintext__
+     * @param salt__
+     * @return
+     */
+    /**
+     *
+     * @param plaintext__
+     * @param salt__
+     * @return
+     */
     public String getHash(final String plaintext__, final String salt__);
 }

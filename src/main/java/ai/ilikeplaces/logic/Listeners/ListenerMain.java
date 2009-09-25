@@ -1,5 +1,7 @@
-package ai.ilikeplaces;
+package ai.ilikeplaces.logic.Listeners;
 
+import ai.ilikeplaces.*;
+import ai.ilikeplaces.logic.Listeners.AbstractListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -26,12 +28,18 @@ import org.w3c.dom.html.HTMLDocument;
  */
 public class ListenerMain implements ItsNatServletRequestListener {
 
+    /**
+     *
+     */
     final protected static String JsCodeToSend = "document.monitor = new EventMonitor(); \n" + "document.getItsNatDoc().addEventMonitor(document.monitor); \n";
     final private Properties p_ = new Properties();
     private Context context = null;
     private CrudServiceLocal<Location> crudServiceLocal = null;
     final private Logger logger = Logger.getLogger(ListenerMain.class.getName());
 
+    /**
+     *
+     */
     @SuppressWarnings("unchecked")
     public ListenerMain() {
         boolean initializeFailed = true;
@@ -74,6 +82,11 @@ public class ListenerMain implements ItsNatServletRequestListener {
         }
     }
 
+    /**
+     *
+     * @param request__
+     * @param response__
+     */
     @Override
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
 

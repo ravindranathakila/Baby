@@ -6,14 +6,16 @@ Maintain Order Please!
 2. USER TABLE AND EXTRACTION
 3. USER SIGNON
 4. FRIENDS TABLE AND EXTRACTION
-
+5. ADD DATABASE NON AVAILABILITY EXCEPTION WRAPPER.
+6. GENDER BASED PROFILES (INCLUDE GENDER NEUTRAL)
+7. DATABASE POLLING FOR GROUP MESSAGES.
+8. Customers are starting to expect the companies they do business with to use these tools and communities. If I have a problem with a product and I blog or Tweet about it, it’s really nice when the company shows up and helps me. The expectation of many consumers is that their technology or media companies will use social media. The expectation for, say, financial services companies, is lower (except for Wells Fargo, which happens to use Twitter).
+9. How do you look if you don’t have a presence on Facebook? Customers are saying, “This is where I live, where I want to have a dialogue, and if you don’t want to engage with me here, you probably don’t want my business.”
+10. fix location enum which is A BUG!!!
 
 Go for a white page, it brings a lot of clarity and looks like a book, not a site. GOOD!
 
 Spider man
-Free access mail bomb
+Free access mail bomb or follower challenge
 User points on places - spider man
-httpsession is not synchronized and ejbs might get buggy
-Remove ejb on httpsession destruction: implement interface for this
 
-20090914 1730

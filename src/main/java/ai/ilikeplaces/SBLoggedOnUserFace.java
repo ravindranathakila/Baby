@@ -9,7 +9,15 @@ import javax.ejb.Local;
 @Local
 public interface SBLoggedOnUserFace extends javax.servlet.http.HttpSessionBindingListener {
 
+    /**
+     *
+     * @return
+     */
     public String getLoggedOnUserId();
 
+    /**
+     *
+     * @param loggedOnUserId
+     */
     public void setLoggedOnUserId(String loggedOnUserId);
 }

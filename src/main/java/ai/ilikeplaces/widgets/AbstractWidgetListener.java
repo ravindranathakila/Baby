@@ -27,6 +27,12 @@ import static ai.ilikeplaces.servlets.Controller.*;
  */
 public abstract class AbstractWidgetListener {
 
+    /**
+     *
+     */
+    /**
+     *
+     */
     protected final ItsNatDocument itsNatDocument_;
     private final HTMLDocument hTMLDocument_;
     /**
@@ -42,10 +48,28 @@ public abstract class AbstractWidgetListener {
      * instance number
      */
     final protected long instanceId;
+    /**
+     *
+     */
+    /**
+     *
+     */
     final protected Page page;
 
     final private static String Id = "id";
 
+    /**
+     *
+     * @param itsNatDocument__
+     * @param page__
+     * @param appendToElement__
+     */
+    /**
+     *
+     * @param itsNatDocument__
+     * @param page__
+     * @param appendToElement__
+     */
     public AbstractWidgetListener(final ItsNatDocument itsNatDocument__, final Page page__, final Element appendToElement__) {
 
         instanceId = Instance_++;
@@ -62,6 +86,12 @@ public abstract class AbstractWidgetListener {
         registerEventListeners(itsNatHTMLDocument_, hTMLDocument_);
     }
 
+    /**
+     *
+     */
+    /**
+     *
+     */
     protected abstract void init();
 
     /**

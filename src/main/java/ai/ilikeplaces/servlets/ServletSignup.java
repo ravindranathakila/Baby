@@ -1,65 +1,47 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.CrudServiceLocal;
-import ai.ilikeplaces.logic.Listeners.ListenerMain;
 import ai.ilikeplaces.SBLoggedOnUserFace;
-import ai.ilikeplaces.entities.Human;
-import ai.ilikeplaces.entities.HumansAuthentications;
-import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
-import ai.ilikeplaces.security.face.SingletonHashingFace;
-import ai.ilikeplaces.servlets.Controller.Page;
+//import ai.ilikeplaces.entities.Human.GenderCode.IllegalEnumValueException;
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import ai.ilikeplaces.entities.Human;
+import ai.ilikeplaces.entities.HumansAuthentications;
+import ai.ilikeplaces.entities.HumansIdentity;
+import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
+import ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt;
+import ai.ilikeplaces.security.face.SingletonHashingFace;
+import ai.ilikeplaces.servlets.Controller.Page;
+import java.util.Properties;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
  * @author Ravindranath Akila
  */
-final public class ServletLogin extends HttpServlet {
+final public class ServletSignup extends HttpServlet {
 
-    /**
-     * Stateful Session Bean Containing User Data
-     */
-    public final static String SBLoggedOnUser = "SBLoggedOnUser";
-    /**
-     * Username, an email address to which the reset password link can be mailed
-     */
-    public final static String Username = "Username";
-    /**
-     * Password hash
-     */
-    public final static String Password = "Password";
-    /**
-     *
-     */
-    final Logger logger = Logger.getLogger(ListenerMain.class.getName());
+    final Logger logger = Logger.getLogger(ServletSignup.class.getName());
+    final static private String Username = "Username";
+    final static private String Password = "Password";
+    final static private String Email = "Email";
+    final static private String Gender = "Gender";
+    final static private String DateOfBirth = "DateOfBirth";
     final private Properties p_ = new Properties();
     private Context context = null;
     private CrudServiceLocal<Human> crudServiceLocal_ = null;
-    private CrudServiceLocal<HumansAuthentications> crudServiceLocalHuman_ = null;
     private SingletonHashingFace singletonHashingFace = null;
+    private CrudServiceLocal<HumansAuthentications> crudServiceLocalHuman_ = null;
 
-    /**
-     *
-     */
-    /**
-     *
-     */
     @Override
     @SuppressWarnings("unchecked")
     public void init() {
@@ -82,6 +64,7 @@ final public class ServletLogin extends HttpServlet {
                     log.append(crudServiceLocal_);
                     break init;
                 }
+
                 crudServiceLocalHuman_ = (CrudServiceLocal) context.lookup("CrudServiceLocal");
                 if (crudServiceLocalHuman_ == null) {
                     log.append("\nVARIABLE crudServiceLocalHuman_ IS NULL! ");
@@ -114,19 +97,17 @@ final public class ServletLogin extends HttpServlet {
         }
     }
 
-    /**
+    /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request__
      * @param response__
-     * @throws ServletException if a servlet-specific error occurs
+     * @throws ServletException
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(final HttpServletRequest request__, final HttpServletResponse response__)
             throws ServletException, IOException {
 
         response__.setContentType("text/html;charset=UTF-8");
-
-        //merchantservices@moneybookers.com
 
         /**
          * Make user session anyway as he camed to log in
@@ -137,64 +118,62 @@ final public class ServletLogin extends HttpServlet {
          * Set a timeout compatible with the stateful session bean handling user
          */
         userSession_.setMaxInactiveInterval(10);
-        
+
         final Enumeration enumerated = request__.getParameterNames();
         logger.log(Level.SEVERE, "PARAMETERs");
         while (enumerated.hasMoreElements()) {
             String param = (String) enumerated.nextElement();
             logger.info("PARAMETER NAME:" + param);
-            logger.info("VALUE:"+request__.getParameter(param));
+            logger.info("VALUE:" + request__.getParameter(param));
+
         }
-        doLogin:
-        if (userSession_.getAttribute(SBLoggedOnUser) == null) {
-            /*Ok the session does not have the bean, initialize it with the user with email id and password*/
-            if (request__.getParameter(Username) != null && request__.getParameter(Password) != null) {/*We need both these to sign in a user*/
-                try {
-                    final SBLoggedOnUserFace sBLoggedOnUserFace = (SBLoggedOnUserFace) context.lookup("SBLoggedOnUserLocal");
+        final String username = request__.getParameter(Username);
+        final String password = request__.getParameter(Password);
+        final String email = request__.getParameter(Email);
+        final String gender = request__.getParameter(Gender);
+        final String dateOfBirth = request__.getParameter(DateOfBirth);
 
-                    Human loggedOnUser = crudServiceLocal_.find(Human.class, request__.getParameter(Username));
-                    if (loggedOnUser != null) {/*Ok user name valid but now we check for passworld*/
-                        HumansAuthentications humansAuthentications = crudServiceLocalHuman_.find(HumansAuthentications.class, null);
+        processSignup:
+        {
+            userSession_.removeAttribute(ServletLogin.SBLoggedOnUser);
+            if (username != null && password != null) {// && email != null && gender != null && dateOfBirth != null) {
 
+                if (crudServiceLocal_.find(Human.class, username) == null) {
+                    final Human newUser = new Human();
+                    newUser.setHumanId(username);
+                    final HumansAuthentications ha = new HumansAuthentications();
+                    ha.setHumanId(newUser.getHumanId());
+                    ha.setHumanAuthenticationSalt(BCrypt.gensalt());
+                    ha.setHumanAuthenticationHash(singletonHashingFace.getHash(password, ha.getHumanAuthenticationSalt()));
+                    newUser.setHumansAuthentications(ha);
+                    newUser.setHumanAlive(true);
+                    final HumansIdentity hid = new HumansIdentity();
+                    hid.setHumanId(newUser.getHumanId());
+                    newUser.setHumansIdentity(hid);
+                    crudServiceLocal_.create(newUser);
 
-                        if (humansAuthentications.getHumanAuthenticationHash().equals(singletonHashingFace.getHash(request__.getParameter(Password),humansAuthentications.getHumanAuthenticationSalt()))) {
-                            
-                            sBLoggedOnUserFace.setLoggedOnUserId(null);
-                            userSession_.setAttribute(SBLoggedOnUser, sBLoggedOnUserFace);
-                            final PageFace home = Page.home;
-                            logger.info("GREAT! SIGNON SUCCESSFUL! " + ((SBLoggedOnUserFace) userSession_.getAttribute(SBLoggedOnUser)).getLoggedOnUserId());
-                            response__.sendRedirect(home.toString());
-                            break doLogin;/*This is unnecessary but lets not leave chance for introducing bugs*/
-                        } else {/*Ok password wrong. What do we do with this guy? First lets make his session object null*/
-                            userSession_.invalidate();
-                            logger.info("SORRY! PASSWORD WRONG!");
-                            final PageFace home = Page.home;
-                            response__.sendRedirect(home.toString());
-                            break doLogin;
-                        }
-                    } else {/*There is no such user. Ask if he forgor username or whether to create a new account :)*/
-                        response__.sendRedirect("/ilikeplaces/signup");
-                        logger.info("SORRY! NO USER IN THAT NAME!");
-                        break doLogin;
+                    try {
+                        final SBLoggedOnUserFace sBLoggedOnUserFace = (SBLoggedOnUserFace) context.lookup("SBLoggedOnUserLocal");
+                        final Human loggedOnUser = crudServiceLocal_.find(Human.class, username);
+                        sBLoggedOnUserFace.setLoggedOnUserId(loggedOnUser.getHumanId());
+                        userSession_.setAttribute(ServletLogin.SBLoggedOnUser, sBLoggedOnUserFace);
+                        final Page home = Page.home;
+                        response__.sendRedirect(home.toString());
+                        break processSignup;
+                    } catch (NamingException ex) {
+                        logger.log(Level.SEVERE, "SORRY! COULD NOT ADD STATEFUL SESSION BEAN TO THE SESSION!", ex);
+                        final Page login = Page.login;
+                        response__.sendRedirect(login.toString());
+                        break processSignup;
                     }
-
-                } catch (NamingException ex) {/*Send back to login page or homepage*/
-                    logger.log(Level.SEVERE, "SORRY! COULD NOT LOGIN USER DUE TO A NAMING EXCEPTION!", ex);
-                    final PageFace signup = Page.signup;
-                    response__.sendRedirect(signup.toString());
-                    break doLogin;
+                } else {
+                    logger.log(Level.INFO, "SORRY! A USER IN THAT NAME ALREADY EXISTS!:" + username);
+                    request__.getRequestDispatcher("/signup.jsp").forward(request__, response__);
+                    break processSignup;
                 }
-            } else {/*Why was the user sent here without either username or password or both(by the page)? Send him back!*/
-                logger.severe("SORRY! PAGE SENDS USER TO LOGIN WITHOUT USERNAME PASSWORD OR BOTH. PROGRAMMATICAL ERROR! WHODIDIT:" + request__.getRequestURL().toString());
-                final PageFace home = Page.home;
-                response__.sendRedirect(home.toString());
-                break doLogin;
+            } else {
+                request__.getRequestDispatcher("/signup.jsp").forward(request__, response__);
             }
-
-        } else {/*Why did the user come to this page if he was already logged on? Send him back!*/
-            logger.info("SORRY! AN ALREADY LOGGED IN USER COMES TO LOGIN! REDIRECTED! USERNAME:" + ((SBLoggedOnUserFace) userSession_.getAttribute(SBLoggedOnUser)).getLoggedOnUserId());
-            final PageFace home = Page.home;
-            response__.sendRedirect(home.toString());
         }
     }
 
@@ -231,6 +210,6 @@ final public class ServletLogin extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Nothing interesting here!";
+        return "Short description";
     }// </editor-fold>
 }

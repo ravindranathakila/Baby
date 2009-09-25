@@ -18,8 +18,20 @@ import org.w3c.dom.Element;
  */
 public abstract class AbstractFragmentListener {
 
+    /**
+     *
+     */
+    /**
+     *
+     */
     protected final static String Click = "click";
 
+    /**
+     *
+     */
+    /**
+     *
+     */
     public AbstractFragmentListener() {
         registerEventListeners();
     }

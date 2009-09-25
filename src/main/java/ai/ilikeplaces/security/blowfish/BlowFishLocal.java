@@ -12,6 +12,9 @@ public interface BlowFishLocal {
     /**
      * General Call on Any BlowFish library. Wrapper method.
      * @param passWord
+     * @param salt
+     * @param salt
+     * @param salt
      * @return
      */
     public String getHash(final String passWord, final String salt);

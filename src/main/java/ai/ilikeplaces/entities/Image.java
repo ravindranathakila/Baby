@@ -21,28 +21,76 @@ public class Image implements Serializable {
     private String imageFilePath;
     private String imageURLPath;
 
+    /**
+     *
+     * @return
+     */
+    /**
+     *
+     * @return
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getImageId() {
         return imageId;
     }
 
+    /**
+     *
+     * @param imageId__
+     */
+    /**
+     *
+     * @param imageId__
+     */
     public void setImageId(final Long imageId__) {
         this.imageId = imageId__;
     }
 
+    /**
+     *
+     * @return
+     */
+    /**
+     *
+     * @return
+     */
     public String getImageFilePath() {
         return imageFilePath;
     }
 
+    /**
+     *
+     * @param imageFilePath__
+     */
+    /**
+     *
+     * @param imageFilePath__
+     */
     public void setImageFilePath(final String imageFilePath__) {
         this.imageFilePath = imageFilePath__;
     }
 
+    /**
+     *
+     * @return
+     */
+    /**
+     *
+     * @return
+     */
     public String getImageURLPath() {
         return imageURLPath;
     }
 
+    /**
+     *
+     * @param imageURLPath__
+     */
+    /**
+     *
+     * @param imageURLPath__
+     */
     public void setImageURLPath(final String imageURLPath__) {
         this.imageURLPath = imageURLPath__;
     }
@@ -58,6 +106,7 @@ public class Image implements Serializable {
 
 
     @Override
+    @SuppressWarnings({"EqualsWhichDoesntCheckParameterClass", "EqualsWhichDoesntCheckParameterClass"})
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
 //        if (!(object instanceof Image)) {
