@@ -1,27 +1,30 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package ai.ilikeplaces.entities;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EmbeddedId;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.CascadeType;
-
 
 /**
  *
  * @author Ravindranath Akila
  */
 @Entity
-public class HumansAuthentications implements Serializable {
-
+public class HumansPublicPhoto implements Serializable {
     private static final long serialVersionUID = 1L;
     private String humanId;
     private Human human;
-    private String humanAuthenticationHash;
-    private String humanAuthenticationSalt;
+    private List<PublicPhoto> publicPhotos;
 
     @Id
     public String getHumanId() {
@@ -42,37 +45,31 @@ public class HumansAuthentications implements Serializable {
         this.human = human;
     }
 
-    public String getHumanAuthenticationHash() {
-        return humanAuthenticationHash;
+    @OneToMany(fetch=FetchType.LAZY)
+    public List<PublicPhoto> getPublicPhotos() {
+        return publicPhotos;
     }
 
-    public void setHumanAuthenticationHash(final String humanAuthenticationHash__) {
-        this.humanAuthenticationHash = humanAuthenticationHash__;
+    public void setPublicPhotos(List<PublicPhoto> publicPhotos) {
+        this.publicPhotos = publicPhotos;
     }
 
-    public String getHumanAuthenticationSalt() {
-        return humanAuthenticationSalt;
-    }
-
-    public void setHumanAuthenticationSalt(final String humanAuthenticationSalt__) {
-        this.humanAuthenticationSalt = humanAuthenticationSalt__;
-    }
-
+//
 //    @Override
 //    public int hashCode() {
 //        int hash = 0;
-//        hash += (human != null ? human.hashCode() : 0);
+//        hash += (id != null ? id.hashCode() : 0);
 //        return hash;
 //    }
 //
 //    @Override
 //    public boolean equals(Object object) {
 //        // TODO: Warning - this method won't work in the case the id fields are not set
-//        if (!(object instanceof HumansAuthentications)) {
+//        if (!(object instanceof HumansPublicPhoto)) {
 //            return false;
 //        }
-//        HumansAuthentications other = (HumansAuthentications) object;
-//        if ((this.human == null && other.human != null) || (this.human != null && !this.human.equals(other.human))) {
+//        HumansPublicPhoto other = (HumansPublicPhoto) object;
+//        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
 //            return false;
 //        }
 //        return true;
@@ -80,6 +77,7 @@ public class HumansAuthentications implements Serializable {
 //
 //    @Override
 //    public String toString() {
-//        return "ai.ilikeplaces.entities.human[id=" + human + "]";
+//        return "ai.ilikeplaces.entities.HumansPublicPhoto[id=" + id + "]";
 //    }
+
 }

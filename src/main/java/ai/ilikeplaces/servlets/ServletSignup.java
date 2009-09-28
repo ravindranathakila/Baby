@@ -1,6 +1,6 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.CrudServiceLocal;
+import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.SBLoggedOnUserFace;
 //import ai.ilikeplaces.entities.Human.GenderCode.IllegalEnumValueException;
 import java.io.IOException;
@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import ai.ilikeplaces.entities.Human;
-import ai.ilikeplaces.entities.HumansAuthentications;
+import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.entities.HumansIdentity;
+import ai.ilikeplaces.entities.HumansPrivatePhoto;
+import ai.ilikeplaces.entities.HumansPublicPhoto;
 import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
 import ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt;
 import ai.ilikeplaces.security.face.SingletonHashingFace;
@@ -40,7 +42,7 @@ final public class ServletSignup extends HttpServlet {
     private Context context = null;
     private CrudServiceLocal<Human> crudServiceLocal_ = null;
     private SingletonHashingFace singletonHashingFace = null;
-    private CrudServiceLocal<HumansAuthentications> crudServiceLocalHuman_ = null;
+    private CrudServiceLocal<HumansAuthentication> crudServiceLocalHuman_ = null;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -136,20 +138,31 @@ final public class ServletSignup extends HttpServlet {
         processSignup:
         {
             userSession_.removeAttribute(ServletLogin.SBLoggedOnUser);
-            if (username != null && password != null) {// && email != null && gender != null && dateOfBirth != null) {
+            if ((username != "" && password != "" && email != "" && gender != "" && dateOfBirth != "")
+                    &&(username != null && password != null && email != null && gender != null && dateOfBirth != null)) {
 
                 if (crudServiceLocal_.find(Human.class, username) == null) {
                     final Human newUser = new Human();
                     newUser.setHumanId(username);
-                    final HumansAuthentications ha = new HumansAuthentications();
+                    final HumansAuthentication ha = new HumansAuthentication();
                     ha.setHumanId(newUser.getHumanId());
                     ha.setHumanAuthenticationSalt(BCrypt.gensalt());
                     ha.setHumanAuthenticationHash(singletonHashingFace.getHash(password, ha.getHumanAuthenticationSalt()));
                     newUser.setHumansAuthentications(ha);
                     newUser.setHumanAlive(true);
+                    
                     final HumansIdentity hid = new HumansIdentity();
                     hid.setHumanId(newUser.getHumanId());
                     newUser.setHumansIdentity(hid);
+
+                    final HumansPrivatePhoto hprp = new HumansPrivatePhoto();
+                    hprp.setHumanId(newUser.getHumanId());
+                    newUser.setHumansPrivatePhoto(hprp);
+
+                    final HumansPublicPhoto hpup = new HumansPublicPhoto();
+                    hpup.setHumanId(newUser.getHumanId());
+                    newUser.setHumansPublicPhoto(hpup);
+                    
                     crudServiceLocal_.create(newUser);
 
                     try {

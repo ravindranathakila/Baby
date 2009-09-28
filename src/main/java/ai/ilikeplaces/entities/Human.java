@@ -32,8 +32,10 @@ public class Human implements Serializable {
      * Important: This is also the switch for the privacy policy.
      */
     private Boolean humanAlive;
-    private HumansAuthentications humansAuthentications;
+    private HumansAuthentication humansAuthentication;
     private HumansIdentity humansIdentity;
+    private HumansPublicPhoto humansPublicPhoto;
+    private HumansPrivatePhoto HumansPrivatePhoto;
 
     @Id
     public String getHumanId() {
@@ -54,12 +56,12 @@ public class Human implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
-    public HumansAuthentications getHumansAuthentications() {
-        return humansAuthentications;
+    public HumansAuthentication getHumansAuthentications() {
+        return humansAuthentication;
     }
 
-    public void setHumansAuthentications(final HumansAuthentications humansAuthentications) {
-        this.humansAuthentications = humansAuthentications;
+    public void setHumansAuthentications(final HumansAuthentication humansAuthentications) {
+        this.humansAuthentication = humansAuthentications;
     }
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -72,6 +74,25 @@ public class Human implements Serializable {
         this.humansIdentity = humansIdentity;
     }
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public HumansPrivatePhoto getHumansPrivatePhoto() {
+        return HumansPrivatePhoto;
+    }
+
+    public void setHumansPrivatePhoto(HumansPrivatePhoto HumansPrivatePhoto) {
+        this.HumansPrivatePhoto = HumansPrivatePhoto;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public HumansPublicPhoto getHumansPublicPhoto() {
+        return humansPublicPhoto;
+    }
+
+    public void setHumansPublicPhoto(HumansPublicPhoto humansPublicPhoto) {
+        this.humansPublicPhoto = humansPublicPhoto;
+    }
 
 //    private String loggedOnUserPassword;
 //    private String loggedOnUserEmail;

@@ -44,14 +44,14 @@ public class Controller extends HttpServletWrapper {
                 return "/ilikeplaces/page/main";
             }
         },
-        main("ai/ilikeplaces/Main.xhtml", "Main_temp1", "Main_temp2", "Main_sidebar") {
+        main("ai/ilikeplaces/Main.xhtml", "Main_temp1", "Main_temp2", "Main_sidebar","hot","cool") {
 
             @Override
             public String toString() {
                 return "main";
             }
         },
-        Photo$Description("ai/ilikeplaces/fragments/Photo-Description.xhtml", "pd") {
+        Photo$Description("ai/ilikeplaces/fragments/Photo-Description.xhtml", "pd", "close") {
 
             @Override
             public String toString() {

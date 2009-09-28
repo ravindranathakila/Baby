@@ -1,5 +1,7 @@
 package ai.ilikeplaces.logic.Listeners;
 
+import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.*;
 import ai.ilikeplaces.logic.Listeners.AbstractListener;
 import java.util.logging.Level;
@@ -135,7 +137,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
             @Override
             protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
                 /*Abstract implementation*/
-                itsNatHTMLDocument__.addEventListener((EventTarget) getElementById("Main_temp1"), Click, new EventListener() {
+                itsNatHTMLDocument__.addEventListener((EventTarget) getElementById("cool"), Click, new EventListener() {
 
                     @Override
                     public void handleEvent(final Event evt_) {
@@ -147,7 +149,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 }, false);
 
                 /*Abstract implementation*/
-                itsNatHTMLDocument_.addEventListener((EventTarget) getElementById("Main_temp2"), Click, new EventListener() {
+                itsNatHTMLDocument_.addEventListener((EventTarget) getElementById("hot"), Click, new EventListener() {
 
                     @Override
                     public void handleEvent(final Event evt_) {

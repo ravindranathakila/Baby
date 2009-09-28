@@ -1,4 +1,4 @@
-package ai.ilikeplaces;
+package ai.ilikeplaces.jpa;
 
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import java.lang.reflect.Field;

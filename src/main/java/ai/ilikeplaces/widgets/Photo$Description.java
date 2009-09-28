@@ -20,18 +20,10 @@ public abstract class Photo$Description extends AbstractWidgetListener {
      * @param itsNatDocument__
      * @param appendToElement__
      */
-    /**
-     *
-     * @param itsNatDocument__
-     * @param appendToElement__
-     */
     public Photo$Description(final ItsNatDocument itsNatDocument__, final Element appendToElement__) {
         super(itsNatDocument__, Page.Photo$Description, appendToElement__);
     }
 
-    /**
-     *
-     */
     /**
      *
      */
@@ -42,11 +34,12 @@ public abstract class Photo$Description extends AbstractWidgetListener {
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
-        itsNatHTMLDocument_.addEventListener((EventTarget) getWidgetElementById("pd"), "click", new EventListener() {
+        itsNatHTMLDocument_.addEventListener((EventTarget)
+                getWidgetElementById("close"), "click", new EventListener() {
 
             @Override
             public void handleEvent(final Event evt_) {
-                getWidgetElementById("pd").getParentNode().appendChild(hTMLDocument_.createTextNode("Clicked BD!" + instanceId));
+                toggleVisible("close");
             }
         }, false);
     }
