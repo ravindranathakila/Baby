@@ -2,6 +2,7 @@ package ai.ilikeplaces.entities;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -21,21 +23,19 @@ import javax.persistence.OneToOne;
  * @author Ravindranath Akila
  */
 @Entity
-@NamedQueries(
-    @NamedQuery(name = "FindAllLocationsByName",
-                query = "SELECT loc FROM Location loc WHERE loc.locationName = :locationName"))
+@NamedQueries(@NamedQuery(name = "FindAllLocationsByName",
+query = "SELECT loc FROM Location loc WHERE loc.locationName = :locationName"))
 public class Location implements Serializable {
 
     final Logger logger = Logger.getLogger(Location.class.getName());
-
     final static public String FindAllLocationsByName = "FindAllLocationsByName";
-    
     final static private long serialVersionUID = 1L;
-
     private Long locationId;
     private String locationName;
     private String locationInfo;
     private Location locationSuperSet;
+    private List<PublicPhoto> publicPhotos;
+    private List<PrivatePhoto> privatePhotos;
 
     /**
      *
@@ -98,8 +98,8 @@ public class Location implements Serializable {
      * @return locationSuperSet
      */
     @OneToOne(optional = true,
-                fetch = FetchType.LAZY,
-                targetEntity = Location.class)
+    fetch = FetchType.LAZY,
+    targetEntity = Location.class)
     public Location getLocationSuperSet() {
         return locationSuperSet;
     }
@@ -108,9 +108,17 @@ public class Location implements Serializable {
      *
      * @param locationSuperSet__
      */
- 
     public void setLocationSuperSet(final Location locationSuperSet__) {
         this.locationSuperSet = locationSuperSet__;
+    }
+
+    @OneToMany
+    public List<PublicPhoto> getPublicPhotos() {
+        return publicPhotos;
+    }
+
+    public void setPublicPhotos(List<PublicPhoto> publicPhotos) {
+        this.publicPhotos = publicPhotos;
     }
 
     /**

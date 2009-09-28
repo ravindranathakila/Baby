@@ -1,4 +1,4 @@
-package ai.ilikeplaces;
+package ai.ilikeplaces.jpa;
 
 import java.util.*;
 

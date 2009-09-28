@@ -11,14 +11,16 @@
 package ai.ilikeplaces.widgets;
 
 import ai.ilikeplaces.servlets.Controller;
-import java.math.BigInteger;
 import java.util.HashSet;
+import java.util.Set;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServlet;
 import org.itsnat.core.html.ItsNatHTMLDocFragmentTemplate;
 import org.itsnat.core.html.ItsNatHTMLDocument;
+import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.html.HTMLDocument;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import static ai.ilikeplaces.servlets.Controller.*;
 
 /**
@@ -27,12 +29,6 @@ import static ai.ilikeplaces.servlets.Controller.*;
  */
 public abstract class AbstractWidgetListener {
 
-    /**
-     *
-     */
-    /**
-     *
-     */
     protected final ItsNatDocument itsNatDocument_;
     private final HTMLDocument hTMLDocument_;
     /**
@@ -48,22 +44,10 @@ public abstract class AbstractWidgetListener {
      * instance number
      */
     final protected long instanceId;
-    /**
-     *
-     */
-    /**
-     *
-     */
     final protected Page page;
-
     final private static String Id = "id";
+    private boolean visible = true;
 
-    /**
-     *
-     * @param itsNatDocument__
-     * @param page__
-     * @param appendToElement__
-     */
     /**
      *
      * @param itsNatDocument__
@@ -86,12 +70,6 @@ public abstract class AbstractWidgetListener {
         registerEventListeners(itsNatHTMLDocument_, hTMLDocument_);
     }
 
-    /**
-     *
-     */
-    /**
-     *
-     */
     protected abstract void init();
 
     /**
@@ -136,8 +114,35 @@ public abstract class AbstractWidgetListener {
     protected final Element getWidgetElementById(final String key__) {
         final String elementId__ = Controller.GlobalHTMLIdRegistry.get(key__);
         if (elementId__ == null) {
-            throw new java.lang.NullPointerException("ELEMENT \"" + key__ + "\" CONTAINS NULL OR NO REFERENCE IN REGISTRY!");
+            throw new java.lang.NullPointerException("SORRY! ELEMENT \"" + key__ + "\" CONTAINS NULL OR NO REFERENCE IN REGISTRY!");
         }
         return hTMLDocument_.getElementById(elementId__ + instanceId);
+    }
+
+    /**
+     *
+     * @return HashSet<String> widgetElements
+     */
+    protected final Set<String> getWidgetElements() {
+        return Controller.GlobalPageIdRegistry.get(page);
+    }
+
+    protected void toggleVisible(final String toggleLink) {
+        final Set<String> widgetElements = getWidgetElements();
+        if (visible) {
+            for (String elementId__ : widgetElements) {
+                if (!elementId__.equals(toggleLink)) {
+                    getWidgetElementById(elementId__).setAttribute("style", "display:none");
+                }
+            }
+            visible = false;
+        } else {
+            for (String elementId__ : widgetElements) {
+                if (!elementId__.equals(toggleLink)) {
+                    getWidgetElementById(elementId__).setAttribute("style", "display:block");
+                }
+            }
+            visible = true;
+        }
     }
 }

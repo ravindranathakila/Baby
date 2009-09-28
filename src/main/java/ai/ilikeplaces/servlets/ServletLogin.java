@@ -4,11 +4,11 @@
  */
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.CrudServiceLocal;
+import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.logic.Listeners.ListenerMain;
 import ai.ilikeplaces.SBLoggedOnUserFace;
 import ai.ilikeplaces.entities.Human;
-import ai.ilikeplaces.entities.HumansAuthentications;
+import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
 import ai.ilikeplaces.security.face.SingletonHashingFace;
 import ai.ilikeplaces.servlets.Controller.Page;
@@ -51,7 +51,7 @@ final public class ServletLogin extends HttpServlet {
     final private Properties p_ = new Properties();
     private Context context = null;
     private CrudServiceLocal<Human> crudServiceLocal_ = null;
-    private CrudServiceLocal<HumansAuthentications> crudServiceLocalHuman_ = null;
+    private CrudServiceLocal<HumansAuthentication> crudServiceLocalHuman_ = null;
     private SingletonHashingFace singletonHashingFace = null;
 
     /**
@@ -154,7 +154,7 @@ final public class ServletLogin extends HttpServlet {
 
                     Human loggedOnUser = crudServiceLocal_.find(Human.class, request__.getParameter(Username));
                     if (loggedOnUser != null) {/*Ok user name valid but now we check for passworld*/
-                        HumansAuthentications humansAuthentications = crudServiceLocalHuman_.find(HumansAuthentications.class, null);
+                        HumansAuthentication humansAuthentications = crudServiceLocalHuman_.find(HumansAuthentication.class, null);
 
 
                         if (humansAuthentications.getHumanAuthenticationHash().equals(singletonHashingFace.getHash(request__.getParameter(Password),humansAuthentications.getHumanAuthenticationSalt()))) {
