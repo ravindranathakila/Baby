@@ -1,12 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ai.ilikeplaces.entities;
 
+import ai.ilikeplaces.doc.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.ArrayList;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,7 +42,9 @@ public class HumansPublicPhoto implements Serializable {
         this.human = human;
     }
 
-    @OneToMany(fetch=FetchType.LAZY)
+    @FIXME(issues={"Fetch type should be lazy, check if callers can do list.size() to refresh list." +
+    "The List of photos can be huge so eager isn't practical"})
+    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE)
     public List<PublicPhoto> getPublicPhotos() {
         return publicPhotos;
     }
