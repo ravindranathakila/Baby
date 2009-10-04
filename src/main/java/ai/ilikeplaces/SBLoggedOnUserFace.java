@@ -1,6 +1,9 @@
 package ai.ilikeplaces;
 
 import javax.ejb.Local;
+import java.util.Observer;
+import javax.servlet.http.HttpSessionBindingEvent;
+
 
 /**
  *
@@ -20,4 +23,16 @@ public interface SBLoggedOnUserFace extends javax.servlet.http.HttpSessionBindin
      * @param loggedOnUserId
      */
     public void setLoggedOnUserId(String loggedOnUserId);
+
+    /**
+     *
+     * @param o
+     */
+    public void addObserver(Observer o);
+
+    /**
+     *
+     * @param o
+     */
+    public void deleteObserver(Observer o);
 }

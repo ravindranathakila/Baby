@@ -24,27 +24,27 @@ public abstract class AbstractListener {
     /**
      * Use this ItsNatDocument in your code for handling the page
      */
-    final protected ItsNatDocument itsNatDocument_;
+    final protected ItsNatDocument itsNatDocument;
     /**
      *
      */
-    final protected ItsNatHTMLDocument itsNatHTMLDocument_;
+    final private ItsNatHTMLDocument itsNatHTMLDocument_;
     /**
      *
      */
-    final protected HTMLDocument hTMLDocument_;
+    final private HTMLDocument hTMLDocument_;
     /**
      *
      */
-    final protected ItsNatServlet itsNatServlet_;
+    final private ItsNatServlet itsNatServlet_;
     /**
      *
      */
-    final protected  ItsNatHttpSession itsNatHttpSession;
+    final private ItsNatHttpSession itsNatHttpSession;
     /**
      *
      */
-    final protected String location_;
+    final protected String location;
     /**
      *
      */
@@ -52,7 +52,7 @@ public abstract class AbstractListener {
     /**
      *
      */
-    final protected SBLoggedOnUserFace sBLoggedOnUserFace;
+    final protected SessionBoundBadReferenceWrapper<SBLoggedOnUserFace> sessionBoundBadReferenceWrapper;
 
     /**
      *
@@ -64,15 +64,16 @@ public abstract class AbstractListener {
         init:
         {
 
-            this.itsNatDocument_ = request_.getItsNatDocument();
-            this.itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument_;
+            this.itsNatDocument = request_.getItsNatDocument();
+            this.itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument;
             this.hTMLDocument_ = itsNatHTMLDocument_.getHTMLDocument();
-            this.itsNatServlet_ = itsNatDocument_.getItsNatDocumentTemplate().getItsNatServlet();
+            this.itsNatServlet_ = itsNatDocument.getItsNatDocumentTemplate().getItsNatServlet();
             this.itsNatHttpSession = (ItsNatHttpSession) request_.getItsNatSession();
-            this.sBLoggedOnUserFace = (SBLoggedOnUserFace) itsNatHttpSession.getAttribute(ServletLogin.SBLoggedOnUser);
-            this.location_ = (String) request_.getServletRequest().getAttribute("location");
-            init();
-            registerEventListeners(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument_);
+            final Object attribute__ = itsNatHttpSession.getAttribute(ServletLogin.SBLoggedOnUser);
+            this.sessionBoundBadReferenceWrapper = attribute__ == null ? null : (SessionBoundBadReferenceWrapper<SBLoggedOnUserFace>)attribute__;
+            this.location = (String) request_.getServletRequest().getAttribute("location");
+            init(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument);
+            registerEventListeners(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument);
 
             /**
              * break. Do not let this statement be reachable if initialization
@@ -90,7 +91,7 @@ public abstract class AbstractListener {
     /**
      * Intialize your document here by appending fragments
      */
-    protected abstract void init();
+    protected abstract void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__);
 
     /**
      * Use ItsNatHTMLDocument variable stored in the AbstractListener class
@@ -110,7 +111,7 @@ public abstract class AbstractListener {
      */
     protected DocumentFragment registerFragmentHead(final String page_) {
         final ItsNatHTMLDocFragmentTemplate inhdft_ = (ItsNatHTMLDocFragmentTemplate) itsNatServlet_.getItsNatDocFragmentTemplate(page_);
-        return inhdft_.loadDocumentFragmentHead(itsNatDocument_);
+        return inhdft_.loadDocumentFragmentHead(itsNatDocument);
     }
 
     /**
@@ -121,24 +122,33 @@ public abstract class AbstractListener {
      */
     protected DocumentFragment registerFragmentBody(final String page_) {
         final ItsNatHTMLDocFragmentTemplate inhdft_ = (ItsNatHTMLDocFragmentTemplate) itsNatServlet_.getItsNatDocFragmentTemplate(page_);
-        return inhdft_.loadDocumentFragmentBody(itsNatDocument_);
+        return inhdft_.loadDocumentFragmentBody(itsNatDocument);
     }
     /**
      * This Map is static as Id's in html documents should be universally identical, i.e. as htmldocname_elementId
      */
-    protected final static Map<String, String> GlobalHTMLIdRegistry_ = Controller.GlobalHTMLIdRegistry;
+    final static protected Map<String, String> GlobalHTMLIdRegistry_ = Controller.GlobalHTMLIdRegistry;
 
     /**
      * Id registry should be globally visible to callers
+     * Wrapper to getElementById
      *
      * @param key__ 
      * @return Element
      */
-    protected final Element getElementById(final String key__) {
+    protected final Element $(final String key__) {
+        return getElementById(key__);
+    }
+
+    private final Element getElementById(final String key__) {
         final String elementId__ = GlobalHTMLIdRegistry_.get(key__);
         if (elementId__ == null) {
             throw new java.lang.NullPointerException("THE ELEMENT \"" + key__ + "\" YOU REQUIRE CONTAINS NULL OR NO REFERENCE IN REGISTRY!");
         }
         return hTMLDocument_.getElementById(elementId__);
+    }
+
+    final protected Element $(MarkupTagFace tagNameInAllCaps) {
+        return hTMLDocument_.createElement(tagNameInAllCaps.toString());
     }
 }
