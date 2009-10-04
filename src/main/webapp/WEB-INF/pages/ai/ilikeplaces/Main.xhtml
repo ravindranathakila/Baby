@@ -75,7 +75,9 @@
                         this.enable();
 
                         // add file to the list
-                        $('<li></li>').appendTo('#example1 .files').text(file);
+                        $('<li></li>').appendTo('#Main_file_list .files').text(file);
+                        confirm('Shall I make this photo visible to the WWW?');
+                        alert(prompt('What is this photo about? Describe it for your friends!','Another image on ilikeplaces'));
                     }
                 });
             });
@@ -149,7 +151,7 @@
                         Home
                     </h3>
                     <hr/>
-                    <div id="example1" class="example span-4 last">
+                    <div id="Main_file_list" class="example span-4 last">
                         <div class="notice wrapper span-4">
                             <div id="button1" class="button span-4 last">Upload Images</div>
                         </div>
@@ -157,24 +159,27 @@
                         </div>
                         <div class="success span-4">
                             <p>Uploaded files:</p>
-                            <ol class="files" style="list-style-image:url(/ilikeplaces/css/blueprint/plugins/buttons/icons/tick.png);">
-                            </ol>
+                            <ul class="files" style="list-style-image:url(/ilikeplaces/css/blueprint/plugins/buttons/icons/tick.png);">
+                                <li style="visibility:hidden">Ouch! I didn't want to show this to you</li>
+                            </ul>
                         </div>
                         <div class="span-1 last">
                         </div>
                     </div>
                 </div>
                 <div class="span-14" id="Main_center">
-                    <h3>
-                        Welcome
-                    </h3>
-                    <div class="span-7" id="Main_temp1" style="clip:auto;overflow:hidden;">
-                        <a href="#" class="btn blue"><i></i><span id="cool"><span></span><i></i>Cool</span></a>
-                        <br/>
+                    <div class="span-14 last" id="Main_center_main">
+
                     </div>
-                    <div class="span-7 last" id="Main_temp2">
-                        <a href="#" class="btn green"><i></i><span id="hot"><span></span><i></i>Hot</span></a>
-                        <br/>
+                    <div class="span-14 last" id="Main_center_content">
+                        <div class="span-7" id="Main_left_column" style="clip:auto;overflow:hidden;">
+                            <a href="#" class="btn blue"><i></i><span id="cool"><span></span><i></i>Cool</span></a>
+                            <br/>
+                        </div>
+                        <div class="span-7 last" id="Main_right_column">
+                            <a href="#" class="btn green"><i></i><span id="hot"><span></span><i></i>Hot</span></a>
+                            <br/>
+                        </div>
                     </div>
                 </div>
                 <div class="span-5 last" id="Main_sidebar">
