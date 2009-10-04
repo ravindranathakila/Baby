@@ -1,13 +1,3 @@
-/*
- * 
- * Each widget itself knows its functionality.
- * Hence, each widget should register its own event listeners.
- * But there will be several copies of the same widget in the same page.
- * Therefore, the widget ids should be different.
- * Each widget has to have its own class
- *
- *
- */
 package ai.ilikeplaces.widgets;
 
 import ai.ilikeplaces.servlets.Controller;
@@ -24,6 +14,12 @@ import org.w3c.dom.NodeList;
 import static ai.ilikeplaces.servlets.Controller.*;
 
 /**
+ * 
+ * Each widget itself knows its functionality.
+ * Hence, each widget should register its own event listeners.
+ * But there will be several copies of the same widget in the same page.
+ * Therefore, the widget ids should be different.
+ * Each widget has to have its own class
  *
  * @author Ravindranath Akila
  */
