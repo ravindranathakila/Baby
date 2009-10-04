@@ -1,7 +1,6 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.FieldPreamble;
-import ai.ilikeplaces.doc.ClassPreamble;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
