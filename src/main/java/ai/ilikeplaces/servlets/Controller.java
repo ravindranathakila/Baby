@@ -44,7 +44,7 @@ public class Controller extends HttpServletWrapper {
                 return "/ilikeplaces/page/main";
             }
         },
-        main("ai/ilikeplaces/Main.xhtml", "Main_temp1", "Main_temp2", "Main_sidebar","hot","cool") {
+        main("ai/ilikeplaces/Main.xhtml", "Main_center_main", "Main_left_column", "Main_right_column", "Main_sidebar", "hot", "cool") {
 
             @Override
             public String toString() {
@@ -58,7 +58,7 @@ public class Controller extends HttpServletWrapper {
                 return "Photo-Description";
             }
         },
-        PhotoUpload("ai/ilikeplaces/widgets/PhotoUpload.xhtml"){
+        PhotoUpload("ai/ilikeplaces/widgets/PhotoUpload.xhtml") {
 
             @Override
             public String toString() {
@@ -72,7 +72,14 @@ public class Controller extends HttpServletWrapper {
                 return "/ilikeplaces/signup";
             }
         },
-        login("ai/ilikeplaces/security/login.xhtml") {
+        login(null) {
+
+            @Override
+            public String toString() {
+                return "/login";
+            }
+        },
+        oldlogin("ai/ilikeplaces/security/login.xhtml") {
 
             @Override
             public String toString() {
@@ -125,7 +132,7 @@ public class Controller extends HttpServletWrapper {
                 throw new java.lang.RuntimeException("INVALID URL");//This code does not seem to work, please verify.
                 }*/
                 if (itsNatDocument__ == null && request__.getServletRequest().getAttribute("itsnat_doc_name") == null) {
-                    final  HttpServletRequest httpServletRequest = (HttpServletRequest) request__.getServletRequest();
+                    final HttpServletRequest httpServletRequest = (HttpServletRequest) request__.getServletRequest();
                     pathResolver(request__);
                     request__.getItsNatServlet().processRequest(httpServletRequest, response__.getServletResponse());
                 }
@@ -145,7 +152,7 @@ public class Controller extends HttpServletWrapper {
         final PageFace photoUpload = Page.PhotoUpload;
         inhs__.registerItsNatDocFragmentTemplate(photoUpload.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(photoUpload));
 
-        final PageFace login = Page.login;
+        final PageFace login = Page.oldlogin;
 
         inhs__.registerItsNatDocumentTemplate("login", "text/html", pathPrefix__ + PrettyURLMap_.get(login)).addItsNatServletRequestListener(new ListenerLogin());
 
@@ -163,9 +170,9 @@ public class Controller extends HttpServletWrapper {
         if (isCorrectLocationFormat(location__)) {
             request__.getServletRequest().setAttribute("location", location__);
         } else {
-            request__.getServletRequest().setAttribute("location", null);
+            request__.getServletRequest().setAttribute("location", "main");/*Main shall serve as the main page*/
         }
-        request__.getServletRequest().setAttribute("itsnat_doc_name", "main");
+        request__.getServletRequest().setAttribute("itsnat_doc_name", "main");/*Framework specific*/
     }
 
     /**

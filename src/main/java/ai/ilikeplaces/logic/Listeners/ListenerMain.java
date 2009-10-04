@@ -58,7 +58,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 }
 
                 crudServiceLocal = (CrudServiceLocal) context.lookup("CrudServiceLocal");
-                logger.info("LISTNER MAIN CRUD SERVICE:"+crudServiceLocal.hashCode());
+                logger.info("LISTNER MAIN CRUD SERVICE:" + crudServiceLocal.hashCode());
                 if (crudServiceLocal == null) {
                     log.append("\nVARIABLE crudServiceLocal_ IS NULL! ");
                     log.append(crudServiceLocal);
@@ -66,8 +66,8 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                 }
             } catch (NamingException ex) {
-                log.append("\nSORRY! COULD NOT INITIALIZE "+getClass().getName()+" SERVLET DUE TO A NAMING EXCEPTION!");
-                logger.log(Level.SEVERE, "\nSORRY! COULD NOT INITIALIZE "+getClass().getName()+" DUE TO A NAMING EXCEPTION!", ex);
+                log.append("\nSORRY! COULD NOT INITIALIZE " + getClass().getName() + " SERVLET DUE TO A NAMING EXCEPTION!");
+                logger.log(Level.SEVERE, "\nSORRY! COULD NOT INITIALIZE " + getClass().getName() + " DUE TO A NAMING EXCEPTION!", ex);
                 break init;
             }
 
@@ -99,36 +99,40 @@ public class ListenerMain implements ItsNatServletRequestListener {
              */
             @Override
             @SuppressWarnings("unchecked")
-            protected final void init() {
-                itsNatDocument_.addCodeToSend(JsCodeToSend);
-                if (location_ != null) {
-                    final String locationName_ = location_;
-                    final String locationInfo_ = location_ + " is a now registered on www.ilikeplaces.com." + System.currentTimeMillis();
+            protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
+                itsNatDocument.addCodeToSend(JsCodeToSend);
+                final String locationName_ = location;
 
-                    final Location loc_ = new Location();
+                final Location loc_ = new Location();
 
-                    loc_.setLocationName(locationName_);
-                    loc_.setLocationInfo(locationInfo_);
+                loc_.setLocationName(locationName_);
 
-                    final List<Location> existingLocations = crudServiceLocal.findWithNamedQuery(Location.FindAllLocationsByName,
-                            QueryParameter.with("locationName", loc_.getLocationName()).parameters());
+                final List<Location> existingLocations = crudServiceLocal.findWithNamedQuery(Location.FindAllLocationsByName,
+                        QueryParameter.with("locationName", loc_.getLocationName()).parameters());
 
-                    Location existingLocation = existingLocations.size() == 1 ? existingLocations.get(0) : null;
+                final int resultSetSize = existingLocations.size();
 
-                    if (existingLocation == null) {
-                        crudServiceLocal.create(loc_);
-                        getElementById("Main_temp1").appendChild(itsNatDocument_.getDocument().createTextNode("Create an entry for this location"));
+                if (resultSetSize == 1) {
+                    final Location existingLocation_ = existingLocations.get(0);
+                    $("Main_center_main").appendChild(
+                            $(MarkupTag.P).appendChild(
+                            hTMLDocument__.createTextNode(
+                            existingLocation_.getLocationInfo() +
+                            ":" +
+                            existingLocation_.getLocationSuperSet() +
+                            ":" +
+                            existingLocation_.toString(true))));
 
-                    } else {
-                        //Kandy 1252410471093 Sigiriya 1252410457640
-                        //Location result = (Location) manager.createQuery("SELECT location FROM Location location WHERE location.locationName = :locationName").setParameter("locationName", location_).getSingleResult();
-
-                        existingLocation = existingLocations.size() == 1 ? existingLocations.get(0) : null;
-
-                        getElementById("Main_temp1").appendChild(itsNatDocument_.getDocument().createTextNode(existingLocation.getLocationInfo()+":"+existingLocation.getLocationSuperSet()+":"+existingLocation.toString(true)));
-                    }
-
+                } else if (resultSetSize == 0) {
+                    $("Main_center_main").appendChild(($(MarkupTag.P).appendChild(
+                            hTMLDocument__.createTextNode("<a href=\"#\" onClick=\"javascript:alert('clicked');\">Click here to create</a>"))));
+                    //crudServiceLocal.create(loc_);
+                } else if (resultSetSize > 1) {
+                    $("Main_center_main").appendChild(($(MarkupTag.P).appendChild(hTMLDocument__.createTextNode("Many entries!"))));
+                } else {
+                    throw new IllegalStateException("SORRY! I HAVE A LOCALTION RESLULTSET < 0 WHICH IS NOT POSSIBLE!");
                 }
+
             }
 
             /**
@@ -137,24 +141,24 @@ public class ListenerMain implements ItsNatServletRequestListener {
             @Override
             protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
                 /*Abstract implementation*/
-                itsNatHTMLDocument__.addEventListener((EventTarget) getElementById("cool"), Click, new EventListener() {
+                itsNatHTMLDocument__.addEventListener((EventTarget) $("cool"), Click, new EventListener() {
 
                     @Override
                     public void handleEvent(final Event evt_) {
-                        getElementById("Main_sidebar").appendChild(hTMLDocument__.createTextNode(sBLoggedOnUserFace == null ? "NULL" : sBLoggedOnUserFace.getLoggedOnUserId()));
-                        getElementById("Main_sidebar").appendChild(hTMLDocument__.createTextNode("COOL! "));
-                        new Photo$Description(itsNatDocument__, getElementById("Main_temp1")) {
+                        $("Main_sidebar").appendChild(hTMLDocument__.createTextNode(sessionBoundBadReferenceWrapper != null ? sessionBoundBadReferenceWrapper.boundInstance.getLoggedOnUserId():"Logged Out!"));
+                        $("Main_sidebar").appendChild(hTMLDocument__.createTextNode("COOL! "));
+                        new Photo$Description(itsNatDocument__, $("Main_left_column")) {
                         };
                     }
                 }, false);
 
                 /*Abstract implementation*/
-                itsNatHTMLDocument_.addEventListener((EventTarget) getElementById("hot"), Click, new EventListener() {
+                itsNatHTMLDocument__.addEventListener((EventTarget) $("hot"), Click, new EventListener() {
 
                     @Override
                     public void handleEvent(final Event evt_) {
-                        getElementById("Main_sidebar").appendChild(itsNatDocument_.getDocument().createTextNode("HOT! "));
-                        new Photo$Description(itsNatDocument_, getElementById("Main_temp2")) {
+                        $("Main_sidebar").appendChild(hTMLDocument__.createTextNode("HOT! "));
+                        new Photo$Description(itsNatDocument, $("Main_right_column")) {
                         };
                     }
                 }, false);

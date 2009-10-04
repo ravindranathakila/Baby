@@ -1,19 +1,27 @@
 package ai.ilikeplaces;
 
 import ai.ilikeplaces.util.AbstractSFBCallbacks;
-import java.util.logging.Logger;
+import ai.ilikeplaces.doc.*;
 import javax.ejb.Stateful;
 import javax.ejb.Remove;
 import javax.servlet.http.HttpSessionBindingEvent;
+import java.util.Observer;
 
 /**
  *
  * @author Ravindranath Akila
  */
 @Stateful
-public class SBLoggedOnUser extends AbstractSFBCallbacks implements SBLoggedOnUserFace{
+final public class SBLoggedOnUser extends AbstractSFBCallbacks implements SBLoggedOnUserFace, ManageObservers {
 
-    private  String loggedOnUserId;
+    private String loggedOnUserId;
+    @FIXME(issues = {"is marking this transient consistant?",
+        "Will this field make the session variable huge? There could be millions of users!"})
+    final private transient DelegatedObservable delegatedObservable;
+
+    public SBLoggedOnUser() {
+        this.delegatedObservable = new DelegatedObservable();
+    }
 
     /**
      *
@@ -49,7 +57,9 @@ public class SBLoggedOnUser extends AbstractSFBCallbacks implements SBLoggedOnUs
     @Remove
     @Override
     public void remove() {
-        logger.info("REMOVING BEAN");
+        logger.info("HELLO, REMOVING BEAN");
+        this.delegatedObservable.setChanged();
+        delegatedObservable.notifyObservers(true);
     }
 
     /**
@@ -58,7 +68,7 @@ public class SBLoggedOnUser extends AbstractSFBCallbacks implements SBLoggedOnUs
      */
     @Override
     public void valueBound(final HttpSessionBindingEvent event) {
-        logger.info("BINDING BEAN TO SESSION.");
+        logger.info("HELLO, BINDING BEAN TO SESSION.");
     }
 
     /**
@@ -67,7 +77,25 @@ public class SBLoggedOnUser extends AbstractSFBCallbacks implements SBLoggedOnUs
      */
     @Override
     public void valueUnbound(final HttpSessionBindingEvent event) {
-        logger.info("UNBINDING BEAN FROM SESSION AND MAKING AS REMOVE.");
+        logger.info("HELLO! UNBINDING BEAN FROM SESSION AND MARKING AS REMOVE.");
         this.remove();
+    }
+
+    /**
+     *
+     * @param o
+     */
+    @Override
+    public void addObserver(Observer o) {
+        this.delegatedObservable.addObserver(o);
+    }
+
+    /**
+     *
+     * @param o
+     */
+    @Override
+    public void deleteObserver(Observer o) {
+        this.delegatedObservable.deleteObserver(o);
     }
 }

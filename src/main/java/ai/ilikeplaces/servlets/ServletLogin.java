@@ -1,17 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.logic.Listeners.ListenerMain;
 import ai.ilikeplaces.SBLoggedOnUserFace;
+import ai.ilikeplaces.SessionBoundBadReferenceWrapper;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
 import ai.ilikeplaces.security.face.SingletonHashingFace;
 import ai.ilikeplaces.servlets.Controller.Page;
+import ai.ilikeplaces.doc.*;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -30,6 +28,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Ravindranath Akila
  */
+@FIXME(issues={"XSS"})
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class ServletLogin extends HttpServlet {
 
     /**
@@ -136,14 +136,14 @@ final public class ServletLogin extends HttpServlet {
         /**
          * Set a timeout compatible with the stateful session bean handling user
          */
-        userSession_.setMaxInactiveInterval(10);
-        
+        userSession_.setMaxInactiveInterval(600);
+
         final Enumeration enumerated = request__.getParameterNames();
         logger.log(Level.SEVERE, "PARAMETERs");
         while (enumerated.hasMoreElements()) {
             String param = (String) enumerated.nextElement();
             logger.info("PARAMETER NAME:" + param);
-            logger.info("VALUE:"+request__.getParameter(param));
+            logger.info("VALUE:" + request__.getParameter(param));
         }
         doLogin:
         if (userSession_.getAttribute(SBLoggedOnUser) == null) {
@@ -154,15 +154,15 @@ final public class ServletLogin extends HttpServlet {
 
                     Human loggedOnUser = crudServiceLocal_.find(Human.class, request__.getParameter(Username));
                     if (loggedOnUser != null) {/*Ok user name valid but now we check for passworld*/
-                        HumansAuthentication humansAuthentications = crudServiceLocalHuman_.find(HumansAuthentication.class, null);
+                        HumansAuthentication humansAuthentications = crudServiceLocalHuman_.find(HumansAuthentication.class, request__.getParameter(Username));
 
 
-                        if (humansAuthentications.getHumanAuthenticationHash().equals(singletonHashingFace.getHash(request__.getParameter(Password),humansAuthentications.getHumanAuthenticationSalt()))) {
-                            
-                            sBLoggedOnUserFace.setLoggedOnUserId(null);
-                            userSession_.setAttribute(SBLoggedOnUser, sBLoggedOnUserFace);
+                        if (humansAuthentications.getHumanAuthenticationHash().equals(singletonHashingFace.getHash(request__.getParameter(Password), humansAuthentications.getHumanAuthenticationSalt()))) {
+
+                            sBLoggedOnUserFace.setLoggedOnUserId(request__.getParameter(Username));
+                            userSession_.setAttribute(SBLoggedOnUser, (new SessionBoundBadReferenceWrapper<SBLoggedOnUserFace>(sBLoggedOnUserFace, userSession_, true)));
                             final PageFace home = Page.home;
-                            logger.info("GREAT! SIGNON SUCCESSFUL! " + ((SBLoggedOnUserFace) userSession_.getAttribute(SBLoggedOnUser)).getLoggedOnUserId());
+                            logger.info("HELLO, SIGNON SUCCESSFUL! " + ((SessionBoundBadReferenceWrapper<SBLoggedOnUserFace>)userSession_.getAttribute(SBLoggedOnUser)).boundInstance.getLoggedOnUserId());
                             response__.sendRedirect(home.toString());
                             break doLogin;/*This is unnecessary but lets not leave chance for introducing bugs*/
                         } else {/*Ok password wrong. What do we do with this guy? First lets make his session object null*/
@@ -192,7 +192,7 @@ final public class ServletLogin extends HttpServlet {
             }
 
         } else {/*Why did the user come to this page if he was already logged on? Send him back!*/
-            logger.info("SORRY! AN ALREADY LOGGED IN USER COMES TO LOGIN! REDIRECTED! USERNAME:" + ((SBLoggedOnUserFace) userSession_.getAttribute(SBLoggedOnUser)).getLoggedOnUserId());
+            logger.info("SORRY! AN ALREADY LOGGED IN USER COMES TO LOGIN! REDIRECTED! USERNAME:" + ((SessionBoundBadReferenceWrapper<SBLoggedOnUserFace>)userSession_.getAttribute(SBLoggedOnUser)).boundInstance.getLoggedOnUserId());
             final PageFace home = Page.home;
             response__.sendRedirect(home.toString());
         }
