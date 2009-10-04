@@ -87,7 +87,7 @@ public abstract class AbstractWidgetListener {
      * @param key__
      * @return Element
      */
-    protected final Element getElementById(final String key__) {
+    protected final Element $(final String key__) {
         final String elementId__ = Controller.GlobalHTMLIdRegistry.get(key__);
         if (elementId__ == null) {
             throw new java.lang.NullPointerException("ELEMENT \"" + key__ + "\" CONTAINS NULL OR NO REFERENCE IN REGISTRY!");
@@ -107,11 +107,16 @@ public abstract class AbstractWidgetListener {
     }
 
     /**
+     * Wrapper to getWidgetElementById
      *
      * @param key__
      * @return Element
      */
-    protected final Element getWidgetElementById(final String key__) {
+    final protected Element $$(final String key__) {
+        return getWidgetElementById(key__);
+    }
+
+    final private Element getWidgetElementById(final String key__) {
         final String elementId__ = Controller.GlobalHTMLIdRegistry.get(key__);
         if (elementId__ == null) {
             throw new java.lang.NullPointerException("SORRY! ELEMENT \"" + key__ + "\" CONTAINS NULL OR NO REFERENCE IN REGISTRY!");
@@ -123,7 +128,7 @@ public abstract class AbstractWidgetListener {
      *
      * @return HashSet<String> widgetElements
      */
-    protected final Set<String> getWidgetElements() {
+    final protected Set<String> getWidgetElements() {
         return Controller.GlobalPageIdRegistry.get(page);
     }
 
@@ -132,14 +137,14 @@ public abstract class AbstractWidgetListener {
         if (visible) {
             for (String elementId__ : widgetElements) {
                 if (!elementId__.equals(toggleLink)) {
-                    getWidgetElementById(elementId__).setAttribute("style", "display:none");
+                    $$(elementId__).setAttribute("style", "display:none");
                 }
             }
             visible = false;
         } else {
             for (String elementId__ : widgetElements) {
                 if (!elementId__.equals(toggleLink)) {
-                    getWidgetElementById(elementId__).setAttribute("style", "display:block");
+                    $$(elementId__).setAttribute("style", "display:block");
                 }
             }
             visible = true;

@@ -29,13 +29,13 @@ public abstract class Photo$Description extends AbstractWidgetListener {
      */
     @Override
     protected void init() {
-        getWidgetElementById("pd").setAttribute("style", "color:red");
+        $$("pd").setAttribute("style", "color:red");
     }
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
         itsNatHTMLDocument_.addEventListener((EventTarget)
-                getWidgetElementById("close"), "click", new EventListener() {
+                $$("close"), "click", new EventListener() {
 
             @Override
             public void handleEvent(final Event evt_) {
