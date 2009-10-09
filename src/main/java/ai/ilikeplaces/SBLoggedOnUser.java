@@ -6,6 +6,7 @@ import javax.ejb.Stateful;
 import javax.ejb.Remove;
 import javax.servlet.http.HttpSessionBindingEvent;
 import java.util.Observer;
+import javax.annotation.PreDestroy;
 
 /**
  *
@@ -15,7 +16,8 @@ import java.util.Observer;
 final public class SBLoggedOnUser extends AbstractSFBCallbacks implements SBLoggedOnUserFace, ManageObservers {
 
     private String loggedOnUserId;
-    @FIXME(issues = {"is marking this transient consistant?",
+    @FIXME(issue = "transent", 
+    issues = {"is marking this transient consistant?",
         "Will this field make the session variable huge? There could be millions of users!"})
     final private transient DelegatedObservable delegatedObservable;
 
@@ -58,6 +60,10 @@ final public class SBLoggedOnUser extends AbstractSFBCallbacks implements SBLogg
     @Override
     public void remove() {
         logger.info("HELLO, REMOVING BEAN");
+    }
+
+    @PreDestroy
+    public void preDestroy() {
         this.delegatedObservable.setChanged();
         delegatedObservable.notifyObservers(true);
     }

@@ -18,6 +18,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
  */
 @Entity
 public class HumansPublicPhoto implements Serializable {
+
     private static final long serialVersionUID = 1L;
     private String humanId;
     private Human human;
@@ -32,7 +33,7 @@ public class HumansPublicPhoto implements Serializable {
         this.humanId = humanId__;
     }
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     public Human getHuman() {
         return human;
@@ -42,8 +43,8 @@ public class HumansPublicPhoto implements Serializable {
         this.human = human;
     }
 
-    @FIXME(issues={"Fetch type should be lazy, check if callers can do list.size() to refresh list." +
-    "The List of photos can be huge so eager isn't practical"})
+    @FIXME(issue="Fetch type should be lazy, check if callers can do list.size() to refresh list." +
+    "The List of photos can be huge so eager isn't practical")
     @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE)
     public List<PublicPhoto> getPublicPhotos() {
         return publicPhotos;
@@ -52,7 +53,6 @@ public class HumansPublicPhoto implements Serializable {
     public void setPublicPhotos(List<PublicPhoto> publicPhotos) {
         this.publicPhotos = publicPhotos;
     }
-
 //
 //    @Override
 //    public int hashCode() {
@@ -78,5 +78,4 @@ public class HumansPublicPhoto implements Serializable {
 //    public String toString() {
 //        return "ai.ilikeplaces.entities.HumansPublicPhoto[id=" + id + "]";
 //    }
-
 }
