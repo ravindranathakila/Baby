@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -45,8 +46,7 @@ public class HumansPrivatePhoto implements Serializable {
         this.human = human;
     }
 
-
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     public List<PrivatePhoto> getPrivatePhotos() {
         return privatePhotos;
     }

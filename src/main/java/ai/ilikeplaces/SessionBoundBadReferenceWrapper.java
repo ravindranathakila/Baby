@@ -17,12 +17,13 @@ import javax.servlet.http.HttpSession;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@FIXME(issues = "This class can be broken. One for suppressing NoSuchEJBException, one for Notifications and one for httpsessionbinding")
+@FIXME(issue = "This class can be broken in several. One for suppressing NoSuchEJBException, one for Notifications and one for httpsessionbinding.\n" +
+"Kind of in the form of a pipeline. If this is Pipe and notification needy classes are A & B, then Pipe pipelines notifications between A and B.")
 final public class SessionBoundBadReferenceWrapper<T> implements HttpSessionBindingListener, Observer {
 
     final public T boundInstance;
     final private HttpSession bindingInstance;
-    @FIXME(issues = "You will have to verify what happens if a huge amount of session timeouts happen\n" +
+    @FIXME(issue = "You will have to verify what happens if a huge amount of session timeouts happen\n" +
     "This was made static to avoid a huge amount of references. i.e. Reference per user!")
     final static Logger logger = Logger.getLogger(SessionBoundBadReferenceWrapper.class.getName());
     private boolean isAlive = false;
@@ -36,7 +37,8 @@ final public class SessionBoundBadReferenceWrapper<T> implements HttpSessionBind
         }
     }
 
-    @FIXME(issues = {"As the caller did not register as an observer, he has no right to call isalive so we return false anyway. But what happens then?",
+    @FIXME(issue = "isAlive",
+    issues = {"As the caller did not register as an observer, he has no right to call isalive so we return false anyway. But what happens then?",
         "Could an enum be used?"})
     public SessionBoundBadReferenceWrapper(final T theObjectWhichShouldBeBound__, final HttpSession theObjectWhichIsBindedTo__) {
         this.boundInstance = theObjectWhichShouldBeBound__;
@@ -50,13 +52,14 @@ final public class SessionBoundBadReferenceWrapper<T> implements HttpSessionBind
     }
 
     @Override
-    @FIXME(issues = "This class should be a pipeline between the two objects expecting notification. Split split!!!")
+    @FIXME(issue = "This class should be a pipeline between the two objects expecting notification. Split split!!!")
     public void update(Observable o, Object dying) {
         if (dying instanceof Boolean && (Boolean) dying == true) {
             this.isAlive = false;
             try{
                 ((HttpSession) bindingInstance).invalidate();
             } catch (final IllegalStateException e_){
+                logger.info("HELLO, I JUST RECIEVED AN INVALIDATION CALL ON A ALREADY INVALIDATED SESSION. I CAUGHT AND IGNORED EXCEPTION.");
                 //Already invalidated. So lets ignore this.
             }
         } else {
