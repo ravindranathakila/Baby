@@ -28,7 +28,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Ravindranath Akila
  */
-@FIXME(issues={"XSS"})
+@FIXME(issue="XSS")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class ServletLogin extends HttpServlet {
 

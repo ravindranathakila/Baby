@@ -32,7 +32,7 @@ import javax.naming.NamingException;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@FIXME(issues={"XSS"})
+@FIXME(issue = "XSS")
 final public class ServletSignup extends HttpServlet {
 
     final Logger logger = Logger.getLogger(ServletSignup.class.getName());
@@ -248,20 +248,9 @@ final public class ServletSignup extends HttpServlet {
 
             crudServiceLocal_.create(newUser);
 
-//            try {
-//                final SBLoggedOnUserFace sBLoggedOnUserFace = (SBLoggedOnUserFace) context.lookup("SBLoggedOnUserLocal");
-//                final Human loggedOnUser = crudServiceLocal_.find(Human.class, username);
-//                sBLoggedOnUserFace.setLoggedOnUserId(loggedOnUser.getHumanId());
-//                userSession_.setAttribute(ServletLogin.SBLoggedOnUser, sBLoggedOnUserFace);
-                final Page login = Page.login;
-                request__.getRequestDispatcher(login.toString()).forward(request__, response__);
-                break processSignup;
-//            } catch (NamingException ex) {
-//                logger.log(Level.SEVERE, "SORRY! COULD NOT ADD STATEFUL SESSION BEAN TO THE SESSION!", ex);
-//                final Page login = Page.oldlogin;
-//                response__.sendRedirect(login.toString());
-//                break processSignup;
-//            }
+            final Page login = Page.login;
+            request__.getRequestDispatcher(login.toString()).forward(request__, response__);
+            break processSignup;
         }
     }
 

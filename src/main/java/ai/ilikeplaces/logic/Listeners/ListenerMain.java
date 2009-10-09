@@ -1,9 +1,11 @@
 package ai.ilikeplaces.logic.Listeners;
 
+import ai.ilikeplaces.entities.Location;
+import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.jpa.QueryParameter;
-import ai.ilikeplaces.*;
-import ai.ilikeplaces.logic.Listeners.AbstractListener;
+import ai.ilikeplaces.widgets.Photo$Description;
+import ai.ilikeplaces.widgets.AbstractWidgetListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -13,9 +15,9 @@ import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
-import ai.ilikeplaces.widgets.*;
-import ai.ilikeplaces.entities.*;
+import org.w3c.dom.Element;
 import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import javax.naming.Context;
@@ -30,10 +32,11 @@ import org.w3c.dom.html.HTMLDocument;
  */
 public class ListenerMain implements ItsNatServletRequestListener {
 
-    /**
-     *
-     */
-    final protected static String JsCodeToSend = "document.monitor = new EventMonitor(); \n" + "document.getItsNatDoc().addEventMonitor(document.monitor); \n";
+    final static protected String LocationId = "locationId";
+    final protected static String JsCodeToSend = "document.monitor = new EventMonitor(); \n" +
+            "document.getItsNatDoc().addEventMonitor(document.monitor); \n" +
+            "/*Function for gettling LocationId from hidden variable*/\n" +
+            "function getLocationId(){return document.getElementById('" + LocationId + "').value;}\n";
     final private Properties p_ = new Properties();
     private Context context = null;
     private CrudServiceLocal<Location> crudServiceLocal = null;
@@ -57,7 +60,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     break init;
                 }
 
-                crudServiceLocal = (CrudServiceLocal) context.lookup("CrudServiceLocal");
+                crudServiceLocal = (CrudServiceLocal<Location>) context.lookup("CrudServiceLocal");
                 logger.info("LISTNER MAIN CRUD SERVICE:" + crudServiceLocal.hashCode());
                 if (crudServiceLocal == null) {
                     log.append("\nVARIABLE crudServiceLocal_ IS NULL! ");
@@ -101,6 +104,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
             @SuppressWarnings("unchecked")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
                 itsNatDocument.addCodeToSend(JsCodeToSend);
+
                 final String locationName_ = location;
 
                 final Location loc_ = new Location();
@@ -114,6 +118,16 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                 if (resultSetSize == 1) {
                     final Location existingLocation_ = existingLocations.get(0);
+
+                    setLocationIdForJSReference:
+                    {
+                        final Element hiddenLocationIdInputTag = $(MarkupTag.INPUT);
+                        hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.type(), MarkupTag.INPUT.typeValueHidden());
+                        hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.id(), LocationId);
+                        hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.value(), existingLocation_.getLocationId().toString());
+                        hTMLDocument__.getBody().appendChild(hiddenLocationIdInputTag);
+                    }
+
                     $("Main_center_main").appendChild(
                             $(MarkupTag.P).appendChild(
                             hTMLDocument__.createTextNode(
@@ -122,6 +136,32 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             existingLocation_.getLocationSuperSet() +
                             ":" +
                             existingLocation_.toString(true))));
+                    List<PublicPhoto> listPublicPhoto = existingLocation_.getPublicPhotos();
+                    logger.info("Hello, number of photos:" + String.valueOf(listPublicPhoto.size()));
+
+                    int i = 0;
+                    for (final Iterator<PublicPhoto> it = listPublicPhoto.iterator(); it.hasNext(); i++) {
+                        final PublicPhoto publicPhoto = it.next();
+                        if (i % 2 == 0) {
+                            new Photo$Description(itsNatDocument__, $("Main_left_column")) {
+
+                                @Override
+                                protected void init() {
+                                    $$("pd_photo_permalink").setAttribute("href", publicPhoto.getPublicPhotoURLPath() + "|" + "PHOTO TITLE");
+                                    $$("pd_photo").setAttribute("src", publicPhoto.getPublicPhotoURLPath());
+                                }
+                            };
+                        } else {
+                            new Photo$Description(itsNatDocument__, $("Main_right_column")) {
+
+                                @Override
+                                protected void init() {
+                                    $$("pd_photo_permalink").setAttribute("href", publicPhoto.getPublicPhotoURLPath() + "|" + "PHOTO TITLE");
+                                    $$("pd_photo").setAttribute("src", publicPhoto.getPublicPhotoURLPath());
+                                }
+                            };
+                        }
+                    }
 
                 } else if (resultSetSize == 0) {
                     $("Main_center_main").appendChild(($(MarkupTag.P).appendChild(
@@ -145,7 +185,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                     @Override
                     public void handleEvent(final Event evt_) {
-                        $("Main_sidebar").appendChild(hTMLDocument__.createTextNode(sessionBoundBadReferenceWrapper != null ? sessionBoundBadReferenceWrapper.boundInstance.getLoggedOnUserId():"Logged Out!"));
+                        $("Main_sidebar").appendChild(hTMLDocument__.createTextNode(sessionBoundBadReferenceWrapper != null ? sessionBoundBadReferenceWrapper.boundInstance.getLoggedOnUserId() : "Logged Out!"));
                         $("Main_sidebar").appendChild(hTMLDocument__.createTextNode("COOL! "));
                         new Photo$Description(itsNatDocument__, $("Main_left_column")) {
                         };
