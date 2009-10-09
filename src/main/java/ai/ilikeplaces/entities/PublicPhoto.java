@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +35,8 @@ public class PublicPhoto implements Serializable {
     "Also make sure this supports good SEO.")
     private String publicPhotoURLPath;
 
+    private String publicPhotoDescription;
+
     @FieldPreamble(description = "Required to calculate ranking")
     private Date publicPhotoUploadDate;
 
@@ -48,7 +51,7 @@ public class PublicPhoto implements Serializable {
 
     @FieldPreamble(description = "Required when rebuilding a database from scratch someday." +
     "Since the whole concept of ilikeplaces relies on content richness, preserving this in this table important.")
-    private Location publicPhotoOfLocation;
+    private Location location;
 
     @FieldPreamble(description = "Who uploaded this image? Wil he request to delete it? " +
     "Privacy important? " +
@@ -73,6 +76,14 @@ public class PublicPhoto implements Serializable {
         this.publicPhotoFilePath = publicPhotoFilePath;
     }
 
+    public String getPublicPhotoDescription() {
+        return publicPhotoDescription;
+    }
+
+    public void setPublicPhotoDescription(final String publicPhotoDescription) {
+        this.publicPhotoDescription = publicPhotoDescription;
+    }
+
     @ManyToOne
     public HumansPublicPhoto getHumansPublicPhoto() {
         return humansPublicPhoto;
@@ -82,13 +93,13 @@ public class PublicPhoto implements Serializable {
         this.humansPublicPhoto = humansPublicPhoto;
     }
 
-    @ManyToOne
-    public Location getPublicPhotoOfLocation() {
-        return publicPhotoOfLocation;
+    @ManyToOne(cascade=CascadeType.ALL)
+    public Location getLocation() {
+        return location;
     }
 
-    public void setPublicPhotoOfLocation(Location publicPhotoOfLocation) {
-        this.publicPhotoOfLocation = publicPhotoOfLocation;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Long getPublicPhotoRankTurns() {
@@ -116,7 +127,6 @@ public class PublicPhoto implements Serializable {
         this.publicPhotoTakenDate = publicPhotoTakenDate;
     }
     
-    @Temporal(javax.persistence.TemporalType.DATE)
     public String getPublicPhotoURLPath() {
         return publicPhotoURLPath;
     }
