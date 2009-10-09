@@ -1,14 +1,13 @@
 package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.ListenerLogin;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.logic.Listeners.ListenerMain;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletConfig;
 import org.itsnat.core.ItsNatServletRequest;
@@ -27,66 +26,85 @@ import org.itsnat.core.UseGZip;
  */
 public class Controller extends HttpServletWrapper {
 
-    private final static Map<Page, String> PrettyURLMap_ = new IdentityHashMap<Page, String>();//Please read javadoc before making any changes to this implementation
+    private final static Map<PageFace, String> PrettyURLMap_ = new IdentityHashMap<PageFace, String>();//Please read javadoc before making any changes to this implementation
 
     public Controller() {
     }
 
-    /**
-     * Initializer for pages with their ids and paths
-     */
+    @WARNING(warning = "Initializer for pages with their ids and paths.\n" +
+    "Note that the pages with ID's shall be initialized only once as they will " +
+    "be used within this class only. The rest shall write the the list")
     public enum Page implements PageFace {
 
-        home(null) {
+        home(
+        null) {
 
             @Override
             public String toString() {
                 return "/ilikeplaces/page/main";
             }
         },
-        main("ai/ilikeplaces/Main.xhtml", "Main_center_main", "Main_left_column", "Main_right_column", "Main_sidebar", "hot", "cool") {
+        main(
+        "ai/ilikeplaces/Main.xhtml",
+        "Main_center_main",
+        "Main_left_column",
+        "Main_right_column",
+        "Main_sidebar",
+        "hot",
+        "cool") {
 
             @Override
             public String toString() {
                 return "main";
             }
         },
-        Photo$Description("ai/ilikeplaces/fragments/Photo-Description.xhtml", "pd", "close") {
+        Photo$Description(
+        "ai/ilikeplaces/fragments/Photo-Description.xhtml",
+        "pd",
+        "close",
+        "pd_photo_permalink",
+        "pd_photo",
+        "pd_photo_description") {
 
             @Override
             public String toString() {
                 return "Photo-Description";
             }
         },
-        PhotoUpload("ai/ilikeplaces/widgets/PhotoUpload.xhtml") {
+        PhotoUpload(
+        "ai/ilikeplaces/widgets/PhotoUpload.xhtml") {
 
             @Override
             public String toString() {
                 return "PhotoUpload";
             }
         },
-        signup(null) {
+        signup(
+        null) {
 
             @Override
             public String toString() {
                 return "/ilikeplaces/signup";
             }
         },
-        login(null) {
+        login(
+        null) {
 
             @Override
             public String toString() {
                 return "/login";
             }
         },
-        oldlogin("ai/ilikeplaces/security/login.xhtml") {
+        oldlogin(
+        "ai/ilikeplaces/security/login.xhtml") {
 
             @Override
             public String toString() {
                 return "login";
             }
         },
-        include("ai/ilikeplaces/security/include.xhtml") {
+        include(
+        "ai/ilikeplaces/security/include.xhtml") {
 
             @Override
             public String toString() {

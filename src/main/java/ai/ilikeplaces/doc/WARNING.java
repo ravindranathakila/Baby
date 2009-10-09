@@ -11,9 +11,9 @@ import java.lang.annotation.RetentionPolicy;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Documented
 @Retention(RetentionPolicy.SOURCE)
-public @interface FIXME {
+public @interface WARNING {
 
-    String issue();
+    String warning();
 
-    String[] issues() default {};
+    String[] warnings() default {};
 }

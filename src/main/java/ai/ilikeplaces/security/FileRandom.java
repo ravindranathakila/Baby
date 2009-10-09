@@ -13,7 +13,7 @@ final public class FileRandom {
     final static private Random r = new Random(System.currentTimeMillis());
     final static private WeakHashMap<Long, Long> whm = new WeakHashMap<Long, Long>();
 
-    @FIXME(issues = {"Returns odd names java.utile.random kind of names. Is it due to weak hashmap?"})
+    @FIXME(issue = "Returns odd names java.utile.random kind of names. Is it due to weak hashmap?")
     final static public String getName() {
         return genRandom(System.currentTimeMillis());
     }

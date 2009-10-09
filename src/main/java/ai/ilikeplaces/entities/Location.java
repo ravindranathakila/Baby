@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -112,7 +113,7 @@ public class Location implements Serializable {
         this.locationSuperSet = locationSuperSet__;
     }
 
-    @OneToMany
+    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
     public List<PublicPhoto> getPublicPhotos() {
         return publicPhotos;
     }
