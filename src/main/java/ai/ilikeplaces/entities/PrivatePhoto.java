@@ -1,12 +1,12 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.FieldPreamble;
-import ai.ilikeplaces.doc.ClassPreamble;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,42 +24,45 @@ public class PrivatePhoto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Long privatePhotoId;
-
     @FieldPreamble(description = "Put in folders?" +
     "Folders might be renamed due to change in location names if you use location names in folders." +
     "Well having the location name in the file name is important for SEO. e.g. paris.jpg" +
     "Would an approach like {random_number}_location.jpg work?" +
     "Would an approach like {sequence_number}_location.jpg work?()")
     private String privatePhotoFilePath;
-
     @FieldPreamble(description = "The path should be very random as it will be exposed to the www." +
     "Also make sure this supports good SEO.")
     private String privatePhotoURLPath;
-
+    private String privatePhotoDescription;
     @FieldPreamble(description = "Required to calculate ranking")
     private Date privatePhotoUploadDate;
-
     @FieldPreamble(description = "Required to calculate rank position")
     private Date privatePhotoTakenDate;
-
     @FieldPreamble(description = "Required when rebuilding a database from scratch someday." +
     "Since the whole concept of ilikeplaces relies on content richness, preserving this in this table important.")
     private Location privatePhotoOfLocation;
-
     @FieldPreamble(description = "Who uploaded this image? Wil he request to delete it? " +
     "Privacy important? " +
     "Lets preserve the info.")
-
     private HumansPrivatePhoto humansPrivatePhoto;
+    private Location location;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getPrivatePhotoId() {
         return privatePhotoId;
     }
 
     public void setPrivatePhotoId(Long privatePhotoId) {
         this.privatePhotoId = privatePhotoId;
+    }
+
+    public String getPrivatePhotoDescription() {
+        return privatePhotoDescription;
+    }
+
+    public void setPrivatePhotoDescription(final String privatePhotoDescription) {
+        this.privatePhotoDescription = privatePhotoDescription;
     }
 
     @OneToOne
@@ -73,6 +76,15 @@ public class PrivatePhoto implements Serializable {
 
     public String getPrivatePhotoFilePath() {
         return privatePhotoFilePath;
+    }
+
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public void setPrivatePhotoFilePath(String privatePhotoFilePath) {
