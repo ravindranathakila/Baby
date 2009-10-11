@@ -21,9 +21,36 @@ Spider man
 Free access mail bomb or follower challenge
 User points on places - spider man
 
+00. Stepping
+...---^^^^^^
+
+00.05. Image Links module
+00.10. Inbox Outbox
+00.20. Image Manipulation - Delete/ Toggle Private-Public
+00.30. Campaign Creation
+00.40. Signup for upgraded to facilitate Find Friends
+00.50. Find friends page
+
 
 10. Friends
 ===========
+
+10.00. Identity
+
+        GOTO 10.30
+
+        Profile Photo
+
+10.05. Find Friends(CRITICAL)
+
+            Name
+            Age || Age Range
+            Location || Super Location
+            OP School && || OP University
+
+            This means, when subscribing, you also take Location. This is a good
+            way to populate the database! Initially, it is best to go by
+            existing locations (Country will be there anyway).
 
 10.10. Friend Communication - Inbox Outbox
 
@@ -39,6 +66,12 @@ User points on places - spider man
             Travel Log. GOTO:20.10.
             Places I've Gone. GOTO:20.20.
 
+10.30.20 What other methods facilitate Vividness?
+
+            Photos - But based on facebook, it is nothing much.
+
+            Showoff - Can facilitate a list of things done by user at locations
+
 
 
 20. Travel
@@ -47,3 +80,58 @@ User points on places - spider man
 20.10. Travel Log
 
 20.20. Places I've Gone
+
+20.20.10 Select items from Travel Log
+
+
+30. Photos
+=========
+
+30.10 Photo Likes. A photo item has like count only. A user has the items he
+            voted preventing him from revoting.
+
+
+40. SEO
+=======
+
+40.10. Static Pages
+
+40.20. SEO Word Parser
+
+
+50. SEEK
+========
+
+50.10. Features hidden and exposed after adding business value.
+            e.g. Uploading 100 Photos
+
+50.10.10 Vicinity search
+
+50.10. Stupid hackers box
+            e.g. Let a stupid hacker misuse a feature. Use him to add value.
+
+60. Publicity
+=============
+
+60.10. Reach out to bloggers. Get the junior bloggers.
+
+60.20. Ultra Rich Video demo. "i like places. do you?"
+
+60.30. Start a podcast. A big driver in the early days of Digg.
+            Influencers will listen and they are the heart of your ecosystem.
+
+60.40. ilikeplaces(by) organized events. Use most popular locations.
+
+60.50
+
+
+
+100.00. Money
+=============
+100.10. $ Ad uploads
+
+100.20. Static Pages
+
+ABBREVATIONS
+
+OP OPTIONAL
