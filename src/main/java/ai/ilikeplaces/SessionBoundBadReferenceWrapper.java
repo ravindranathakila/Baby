@@ -2,8 +2,8 @@ package ai.ilikeplaces;
 
 import ai.ilikeplaces.doc.*;
 import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpSessionBindingEvent;
 import java.lang.reflect.Method;
 import java.util.Observable;
@@ -25,7 +25,7 @@ final public class SessionBoundBadReferenceWrapper<T> implements HttpSessionBind
     final private HttpSession bindingInstance;
     @FIXME(issue = "You will have to verify what happens if a huge amount of session timeouts happen\n" +
     "This was made static to avoid a huge amount of references. i.e. Reference per user!")
-    final static Logger logger = Logger.getLogger(SessionBoundBadReferenceWrapper.class.getName());
+    final static Logger logger = LoggerFactory.getLogger(SessionBoundBadReferenceWrapper.class.getName());
     private boolean isAlive = false;
 
     public SessionBoundBadReferenceWrapper(final T theObjectWhichShouldBeBound__, final HttpSession theObjectWhichIsBindedTo__, final boolean implementsObservable) {
@@ -74,16 +74,16 @@ final public class SessionBoundBadReferenceWrapper<T> implements HttpSessionBind
             try {
                 m.invoke(boundInstance, this);
             } catch (final IllegalAccessException ex) {
-                logger.log(Level.SEVERE, null, ex);
+                logger.info( null, ex);
             } catch (final IllegalArgumentException ex) {
-                logger.log(Level.SEVERE, null, ex);
+                logger.info( null, ex);
             } catch (final InvocationTargetException ex) {
-                logger.log(Level.SEVERE, null, ex);
+                logger.info( null, ex);
             }
         } catch (final NoSuchMethodException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            logger.info( null, ex);
         } catch (final SecurityException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            logger.info( null, ex);
         }
     }
 
@@ -95,20 +95,20 @@ final public class SessionBoundBadReferenceWrapper<T> implements HttpSessionBind
             try {
                 m.invoke(boundInstance, event);
             } catch (final IllegalAccessException ex) {
-                logger.log(Level.SEVERE, null, ex);
+                logger.info( null, ex);
             } catch (final IllegalArgumentException ex) {
-                logger.log(Level.SEVERE, null, ex);
+                logger.info( null, ex);
             } catch (final InvocationTargetException ex) {
-                logger.log(Level.SEVERE, null, ex);
+                logger.info( null, ex);
             } catch (final NoSuchEJBException ex__) {
                 /*This is the whole purpose of this wrapper. i.e. Ignore this exception*/
                 /*If you have more specific exceptions which need logging, add them here*/
                 logger.info("HELLO! NO SUCH EJB EXCEPTION JUST OCCURED DUE TO A INVALIDATION OF REMOVED EJB.");
             }
         } catch (final NoSuchMethodException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            logger.info( null, ex);
         } catch (final SecurityException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            logger.info( null, ex);
         }
     }
 
@@ -120,20 +120,20 @@ final public class SessionBoundBadReferenceWrapper<T> implements HttpSessionBind
             try {
                 m.invoke(boundInstance, event);
             } catch (final IllegalAccessException ex) {
-                logger.log(Level.SEVERE, null, ex);
+                logger.info( null, ex);
             } catch (final IllegalArgumentException ex) {
-                logger.log(Level.SEVERE, null, ex);
+                logger.info( null, ex);
             } catch (final InvocationTargetException ex) {
-                logger.log(Level.SEVERE, null, ex);
+                logger.info( null, ex);
             } catch (final NoSuchEJBException ex__) {
                 /*This is the whole purpose of this wrapper. i.e. Ignore this exception*/
                 /*If you have more specific exceptions which need logging, add them here*/
                 logger.info("HELLO! NO SUCH EJB EXCEPTION JUST OCCURED DUE TO A INVALIDATION OF REMOVED EJB.");
             }
         } catch (final NoSuchMethodException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            logger.info( null, ex);
         } catch (final SecurityException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            logger.info( null, ex);
         }
     }
 }

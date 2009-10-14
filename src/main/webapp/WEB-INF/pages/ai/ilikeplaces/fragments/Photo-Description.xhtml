@@ -2,12 +2,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html  xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
-        <!-- Framework CSS -->
-        <link rel="stylesheet" href="/ilikeplaces/css/blueprint/screen.css" type="text/css" media="screen, projection"/>
-        <link rel="stylesheet" href="/ilikeplaces/css/blueprint/print.css" type="text/css" media="print"/>
-        <!--[if lt IE 8]><link rel="stylesheet" href="../../blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
-
         <title>Photo-Description</title>
     </head>
     <body>
@@ -17,11 +11,10 @@
         <div id="close"class="span-1 last">
             <a href="#" class="btn yellow" style="font-size:8px;"><i></i><span><span></span><i></i>&nbsp;X&nbsp;</span></a>
         </div>
-        <div class="span-7 last" id="pd" style="height:10px;">
-                Wow this is a beautiful image!<br/>
-                More content!<br/>
-                More content!<br/>
-                More content!<br/>
+        <div class="span-7 last" id="pd" onmouseover="javascript:$('a[rel=shareit], #shareit-box').mouseenter(shareEnter);">
+            <img id="pd_photo" src="#" width="96px" alt="Mail" title="Mail" />
+            <span id="pd_photo_description"></span><br/>
+            <a href="#" rel="shareit" id="pd_photo_permalink" style="float:right;"class="btn yelow" onclick="javascript:return false;"><i></i><span><span></span><i></i>Share it!</span></a><br/>
         </div>
         <hr/>
     </body>

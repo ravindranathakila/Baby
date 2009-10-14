@@ -1,11 +1,20 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import java.util.logging.Logger;
+import ai.ilikeplaces.doc.FIXME;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
+ * 
+ * We cannot except all tags to implement all abstract methods and throw
+ * unsupportedness so we throw it by default. Overriding is the tags
+ * responsibility.
  *
  * @author Ravindranath Akila
  */
+@FIXME(issue = "Each tag can be exposed through an interface to ensure type " +
+"safety and also, proper method calls. Current approach is simpler to use. " +
+"Using an interface based approach is easy to make changes to")
 public enum MarkupTag implements MarkupTagFace {
 
     P() {
@@ -57,39 +66,30 @@ public enum MarkupTag implements MarkupTagFace {
             return "hidden";
         }
     };
-    final static  Logger logger = Logger.getLogger(MarkupTag.class.getName());
+    final static Logger logger = LoggerFactory.getLogger(MarkupTag.class.getName());
+    final static String ExceptionMsg = "OOPS! I RECIEVE CALL ON NON OVERRIDDEN ATTRIBUTE. YOU SHOULD EXPECT NPE SOON.";
 
     public String id() {
-        warnNonOverriddenAttributeCall();
-        return null;
+        throw new UnsupportedOperationException(ExceptionMsg);
     }
 
     public String value() {
-        warnNonOverriddenAttributeCall();
-        return null;
+        throw new UnsupportedOperationException(ExceptionMsg);
     }
 
     public String type() {
-        warnNonOverriddenAttributeCall();
-        return null;
+        throw new UnsupportedOperationException(ExceptionMsg);
     }
 
     public String typeValueText() {
-        warnNonOverriddenAttributeCall();
-        return null;
+        throw new UnsupportedOperationException(ExceptionMsg);
     }
 
     public String typeValueSelect() {
-        warnNonOverriddenAttributeCall();
-        return null;
+        throw new UnsupportedOperationException(ExceptionMsg);
     }
 
     public String typeValueHidden() {
-        warnNonOverriddenAttributeCall();
-        return null;
-    }
-
-    final static private void warnNonOverriddenAttributeCall() {
-        logger.severe("OOPS! I RECIEVE CALL ON NON OVERRIDDEN ATTRIBUTE. YOU SHOULD EXPECT NPE SOON.");
+        throw new UnsupportedOperationException(ExceptionMsg);
     }
 }

@@ -1,8 +1,9 @@
 package ai.ilikeplaces.util;
 
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import org.slf4j.Logger;
 
 /**
  *
@@ -13,7 +14,7 @@ public class AbstractSBCallbacks {
     /**
      *
      */
-    final protected Logger logger = Logger.getLogger(this.getClass().getName());
+    final protected Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     /**
      *
      */

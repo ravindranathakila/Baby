@@ -118,8 +118,7 @@
                         var photoDescription;
                         while(true){
                             photoDescription = prompt("What is this photo all about?!");
-                            if(photoDescription != null || photoDescription.length != 0){
-                                alert(photoDescription);
+                            if(photoDescription != null){
                                 break;
                             }
                         }
@@ -203,7 +202,7 @@
         </script>
     </head>
     <body>
-        <div id="shareit-box" style="background:transparent;">
+        <div id="shareit-box" style="background:transparent;z-index:2;">
             <div id="shareit-header"></div>
             <div id="shareit-body">
                 <div id="shareit-blank"></div>
@@ -220,7 +219,7 @@
                 </div>
             </div>
         </div>
-        <div class="container showgrid" itsnat:nocache="true" >
+        <div class="container" itsnat:nocache="true" >
             <script type="text/javascript">
                 function EventMonitor()
                 {
@@ -255,7 +254,7 @@
                     }
                 }
             </script>
-            <div class="notice span-24 last">
+            <div class="span-24 last">
                 <div class="span-8">
                     Hey... you who likes places! <br/>
                 </div>
@@ -277,17 +276,18 @@
             </div>
             <br/>
             <br/>
-            <div class="notice span-24 last">
-                <div id="monitorId" class="top notice" style="position:relative;display:none;float:right;width:120px;height:20px;">
+            <div class="span-24 last">
+                <div id="monitorId" class="top" style="position:relative;display:none;float:right;width:120px;height:20px;">
                     Please wait... <img src="/ilikeplaces/images/circle.gif"  width="23" height="17" alt="Busy"/>
                 </div>
                 <div class="span-5" id="Main_othersidebar">
                     <h3>
-                        Home
+                        <a href="/ilikeplaces/page/main">Home</a>
+                        <a href="/ilikeplaces/page/_me">My Home</a>
                     </h3>
                     <hr/>
                     <div id="Main_file_list" class="example span-4 last">
-                        <div class="notice wrapper span-4">
+                        <div class="wrapper span-4">
                             <div id="button1" class="button span-4 last">Upload Images</div>
                         </div>
                         <div class="span-1 last">

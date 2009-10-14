@@ -6,8 +6,8 @@ import ai.ilikeplaces.SBLoggedOnUserFace;
 import ai.ilikeplaces.doc.*;
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +35,7 @@ import javax.naming.NamingException;
 @FIXME(issue = "XSS")
 final public class ServletSignup extends HttpServlet {
 
-    final Logger logger = Logger.getLogger(ServletSignup.class.getName());
+    final Logger logger = LoggerFactory.getLogger(ServletSignup.class.getName());
 
     /*Session related static id references*/
     final static private String Username = "Username";
@@ -103,7 +103,7 @@ final public class ServletSignup extends HttpServlet {
                 }
             } catch (NamingException ex) {
                 log.append("\nCOULD NOT INITIALIZE SIGNUP SERVLET DUE TO A NAMING EXCEPTION!");
-                logger.log(Level.SEVERE, "\nCOULD NOT INITIALIZE SIGNUP SERVLET DUE TO A NAMING EXCEPTION!", ex);
+                logger.info( "\nCOULD NOT INITIALIZE SIGNUP SERVLET DUE TO A NAMING EXCEPTION!", ex);
                 break init;
             }
 
@@ -133,7 +133,7 @@ final public class ServletSignup extends HttpServlet {
         response__.setContentType("text/html;charset=UTF-8");
 
         final Enumeration enumerated = request__.getParameterNames();
-        logger.log(Level.SEVERE, "PARAMETERs");
+        logger.info( "PARAMETERs");
         while (enumerated.hasMoreElements()) {
             String param = (String) enumerated.nextElement();
             logger.info("PARAMETER NAME:" + param);
@@ -225,28 +225,32 @@ final public class ServletSignup extends HttpServlet {
                 break processSignup;
             }
 
-            final Human newUser = new Human();
-            newUser.setHumanId(username);
-            final HumansAuthentication ha = new HumansAuthentication();
-            ha.setHumanId(newUser.getHumanId());
-            ha.setHumanAuthenticationSalt(BCrypt.gensalt());
-            ha.setHumanAuthenticationHash(singletonHashingFace.getHash(password, ha.getHumanAuthenticationSalt()));
-            newUser.setHumansAuthentications(ha);
-            newUser.setHumanAlive(true);
+            devLoop_1:
+            for (int i = 0; i < 10; i++) {
+                final Human newUser = new Human();
+                devLoop_1_1:
+                newUser.setHumanId(username+i);
+                final HumansAuthentication ha = new HumansAuthentication();
+                ha.setHumanId(newUser.getHumanId());
+                ha.setHumanAuthenticationSalt(BCrypt.gensalt());
+                ha.setHumanAuthenticationHash(singletonHashingFace.getHash(password, ha.getHumanAuthenticationSalt()));
+                newUser.setHumansAuthentications(ha);
+                newUser.setHumanAlive(true);
 
-            final HumansIdentity hid = new HumansIdentity();
-            hid.setHumanId(newUser.getHumanId());
-            newUser.setHumansIdentity(hid);
+                final HumansIdentity hid = new HumansIdentity();
+                hid.setHumanId(newUser.getHumanId());
+                newUser.setHumansIdentity(hid);
 
-            final HumansPrivatePhoto hprp = new HumansPrivatePhoto();
-            hprp.setHumanId(newUser.getHumanId());
-            newUser.setHumansPrivatePhoto(hprp);
+                final HumansPrivatePhoto hprp = new HumansPrivatePhoto();
+                hprp.setHumanId(newUser.getHumanId());
+                newUser.setHumansPrivatePhoto(hprp);
 
-            final HumansPublicPhoto hpup = new HumansPublicPhoto();
-            hpup.setHumanId(newUser.getHumanId());
-            newUser.setHumansPublicPhoto(hpup);
+                final HumansPublicPhoto hpup = new HumansPublicPhoto();
+                hpup.setHumanId(newUser.getHumanId());
+                newUser.setHumansPublicPhoto(hpup);
 
-            crudServiceLocal_.create(newUser);
+                crudServiceLocal_.create(newUser);
+            }
 
             final Page login = Page.login;
             request__.getRequestDispatcher(login.toString()).forward(request__, response__);

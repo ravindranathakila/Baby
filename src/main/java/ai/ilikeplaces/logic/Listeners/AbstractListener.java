@@ -58,6 +58,7 @@ public abstract class AbstractListener {
      *
      * @param request_
      */
+    @SuppressWarnings("unchecked")
     public AbstractListener(final ItsNatServletRequest request_) {
         boolean initializeFailed = true;
         final StringBuilder log = new StringBuilder();

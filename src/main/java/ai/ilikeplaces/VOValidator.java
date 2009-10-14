@@ -3,8 +3,8 @@ package ai.ilikeplaces;
 import ai.ilikeplaces.doc.ClassPreamble;
 import ai.ilikeplaces.doc.MethodPreamble;
 import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 
@@ -44,16 +44,16 @@ public abstract class VOValidator {
             try {
                 this.getClass().getMethod(invocationContext.getMethod().getName(), new Class[]{InvocationContext.class, Object[].class}).invoke(this, new Object[]{invocationContext, invocationContext.getParameters()});
             } catch (final IllegalAccessException ex) {
-                Logger.getLogger(VOValidator.class.getName()).log(Level.SEVERE, "ERROR IN VALIDATING BEAN FOR METHOD:"+invocationContext.getMethod().toGenericString(), ex);
+                LoggerFactory.getLogger(VOValidator.class.getName()).error( "ERROR IN VALIDATING BEAN FOR METHOD:"+invocationContext.getMethod().toGenericString(), ex);
             } catch (final IllegalArgumentException ex) {
-                Logger.getLogger(VOValidator.class.getName()).log(Level.SEVERE, "ERROR IN VALIDATING BEAN FOR METHOD:"+invocationContext.getMethod().toGenericString(), ex);
+                LoggerFactory.getLogger(VOValidator.class.getName()).error( "ERROR IN VALIDATING BEAN FOR METHOD:"+invocationContext.getMethod().toGenericString(), ex);
             } catch (final InvocationTargetException ex) {
-                Logger.getLogger(VOValidator.class.getName()).log(Level.SEVERE, "ERROR IN VALIDATING BEAN FOR METHOD:"+invocationContext.getMethod().toGenericString(), ex);
+                LoggerFactory.getLogger(VOValidator.class.getName()).error( "ERROR IN VALIDATING BEAN FOR METHOD:"+invocationContext.getMethod().toGenericString(), ex);
             }
         } catch (final NoSuchMethodException ex) {
-            Logger.getLogger(VOValidator.class.getName()).log(Level.SEVERE, "ERROR IN VALIDATING BEAN FOR METHOD:"+invocationContext.getMethod().toGenericString(), ex);
+            LoggerFactory.getLogger(VOValidator.class.getName()).error( "ERROR IN VALIDATING BEAN FOR METHOD:"+invocationContext.getMethod().toGenericString(), ex);
         } catch (final SecurityException ex) {
-            Logger.getLogger(VOValidator.class.getName()).log(Level.SEVERE, "ERROR IN VALIDATING BEAN FOR METHOD:"+invocationContext.getMethod().toGenericString(), ex);
+            LoggerFactory.getLogger(VOValidator.class.getName()).error( "ERROR IN VALIDATING BEAN FOR METHOD:"+invocationContext.getMethod().toGenericString(), ex);
         }
     }
 }

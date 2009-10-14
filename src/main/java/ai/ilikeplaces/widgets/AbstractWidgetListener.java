@@ -1,5 +1,6 @@
 package ai.ilikeplaces.widgets;
 
+import ai.ilikeplaces.logic.Listeners.MarkupTagFace;
 import ai.ilikeplaces.servlets.Controller;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,10 +8,12 @@ import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServlet;
 import org.itsnat.core.html.ItsNatHTMLDocFragmentTemplate;
 import org.itsnat.core.html.ItsNatHTMLDocument;
-import org.w3c.dom.DocumentFragment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.html.HTMLDocument;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
 import static ai.ilikeplaces.servlets.Controller.*;
 
 /**
@@ -33,7 +36,7 @@ public abstract class AbstractWidgetListener {
      * instance number. Remember, each instance has to have its own instance id,
      * and should not have a reference to THIS copy which will lead to bugs.
      */
-    private static long Instance_ = 0;
+    private static long InstanceCounter_ = 0;
     /**
      * As a widget may have many instances within a document, we register each
      * instance with unique ids. i.e. the existing id is appended with the
@@ -52,7 +55,7 @@ public abstract class AbstractWidgetListener {
      */
     public AbstractWidgetListener(final ItsNatDocument itsNatDocument__, final Page page__, final Element appendToElement__) {
 
-        instanceId = Instance_++;
+        instanceId = InstanceCounter_++;
         page = page__;
         this.itsNatDocument_ = itsNatDocument__;
         final ItsNatHTMLDocument itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument_;
@@ -86,7 +89,7 @@ public abstract class AbstractWidgetListener {
     protected final Element $(final String key__) {
         final String elementId__ = Controller.GlobalHTMLIdRegistry.get(key__);
         if (elementId__ == null) {
-            throw new java.lang.NullPointerException("ELEMENT \"" + key__ + "\" CONTAINS NULL OR NO REFERENCE IN REGISTRY!");
+            throw new java.lang.NullPointerException("SORRY! I FIND THAT ELEMENT \"" + key__ + "\" CONTAINS NULL OR NO REFERENCE IN REGISTRY!");
         }
         return hTMLDocument_.getElementById(elementId__);
     }
@@ -115,7 +118,7 @@ public abstract class AbstractWidgetListener {
     final private Element getWidgetElementById(final String key__) {
         final String elementId__ = Controller.GlobalHTMLIdRegistry.get(key__);
         if (elementId__ == null) {
-            throw new java.lang.NullPointerException("SORRY! ELEMENT \"" + key__ + "\" CONTAINS NULL OR NO REFERENCE IN REGISTRY!");
+            throw new java.lang.NullPointerException("SORRY! I FIND THAT ELEMENT \"" + key__ + "\" CONTAINS NULL OR NO REFERENCE IN REGISTRY!");
         }
         return hTMLDocument_.getElementById(elementId__ + instanceId);
     }
@@ -133,17 +136,39 @@ public abstract class AbstractWidgetListener {
         if (visible) {
             for (String elementId__ : widgetElements) {
                 if (!elementId__.equals(toggleLink)) {
-                    $$(elementId__).setAttribute("style", "display:none");
+                    final String existingVal = $$(elementId__).getAttribute("style");
+                    if (existingVal.contains("display:block")) {
+                        $$(elementId__).setAttribute("style", existingVal.replace("display:block", "display:none"));
+                    } else {
+                        $$(elementId__).setAttribute("style", "display:none;" + existingVal);
+                    }
                 }
             }
             visible = false;
         } else {
             for (String elementId__ : widgetElements) {
                 if (!elementId__.equals(toggleLink)) {
-                    $$(elementId__).setAttribute("style", "display:block");
+                    final String existingVal = $$(elementId__).getAttribute("style").replace(" ", "");
+
+                    if (existingVal.contains("display:none")) {
+                        $$(elementId__).setAttribute("style", existingVal.replace("display:none", "display:block"));
+                    } else {
+                        $$(elementId__).setAttribute("style", "display:block;" + existingVal);
+                    }
                 }
             }
             visible = true;
         }
     }
+
+    final protected Element $$(MarkupTagFace tagNameInAllCaps) {
+        return hTMLDocument_.createElement(tagNameInAllCaps.toString());
+    }
+
+    final protected void remove(final EventListener eventListener_, final EventTarget eventTarget_) {
+        logger.debug("HELLO, REMOVING WIDGET LISTENER");
+        itsNatDocument_.removeEventListener(eventTarget_, "click", eventListener_, false);
+    }
+
+    final static Logger logger = LoggerFactory.getLogger(AbstractWidgetListener.class);
 }

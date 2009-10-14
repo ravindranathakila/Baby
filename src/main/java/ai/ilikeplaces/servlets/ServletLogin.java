@@ -13,8 +13,8 @@ import ai.ilikeplaces.doc.*;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -47,7 +47,7 @@ final public class ServletLogin extends HttpServlet {
     /**
      *
      */
-    final Logger logger = Logger.getLogger(ListenerMain.class.getName());
+    final Logger logger = LoggerFactory.getLogger(ListenerMain.class.getName());
     final private Properties p_ = new Properties();
     private Context context = null;
     private CrudServiceLocal<Human> crudServiceLocal_ = null;
@@ -97,7 +97,7 @@ final public class ServletLogin extends HttpServlet {
                 }
             } catch (NamingException ex) {
                 log.append("\nCOULD NOT INITIALIZE SIGNUP SERVLET DUE TO A NAMING EXCEPTION!");
-                logger.log(Level.SEVERE, "\nCOULD NOT INITIALIZE SIGNUP SERVLET DUE TO A NAMING EXCEPTION!", ex);
+                logger.info( "\nCOULD NOT INITIALIZE SIGNUP SERVLET DUE TO A NAMING EXCEPTION!", ex);
                 break init;
             }
 
@@ -139,7 +139,7 @@ final public class ServletLogin extends HttpServlet {
         userSession_.setMaxInactiveInterval(600);
 
         final Enumeration enumerated = request__.getParameterNames();
-        logger.log(Level.SEVERE, "PARAMETERs");
+        logger.info( "PARAMETERs");
         while (enumerated.hasMoreElements()) {
             String param = (String) enumerated.nextElement();
             logger.info("PARAMETER NAME:" + param);
@@ -179,13 +179,13 @@ final public class ServletLogin extends HttpServlet {
                     }
 
                 } catch (NamingException ex) {/*Send back to login page or homepage*/
-                    logger.log(Level.SEVERE, "SORRY! COULD NOT LOGIN USER DUE TO A NAMING EXCEPTION!", ex);
+                    logger.info( "SORRY! COULD NOT LOGIN USER DUE TO A NAMING EXCEPTION!", ex);
                     final PageFace signup = Page.signup;
                     response__.sendRedirect(signup.toString());
                     break doLogin;
                 }
             } else {/*Why was the user sent here without either username or password or both(by the page)? Send him back!*/
-                logger.severe("SORRY! PAGE SENDS USER TO LOGIN WITHOUT USERNAME PASSWORD OR BOTH. PROGRAMMATICAL ERROR! WHODIDIT:" + request__.getRequestURL().toString());
+                logger.warn("SORRY! PAGE SENDS USER TO LOGIN WITHOUT USERNAME PASSWORD OR BOTH. PROGRAMMATICAL ERROR! WHODIDIT:" + request__.getRequestURL().toString());
                 final PageFace home = Page.home;
                 response__.sendRedirect(home.toString());
                 break doLogin;

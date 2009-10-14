@@ -3,8 +3,8 @@ package ai.ilikeplaces.entities;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +28,7 @@ import javax.persistence.OneToOne;
 query = "SELECT loc FROM Location loc WHERE loc.locationName = :locationName"))
 public class Location implements Serializable {
 
-    final Logger logger = Logger.getLogger(Location.class.getName());
+    final Logger logger = LoggerFactory.getLogger(Location.class.getName());
     final static public String FindAllLocationsByName = "FindAllLocationsByName";
     final static private long serialVersionUID = 1L;
     private Long locationId;
@@ -36,7 +36,6 @@ public class Location implements Serializable {
     private String locationInfo;
     private Location locationSuperSet;
     private List<PublicPhoto> publicPhotos;
-    private List<PrivatePhoto> privatePhotos;
 
     /**
      *
@@ -113,7 +112,7 @@ public class Location implements Serializable {
         this.locationSuperSet = locationSuperSet__;
     }
 
-    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     public List<PublicPhoto> getPublicPhotos() {
         return publicPhotos;
     }
@@ -138,15 +137,15 @@ public class Location implements Serializable {
                 try {
                     toString_ += "\n{" + field.getName() + "," + field.get(this) + "}";
                 } catch (IllegalArgumentException ex) {
-                    logger.log(Level.SEVERE, null, ex);
+                    logger.info( null, ex);
                 } catch (IllegalAccessException ex) {
-                    logger.log(Level.SEVERE, null, ex);
+                    logger.info( null, ex);
                 }
             }
         } catch (NoSuchFieldException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            logger.info( null, ex);
         } catch (SecurityException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            logger.info( null, ex);
         }
 
         return toString_;
