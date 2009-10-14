@@ -2,11 +2,15 @@ package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.ListenerLogin;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.logic.Listeners.ListenerHuman;
 import ai.ilikeplaces.logic.Listeners.ListenerMain;
+import ai.ilikeplaces.logic.Listeners.ListenerPhoto;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Map;
-import javax.servlet.*;
+import org.slf4j.LoggerFactory;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletConfig;
@@ -18,18 +22,17 @@ import org.itsnat.core.http.ItsNatHttpServlet;
 import org.itsnat.core.ClientErrorMode;
 import org.itsnat.core.SyncMode;
 import org.itsnat.core.UseGZip;
+import org.slf4j.Logger;
 
 /**
  * @TODO Code to disable url calls with itsnat_doc_name=### type urls if possible
  *
  * @author Ravindranath Akila
  */
-public class Controller extends HttpServletWrapper {
+final public class Controller extends HttpServletWrapper {
 
     private final static Map<PageFace, String> PrettyURLMap_ = new IdentityHashMap<PageFace, String>();//Please read javadoc before making any changes to this implementation
-
-    public Controller() {
-    }
+    final static private Logger staticLogger = LoggerFactory.getLogger(Controller.class.getName());
 
     @WARNING(warning = "Initializer for pages with their ids and paths.\n" +
     "Note that the pages with ID's shall be initialized only once as they will " +
@@ -46,12 +49,12 @@ public class Controller extends HttpServletWrapper {
         },
         main(
         "ai/ilikeplaces/Main.xhtml",
-        "Main_center_main",
-        "Main_left_column",
-        "Main_right_column",
-        "Main_sidebar",
-        "hot",
-        "cool") {
+        Controller.Page.Main_center_main,
+        Controller.Page.Main_left_column,
+        Controller.Page.Main_right_column,
+        Controller.Page.Main_sidebar,
+        Controller.Page.hot,
+        Controller.Page.cool) {
 
             @Override
             public String toString() {
@@ -60,11 +63,11 @@ public class Controller extends HttpServletWrapper {
         },
         Photo$Description(
         "ai/ilikeplaces/fragments/Photo-Description.xhtml",
-        "pd",
-        "close",
-        "pd_photo_permalink",
-        "pd_photo",
-        "pd_photo_description") {
+        Controller.Page.pd,
+        Controller.Page.close,
+        Controller.Page.pd_photo_permalink,
+        Controller.Page.pd_photo,
+        Controller.Page.pd_photo_description) {
 
             @Override
             public String toString() {
@@ -95,6 +98,21 @@ public class Controller extends HttpServletWrapper {
                 return "/login";
             }
         },
+        PhotoCRUD(
+        "ai/ilikeplaces/widgets/PhotoCRUD.xhtml",
+        Controller.Page.pc_photo_title,
+        Controller.Page.pc_close,
+        Controller.Page.pc,
+        Controller.Page.pc_photo,
+        Controller.Page.pc_photo_description,
+        Controller.Page.pc_photo_permalink,
+        Controller.Page.pc_delete) {
+
+            @Override
+            public String toString() {
+                return "me";
+            }
+        },
         oldlogin(
         "ai/ilikeplaces/security/login.xhtml") {
 
@@ -111,6 +129,27 @@ public class Controller extends HttpServletWrapper {
                 return "include";
             }
         };
+        /*Photo Descrition Specific IDs*/
+        final static public String pd = "pd";
+        final static public String close = "close";
+        final static public String pd_photo_permalink = "pd_photo_permalink";
+        final static public String pd_photo = "pd_photo";
+        final static public String pd_photo_description = "pd_photo_description";
+        /*Main Specific IDs*/
+        final static public String Main_center_main = "Main_center_main";
+        final static public String Main_left_column = "Main_left_column";
+        final static public String Main_right_column = "Main_right_column";
+        final static public String Main_sidebar = "Main_sidebar";
+        final static public String hot = "hot";
+        final static public String cool = "cool";
+        /*PhotoCRUD Specific IDs*/
+        final static public String pc_photo_title = "pc_photo_title";
+        final static public String pc_close = "pc_close";
+        final static public String pc = "pc";
+        final static public String pc_photo = "pc_photo";
+        final static public String pc_photo_description = "pc_photo_description";
+        final static public String pc_photo_permalink = "pc_photo_permalink";
+        final static public String pc_delete = "pc_delete";
 
         private Page(final String path__, final String... ids__) {
             PrettyURLMap_.put(this, path__);
@@ -164,11 +203,17 @@ public class Controller extends HttpServletWrapper {
 
         inhs__.registerItsNatDocumentTemplate(main.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(main)).addItsNatServletRequestListener(new ListenerMain());
 
+        inhs__.registerItsNatDocumentTemplate("photo", "text/html", pathPrefix__ + PrettyURLMap_.get(main)).addItsNatServletRequestListener(new ListenerPhoto());
+
+        final PageFace PhotoCRUD = Page.PhotoCRUD;
+        inhs__.registerItsNatDocumentTemplate(PhotoCRUD.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(main)).addItsNatServletRequestListener(new ListenerHuman());
+        inhs__.registerItsNatDocFragmentTemplate(PhotoCRUD.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(PhotoCRUD));
+
         final PageFace photo$Description = Page.Photo$Description;
         inhs__.registerItsNatDocFragmentTemplate(photo$Description.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(photo$Description));
-
-        final PageFace photoUpload = Page.PhotoUpload;
-        inhs__.registerItsNatDocFragmentTemplate(photoUpload.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(photoUpload));
+//
+//        final PageFace photoUpload = Page.PhotoUpload;
+//        inhs__.registerItsNatDocFragmentTemplate(photoUpload.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(photoUpload));
 
         final PageFace login = Page.oldlogin;
 
@@ -180,17 +225,37 @@ public class Controller extends HttpServletWrapper {
 
     /**
      * We have a URL of type say www.ilikeplaces.com/page/Egypt
-     * where we are supposed to recieve the /Egypt part.
+     * where we are supposed to recieve the /Egypt part. Most requests WILL be
+     * location requests so we go optimistic on that first.
      * @param request__
      */
     private static void pathResolver(final ItsNatServletRequest request__) {
-        final String location__ = ((HttpServletRequest) request__.getServletRequest()).getPathInfo().substring(1);//Removes preceeding slash
-        if (isCorrectLocationFormat(location__)) {
-            request__.getServletRequest().setAttribute("location", location__);
+        final String pathInfo = ((HttpServletRequest) request__.getServletRequest()).getPathInfo();
+        final String URL__ = pathInfo == null ? "" : ((HttpServletRequest) request__.getServletRequest()).getPathInfo().substring(1);//Removes preceeding slash
+        if (isNonLocationPage(URL__)) {
+            if (isPhotoPage(URL__)) {
+                request__.getServletRequest().setAttribute("location", getPhotoLocation(URL__));
+                request__.getServletRequest().setAttribute("photoURL", getPhotoURL(URL__));
+                request__.getServletRequest().setAttribute("itsnat_doc_name", "photo");/*Framework specific*/
+                staticLogger.info("HELLO, LOCATION OF PHOTO:" + getPhotoLocation(URL__));
+                staticLogger.info("HELLO, THE URL OF PHOTO:" + getPhotoURL(URL__));
+            } else if (isHumanPage(URL__)) {
+                request__.getServletRequest().setAttribute("itsnat_doc_name", "me");/*Framework specific*/
+                staticLogger.info("HELLO, THIS IS A HUMAN PAGE.");
+            } else {
+                request__.getServletRequest().setAttribute("location", "main");
+                request__.getServletRequest().setAttribute("itsnat_doc_name", "main");/*Framework specific*/
+                staticLogger.info("HELLO, THIS REQUEST DID NOT FIT INTO ANY NON LOCATION FORMAT. FORWARDING TO MAIN PAGE.");
+            }
+        } else if (isCorrectLocationFormat(URL__)) {
+            request__.getServletRequest().setAttribute("location", URL__);
+            request__.getServletRequest().setAttribute("itsnat_doc_name", "main");/*Framework specific*/
+            staticLogger.info("HELLO, THIS IS A LOCATION CALLED:" + URL__);
         } else {
             request__.getServletRequest().setAttribute("location", "main");/*Main shall serve as the main page*/
+            request__.getServletRequest().setAttribute("itsnat_doc_name", "main");/*Framework specific*/
+            staticLogger.info("HELLO, THIS IS THE END OF THE CHAIN");
         }
-        request__.getServletRequest().setAttribute("itsnat_doc_name", "main");/*Framework specific*/
     }
 
     /**
@@ -199,8 +264,29 @@ public class Controller extends HttpServletWrapper {
      * @param location__
      * @return boolean
      */
-    private static boolean isCorrectLocationFormat(final String location__) {
-        return !(location__.contains("/") || location__.contains(",") || location__.contains("?"));
+    static private boolean isCorrectLocationFormat(final String URL__) {
+        /*"_" check first is vital as the photo and me urls might have "/"*/
+        return !(URL__.startsWith("_") || URL__.contains("/") || URL__.contains(",") || URL__.contains("?"));
+    }
+
+    static private boolean isNonLocationPage(final String URL_) {
+        return (URL_.startsWith("_"));
+    }
+
+    static private boolean isHumanPage(final String URL_) {
+        return (URL_.startsWith("_me"));
+    }
+
+    static private boolean isPhotoPage(final String URL_) {
+        return (URL_.startsWith("_photo_") && URL_.split("_").length == 4);
+    }
+
+    static private String getPhotoLocation(final String URL_) {
+        return URL_.replace("_photo_", "").split("_")[0];
+    }
+
+    static private String getPhotoURL(final String URL_) {
+        return URL_.replace("_photo_", "").split("_")[1];
     }
     /**
      * This Map is static as Id's in html documents should be universally identical, i.e. as htmldocname_elementId

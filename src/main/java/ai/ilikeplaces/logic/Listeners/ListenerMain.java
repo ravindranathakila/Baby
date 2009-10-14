@@ -5,9 +5,8 @@ import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.widgets.Photo$Description;
-import ai.ilikeplaces.widgets.AbstractWidgetListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.naming.NamingException;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -17,6 +16,8 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.Element;
 import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
+import ch.qos.logback.classic.LoggerContext;
+import static ai.ilikeplaces.servlets.Controller.Page.*;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -25,6 +26,9 @@ import javax.naming.InitialContext;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.html.HTMLDocument;
+
+
+import ch.qos.logback.core.util.StatusPrinter;
 
 /**
  *
@@ -40,7 +44,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
     final private Properties p_ = new Properties();
     private Context context = null;
     private CrudServiceLocal<Location> crudServiceLocal = null;
-    final private Logger logger = Logger.getLogger(ListenerMain.class.getName());
+    final private Logger logger = LoggerFactory.getLogger(ListenerMain.class);
 
     /**
      *
@@ -61,7 +65,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 }
 
                 crudServiceLocal = (CrudServiceLocal<Location>) context.lookup("CrudServiceLocal");
-                logger.info("LISTNER MAIN CRUD SERVICE:" + crudServiceLocal.hashCode());
+                logger.info("" + crudServiceLocal.hashCode());
                 if (crudServiceLocal == null) {
                     log.append("\nVARIABLE crudServiceLocal_ IS NULL! ");
                     log.append(crudServiceLocal);
@@ -70,7 +74,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 }
             } catch (NamingException ex) {
                 log.append("\nSORRY! COULD NOT INITIALIZE " + getClass().getName() + " SERVLET DUE TO A NAMING EXCEPTION!");
-                logger.log(Level.SEVERE, "\nSORRY! COULD NOT INITIALIZE " + getClass().getName() + " DUE TO A NAMING EXCEPTION!", ex);
+                logger.error("\nSORRY! COULD NOT INITIALIZE " + getClass().getName() + " DUE TO A NAMING EXCEPTION!", ex);
                 break init;
             }
 
@@ -138,6 +142,11 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             existingLocation_.toString(true))));
                     List<PublicPhoto> listPublicPhoto = existingLocation_.getPublicPhotos();
                     logger.info("Hello, number of photos:" + String.valueOf(listPublicPhoto.size()));
+                    logger.debug("DEBUG MSG FOR TESTING");
+                    LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+                    StatusPrinter.print(lc);
+
+
 
                     int i = 0;
                     for (final Iterator<PublicPhoto> it = listPublicPhoto.iterator(); it.hasNext(); i++) {
@@ -147,8 +156,12 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                                 @Override
                                 protected void init() {
-                                    $$("pd_photo_permalink").setAttribute("href", publicPhoto.getPublicPhotoURLPath() + "|" + "PHOTO TITLE");
-                                    $$("pd_photo").setAttribute("src", publicPhoto.getPublicPhotoURLPath());
+                                    $$(pd_photo_permalink).setAttribute("href", publicPhoto.getPublicPhotoURLPath() + "|" + "PHOTO TITLE");
+                                    $$(pd_photo).setAttribute("src", publicPhoto.getPublicPhotoURLPath());
+                                    final Element descriptionText = $$(MarkupTag.P);
+                                    descriptionText.setTextContent(publicPhoto.getPublicPhotoDescription());
+                                    $$(pd_photo_description).appendChild(descriptionText);
+
                                 }
                             };
                         } else {

@@ -4,8 +4,8 @@ import ai.ilikeplaces.doc.FieldPreamble;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,16 +24,13 @@ public class PublicPhoto implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long publicPhotoId;
 
-    @FieldPreamble(description = "Put in folders?" +
-    "Folders might be renamed due to change in location names if you use location names in folders." +
-    "Well having the location name in the file name is important for SEO. e.g. paris.jpg" +
-    "Would an approach like {random_number}_location.jpg work?" +
-    "Would an approach like {sequence_number}_location.jpg work?()")
     private String publicPhotoFilePath;
 
     @FieldPreamble(description = "The path should be very random as it will be exposed to the www." +
     "Also make sure this supports good SEO.")
     private String publicPhotoURLPath;
+
+    private String publicPhotoName;
 
     private String publicPhotoDescription;
 
@@ -76,6 +73,14 @@ public class PublicPhoto implements Serializable {
         this.publicPhotoFilePath = publicPhotoFilePath;
     }
 
+    public String getPublicPhotoName() {
+        return publicPhotoName;
+    }
+
+    public void setPublicPhotoName(String publicPhotoName) {
+        this.publicPhotoName = publicPhotoName;
+    }
+
     public String getPublicPhotoDescription() {
         return publicPhotoDescription;
     }
@@ -93,7 +98,7 @@ public class PublicPhoto implements Serializable {
         this.humansPublicPhoto = humansPublicPhoto;
     }
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH})
     public Location getLocation() {
         return location;
     }
@@ -186,15 +191,15 @@ public class PublicPhoto implements Serializable {
                 try {
                     toString_ += "\n{" + field.getName() + "," + field.get(this) + "}";
                 } catch (IllegalArgumentException ex) {
-                    Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+                    LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
                 } catch (IllegalAccessException ex) {
-                    Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+                    LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
                 }
             }
         } catch (NoSuchFieldException ex) {
-            Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+            LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
         } catch (SecurityException ex) {
-            Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+            LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
         }
 
         return toString_;

@@ -6,8 +6,8 @@ package ai.ilikeplaces.entities;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -247,15 +247,15 @@ public class Human implements Serializable {
                 try {
                     toString_ += "\n{" + field.getName() + "," + field.get(this) + "}";
                 } catch (IllegalArgumentException ex) {
-                    Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+                    LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
                 } catch (IllegalAccessException ex) {
-                    Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+                    LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
                 }
             }
         } catch (NoSuchFieldException ex) {
-            Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+            LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
         } catch (SecurityException ex) {
-            Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+            LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
         }
 
         return toString_;

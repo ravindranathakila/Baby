@@ -4,7 +4,7 @@
     <servlet>
         <servlet-name>Home</servlet-name>
         <servlet-class>ai.ilikeplaces.servlets.Controller</servlet-class>
-        </servlet>
+    </servlet>
     <servlet>
         <servlet-name>FileUploads</servlet-name>
         <servlet-class>ai.ilikeplaces.servlets.ServletFileUploads</servlet-class>
@@ -17,6 +17,14 @@
         <servlet-name>ServletSignup</servlet-name>
         <servlet-class>ai.ilikeplaces.servlets.ServletSignup</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccessViewStatusMessages</servlet-name>
+        <servlet-class>ch.qos.logback.access.ViewStatusMessagesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccessViewStatusMessages</servlet-name>
+        <url-pattern>/lbAccessStatus</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/page/*</url-pattern>
@@ -41,5 +49,5 @@
     </session-config>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
-        </welcome-file-list>
-    </web-app>
+    </welcome-file-list>
+</web-app>

@@ -5,9 +5,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Level;
+import org.slf4j.Logger;
 import java.util.Set;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -157,15 +157,15 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
                 try {
                     toString_ += "\n{" + field.getName() + "," + field.get(this) + "}";
                 } catch (IllegalArgumentException ex) {
-                    logger.log(Level.SEVERE, null, ex);
+                    logger.info( null, ex);
                 } catch (IllegalAccessException ex) {
-                    logger.log(Level.SEVERE, null, ex);
+                    logger.info( null, ex);
                 }
             }
         } catch (NoSuchFieldException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            logger.info( null, ex);
         } catch (SecurityException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            logger.info( null, ex);
         }
 
         return toString_;

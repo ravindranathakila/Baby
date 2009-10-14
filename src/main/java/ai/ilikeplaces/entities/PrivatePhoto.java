@@ -4,8 +4,8 @@ import ai.ilikeplaces.doc.FieldPreamble;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,6 +33,9 @@ public class PrivatePhoto implements Serializable {
     @FieldPreamble(description = "The path should be very random as it will be exposed to the www." +
     "Also make sure this supports good SEO.")
     private String privatePhotoURLPath;
+
+    private String privatePhotoName;
+    
     private String privatePhotoDescription;
     @FieldPreamble(description = "Required to calculate ranking")
     private Date privatePhotoUploadDate;
@@ -55,6 +58,14 @@ public class PrivatePhoto implements Serializable {
 
     public void setPrivatePhotoId(Long privatePhotoId) {
         this.privatePhotoId = privatePhotoId;
+    }
+
+    public String getPrivatePhotoName() {
+        return privatePhotoName;
+    }
+
+    public void setPrivatePhotoName(String privatePhotoName) {
+        this.privatePhotoName = privatePhotoName;
     }
 
     public String getPrivatePhotoDescription() {
@@ -166,15 +177,15 @@ public class PrivatePhoto implements Serializable {
                 try {
                     toString_ += "\n{" + field.getName() + "," + field.get(this) + "}";
                 } catch (IllegalArgumentException ex) {
-                    Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+                    LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
                 } catch (IllegalAccessException ex) {
-                    Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+                    LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
                 }
             }
         } catch (NoSuchFieldException ex) {
-            Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+            LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
         } catch (SecurityException ex) {
-            Logger.getLogger(Location.class.getName()).log(Level.SEVERE, null, ex);
+            LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
         }
 
         return toString_;
