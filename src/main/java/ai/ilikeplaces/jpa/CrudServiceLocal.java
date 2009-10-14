@@ -72,4 +72,12 @@ public interface CrudServiceLocal<T> {
      * @return
      */
     public List findWithNamedQuery(String namedQueryName, Map parameters, int resultLimit);
+
+    /**
+     *
+     * @param sql
+     * @param type
+     * @return ListF
+     */
+    public List findByNativeQuery(final String sql, final Class type);
 }
