@@ -30,6 +30,7 @@ public class Location implements Serializable {
 
     final Logger logger = LoggerFactory.getLogger(Location.class.getName());
     final static public String FindAllLocationsByName = "FindAllLocationsByName";
+    final static public String LocationName = "locationName";
     final static private long serialVersionUID = 1L;
     private Long locationId;
     private String locationName;

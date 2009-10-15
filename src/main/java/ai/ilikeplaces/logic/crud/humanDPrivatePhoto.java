@@ -13,8 +13,8 @@ import javax.ejb.TransactionAttributeType;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@Stateless
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+//@Stateless
+//@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class humanDPrivatePhoto extends AbstractSLBCallbacks {
 
     public humanDPrivatePhoto() {

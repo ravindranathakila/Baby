@@ -5,13 +5,16 @@ import org.slf4j.LoggerFactory;
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 /**
  *
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@Stateless
+//@Stateless
+//@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class humanUPublicPhoto extends AbstractSLBCallbacks {
 
     public humanUPublicPhoto() {

@@ -15,7 +15,7 @@ import javax.ejb.TransactionAttributeType;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public class CHuman extends AbstractSLBCallbacks {
+public class CHuman extends AbstractSLBCallbacks implements CHumanLocal {
 
     public CHuman() {
         logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", CHuman.class, this.hashCode());

@@ -1,6 +1,7 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.FieldPreamble;
+import ai.ilikeplaces.doc.*;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
@@ -89,7 +90,7 @@ public class PublicPhoto implements Serializable {
         this.publicPhotoDescription = publicPhotoDescription;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH})
     public HumansPublicPhoto getHumansPublicPhoto() {
         return humansPublicPhoto;
     }
@@ -98,7 +99,8 @@ public class PublicPhoto implements Serializable {
         this.humansPublicPhoto = humansPublicPhoto;
     }
 
-    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH})
+    @FIXME(issue="Break Location table by this field. i.e. LocationsPublicPhoto(P.K. = locationId), as that will ease transaction")
+    @ManyToOne(cascade={CascadeType.MERGE})
     public Location getLocation() {
         return location;
     }
@@ -151,14 +153,14 @@ public class PublicPhoto implements Serializable {
 
 
 
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 37 * hash + (this.publicPhotoId != null ? this.publicPhotoId.hashCode() : 0);
-        hash = 37 * hash + (this.publicPhotoFilePath != null ? this.publicPhotoFilePath.hashCode() : 0);
-        hash = 37 * hash + (this.publicPhotoURLPath != null ? this.publicPhotoURLPath.hashCode() : 0);
-        return hash;
-    }
+//    @Override
+//    public int hashCode() {
+//        int hash = 5;
+//        hash = 37 * hash + (this.publicPhotoId != null ? this.publicPhotoId.hashCode() : 0);
+//        hash = 37 * hash + (this.publicPhotoFilePath != null ? this.publicPhotoFilePath.hashCode() : 0);
+//        hash = 37 * hash + (this.publicPhotoURLPath != null ? this.publicPhotoURLPath.hashCode() : 0);
+//        return hash;
+//    }
 
     @Override
     @SuppressWarnings({"EqualsWhichDoesntCheckParameterClass", "EqualsWhichDoesntCheckParameterClass"})

@@ -1,5 +1,6 @@
 package ai.ilikeplaces.jpa;
 
+import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import java.lang.reflect.Field;
 import java.util.List;
@@ -15,20 +16,22 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
-
+//select * from ILP.PUBLICPHOTO;
+//select * from ILP.HUMANSPUBLICPHOTO_PUBLICPHOTO;
+//select * from ILP.LOCATION_PUBLICPHOTO;
 /**
  *
  * @param <T>
  * @author Ravindranath Akila
  */
 @Stateless
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 final public class CrudService<T> extends AbstractSLBCallbacks implements CrudServiceLocal<T> {
 
     /**
      *
      * Please not that this is a field of Stateless session bean
      */
+    @FIXME(issue="FIND OUT HOW THE MANAGER HANDLES CONCURRENT REQUESTS. SAME CACHE OR DIFFERENT? IF DIFFERENT, COME ON, THIS A CLASS VARIABLE!")
     @PersistenceContext(unitName = "adimpression_ilikeplaces_war_1.6-SNAPSHOTPU", type = PersistenceContextType.TRANSACTION)
     public EntityManager entityManager;
 
@@ -37,6 +40,7 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
      * @param t
      * @return
      */
+    @TransactionAttribute(TransactionAttributeType.MANDATORY)
     @Override
     public T create(final T t) {
         entityManager.persist(t);
@@ -53,6 +57,7 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
      */
     @SuppressWarnings("unchecked")
     @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public T find(final Class type, final Object id) {
         return (T) entityManager.find(type, id);
     }
@@ -64,6 +69,7 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
      */
     @SuppressWarnings("unchecked")
     @Override
+    @TransactionAttribute(TransactionAttributeType.MANDATORY)
     public void delete(final Class type, final Object id) {
         entityManager.remove(this.entityManager.getReference(type, id));
     }
@@ -74,6 +80,7 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
      * @return
      */
     @Override
+    @TransactionAttribute(TransactionAttributeType.MANDATORY)
     public T update(final T t) {
         return entityManager.merge(t);
     }
@@ -84,6 +91,7 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
      * @return
      */
     @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List findWithNamedQuery(final String namedQueryName) {
         return entityManager.createNamedQuery(namedQueryName).getResultList();
     }
@@ -95,6 +103,7 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
      * @return
      */
     @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List findWithNamedQuery(final String namedQueryName, final Map parameters) {
         return findWithNamedQuery(namedQueryName, parameters, 0);
     }
@@ -106,6 +115,7 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
      * @return
      */
     @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List findWithNamedQuery(final String queryName, final int resultLimit) {
         return entityManager.createNamedQuery(queryName).
                 setMaxResults(resultLimit).
@@ -118,6 +128,8 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
      * @param type
      * @return
      */
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List findByNativeQuery(final String sql, final Class type) {
         return this.entityManager.createNativeQuery(sql, type).getResultList();
     }
@@ -130,6 +142,7 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
      * @return
      */
     @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List findWithNamedQuery(final String namedQueryName, final Map parameters, final int resultLimit) {
         @SuppressWarnings("unchecked")
         final Set<Entry> rawParameters = parameters.entrySet();
@@ -157,15 +170,15 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
                 try {
                     toString_ += "\n{" + field.getName() + "," + field.get(this) + "}";
                 } catch (IllegalArgumentException ex) {
-                    logger.info( null, ex);
+                    logger.info(null, ex);
                 } catch (IllegalAccessException ex) {
-                    logger.info( null, ex);
+                    logger.info(null, ex);
                 }
             }
         } catch (NoSuchFieldException ex) {
-            logger.info( null, ex);
+            logger.info(null, ex);
         } catch (SecurityException ex) {
-            logger.info( null, ex);
+            logger.info(null, ex);
         }
 
         return toString_;
