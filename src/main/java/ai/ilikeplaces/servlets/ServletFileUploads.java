@@ -6,12 +6,11 @@ import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansPrivatePhoto;
-import ai.ilikeplaces.entities.HumansPublicPhoto;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PrivatePhoto;
-import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.logic.crud.HumanCPublicPhotoLocal;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -48,10 +47,9 @@ final public class ServletFileUploads extends HttpServlet {
     final static private String Ok = "ok";
 
     /*Container Related Services*/
-    final private Properties p_ = new Properties();
-    private Context context = null;
     private CrudServiceLocal<Human> crudServiceHuman_ = null;
     private CrudServiceLocal<Location> crudServiceLocation_ = null;
+    private HumanCPublicPhotoLocal humanCPublicPhotoLocal_ = null;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -65,30 +63,35 @@ final public class ServletFileUploads extends HttpServlet {
         init:
         {
             try {
+                final Properties p_ = new Properties();
                 p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
-                context = new InitialContext(p_);
+                final Context context = new InitialContext(p_);
                 if (context == null) {
                     log.append("\nVARIABLE context IS NULL! ");
                     log.append(context);
                     break init;
                 }
-
-                crudServiceHuman_ = (CrudServiceLocal<Human>) context.lookup("CrudServiceLocal");
-                if (crudServiceHuman_ == null) {
-                    log.append("\nVARIABLE crudServiceLocal_ IS NULL! ");
-                    log.append(crudServiceHuman_);
+//                crudServiceHuman_ = (CrudServiceLocal<Human>) context.lookup("CrudServiceLocal");
+//                if (crudServiceHuman_ == null) {
+//                    log.append("\nVARIABLE crudServiceLocal_ IS NULL! ");
+//                    log.append(crudServiceHuman_);
+//                    break init;
+//                }
+//                crudServiceLocation_ = (CrudServiceLocal<Location>) context.lookup("CrudServiceLocal");
+//                if (crudServiceLocation_ == null) {
+//                    log.append("\nVARIABLE crudServiceLocation_ IS NULL! ");
+//                    log.append(crudServiceLocation_);
+//                    break init;
+//                }
+                humanCPublicPhotoLocal_ = (HumanCPublicPhotoLocal) context.lookup("HumanCPublicPhotoLocal");
+                if (humanCPublicPhotoLocal_ == null) {
+                    log.append("\nVARIABLE humanCPublicPhotoLocal_ IS NULL! ");
+                    log.append(humanCPublicPhotoLocal_);
                     break init;
                 }
-                crudServiceLocation_ = (CrudServiceLocal<Location>) context.lookup("CrudServiceLocal");
-                if (crudServiceLocation_ == null) {
-                    log.append("\nVARIABLE crudServiceLocation_ IS NULL! ");
-                    log.append(crudServiceLocation_);
-                    break init;
-                }
-
             } catch (NamingException ex) {
                 log.append("\nCOULD NOT INITIALIZE ServletFileUploads SERVLET DUE TO A NAMING EXCEPTION!");
-                logger.info( "\nCOULD NOT INITIALIZE ServletFileUploads SERVLET DUE TO A NAMING EXCEPTION!", ex);
+                logger.info("\nCOULD NOT INITIALIZE ServletFileUploads SERVLET DUE TO A NAMING EXCEPTION!", ex);
                 break init;
             }
 
@@ -100,9 +103,11 @@ final public class ServletFileUploads extends HttpServlet {
              */
             initializeFailed = false;
         }
+
         if (initializeFailed) {
             throw new ExceptionConstructorInvokation(log.toString());
         }
+
     }
 
     /**
@@ -112,7 +117,8 @@ final public class ServletFileUploads extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(final HttpServletRequest request__, final HttpServletResponse response__)
+    protected void processRequest(final HttpServletRequest request__,
+            final HttpServletResponse response__)
             throws ServletException, IOException {
         response__.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response__.getWriter();
@@ -140,8 +146,12 @@ final public class ServletFileUploads extends HttpServlet {
                         /*Check that we have a file upload request*/
                         final boolean isMultipart = ServletFileUpload.isMultipartContent(request__);
                         if (!isMultipart) {
-                            LoggerFactory.getLogger(ServletFileUploads.class.getName()).error( "IS NOT A FILE UPLOAD REQUEST");
+                            LoggerFactory.getLogger(ServletFileUploads.class.getName()).error("IS NOT A FILE UPLOAD REQUEST");
                             errorNonMultipart(out);
+
+
+
+
                             break processRequestType;
                         }
 
@@ -179,18 +189,22 @@ final public class ServletFileUploads extends HttpServlet {
                                             locationId = Long.parseLong(value);
                                             logger.info("HELLO, I PROPERLY RECIEVED locationId");
                                         }
+
                                         if (name.equals("photoDescription")) {
                                             photoDescription = value;
                                             logger.info("HELLO, I PROPERLY RECIEVED photoDescription");
                                         }
+
                                         if (name.equals("isPublic")) {
                                             if (!(value.equals("true") || value.equals("false"))) {
                                                 throw new IllegalArgumentException("SORRY! I REQUIRE A BOOLEAN AND YOU GIVE ME:" + value);
                                             }
+
                                             isPublic = Boolean.valueOf(value);
                                             logger.info("HELLO, I PROPERLY RECIEVED isPublic");
 
                                         }
+
                                     }
                                     if ((!item.isFormField())) {
                                         logger.info("HELLO, I DETECTED A FILE FIELD WITH NAME " + name + " AND WITH FILE NAME " + item.getName() + ".");
@@ -199,12 +213,15 @@ final public class ServletFileUploads extends HttpServlet {
                                             errorFileType(out, item.getName());
                                             break processRequest;
                                         }
+
                                         usersFileName = (item.getName().indexOf("\\") <= 1 ? item.getName()
                                                 : item.getName().substring(item.getName().lastIndexOf("\\") + 1));
 
 //                        final String fileName = FilePath + FileRandom.getName() + "." + item.getName().substring(item.getName().lastIndexOf(".") + 1);
-                                        randomFileName = String.valueOf(System.currentTimeMillis()) + "." + item.getName().substring(item.getName().lastIndexOf(".") + 1);
-                                        fileName += randomFileName;
+                                        randomFileName =
+                                                String.valueOf(System.currentTimeMillis()) + "." + item.getName().substring(item.getName().lastIndexOf(".") + 1);
+                                        fileName +=
+                                                randomFileName;
                                         final File uploadedFile = new File(fileName);
                                         final FileOutputStream fos = new FileOutputStream(uploadedFile);
                                         while (true) {
@@ -214,12 +231,13 @@ final public class ServletFileUploads extends HttpServlet {
                                             } else {
                                                 break;
                                             }
+
                                         }
                                         fos.close();
                                         stream.close();
-                                        fileSaved = true;
+                                        fileSaved =
+                                                true;
                                     }
-
 
                                     System.out.println("locationId" + locationId);
                                     System.out.println("fileSaved" + fileSaved);
@@ -228,98 +246,66 @@ final public class ServletFileUploads extends HttpServlet {
                                     if (fileSaved && (locationId != null) && (photoDescription != null) && (isPublic != null)) {
                                         persistData:
                                         {
-                                            final Human human = crudServiceHuman_.find(Human.class, sBLoggedOnUserFace.getLoggedOnUserId());
-                                            logger.info("HELLO, I AM DOING A FILE UPLOAD PERSISTENCE ON HUMAN id:" + human.getHumanId());
+//                                            final Human human = crudServiceHuman_.find(Human.class, sBLoggedOnUserFace.getLoggedOnUserId());
+//                                            logger.info(
+//                                                    "HELLO, I AM DOING A FILE UPLOAD PERSISTENCE ON HUMAN id:" + human.getHumanId());
 
-                                            Location locationn = crudServiceLocation_.find(Location.class, locationId);
-                                            logger.info("HELLO, I AM DOING A FILE UPLOAD PERSISTENCE ON LOCATION NAME:" + locationn.getLocationName());
+//                                            Location locationn = crudServiceLocation_.find(Location.class, locationId);
+//                                            logger.info(
+//                                                    "HELLO, I AM DOING A FILE UPLOAD PERSISTENCE ON LOCATION NAME:" + locationn.getLocationName());
 
 
                                             handlePublicPrivateness:
                                             {
                                                 if (isPublic) {
-                                                    final PublicPhoto publicPhoto = new PublicPhoto();
-                                                    publicPhoto.setPublicPhotoFilePath(fileName);
-                                                    publicPhoto.setLocation(locationn);
-                                                    publicPhoto.setPublicPhotoDescription(photoDescription);
-                                                    publicPhoto.setPublicPhotoURLPath(new String(CDN + randomFileName));
-
-                                                    final HumansPublicPhoto humansPublicPhoto = human.getHumansPublicPhoto();
-                                                    publicPhoto.setHumansPublicPhoto(humansPublicPhoto);
-                                                    humansPublicPhoto.getPublicPhotos().add(publicPhoto);
-
-
-                                                    final int retryLimit = 4;
-                                                    for (int retries = 1, uploaded = 0; uploaded != 1 && retries <= retryLimit/* 15 seconds*/; retries++) {
-                                                        try {
-                                                            locationn.getPublicPhotos().add(publicPhoto);
-                                                            crudServiceHuman_.update(human);
-                                                            //crudServiceLocation_.update(locationn);
-                                                            uploaded = 1;
-                                                            successFileName(out, usersFileName, "public");
-                                                            if (retries > 1) {
-                                                                logger.info("HELLO, I MANAGED TO PERSIST THE DATA AFTER " + retries + " RETRIES.");
-                                                            }
-                                                        } catch (javax.ejb.EJBTransactionRolledbackException e_) {
-                                                            logger.info( "SORRY! I AM UNABLE TO PERSIST FILE UPLOAD DATA.", e_);
-                                                            if (retries == retryLimit) {/*ok this is the last retrey. Failed. lets report to the client*/
-                                                                errorBusy(out);
-                                                                /*@WARN: do not do this without closing streams!*/
-                                                                break fileUpload;
-                                                            } else {
-                                                                logger.info("HELLO, I AM RETRYING TO PERSIST THE DATA AFTER " + retries + " SECONDS THREAD SLEEP. I AM GOING TO SLEEP NOW.");
-                                                                try {
-                                                                    Thread.sleep(1000 * retries);
-                                                                } catch (InterruptedException ex) {
-                                                                    LoggerFactory.getLogger(ServletFileUploads.class.getName()).error( null, ex);
-                                                                }
-                                                            }
-                                                        }
+                                                    persisted = humanCPublicPhotoLocal_.doHumanCPublicPhoto(sBLoggedOnUserFace.getLoggedOnUserId(), locationId, fileName, "@TODO in FILEUPLOADSERVLET", photoDescription, new String(CDN + randomFileName), 4);
+                                                    if (persisted) {
+                                                        successFileName(out, usersFileName, "public");
+                                                    } else {
+                                                        errorBusy(out);
                                                     }
-                                                    persisted = true;
-
-
 
                                                 } else {
-                                                    final PrivatePhoto privatePhoto = new PrivatePhoto();
-                                                    privatePhoto.setPrivatePhotoFilePath(fileName);
-                                                    privatePhoto.setPrivatePhotoDescription(photoDescription);
-                                                    privatePhoto.setPrivatePhotoURLPath(new String(CDN + randomFileName));
-                                                    privatePhoto.setLocation(locationn);
-
-                                                    final HumansPrivatePhoto humansPrivatePhoto = human.getHumansPrivatePhoto();
-                                                    privatePhoto.setHumansPrivatePhoto(humansPrivatePhoto);
-                                                    final List<PrivatePhoto> privatePhotoList = humansPrivatePhoto.getPrivatePhotos();
-
-                                                    privatePhotoList.size();
-                                                    privatePhotoList.add(privatePhoto);
-
-                                                    final int retryLimit = 4;
-                                                    for (int retries = 1, uploaded = 0; uploaded != 1 && retries <= retryLimit/* 15 seconds*/; retries++) {
-                                                        try {
-                                                            crudServiceHuman_.update(human);
-                                                            uploaded = 1;
-                                                            successFileName(out, usersFileName, "public");
-                                                            if (retries > 1) {
-                                                                logger.info("HELLO, I MANAGED TO PERSIST THE DATA AFTER " + retries + " RETRIES.");
-                                                            }
-                                                        } catch (javax.ejb.EJBTransactionRolledbackException e_) {
-                                                            logger.info( "SORRY! I AM UNABLE TO PERSIST FILE UPLOAD DATA.", e_);
-                                                            if (retries == retryLimit) {/*ok this is the last retrey. Failed. lets report to the client*/
-                                                                errorBusy(out);
-                                                                /*@WARN: do not do this without closing streams!*/
-                                                                break fileUpload;
-                                                            } else {
-                                                                logger.info("HELLO, I AM RETRYING TO PERSIST THE DATA AFTER " + retries + " SECONDS THREAD SLEEP. I AM GOING TO SLEEP NOW.");
-                                                                try {
-                                                                    Thread.sleep(1000 * retries);
-                                                                } catch (InterruptedException ex) {
-                                                                    LoggerFactory.getLogger(ServletFileUploads.class.getName()).error( null, ex);
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                    persisted = true;
+//                                                    final PrivatePhoto privatePhoto = new PrivatePhoto();
+//                                                    privatePhoto.setPrivatePhotoFilePath(fileName);
+//                                                    privatePhoto.setPrivatePhotoDescription(photoDescription);
+//                                                    privatePhoto.setPrivatePhotoURLPath(new String(CDN + randomFileName));
+//                                                    privatePhoto.setLocation(locationn);
+//
+//                                                    final HumansPrivatePhoto humansPrivatePhoto = human.getHumansPrivatePhoto();
+//                                                    privatePhoto.setHumansPrivatePhoto(humansPrivatePhoto);
+//                                                    final List<PrivatePhoto> privatePhotoList = humansPrivatePhoto.getPrivatePhotos();
+//
+//                                                    privatePhotoList.size();
+//                                                    privatePhotoList.add(privatePhoto);
+//
+//                                                    final int retryLimit = 4;
+//                                                    for (int retries = 1, uploaded = 0; uploaded != 1 && retries <= retryLimit/* 15 seconds*/; retries++) {
+//                                                        try {
+//                                                            crudServiceHuman_.update(human);
+//                                                            uploaded = 1;
+//                                                            successFileName(out, usersFileName, "public");
+//                                                            if (retries > 1) {
+//                                                                logger.info("HELLO, I MANAGED TO PERSIST THE DATA AFTER " + retries + " RETRIES.");
+//                                                            }
+//                                                        } catch (javax.ejb.EJBTransactionRolledbackException e_) {
+//                                                            logger.info("SORRY! I AM UNABLE TO PERSIST FILE UPLOAD DATA.", e_);
+//                                                            if (retries == retryLimit) {/*ok this is the last retrey. Failed. lets report to the client*/
+//                                                                errorBusy(out);
+//                                                                /*@WARN: do not do this without closing streams!*/
+//                                                                break fileUpload;
+//                                                            } else {
+//                                                                logger.info("HELLO, I AM RETRYING TO PERSIST THE DATA AFTER " + retries + " SECONDS THREAD SLEEP. I AM GOING TO SLEEP NOW.");
+//                                                                try {
+//                                                                    Thread.sleep(1000 * retries);
+//                                                                } catch (InterruptedException ex) {
+//                                                                    LoggerFactory.getLogger(ServletFileUploads.class.getName()).error(null, ex);
+//                                                                }
+//                                                            }
+//                                                        }
+//                                                    }
+//                                                    persisted = true;
+                                                    persisted = false;
 
 
 
@@ -327,8 +313,10 @@ final public class ServletFileUploads extends HttpServlet {
                                             }
                                         }
                                         /*We got what we need from the loop. Lets break it*/
+
                                         break loop;
                                     }
+
                                 }
 
                             }
@@ -336,10 +324,14 @@ final public class ServletFileUploads extends HttpServlet {
                                 errorMissingParameters(out);
                                 break processRequest;
                             }
+
+
+
+
                         }
 
                     } catch (FileUploadException ex) {
-                        LoggerFactory.getLogger(ServletFileUploads.class.getName()).error( null, ex);
+                        LoggerFactory.getLogger(ServletFileUploads.class.getName()).error(null, ex);
                         errorBusy(out);
                     }
                 }
@@ -356,12 +348,15 @@ final public class ServletFileUploads extends HttpServlet {
             String formattedResponse = "";
             for (String param_ : params__) {
                 formattedResponse += ",";
-                formattedResponse += param_;
+                formattedResponse +=
+                        param_;
             }
+
             returnVal = "{" + formattedResponse.substring(formattedResponse.indexOf(",") + 1) + "}";
         } else {
             throw new IllegalArgumentException("SORRY! YOU HAVE GIVEN AN EMPTY LIST OF PARAMS FOR ME TO PROCEESS WHICH IS INSANE.");
         }
+
         return returnVal;
 
     }
@@ -403,21 +398,26 @@ final public class ServletFileUploads extends HttpServlet {
 
     @TODO(task = "Make a key,value implementation to avoid careless indexing errors on client")
     @FIXME(issue = "Handle exception")
-    private void successFileName(final PrintWriter out, final String fileName, final String exposurePublicOrPrivate) {
+    private void successFileName(final PrintWriter out,
+            final String fileName,
+            final String exposurePublicOrPrivate) {
         try {
             flush(out).print(formatTuple(Ok, fileName, exposurePublicOrPrivate));
         } finally {
             out.close();
         }
+
     }
 
     @FIXME(issue = "Handle exception")
-    private void errorFileType(final PrintWriter out, final String fileName) {
+    private void errorFileType(final PrintWriter out,
+            final String fileName) {
         try {
             flush(out).print(formatTuple(Error, "wrong_file_type", fileName));
         } finally {
             out.close();
         }
+
     }
 
     @FIXME(issue = "Handle exception")
@@ -427,6 +427,7 @@ final public class ServletFileUploads extends HttpServlet {
         } finally {
             out.close();
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -438,12 +439,13 @@ final public class ServletFileUploads extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
+    protected void doGet(final HttpServletRequest request,
+            final HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request
      * @param response servlet response
@@ -451,12 +453,13 @@ final public class ServletFileUploads extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(final HttpServletRequest request, final HttpServletResponse response)
+    protected void doPost(final HttpServletRequest request,
+            final HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
      * @return a String containing servlet description
      */

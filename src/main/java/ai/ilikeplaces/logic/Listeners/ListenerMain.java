@@ -4,6 +4,7 @@ import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.jpa.QueryParameter;
+import ai.ilikeplaces.logic.crud.*;
 import ai.ilikeplaces.widgets.Photo$Description;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,9 +42,8 @@ public class ListenerMain implements ItsNatServletRequestListener {
             "document.getItsNatDoc().addEventMonitor(document.monitor); \n" +
             "/*Function for gettling LocationId from hidden variable*/\n" +
             "function getLocationId(){return document.getElementById('" + LocationId + "').value;}\n";
-    final private Properties p_ = new Properties();
-    private Context context = null;
     private CrudServiceLocal<Location> crudServiceLocal = null;
+    private RLocationLocal rLocationLocal_;
     final private Logger logger = LoggerFactory.getLogger(ListenerMain.class);
 
     /**
@@ -56,25 +56,17 @@ public class ListenerMain implements ItsNatServletRequestListener {
         init:
         {
             try {
+                final Properties p_ = new Properties();
                 p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
-                context = new InitialContext(p_);
-                if (context == null) {
-                    log.append("\nVARIABLE context IS NULL! ");
-                    log.append(context);
-                    break init;
-                }
+                final Context context = new InitialContext(p_);
 
                 crudServiceLocal = (CrudServiceLocal<Location>) context.lookup("CrudServiceLocal");
-                logger.info("" + crudServiceLocal.hashCode());
-                if (crudServiceLocal == null) {
-                    log.append("\nVARIABLE crudServiceLocal_ IS NULL! ");
-                    log.append(crudServiceLocal);
-                    break init;
 
-                }
+                rLocationLocal_ = (RLocationLocal) context.lookup("RLocationLocal");
+
             } catch (NamingException ex) {
-                log.append("\nSORRY! COULD NOT INITIALIZE " + getClass().getName() + " SERVLET DUE TO A NAMING EXCEPTION!");
-                logger.error("\nSORRY! COULD NOT INITIALIZE " + getClass().getName() + " DUE TO A NAMING EXCEPTION!", ex);
+                log.append("SORRY! COULD NOT INITIALIZE " + getClass().getName() + " SERVLET DUE TO A NAMING EXCEPTION!");
+                logger.error("SORRY! COULD NOT INITIALIZE " + getClass().getName() + " DUE TO A NAMING EXCEPTION!", ex);
                 break init;
             }
 
@@ -109,19 +101,11 @@ public class ListenerMain implements ItsNatServletRequestListener {
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
                 itsNatDocument.addCodeToSend(JsCodeToSend);
 
-                final String locationName_ = location;
 
-                final Location loc_ = new Location();
+                final Location loc_ = rLocationLocal_.doRLocation(location, null);
 
-                loc_.setLocationName(locationName_);
-
-                final List<Location> existingLocations = crudServiceLocal.findWithNamedQuery(Location.FindAllLocationsByName,
-                        QueryParameter.with("locationName", loc_.getLocationName()).parameters());
-
-                final int resultSetSize = existingLocations.size();
-
-                if (resultSetSize == 1) {
-                    final Location existingLocation_ = existingLocations.get(0);
+                if (loc_ != null) {
+                    final Location existingLocation_ = loc_;
 
                     setLocationIdForJSReference:
                     {
@@ -134,18 +118,14 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                     $("Main_center_main").appendChild(
                             $(MarkupTag.P).appendChild(
-                            hTMLDocument__.createTextNode(
+                            hTMLDocument__.createTextNode("\nINFO:" +
                             existingLocation_.getLocationInfo() +
-                            ":" +
+                            "\nSUPERSET:" +
                             existingLocation_.getLocationSuperSet() +
-                            ":" +
+                            "\nTOSTRING:" +
                             existingLocation_.toString(true))));
                     List<PublicPhoto> listPublicPhoto = existingLocation_.getPublicPhotos();
-                    logger.info("Hello, number of photos:" + String.valueOf(listPublicPhoto.size()));
-                    logger.debug("DEBUG MSG FOR TESTING");
-                    LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
-                    StatusPrinter.print(lc);
-
+                    logger.info("Hello, number of photos:{}", listPublicPhoto.size());
 
 
                     int i = 0;
@@ -176,14 +156,10 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         }
                     }
 
-                } else if (resultSetSize == 0) {
-                    $("Main_center_main").appendChild(($(MarkupTag.P).appendChild(
-                            hTMLDocument__.createTextNode("<a href=\"#\" onClick=\"javascript:alert('clicked');\">Click here to create</a>"))));
-                    //crudServiceLocal.create(loc_);
-                } else if (resultSetSize > 1) {
-                    $("Main_center_main").appendChild(($(MarkupTag.P).appendChild(hTMLDocument__.createTextNode("Many entries!"))));
                 } else {
-                    throw new IllegalStateException("SORRY! I HAVE A LOCALTION RESLULTSET < 0 WHICH IS NOT POSSIBLE!");
+                    $("Main_center_main").appendChild(($(MarkupTag.P).appendChild(
+                            hTMLDocument__.createTextNode("Create Location"))));
+                    //crudServiceLocal.create(loc_);
                 }
 
             }

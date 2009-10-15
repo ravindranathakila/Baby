@@ -72,6 +72,22 @@ User points on places - spider man
 
             Showoff - Can facilitate a list of things done by user at locations
 
+10.40. Friends can ask for favors. Always switch gender.
+
+10.40.00. Oblige list (People whom a user asked favors from and what they were)
+
+10.40.10. I don't know how to use this. Pleas help me.
+
+10.50. During signup, use the localized data.
+
+10.50.10. Check the localized userbase. Handle more and less scenarios.
+            If there are a lot of users, then tell the user he is late, help him
+            find his/her friends, and help him/her gain some recognition.
+            If there are only a few, use the "be the first" approach. e.g. be
+            the first to tell your friends about this. (they follow you).
+
+10.60. Follower competition. Who has more gets followed by the friend who has
+        less.
 
 
 20. Travel
@@ -103,9 +119,22 @@ User points on places - spider man
 ========
 
 50.10. Features hidden and exposed after adding business value.
-            e.g. Uploading 100 Photos
 
-50.10.10 Vicinity search
+50.10.00. Competition types
+
+50.10.00.10.  Uploading 100 Photos
+
+50.10.00.20. Getting 10 Followers
+
+50.10.10. Prize/Discover Types
+
+50.10.10.10. Discover
+
+50.10.10.10.10 Vicinity search
+
+50.10.10.20. Prize
+
+50.10.10.20.10 Announce to friends/entire userbase about the prize
 
 50.10. Stupid hackers box
             e.g. Let a stupid hacker misuse a feature. Use him to add value.
@@ -124,14 +153,91 @@ User points on places - spider man
 
 60.50
 
+70. Competitors
+===============
+
+70.10. Make each competitor a complementor.
+            Let users add links to them or you can add them as further info.
+            Give them traffic and tell them not to let users get lost, instead,
+            send them to ilikeplaces.
+
+
+80. Text Content
+================
+
+80.00. An image is worth a 1000 words. Thats why we chose to use photos.
+        Remember that!
+
+80.10. A Link is worth a thousand words too! So we provide links! This helps
+        GOTO: 70.
 
 
 100.00. Money
 =============
 100.10. $ Ad uploads
 
+100.10.10. Ads for self photos
+
+100.10.20. Ads for non-self photos
+
 100.20. Static Pages
+
+100.30. Admin public photo locking for advertisements
 
 ABBREVATIONS
 
+
+PREDEPLOY AND POSTBUG
+
+Check if ALL public methods of SLB and SFB have @Override.
+If not put them in interface
+
+Check if ALL SLB and SFB implement interfaces
+
+Check if implemented interfaces are annotated @Local
+
+
 OP OPTIONAL
+
+
+
+        "click",
+        "dblclick", 
+        "mousedown",
+        "mouseup",  
+        "mouseover",
+        "mousemove",
+        "mouseout", 
+
+        "keypress", 
+        "keydown",  
+        "keyup",    
+
+        "load",     
+        "unload",   
+        "abort",    
+        "error",    
+        "resize",   
+        "scroll",   
+        "select",   
+        "change",   
+        "submit",   
+        "reset",    
+        "focus",    
+        "blur",     
+
+        "DOMFocusIn"
+        "DOMFocusOut"
+        "DOMActivate",
+
+        "DOMSubtreeModified"
+        "DOMNodeInserted"
+        "DOMNodeRemoved"
+        "DOMAttrModified"
+        "DOMCharacterDataModified"
+        "DOMNodeInsertedIntoDocument"
+        "DOMNodeRemovedFromDocument"
+
+        "beforeunload"
+
+        "DOMContentLoaded"
