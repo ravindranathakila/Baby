@@ -5,7 +5,7 @@ import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.logic.crud.*;
-import ai.ilikeplaces.widgets.Photo$Description;
+import ai.ilikeplaces.logic.Listeners.widgets.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.naming.NamingException;

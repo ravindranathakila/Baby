@@ -1,4 +1,4 @@
-package ai.ilikeplaces.widgets;
+package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.logic.Listeners.MarkupTagFace;
 import ai.ilikeplaces.servlets.Controller;

@@ -1,4 +1,4 @@
-package ai.ilikeplaces.widgets;
+package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivatePhoto;
