@@ -12,7 +12,7 @@ import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
 import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.widgets.PhotoCRUD;
+import ai.ilikeplaces.logic.Listeners.widgets.PhotoCRUD;
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 import java.util.Properties;
 import javax.naming.Context;
