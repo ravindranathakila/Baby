@@ -104,9 +104,12 @@ final public class Controller extends HttpServletWrapper {
         Controller.Page.pc_close,
         Controller.Page.pc,
         Controller.Page.pc_photo,
-        Controller.Page.pc_photo_description,
         Controller.Page.pc_photo_permalink,
-        Controller.Page.pc_delete) {
+        Controller.Page.pc_photo_name,
+        Controller.Page.pc_update_name,
+        Controller.Page.pc_photo_description,
+        Controller.Page.pc_delete,
+        Controller.Page.pc_update_description) {
 
             @Override
             public String toString() {
@@ -147,9 +150,12 @@ final public class Controller extends HttpServletWrapper {
         final static public String pc_close = "pc_close";
         final static public String pc = "pc";
         final static public String pc_photo = "pc_photo";
-        final static public String pc_photo_description = "pc_photo_description";
         final static public String pc_photo_permalink = "pc_photo_permalink";
+        final static public String pc_photo_name = "pc_photo_name";
+        final static public String pc_update_name = "pc_update_name";
+        final static public String pc_photo_description = "pc_photo_description";
         final static public String pc_delete = "pc_delete";
+        final static public String pc_update_description = "pc_update_description";
 
         private Page(final String path__, final String... ids__) {
             PrettyURLMap_.put(this, path__);

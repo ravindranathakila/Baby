@@ -21,8 +21,20 @@ Spider man
 Free access mail bomb or follower challenge
 User points on places - spider man
 
+
 00. Stepping
 ...---^^^^^^
+00.00 C2I
+00.00.10 CRUD Image where U = Image Attribute Updates
+00.00.20 CRUD Image Admin with Image Locks
+00.00.30 Create Admin Account(Subscribe Actually, which changes role)
+            If new user, then create a new account
+00.00.50 Upload Ad Links (To existing image)
+00.00.60 Upload Ad Links With Image
+00.00.70 Admin Ad Link Management
+00.00.80 Interactive Ads Widget(Call me, Mail Me, More info(BOOK), Bad Ad, Like)
+
+
 
 00.05. Image Links module
 00.10. Inbox Outbox

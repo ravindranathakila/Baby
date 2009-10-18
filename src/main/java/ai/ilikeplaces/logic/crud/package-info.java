@@ -18,7 +18,11 @@ conventions = {
     "U=Update\n" +
     "D=Delete\n" +
     "Implies the operation, instead of saying set or get, we say do. For" +
-    " Example, doEntity1UEntityB, which implies \"Do Entity 1 Update Entity2."})
+    " Example, doEntity1UEntityB, which implies \"Do Entity 1 Update Entity2.",
+    "The private classes show attitude \"I don't care who calls me, as long as I can " +
+    "work on the database to make a consistant crud without leading to stale data\"." +
+    "The public classes show attitude \"I do care who calls me. I will make sure " +
+    "this guy can really do this operation, and if he sends me the correct data\"."})
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;

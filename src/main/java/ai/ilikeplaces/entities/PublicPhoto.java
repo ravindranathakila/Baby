@@ -1,11 +1,10 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.FieldPreamble;
 import ai.ilikeplaces.doc.*;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
-import org.slf4j.Logger;
+import java.util.UUID;
 import org.slf4j.LoggerFactory;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -22,42 +21,33 @@ import javax.persistence.Temporal;
 @Entity
 public class PublicPhoto implements Serializable {
 
+    final private UUID uUID = UUID.randomUUID();
     private static final long serialVersionUID = 1L;
-    private Long publicPhotoId;
-
+    private Long publicPhotoId = null;
     private String publicPhotoFilePath;
-
     @FieldPreamble(description = "The path should be very random as it will be exposed to the www." +
     "Also make sure this supports good SEO.")
     private String publicPhotoURLPath;
-
     private String publicPhotoName;
-
     private String publicPhotoDescription;
-
     @FieldPreamble(description = "Required to calculate ranking")
     private Date publicPhotoUploadDate;
-
     @FieldPreamble(description = "Required to calculate rank position")
     private Date publicPhotoTakenDate;
-
     @FieldPreamble(description = "Required to calculate rank position")
     private Long publicPhotoRankUnits;
-
     @FieldPreamble(description = "Required to calculate rank position")
     private Long publicPhotoRankTurns;
-
     @FieldPreamble(description = "Required when rebuilding a database from scratch someday." +
     "Since the whole concept of ilikeplaces relies on content richness, preserving this in this table important.")
     private Location location;
-
     @FieldPreamble(description = "Who uploaded this image? Wil he request to delete it? " +
     "Privacy important? " +
     "Lets preserve the info.")
     private HumansPublicPhoto humansPublicPhoto;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getPublicPhotoId() {
         return publicPhotoId;
     }
@@ -90,7 +80,7 @@ public class PublicPhoto implements Serializable {
         this.publicPhotoDescription = publicPhotoDescription;
     }
 
-    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     public HumansPublicPhoto getHumansPublicPhoto() {
         return humansPublicPhoto;
     }
@@ -99,8 +89,8 @@ public class PublicPhoto implements Serializable {
         this.humansPublicPhoto = humansPublicPhoto;
     }
 
-    @FIXME(issue="Break Location table by this field. i.e. LocationsPublicPhoto(P.K. = locationId), as that will ease transaction")
-    @ManyToOne(cascade={CascadeType.MERGE})
+    @FIXME(issue = "Break Location table by this field. i.e. LocationsPublicPhoto(P.K. = locationId), as that will ease transaction")
+    @ManyToOne(cascade = {CascadeType.MERGE})
     public Location getLocation() {
         return location;
     }
@@ -133,11 +123,11 @@ public class PublicPhoto implements Serializable {
     public void setPublicPhotoTakenDate(Date publicPhotoTakenDate) {
         this.publicPhotoTakenDate = publicPhotoTakenDate;
     }
-    
+
     public String getPublicPhotoURLPath() {
         return publicPhotoURLPath;
     }
-    
+
     public void setPublicPhotoURLPath(String publicPhotoURLPath) {
         this.publicPhotoURLPath = publicPhotoURLPath;
     }
@@ -151,30 +141,48 @@ public class PublicPhoto implements Serializable {
         this.publicPhotoUploadDate = publicPhotoUploadDate;
     }
 
-
-
-//    @Override
-//    public int hashCode() {
-//        int hash = 5;
-//        hash = 37 * hash + (this.publicPhotoId != null ? this.publicPhotoId.hashCode() : 0);
-//        hash = 37 * hash + (this.publicPhotoFilePath != null ? this.publicPhotoFilePath.hashCode() : 0);
-//        hash = 37 * hash + (this.publicPhotoURLPath != null ? this.publicPhotoURLPath.hashCode() : 0);
-//        return hash;
-//    }
+    @FIXME(issue = "VERIFY THAT UUID IS NOT RESOURCE INTENSIVE.")
+    @Override
+    public int hashCode() {
+        return (int) (this.getPublicPhotoId() != null ? this.getPublicPhotoId() : uUID.hashCode());
+    }
 
     @Override
-    @SuppressWarnings({"EqualsWhichDoesntCheckParameterClass", "EqualsWhichDoesntCheckParameterClass"})
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-//        if (!(object instanceof PublicPhoto)) {
-//            return false;
-//        }
-//        PublicPhoto other = (PublicPhoto) object;
-//        if ((this.publicPhotoId == null && other.publicPhotoId != null) || (this.publicPhotoId != null && !this.publicPhotoId.equals(other.publicPhotoId))) {
-//            return false;
-//        }
-//        return true;
-        throw new UnsupportedOperationException("PLEASE PROVIDE THE BODY OF THIS EQUALS METHOD!");
+    public boolean equals(Object obj) {
+        boolean returnVal = false;
+        equals:
+        {
+            if (obj == null) {
+                returnVal = false;
+                break equals;
+            }
+            if (getClass() != obj.getClass()) {
+                returnVal = false;
+                break equals;
+            }
+            final PublicPhoto other = (PublicPhoto) obj;
+            /*Are both not null?*/
+            if (this.getPublicPhotoId() != null && other.getPublicPhotoId() != null) {
+                if (this.getPublicPhotoId().equals(other.getPublicPhotoId())) {
+                    returnVal = true;
+                    break equals;
+                }
+            } else if (this.getPublicPhotoId() == null && other.getPublicPhotoId() == null) {/*Are both null?*/
+                /*i.e. Still not persisted. Lets compare UUIDs*/
+                if (this.uUID.equals(other.uUID)) {
+                    returnVal = true;
+                    break equals;
+                } else {
+                    returnVal = false;
+                    break equals;
+                }
+            } else {/*Only one is null*/
+                returnVal = false;
+                break equals;
+            }
+
+        }
+        return returnVal;
     }
 
     /**
@@ -185,23 +193,21 @@ public class PublicPhoto implements Serializable {
     public String toString() {
         String toString_ = new String(getClass().getName());
         try {
-            final Field[] fields = {getClass().getDeclaredField("locationId"),
-                getClass().getDeclaredField("locationName"),
-                getClass().getDeclaredField("locationSuperSet")};
+            final Field[] fields = {getClass().getDeclaredField("publicPhotoId")};
 
             for (final Field field : fields) {
                 try {
                     toString_ += "\n{" + field.getName() + "," + field.get(this) + "}";
                 } catch (IllegalArgumentException ex) {
-                    LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
+                    LoggerFactory.getLogger(Location.class.getName()).error(null, ex);
                 } catch (IllegalAccessException ex) {
-                    LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
+                    LoggerFactory.getLogger(Location.class.getName()).error(null, ex);
                 }
             }
         } catch (NoSuchFieldException ex) {
-            LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
+            LoggerFactory.getLogger(Location.class.getName()).error(null, ex);
         } catch (SecurityException ex) {
-            LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
+            LoggerFactory.getLogger(Location.class.getName()).error(null, ex);
         }
 
         return toString_;
