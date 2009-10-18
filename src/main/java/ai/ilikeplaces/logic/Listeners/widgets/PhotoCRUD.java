@@ -1,10 +1,10 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.PrivatePhoto;
-import ai.ilikeplaces.entities.PublicPhoto;
+import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.logic.crud.HumanCRUDPublicPhotoLocal;
 import ai.ilikeplaces.servlets.Controller.Page;
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 import java.util.Properties;
@@ -33,7 +33,9 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
     private Context context = null;
     private CrudServiceLocal<PublicPhoto> crudPublicPhoto = null;
     private CrudServiceLocal<PrivatePhoto> crudPrivatePhoto = null;
+    private HumanCRUDPublicPhotoLocal humanCRUDPublicPhotoLocal_ = null;
     final private Logger logger = LoggerFactory.getLogger(PhotoCRUD.class.getName());
+    final String humanId;
 
     /**
      *
@@ -41,8 +43,10 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
      * @param appendToElement__
      */
     @SuppressWarnings("unchecked")
-    public PhotoCRUD(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final Object t_) {
+    public PhotoCRUD(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final Object t_, final String humanId) {
         super(itsNatDocument__, Page.PhotoCRUD, appendToElement__);
+
+        this.humanId = humanId;
 
         boolean initializeFailed = true;
         final StringBuilder log = new StringBuilder();
@@ -58,6 +62,7 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
                     this.publicPhoto = (PublicPhoto) t_;
                     this.privatePhoto = null;
                     crudPublicPhoto = (CrudServiceLocal<PublicPhoto>) context.lookup("CrudServiceLocal");
+                    humanCRUDPublicPhotoLocal_ = (HumanCRUDPublicPhotoLocal) context.lookup("HumanCRUDPublicPhotoLocal");
                     logger.info("HELLO, HASH:" + crudPublicPhoto.hashCode());
 
                 } else if (t_ instanceof PrivatePhoto) {
@@ -73,7 +78,7 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
 
             } catch (Exception ex) {
                 log.append("\nSORRY! COULD NOT INITIALIZE " + getClass().getName() + " SERVLET DUE TO AN EXCEPTION!");
-                logger.info( "\nSORRY! COULD NOT INITIALIZE " + getClass().getName() + " DUE TO AN EXCEPTION!", ex);
+                logger.info("\nSORRY! COULD NOT INITIALIZE " + getClass().getName() + " DUE TO AN EXCEPTION!", ex);
                 break init;
             }
 
@@ -113,8 +118,9 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
 
             @Override
             public void handleEvent(final Event evt_) {
-                crudPublicPhoto.delete(PublicPhoto.class, publicPhoto.getPublicPhotoId());
-                remove(self,evt_.getTarget());
+                humanCRUDPublicPhotoLocal_.doHumanDPublicPhoto(humanId, publicPhoto.getPublicPhotoId());
+                remove(self, evt_.getTarget());
+                toggleVisible(pc_close);
             }
         }, false);
     }

@@ -10,7 +10,7 @@ import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
-import ai.ilikeplaces.logic.crud.HumanCPublicPhotoLocal;
+import ai.ilikeplaces.logic.crud.HumanCRUDPublicPhotoLocal;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -49,7 +49,7 @@ final public class ServletFileUploads extends HttpServlet {
     /*Container Related Services*/
     private CrudServiceLocal<Human> crudServiceHuman_ = null;
     private CrudServiceLocal<Location> crudServiceLocation_ = null;
-    private HumanCPublicPhotoLocal humanCPublicPhotoLocal_ = null;
+    private HumanCRUDPublicPhotoLocal humanCPublicPhotoLocal_ = null;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -83,7 +83,7 @@ final public class ServletFileUploads extends HttpServlet {
 //                    log.append(crudServiceLocation_);
 //                    break init;
 //                }
-                humanCPublicPhotoLocal_ = (HumanCPublicPhotoLocal) context.lookup("HumanCPublicPhotoLocal");
+                humanCPublicPhotoLocal_ = (HumanCRUDPublicPhotoLocal) context.lookup(HumanCRUDPublicPhotoLocal.NAME);
                 if (humanCPublicPhotoLocal_ == null) {
                     log.append("\nVARIABLE humanCPublicPhotoLocal_ IS NULL! ");
                     log.append(humanCPublicPhotoLocal_);

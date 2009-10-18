@@ -109,7 +109,7 @@ public class ListenerHuman implements ItsNatServletRequestListener {
                     HumansPublicPhoto humansPublicPhoto = crudHumansPublicPhoto_.find(HumansPublicPhoto.class, sessionBoundBadReferenceWrapper.boundInstance.getLoggedOnUserId());
 
                     for (final PublicPhoto publicPhoto : humansPublicPhoto.getPublicPhotos()) {
-                        new PhotoCRUD(itsNatDocument__, $(Controller.Page.Main_center_main), publicPhoto) {
+                        new PhotoCRUD(itsNatDocument__, $(Controller.Page.Main_center_main), publicPhoto, humansPublicPhoto.getHumanId()) {
 
                             @Override
                             protected void init() {

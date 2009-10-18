@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
+import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.logic.Listeners.MarkupTagFace;
 import ai.ilikeplaces.servlets.Controller;
 import java.util.HashSet;
@@ -131,6 +132,7 @@ public abstract class AbstractWidgetListener {
         return Controller.GlobalPageIdRegistry.get(page);
     }
 
+    @NOTE(note = "ASSUMING THIS METHOD CANNOT BE CALLED  AFTER hide() IF ALL ELEMENTS ARE HIDDEN.")
     protected void toggleVisible(final String toggleLink) {
         final Set<String> widgetElements = getWidgetElements();
         if (visible) {
@@ -161,6 +163,14 @@ public abstract class AbstractWidgetListener {
         }
     }
 
+    @NOTE(note = "toogleVisitble CANNOT BE CALLED IF ALL ELEMENTS ARE HIDDEN. SO WE JUST HIDE OVERRIDING STYLES AS HIDE WOULD BE PERMANENT.")
+    protected void hide(final String toggleLink) {
+        final Set<String> widgetElements = getWidgetElements();
+        for (String elementId__ : widgetElements) {
+            $$(elementId__).setAttribute("style", "display:none;");
+        }
+    }
+
     final protected Element $$(MarkupTagFace tagNameInAllCaps) {
         return hTMLDocument_.createElement(tagNameInAllCaps.toString());
     }
@@ -169,6 +179,5 @@ public abstract class AbstractWidgetListener {
         logger.debug("HELLO, REMOVING WIDGET LISTENER");
         itsNatDocument_.removeEventListener(eventTarget_, "click", eventListener_, false);
     }
-
     final static Logger logger = LoggerFactory.getLogger(AbstractWidgetListener.class);
 }
