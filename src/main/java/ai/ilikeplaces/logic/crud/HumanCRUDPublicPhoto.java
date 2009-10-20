@@ -1,5 +1,10 @@
 package ai.ilikeplaces.logic.crud;
 
+import ai.ilikeplaces.logic.crud.unit.DPublicPhotoLocal;
+import ai.ilikeplaces.logic.crud.unit.CPublicPhotoLocal;
+import ai.ilikeplaces.logic.crud.unit.UPublicPhotoLocal;
+import ai.ilikeplaces.logic.crud.unit.RHumanLocal;
+import ai.ilikeplaces.logic.crud.unit.RLocationLocal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ai.ilikeplaces.doc.*;
@@ -27,11 +32,9 @@ import javax.persistence.CascadeType;
 final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements HumanCRUDPublicPhotoLocal {
 
     @EJB
-    private RLocationLocal rLocationLocal_;
-    @EJB
-    private RHumanLocal rHumanLocal_;
-    @EJB
     private CPublicPhotoLocal cPublicPhotoLocal_;
+    @EJB
+    private UPublicPhotoLocal uPublicPhotoLocal_;
     @EJB
     private DPublicPhotoLocal dPublicPhotoLocal_;
 
@@ -44,6 +47,16 @@ final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements 
     private boolean doHumanCPublicPhoto(final String humanId, final long locationId, PublicPhoto publicPhoto) throws javax.ejb.EJBTransactionRolledbackException {
         cPublicPhotoLocal_.doCPublicPhotoLocal(humanId, locationId, publicPhoto);
         return true;
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    private boolean doHumanDPublicPhoto(final long publicPhotoId) {
+        return dPublicPhotoLocal_.doDPublicPhotoLocal(publicPhotoId);
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public boolean doHumanUPublicPhotoDescription(final long publicPhotoId, final String publicPhotoDescription) {
+        return uPublicPhotoLocal_.doUPublicPhotoDescriptionLocal(publicPhotoId, publicPhotoDescription);
     }
 
     @FIXME(issue = "When adding a location, there cannot be two equal location names such that super locations are equal too. Please update specific CRUD service. Also His As, My As.")
@@ -59,21 +72,24 @@ final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements 
 
         return doHumanCPublicPhoto(humanId, locationId, publicPhoto);
     }
-    final static Logger logger = LoggerFactory.getLogger(HumanCRUDPublicPhoto.class);
 
     @Override
     public boolean doHumanRPublicPhoto() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /*BEGINING OF NON TRANSACTIONAL METHODS*/
     @Override
-    public boolean doHumanUPublicPhoto() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    @TODO(task = "VERIFY IF IT IS THE RIGHT HUMAN BEFORE DELETING")
+    public boolean doHumanUPublicPhotoDescription(final String humanId, final long publicPhotoId, final String publicPhotoDescription) {
+        return doHumanUPublicPhotoDescription(publicPhotoId, publicPhotoDescription);
     }
 
     @Override
-    @TODO(task="VERIFY IF IT IS THE RIGHT HUMAN BEFORE DELETING")
+    @TODO(task = "VERIFY IF IT IS THE RIGHT HUMAN BEFORE DELETING")
     public boolean doHumanDPublicPhoto(final String humanId, final long publicPhotoId) {
-        return dPublicPhotoLocal_.doDPublicPhotoLocal(publicPhotoId);
+        return doHumanDPublicPhoto(publicPhotoId);
     }
+    /*END OF NON TRANSACTIONAL METHODS*/
+    final static Logger logger = LoggerFactory.getLogger(HumanCRUDPublicPhoto.class);
 }

@@ -1,8 +1,6 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.entities.PublicPhoto;
 import javax.ejb.Local;
 
 /**
@@ -11,7 +9,10 @@ import javax.ejb.Local;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Local
-public interface CPublicPhotoLocal {
+public interface DBLocal {
 
-    public PublicPhoto doCPublicPhotoLocal(String humanId, long locationId, PublicPhoto publicPhoto );
+    final static public String NAME = DBLocal.class.getSimpleName();
+
+    public HumanCRUDPublicPhotoLocal getHumanCRUDPublicPhotoLocal();
+
 }

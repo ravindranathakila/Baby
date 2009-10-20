@@ -150,6 +150,7 @@ public abstract class AbstractWidgetListener {
         } else {
             for (String elementId__ : widgetElements) {
                 if (!elementId__.equals(toggleLink)) {
+                    @FIXME(issue="THIS IS WRONG. CSS CAN HAVE NECESSARY SPACES. E.G. backgroound-image:0% 0% url(/path/image.png);")
                     final String existingVal = $$(elementId__).getAttribute("style").replace(" ", "");
 
                     if (existingVal.contains("display:none")) {

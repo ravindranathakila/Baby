@@ -1,4 +1,4 @@
-package ai.ilikeplaces.logic.crud;
+package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
@@ -11,7 +11,7 @@ import javax.ejb.Local;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Local
-public interface RPublicPhotoLocal {
+public interface CPublicPhotoLocal {
 
-    public PublicPhoto doRPublicPhotoLocal(String humanId, long locationId, PublicPhoto publicPhoto );
+    public PublicPhoto doCPublicPhotoLocal(String humanId, long locationId, PublicPhoto publicPhoto );
 }

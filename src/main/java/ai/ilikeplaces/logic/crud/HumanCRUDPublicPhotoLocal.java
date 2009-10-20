@@ -17,7 +17,7 @@ public interface HumanCRUDPublicPhotoLocal {
 
     public boolean doHumanRPublicPhoto();
 
-    public boolean doHumanUPublicPhoto();
+    public boolean doHumanUPublicPhotoDescription(final String humanId, final long publicPhotoId, final String publicPhotoDescription);
 
-    public boolean doHumanDPublicPhoto(final String humanId, final long publicPhotoId) ;
+    public boolean doHumanDPublicPhoto(final String humanId, final long publicPhotoId);
 }

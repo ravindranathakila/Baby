@@ -53,6 +53,7 @@ final public class Controller extends HttpServletWrapper {
         Controller.Page.Main_left_column,
         Controller.Page.Main_right_column,
         Controller.Page.Main_sidebar,
+        Controller.Page.Main_login_widget,
         Controller.Page.hot,
         Controller.Page.cool) {
 
@@ -143,6 +144,7 @@ final public class Controller extends HttpServletWrapper {
         final static public String Main_left_column = "Main_left_column";
         final static public String Main_right_column = "Main_right_column";
         final static public String Main_sidebar = "Main_sidebar";
+        final static public String Main_login_widget = "Main_login_widget";
         final static public String hot = "hot";
         final static public String cool = "cool";
         /*PhotoCRUD Specific IDs*/

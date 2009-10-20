@@ -1,4 +1,4 @@
-package ai.ilikeplaces.logic.crud;
+package ai.ilikeplaces.logic.crud.unit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +28,14 @@ public class RHuman extends AbstractSLBCallbacks implements RHumanLocal {
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @TransactionAttribute(TransactionAttributeType.MANDATORY)
     public Human doRHuman(String humandId) {
+        return crudServiceLocal_.find(Human.class, humandId);
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public Human doNTxRHuman(String humandId) {
         return crudServiceLocal_.find(Human.class, humandId);
     }
 

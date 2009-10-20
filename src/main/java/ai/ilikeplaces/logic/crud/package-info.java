@@ -9,9 +9,16 @@ conventions = {
     "Public classes here are always one entity handling " +
     "another. For example A creates B, so the class ACB is public.\n" +
     "The rest of the classes are visible only to the package.",
-    "CrudeService in injected only to the package visible" +
+    "CrudService in injected only to the package visible" +
     " only classes. In most cases, there are pure entitiy handles. i.e. NOT one" +
     " entity handling a nother.",
+    "CrudService never creates a transaction. It SUPPORTS and MANDATORY. Hence " +
+    "the callers should handle the transactions. The classes containing CrudService " +
+    "always ENFORCE a transaction level. i.e. MANDATORY, NOT_SUPPORTED or REQUIRES_NEW. " +
+    "Please note that each one of these will have a seperate method such as doCreate, doDirtyCreate, doNTxCreate " +
+    "whete NTx stands for transactional(meaning do it in a new transaction). " +
+    "Always remember that database cleanliness(handling null fields) is done by classes " +
+    "containing CrudService",
     "As\n" +
     "C=Create\n" +
     "R=Read\n" +
