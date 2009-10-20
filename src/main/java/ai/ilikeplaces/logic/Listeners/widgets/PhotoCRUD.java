@@ -4,6 +4,8 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.crud.DBLocal;
 import ai.ilikeplaces.logic.crud.HumanCRUDPublicPhotoLocal;
 import ai.ilikeplaces.servlets.Controller.Page;
 import static ai.ilikeplaces.servlets.Controller.Page.*;
@@ -104,6 +106,8 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
+        //logger.debug("DESCRIPTION:{}", $$(pc_photo_description).getTextContent());
+
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(pc_close), "click", new EventListener() {
 
             @Override
@@ -118,9 +122,19 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
 
             @Override
             public void handleEvent(final Event evt_) {
-                humanCRUDPublicPhotoLocal_.doHumanDPublicPhoto(humanId, publicPhoto.getPublicPhotoId());
+                DB.getHumanCRUDPublicPhotoLocal(true).doHumanDPublicPhoto(humanId, publicPhoto.getPublicPhotoId());
                 remove(self, evt_.getTarget());
-                toggleVisible(pc_close);
+                //toggleVisible(pc_close);
+            }
+        }, false);
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(pc_photo_description), "blur", new EventListener() {
+
+            final EventListener self = this;
+
+            @Override
+            public void handleEvent(final Event evt_) {//doHumanUPublicPhotoDescription
+                logger.debug("DESCRIPTION ON EVENT:{}", ((Element) evt_.getTarget()).getTextContent());
+                DB.getHumanCRUDPublicPhotoLocal(true).doHumanUPublicPhotoDescription(humanId, publicPhoto.getPublicPhotoId(), "@TODO ADD THE TEXT FROM TEXT AREA HERE!");
             }
         }, false);
     }

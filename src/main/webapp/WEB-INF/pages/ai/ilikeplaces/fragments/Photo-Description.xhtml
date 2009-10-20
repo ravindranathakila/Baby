@@ -5,17 +5,21 @@
         <title>Photo-Description</title>
     </head>
     <body>
-        <div class="span-6">
-            This is the title
+        <div class="span-1 last push-6" id="close">
+            <a href="#"  class="btn gray" style="font-size:4px;"><i></i><span><span></span><i></i>o</span></a>
         </div>
-        <div id="close"class="span-1 last">
-            <a href="#" class="btn yellow" style="font-size:8px;"><i></i><span><span></span><i></i>&nbsp;X&nbsp;</span></a>
+        <div class="span-7 last" id="pd" onmouseover="javascript:$('a[rel=shareit], #shareit-box').mouseenter(shareEnter);"  style="background:repeat url(/cdn/gray_repeat.png);">
+            <div class="span-1">
+                &nbsp;
+            </div>
+            <div class="span-6 last">
+                <img id="pd_photo" src="#" width="96px" alt="Mail" title="Mail" style="float:left;"></img>
+                <span id="pd_photo_description" style="font-family:cursive; float:right;text-align:right;"></span><br/>
+                <a href="#" rel="shareit" id="pd_photo_permalink" style="float:right;"class="btn yelow" onclick="javascript:return false;"><i></i><span><span></span><i></i>Share it!</span></a><br/>
+            </div>
         </div>
-        <div class="span-7 last" id="pd" onmouseover="javascript:$('a[rel=shareit], #shareit-box').mouseenter(shareEnter);">
-            <img id="pd_photo" src="#" width="96px" alt="Mail" title="Mail" />
-            <span id="pd_photo_description"></span><br/>
-            <a href="#" rel="shareit" id="pd_photo_permalink" style="float:right;"class="btn yelow" onclick="javascript:return false;"><i></i><span><span></span><i></i>Share it!</span></a><br/>
+        <div class="span-7 last" style="height:60px;background:no-repeat 0% 0% url(/cdn/gray_bottom2.png);">
+            &nbsp;
         </div>
-        <hr/>
     </body>
 </html>

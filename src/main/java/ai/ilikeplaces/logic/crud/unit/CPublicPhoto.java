@@ -1,4 +1,4 @@
-package ai.ilikeplaces.logic.crud;
+package ai.ilikeplaces.logic.crud.unit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ import javax.ejb.Stateless;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-public class RPublicPhoto implements RPublicPhotoLocal {
+public class CPublicPhoto implements CPublicPhotoLocal {
 
     @EJB
     private CrudServiceLocal<Human> crudServiceHuman_;
@@ -27,12 +27,12 @@ public class RPublicPhoto implements RPublicPhotoLocal {
     @EJB
     private CrudServiceLocal<PublicPhoto> CrudServicPublicPhoto_;
 
-    public RPublicPhoto() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", RPublicPhoto.class, this.hashCode());
+    public CPublicPhoto() {
+        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", CPublicPhoto.class, this.hashCode());
     }
 
     @Override
-    public PublicPhoto doRPublicPhotoLocal(final String humanId, final long locationId, final PublicPhoto publicPhoto) {
+    public PublicPhoto doCPublicPhotoLocal(final String humanId, final long locationId, final PublicPhoto publicPhoto) {
         if (publicPhoto.getLocation() != null || publicPhoto.getHumansPublicPhoto() != null) {
             logger.warn("HEY! DON'T SET THE Location OR HumansPublicPhoto PARAMETERS OF PublicPhoto WHEN CALLING THIS METHOD!");
         }
@@ -49,5 +49,5 @@ public class RPublicPhoto implements RPublicPhotoLocal {
 
         return publicPhoto;
     }
-    final static Logger logger = LoggerFactory.getLogger(RPublicPhoto.class);
+    final static Logger logger = LoggerFactory.getLogger(CPublicPhoto.class);
 }

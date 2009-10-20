@@ -1,4 +1,4 @@
-package ai.ilikeplaces.logic.crud;
+package ai.ilikeplaces.logic.crud.unit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

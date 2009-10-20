@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.Listeners;
 
+import ai.ilikeplaces.logic.crud.unit.RLocationLocal;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.jpa.CrudServiceLocal;

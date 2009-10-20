@@ -1,4 +1,4 @@
-package ai.ilikeplaces.logic.crud;
+package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Location;
