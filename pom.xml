@@ -30,7 +30,7 @@
             <scope>provided</scope>
         </dependency>
     
-        <dependency>
+        <!--dependency>
             <groupId>ItsNat0.6</groupId>
             <artifactId>ItsNat</artifactId>
             <version>0.6</version>
@@ -64,6 +64,62 @@
             <version>0.6</version>
             <scope>system</scope>
             <systemPath>D:\1\adimpression\feasibility tests\downloads\ItsNat_0.6\fw_dist\lib\xml-apis.jar</systemPath>
+        </dependency-->
+        <dependency>
+            <groupId>ItsNat0.7</groupId>
+            <artifactId>ItsNat</artifactId>
+            <version>0.7</version>
+            <scope>system</scope>
+            <systemPath>D:\1\adimpression\itsnat\itsnat\fw_dist\lib\ItsNat.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ItsNat0.7</groupId>
+            <artifactId>nekohtml</artifactId>
+            <version>0.7</version>
+            <scope>system</scope>
+            <systemPath>D:\1\adimpression\itsnat\itsnat\fw_dist\lib\nekohtml.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ItsNat0.7</groupId>
+            <artifactId>serializer</artifactId>
+            <version>0.7</version>
+            <scope>system</scope>
+            <systemPath>D:\1\adimpression\itsnat\itsnat\fw_dist\lib\serializer.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ItsNat0.7</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>0.7</version>
+            <scope>system</scope>
+            <systemPath>D:\1\adimpression\itsnat\itsnat\fw_dist\lib\xercesImpl.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ItsNat0.7</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>0.7</version>
+            <scope>system</scope>
+            <systemPath>D:\1\adimpression\itsnat\itsnat\fw_dist\lib\xml-apis.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ItsNat0.7</groupId>
+            <artifactId>batik-dom</artifactId>
+            <version>0.7</version>
+            <scope>system</scope>
+            <systemPath>D:\1\adimpression\itsnat\itsnat\fw_dist\lib\batik-dom.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ItsNat0.7</groupId>
+            <artifactId>batik-util</artifactId>
+            <version>0.7</version>
+            <scope>system</scope>
+            <systemPath>D:\1\adimpression\itsnat\itsnat\fw_dist\lib\batik-util.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ItsNat0.7</groupId>
+            <artifactId>batik-xml</artifactId>
+            <version>0.7</version>
+            <scope>system</scope>
+            <systemPath>D:\1\adimpression\itsnat\itsnat\fw_dist\lib\batik-xml.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -110,6 +166,11 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>1.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
         </dependency>
         <dependency>
             <groupId>org.apache.openejb</groupId>
