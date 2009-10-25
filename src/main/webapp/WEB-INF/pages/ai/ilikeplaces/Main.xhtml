@@ -7,6 +7,61 @@
             Main
         </title>
         <style type="text/css">
+
+            .b1h, .b2h, .b3h, .b4h, .b2bh, .b3bh, .b4bh{font-size:1px; overflow:hidden; display:block;}
+            .b1h {height:1px; background:#aaa; margin:0 5px;}
+            .b2h, .b2bh {height:1px; background:#aaa; border-right:2px solid #aaa; border-left:2px solid #aaa; margin:0 3px;}
+            .b3h, .b3bh {height:1px; background:#aaa; border-right:1px solid #aaa; border-left:1px solid #aaa; margin:0 2px;}
+            .b4h, .b4bh {height:2px; background:#aaa; border-right:1px solid #aaa; border-left:1px solid #aaa; margin:0 1px;}
+            .b2bh, .b3bh, .b4bh {background: #ddd;}
+            .headh {background: #aaa; border-right:1px solid #aaa; border-left:0px solid #aaa;}
+            .headh h3 {margin: 0px 10px 0px 10px; padding-bottom: 3px;}
+            .contenth {background: #ddd; border-right:1px solid #aaa; border-left:0px solid #aaa;}
+            /*.contenth div {padding-top: 5px;}*/
+            .contenth div {margin-left: 12px; padding-top: 5px;}
+        </style>
+
+
+        <style type="text/css">
+            .spfy{display:block}
+            .spfy *{
+                display:block;
+                height:1px;
+                overflow:hidden;
+                font-size:.01em;
+                background:#b20000}
+            .spfy1{
+                margin-left:3px;
+                margin-right:3px;
+                padding-left:1px;
+                padding-right:1px;
+                border-left:1px solid #dd9191;
+                border-right:1px solid #dd9191;
+                background:#c53f3f}
+            .spfy2{
+                margin-left:1px;
+                margin-right:1px;
+                padding-right:1px;
+                padding-left:1px;
+                border-left:1px solid #f7e5e5;
+                border-right:1px solid #f7e5e5;
+                background:#c03030}
+            .spfy3{
+                margin-left:1px;
+                margin-right:1px;
+                border-left:1px solid #c03030;
+                border-right:1px solid #c03030;}
+            .spfy4{
+                border-left:1px solid #dd9191;
+                border-right:1px solid #dd9191}
+            .spfy5{
+                border-left:1px solid #c53f3f;
+                border-right:1px solid #c53f3f}
+            .spfyfg{
+                background:#b20000}
+            </style>
+
+            <style type="text/css">
             #shareit-box {
                 position:absolute;
                 display:none;
@@ -20,6 +75,8 @@
             #shareit-body {
                 width:138px; height:100px;
                 background:transparent url(/ilikeplaces/images/shareit.png);
+                border-color:black;
+                border-style:groove;
             }
 
             #shareit-blank {
@@ -254,73 +311,80 @@
                     }
                 }
             </script>
-            <div class="span-24 last"  id="Main_login_widget">
-                <div class="span-8">
-                    &nbsp; <br/>
-                </div>
-                <div class="span-16 last">
-                    <form method="POST" id="login" action="/ilikeplaces/login">
-                        <div class="span-6" style="height:25px">
-                            <div style="vertical-align:middle;">
-                                Username:<input type="text" id="Username" name="Username"/>
-                            </div>
-                        </div>
-                        <div class="span-6" style="height:25px">
-                            Password:<input type="password" id="Password" name="Password"/>
-                        </div>
-                        <div class="span-4 last" style="height:25px; line-height:25px">
-                            <a href="#" onclick="javascript:document.forms['login'].submit();return false;" class="btn blue"><i></i><span><span></span><i></i>Submit</span></a>
-                        </div>
-                    </form>
-                </div>
+            <b class="b1h"></b><b class="b2h"></b><b class="b3h"></b><b class="b4h"></b>
+            <div class="span-24 last headh">
+                <h3>Welcome to iLikePlaces . com</h3>
             </div>
-            <br/>
-            <br/>
-            <div class="span-24 last">
-                <div id="monitorId" class="top" style="position:relative;display:none;float:right;width:120px;height:20px;">
-                    Please wait... <img src="/ilikeplaces/images/circle.gif"  width="23" height="17" alt="Busy"/>
+            <div class="span-24 last contenth">
+                <div class="span-24 last"  id="Main_login_widget">
+                    <div class="span-8">
+                        &nbsp; <br/>
+                    </div>
+                    <div class="span-16 last">
+                        <form method="POST" id="login" action="/ilikeplaces/login">
+                            <div class="span-6" style="height:25px">
+                                <div style="vertical-align:middle;">
+                                    Username:<input type="text" id="Username" name="Username"/>
+                                </div>
+                            </div>
+                            <div class="span-6" style="height:25px">
+                                Password:<input type="password" id="Password" name="Password"/>
+                            </div>
+                            <div class="span-4 last" style="height:25px; line-height:25px">
+                                <a href="#" onclick="javascript:document.forms['login'].submit();return false;" class="btn blue"><i></i><span><span></span><i></i>Submit</span></a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="span-5" id="Main_othersidebar">
+                <br/>
+                <br/>
+                <div class="span-24 last">
+                    <div id="monitorId" class="top" style="position:relative;display:none;float:right;width:120px;height:20px;">
+                        Please wait... <img src="/ilikeplaces/images/circle.gif"  width="23" height="17" alt="Busy"/>
+                    </div>
+                    <div class="span-5" id="Main_othersidebar">
                         <a href="/ilikeplaces/page/main" class="btn blue"><i></i><span><span></span><i></i>Home</span></a>
                         <a href="/ilikeplaces/page/_me" class="btn blue"><i></i><span><span></span><i></i>My Home</span></a>
-                    <hr/>
-                    <div id="Main_file_list" class="example span-4 last">
-                        <div class="wrapper span-4">
-                            <div id="button1" class="button span-4 last">Upload Images</div>
-                        </div>
-                        <div class="span-1 last">
-                        </div>
-                        <div class="success span-4">
-                            <p>Uploaded files:</p>
-                            <ul class="files" style="list-style-image:url(/ilikeplaces/css/blueprint/plugins/buttons/icons/tick.png);">
-                                <li style="visibility:hidden">Ouch! I didn't want to show this to you</li>
-                            </ul>
-                        </div>
-                        <div class="span-1 last">
+                        <hr/>
+                        <div id="Main_file_list" class="example span-4 last">
+                            <div class="wrapper span-4">
+                                <div id="button1" class="button span-4 last">Upload Images</div>
+                            </div>
+                            <div class="span-1 last">
+                            </div>
+                            <div class="success span-4">
+                                <p>Uploaded files:</p>
+                                <ul class="files" style="list-style-image:url(/ilikeplaces/css/blueprint/plugins/buttons/icons/tick.png);">
+                                    <li style="visibility:hidden">Ouch! I didn't want to show this to you</li>
+                                </ul>
+                            </div>
+                            <div class="span-1 last">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="span-14" id="Main_center">
-                    <div class="span-14 last" id="Main_center_main">
+                    <div class="span-14" id="Main_center">
+                        <div class="span-14 last" id="Main_center_main">
 
-                    </div>
-                    <div class="span-14 last" id="Main_center_content">
-                        <div class="span-7" id="Main_left_column" style="clip:auto;overflow:hidden;">
-                            <a href="#" class="btn blue"><i></i><span id="cool"><span></span><i></i>Cool</span></a>
-                            <br/>
                         </div>
-                        <div class="span-7 last" id="Main_right_column">
-                            <a href="#" class="btn green"><i></i><span id="hot"><span></span><i></i>Hot</span></a>
-                            <br/>
+                        <div class="span-14 last" id="Main_center_content">
+                            <div class="span-7" id="Main_left_column" style="clip:auto;overflow:hidden;">
+                                <a href="#" class="btn blue"><i></i><span id="cool"><span></span><i></i>Cool</span></a>
+                                <br/>
+                            </div>
+                            <div class="span-7 last" id="Main_right_column">
+                                <a href="#" class="btn green"><i></i><span id="hot"><span></span><i></i>Hot</span></a>
+                                <br/>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="span-5 last" id="Main_sidebar">
-                    <h3>
-                        Advertisements
-                    </h3>
+                    <div class="span-5 last" id="Main_sidebar">
+                        <h3>
+                            Advertisements
+                        </h3>
+                    </div>
                 </div>
             </div>
+            <b class="b4bh"></b><b class="b3bh"></b><b class="b2bh"></b><b class="b1h"></b>
         </div>
     </body>
 </html>

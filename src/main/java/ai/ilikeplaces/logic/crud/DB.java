@@ -7,6 +7,7 @@ import javax.naming.NamingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.util.*;
 import java.util.Properties;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -57,7 +58,7 @@ final public class DB implements DBLocal {
         } catch (NamingException ex) {
             logger.error("{}", ex);
         }
-        return h;
+        return h != null ? h : (HumanCRUDPublicPhotoLocal) LogNull.logThrow();
     }
 
     public static HumanCRUDPublicPhotoLocal getHumanCRUDPublicPhotoLocal(final boolean nonInjected) {
@@ -68,7 +69,6 @@ final public class DB implements DBLocal {
         } catch (NamingException ex) {
             logger.error("{}", ex);
         }
-        return h;
-
+        return h != null ? h : (HumanCRUDPublicPhotoLocal) LogNull.logThrow();
     }
 }
