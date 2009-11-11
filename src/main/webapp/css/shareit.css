@@ -1,0 +1,51 @@
+#shareit-box {
+    position:absolute;
+    display:none;
+}
+
+#shareit-header {
+    width:138px;
+}
+
+#shareit-body {
+    width:138px; height:100px;
+    background:transparent url(/ilikeplaces/images/shareit.png);
+    border-color:black;
+    border-style:groove;
+}
+
+#shareit-blank {
+    height:20px;
+}
+
+#shareit-url {
+    height:50px;
+    text-align:center;
+}
+
+#shareit-url input.field{
+    width:100px; height:26px;
+    background: transparent url(/ilikeplaces/images/field.gif) no-repeat;
+    border:none; outline:none;
+    padding:7px 5px 0 5px;
+    margin:3px auto;font-size:11px;
+}
+
+#shareit-icon  {
+    height:20px;
+}
+
+#shareit-icon ul {
+    list-style:none;
+    width:130px;
+    margin:0; padding:0 0 0 8px;
+}
+
+#shareit-icon ul  li{
+    float:left;
+    padding:0 2px;
+}
+
+#shareit-icon ul  li img{
+    border:none;
+}

@@ -30,11 +30,13 @@ import javax.servlet.http.HttpSession;
  */
 @FIXME(issue="XSS")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@TODO(task="USE A STATIC METHOD TO GET THE LOGGED ON USER INSTANCE.")
 final public class ServletLogin extends HttpServlet {
 
     /**
      * Stateful Session Bean Containing User Data
      */
+    @TODO(task="REFACTOR EVERY USAGE OF THIS TO USE INTERFACE 'NAME' PROPERTY")
     public final static String SBLoggedOnUser = "SBLoggedOnUser";
     /**
      * Username, an email address to which the reset password link can be mailed

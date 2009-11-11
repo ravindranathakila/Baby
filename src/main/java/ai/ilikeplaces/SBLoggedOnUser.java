@@ -2,6 +2,7 @@ package ai.ilikeplaces;
 
 import ai.ilikeplaces.util.AbstractSFBCallbacks;
 import ai.ilikeplaces.doc.*;
+import java.util.ResourceBundle;
 import javax.ejb.Stateful;
 import javax.ejb.Remove;
 import javax.servlet.http.HttpSessionBindingEvent;
@@ -14,6 +15,7 @@ import javax.annotation.PreDestroy;
  */
 @Stateful
 final public class SBLoggedOnUser extends AbstractSFBCallbacks implements SBLoggedOnUserFace, ManageObservers {
+    private static final ResourceBundle logMsgs = ResourceBundle.getBundle("LogMsgs");
 
     private String loggedOnUserId;
     @FIXME(issue = "transent", 
@@ -59,10 +61,11 @@ final public class SBLoggedOnUser extends AbstractSFBCallbacks implements SBLogg
     @Remove
     @Override
     public void remove() {
-        logger.info("HELLO, REMOVING BEAN");
+        logger.info(logMsgs.getString("REMOVING_BEAN"));
     }
 
     @PreDestroy
+    @Override
     public void preDestroy() {
         this.delegatedObservable.setChanged();
         delegatedObservable.notifyObservers(true);
@@ -74,7 +77,7 @@ final public class SBLoggedOnUser extends AbstractSFBCallbacks implements SBLogg
      */
     @Override
     public void valueBound(final HttpSessionBindingEvent event) {
-        logger.info("HELLO, BINDING BEAN TO SESSION.");
+        logger.info(logMsgs.getString("BINDING_BEAN"));
     }
 
     /**
@@ -83,7 +86,7 @@ final public class SBLoggedOnUser extends AbstractSFBCallbacks implements SBLogg
      */
     @Override
     public void valueUnbound(final HttpSessionBindingEvent event) {
-        logger.info("HELLO! UNBINDING BEAN FROM SESSION AND MARKING AS REMOVE.");
+        logger.info(logMsgs.getString("UNBINDING_BEAN"));
         this.remove();
     }
 

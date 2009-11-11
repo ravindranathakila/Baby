@@ -12,7 +12,13 @@ import javax.ejb.Local;
 @Local
 public interface RLocationLocal {
 
+    final static public String NAME = RLocationLocal.class.getSimpleName();
+
     public Location doRLocation(final String locationName, final String superLocationName);
 
+    public Location doDirtyRLocation(final String locationName, final String superLocationName);
+
     public Location doRLocation(final long locationId);
+
+    public Location doDirtyRLocation(final long locationId);
 }

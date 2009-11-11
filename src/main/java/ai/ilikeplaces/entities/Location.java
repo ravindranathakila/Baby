@@ -1,5 +1,6 @@
 package ai.ilikeplaces.entities;
 
+import ai.ilikeplaces.util.LogNull;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.List;
@@ -99,7 +100,6 @@ public class Location implements Serializable {
      * @return locationSuperSet
      */
     @OneToOne(optional = true,
-    fetch = FetchType.LAZY,
     targetEntity = Location.class)
     public Location getLocationSuperSet() {
         return locationSuperSet;

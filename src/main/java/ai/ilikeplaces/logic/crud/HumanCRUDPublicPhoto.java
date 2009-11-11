@@ -43,7 +43,7 @@ final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements 
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    @WARNING(warning = "transactional_1", warnings = {"These two Merge and Persist Each other. Do not update their fields after this block"})
+    @WARNING(warning = "transactional", warnings = {"These two Merge and Persist Each other. Do not update their fields after this block"})
     private boolean doHumanCPublicPhoto(final String humanId, final long locationId, PublicPhoto publicPhoto) throws javax.ejb.EJBTransactionRolledbackException {
         cPublicPhotoLocal_.doCPublicPhotoLocal(humanId, locationId, publicPhoto);
         return true;

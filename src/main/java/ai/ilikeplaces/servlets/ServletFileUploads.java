@@ -4,25 +4,18 @@ import ai.ilikeplaces.SBLoggedOnUserFace;
 import ai.ilikeplaces.SessionBoundBadReferenceWrapper;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.TODO;
-import ai.ilikeplaces.entities.Human;
-import ai.ilikeplaces.entities.HumansPrivatePhoto;
-import ai.ilikeplaces.entities.Location;
-import ai.ilikeplaces.entities.PrivatePhoto;
-import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
-import ai.ilikeplaces.jpa.CrudServiceLocal;
-import ai.ilikeplaces.logic.crud.HumanCRUDPublicPhotoLocal;
+import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.rbs.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.Properties;
+import java.util.Random;
+import java.util.ResourceBundle;
+import java.util.PropertyResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,74 +34,12 @@ import org.apache.commons.fileupload.util.Streams;
 final public class ServletFileUploads extends HttpServlet {
 
     final Logger logger = LoggerFactory.getLogger(ServletFileUploads.class.getName());
-    final static private String FilePath = "C:\\Program Files\\Apache Software Foundation\\apache-tomcat-6.0.14\\webapps\\cdn\\";
-    final static private String CDN = "/cdn/";
     final static private String Error = "error";
     final static private String Ok = "ok";
-
-    /*Container Related Services*/
-    private CrudServiceLocal<Human> crudServiceHuman_ = null;
-    private CrudServiceLocal<Location> crudServiceLocation_ = null;
-    private HumanCRUDPublicPhotoLocal humanCPublicPhotoLocal_ = null;
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @FIXME(issue = "Concurrent calls seem to create concurrency issues on persistance initialization. Verify. Entities all done't initialise\n" +
-    "The bean encountered a non-application exception; nested exception is:" +
-    "<openjpa-1.2.0-r422266:683325 nonfatal user error> org.apache.openjpa.persistence.ArgumentException: An error occurred while parsing the query filter SELECT loc FROM Location loc WHERE loc.locationName = " +
-    ":locationName. Error message: The name Location is not a recognized entity or identifier. Perhaps you meant HumansAuthorization, which is a close match. Known entity names: [HumansPublicPhoto, Human, HumansAuthorization]")
-    public void init() {
-        boolean initializeFailed = true;
-        final StringBuilder log = new StringBuilder();
-        init:
-        {
-            try {
-                final Properties p_ = new Properties();
-                p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
-                final Context context = new InitialContext(p_);
-                if (context == null) {
-                    log.append("\nVARIABLE context IS NULL! ");
-                    log.append(context);
-                    break init;
-                }
-//                crudServiceHuman_ = (CrudServiceLocal<Human>) context.lookup("CrudServiceLocal");
-//                if (crudServiceHuman_ == null) {
-//                    log.append("\nVARIABLE crudServiceLocal_ IS NULL! ");
-//                    log.append(crudServiceHuman_);
-//                    break init;
-//                }
-//                crudServiceLocation_ = (CrudServiceLocal<Location>) context.lookup("CrudServiceLocal");
-//                if (crudServiceLocation_ == null) {
-//                    log.append("\nVARIABLE crudServiceLocation_ IS NULL! ");
-//                    log.append(crudServiceLocation_);
-//                    break init;
-//                }
-                humanCPublicPhotoLocal_ = (HumanCRUDPublicPhotoLocal) context.lookup(HumanCRUDPublicPhotoLocal.NAME);
-                if (humanCPublicPhotoLocal_ == null) {
-                    log.append("\nVARIABLE humanCPublicPhotoLocal_ IS NULL! ");
-                    log.append(humanCPublicPhotoLocal_);
-                    break init;
-                }
-            } catch (NamingException ex) {
-                log.append("\nCOULD NOT INITIALIZE ServletFileUploads SERVLET DUE TO A NAMING EXCEPTION!");
-                logger.info("\nCOULD NOT INITIALIZE ServletFileUploads SERVLET DUE TO A NAMING EXCEPTION!", ex);
-                break init;
-            }
-
-            /**
-             * break. Do not let this statement be reachable if initialization
-             * failed. Instead, break immediately where initialization failed.
-             * At this point, we set the initializeFailed to false and thereby,
-             * allow initialization of an instance
-             */
-            initializeFailed = false;
-        }
-
-        if (initializeFailed) {
-            throw new ExceptionConstructorInvokation(log.toString());
-        }
-
-    }
+    final static private Random random = new Random(System.currentTimeMillis());
+    private static final ResourceBundle iLikePlaces = PropertyResourceBundle.getBundle("ai.ilikeplaces.rbs.ExceptionMsgs");
+    final static private String FilePath = iLikePlaces.getString("path.SYSTEM_PHOTO");
+    final static private String CDN = iLikePlaces.getString("url.CDN_PHOTO");
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -149,9 +80,6 @@ final public class ServletFileUploads extends HttpServlet {
                             LoggerFactory.getLogger(ServletFileUploads.class.getName()).error("IS NOT A FILE UPLOAD REQUEST");
                             errorNonMultipart(out);
 
-
-
-
                             break processRequestType;
                         }
 
@@ -168,13 +96,14 @@ final public class ServletFileUploads extends HttpServlet {
                             {
                                 Long locationId = null;
                                 String photoDescription = null;
+                                String photoName = null;
                                 Boolean isPublic = null;
                                 boolean fileSaved = false;
 
                                 while (iter.hasNext()) {
                                     FileItemStream item = iter.next();
                                     String name = item.getFieldName();
-                                    String fileName = FilePath;
+                                    String absoluteFileSystemFileName = FilePath;
 
                                     InputStream stream = item.openStream();
                                     @FIXME(issue = "Handle no extension files")
@@ -193,6 +122,11 @@ final public class ServletFileUploads extends HttpServlet {
                                         if (name.equals("photoDescription")) {
                                             photoDescription = value;
                                             logger.info("HELLO, I PROPERLY RECIEVED photoDescription");
+                                        }
+
+                                        if (name.equals("photoName")) {
+                                            photoName = value;
+                                            logger.debug("HELLO, I PROPERLY RECIEVED photoName");
                                         }
 
                                         if (name.equals("isPublic")) {
@@ -217,12 +151,9 @@ final public class ServletFileUploads extends HttpServlet {
                                         usersFileName = (item.getName().indexOf("\\") <= 1 ? item.getName()
                                                 : item.getName().substring(item.getName().lastIndexOf("\\") + 1));
 
-//                        final String fileName = FilePath + FileRandom.getName() + "." + item.getName().substring(item.getName().lastIndexOf(".") + 1);
-                                        randomFileName =
-                                                String.valueOf(System.currentTimeMillis()) + "." + item.getName().substring(item.getName().lastIndexOf(".") + 1);
-                                        fileName +=
-                                                randomFileName;
-                                        final File uploadedFile = new File(fileName);
+                                        randomFileName = getRandomFileName(locationId);
+
+                                        final File uploadedFile = new File(absoluteFileSystemFileName += randomFileName);
                                         final FileOutputStream fos = new FileOutputStream(uploadedFile);
                                         while (true) {
                                             final int dataByte = stream.read();
@@ -235,30 +166,22 @@ final public class ServletFileUploads extends HttpServlet {
                                         }
                                         fos.close();
                                         stream.close();
-                                        fileSaved =
-                                                true;
+                                        fileSaved = true;
                                     }
 
-                                    System.out.println("locationId" + locationId);
-                                    System.out.println("fileSaved" + fileSaved);
-                                    System.out.println("photoDescription" + photoDescription);
-                                    System.out.println("isPublic" + isPublic);
+                                    logger.debug("locationId" + locationId);
+                                    logger.debug("fileSaved" + fileSaved);
+                                    logger.debug("photoDescription" + photoDescription);
+                                    logger.debug("photoName", photoName);
+                                    logger.debug("isPublic" + isPublic);
+
                                     if (fileSaved && (locationId != null) && (photoDescription != null) && (isPublic != null)) {
                                         persistData:
                                         {
-//                                            final Human human = crudServiceHuman_.find(Human.class, sBLoggedOnUserFace.getLoggedOnUserId());
-//                                            logger.info(
-//                                                    "HELLO, I AM DOING A FILE UPLOAD PERSISTENCE ON HUMAN id:" + human.getHumanId());
-
-//                                            Location locationn = crudServiceLocation_.find(Location.class, locationId);
-//                                            logger.info(
-//                                                    "HELLO, I AM DOING A FILE UPLOAD PERSISTENCE ON LOCATION NAME:" + locationn.getLocationName());
-
-
                                             handlePublicPrivateness:
                                             {
                                                 if (isPublic) {
-                                                    persisted = humanCPublicPhotoLocal_.doHumanCPublicPhoto(sBLoggedOnUserFace.getLoggedOnUserId(), locationId, fileName, "@TODO in FILEUPLOADSERVLET", photoDescription, new String(CDN + randomFileName), 4);
+                                                    persisted = DB.getHumanCRUDPublicPhotoLocal(true).doHumanCPublicPhoto(sBLoggedOnUserFace.getLoggedOnUserId(), locationId, absoluteFileSystemFileName, photoName, photoDescription, new String(CDN + randomFileName), 4);
                                                     if (persisted) {
                                                         successFileName(out, usersFileName, "public");
                                                     } else {
@@ -267,7 +190,7 @@ final public class ServletFileUploads extends HttpServlet {
 
                                                 } else {
 //                                                    final PrivatePhoto privatePhoto = new PrivatePhoto();
-//                                                    privatePhoto.setPrivatePhotoFilePath(fileName);
+//                                                    privatePhoto.setPrivatePhotoFilePath(absoluteFileSystemFileName);
 //                                                    privatePhoto.setPrivatePhotoDescription(photoDescription);
 //                                                    privatePhoto.setPrivatePhotoURLPath(new String(CDN + randomFileName));
 //                                                    privatePhoto.setLocation(locationn);
@@ -306,9 +229,7 @@ final public class ServletFileUploads extends HttpServlet {
 //                                                    }
 //                                                    persisted = true;
                                                     persisted = false;
-
-
-
+                                                    throw new UnsupportedOperationException("SORRY! PRIVATE NAMES NOT SUPPORTED YET.");
                                                 }
                                             }
                                         }
@@ -428,6 +349,10 @@ final public class ServletFileUploads extends HttpServlet {
             out.close();
         }
 
+    }
+
+    final static private String getRandomFileName(final long locationId) {
+        return "PHOTO_OF_" + DB.getHumanCRUDLocationLocal(true).doDirtyHumanRLocation(locationId).getLocationName() + "_" + random.nextLong() + System.currentTimeMillis();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

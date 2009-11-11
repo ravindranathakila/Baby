@@ -27,8 +27,6 @@ import org.w3c.dom.html.HTMLDocument;
  */
 public class ListenerHuman implements ItsNatServletRequestListener {
 
-    final protected static String JsCodeToSend = "document.monitor = new EventMonitor(); \n" +
-            "document.getItsNatDoc().addEventMonitor(document.monitor); \n";
     final private Properties p_ = new Properties();
     private Context context = null;
     private CrudServiceLocal<HumansPublicPhoto> crudHumansPublicPhoto_ = null;
@@ -102,7 +100,7 @@ public class ListenerHuman implements ItsNatServletRequestListener {
             @Override
             @SuppressWarnings("unchecked")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
-                itsNatDocument.addCodeToSend(JsCodeToSend);
+                itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor+JSCodeToSend.FnLocationId);
 
                 if (sessionBoundBadReferenceWrapper != null) {
                     //sessionBoundBadReferenceWrapper.boundInstance.getLoggedOnUserId()
@@ -116,6 +114,7 @@ public class ListenerHuman implements ItsNatServletRequestListener {
 
                                 $$(pc_photo_permalink).setAttribute("href", "");
                                 $$(pc_photo).setAttribute("src", publicPhoto.getPublicPhotoURLPath());
+                                $$(pc_photo_description).setAttribute("value", publicPhoto.getPublicPhotoDescription());
                             }
                         };
                     }
@@ -130,19 +129,5 @@ public class ListenerHuman implements ItsNatServletRequestListener {
             protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
             }
         };
-    }
-
-    /**
-     *
-     * @param showChangeLog__
-     * @return changeLog
-     */
-    public String toString(final boolean showChangeLog__) {
-        String changeLog = new String(toString() + "\n");
-        changeLog += "20090918 crudServiceLocal was throwing a bug(exception). Should be due to garbage colection of outer class." +
-                "Moved it to init. Did not pursue reason as now implementation is sane and previous was not.\n";
-        changeLog += "20090924 crudServiceLocal was shifter back to the original position with validation. Not a bug. " +
-                "Outer class has a reference from the inner class so never gets garbage collected.";
-        return showChangeLog__ ? changeLog : toString();
     }
 }

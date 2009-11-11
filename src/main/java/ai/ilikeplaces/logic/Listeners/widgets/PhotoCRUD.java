@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
+import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
@@ -9,12 +10,16 @@ import ai.ilikeplaces.logic.crud.DBLocal;
 import ai.ilikeplaces.logic.crud.HumanCRUDPublicPhotoLocal;
 import ai.ilikeplaces.servlets.Controller.Page;
 import static ai.ilikeplaces.servlets.Controller.Page.*;
+import static ai.ilikeplaces.security.xss.Trim.*;
 import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.event.NodeAllAttribTransport;
+import org.itsnat.core.event.NodeAttributeTransport;
+import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
@@ -35,7 +40,6 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
     private Context context = null;
     private CrudServiceLocal<PublicPhoto> crudPublicPhoto = null;
     private CrudServiceLocal<PrivatePhoto> crudPrivatePhoto = null;
-    private HumanCRUDPublicPhotoLocal humanCRUDPublicPhotoLocal_ = null;
     final private Logger logger = LoggerFactory.getLogger(PhotoCRUD.class.getName());
     final String humanId;
 
@@ -47,7 +51,6 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
     @SuppressWarnings("unchecked")
     public PhotoCRUD(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final Object t_, final String humanId) {
         super(itsNatDocument__, Page.PhotoCRUD, appendToElement__);
-
         this.humanId = humanId;
 
         boolean initializeFailed = true;
@@ -63,19 +66,14 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
                 if (t_ instanceof PublicPhoto) {
                     this.publicPhoto = (PublicPhoto) t_;
                     this.privatePhoto = null;
-                    crudPublicPhoto = (CrudServiceLocal<PublicPhoto>) context.lookup("CrudServiceLocal");
-                    humanCRUDPublicPhotoLocal_ = (HumanCRUDPublicPhotoLocal) context.lookup("HumanCRUDPublicPhotoLocal");
-                    logger.info("HELLO, HASH:" + crudPublicPhoto.hashCode());
 
                 } else if (t_ instanceof PrivatePhoto) {
                     this.privatePhoto = (PrivatePhoto) t_;
                     this.publicPhoto = null;
-                    crudPrivatePhoto = (CrudServiceLocal<PrivatePhoto>) context.lookup("CrudServiceLocal");
-                    logger.info("HELLO, HASH:" + crudPrivatePhoto.hashCode());
 
                 } else {
                     throw new IllegalArgumentException("SORRY! THIS CLASS ONLY SUPPORTS GENERIC TYPES:" + PublicPhoto.class.getName() + " AND " + PrivatePhoto.class.getName() + ". RECIEVED TYPE:" + t_.getClass().getName());
-                }
+    }
 
 
             } catch (Exception ex) {
@@ -84,7 +82,7 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
                 break init;
             }
 
-            /**
+    /**
              * break. Do not let this statement be reachable if initialization
              * failed. Instead, break immediately where initialization failed.
              * At this point, we set the initializeFailed to false and thereby,
@@ -106,7 +104,6 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
-        //logger.debug("DESCRIPTION:{}", $$(pc_photo_description).getTextContent());
 
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(pc_close), "click", new EventListener() {
 
@@ -127,15 +124,17 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
                 //toggleVisible(pc_close);
             }
         }, false);
+
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(pc_photo_description), "blur", new EventListener() {
 
             final EventListener self = this;
 
             @Override
+            @FIXME(issue = "XSS")
             public void handleEvent(final Event evt_) {//doHumanUPublicPhotoDescription
-                logger.debug("DESCRIPTION ON EVENT:{}", ((Element) evt_.getTarget()).getTextContent());
-                DB.getHumanCRUDPublicPhotoLocal(true).doHumanUPublicPhotoDescription(humanId, publicPhoto.getPublicPhotoId(), "@TODO ADD THE TEXT FROM TEXT AREA HERE!");
+                logger.debug("{}", ((Element) evt_.getCurrentTarget()).getAttribute("value"));
+                DB.getHumanCRUDPublicPhotoLocal(true).doHumanUPublicPhotoDescription(humanId, publicPhoto.getPublicPhotoId(), trimAll(((Element) evt_.getCurrentTarget()).getAttribute("value")));
             }
-        }, false);
+        }, false, new NodePropertyTransport("value"));
     }
 }
