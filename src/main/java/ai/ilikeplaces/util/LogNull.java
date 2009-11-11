@@ -1,5 +1,6 @@
 package ai.ilikeplaces.util;
 
+import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ai.ilikeplaces.doc.*;
@@ -24,7 +25,8 @@ import javax.lang.model.type.*;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class LogNull {
 
-    final static private String MSG = "SORRY! A NPE OCCURRED. PLEASE CHECK THE CALLER OF THIS METHOD TO FIND OUT WHERE THE NPE ACTUALLY TOOK PLACE.";
+    private static final ResourceBundle logMsgs = ResourceBundle.getBundle("LogMsgs");
+    final static private String MSG = logMsgs.getString("NPE_1");
 
     private LogNull() {
     }
@@ -38,7 +40,7 @@ public class LogNull {
      *
      * @return Object
      */
-    final static public NullType log() {
+    final static public Object log() {
         Thread.dumpStack();
         return null;
     }
@@ -48,7 +50,7 @@ public class LogNull {
      *
      * @return Object
      */
-    final static public NullType logThrow() {
+    final static public Object logThrow() {
         throw new NullPointerException(MSG);
     }
 }

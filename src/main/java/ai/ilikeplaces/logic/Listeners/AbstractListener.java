@@ -4,7 +4,9 @@ import ai.ilikeplaces.*;
 import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.ServletLogin;
+import ai.ilikeplaces.util.LogNull;
 import java.util.Map;
+import java.util.ResourceBundle;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServlet;
 import org.itsnat.core.ItsNatServletRequest;
@@ -54,6 +56,8 @@ public abstract class AbstractListener {
      */
     final protected SessionBoundBadReferenceWrapper<SBLoggedOnUserFace> sessionBoundBadReferenceWrapper;
 
+    private static final ResourceBundle logMsgs = ResourceBundle.getBundle("LogMsgs");
+
     /**
      *
      * @param request_
@@ -71,8 +75,8 @@ public abstract class AbstractListener {
             this.itsNatServlet_ = itsNatDocument.getItsNatDocumentTemplate().getItsNatServlet();
             this.itsNatHttpSession = (ItsNatHttpSession) request_.getItsNatSession();
             final Object attribute__ = itsNatHttpSession.getAttribute(ServletLogin.SBLoggedOnUser);
-            this.sessionBoundBadReferenceWrapper = attribute__ == null ? null : (SessionBoundBadReferenceWrapper<SBLoggedOnUserFace>)attribute__;
-            this.location = (String) request_.getServletRequest().getAttribute("location");
+            this.sessionBoundBadReferenceWrapper = attribute__ == null ? null : (SessionBoundBadReferenceWrapper<SBLoggedOnUserFace>) attribute__;
+            this.location = (String) request_.getServletRequest().getAttribute(java.util.ResourceBundle.getBundle("LogMsgs").getString("LOCATION"));
             init(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument);
             registerEventListeners(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument);
 
@@ -144,9 +148,10 @@ public abstract class AbstractListener {
     private final Element getElementById(final String key__) {
         final String elementId__ = GlobalHTMLIdRegistry_.get(key__);
         if (elementId__ == null) {
-            throw new java.lang.NullPointerException("THE ELEMENT \"" + key__ + "\" YOU REQUIRE CONTAINS NULL OR NO REFERENCE IN REGISTRY!");
+            throw new NullPointerException(logMsgs.getString("NPE_2_1") + key__ + logMsgs.getString("NPE_2_2"));
         }
-        return hTMLDocument_.getElementById(elementId__);
+        final Element element__ = hTMLDocument_.getElementById(elementId__);
+        return element__ != null ? element__ : (Element) LogNull.logThrow();
     }
 
     final protected Element $(MarkupTagFace tagNameInAllCaps) {

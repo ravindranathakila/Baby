@@ -1,0 +1,24 @@
+.wrapper {
+    margin: 0 auto;
+}
+
+div.button {
+    height: 40px;
+    /*background: url(/ilikeplaces/css/blueprint/plugins/buttons/icons/tick.png) 0 0;*/
+
+    font-size: 13px;
+    color: blue;
+    text-align: center;
+}
+/*
+We can't use ":hover" preudo-class because we have
+invisible file input above, so we have to simulate
+hover effect with javascript.
+*/
+div.button.hover {
+    /*background: url(/ilikeplaces/images/choose-file.png) 0 56px;*/
+    color: #95A226;
+}
+#button2.hover, #button4.hover {
+    text-decoration:underline;
+}

@@ -7,6 +7,7 @@ import ai.ilikeplaces.logic.Listeners.ListenerMain;
 import ai.ilikeplaces.logic.Listeners.ListenerPhoto;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
+import java.util.Locale;
 import java.util.Map;
 import org.slf4j.LoggerFactory;
 import javax.servlet.ServletConfig;
@@ -34,9 +35,9 @@ final public class Controller extends HttpServletWrapper {
     private final static Map<PageFace, String> PrettyURLMap_ = new IdentityHashMap<PageFace, String>();//Please read javadoc before making any changes to this implementation
     final static private Logger staticLogger = LoggerFactory.getLogger(Controller.class.getName());
 
-    @WARNING(warning = "Initializer for pages with their ids and paths.\n" +
-    "Note that the pages with ID's shall be initialized only once as they will " +
-    "be used within this class only. The rest shall write the the list")
+    @WARNING(warning = "Initializer for pages with their ids and paths.\n"
+    + "Note that the pages with ID's shall be initialized only once as they will "
+    + "be used within this class only. The rest shall write the the list")
     public enum Page implements PageFace {
 
         home(
@@ -49,6 +50,7 @@ final public class Controller extends HttpServletWrapper {
         },
         main(
         "ai/ilikeplaces/Main.xhtml",
+        Controller.Page.mainTitle,
         Controller.Page.Main_center_main,
         Controller.Page.Main_left_column,
         Controller.Page.Main_right_column,
@@ -140,6 +142,7 @@ final public class Controller extends HttpServletWrapper {
         final static public String pd_photo = "pd_photo";
         final static public String pd_photo_description = "pd_photo_description";
         /*Main Specific IDs*/
+        final static public String mainTitle = "mainTitle";
         final static public String Main_center_main = "Main_center_main";
         final static public String Main_left_column = "Main_left_column";
         final static public String Main_right_column = "Main_right_column";
@@ -179,13 +182,24 @@ final public class Controller extends HttpServletWrapper {
         final ItsNatHttpServlet inhs__ = getItsNatHttpServlet();
 
         final ItsNatServletConfig itsNatServletConfig = inhs__.getItsNatServletConfig();
-        itsNatServletConfig.setFrameworkScriptFilesBasePath("/ilikeplaces/js");
+//        itsNatServletConfig.setFrameworkScriptFilesBasePath("/ilikeplaces/js");
         itsNatServletConfig.setDebugMode(true);
         itsNatServletConfig.setClientErrorMode(ClientErrorMode.SHOW_SERVER_AND_CLIENT_ERRORS);
         itsNatServletConfig.setLoadScriptInline(true);
         itsNatServletConfig.setUseGZip(UseGZip.SCRIPT);
         itsNatServletConfig.setDefaultSyncMode(SyncMode.SYNC);
         itsNatServletConfig.setAutoCleanEventListeners(true);
+
+        setDefaultLocale:
+        {
+            staticLogger.info("HELLO, A AM SETTING THE DEFAULT LOCALE.");
+            Locale.setDefault(new Locale("en","US"));
+            staticLogger.info("HELLO, APPLICATION LOCALE AFTER SETTING:{}",Locale.getDefault().toString());
+        }
+
+        staticLogger.info("HELLO, APPLICATION LOCALE:{}",Locale.getDefault().toString());
+
+        staticLogger.debug("HELLO, APPLICATION CLASSPATH:{}",System.getProperty("java.class.path"));
 
         /*Add a listner to convert pretty urls to proper urls*/
         inhs__.addItsNatServletRequestListener(new ItsNatServletRequestListener() {

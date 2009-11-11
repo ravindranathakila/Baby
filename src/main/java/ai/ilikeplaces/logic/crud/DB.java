@@ -19,6 +19,7 @@ import javax.naming.InitialContext;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Singleton
 @NOTE(note = "MADE FINAL AS CONSTRUCTOR THROWS EXCEPTION TO PREVENT UNINITIALIZED VARIABLES. SUBCLASSING SINGLETON NO SENSE ANYWAY.")
+@FIXME(issue="NON INJECTED CALL SHOULD BE VERIFIED IF A USER SENDS FALSE")
 @Startup
 final public class DB implements DBLocal {
 
@@ -70,5 +71,29 @@ final public class DB implements DBLocal {
             logger.error("{}", ex);
         }
         return h != null ? h : (HumanCRUDPublicPhotoLocal) LogNull.logThrow();
+    }
+
+    @Override
+    public HumanCRUDLocationLocal getHumanCRUDLocationLocal() {
+        isOK();
+        HumanCRUDLocationLocal h = null;
+        try {
+            h = (HumanCRUDLocationLocal) Context_.lookup(HumanCRUDLocationLocal.NAME);
+        } catch (NamingException ex) {
+            logger.error("{}", ex);
+        }
+        return h != null ? h : (HumanCRUDLocationLocal) LogNull.logThrow();
+    }
+
+    public static HumanCRUDLocationLocal getHumanCRUDLocationLocal(final boolean nonInjected){
+        isOK();
+        HumanCRUDLocationLocal h = null;
+        try {
+            h = ((DBLocal) Context_.lookup(DBLocal.NAME)).getHumanCRUDLocationLocal();
+        } catch (NamingException ex) {
+            logger.error("{}", ex);
+        }
+        return h != null ? h : (HumanCRUDLocationLocal) LogNull.logThrow();
+
     }
 }
