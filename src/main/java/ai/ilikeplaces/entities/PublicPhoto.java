@@ -2,6 +2,7 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.FieldPreamble;
+import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.util.EntityLifeCyleListener;
 import org.slf4j.LoggerFactory;
 
@@ -18,26 +19,36 @@ import java.util.UUID;
 @EntityListeners(EntityLifeCyleListener.class)
 public class PublicPhoto implements Serializable {
 
+    @NOTE(note = "PRE PERSISTED ENTITIES WILL HAVE NULL IDS. HENCE USING PRE PERSISTED IDS IS NOT PRACTICAL.")
     final private UUID uUID = UUID.randomUUID();
     private static final long serialVersionUID = 1L;
     private Long publicPhotoId = null;
+
     private String publicPhotoFilePath;
+
     @FieldPreamble(description = "The path should be very random as it will be exposed to the www." +
             "Also make sure this supports good SEO.")
     private String publicPhotoURLPath;
+
     private String publicPhotoName;
+
     private String publicPhotoDescription;
+
     @FieldPreamble(description = "Required to calculate ranking")
     private Date publicPhotoUploadDate;
     @FieldPreamble(description = "Required to calculate rank position")
+
     private Date publicPhotoTakenDate;
     @FieldPreamble(description = "Required to calculate rank position")
     private Long publicPhotoRankUnits;
+
     @FieldPreamble(description = "Required to calculate rank position")
     private Long publicPhotoRankTurns;
+
     @FieldPreamble(description = "Required when rebuilding a database from scratch someday." +
             "Since the whole concept of ilikeplaces relies on content richness, preserving this in this table important.")
     private Location location;
+
     @FieldPreamble(description = "Who uploaded this image? Wil he request to delete it? " +
             "Privacy important? " +
             "Lets preserve the info.")
