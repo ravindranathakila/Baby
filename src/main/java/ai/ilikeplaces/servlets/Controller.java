@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import org.slf4j.LoggerFactory;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -34,6 +35,7 @@ final public class Controller extends HttpServletWrapper {
 
     private final static Map<PageFace, String> PrettyURLMap_ = new IdentityHashMap<PageFace, String>();//Please read javadoc before making any changes to this implementation
     final static private Logger staticLogger = LoggerFactory.getLogger(Controller.class.getName());
+    private static final ResourceBundle logMsgs = ResourceBundle.getBundle("ai/ilikeplaces/rbs/LogMsgs_en_US");
 
     @WARNING(warning = "Initializer for pages with their ids and paths.\n"
     + "Note that the pages with ID's shall be initialized only once as they will "
@@ -65,7 +67,7 @@ final public class Controller extends HttpServletWrapper {
             }
         },
         Photo$Description(
-        "ai/ilikeplaces/fragments/Photo-Description.xhtml",
+        "ai/ilikeplaces/widgets/Photo-Description.xhtml",
         Controller.Page.pd,
         Controller.Page.close,
         Controller.Page.pd_photo_permalink,
@@ -192,14 +194,14 @@ final public class Controller extends HttpServletWrapper {
 
         setDefaultLocale:
         {
-            staticLogger.info("HELLO, A AM SETTING THE DEFAULT LOCALE.");
-            Locale.setDefault(new Locale("en","US"));
-            staticLogger.info("HELLO, APPLICATION LOCALE AFTER SETTING:{}",Locale.getDefault().toString());
+            staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0001"));
+            Locale.setDefault(new Locale("en", "US"));
+            staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0002"), Locale.getDefault().toString());
         }
 
-        staticLogger.info("HELLO, APPLICATION LOCALE:{}",Locale.getDefault().toString());
+        staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0003"), Locale.getDefault().toString());
 
-        staticLogger.debug("HELLO, APPLICATION CLASSPATH:{}",System.getProperty("java.class.path"));
+        staticLogger.debug(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0004"), System.getProperty("java.class.path"));
 
         /*Add a listner to convert pretty urls to proper urls*/
         inhs__.addItsNatServletRequestListener(new ItsNatServletRequestListener() {
@@ -259,24 +261,24 @@ final public class Controller extends HttpServletWrapper {
                 request__.getServletRequest().setAttribute("location", getPhotoLocation(URL__));
                 request__.getServletRequest().setAttribute("photoURL", getPhotoURL(URL__));
                 request__.getServletRequest().setAttribute("itsnat_doc_name", "photo");/*Framework specific*/
-                staticLogger.info("HELLO, LOCATION OF PHOTO:" + getPhotoLocation(URL__));
-                staticLogger.info("HELLO, THE URL OF PHOTO:" + getPhotoURL(URL__));
+                staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0005") + getPhotoLocation(URL__));
+                staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0006") + getPhotoURL(URL__));
             } else if (isHumanPage(URL__)) {
                 request__.getServletRequest().setAttribute("itsnat_doc_name", "me");/*Framework specific*/
-                staticLogger.info("HELLO, THIS IS A HUMAN PAGE.");
+                staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0007"));
             } else {
                 request__.getServletRequest().setAttribute("location", "main");
                 request__.getServletRequest().setAttribute("itsnat_doc_name", "main");/*Framework specific*/
-                staticLogger.info("HELLO, THIS REQUEST DID NOT FIT INTO ANY NON LOCATION FORMAT. FORWARDING TO MAIN PAGE.");
+                staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
             }
         } else if (isCorrectLocationFormat(URL__)) {
             request__.getServletRequest().setAttribute("location", URL__);
             request__.getServletRequest().setAttribute("itsnat_doc_name", "main");/*Framework specific*/
-            staticLogger.info("HELLO, THIS IS A LOCATION CALLED:" + URL__);
+            staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0009") + URL__);
         } else {
             request__.getServletRequest().setAttribute("location", "main");/*Main shall serve as the main page*/
             request__.getServletRequest().setAttribute("itsnat_doc_name", "main");/*Framework specific*/
-            staticLogger.info("HELLO, THIS IS THE END OF THE CHAIN");
+            staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0010"));
         }
     }
 
@@ -329,7 +331,7 @@ final public class Controller extends HttpServletWrapper {
                  */
                 GlobalHTMLIdRegistry.put(id_, id_);
             } else {
-                throw new java.lang.SecurityException("MAP ALREADY CONTAINS THIS \"" + id_ + "\" KEY!");
+                throw new SecurityException(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0011" + id_));
             }
         }
     }

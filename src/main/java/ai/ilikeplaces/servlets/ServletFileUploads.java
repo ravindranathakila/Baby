@@ -1,11 +1,11 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.SBLoggedOnUserFace;
+import ai.ilikeplaces.HumanUserLocal;
 import ai.ilikeplaces.SessionBoundBadReferenceWrapper;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.rbs.*;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -34,13 +34,18 @@ import org.apache.commons.fileupload.util.Streams;
 final public class ServletFileUploads extends HttpServlet {
 
     final Logger logger = LoggerFactory.getLogger(ServletFileUploads.class.getName());
+    
     final static private String Error = "error";
     final static private String Ok = "ok";
-    final static private Random random = new Random(System.currentTimeMillis());
-    private static final ResourceBundle iLikePlaces = PropertyResourceBundle.getBundle("ai.ilikeplaces.rbs.ExceptionMsgs");
-    final static private String FilePath = iLikePlaces.getString("path.SYSTEM_PHOTO");
-    final static private String CDN = iLikePlaces.getString("url.CDN_PHOTO");
 
+    final static private Random random = new Random(System.currentTimeMillis());
+
+    private static final ResourceBundle config = PropertyResourceBundle.getBundle("ai.ilikeplaces.rbs.Config");
+    private static final ResourceBundle logMsgs = PropertyResourceBundle.getBundle("ai.ilikeplaces.rbs.LogMsgs");
+    private static final ResourceBundle exceptionMsgs = PropertyResourceBundle.getBundle("ai.ilikeplaces.rbs.ExceptionMsgs");
+
+    final static private String FilePath = config.getString("path.SYSTEM_PHOTO");
+    final static private String CDN = config.getString("url.CDN_PHOTO");
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request__
@@ -63,7 +68,7 @@ final public class ServletFileUploads extends HttpServlet {
                 if (session == null) {
                     errorNoLogin(out);
                     break fileUpload;
-                } else if (session.getAttribute(ServletLogin.SBLoggedOnUser) == null) {
+                } else if (session.getAttribute(ServletLogin.HumanUser) == null) {
                     errorNoLogin(out);
                     break processSignOn;
                 }
@@ -71,13 +76,13 @@ final public class ServletFileUploads extends HttpServlet {
                 processRequestType:
                 {
                     @SuppressWarnings("unchecked")
-                    final SBLoggedOnUserFace sBLoggedOnUserFace =
-                            ((SessionBoundBadReferenceWrapper<SBLoggedOnUserFace>) session.getAttribute(ServletLogin.SBLoggedOnUser)).boundInstance;
+                    final HumanUserLocal sBLoggedOnUserLocal =
+                            ((SessionBoundBadReferenceWrapper<HumanUserLocal>) session.getAttribute(ServletLogin.HumanUser)).boundInstance;
                     try {
                         /*Check that we have a file upload request*/
                         final boolean isMultipart = ServletFileUpload.isMultipartContent(request__);
                         if (!isMultipart) {
-                            LoggerFactory.getLogger(ServletFileUploads.class.getName()).error("IS NOT A FILE UPLOAD REQUEST");
+                            LoggerFactory.getLogger(ServletFileUploads.class.getName()).error(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0001"));
                             errorNonMultipart(out);
 
                             break processRequestType;
@@ -113,35 +118,37 @@ final public class ServletFileUploads extends HttpServlet {
 
                                     if (item.isFormField()) {
                                         final String value = Streams.asString(stream);
-                                        logger.info("HELLO, I DETECTED A FORM FIELD WITH NAME " + name + " AND WITH VALUE " + value + ".");
+                                        logger.info(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0002"),name);
+                                        logger.info(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0003"),value);
                                         if (name.equals("locationId")) {
                                             locationId = Long.parseLong(value);
-                                            logger.info("HELLO, I PROPERLY RECIEVED locationId");
+                                            logger.info(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0004"));
                                         }
 
                                         if (name.equals("photoDescription")) {
                                             photoDescription = value;
-                                            logger.info("HELLO, I PROPERLY RECIEVED photoDescription");
+                                            logger.info(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0005"));
                                         }
 
                                         if (name.equals("photoName")) {
                                             photoName = value;
-                                            logger.debug("HELLO, I PROPERLY RECIEVED photoName");
+                                            logger.debug(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0006"));
                                         }
 
                                         if (name.equals("isPublic")) {
                                             if (!(value.equals("true") || value.equals("false"))) {
-                                                throw new IllegalArgumentException("SORRY! I REQUIRE A BOOLEAN AND YOU GIVE ME:" + value);
+                                                throw new IllegalArgumentException(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0007") + value);
                                             }
 
                                             isPublic = Boolean.valueOf(value);
-                                            logger.info("HELLO, I PROPERLY RECIEVED isPublic");
+                                            logger.info(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0008"));
 
                                         }
 
                                     }
                                     if ((!item.isFormField())) {
-                                        logger.info("HELLO, I DETECTED A FILE FIELD WITH NAME " + name + " AND WITH FILE NAME " + item.getName() + ".");
+                                        logger.info(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0009") + name);
+                                        logger.info(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0010") + item.getName());
                                         // Process the input stream
                                         if (!(item.getName().lastIndexOf(".") > 0)) {
                                             errorFileType(out, item.getName());
@@ -169,11 +176,11 @@ final public class ServletFileUploads extends HttpServlet {
                                         fileSaved = true;
                                     }
 
-                                    logger.debug("locationId" + locationId);
-                                    logger.debug("fileSaved" + fileSaved);
-                                    logger.debug("photoDescription" + photoDescription);
-                                    logger.debug("photoName", photoName);
-                                    logger.debug("isPublic" + isPublic);
+                                    logger.debug(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0011") + locationId);
+                                    logger.debug(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0012") + fileSaved);
+                                    logger.debug(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0013") + photoDescription);
+                                    logger.debug(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0014") + photoName);
+                                    logger.debug(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0015") + isPublic);
 
                                     if (fileSaved && (locationId != null) && (photoDescription != null) && (isPublic != null)) {
                                         persistData:
@@ -181,9 +188,9 @@ final public class ServletFileUploads extends HttpServlet {
                                             handlePublicPrivateness:
                                             {
                                                 if (isPublic) {
-                                                    persisted = DB.getHumanCRUDPublicPhotoLocal(true).doHumanCPublicPhoto(sBLoggedOnUserFace.getLoggedOnUserId(), locationId, absoluteFileSystemFileName, photoName, photoDescription, new String(CDN + randomFileName), 4);
+                                                    persisted = DB.getHumanCRUDPublicPhotoLocal(true).doHumanCPublicPhoto(sBLoggedOnUserLocal.getHumanUserId(), locationId, absoluteFileSystemFileName, photoName, photoDescription, new String(CDN + randomFileName), 4);
                                                     if (persisted) {
-                                                        successFileName(out, usersFileName, "public");
+                                                        successFileName(out, usersFileName, logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0016"));
                                                     } else {
                                                         errorBusy(out);
                                                     }
@@ -229,7 +236,7 @@ final public class ServletFileUploads extends HttpServlet {
 //                                                    }
 //                                                    persisted = true;
                                                     persisted = false;
-                                                    throw new UnsupportedOperationException("SORRY! PRIVATE NAMES NOT SUPPORTED YET.");
+                                                    throw new UnsupportedOperationException(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0017"));
                                                 }
                                             }
                                         }
@@ -252,7 +259,7 @@ final public class ServletFileUploads extends HttpServlet {
                         }
 
                     } catch (FileUploadException ex) {
-                        LoggerFactory.getLogger(ServletFileUploads.class.getName()).error(null, ex);
+                        logger.error(null, ex);
                         errorBusy(out);
                     }
                 }
@@ -275,7 +282,7 @@ final public class ServletFileUploads extends HttpServlet {
 
             returnVal = "{" + formattedResponse.substring(formattedResponse.indexOf(",") + 1) + "}";
         } else {
-            throw new IllegalArgumentException("SORRY! YOU HAVE GIVEN AN EMPTY LIST OF PARAMS FOR ME TO PROCEESS WHICH IS INSANE.");
+            throw new IllegalArgumentException(exceptionMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0001"));
         }
 
         return returnVal;
@@ -390,6 +397,6 @@ final public class ServletFileUploads extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0018");
     }// </editor-fold>
 }

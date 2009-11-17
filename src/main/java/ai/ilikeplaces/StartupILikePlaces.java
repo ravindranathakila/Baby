@@ -27,14 +27,14 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         System.out.println("********* START UP CHECK ILIKEPLACES");
         System.out.println("********* ********* ********* ********* *********");
         System.out.println("");
+        System.out.println("PLACEHOLDER ID:8");
         System.out.println("PLEASE NOTE GENERAL SETUP");
         System.out.println("1. Make sure openejb.log in shows no issues.");
         System.out.println("1. Configure datasource in openejb xml file.");
         System.out.println("2. Configure stateful and stateless in openejb xml file.");
         System.out.println("2. Configure cdn and filepath in Config.properties file.");
         System.out.println("3. Verify that classfiles also include .properties files in war.");
-
-
+        System.out.println("");
         System.out.println("********* ********* ********* ********* *********");
         System.out.println("********* START UP CHECK DONE ILIKEPLACES");
         System.out.println("********* ********* ********* ********* *********");

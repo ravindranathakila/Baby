@@ -103,8 +103,8 @@ public class ListenerHuman implements ItsNatServletRequestListener {
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor+JSCodeToSend.FnLocationId);
 
                 if (sessionBoundBadReferenceWrapper != null) {
-                    //sessionBoundBadReferenceWrapper.boundInstance.getLoggedOnUserId()
-                    HumansPublicPhoto humansPublicPhoto = crudHumansPublicPhoto_.find(HumansPublicPhoto.class, sessionBoundBadReferenceWrapper.boundInstance.getLoggedOnUserId());
+                    //sessionBoundBadReferenceWrapper.boundInstance.getHumanUserId()
+                    HumansPublicPhoto humansPublicPhoto = crudHumansPublicPhoto_.find(HumansPublicPhoto.class, sessionBoundBadReferenceWrapper.boundInstance.getHumanUserId());
 
                     for (final PublicPhoto publicPhoto : humansPublicPhoto.getPublicPhotos()) {
                         new PhotoCRUD(itsNatDocument__, $(Controller.Page.Main_center_main), publicPhoto, humansPublicPhoto.getHumanId()) {

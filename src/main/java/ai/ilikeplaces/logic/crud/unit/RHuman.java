@@ -1,22 +1,24 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 /**
- *
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@NOTE(note="SEE CRUDSERVICE WHERE TO SUPPORT READ AND DIRTY READ, THE TX TYPE IS SUPPORTS.")
+@NOTE(note = "SEE CRUDSERVICE WHERE TO SUPPORT READ AND DIRTY READ, THE TX TYPE IS SUPPORTS.")
 @Stateless
 public class RHuman extends AbstractSLBCallbacks implements RHumanLocal {
 
@@ -24,7 +26,7 @@ public class RHuman extends AbstractSLBCallbacks implements RHumanLocal {
     private CrudServiceLocal<Human> crudServiceLocal_;
 
     public RHuman() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", RHuman.class, this.hashCode());
+        logger.debug(RBGet.logMsgs.getString("common.Constructor.Init"), RHuman.class, this.hashCode());
     }
 
     @Override
@@ -34,15 +36,21 @@ public class RHuman extends AbstractSLBCallbacks implements RHumanLocal {
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Human doNTxRHuman(String humandId) {
-        return crudServiceLocal_.find(Human.class, humandId);
-    }
-
-    @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Human doDirtyRHuman(String humanId) {
         return crudServiceLocal_.find(Human.class, humanId);
     }
+
+    /**
+     * If a user exists, returns true;
+     * @param humanId
+     * @return  userExists
+     */
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public boolean doDirtyCheckHuman(final String humanId) {
+        return crudServiceLocal_.find(Human.class, humanId) != null;
+    }
+
     final static Logger logger = LoggerFactory.getLogger(RHuman.class);
 }

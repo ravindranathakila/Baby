@@ -1,6 +1,8 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.entities.Human;
+
 import javax.ejb.Local;
 
 /**
@@ -10,4 +12,5 @@ import javax.ejb.Local;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Local
 public interface CHumanLocal {
+    public void doCHuman(final Human newUser);
 }

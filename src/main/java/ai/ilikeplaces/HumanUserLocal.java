@@ -1,37 +1,34 @@
 package ai.ilikeplaces;
 
 import javax.ejb.Local;
+import javax.servlet.http.HttpSessionBindingListener;
 import java.util.Observer;
-import javax.servlet.http.HttpSessionBindingEvent;
 
 
 /**
- *
  * @author Ravindranath Akila
  */
 @Local
-public interface SBLoggedOnUserFace extends javax.servlet.http.HttpSessionBindingListener {
+public interface HumanUserLocal extends HttpSessionBindingListener {
+
+    final static public String NAME = HumanUserLocal.class.getSimpleName();
 
     /**
-     *
      * @return
      */
-    public String getLoggedOnUserId();
+    public String getHumanUserId();
 
     /**
-     *
      * @param loggedOnUserId
      */
-    public void setLoggedOnUserId(String loggedOnUserId);
+    public void setHumanUserId(String loggedOnUserId);
 
     /**
-     *
      * @param o
      */
     public void addObserver(Observer o);
 
     /**
-     *
      * @param o
      */
     public void deleteObserver(Observer o);

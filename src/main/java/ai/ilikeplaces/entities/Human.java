@@ -1,15 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ai.ilikeplaces.entities;
 
+import ai.ilikeplaces.util.*;
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -19,6 +16,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
  * @author Ravindranath Akila
  */
 @Entity
+@EntityListeners(EntityLifeCyleListener.class)
 public class Human implements Serializable {
 
 //    public static final Integer genderCodeNeutral = 0;

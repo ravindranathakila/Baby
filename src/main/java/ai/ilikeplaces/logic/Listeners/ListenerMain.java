@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.logic.crud.unit.RLocationLocal;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
@@ -8,22 +7,15 @@ import ai.ilikeplaces.doc.*;
 import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.naming.NamingException;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.Element;
-import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
 import ai.ilikeplaces.logic.crud.DB;
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
-import javax.naming.Context;
-import javax.naming.InitialContext;
+
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.html.HTMLDocument;
@@ -145,7 +137,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
 //
 //                    @Override
 //                    public void handleEvent(final Event evt_) {
-//                        $(Main_sidebar).appendChild(hTMLDocument__.createTextNode(sessionBoundBadReferenceWrapper != null ? sessionBoundBadReferenceWrapper.boundInstance.getLoggedOnUserId() : "Logged Out!"));
+//                        $(Main_sidebar).appendChild(hTMLDocument__.createTextNode(sessionBoundBadReferenceWrapper != null ? sessionBoundBadReferenceWrapper.boundInstance.getHumanUserId() : "Logged Out!"));
 //                        $(Main_sidebar).appendChild(hTMLDocument__.createTextNode("COOL! "));
 //                        new Photo$Description(itsNatDocument__, $(Main_left_column)) {
 //                        };
