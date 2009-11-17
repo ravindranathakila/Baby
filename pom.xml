@@ -21,7 +21,7 @@
             <artifactId>jsp-api</artifactId>
             <version>1+</version>
             <scope>system</scope>
-            <systemPath>C:\Program Files\Apache Software Foundation\Apache Tomcat 6.0.18\lib\jsp-api.jar</systemPath>
+            <systemPath>C:/Program Files/Apache Software Foundation/apache-tomcat-6.0.14/lib/jsp-api.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.apache.openejb</groupId>
@@ -199,6 +199,12 @@
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
                 </includes>
             </resource>
         </resources>

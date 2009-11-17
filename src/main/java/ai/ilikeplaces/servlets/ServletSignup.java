@@ -1,34 +1,24 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.jpa.CrudServiceLocal;
-import ai.ilikeplaces.SBLoggedOnUserFace;
-//import ai.ilikeplaces.entities.Human.GenderCode.IllegalEnumValueException;
-import ai.ilikeplaces.doc.*;
-import java.io.IOException;
-import java.util.Enumeration;
+import ai.ilikeplaces.doc.FIXME;
+import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.entities.Human;
+import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.servlets.Controller.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import ai.ilikeplaces.entities.Human;
-import ai.ilikeplaces.entities.HumansAuthentication;
-import ai.ilikeplaces.entities.HumansIdentity;
-import ai.ilikeplaces.entities.HumansPrivatePhoto;
-import ai.ilikeplaces.entities.HumansPublicPhoto;
-import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
-import ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt;
-import ai.ilikeplaces.security.face.SingletonHashingFace;
-import ai.ilikeplaces.servlets.Controller.Page;
-import java.util.Properties;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.ResourceBundle;
 
 /**
- *
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
@@ -36,6 +26,7 @@ import javax.naming.NamingException;
 final public class ServletSignup extends HttpServlet {
 
     final Logger logger = LoggerFactory.getLogger(ServletSignup.class.getName());
+    final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
 
     /*Session related static id references*/
     final static private String Username = "Username";
@@ -58,74 +49,20 @@ final public class ServletSignup extends HttpServlet {
     final static private String DateOfBirthErrorMsg = "DateOfBirthErrorMsg";
     final static private String ErrorStatusTrue = "true";
 
-    /*Container Related Services*/
-    final private Properties p_ = new Properties();
-    private Context context = null;
-    private CrudServiceLocal<Human> crudServiceLocal_ = null;
-    private SingletonHashingFace singletonHashingFace = null;
-    private CrudServiceLocal<HumansAuthentication> crudServiceLocalHuman_ = null;
+    private ResourceBundle logMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.LogMsgs");
 
     @Override
     @SuppressWarnings("unchecked")
     public void init() {
-        boolean initializeFailed = true;
-        final StringBuilder log = new StringBuilder();
-        init:
-        {
-            try {
-                p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
-                context = new InitialContext(p_);
-                if (context == null) {
-                    log.append("\nVARIABLE context IS NULL! ");
-                    log.append(context);
-                    break init;
-                }
-
-                crudServiceLocal_ = (CrudServiceLocal) context.lookup("CrudServiceLocal");
-                if (crudServiceLocal_ == null) {
-                    log.append("\nVARIABLE crudServiceLocal_ IS NULL! ");
-                    log.append(crudServiceLocal_);
-                    break init;
-                }
-
-                crudServiceLocalHuman_ = (CrudServiceLocal) context.lookup("CrudServiceLocal");
-                if (crudServiceLocalHuman_ == null) {
-                    log.append("\nVARIABLE crudServiceLocalHuman_ IS NULL! ");
-                    log.append(crudServiceLocalHuman_);
-                    break init;
-                }
-
-                singletonHashingFace = (SingletonHashingFace) context.lookup("SingletonHashingLocal");
-                if (singletonHashingFace == null) {
-                    log.append("\nVARIABLE singletonHashingFace IS NULL! ");
-                    log.append(singletonHashingFace);
-                    break init;
-                }
-            } catch (NamingException ex) {
-                log.append("\nCOULD NOT INITIALIZE SIGNUP SERVLET DUE TO A NAMING EXCEPTION!");
-                logger.info( "\nCOULD NOT INITIALIZE SIGNUP SERVLET DUE TO A NAMING EXCEPTION!", ex);
-                break init;
-            }
-
-            /**
-             * break. Do not let this statement be reachable if initialization
-             * failed. Instead, break immediately where initialization failed.
-             * At this point, we set the initializeFailed to false and thereby,
-             * allow initialization of an instance
-             */
-            initializeFailed = false;
-        }
-        if (initializeFailed) {
-            throw new ExceptionConstructorInvokation(log.toString());
-        }
     }
 
-    /** 
+    /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     *
      * @param request__
      * @param response__
      * @throws ServletException
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(final HttpServletRequest request__, final HttpServletResponse response__)
             throws ServletException, IOException {
@@ -133,11 +70,11 @@ final public class ServletSignup extends HttpServlet {
         response__.setContentType("text/html;charset=UTF-8");
 
         final Enumeration enumerated = request__.getParameterNames();
-        logger.info( "PARAMETERs");
+        logger.debug(logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0003"));
         while (enumerated.hasMoreElements()) {
             String param = (String) enumerated.nextElement();
-            logger.info("PARAMETER NAME:" + param);
-            logger.info("VALUE:" + request__.getParameter(param));
+            logger.debug(logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0001"), param);
+            logger.debug(logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0002"), request__.getParameter(param).length());
 
         }
         final String username = request__.getParameter(Username);/*DO NOT ASSIGN TO NEW STRING. NULL REPRESENTS FIRST ENTRANCE*/
@@ -163,7 +100,7 @@ final public class ServletSignup extends HttpServlet {
              */
             final HttpSession oldUserSession_ = request__.getSession(false);
             if (oldUserSession_ != null) {
-                oldUserSession_.removeAttribute(ServletLogin.SBLoggedOnUser);
+                oldUserSession_.removeAttribute(ServletLogin.HumanUser);
                 oldUserSession_.invalidate();
             }
 
@@ -180,7 +117,7 @@ final public class ServletSignup extends HttpServlet {
             userSession_.setMaxInactiveInterval(1200);
 
             /*Lets set session values in case signup fails and user does not require to fill all fields again.
-            Remember though, we will never be sing these values for persisting, as a conventioin.*/
+            Remember though, we will never be using these values for persisting, as a conventioin.*/
             userSession_.setAttribute(Username, username);
             userSession_.setAttribute(Password, "");
             userSession_.setAttribute(Email, email);
@@ -191,23 +128,23 @@ final public class ServletSignup extends HttpServlet {
 
             if (username == null || username.equals("") || username.equals("null")) {/*username*/
                 userSession_.setAttribute(UsernameError, ErrorStatusTrue);
-                userSession_.setAttribute(UsernameErrorMsg, "Did not fill");
+                userSession_.setAttribute(UsernameErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0002"));
                 allParametersNotOkFlag = Boolean.TRUE;
-            } else if (crudServiceLocal_.find(Human.class, username) != null) {
+            } else if (DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(username)) {
                 userSession_.setAttribute(UsernameError, ErrorStatusTrue);
-                userSession_.setAttribute(UsernameErrorMsg, "Sorry! " + username + " is unavailable.");
+                userSession_.setAttribute(UsernameErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0003") + username);
                 allParametersNotOkFlag = Boolean.TRUE;
             }
 
             /*Do NOT put the password into the session.*/
             if (password == null || password.equals("") || password.equals("null")) {/*password*/
                 userSession_.setAttribute(PasswordError, ErrorStatusTrue);
-                userSession_.setAttribute(PasswordErrorMsg, "Sorry! You will have to re-enter the password.");
+                userSession_.setAttribute(PasswordErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0004"));
                 allParametersNotOkFlag = Boolean.TRUE;
             }
             if (email == null || email.equals("") || email.equals("null")) {/*email*/
                 userSession_.setAttribute(EmailError, ErrorStatusTrue);
-                userSession_.setAttribute(EmailErrorMsg, "Did not fill");
+                userSession_.setAttribute(EmailErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0002"));
                 allParametersNotOkFlag = Boolean.TRUE;
             }
             if (gender == null || gender.equals("") || gender.equals("null")) {/*gender*/
@@ -217,7 +154,7 @@ final public class ServletSignup extends HttpServlet {
             }
             if (dateOfBirth == null || dateOfBirth.equals("") || dateOfBirth.equals("null")) {/*dateofbirth*/
                 userSession_.setAttribute(DateOfBirthError, ErrorStatusTrue);
-                userSession_.setAttribute(DateOfBirthErrorMsg, "Did not fill");
+                userSession_.setAttribute(DateOfBirthErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0002"));
                 allParametersNotOkFlag = Boolean.TRUE;
             }
             if (allParametersNotOkFlag) {
@@ -225,33 +162,16 @@ final public class ServletSignup extends HttpServlet {
                 break processSignup;
             }
 
-            devLoop_1:
-            for (int i = 0; i < 10; i++) {
-                final Human newUser = new Human();
-                devLoop_1_1:
-                newUser.setHumanId(username+i);
-                final HumansAuthentication ha = new HumansAuthentication();
-                ha.setHumanId(newUser.getHumanId());
-                ha.setHumanAuthenticationSalt(BCrypt.gensalt());
-                ha.setHumanAuthenticationHash(singletonHashingFace.getHash(password, ha.getHumanAuthenticationSalt()));
-                newUser.setHumansAuthentications(ha);
-                newUser.setHumanAlive(true);
-
-                final HumansIdentity hid = new HumansIdentity();
-                hid.setHumanId(newUser.getHumanId());
-                newUser.setHumansIdentity(hid);
-
-                final HumansPrivatePhoto hprp = new HumansPrivatePhoto();
-                hprp.setHumanId(newUser.getHumanId());
-                newUser.setHumansPrivatePhoto(hprp);
-
-                final HumansPublicPhoto hpup = new HumansPublicPhoto();
-                hpup.setHumanId(newUser.getHumanId());
-                newUser.setHumansPublicPhoto(hpup);
-
-                crudServiceLocal_.create(newUser);
+            try {
+                DB.getHumanCRUDHumanLocal(true).doCHuman(username, password);
+            } catch (
+                    @NOTE(note = "COINCIDENCE. ANOTHER USER SIGNED UP IN SAME NAME WHILE THIS USER WAS DOING IT.")
+                    final IllegalAccessException e) {
+                userSession_.setAttribute(UsernameError, ErrorStatusTrue);
+                userSession_.setAttribute(UsernameErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0001") + username);
+                request__.getRequestDispatcher("/signup.jsp").forward(request__, response__);
+                break processSignup;
             }
-
             final Page login = Page.login;
             request__.getRequestDispatcher(login.toString()).forward(request__, response__);
             break processSignup;
@@ -259,12 +179,13 @@ final public class ServletSignup extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
+     *
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
@@ -272,12 +193,13 @@ final public class ServletSignup extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
+     *
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(final HttpServletRequest request, final HttpServletResponse response)
@@ -285,8 +207,9 @@ final public class ServletSignup extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

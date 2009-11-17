@@ -16,4 +16,6 @@ public interface DBLocal {
     public HumanCRUDPublicPhotoLocal getHumanCRUDPublicPhotoLocal();
 
     public HumanCRUDLocationLocal getHumanCRUDLocationLocal();
+
+    public HumanCRUDHumanLocal getHumanCRUDHumanLocal();
 }

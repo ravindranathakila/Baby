@@ -25,7 +25,9 @@
         <link rel="stylesheet" href="/cdn/css/shareit.css" type="text/css"/>
         <link rel="stylesheet" href="/cdn/css/FileUploadButton.css" type="text/css"/>
         <script src="/ilikeplaces/js/jquery.ready.js" type="text/javascript"></script>
-        <!-- END DYNAMIC IMPORTS -->            
+        <script src="/ilikeplaces/js/Nifty.onload.js" type="text/javascript"></script>
+        <script src="/ilikeplaces/js/ItsNatEventMonitor.js" type="text/javascript"></script>
+        <!-- END DYNAMIC IMPORTS -->
     </head>
     <body>
         <div id="shareit-box" style="background:transparent;z-index:2;">
@@ -46,40 +48,6 @@
             </div>
         </div>
         <div class="container" itsnat:nocache="true" >
-            <script type="text/javascript">
-                function EventMonitor()
-                {
-                    this.before = before;
-                    this.after = after;
-
-                    this.monitor = document.getElementById("monitorId");
-                    this.count = 0;
-
-
-                    function before(evt)
-                    {
-                        if (this.count == 0){
-                            this.monitor.style.position = "relative";
-                            //this.monitor.style.pixelTop= event.clientX;
-                            //this.monitor.style.pixelLeft = event.clientY;
-                            //$("#monitorId").css( { "left": 100 + "px", "top":100 + "px" } );
-                            this.monitor.style.display = "block";
-                        }
-
-                        this.count++;
-                    }
-
-                    function after(evt)
-                    {
-                        if (this.count == 0) return; // to avoid some pending event before registering
-
-                        this.count--;
-
-                        if (this.count == 0)
-                            this.monitor.style.display = "none";
-                    }
-                }
-            </script>
             <div class="span-24 last">
                 <h3>Welcome to iLikePlaces . com</h3>
             </div>
@@ -136,11 +104,11 @@
                         </div>
                         <div class="span-14 last" id="Main_center_content">
                             <div class="span-7" id="Main_left_column" style="clip:auto;overflow:hidden;">
-                                <a href="#" class="btn blue" style="display:none;"><i></i><span id="cool"><span></span><i></i>Cool</span></a>
+                                <a href="#" class="btn blue" ><i></i><span id="cool"><span></span><i></i>Cool</span></a>
                                 <br/>
                             </div>
                             <div class="span-7 last" id="Main_right_column">
-                                <a href="#" class="btn green" style="display:none;"><i></i><span id="hot"><span></span><i></i>Hot</span></a>
+                                <a href="#" class="btn green" ><i></i><span id="hot"><span></span><i></i>Hot</span></a>
                                 <br/>
                             </div>
                         </div>
@@ -158,11 +126,5 @@
                 <p>One call. Two parameters. Three sizes.</p>
             </div>
         </div>
-        <script type="text/javascript" src="/cdn/js/niftycube.js"></script>
-        <script type="text/javascript">
-        window.onload=function(){
-        Nifty("div.nty","big");
-        }
-        </script>
     </body>
 </html>

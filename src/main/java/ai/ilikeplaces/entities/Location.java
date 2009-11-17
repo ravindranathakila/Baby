@@ -1,6 +1,6 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.util.LogNull;
+import ai.ilikeplaces.util.*;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +26,7 @@ import javax.persistence.OneToOne;
  * @author Ravindranath Akila
  */
 @Entity
+@EntityListeners(EntityLifeCyleListener.class)
 @NamedQueries(@NamedQuery(name = "FindAllLocationsByName",
 query = "SELECT loc FROM Location loc WHERE loc.locationName = :locationName"))
 public class Location implements Serializable {
@@ -137,16 +139,16 @@ public class Location implements Serializable {
             for (final Field field : fields) {
                 try {
                     toString_ += "\n{" + field.getName() + "," + field.get(this) + "}";
-                } catch (IllegalArgumentException ex) {
-                    logger.info( null, ex);
-                } catch (IllegalAccessException ex) {
-                    logger.info( null, ex);
+                } catch (final IllegalArgumentException ex) {
+                    logger.error( null, ex);
+                } catch (final IllegalAccessException ex) {
+                    logger.error( null, ex);
                 }
             }
-        } catch (NoSuchFieldException ex) {
-            logger.info( null, ex);
-        } catch (SecurityException ex) {
-            logger.info( null, ex);
+        } catch (final NoSuchFieldException ex) {
+            logger.error( null, ex);
+        } catch (final SecurityException ex) {
+            logger.error( null, ex);
         }
 
         return toString_;

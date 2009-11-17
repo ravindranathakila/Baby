@@ -54,7 +54,7 @@ public abstract class AbstractListener {
     /**
      *
      */
-    final protected SessionBoundBadReferenceWrapper<SBLoggedOnUserFace> sessionBoundBadReferenceWrapper;
+    final protected SessionBoundBadReferenceWrapper<HumanUserLocal> sessionBoundBadReferenceWrapper;
 
     private static final ResourceBundle logMsgs = ResourceBundle.getBundle("LogMsgs");
 
@@ -74,8 +74,8 @@ public abstract class AbstractListener {
             this.hTMLDocument_ = itsNatHTMLDocument_.getHTMLDocument();
             this.itsNatServlet_ = itsNatDocument.getItsNatDocumentTemplate().getItsNatServlet();
             this.itsNatHttpSession = (ItsNatHttpSession) request_.getItsNatSession();
-            final Object attribute__ = itsNatHttpSession.getAttribute(ServletLogin.SBLoggedOnUser);
-            this.sessionBoundBadReferenceWrapper = attribute__ == null ? null : (SessionBoundBadReferenceWrapper<SBLoggedOnUserFace>) attribute__;
+            final Object attribute__ = itsNatHttpSession.getAttribute(ServletLogin.HumanUser);
+            this.sessionBoundBadReferenceWrapper = attribute__ == null ? null : (SessionBoundBadReferenceWrapper<HumanUserLocal>) attribute__;
             this.location = (String) request_.getServletRequest().getAttribute(java.util.ResourceBundle.getBundle("LogMsgs").getString("LOCATION"));
             init(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument);
             registerEventListeners(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument);

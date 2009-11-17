@@ -1,24 +1,21 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.doc.FIXME;
+import ai.ilikeplaces.doc.FieldPreamble;
+import ai.ilikeplaces.util.EntityLifeCyleListener;
+import org.slf4j.LoggerFactory;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.UUID;
-import org.slf4j.LoggerFactory;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
 
 /**
- *
  * @author Ravindranath Akila
  */
 @Entity
+@EntityListeners(EntityLifeCyleListener.class)
 public class PublicPhoto implements Serializable {
 
     final private UUID uUID = UUID.randomUUID();
@@ -26,7 +23,7 @@ public class PublicPhoto implements Serializable {
     private Long publicPhotoId = null;
     private String publicPhotoFilePath;
     @FieldPreamble(description = "The path should be very random as it will be exposed to the www." +
-    "Also make sure this supports good SEO.")
+            "Also make sure this supports good SEO.")
     private String publicPhotoURLPath;
     private String publicPhotoName;
     private String publicPhotoDescription;
@@ -39,11 +36,11 @@ public class PublicPhoto implements Serializable {
     @FieldPreamble(description = "Required to calculate rank position")
     private Long publicPhotoRankTurns;
     @FieldPreamble(description = "Required when rebuilding a database from scratch someday." +
-    "Since the whole concept of ilikeplaces relies on content richness, preserving this in this table important.")
+            "Since the whole concept of ilikeplaces relies on content richness, preserving this in this table important.")
     private Location location;
     @FieldPreamble(description = "Who uploaded this image? Wil he request to delete it? " +
-    "Privacy important? " +
-    "Lets preserve the info.")
+            "Privacy important? " +
+            "Lets preserve the info.")
     private HumansPublicPhoto humansPublicPhoto;
 
     @Id
@@ -186,7 +183,6 @@ public class PublicPhoto implements Serializable {
     }
 
     /**
-     *
      * @return toString_
      */
     @Override
@@ -214,7 +210,6 @@ public class PublicPhoto implements Serializable {
     }
 
     /**
-     *
      * @param showChangeLog__
      * @return changeLog
      */

@@ -14,7 +14,7 @@ public interface RHumanLocal {
 
     public Human doRHuman(String humandId);
 
-    public Human doNTxRHuman(String humandId);
-
     public Human doDirtyRHuman(String humanId);
+
+    boolean doDirtyCheckHuman(String humanId);
 }

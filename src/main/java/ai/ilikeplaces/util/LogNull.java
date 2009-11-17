@@ -23,9 +23,9 @@ import javax.lang.model.type.*;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public class LogNull {
+final public class LogNull {
 
-    private static final ResourceBundle logMsgs = ResourceBundle.getBundle("LogMsgs");
+    private static final ResourceBundle logMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.LogMsgs");
     final static private String MSG = logMsgs.getString("NPE_1");
 
     private LogNull() {
@@ -40,7 +40,7 @@ public class LogNull {
      *
      * @return Object
      */
-    final static public Object log() {
+    static public Object log() {
         Thread.dumpStack();
         return null;
     }
@@ -50,7 +50,7 @@ public class LogNull {
      *
      * @return Object
      */
-    final static public Object logThrow() {
+    static public Object logThrow() {
         throw new NullPointerException(MSG);
     }
 }
