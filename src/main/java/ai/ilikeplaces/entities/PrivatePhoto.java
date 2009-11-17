@@ -4,6 +4,8 @@ import ai.ilikeplaces.doc.FieldPreamble;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
+
+import ai.ilikeplaces.doc.TODO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.persistence.CascadeType;
@@ -24,12 +26,14 @@ public class PrivatePhoto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Long privatePhotoId;
+
     @FieldPreamble(description = "Put in folders?" +
     "Folders might be renamed due to change in location names if you use location names in folders." +
     "Well having the location name in the file name is important for SEO. e.g. paris.jpg" +
     "Would an approach like {random_number}_location.jpg work?" +
     "Would an approach like {sequence_number}_location.jpg work?()")
     private String privatePhotoFilePath;
+
     @FieldPreamble(description = "The path should be very random as it will be exposed to the www." +
     "Also make sure this supports good SEO.")
     private String privatePhotoURLPath;
@@ -37,17 +41,22 @@ public class PrivatePhoto implements Serializable {
     private String privatePhotoName;
     
     private String privatePhotoDescription;
+
     @FieldPreamble(description = "Required to calculate ranking")
     private Date privatePhotoUploadDate;
+
     @FieldPreamble(description = "Required to calculate rank position")
     private Date privatePhotoTakenDate;
+
     @FieldPreamble(description = "Required when rebuilding a database from scratch someday." +
     "Since the whole concept of ilikeplaces relies on content richness, preserving this in this table important.")
     private Location privatePhotoOfLocation;
+
     @FieldPreamble(description = "Who uploaded this image? Wil he request to delete it? " +
     "Privacy important? " +
     "Lets preserve the info.")
     private HumansPrivatePhoto humansPrivatePhoto;
+
     private Location location;
 
     @Id
@@ -148,16 +157,8 @@ public class PrivatePhoto implements Serializable {
 
     @Override
     @SuppressWarnings({"EqualsWhichDoesntCheckParameterClass", "EqualsWhichDoesntCheckParameterClass"})
+    @TODO(task = "DO AS IN PublicPhoto.class, UUID")
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-//        if (!(object instanceof PublicPhoto)) {
-//            return false;
-//        }
-//        PublicPhoto other = (PublicPhoto) object;
-//        if ((this.privatePhotoId == null && other.privatePhotoId != null) || (this.privatePhotoId != null && !this.privatePhotoId.equals(other.privatePhotoId))) {
-//            return false;
-//        }
-//        return true;
         throw new UnsupportedOperationException("PLEASE PROVIDE THE BODY OF THIS EQUALS METHOD!");
     }
 
