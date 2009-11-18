@@ -1,4 +1,4 @@
-package ai.ilikeplaces;
+package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.*;
 import java.util.Observable;

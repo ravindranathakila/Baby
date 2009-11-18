@@ -1,14 +1,9 @@
 package ai.ilikeplaces.jpa;
 
-import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.doc.CONVENTION;
+import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import org.slf4j.Logger;
-import java.util.Set;
-import org.slf4j.LoggerFactory;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -16,28 +11,30 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
-//select * from ILP.PUBLICPHOTO;
-//select * from ILP.HUMANSPUBLICPHOTO_PUBLICPHOTO;
-//select * from ILP.LOCATION_PUBLICPHOTO;
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
 /**
- *
- * @param <T>
  * @author Ravindranath Akila
+ * @param <T>
  */
 @Stateless
+@CONVENTION(convention = "CALLER ASSUMES THIS CLASS METHODS ARE OF TX SCOPE SUPPORTS, " +
+        "BUT CREATE AND UPDATES HERE ARE OF SCOPE MANDATORY WHICH WILL ENSURE CALLER DOES NO MISTAKE.")
 final public class CrudService<T> extends AbstractSLBCallbacks implements CrudServiceLocal<T> {
 
     /**
-     *
      * Please not that this is a field of Stateless session bean
      */
-    @FIXME(issue="FIND OUT HOW THE MANAGER HANDLES CONCURRENT REQUESTS. SAME CACHE OR DIFFERENT? IF DIFFERENT, COME ON, THIS A CLASS VARIABLE!" +
-    "RESOLVED! CHECK OUT THTE HIBERNATE SITE ARTICLE ON THIS. APPARENTLY, CONTAINER DOES THIS. AMAZING!")
+    @FIXME(issue = "FIND OUT HOW THE MANAGER HANDLES CONCURRENT REQUESTS. SAME CACHE OR DIFFERENT? IF DIFFERENT, COME ON, THIS A CLASS VARIABLE!" +
+            "RESOLVED! CHECK OUT THTE HIBERNATE SITE ARTICLE ON THIS. APPARENTLY, CONTAINER DOES THIS. AMAZING!")
     @PersistenceContext(unitName = "adimpression_ilikeplaces_war_1.6-SNAPSHOTPU", type = PersistenceContextType.TRANSACTION)
     public EntityManager entityManager;
 
     /**
-     *
      * @param t
      * @return
      */
@@ -51,7 +48,6 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
     }
 
     /**
-     *
      * @param type
      * @param id
      * @return
@@ -64,7 +60,6 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
     }
 
     /**
-     *
      * @param type
      * @param id
      */
@@ -76,7 +71,6 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
     }
 
     /**
-     *
      * @param t
      * @return
      */
@@ -87,7 +81,6 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
     }
 
     /**
-     *
      * @param namedQueryName
      * @return
      */
@@ -98,7 +91,6 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
     }
 
     /**
-     *
      * @param namedQueryName
      * @param parameters
      * @return
@@ -110,7 +102,6 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
     }
 
     /**
-     *
      * @param queryName
      * @param resultLimit
      * @return
@@ -124,7 +115,6 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
     }
 
     /**
-     *
      * @param sql
      * @param type
      * @return
@@ -136,7 +126,6 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
     }
 
     /**
-     *
      * @param namedQueryName
      * @param parameters
      * @param resultLimit
@@ -158,7 +147,6 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
     }
 
     /**
-     *
      * @return toString_
      */
     @Override
@@ -186,7 +174,6 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
     }
 
     /**
-     *
      * @param showChangeLog__
      * @return changeLog
      */

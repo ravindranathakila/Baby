@@ -42,9 +42,27 @@ public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
      */
     @Override
     @WARNING(warning = "SUPER LOCATION CAN BE NULL(CALLER SENDS NULL OR DB HAS NULL). HENCE JUST FIND BY LOCATION. IF PLENTY(THEN SUPER IS DEFINITELY THERE, MATCH SUPER.")
-    @TransactionAttribute(TransactionAttributeType.MANDATORY)
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public Location doNTxRLocation(final String locationName, final String superLocationName) {
+        return doCommonRLocation(locationName,superLocationName);
+    }
+
+    /**
+     * Use if you are going to use this method, then you should be within a
+     * transaction on which you will be doing some updates on this location. If
+     * not, use the dirty read instead. Holding up a row in a long lived
+     * transaction will be a huge bottleneck so dirty read is the best in most
+     * cases.
+     *
+     * @param locationName
+     * @param superLocationName
+     * @return
+     */
+    @Override
+    @WARNING(warning = "SUPER LOCATION CAN BE NULL(CALLER SENDS NULL OR DB HAS NULL). HENCE JUST FIND BY LOCATION. IF PLENTY(THEN SUPER IS DEFINITELY THERE, MATCH SUPER.")
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Location doRLocation(final String locationName, final String superLocationName) {
-        return dirtyRLocation(locationName,superLocationName);
+        return doCommonRLocation(locationName,superLocationName);
     }
 
     /**
@@ -57,7 +75,7 @@ public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
     @WARNING(warning = "SUPER LOCATION CAN BE NULL(CALLER SENDS NULL OR DB HAS NULL). HENCE JUST FIND BY LOCATION. IF PLENTY(THEN SUPER IS DEFINITELY THERE, MATCH SUPER.")
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Location doDirtyRLocation(final String locationName, final String superLocationName) {
-        return dirtyRLocation(locationName,superLocationName);
+        return doCommonRLocation(locationName,superLocationName);
     }
 
 
@@ -67,7 +85,8 @@ public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
      * @return
      */
     @WARNING(warning = "SUPER LOCATION CAN BE NULL(CALLER SENDS NULL OR DB HAS NULL). HENCE JUST FIND BY LOCATION. IF PLENTY(THEN SUPER IS DEFINITELY THERE, MATCH SUPER.")
-    private  Location dirtyRLocation(final String locationName, final String superLocationName) {
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    private  Location doCommonRLocation(final String locationName, final String superLocationName) {
 
         logger.debug("HELLO, I AM QUERYING FOR A LOCATION {} OF WHICH SUPER LOCATION IS {}.", locationName, superLocationName);
 

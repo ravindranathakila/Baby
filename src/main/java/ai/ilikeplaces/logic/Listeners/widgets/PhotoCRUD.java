@@ -3,22 +3,20 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.*;
-import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
+import ai.ilikeplaces.exception.ConstructorInvokationException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.crud.DBLocal;
-import ai.ilikeplaces.logic.crud.HumanCRUDPublicPhotoLocal;
 import ai.ilikeplaces.servlets.Controller.Page;
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 import static ai.ilikeplaces.security.xss.Trim.*;
 import java.util.Properties;
+
+import ai.ilikeplaces.util.AbstractWidgetListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import org.itsnat.core.ItsNatDocument;
-import org.itsnat.core.event.NodeAllAttribTransport;
-import org.itsnat.core.event.NodeAttributeTransport;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
@@ -91,7 +89,7 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
             initializeFailed = false;
         }
         if (initializeFailed) {
-            throw new ExceptionConstructorInvokation(log.toString());
+            throw new ConstructorInvokationException(log.toString());
         }
     }
 

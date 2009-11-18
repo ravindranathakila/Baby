@@ -130,7 +130,7 @@ public class Location implements Serializable {
      */
     @Override
     public String toString() {
-        String toString_ = new String(getClass().getName());
+/*        String toString_ = getClass().getName();
         try {
             final Field[] fields = {getClass().getDeclaredField("locationId"),
                 getClass().getDeclaredField("locationName"),
@@ -151,7 +151,8 @@ public class Location implements Serializable {
             logger.error( null, ex);
         }
 
-        return toString_;
+        return toString_;*/
+        return locationName;
     }
 
     /**

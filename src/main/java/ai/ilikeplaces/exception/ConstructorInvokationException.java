@@ -4,7 +4,7 @@ package ai.ilikeplaces.exception;
  * Throw this exception if constructor failed to initialize
  * @author Ravindranath Akila
  */
-final public class ExceptionConstructorInvokation extends RuntimeException {
+final public class ConstructorInvokationException extends RuntimeException {
 
     final static private String SeeLogs = "\nSORRY! I COULD NOT INITIALIZE THIS INSTANCE. PLEASE SEE LOGS FOR MORE DETAILS.";
 
@@ -12,7 +12,7 @@ final public class ExceptionConstructorInvokation extends RuntimeException {
      *
      * @param cause
      */
-    public ExceptionConstructorInvokation(final Throwable cause) {
+    public ConstructorInvokationException(final Throwable cause) {
         super(cause);
     }
 
@@ -21,7 +21,7 @@ final public class ExceptionConstructorInvokation extends RuntimeException {
      * @param message
      * @param cause
      */
-    public ExceptionConstructorInvokation(final String message, final Throwable cause) {
+    public ConstructorInvokationException(final String message, final Throwable cause) {
         super(message + SeeLogs, cause);
     }
 
@@ -29,7 +29,7 @@ final public class ExceptionConstructorInvokation extends RuntimeException {
      *
      * @param message
      */
-    public ExceptionConstructorInvokation(final String message) {
+    public ConstructorInvokationException(final String message) {
         super(message + SeeLogs);
     }
 }

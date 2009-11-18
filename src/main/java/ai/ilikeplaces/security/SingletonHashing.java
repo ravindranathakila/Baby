@@ -1,7 +1,7 @@
 package ai.ilikeplaces.security;
 
+import ai.ilikeplaces.exception.ConstructorInvokationException;
 import ai.ilikeplaces.util.AbstractSNGLTNBCallbacks;
-import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
 import ai.ilikeplaces.security.blowfish.BlowFishLocal;
 import ai.ilikeplaces.security.face.SingletonHashingFace;
 import javax.annotation.PostConstruct;
@@ -45,7 +45,7 @@ public class SingletonHashing extends AbstractSNGLTNBCallbacks implements Single
             initializeFailed = false;
         }
         if (initializeFailed) {
-            throw new ExceptionConstructorInvokation(log.toString());
+            throw new ConstructorInvokationException(log.toString());
         }
         System.out.println(log);
     }

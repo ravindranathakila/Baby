@@ -29,8 +29,8 @@ public class CHuman extends AbstractSLBCallbacks implements CHumanLocal {
     final static Logger logger = LoggerFactory.getLogger(CHuman.class);
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.MANDATORY)
-    public void doCHuman(final Human newUser) {
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void doNTxCHuman(final Human newUser) {
         crudServiceLocal_.create(newUser);
     }
 }

@@ -1,39 +1,39 @@
 package ai.ilikeplaces.logic.Listeners;
 
+import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PublicPhoto;
-import ai.ilikeplaces.logic.Listeners.widgets.*;
-import ai.ilikeplaces.doc.*;
-import java.util.ResourceBundle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import ai.ilikeplaces.logic.Listeners.widgets.Photo$Description;
+import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.rbs.RBGet;
+import ai.ilikeplaces.util.AbstractListener;
+import ai.ilikeplaces.util.MarkupTag;
+import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
+import org.itsnat.core.html.ItsNatHTMLDocument;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
-import ai.ilikeplaces.logic.crud.DB;
-import static ai.ilikeplaces.servlets.Controller.Page.*;
+import org.w3c.dom.html.HTMLDocument;
+
 import java.util.Iterator;
 import java.util.List;
 
-import org.itsnat.core.ItsNatDocument;
-import org.itsnat.core.html.ItsNatHTMLDocument;
-import org.w3c.dom.html.HTMLDocument;
+import static ai.ilikeplaces.servlets.Controller.Page.*;
 
 /**
- *
  * @author Ravindranath Akila
  */
 public class ListenerMain implements ItsNatServletRequestListener {
 
 
     final static private Logger logger = LoggerFactory.getLogger(ListenerMain.class);
-    @TODO(task="Move to several budnles as i18n,EXCEPTION,LOG where they can be used from several jars. Use a package structure like ai.ilikeplaces.rb.i18n")
-    private static final ResourceBundle logMsgs = ResourceBundle.getBundle("LogMsgs");
-    final static protected String LocationId = logMsgs.getString("LOCATIONID");
+    @TODO(task = "Move to several budnles as i18n,EXCEPTION,LOG where they can be used from several jars. Use a package structure like ai.ilikeplaces.rb.i18n")
+    final static protected String LocationId = RBGet.config.getString("LOCATIONID");
 
     /**
-     *
      * @param request__
      * @param response__
      */
@@ -76,17 +76,17 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                     setLocationAsTitle:
                     {
-                        try{
-                        hTMLDocument__.setTitle("Test title");
-                        } catch (Throwable t){
-                            logger.error("{}",t);
+                        try {
+                            hTMLDocument__.setTitle("Test title");
+                        } catch (Throwable t) {
+                            logger.error("{}", t);
                         }
                     }
-                    
+
                     getAndDisplayAllThePhotos:
                     {
                         List<PublicPhoto> listPublicPhoto = existingLocation_.getPublicPhotos();
-                        logger.info(logMsgs.getString("NUMBER_OF_PHOTOS_FOR_LOCATION"), existingLocation_.getLocationName(), listPublicPhoto.size());
+                        logger.info(RBGet.logMsgs.getString("NUMBER_OF_PHOTOS_FOR_LOCATION"), existingLocation_.getLocationName(), listPublicPhoto.size());
 
                         int i = 0;
                         for (final Iterator<PublicPhoto> it = listPublicPhoto.iterator(); it.hasNext(); i++) {
@@ -121,7 +121,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     noSupportForNewLocationsYet:
                     {
                         $(Main_center_main).appendChild(($(MarkupTag.P).appendChild(
-                                hTMLDocument__.createTextNode(logMsgs.getString("CANT_FIND_LOCATION")))));
+                                hTMLDocument__.createTextNode(RBGet.logMsgs.getString("CANT_FIND_LOCATION")))));
                     }
                 }
 
@@ -132,34 +132,35 @@ public class ListenerMain implements ItsNatServletRequestListener {
              */
             @Override
             protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
-//                /*Abstract implementation*/
-//                itsNatHTMLDocument__.addEventListener((EventTarget) $("cool"), Click, new EventListener() {
-//
-//                    @Override
-//                    public void handleEvent(final Event evt_) {
-//                        $(Main_sidebar).appendChild(hTMLDocument__.createTextNode(sessionBoundBadReferenceWrapper != null ? sessionBoundBadReferenceWrapper.boundInstance.getHumanUserId() : "Logged Out!"));
-//                        $(Main_sidebar).appendChild(hTMLDocument__.createTextNode("COOL! "));
-//                        new Photo$Description(itsNatDocument__, $(Main_left_column)) {
-//                        };
-//                    }
-//                }, false);
-//
-//                /*Abstract implementation*/
-//                itsNatHTMLDocument__.addEventListener((EventTarget) $("hot"), Click, new EventListener() {
-//
-//                    @Override
-//                    public void handleEvent(final Event evt_) {
-//                        $(Main_sidebar).appendChild(hTMLDocument__.createTextNode("HOT! "));
-//                        new Photo$Description(itsNatDocument, $(Main_right_column)) {
-//                        };
-//                    }
-//                }, false);
+/*
+                *//*Abstract implementation*//*
+                itsNatHTMLDocument__.addEventListener((EventTarget) $("cool"), Click, new EventListener() {
+
+                    @Override
+                    public void handleEvent(final Event evt_) {
+                        $(Main_sidebar).appendChild(hTMLDocument__.createTextNode(sessionBoundBadRefWrapper != null ? sessionBoundBadRefWrapper.boundInstance.getHumanUserId() : "Logged Out!"));
+                        $(Main_sidebar).appendChild(hTMLDocument__.createTextNode("COOL! "));
+                        new Photo$Description(itsNatDocument__, $(Main_left_column)) {
+                        };
+                    }
+                }, false);
+
+                *//*Abstract implementation*//*
+                itsNatHTMLDocument__.addEventListener((EventTarget) $("hot"), Click, new EventListener() {
+
+                    @Override
+                    public void handleEvent(final Event evt_) {
+                        $(Main_sidebar).appendChild(hTMLDocument__.createTextNode("HOT! "));
+                        new Photo$Description(itsNatDocument, $(Main_right_column)) {
+                        };
+                    }
+                }, false);
+                */
             }
         };
     }
 
     /**
-     *
      * @param showChangeLog__
      * @return changeLog
      */

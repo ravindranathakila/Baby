@@ -13,5 +13,5 @@ import javax.ejb.Local;
 @Local
 public interface CPublicPhotoLocal {
 
-    public PublicPhoto doCPublicPhotoLocal(String humanId, long locationId, PublicPhoto publicPhoto );
+    public PublicPhoto doNTxCPublicPhotoLocal(String humanId, long locationId, PublicPhoto publicPhoto );
 }

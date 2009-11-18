@@ -1,7 +1,7 @@
-package ai.ilikeplaces.logic.Listeners.widgets;
+package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.*;
-import ai.ilikeplaces.logic.Listeners.MarkupTagFace;
+import ai.ilikeplaces.util.MarkupTagFace;
 import ai.ilikeplaces.servlets.Controller;
 import java.util.HashSet;
 import java.util.Set;

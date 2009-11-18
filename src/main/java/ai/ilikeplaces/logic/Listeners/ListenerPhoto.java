@@ -1,25 +1,19 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.entities.Location;
-import ai.ilikeplaces.entities.PublicPhoto;
+import ai.ilikeplaces.exception.ConstructorInvokationException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
-import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
+import ai.ilikeplaces.util.AbstractListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.naming.NamingException;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
-import org.w3c.dom.Element;
-import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
 import ai.ilikeplaces.servlets.Controller;
 import static ai.ilikeplaces.servlets.Controller.Page.*;
-import java.util.Iterator;
-import java.util.List;
+
 import java.util.Properties;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -83,7 +77,7 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
             initializeFailed = false;
         }
         if (initializeFailed) {
-            throw new ExceptionConstructorInvokation(log.toString());
+            throw new ConstructorInvokationException(log.toString());
         }
     }
 

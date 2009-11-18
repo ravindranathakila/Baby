@@ -1,4 +1,4 @@
-package ai.ilikeplaces.logic.Listeners;
+package ai.ilikeplaces.util;
 
 /**
  *
@@ -21,7 +21,7 @@ public interface MarkupTagFace {
     /**
      * Exact String Representation of Enum.
      * Case sensitive as XML markup could be added here in future
-     * @return
+     * @return String representation of Tag
      */
     @Override
     public String toString();

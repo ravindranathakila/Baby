@@ -30,9 +30,15 @@ public class RHuman extends AbstractSLBCallbacks implements RHumanLocal {
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.MANDATORY)
-    public Human doRHuman(String humandId) {
-        return crudServiceLocal_.find(Human.class, humandId);
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Human doRHuman(String humanId) {
+        return crudServiceLocal_.find(Human.class, humanId);
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public Human doNTxRHuman(String humanId) {
+        return crudServiceLocal_.find(Human.class, humanId);
     }
 
     @Override

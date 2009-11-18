@@ -1,19 +1,19 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Human;
-import ai.ilikeplaces.entities.HumansPublicPhoto;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PublicPhoto;
-import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 /**
- *
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
@@ -25,16 +25,32 @@ public class UPublicPhoto implements UPublicPhotoLocal {
     @EJB
     private CrudServiceLocal<Location> crudServiceLocation_;
     @EJB
-    private CrudServiceLocal<PublicPhoto> CrudServicPublicPhoto_;
+    private CrudServiceLocal<PublicPhoto> crudServicePublicPhoto_;
 
     public UPublicPhoto() {
         logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", UPublicPhoto.class, this.hashCode());
     }
 
     @Override
-    public boolean doUPublicPhotoDescriptionLocal(final long publicPhotoId, final String publicPhotoDescription) {
-        CrudServicPublicPhoto_.find(PublicPhoto.class, publicPhotoId).setPublicPhotoDescription(publicPhotoDescription);
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public boolean doNTxUPublicPhotoDescriptionLocal(final long publicPhotoId, final String publicPhotoDescription) {
+        crudServicePublicPhoto_.find(PublicPhoto.class, publicPhotoId).setPublicPhotoDescription(publicPhotoDescription);
         return true;
     }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public boolean doUPublicPhotoDescriptionLocal(final long publicPhotoId, final String publicPhotoDescription) {
+        crudServicePublicPhoto_.find(PublicPhoto.class, publicPhotoId).setPublicPhotoDescription(publicPhotoDescription);
+        return true;
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public boolean doDirtyUPublicPhotoDescriptionLocal(final long publicPhotoId, final String publicPhotoDescription) {
+        crudServicePublicPhoto_.find(PublicPhoto.class, publicPhotoId).setPublicPhotoDescription(publicPhotoDescription);
+        return true;
+    }
+
     final static Logger logger = LoggerFactory.getLogger(UPublicPhoto.class);
 }
