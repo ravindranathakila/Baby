@@ -1,13 +1,13 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.HumanUserLocal;
-import ai.ilikeplaces.SessionBoundBadReferenceWrapper;
+import ai.ilikeplaces.logic.role.HumanUserLocal;
+import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
-import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
+import ai.ilikeplaces.exception.ConstructorInvokationException;
 import ai.ilikeplaces.logic.Listeners.ListenerMain;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.rbs.RBGet;
@@ -94,7 +94,7 @@ final public class ServletLogin extends HttpServlet {
             initializeFailed = false;
         }
         if (initializeFailed) {
-            throw new ExceptionConstructorInvokation(log.toString());
+            throw new ConstructorInvokationException(log.toString());
         }
     }
 
@@ -145,9 +145,9 @@ final public class ServletLogin extends HttpServlet {
                         if (humansAuthentications.getHumanAuthenticationHash().equals(singletonHashingFace.getHash(request__.getParameter(Password), humansAuthentications.getHumanAuthenticationSalt()))) {
 
                             humanUserLocal.setHumanUserId(request__.getParameter(Username));
-                            userSession_.setAttribute(HumanUser, (new SessionBoundBadReferenceWrapper<HumanUserLocal>(humanUserLocal, userSession_, true)));
+                            userSession_.setAttribute(HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_, true)));
                             final PageFace home = Page.home;
-                            logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0001") + ((SessionBoundBadReferenceWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).boundInstance.getHumanUserId());
+                            logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0001") + ((SessionBoundBadRefWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).boundInstance.getHumanUserId());
                             response__.sendRedirect(home.toString());
                             break doLogin;/*This is unnecessary but lets not leave chance for introducing bugs*/
                         } else {/*Ok password wrong. What do we do with this guy? First lets make his session object null*/
@@ -177,7 +177,7 @@ final public class ServletLogin extends HttpServlet {
             }
 
         } else {/*Why did the user come to this page if he was already logged on? Send him back!*/
-            logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0005") + ((SessionBoundBadReferenceWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).boundInstance.getHumanUserId());
+            logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0005") + ((SessionBoundBadRefWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).boundInstance.getHumanUserId());
             final PageFace home = Page.home;
             response__.sendRedirect(home.toString());
         }

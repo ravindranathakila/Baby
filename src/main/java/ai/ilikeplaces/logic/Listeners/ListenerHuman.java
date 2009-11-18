@@ -4,13 +4,14 @@ import ai.ilikeplaces.entities.HumansPrivatePhoto;
 import ai.ilikeplaces.entities.HumansPublicPhoto;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.util.AbstractListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.naming.NamingException;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
-import ai.ilikeplaces.exception.ExceptionConstructorInvokation;
+import ai.ilikeplaces.exception.ConstructorInvokationException;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.logic.Listeners.widgets.PhotoCRUD;
 import static ai.ilikeplaces.servlets.Controller.Page.*;
@@ -80,7 +81,7 @@ public class ListenerHuman implements ItsNatServletRequestListener {
             initializeFailed = false;
         }
         if (initializeFailed) {
-            throw new ExceptionConstructorInvokation(log.toString());
+            throw new ConstructorInvokationException(log.toString());
         }
     }
 
@@ -102,9 +103,9 @@ public class ListenerHuman implements ItsNatServletRequestListener {
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor+JSCodeToSend.FnLocationId);
 
-                if (sessionBoundBadReferenceWrapper != null) {
-                    //sessionBoundBadReferenceWrapper.boundInstance.getHumanUserId()
-                    HumansPublicPhoto humansPublicPhoto = crudHumansPublicPhoto_.find(HumansPublicPhoto.class, sessionBoundBadReferenceWrapper.boundInstance.getHumanUserId());
+                if (sessionBoundBadRefWrapper != null) {
+                    //sessionBoundBadRefWrapper.boundInstance.getHumanUserId()
+                    HumansPublicPhoto humansPublicPhoto = crudHumansPublicPhoto_.find(HumansPublicPhoto.class, sessionBoundBadRefWrapper.boundInstance.getHumanUserId());
 
                     for (final PublicPhoto publicPhoto : humansPublicPhoto.getPublicPhotos()) {
                         new PhotoCRUD(itsNatDocument__, $(Controller.Page.Main_center_main), publicPhoto, humansPublicPhoto.getHumanId()) {

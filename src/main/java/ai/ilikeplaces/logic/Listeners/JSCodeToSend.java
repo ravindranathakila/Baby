@@ -1,11 +1,10 @@
 package ai.ilikeplaces.logic.Listeners;
 
+import ai.ilikeplaces.doc.License;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ai.ilikeplaces.doc.*;
 
 /**
- *
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
@@ -14,6 +13,7 @@ final public class JSCodeToSend {
     private JSCodeToSend() throws IllegalAccessException {
         throw new IllegalAccessException("SORRY! THIS CLASS IS NOT INSTRANTIABLE.");
     }
+
     final static Logger logger = LoggerFactory.getLogger(JSCodeToSend.class);
     final static public String FnEventMonitor = "\ndocument.monitor = new EventMonitor();document.getItsNatDoc().addEventMonitor(document.monitor);";
     final static public String LocationId = "locationId";

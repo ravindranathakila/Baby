@@ -1,4 +1,4 @@
-package ai.ilikeplaces.logic.Listeners;
+package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.FIXME;
 import org.slf4j.Logger;
@@ -67,7 +67,7 @@ public enum MarkupTag implements MarkupTagFace {
         }
     };
     final static Logger logger = LoggerFactory.getLogger(MarkupTag.class.getName());
-    final static String ExceptionMsg = "OOPS! I RECIEVE CALL ON NON OVERRIDDEN ATTRIBUTE. YOU SHOULD EXPECT NPE SOON.";
+    final static String ExceptionMsg = "SORRY! I RECEIVED A CALL ON NON OVERRIDDEN ATTRIBUTE.";
 
     public String id() {
         throw new UnsupportedOperationException(ExceptionMsg);

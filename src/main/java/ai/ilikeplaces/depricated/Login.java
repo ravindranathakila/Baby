@@ -1,4 +1,4 @@
-package ai.ilikeplaces;
+package ai.ilikeplaces.depricated;
 
 import org.itsnat.comp.ItsNatComponent;
 import org.itsnat.comp.ItsNatComponentManager;

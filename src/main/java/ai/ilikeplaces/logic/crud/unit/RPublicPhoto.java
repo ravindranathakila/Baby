@@ -1,19 +1,20 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansPublicPhoto;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PublicPhoto;
-import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 /**
- *
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
@@ -32,7 +33,13 @@ public class RPublicPhoto implements RPublicPhotoLocal {
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public PublicPhoto doRPublicPhotoLocal(final String humanId, final long locationId, final PublicPhoto publicPhoto) {
+        return doCommonRPublicPhotoLocal(humanId, locationId, publicPhoto);
+    }
+
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    private PublicPhoto doCommonRPublicPhotoLocal(final String humanId, final long locationId, final PublicPhoto publicPhoto) {
         if (publicPhoto.getLocation() != null || publicPhoto.getHumansPublicPhoto() != null) {
             logger.warn("HEY! DON'T SET THE Location OR HumansPublicPhoto PARAMETERS OF PublicPhoto WHEN CALLING THIS METHOD!");
         }
@@ -49,5 +56,6 @@ public class RPublicPhoto implements RPublicPhotoLocal {
 
         return publicPhoto;
     }
+
     final static Logger logger = LoggerFactory.getLogger(RPublicPhoto.class);
 }

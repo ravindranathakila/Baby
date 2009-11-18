@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@NOTE(note="THIS CLASS WAS USED TO COPY PARAMETERS FROM ONE ENTITY TO ANOTHER, BUT IS NOT IN USE ")
 final public class UpdateCopy<T> {
 
     final static Logger logger = LoggerFactory.getLogger(UpdateCopy.class);

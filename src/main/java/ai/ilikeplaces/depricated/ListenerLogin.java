@@ -1,9 +1,8 @@
-package ai.ilikeplaces;
+package ai.ilikeplaces.depricated;
 
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
-import org.itsnat.core.html.ItsNatHTMLDocument;
 
 /**
  *

@@ -25,7 +25,7 @@ public class Human implements Serializable {
     private String humanId;
     /**
      * If the user is not active on the site, he is considered dead and the
-     * accound shall be false under humanAlive.
+     * account shall be false under humanAlive.
      * The motivation is to get all humansAlive to be true on ilikeplaces.com:-)
      * Important: This is also the switch for the privacy policy.
      */
@@ -135,14 +135,6 @@ public class Human implements Serializable {
 //            }
 //        }
 //    }
-//    public String getLoggedOnUserPassword() {
-//        return loggedOnUserPassword;
-//    }
-//
-//    public void setLoggedOnUserPassword(final String loggedOnUserPassword) {
-//        this.loggedOnUserPassword = loggedOnUserPassword;
-//    }
-//
 //    public String getLoggedOnUserAuthorizations() {
 //        return loggedOnUserAuthorizations;
 //    }
@@ -151,11 +143,6 @@ public class Human implements Serializable {
 //        this.loggedOnUserAuthorizations = loggedOnUserAuthorizations;
 //    }
 //
-//
-//
-//    public void setLoggedOnUserEmail(final String loggedOnUserEmail) {
-//        this.loggedOnUserEmail = loggedOnUserEmail;
-//    }
 //
 //    @OneToMany
 //    public List<Human> getLoggedOnUserBestFriends() {

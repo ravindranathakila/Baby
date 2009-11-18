@@ -3,22 +3,15 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.logic.crud.unit.DPublicPhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.CPublicPhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.UPublicPhotoLocal;
-import ai.ilikeplaces.logic.crud.unit.RHumanLocal;
-import ai.ilikeplaces.logic.crud.unit.RLocationLocal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ai.ilikeplaces.doc.*;
-import ai.ilikeplaces.entities.Human;
-import ai.ilikeplaces.entities.HumansPublicPhoto;
-import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PublicPhoto;
-import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.persistence.CascadeType;
 
 /**
  *
@@ -45,13 +38,13 @@ final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @WARNING(warning = "transactional", warnings = {"These two Merge and Persist Each other. Do not update their fields after this block"})
     private boolean doHumanCPublicPhoto(final String humanId, final long locationId, PublicPhoto publicPhoto) throws javax.ejb.EJBTransactionRolledbackException {
-        cPublicPhotoLocal_.doCPublicPhotoLocal(humanId, locationId, publicPhoto);
+        cPublicPhotoLocal_.doNTxCPublicPhotoLocal(humanId, locationId, publicPhoto);
         return true;
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     private boolean doHumanDPublicPhoto(final long publicPhotoId) {
-        return dPublicPhotoLocal_.doDPublicPhotoLocal(publicPhotoId);
+        return dPublicPhotoLocal_.doNTxDPublicPhotoLocal(publicPhotoId);
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)

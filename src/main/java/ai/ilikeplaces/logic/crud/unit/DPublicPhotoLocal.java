@@ -13,5 +13,5 @@ import javax.ejb.Local;
 @Local
 public interface DPublicPhotoLocal {
 
-    public boolean doDPublicPhotoLocal(long publicPhotoId );
+    public boolean doNTxDPublicPhotoLocal(long publicPhotoId );
 }

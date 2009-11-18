@@ -1,6 +1,6 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.ListenerLogin;
+import ai.ilikeplaces.depricated.ListenerLogin;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.logic.Listeners.ListenerHuman;
 import ai.ilikeplaces.logic.Listeners.ListenerMain;
@@ -10,6 +10,8 @@ import java.util.IdentityHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import ai.ilikeplaces.rbs.RBGet;
 import org.slf4j.LoggerFactory;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -258,7 +260,7 @@ final public class Controller extends HttpServletWrapper {
         final String URL__ = pathInfo == null ? "" : ((HttpServletRequest) request__.getServletRequest()).getPathInfo().substring(1);//Removes preceeding slash
         if (isNonLocationPage(URL__)) {
             if (isPhotoPage(URL__)) {
-                request__.getServletRequest().setAttribute("location", getPhotoLocation(URL__));
+                request__.getServletRequest().setAttribute(RBGet.config.getString("HttpSessionAttr.location"), getPhotoLocation(URL__));
                 request__.getServletRequest().setAttribute("photoURL", getPhotoURL(URL__));
                 request__.getServletRequest().setAttribute("itsnat_doc_name", "photo");/*Framework specific*/
                 staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0005") + getPhotoLocation(URL__));

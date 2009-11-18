@@ -1,7 +1,7 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.HumanUserLocal;
-import ai.ilikeplaces.SessionBoundBadReferenceWrapper;
+import ai.ilikeplaces.logic.role.HumanUserLocal;
+import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.logic.crud.DB;
@@ -77,7 +77,7 @@ final public class ServletFileUploads extends HttpServlet {
                 {
                     @SuppressWarnings("unchecked")
                     final HumanUserLocal sBLoggedOnUserLocal =
-                            ((SessionBoundBadReferenceWrapper<HumanUserLocal>) session.getAttribute(ServletLogin.HumanUser)).boundInstance;
+                            ((SessionBoundBadRefWrapper<HumanUserLocal>) session.getAttribute(ServletLogin.HumanUser)).boundInstance;
                     try {
                         /*Check that we have a file upload request*/
                         final boolean isMultipart = ServletFileUpload.isMultipartContent(request__);

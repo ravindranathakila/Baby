@@ -1,8 +1,10 @@
-package ai.ilikeplaces;
+package ai.ilikeplaces.logic.role;
 
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSFBCallbacks;
+import ai.ilikeplaces.util.DelegatedObservable;
+import ai.ilikeplaces.util.ManageObservers;
 
 import javax.annotation.PreDestroy;
 import javax.ejb.Remove;
@@ -46,7 +48,7 @@ final public class HumanUser extends AbstractSFBCallbacks implements HumanUserLo
         } else {
             this.remove();
             throw new IllegalStateException(
-                    "YOU ATTEMPT TO RE-ASSIGN USER ID WHICH IS NOT ALLOWED. PLEASE MAKE THE USER SIGN OUT AND SIGN IN INSTEAD!" +
+                    "SORRY! YOU ATTEMPT TO RE-ASSIGN USER ID WHICH IS NOT ALLOWED. PLEASE MAKE THE USER SIGN OUT AND SIGN IN INSTEAD!" +
                             "\n EXISTING ID:" + this.humanUserId_ +
                             "\n ID YOU ASKED ME TO ASSIGN:" + humanUserId__ +
                             "\n ALSO, AS A PRECAUTION, I AM REMOVING THIS STATEFUL SESSION BEAN!");

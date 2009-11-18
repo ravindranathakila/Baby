@@ -1,9 +1,9 @@
-package ai.ilikeplaces;
+package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.ClassPreamble;
 import ai.ilikeplaces.doc.MethodPreamble;
 import java.lang.reflect.InvocationTargetException;
-import org.slf4j.Logger;
+
 import org.slf4j.LoggerFactory;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;

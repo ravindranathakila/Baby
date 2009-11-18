@@ -45,7 +45,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     private void doNTxCHuman(final Human human) {
-        cHumanLocal_.doCHuman(human);
+        cHumanLocal_.doNTxCHuman(human);
     }
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)

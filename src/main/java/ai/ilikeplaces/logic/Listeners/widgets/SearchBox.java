@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.servlets.Controller.Page;
+import ai.ilikeplaces.util.AbstractWidgetListener;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;

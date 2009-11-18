@@ -1,6 +1,5 @@
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>adimpression</groupId>
     <artifactId>ilikeplaces</artifactId>
@@ -29,7 +28,7 @@
             <version>5.0-1</version>
             <scope>provided</scope>
         </dependency>
-    
+
         <!--dependency>
             <groupId>ItsNat0.6</groupId>
             <artifactId>ItsNat</artifactId>
@@ -148,14 +147,16 @@
             <artifactId>logback-classic</artifactId>
             <version>0.9.17</version>
             <scope>system</scope>
-            <systemPath>D:/1/adimpression/nbprojects/logback-0.9.17/logback-0.9.17/logback-classic-0.9.17.jar</systemPath>
+            <systemPath>D:/1/adimpression/nbprojects/logback-0.9.17/logback-0.9.17/logback-classic-0.9.17.jar
+            </systemPath>
         </dependency>
         <dependency>
             <groupId>logback</groupId>
             <artifactId>logback-access</artifactId>
             <version>0.9.17.</version>
             <scope>system</scope>
-            <systemPath>D:/1/adimpression/nbprojects/logback-0.9.17/logback-0.9.17/logback-access-0.9.17.jar</systemPath>
+            <systemPath>D:/1/adimpression/nbprojects/logback-0.9.17/logback-0.9.17/logback-access-0.9.17.jar
+            </systemPath>
         </dependency>
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -220,14 +221,51 @@
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
                             <classpathLayoutType>repository</classpathLayoutType>
-
-               <!-- NOTE: Deprecated in version 2.4. Use 'classpathLayoutType' instead.
-               <classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout>
-               -->
                         </manifest>
                     </archive>
                     <debug>false</debug>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <!-- NOTE: Deprecated in version 2.4. Use 'classpathLayoutType' instead.
+                            <classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout>
+                            -->
+                        </manifest>
+                        <manifestEntries>
+                            <BIRTH>${buildNumber}</BIRTH>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.0-beta-3</version>
+                <configuration>
+                    <!--revisionOnScmFailure>NON_SCM_MODE</revisionOnScmFailure-->
+                    <format>BOT ILIKEPLACES REINC 1.6.{0,date,yyyy.MM.dd.HH.mm.ss}</format>
+                    <items>
+                        <item>timestamp</item>
+                    </items>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>                        
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <finalName>ilikeplaces</finalName>

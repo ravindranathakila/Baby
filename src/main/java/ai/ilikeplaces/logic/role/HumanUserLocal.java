@@ -1,4 +1,4 @@
-package ai.ilikeplaces;
+package ai.ilikeplaces.logic.role;
 
 import javax.ejb.Local;
 import javax.servlet.http.HttpSessionBindingListener;
