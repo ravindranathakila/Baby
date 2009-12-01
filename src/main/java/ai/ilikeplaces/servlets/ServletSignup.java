@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,6 +88,10 @@ final public class ServletSignup extends HttpServlet {
         processSignup:
         {
 
+            if(!isSignUpPermitted()){
+                request__.getRequestDispatcher("/signup.jsp").forward(request__, response__);
+                break processSignup;
+            }
             if (request__.getSession(false) == null) {
                 request__.getRequestDispatcher("/signup.jsp").forward(request__, response__);
                 request__.getSession();
@@ -141,6 +146,8 @@ final public class ServletSignup extends HttpServlet {
                         userSession_.setAttribute(UsernameError, ErrorStatusTrue);
                         userSession_.setAttribute(UsernameErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0003") + username);
                         allParametersNotOkFlag = Boolean.TRUE;
+                    } else {
+                        logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0006"));
                     }
                 }
 
@@ -151,6 +158,8 @@ final public class ServletSignup extends HttpServlet {
                         userSession_.setAttribute(PasswordError, ErrorStatusTrue);
                         userSession_.setAttribute(PasswordErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0004"));
                         allParametersNotOkFlag = Boolean.TRUE;
+                    } else {
+                        logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0007"));
                     }
                 }
 
@@ -160,6 +169,8 @@ final public class ServletSignup extends HttpServlet {
                         userSession_.setAttribute(EmailError, ErrorStatusTrue);
                         userSession_.setAttribute(EmailErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0002"));
                         allParametersNotOkFlag = Boolean.TRUE;
+                    } else {
+                        logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0008"));
                     }
                 }
 
@@ -169,6 +180,8 @@ final public class ServletSignup extends HttpServlet {
                         userSession_.setAttribute(GenderError, ErrorStatusTrue);
                         userSession_.setAttribute(GenderErrorMsg, gender);
                         allParametersNotOkFlag = Boolean.TRUE;
+                    }   else {
+                        logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0009"));
                     }
                 }
 
@@ -182,6 +195,8 @@ final public class ServletSignup extends HttpServlet {
                         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD");
                         try {
                             sdf.parse(dateOfBirth);
+                            logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0010"));
+                            logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0010"));
                         } catch (final ParseException e) {
                             //logger.error("{}", e);
                             userSession_.setAttribute(DateOfBirthError, ErrorStatusTrue);
@@ -215,6 +230,9 @@ final public class ServletSignup extends HttpServlet {
 
     }
 
+    final private boolean isSignUpPermitted(){
+         return RBGet.getGlobalConfigKey("signUpEnabled") != null && RBGet.getGlobalConfigKey("signUpEnabled").equals("true");
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

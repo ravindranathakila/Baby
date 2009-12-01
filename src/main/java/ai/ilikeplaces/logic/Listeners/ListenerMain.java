@@ -26,11 +26,11 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 /**
  * @author Ravindranath Akila
  */
+@TODO(task = "RENAME TO LISTENERLOCATION. DO A STRING SEARCH ON LISTENERMAIN TO FIND USAGE FIRST. CURRENT SEARCH SHOWS NO ISSUES. REFAC DELAYED TILL NEXT CHECK")
 public class ListenerMain implements ItsNatServletRequestListener {
 
 
     final static private Logger logger = LoggerFactory.getLogger(ListenerMain.class);
-    @TODO(task = "Move to several budnles as i18n,EXCEPTION,LOG where they can be used from several jars. Use a package structure like ai.ilikeplaces.rb.i18n")
     final static protected String LocationId = RBGet.config.getString("LOCATIONID");
 
     /**
@@ -67,20 +67,25 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                     setLocationNameForJSReference:
                     {
+                        @TODO(task = "MOVE TO GUI MSGS I18N METHODICALLY")
                         final Element hiddenLocationIdInputTag = $(MarkupTag.INPUT);
                         hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.type(), MarkupTag.INPUT.typeValueHidden());
                         hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.id(), JSCodeToSend.LocationName);
-                        hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.value(), existingLocation_.getLocationName());
+                        hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.value(),
+                                "This is " + existingLocation_.getLocationName() + " of " + existingLocation_.getLocationSuperSet().getLocationName() + ". " +
+                                        "You are at " + existingLocation_.getLocationName() + " in " + existingLocation_.getLocationSuperSet().getLocationName() + ". ");
                         hTMLDocument__.getBody().appendChild(hiddenLocationIdInputTag);
                     }
 
                     setLocationAsTitle:
                     {
-                        try {
-                            hTMLDocument__.setTitle("Test title");
-                        } catch (Throwable t) {
-                            logger.error("{}", t);
-                        }
+                        @TODO(task = "CONTACT JOSE MARIA REGARDING THE EXCEPTION OF TAG NOT BEING AVAILABLE WHEN SETTITLE IS USED")
+                        final String pageTitle = existingLocation_.getLocationName();
+                    }
+
+                    setLocationAsPageTopic:
+                    {
+                        $(Main_center_main_location_title).setTextContent("This is " + existingLocation_.getLocationName() + " of " + existingLocation_.getLocationSuperSet());
                     }
 
                     getAndDisplayAllThePhotos:
@@ -88,15 +93,15 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         List<PublicPhoto> listPublicPhoto = existingLocation_.getPublicPhotos();
                         logger.info(RBGet.logMsgs.getString("NUMBER_OF_PHOTOS_FOR_LOCATION"), existingLocation_.getLocationName(), listPublicPhoto.size());
 
+                        @TODO(task = "INVERT COLORS AND SET PHOTO NAME")
                         int i = 0;
                         for (final Iterator<PublicPhoto> it = listPublicPhoto.iterator(); it.hasNext(); i++) {
                             final PublicPhoto publicPhoto = it.next();
                             if (i % 2 == 0) {
-                                new Photo$Description(itsNatDocument__, $(Main_left_column)) {
-
+                                new Photo$Description(itsNatDocument__, $(Main_center_main)) {
                                     @Override
                                     protected void init() {
-                                        $$(pd_photo_permalink).setAttribute("href", publicPhoto.getPublicPhotoURLPath() + "|" + "PHOTO TITLE");
+                                        $$(pd_photo_permalink).setAttribute("href", publicPhoto.getPublicPhotoURLPath() + "|" + publicPhoto.getPublicPhotoName());
                                         $$(pd_photo).setAttribute("src", publicPhoto.getPublicPhotoURLPath());
                                         final Element descriptionText = $$(MarkupTag.P);
                                         descriptionText.setTextContent(publicPhoto.getPublicPhotoDescription());
@@ -105,12 +110,15 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                     }
                                 };
                             } else {
-                                new Photo$Description(itsNatDocument__, $(Main_right_column)) {
-
+                                new Photo$Description(itsNatDocument__, $(Main_center_main)) {
                                     @Override
                                     protected void init() {
-                                        $$(pd_photo_permalink).setAttribute("href", publicPhoto.getPublicPhotoURLPath() + "|" + "PHOTO TITLE");
+                                        $$(pd_photo_permalink).setAttribute("href", publicPhoto.getPublicPhotoURLPath() + "|" + publicPhoto.getPublicPhotoName());
                                         $$(pd_photo).setAttribute("src", publicPhoto.getPublicPhotoURLPath());
+                                        final Element descriptionText = $$(MarkupTag.P);
+                                        descriptionText.setTextContent(publicPhoto.getPublicPhotoDescription());
+                                        $$(pd_photo_description).appendChild(descriptionText);
+
                                     }
                                 };
                             }

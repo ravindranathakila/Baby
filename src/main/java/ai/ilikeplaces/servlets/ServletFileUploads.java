@@ -1,40 +1,37 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.logic.role.HumanUserLocal;
-import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.logic.crud.DB;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.util.Random;
-import java.util.ResourceBundle;
-import java.util.PropertyResourceBundle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import ai.ilikeplaces.logic.role.HumanUserLocal;
+import ai.ilikeplaces.rbs.RBGet;
+import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.*;
+import java.util.PropertyResourceBundle;
+import java.util.Random;
+import java.util.ResourceBundle;
 
 /**
- *
  * @author Ravindranath Akila
  */
 final public class ServletFileUploads extends HttpServlet {
 
     final Logger logger = LoggerFactory.getLogger(ServletFileUploads.class.getName());
-    
+
     final static private String Error = "error";
     final static private String Ok = "ok";
 
@@ -46,21 +43,30 @@ final public class ServletFileUploads extends HttpServlet {
 
     final static private String FilePath = config.getString("path.SYSTEM_PHOTO");
     final static private String CDN = config.getString("url.CDN_PHOTO");
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     *
      * @param request__
      * @param response__
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(final HttpServletRequest request__,
-            final HttpServletResponse response__)
+                                  final HttpServletResponse response__)
             throws ServletException, IOException {
         response__.setContentType("text/html;charset=UTF-8");
+        logger.debug(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0020"), request__.getLocale());
         PrintWriter out = response__.getWriter();
+
+        final ResourceBundle gUI = PropertyResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
 
         fileUpload:
         {
+            if(!isFileUploadPermitted()){
+                errorTemporarilyDisabled(out);
+                break fileUpload;
+            }
             processSignOn:
             {
                 final HttpSession session = request__.getSession(false);
@@ -118,8 +124,8 @@ final public class ServletFileUploads extends HttpServlet {
 
                                     if (item.isFormField()) {
                                         final String value = Streams.asString(stream);
-                                        logger.info(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0002"),name);
-                                        logger.info(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0003"),value);
+                                        logger.info(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0002"), name);
+                                        logger.info(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0003"), value);
                                         if (name.equals("locationId")) {
                                             locationId = Long.parseLong(value);
                                             logger.info(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0004"));
@@ -158,7 +164,24 @@ final public class ServletFileUploads extends HttpServlet {
                                         usersFileName = (item.getName().indexOf("\\") <= 1 ? item.getName()
                                                 : item.getName().substring(item.getName().lastIndexOf("\\") + 1));
 
+                                        final String userUploadedFileName = item.getName();
+
+                                        String fileExtension = "error";
+
+                                        if (userUploadedFileName.toLowerCase().endsWith("jpg")) {
+                                            fileExtension = "jpg";
+                                        } else if (userUploadedFileName.toLowerCase().endsWith("jpeg")) {
+                                            fileExtension = "jpeg";
+                                        } else if (userUploadedFileName.toLowerCase().endsWith("png")) {
+                                            fileExtension = "png";
+                                        } else {
+                                            errorFileType(out, gUI.getString("ai.ilikeplaces.servlets.ServletFileUploads.0019"));
+                                            break processRequest;
+                                        }
+
                                         randomFileName = getRandomFileName(locationId);
+
+                                        randomFileName += fileExtension;
 
                                         final File uploadedFile = new File(absoluteFileSystemFileName += randomFileName);
                                         final FileOutputStream fos = new FileOutputStream(uploadedFile);
@@ -196,45 +219,6 @@ final public class ServletFileUploads extends HttpServlet {
                                                     }
 
                                                 } else {
-//                                                    final PrivatePhoto privatePhoto = new PrivatePhoto();
-//                                                    privatePhoto.setPrivatePhotoFilePath(absoluteFileSystemFileName);
-//                                                    privatePhoto.setPrivatePhotoDescription(photoDescription);
-//                                                    privatePhoto.setPrivatePhotoURLPath(new String(CDN + randomFileName));
-//                                                    privatePhoto.setLocation(locationn);
-//
-//                                                    final HumansPrivatePhoto humansPrivatePhoto = human.getHumansPrivatePhoto();
-//                                                    privatePhoto.setHumansPrivatePhoto(humansPrivatePhoto);
-//                                                    final List<PrivatePhoto> privatePhotoList = humansPrivatePhoto.getPrivatePhotos();
-//
-//                                                    privatePhotoList.size();
-//                                                    privatePhotoList.add(privatePhoto);
-//
-//                                                    final int retryLimit = 4;
-//                                                    for (int retries = 1, uploaded = 0; uploaded != 1 && retries <= retryLimit/* 15 seconds*/; retries++) {
-//                                                        try {
-//                                                            crudServiceHuman_.update(human);
-//                                                            uploaded = 1;
-//                                                            successFileName(out, usersFileName, "public");
-//                                                            if (retries > 1) {
-//                                                                logger.info("HELLO, I MANAGED TO PERSIST THE DATA AFTER " + retries + " RETRIES.");
-//                                                            }
-//                                                        } catch (javax.ejb.EJBTransactionRolledbackException e_) {
-//                                                            logger.info("SORRY! I AM UNABLE TO PERSIST FILE UPLOAD DATA.", e_);
-//                                                            if (retries == retryLimit) {/*ok this is the last retrey. Failed. lets report to the client*/
-//                                                                errorBusy(out);
-//                                                                /*@WARN: do not do this without closing streams!*/
-//                                                                break fileUpload;
-//                                                            } else {
-//                                                                logger.info("HELLO, I AM RETRYING TO PERSIST THE DATA AFTER " + retries + " SECONDS THREAD SLEEP. I AM GOING TO SLEEP NOW.");
-//                                                                try {
-//                                                                    Thread.sleep(1000 * retries);
-//                                                                } catch (InterruptedException ex) {
-//                                                                    LoggerFactory.getLogger(ServletFileUploads.class.getName()).error(null, ex);
-//                                                                }
-//                                                            }
-//                                                        }
-//                                                    }
-//                                                    persisted = true;
                                                     persisted = false;
                                                     throw new UnsupportedOperationException(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0017"));
                                                 }
@@ -252,8 +236,6 @@ final public class ServletFileUploads extends HttpServlet {
                                 errorMissingParameters(out);
                                 break processRequest;
                             }
-
-
 
 
                         }
@@ -295,6 +277,14 @@ final public class ServletFileUploads extends HttpServlet {
     }
 
     @FIXME(issue = "Handle exception")
+    private void errorTemporarilyDisabled(final PrintWriter out) {
+        try {
+            flush(out).print(formatTuple(Error, "file_uploading_disabled"));
+        } finally {
+            out.close();
+        }
+
+    }   @FIXME(issue = "Handle exception")
     private void errorNoLogin(final PrintWriter out) {
         try {
             flush(out).print(formatTuple(Error, "no_login"));
@@ -327,8 +317,8 @@ final public class ServletFileUploads extends HttpServlet {
     @TODO(task = "Make a key,value implementation to avoid careless indexing errors on client")
     @FIXME(issue = "Handle exception")
     private void successFileName(final PrintWriter out,
-            final String fileName,
-            final String exposurePublicOrPrivate) {
+                                 final String fileName,
+                                 final String exposurePublicOrPrivate) {
         try {
             flush(out).print(formatTuple(Ok, fileName, exposurePublicOrPrivate));
         } finally {
@@ -339,7 +329,7 @@ final public class ServletFileUploads extends HttpServlet {
 
     @FIXME(issue = "Handle exception")
     private void errorFileType(final PrintWriter out,
-            final String fileName) {
+                               final String fileName) {
         try {
             flush(out).print(formatTuple(Error, "wrong_file_type", fileName));
         } finally {
@@ -358,45 +348,56 @@ final public class ServletFileUploads extends HttpServlet {
 
     }
 
+    @WARNING(warning = "DO NOT USE _(UNDERSCORE) AS URL SPLITTING WORKS USING UNDERSCORE. SEE Controller FOR FURTHER INFO")
     final static private String getRandomFileName(final long locationId) {
-        return "PHOTO_OF_" + DB.getHumanCRUDLocationLocal(true).doDirtyHumanRLocation(locationId).getLocationName() + "_" + random.nextLong() + System.currentTimeMillis();
+        return "photo-of-" + DB.getHumanCRUDLocationLocal(true).doDirtyHumanRLocation(locationId).getLocationName() + "-" + random.nextLong() + System.currentTimeMillis();
+    }
+
+
+    private boolean isFileUploadPermitted() {
+        return (RBGet.getGlobalConfigKey("fileUploadEnabled") != null
+                && RBGet.getGlobalConfigKey("fileUploadEnabled").equals("true"));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
+     *
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(final HttpServletRequest request,
-            final HttpServletResponse response)
+                         final HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
     /**
      * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
+     *
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(final HttpServletRequest request,
-            final HttpServletResponse response)
+                          final HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
     /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
     public String getServletInfo() {
         return logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0018");
     }// </editor-fold>
+
 }

@@ -20,6 +20,7 @@ import javax.ejb.TransactionAttributeType;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
+@TODO(task = "i18n")
 public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
 
     @EJB
@@ -120,7 +121,7 @@ public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
             }
 
         } else {
-            logger.debug("HELLO, NO SUCH LOCATION AS {}. I DID NOT COMPARE SUPER LOCATIONS AS LOCATIONS DID NOT MATCHf.", locationName, superLocationName);
+            logger.debug("HELLO, NO SUCH LOCATION AS {}. I DID NOT COMPARE SUPER LOCATIONS AS LOCATIONS DID NOT MATCH.", locationName, superLocationName);
             returnVal = null;
         }
         return returnVal;

@@ -29,6 +29,7 @@
 .btn.blue { background: #2ae; }
 .btn.green { background: #9d4; }
 .btn.pink { background: #e1a; }
+.btn.orange { background: #ff6f00; }
 .btn.yellow { background:rgb(254,237,33); }
 .btn.dark_yellow { background:rgb(255,198,0); }
 .btn:hover { background-color: #a00; }
@@ -40,6 +41,7 @@
 * html .btn.blue { border-color: #2ae; }
 * html .btn.green { border-color: #9d4; }
 * html .btn.pink { border-color: #e1a; }
+* html .btn.orange { border-color: #ff6f00; }
 * .btn.yellow { background:rgb(254,237,33); }
 * html .btn.dark_yellow { background:rgb(255,198,0); }
 * html .btn:hover { border-color: #a00; }

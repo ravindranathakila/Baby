@@ -28,19 +28,26 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
 
     @PostConstruct
     public void postContruct() {
-
+        System.out.println("");
         System.out.println("********* ********* ********* ********* *********");
         System.out.println("********* START UP CHECK ILIKEPLACES");
+        System.out.println("********* The Worlds PlaYGrounD!");
+        System.out.println("********* ********* ********* ********* *********");
+        System.out.println("********* (logging startup-only via S.O.P)");
         System.out.println("********* ********* ********* ********* *********");
         System.out.println("");
-        System.out.println("PLACEHOLDER ID:11");
+        System.out.println(RBGet.config.getString("bn"));
+        System.out.println("");
         System.out.println("PLEASE NOTE GENERAL SETUP");
         System.out.println("1. Make sure openejb.log in shows no issues.");
-        System.out.println("1. Configure datasource in openejb xml file.");
-        System.out.println("2. Configure stateful and stateless in openejb xml file.");
-        System.out.println("2. Configure cdn and filepath in Config.properties file.");
-        System.out.println("3. Verify that classfiles also include .properties files in war.");
+        System.out.println("2. Configure datasource in openejb xml file.");
+        System.out.println("3. Configure stateful and stateless in openejb xml file.");
+        System.out.println("4. Configure cdn and filepath in Config.properties file.");
+        System.out.println("5. Verify that classfiles also include .properties files in war.");
+        System.out.println("6. Verify that derbyclient.lib is the same version of the derby you installed in the OS.");
+        System.out.println("7. Verify that the first entry for location \"The Planet Earth\" was set");
         System.out.println("");
+        logger.debug(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0004"), System.getProperty("java.class.path"));
         System.out.println("STARTING TO VERIFY CLASSES");
         System.out.println("");
 
@@ -55,7 +62,7 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
                     final Method m = Class.forName(verifyClass).getMethod("verify", new Class[]{});
                     if (Verify.class.isInstance(verifyClass)) {
                         try {
-                            System.out.println(m.invoke(Class.forName(verifyClass).newInstance(), new Object[]{}));
+                            System.out.println("VERIFICATION OF " + verifyClass + ":" + m.invoke(Class.forName(verifyClass).newInstance(), new Object[]{}));
                         } catch (final IllegalAccessException e) {
                             e.printStackTrace(System.out);
                         } catch (final InvocationTargetException e) {
@@ -63,19 +70,19 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
                         } catch (final InstantiationException e) {
                             e.printStackTrace(System.out);
                         }
-                    } else {
+                    } else { /*Assumed to be a static method, which cannot implement the interface*/
                         try {
-                            System.out.println(m.invoke(null, new Object[]{}));
+                            System.out.println("VERIFICATION OF " + verifyClass + ":" + m.invoke(null, new Object[]{}));
                         } catch (final IllegalAccessException e) {
                             e.printStackTrace(System.out);
                         } catch (final InvocationTargetException e) {
                             e.printStackTrace(System.out);
                         }
                     }
-                } catch (NoSuchMethodException e) {
+                } catch (final NoSuchMethodException e) {
                     e.printStackTrace(System.out);
                 }
-            } catch (ClassNotFoundException e) {
+            } catch (final ClassNotFoundException e) {
                 e.printStackTrace(System.out);
             }
         }
@@ -84,7 +91,7 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         System.out.println("********* ********* ********* ********* *********");
         System.out.println("********* START UP CHECK DONE ILIKEPLACES");
         System.out.println("********* ********* ********* ********* *********");
-
+        System.out.println("");
     }
 
     final static Logger logger = LoggerFactory.getLogger(StartupILikePlaces.class);

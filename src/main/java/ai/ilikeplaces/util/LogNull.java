@@ -1,20 +1,20 @@
 package ai.ilikeplaces.util;
 
+import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.rbs.RBGet;
+
 import java.util.ResourceBundle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ai.ilikeplaces.doc.*;
-import javax.lang.model.type.*;
 
 /**
  * LogNull does not always log a null. instead, it outputs exceptions or dumps
  * so that you can figure out where exactly the null occurred.
- *
+ * <p/>
  * Nulls can always be checked by assigning return values to reference and
  * doing a == null check. Remember, having too many references in Java is very
  * bad practice (even for readability) unless you have a huge heap and an ultra
  * efficient GC.
- *
+ * <p/>
  * Even in an if else control structure, references are required.
  * So to use these methods, do ternary as
  * return returnVal =! null ? returnVal : (CAST)LogNull.logThrow();
@@ -25,8 +25,8 @@ import javax.lang.model.type.*;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class LogNull {
 
-    private static final ResourceBundle logMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.LogMsgs");
-    final static private String MSG = logMsgs.getString("NPE_1");
+    @NOTE(note = "ASSIGNING VALUE TO STATIC STRING TO GAIN SPEED. THESE METHODS SHOULD WORK FAST TO FACILITATE THEIR PURPOSE.")
+    final static private String MSG = RBGet.expMsgs.getString("ai.ilikeplaces.util.LogNull.0001");
 
     private LogNull() {
     }
@@ -52,5 +52,19 @@ final public class LogNull {
      */
     static public Object logThrow() {
         throw new NullPointerException(MSG);
+    }
+
+    /**
+     * This stops the thread execution by throwing a NPE immediately if the
+     * given parameter is null
+     *
+     * @return Object
+     */
+    static public Object logThrow(final Object obj) {
+        if (obj == null) {
+            throw new NullPointerException(MSG);
+        } else {
+            return obj;
+        }
     }
 }

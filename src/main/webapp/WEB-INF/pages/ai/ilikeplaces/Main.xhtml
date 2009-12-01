@@ -30,7 +30,7 @@
         <script src="/ilikeplaces/js/ItsNatEventMonitor.js" type="text/javascript"></script>
         <!-- END DYNAMIC IMPORTS -->
     </head>
-    <body class="orange_bg">
+    <body style="background-color: white;">
         <div id="shareit-box" style="background:transparent;z-index:2;">
             <div id="shareit-header"></div>
             <div id="shareit-body">
@@ -38,75 +38,101 @@
                 <div id="shareit-url"><input type="text" value="" name="shareit-field" id="shareit-field" class="field"/></div>
                 <div id="shareit-icon">
                     <ul>
-                        <li><a href="#" rel="shareit-mail" class="shareit-sm"><img src="/ilikeplaces/images/sm_mail.gif" width="16" height="16" alt="Mail" title="Mail" /></a></li>
-                        <li><a href="#" rel="shareit-facebook" class="shareit-sm"><img src="http://www.facebook.com/favicon.ico" width="16" height="16" alt="Facebook" title="Facebook" /></a></li>
-                        <li><a href="#" rel="shareit-google" class="shareit-sm"><img src="http://www.google.com/favicon.ico" width="16" height="16" alt="google" title="google" /></a></li>
-                        <li><a href="#" rel="shareit-twitter" class="shareit-sm"><img src="http://www.twitter.com/favicon.ico" width="16" height="16" alt="twitter" title="twitter" /></a></li>
-                        <li><a href="#" rel="shareit-orkut" class="shareit-sm"><img src="http://www.orkut.com/favicon.ico" width="16" height="16" alt="orkut" title="orkut" /></a></li>
-                        <li><a href="#" rel="shareit-myspace" class="shareit-sm"><img src="http://www.myspace.com/favicon.ico" width="16" height="16" alt="myspace" title="myspace" /></a></li>
+                        <li><a href="#" rel="shareit-mail" class="shareit-sm"><img src="/ilikeplaces/images/sm_mail.gif" width="16" height="16" alt="ml" title="Mail" /></a></li>
+                        <li><a href="#" rel="shareit-facebook" class="shareit-sm"><img src="http://www.facebook.com/favicon.ico" width="16" height="16" alt="fb" title="Facebook" /></a></li>
+                        <li><a href="#" rel="shareit-stumbleupon" class="shareit-sm"><img src="http://www.stumbleupon.com/favicon.ico" width="16" height="16" alt="gle" title="Stumbleupon" /></a></li>
+                        <li><a href="#" rel="shareit-twitter" class="shareit-sm"><img src="http://www.twitter.com/favicon.ico" width="16" height="16" alt="twt" title="Twitter" /></a></li>
+                        <li><a href="#" rel="shareit-digg" class="shareit-sm"><img src="http://digg.com/favicon.ico" width="16" height="16" alt="digg" title="Digg" /></a></li>
+                        <li><a href="#" rel="shareit-delicious" class="shareit-sm"><img src="http://delicious.com/favicon.ico" width="16" height="16" alt="del" title="Delicious" /></a></li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="container" itsnat:nocache="true" >
+        <div id="Main_display" class="container" style="background-color: white;" itsnat:nocache="true" style="display:none;">
             <div class="span-24 last">
-                <div class="span-24 last">
-                    <div class="span-8">
-                        <span class="ilp_title">iLikePlaces</span>
-                        <!--img src="/ilikeplaces/images/logo.png" alt="Welcome to iLikePlaces . com&lt;" /-->
-                    </div>
-                    <div class="span-16 last">
-                        <form method="post" id="login" action="/ilikeplaces/login">
-                            <div class="span-6" style="height: 40px;">
-                                <div class="span-6 last" style="text-align: left; line-height: 40px;">
-                                    <div class="span-2">
-                                        Username:
+                <div class="span-24 last height_5 dark_orange_bg ntyST">
+                    &nbsp;
+                </div>
+                <div class="span-24 last height_40 dark_orange_bg">
+                    <div class="span-24 last inherit_height">
+                        <div class="span-10 inherit_height line_height_40">
+                            <span class="ilp_title inherit_height inherit_line_height">&nbsp; I Like Places, do I?</span>
+                            <!--img src="/ilikeplaces/images/logo.png" alt="Welcome to iLikePlaces . com&lt;" /-->
+                        </div>
+                        <div class="span-14 last inherit_height ">
+                            <div class="span-14 last inherit_height orange_bg">
+                                <form method="post" id="login" action="/ilikeplaces/login">
+                                    <div class="span-6 inherit_height">
+                                        <div class="span-6 last inherit_height line_height_40 dark_orange_bg">
+                                            <div class="span-6 last inherit_height inherit_line_height ntyTL ntyBL orange_bg">
+                                                 &nbsp;&nbsp;Username:
+
+                                                <input class="span-4 last dark_orange_fg bold" style="background-color: #FFD324;" id="Username" name="Username" type="text" />
+                                            </div>
+                                            </div>
+                                        </div>
+                                    <div class="span-6 inherit_height">
+                                        <div class="span-6 last inherit_height line_height_40">
+                                            <div class="span-6 last inherit_height inherit_line_height">
+                                                Password:
+                                                <input class="span-4 last dark_orange_fg bold" style="background-color: #FFD324;" id="Password" name="Password" type="password" />
+                                            </div>
+                                            </div>
+                                        </div>
+                                    <div class="span-2 last inherit_height dark_orange_bg">
+                                        <div class="span-2 last height_10 ntyTR orange_bg">
+                                            &nbsp;
+                                        </div>
+                                        <div class="span-2 last height_15 orange_bg">
+                                            <a href="#" onclick="javascript:document.forms['login'].submit();return false;" class="btn orange"><i></i><span><span></span><i></i>Submit</span></a>
+                                        </div>
+                                        <div class="span-2 last height_15 ntyBR orange_bg">
+                                            &nbsp;
+                                        </div>
                                     </div>
-                                    <div class="span-4 last">
-                                        <input class="span-4 last orange_fg" id="Username" name="Username" type="text" />
-                                    </div>
-                                </div>
+                                </form>
                             </div>
-                            <div class="span-6" style="text-align: left; line-height: 40px;">
-                                <div class="span-2">
-                                    Password:
-                                </div>
-                                <div class="span-4 last">
-                                    <input class="span-4 last orange_fg" id="Password" name="Password" type="password" />
-                                </div>
-                            </div>
-                            <div class="span-4 last" style="text-align: left; line-height: 40px;">
-                                <a href="#" onclick="javascript:document.forms['login'].submit();return false;" class="btn orange"><i></i><span><span></span><i></i>Submit</span></a>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
+                <div class="span-24 last height_10 dark_orange_bg ntyBot">
+                    &nbsp;
+                </div>
+
                 <div class="span-24 last">
                     <div class="span-24 last" id="Main_login_widget">
+                        &nbsp;
                     </div>
-                    <hr/>
-                    <hr/>
                     <div class="span-24 last">
                         <div id="monitorId" class="top" style="position: relative; display: none; float: right; width: 120px; height: 20px;">
                             Please wait... <img src="/ilikeplaces/images/circle.gif" alt="Busy" height="17" width="23" />
                         </div>
                         <div class="span-5" id="Main_othersidebar">
-                            <hr/>
                             <div class="span-5 last">
                                 <div class="span-5 last profile_photo">
+                                    <img class="span-5 last" src="/ilikeplaces/images/profile.jpg" alt="Profile Picture"/>
                                 </div>
+                                <div class="span-5 last center ntyBR orange_bg title_blend bold">
+                                    <br/>
+                                    This is Ravindranath Akila
+                                    <br/><br/>
                             </div>
-                            <hr/>
+                            </div>
                             <div class="span-5 last">
+                                <div class="span-5 last height_10">
+                                    &nbsp;
+                                </div>
                                 <div class="span-5 last">
-                                    <div class="span-1 nav_link">
+                                    <div class="span-1 nav_link ntyS">
                                         <img src="/ilikeplaces/images/location.jpg" alt="home" />
                                     </div>
                                     <div class="span-4 last nav_link ntyS">
                                         <a href="/ilikeplaces/page/main" >Places</a>
                                     </div>
                                 </div>
-                                <hr/><hr/>
+                                <div class="span-5 last height_10">
+                                    &nbsp;
+                                </div>
                                 <div class="span-5 last">
                                     <div class="span-1 nav_link">
                                         <img src="/ilikeplaces/images/home.png" alt="home" />
@@ -115,7 +141,9 @@
                                         <a href="/ilikeplaces/page/_me" >Profile</a>
                                     </div>
                                 </div>
-                                <hr/><hr/>
+                                <div class="span-5 last height_10">
+                                    &nbsp;
+                                </div>
                                 <div class="span-5 last">
                                     <div class="span-1 nav_link">
                                         <img src="/ilikeplaces/images/friends.jpg" alt="home" />
@@ -124,7 +152,9 @@
                                         <a href="/ilikeplaces/page/_me">Manage Photos</a>
                                     </div>
                                 </div>
-                                <hr/><hr/>
+                                <div class="span-5 last height_10">
+                                    &nbsp;
+                                </div>
                                 <div class="span-5 last">
                                     <div class="span-1 nav_link">
                                         <img src="/ilikeplaces/images/settings.jpg" alt="home" />
@@ -133,7 +163,9 @@
                                         <a href="/ilikeplaces/page/_me">Organize</a>
                                     </div>
                                 </div>
-                                <hr/><hr/>
+                                <div class="span-5 last height_10">
+                                    &nbsp;
+                                </div>
                                 <div class="span-5 last">
                                     <div id="Main_file_list" class="span-5 last example">
                                         <div class="span-5 last wrapper">
@@ -142,13 +174,16 @@
                                                     <img src="/ilikeplaces/images/save.jpg" alt="home" />
                                                 </div>
                                                 <div class="span-4 last nav_link ntyS">
-                                                    <a id="button1" href="#" >Upload Photos</a>
+                                                    <a id="button1" href="#" >Add Photos</a>
                                                 </div>
                                             </div>
                                         </div>
                                         <hr/>
-                                        <div class="span-5 last">
-                                            <span class="photos_added">Photos Added</span>
+                                        <div class="span-5 last orange_bg nty">
+                                            <div class="span-5 height_5">
+                                                &nbsp;
+                                            </div>
+                                            <span class="span-3 prepend-1 append-1 bold black_fg center">&nbsp; &nbsp; Photos Added</span>
                                             <ul class="files" style="list-style-image:url(/ilikeplaces/css/blueprint/plugins/buttons/icons/tick.png);">
                                                 <li style="visibility:hidden">Ouch! I didn't want to show this to you</li>
                                             </ul>
@@ -159,6 +194,57 @@
                         </div>
                         <div class="span-14" id="Main_center">
                             <div class="span-14 last" id="Main_center_main">
+                                <div class="span-14 last" style="display:none;">
+                                    <div class="span-12 prepend-1 append-1 notice last">
+                                        <p id="notice" class="title_blend bold large"></p>
+                                    </div>
+                                </div>
+
+                                <div class="span-14 last">
+                                    <div class="span-12 prepend-1 append-1 last lite_orange_bg ntyBTR">
+                                        <p class="title_blend bold large">How would you like to have fun today? Not on net, for real!</p>
+                                    </div>
+                                </div>
+                                <div class="span-14 last lite_orange_bg">
+                                    <div class="span-1 lite_orange_bg height_total">
+                                        &nbsp;
+                                    </div>
+                                    <div class="span-12 title_blend white_bg">
+                                        <div class="span-10 prepend-1 append-1 title_blend white_bg">
+                                                    <br/>
+                                                    <p id="Main_center_main_location_title" class="dark_orange_fg">
+                                                        Is this where you want to be? If so,
+                                                        check out the images below, if not,
+                                                        <br/>
+                                                    </p>
+                                        </div>
+                                    </div>
+                                    <div class="span-1 last lite_orange_bg height_total">
+                                        &nbsp;
+                                    </div>
+                                </div>
+
+                                <div class="span-14 last lite_orange_bg">
+                                    <fieldset style="border:none;padding:0px;margin:0px;">
+                                        <label for="LocationSearch" class="title_blend">
+                                            &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
+                                            Let's find out, type in a place you like:
+                                            &nbsp; &nbsp; &nbsp; &nbsp;
+                                        </label>
+                                        <input class="dark_orange_fg orange_bg bold" id="LocationSearch" name="LocationSearch" type="text" />
+                                    </fieldset>
+                                </div>
+                                <div class="span-14 last lite_orange_bg height_10 ntyBB">
+                                    &nbsp;
+                                </div>
+                                <div class="span-14 last height_10">
+                                    &nbsp;
+                                </div>
+
+                                <div class="span-14 last height_10">
+                                    &nbsp;
+                                </div>
+
                                 <div class="span-14 last">
                                     <span id="Main_center_main_location_title" />
                                 </div>
@@ -180,6 +266,14 @@
                                     <img src="/ilikeplaces/images/ad180150.jpg" alt="home" />
                                 </div>
                                 <div class="span-5 last" style="float:right;">
+                                    <span>Relevant to me</span>
+                                </div>
+                            </div>
+                            <div class="span-5 last">
+                                <div class="span-5 last">
+                                    <img src="/ilikeplaces/images/ad180150.jpg" alt="home" />
+                                </div>
+                                <div class="span-5 last center">
                                     <span>Relevant to me</span>
                                 </div>
                             </div>

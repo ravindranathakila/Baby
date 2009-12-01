@@ -201,6 +201,7 @@
                 <includes>
                     <include>**/*.properties</include>
                 </includes>
+                <filtering>true</filtering>                
             </resource>
             <resource>
                 <directory>src/main/java</directory>
@@ -208,6 +209,12 @@
                     <include>**/*.xml</include>
                 </includes>
             </resource>
+            <!--resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.java</include>
+                </includes>
+            </resource-->
         </resources>
         <plugins>
             <plugin>
@@ -240,7 +247,7 @@
                             -->
                         </manifest>
                         <manifestEntries>
-                            <BIRTH>${buildNumber}</BIRTH>
+                            <Implementation-Build>${buildNumber}</Implementation-Build>
                         </manifestEntries>
                     </archive>
                 </configuration>
