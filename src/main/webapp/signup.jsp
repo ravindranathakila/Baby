@@ -39,6 +39,11 @@
                             &nbsp;
                         </div>
                         <div class="span-8">
+                           <div class="span-7">
+                                Username:<br/>
+                                <input type="text" id="Username" name="Username" value='<sess:attribute name="Username"/>'/>
+                            </div>
+                            <div class="span-1 last"></div>
                             <sess:equalsAttribute name="UsernameError" match="true">
                                 <div class="error span-7">
                                     Please enter a correct username<br/>
@@ -48,14 +53,13 @@
                                 <div class="span-1 last"></div>
 
                             </sess:equalsAttribute>
-                            <div class="span-7">
-                                Username:<br/>
-                                <input type="text" id="Username" name="Username" value='<sess:attribute name="Username"/>'/>
-                            </div>
-                            <div class="span-1 last"></div>
-
                         </div>
                         <div class="span-8">
+                            <div class="span-7">
+                                Password:<br/>
+                                <input type="password" id="Password" name="Password"/>
+                            </div>
+                            <div class="span-1 last"></div>
                             <sess:equalsAttribute name="PasswordError" match="true" >
                                 <div class="error span-7">
                                     Please re-enter password:<br/>
@@ -65,12 +69,6 @@
                                 <div class="span-1 last"></div>
 
                             </sess:equalsAttribute>
-                            <div class="span-7">
-                                Password:<br/>
-                                <input type="password" id="Password" name="Password"/>
-                            </div>
-                            <div class="span-1"></div>
-
                         </div>
                         <div class="span-4 last">
                             &nbsp;
@@ -81,6 +79,13 @@
                     <div class="span-3">
                     </div>
                     <div class="span-6">
+                        <div class="span-5">
+                            A Valid Email Address <br/>
+                            <input type="text" id="Email" name="Email" value='<sess:attribute name="Email"/>'/><br/>
+                            <br/>
+                            <sub>e.g. smith@game.lk</sub><br/>
+                        </div>
+                        <div class="span-1 last"></div>
                         <sess:equalsAttribute name="EmailError" match="true">
                             <div class="span-1"></div>
                             <div class="error tail span-5 last">
@@ -89,19 +94,22 @@
                                 <sess:attribute name="EmailErrorMsg"/>
                             </div>
                         </sess:equalsAttribute>
-                        <div class="span-5">
-                            A Valid Email Address <br/>
-                            <input type="text" id="Email" name="Email" value='<sess:attribute name="Email"/>'/><br/>
-                            <br/>
-                            <sub>e.g. smith@game.lk</sub><br/>
-                        </div>
-                        <div class="span-1 last"></div>
                     </div>
                     <div class="span-6">
-                        Date of Birth<br/>
-                        <input type="text"  id="DateOfBirth" name="DateOfBirth"/><br/>
-                        <br/>
-                        <sub>Required for content filtering</sub>
+                        <div class="span-6 last">
+                            Date of Birth<br/>
+                            <input type="text"  id="DateOfBirth" name="DateOfBirth" value='<sess:attribute name="DateOfBirth"/>'/><br/>
+                            <br/>
+                            <sub>Required for content filtering</sub>
+                        </div>
+                        <sess:equalsAttribute name="DateOfBirthError" match="true">
+                            <div class="span-1"></div>
+                            <div class="error tail span-5 last">
+                                Please enter your date of birth properly<br/>
+                                Mistakes you made:<br/>
+                                <sess:attribute name="DateOfBirthErrorMsg"/>
+                            </div>
+                        </sess:equalsAttribute>
                     </div>
                     <div class="span-4">
                         Gender<br/>
@@ -116,7 +124,7 @@
                         <sub>Select neutral if not relevant only.</sub>
                     </div>
                     <div class="span-5 last">
-                        Re-enter the password:
+                        <!--@TODO(task="PASSWORD CONFIRM")Re-enter the password:-->
                         
                         <br/>
                         <input type="submit" value="Sign me up!"/>

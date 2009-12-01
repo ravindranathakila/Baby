@@ -53,10 +53,16 @@ $(document).ready(function(){
             }, 200);
         },
         onComplete: function(file, response){
-            button.text('Done! Click to Upload More');
-            alert(response);
-
             window.clearInterval(interval);
+            //button.text('Done! Click to Upload More');
+
+            if(String(response).split("|")[0] == "ok"){
+                alert("No Error!")
+            } else {
+                alert("An Error Occurred");
+                alert(response);
+            }
+
 
             // enable upload button
             this.enable();
@@ -106,7 +112,12 @@ function shareEnter(){
     $('a.shareit-sm').attr('target','_blank');
 
     //Setup the bookmark media url and title
-    $('a[rel=shareit-mail]').attr('href', 'http://mailto:?subject=' + title);
+    $('a[rel=shareit-mail]').attr('href', 'http://mailto:?subject=' + title + '&body=' + url);
+    $('a[rel=shareit-delicious]').attr('href', 'http://del.icio.us/post?v=4&noui&jump=close&url=' + url + '&title=' + title);
+    $('a[rel=shareit-digg]').attr('href', 'http://digg.com/submit?phase=2&url=' + url + '&title=' + title);
+    $('a[rel=shareit-stumbleupon]').attr('href', 'http://www.stumbleupon.com/submit?url=' + url + '&title=' + title);
+    $('a[rel=shareit-twitter]').attr('href', 'http://twitter.com/home?status=' + title + '%20-%20' + title);  
+    $('a[rel=shareit-facebook]').attr('href', 'http://www.facebook.com/share.php?u=' + url + '&t=' + title);
 }
 
 function shareLeave(){

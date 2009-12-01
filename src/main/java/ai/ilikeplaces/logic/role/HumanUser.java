@@ -44,7 +44,7 @@ final public class HumanUser extends AbstractSFBCallbacks implements HumanUserLo
     public void setHumanUserId(final String humanUserId__) throws IllegalStateException {
         if (this.humanUserId_ == null) {
             this.humanUserId_ = humanUserId__;
-            logger.debug(RBGet.logMsgs.getString("ai.ilikeplaces.HumanUser.0001"),humanUserId__);
+            logger.debug(RBGet.logMsgs.getString("ai.ilikeplaces.logic.role.HumanUser.0001"),humanUserId__);
         } else {
             this.remove();
             throw new IllegalStateException(

@@ -13,12 +13,12 @@ import javax.persistence.*;
 final public class EntityLifeCyleListener {
 
     public EntityLifeCyleListener() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", EntityLifeCyleListener.class, this.hashCode());
+        //logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", EntityLifeCyleListener.class, this.hashCode());
     }
 
     @PrePersist
     public void PrePersist(final Object entity) {
-        logger.debug("PrePersist:{}.", entity);
+        //logger.debug("PrePersist:{}.", entity);
     }
 
     @PostPersist
@@ -35,7 +35,7 @@ final public class EntityLifeCyleListener {
 
     @PreUpdate
     public void PreUpdate(final Object entity) {
-        logger.debug("PreUpdate:{}.", entity);
+        //logger.debug("PreUpdate:{}.", entity);
 
     }
 
@@ -47,7 +47,7 @@ final public class EntityLifeCyleListener {
 
     @PreRemove
     public void PreRemove(final Object entity) {
-        logger.debug("PreRemove:{}.", entity);
+        //logger.debug("PreRemove:{}.", entity);
 
     }
 

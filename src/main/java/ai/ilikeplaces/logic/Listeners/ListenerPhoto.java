@@ -31,55 +31,7 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
     final protected static String JsCodeToSend = "document.monitor = new EventMonitor(); \n" +
             "document.getItsNatDoc().addEventMonitor(document.monitor); \n";
     final private String permaLink = null;
-    final private Properties p_ = new Properties();
-    private Context context = null;
-    private CrudServiceLocal<Location> crudServiceLocal = null;
     final private Logger logger = LoggerFactory.getLogger(ListenerPhoto.class.getName());
-
-    /**
-     *
-     */
-    @SuppressWarnings("unchecked")
-    public ListenerPhoto() {
-        boolean initializeFailed = true;
-        final StringBuilder log = new StringBuilder();
-        init:
-        {
-            try {
-                p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
-                context = new InitialContext(p_);
-                if (context == null) {
-                    log.append("\nVARIABLE context IS NULL! ");
-                    log.append(context);
-                    break init;
-                }
-
-                crudServiceLocal = (CrudServiceLocal<Location>) context.lookup("CrudServiceLocal");
-                logger.info(""+crudServiceLocal.hashCode());
-                if (crudServiceLocal == null) {
-                    log.append("\nVARIABLE crudServiceLocal_ IS NULL! ");
-                    log.append(crudServiceLocal);
-                    break init;
-
-                }
-            } catch (NamingException ex) {
-                log.append("\nSORRY! COULD NOT INITIALIZE " + getClass().getName() + " SERVLET DUE TO A NAMING EXCEPTION!");
-                logger.info( "\nSORRY! COULD NOT INITIALIZE " + getClass().getName() + " DUE TO A NAMING EXCEPTION!", ex);
-                break init;
-            }
-
-            /**
-             * break. Do not let this statement be reachable if initialization
-             * failed. Instead, break immediately where initialization failed.
-             * At this point, we set the initializeFailed to false and thereby,
-             * allow initialization of an instance
-             */
-            initializeFailed = false;
-        }
-        if (initializeFailed) {
-            throw new ConstructorInvokationException(log.toString());
-        }
-    }
 
     /**
      *
