@@ -3,6 +3,7 @@ package ai.ilikeplaces.entities;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.FieldPreamble;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.util.EntityLifeCyleListener;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +24,7 @@ public class PublicPhoto implements Serializable {
     final private UUID uUID = UUID.randomUUID();
     private static final long serialVersionUID = 1L;
     private Long publicPhotoId = null;
-
+     
     private String publicPhotoFilePath;
 
     @FieldPreamble(description = "The path should be very random as it will be exposed to the www." +
@@ -79,11 +80,11 @@ public class PublicPhoto implements Serializable {
     public void setPublicPhotoName(String publicPhotoName) {
         this.publicPhotoName = publicPhotoName;
     }
-
+    
+    @Column(length = 1000)
     public String getPublicPhotoDescription() {
         return publicPhotoDescription;
     }
-
     public void setPublicPhotoDescription(final String publicPhotoDescription) {
         this.publicPhotoDescription = publicPhotoDescription;
     }

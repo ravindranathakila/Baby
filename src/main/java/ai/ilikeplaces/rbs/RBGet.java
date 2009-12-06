@@ -7,9 +7,9 @@ import ai.ilikeplaces.doc.TODO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * @author Ravindranath Akila
@@ -30,8 +30,9 @@ public class RBGet {
     static {
         try {
             globalConfig = ResourceBundle.getBundle("GlobalConfig");
-        } catch (final MissingResourceException e_) {
-            e_.printStackTrace(System.out);
+        } catch (@NOTE(note = "WE DON'T NEED THE STACK TRACE")
+        final MissingResourceException e_) {
+            System.out.println(e_.getMessage());
         }
     }
 
@@ -61,18 +62,52 @@ public class RBGet {
         final StringBuilder result_ = new StringBuilder();
         try {
             result_.append("\n");
-            result_.append("\n");
-            result_.append(config.getString("verify"));
-            result_.append(Arrays.toString(config.keySet().toArray()));
-            result_.append("\n");
-            result_.append(logMsgs.getString("verify"));
-            result_.append(Arrays.toString(logMsgs.keySet().toArray()));
-            result_.append("\n");
-            result_.append(expMsgs.getString("verify"));
-            result_.append(Arrays.toString(expMsgs.keySet().toArray()));
-            result_.append("\n");
-            result_.append(globalConfig.getString("verify"));
-            result_.append(Arrays.toString(globalConfig.keySet().toArray()));
+            config:
+            {
+                result_.append("\n");
+                result_.append(config.getString("verify"));
+                final Set<String> keySet = config.keySet();
+                for (String key : keySet) {
+                    result_.append("\n");
+                    result_.append("{" + key + "," + config.getString(key) + "}");
+                }
+                result_.append("\n");
+            }
+
+            logMsgs:
+            {
+                result_.append("\n");
+                result_.append(logMsgs.getString("verify"));
+                final Set<String> keySet = logMsgs.keySet();
+                for (String key : keySet) {
+                    result_.append("\n");
+                    result_.append("{" + key + "," + logMsgs.getString(key) + "}");
+                }
+                result_.append("\n");
+            }
+
+            expMsgs:
+            {
+                result_.append("\n");
+                result_.append(expMsgs.getString("verify"));
+                final Set<String> keySet = expMsgs.keySet();
+                for (String key : keySet) {
+                    result_.append("\n");
+                    result_.append("{" + key + "," + expMsgs.getString(key) + "}");
+                }
+                result_.append("\n");
+            }
+            globalConfig:
+            {
+                result_.append("\n");
+                result_.append(globalConfig.getString("verify"));
+                final Set<String> keySet = globalConfig.keySet();
+                for (String key : keySet) {
+                    result_.append("\n");
+                    result_.append("{" + key + "," + globalConfig.getString(key) + "}");
+                }
+                result_.append("\n");
+            }
         } catch (final Exception e) {
             result_.append(e.getMessage());
         }

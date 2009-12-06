@@ -519,16 +519,17 @@
                     iframe.src = "javascript:'<html></html>';";
                 });
 
-            } else {
-                // clear input to allow user to select same file
-                // Doesn't work in IE6
-                // this._input.value = '';
-                d.body.removeChild(this._input);
-                this._input = null;
-
-                // create new input
-                this._createInput();
             }
+//            else {
+//                // clear input to allow user to select same file
+//                // Doesn't work in IE6
+//                // this._input.value = '';
+//                d.body.removeChild(this._input);
+//                this._input = null;
+//
+//                // create new input
+//                this._createInput();
+//            }
         },
         /**
 	 * Creates form, that will be submitted to iframe

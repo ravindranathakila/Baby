@@ -2,10 +2,11 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Location;
+
 import javax.ejb.Local;
+import java.util.List;
 
 /**
- *
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
@@ -17,4 +18,6 @@ public interface HumanCRUDLocationLocal {
     public Location doDirtyHumanRLocation(final String locationName, final String superLocationName);
 
     public Location doDirtyHumanRLocation(final long locationId);
+
+    public List<String> doDirtyHumanRLikeLocationName(final String likeLocationName);
 }

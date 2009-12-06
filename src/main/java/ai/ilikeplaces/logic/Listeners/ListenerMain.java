@@ -18,8 +18,10 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 
@@ -50,11 +52,53 @@ public class ListenerMain implements ItsNatServletRequestListener {
             @TODO(task = "IF LOCATION IS NOT AVAILABLE, IT SHOULD BE ADDED THROUGH A WIDGET(OR FRAGMENT MAYBE?)")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor + JSCodeToSend.FnLocationId + JSCodeToSend.FnLocationName + JSCodeToSend.FnSetTitle);
+                final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
+                setMainTitle:
+                {
+                    try {
+                        $(mainTitle).setTextContent("Welcome to ilikeplaces!");
+                    } catch (final Exception e__) {
+                        logger.debug(e__.getMessage());
+                    }
+                }
+                signOnActions:
+                {
+                    if (getUsername() != null) {
 
+                        setUsersDisplayNameIfLoggedIn:
+                        {
+                            final Element usersName = $(MarkupTag.P);
+                            usersName.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0004") + getUsername());
+                            $(Main_othersidebar_identity).appendChild(usersName);
+                        }
+                        setProfileLink:
+                        {
+                            $(Main_othersidebar_profile_link).setAttribute("href", RBGet.config.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0002"));
+                        }
+                    } else {
+                        setSignupLink:
+                        {
+                            $(Main_othersidebar_profile_link).setAttribute("href", RBGet.config.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0003"));
+                        }
+                        setDisplayNameAlternative:
+                        {
+                            final Element location = $(MarkupTag.P);
+                            location.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0005") + location);
+                            $(Main_othersidebar_identity).appendChild(location);
+                        }
+                    }
+                }
                 final Location loc_ = DB.getHumanCRUDLocationLocal(true).doDirtyHumanRLocation(location, null);
 
                 if (loc_ != null) {
                     final Location existingLocation_ = loc_;
+
+                    showUploadFileLink:
+                    {
+                        if (getUsername() != null) {
+                            $(Main_othersidebar_upload_file_sh).setAttribute("style", "display:block;");
+                        }
+                    }
 
                     setLocationIdForJSReference:
                     {
@@ -88,6 +132,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         $(Main_center_main_location_title).setTextContent("This is " + existingLocation_.getLocationName() + " of " + existingLocation_.getLocationSuperSet());
                     }
 
+
                     getAndDisplayAllThePhotos:
                     {
                         List<PublicPhoto> listPublicPhoto = existingLocation_.getPublicPhotos();
@@ -106,7 +151,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                         final Element descriptionText = $$(MarkupTag.P);
                                         descriptionText.setTextContent(publicPhoto.getPublicPhotoDescription());
                                         $$(pd_photo_description).appendChild(descriptionText);
-
                                     }
                                 };
                             } else {
@@ -128,8 +172,12 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 } else {
                     noSupportForNewLocationsYet:
                     {
-                        $(Main_center_main).appendChild(($(MarkupTag.P).appendChild(
-                                hTMLDocument__.createTextNode(RBGet.logMsgs.getString("CANT_FIND_LOCATION")))));
+                        $(Main_notice).appendChild(($(MarkupTag.P).appendChild(
+                                hTMLDocument__.createTextNode(RBGet.logMsgs.getString("CANT_FIND_LOCATION")
+                                        + " Were you looking for " + Arrays.toString(DB.getHumanCRUDLocationLocal(true).doDirtyHumanRLikeLocationName(location).toArray())
+                                ))));
+                        $(Main_notice_sh).setAttribute("style", "display:block;");
+                        logger.debug(RBGet.logMsgs.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0001"), DB.getHumanCRUDLocationLocal(true).doDirtyHumanRLikeLocationName(location));
                     }
                 }
 

@@ -1,0 +1,19 @@
+package ai.ilikeplaces.doc;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+/**
+ * This is just a utility annotation to indicate the class is in working condition along with
+ * a review by anybody.
+ *
+ * @author Ravindranath Akila
+ */
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Documented
+@Retention(RetentionPolicy.SOURCE)
+public @interface OK {
+
+    public String details() default "";
+}

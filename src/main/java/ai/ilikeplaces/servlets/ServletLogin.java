@@ -110,10 +110,8 @@ final public class ServletLogin extends HttpServlet {
 
         response__.setContentType("text/html;charset=UTF-8");
 
-        //merchantservices@moneybookers.com
-
         /**
-         * Make user session anyway as he camed to log in
+         * Make user session anyway as he came to log in
          */
         final HttpSession userSession_ = request__.getSession();
 
@@ -190,7 +188,7 @@ final public class ServletLogin extends HttpServlet {
     }
 
     final private boolean isSignOnPermitted() {
-        return RBGet.getGlobalConfigKey("signOnEnabled") != null && RBGet.getGlobalConfigKey("signonEnabled").equals("true");
+        return RBGet.getGlobalConfigKey("signOnEnabled") != null && RBGet.getGlobalConfigKey("signOnEnabled").equals("true");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

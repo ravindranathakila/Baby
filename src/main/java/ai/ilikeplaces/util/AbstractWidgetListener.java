@@ -98,7 +98,7 @@ public abstract class AbstractWidgetListener {
     /**
      * Id list of this widget
      *
-     * @param keys__
+     * @param ids__
      */
     private final void setWidgetElementIds(final HashSet<String> ids__) {
         for (final String id_ : ids__) {

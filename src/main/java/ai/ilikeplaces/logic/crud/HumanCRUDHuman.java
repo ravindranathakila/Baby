@@ -55,7 +55,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
 
     /*BEGINNING OF PREPERATOR METHODS*/
 
-    @TODO(task = "CHANGE ALL NON_CRUDSERVICE CLASSES TO USE NON_TRANSACTIONAL AS REQUIRED")
+    @TODO(task = "ADD HUMANSIDENTITY VALUES TAKE FROM THE SERVLETSIGNUP. CHANGE ALL NON_CRUDSERVICE CLASSES TO USE NON_TRANSACTIONAL AS REQUIRED")
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void doCHuman(final String humanId, final String password) throws IllegalAccessException {

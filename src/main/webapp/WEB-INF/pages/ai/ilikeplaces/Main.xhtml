@@ -17,6 +17,7 @@
 
         <script src="/ilikeplaces/js/jquery-1.3.2.js" type="text/javascript"></script>
         <script src="/ilikeplaces/js/ajaxupload.3.5.js" type="text/javascript"></script>
+        <script src="/ilikeplaces/js/jquery-impromptu.2.7.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="/ilikeplaces/nifty/niftycube.js"></script>
         <!-- END STATIC IMPORTS -->
 
@@ -25,12 +26,15 @@
         <link rel="stylesheet" href="/ilikeplaces/css/buttons.css" type="text/css"/>
         <link rel="stylesheet" href="/ilikeplaces/css/shareit.css" type="text/css"/>
         <link rel="stylesheet" href="/ilikeplaces/css/FileUploadButton.css" type="text/css"/>
+        <link rel="stylesheet" href="/ilikeplaces/css/impromptu.css" type="text/css"/>
         <script src="/ilikeplaces/js/jquery.ready.js" type="text/javascript"></script>
         <script src="/ilikeplaces/js/Nifty.onload.js" type="text/javascript"></script>
         <script src="/ilikeplaces/js/ItsNatEventMonitor.js" type="text/javascript"></script>
         <!-- END DYNAMIC IMPORTS -->
     </head>
-    <body style="background-color: white;">
+    <body style="background-color: #80000d ;">
+	<!--darkred:a50011 darkerred:80000d bluepurple:513684 darkbluegreen:518284 brown:b27207 treebrown:794c00 darkbrown:5e3100 skypeorange:ff9621-->
+      <!--darkorange:e36100 -->
         <div id="shareit-box" style="background:transparent;z-index:2;">
             <div id="shareit-header"></div>
             <div id="shareit-body">
@@ -48,7 +52,7 @@
                 </div>
             </div>
         </div>
-        <div id="Main_display" class="container" style="background-color: white;" itsnat:nocache="true" style="display:none;">
+        <div id="Main_display" class="container" itsnat:nocache="true" style="display:none;">
             <div class="span-24 last">
                 <div class="span-24 last height_5 dark_orange_bg ntyST">
                     &nbsp;
@@ -67,7 +71,7 @@
                                             <div class="span-6 last inherit_height inherit_line_height ntyTL ntyBL orange_bg">
                                                  &nbsp;&nbsp;Username:
 
-                                                <input class="span-4 last dark_orange_fg bold" style="background-color: #FFD324;" id="Username" name="Username" type="text" />
+                                                 <input class="span-4 last dark_orange_fg bold" style="background-color: #FFD324;" id="Username" name="Username" maxlength="255" type="text" />
                                             </div>
                                             </div>
                                         </div>
@@ -75,7 +79,7 @@
                                         <div class="span-6 last inherit_height line_height_40">
                                             <div class="span-6 last inherit_height inherit_line_height">
                                                 Password:
-                                                <input class="span-4 last dark_orange_fg bold" style="background-color: #FFD324;" id="Password" name="Password" type="password" />
+                                                <input class="span-4 last dark_orange_fg bold" style="background-color: #FFD324;" id="Password" name="Password" maxlength="255" type="password" />
                                             </div>
                                             </div>
                                         </div>
@@ -113,9 +117,7 @@
                                     <img class="span-5 last" src="/ilikeplaces/images/profile.jpg" alt="Profile Picture"/>
                                 </div>
                                 <div class="span-5 last center ntyBR orange_bg title_blend bold">
-                                    <br/>
-                                    This is Ravindranath Akila
-                                    <br/><br/>
+                                    <span id="Main_othersidebar_identity"></span>
                             </div>
                             </div>
                             <div class="span-5 last">
@@ -138,7 +140,7 @@
                                         <img src="/ilikeplaces/images/home.png" alt="home" />
                                     </div>
                                     <div class="span-4 last nav_link ntyS">
-                                        <a href="/ilikeplaces/page/_me" >Profile</a>
+                                        <a id="Main_othersidebar_profile_link" href="#" >Profile</a>
                                     </div>
                                 </div>
                                 <div class="span-5 last height_10">
@@ -166,7 +168,7 @@
                                 <div class="span-5 last height_10">
                                     &nbsp;
                                 </div>
-                                <div class="span-5 last">
+                                <div id="Main_othersidebar_upload_file_sh" class="span-5 last" style="display:none;">
                                     <div id="Main_file_list" class="span-5 last example">
                                         <div class="span-5 last wrapper">
                                             <div class="span-5 last button">
@@ -194,9 +196,9 @@
                         </div>
                         <div class="span-14" id="Main_center">
                             <div class="span-14 last" id="Main_center_main">
-                                <div class="span-14 last" style="display:none;">
+                                <div id="Main_notice_sh" class="span-14 last" style="display:none;">
                                     <div class="span-12 prepend-1 append-1 notice last">
-                                        <p id="notice" class="title_blend bold large"></p>
+                                        <p id="Main_notice" class="title_blend bold large"></p>
                                     </div>
                                 </div>
 
@@ -251,12 +253,10 @@
                             </div>
                             <div class="span-14 last" id="Main_center_content">
                                 <div class="span-7" id="Main_left_column" style="overflow: hidden; clip: rect(auto, auto, auto, auto);">
-                                    <!--a href="#" class="btn blue" ><i></i><span id="cool"><span></span><i></i>Cool</span></a-->
-                                    <hr/>
+                                    &nbsp;
                                 </div>
                                 <div class="span-7 last" id="Main_right_column">
-                                    <!--a href="#" class="btn green" ><i></i><span id="hot"><span></span><i></i>Hot</span></a-->
-                                    <hr/>
+                                    &nbsp;
                                 </div>
                             </div>
                         </div>
