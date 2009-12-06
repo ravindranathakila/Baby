@@ -49,10 +49,8 @@ public abstract class AbstractListener {
      *
      */
     final static protected String Click = "click";
-    /**
-     *
-     */
-    final protected SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper;
+
+    final private SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper;
 
 
     /**
@@ -122,11 +120,11 @@ public abstract class AbstractListener {
      * Id registry should be globally visible to callers
      * Wrapper to getElementById
      *
-     * @param key__
+     * @param iDOfElementRequired__
      * @return Element
      */
-    protected final Element $(final String key__) {
-        return getElementById(key__);
+    protected final Element $(final String iDOfElementRequired__) {
+        return getElementById(iDOfElementRequired__);
     }
 
     private final Element getElementById(final String key__) {
@@ -147,5 +145,14 @@ public abstract class AbstractListener {
      */
     final protected Element $(MarkupTagFace tagNameInAllCaps) {
         return hTMLDocument_.createElement(tagNameInAllCaps.toString());
+    }
+
+    /**
+     * Get the Username of the Logged in user, and null, if not logged in
+     *
+     * @return The Username of the Logged in user, and null, if not logged in
+     */
+    final protected String getUsername() {
+        return sessionBoundBadRefWrapper != null ? sessionBoundBadRefWrapper.boundInstance.getHumanUserId():null;
     }
 }

@@ -1,9 +1,11 @@
 package ai.ilikeplaces.logic.Listeners;
 
+import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.HumansPrivatePhoto;
 import ai.ilikeplaces.entities.HumansPublicPhoto;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.util.AbstractListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,9 +105,9 @@ public class ListenerHuman implements ItsNatServletRequestListener {
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor+JSCodeToSend.FnLocationId);
 
-                if (sessionBoundBadRefWrapper != null) {
-                    //sessionBoundBadRefWrapper.boundInstance.getHumanUserId()
-                    HumansPublicPhoto humansPublicPhoto = crudHumansPublicPhoto_.find(HumansPublicPhoto.class, sessionBoundBadRefWrapper.boundInstance.getHumanUserId());
+                if (getUsername() != null) {
+                    @TODO(task = "USE DBLocal")
+                    HumansPublicPhoto humansPublicPhoto = crudHumansPublicPhoto_.find(HumansPublicPhoto.class, getUsername());
 
                     for (final PublicPhoto publicPhoto : humansPublicPhoto.getPublicPhotos()) {
                         new PhotoCRUD(itsNatDocument__, $(Controller.Page.Main_center_main), publicPhoto, humansPublicPhoto.getHumanId()) {

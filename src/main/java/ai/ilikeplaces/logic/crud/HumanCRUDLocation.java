@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import java.util.List;
 
 /**
  *
@@ -33,9 +34,15 @@ public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUD
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.NEVER)
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Location doDirtyHumanRLocation(final long locationId) {
         return rLocationLocal_.doDirtyRLocation(locationId);
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<String> doDirtyHumanRLikeLocationName(final String likeLocationName){
+        return rLocationLocal_.doDirtyRLikeLocation(likeLocationName);
     }
 
     final static Logger logger = LoggerFactory.getLogger(HumanCRUDLocation.class);

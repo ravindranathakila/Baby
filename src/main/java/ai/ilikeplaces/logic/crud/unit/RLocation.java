@@ -139,5 +139,11 @@ public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
         return crudServiceLocation_.find(Location.class, locationId);
     }
 
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<String> doDirtyRLikeLocation(final String locationName){
+        return crudServiceLocation_.findWithNamedQuery(FindAllLocationsByLikeName,
+                QueryParameter.with(LocationName, locationName.toUpperCase()+"%").parameters());
+    }
     final static Logger logger = LoggerFactory.getLogger(RLocation.class);
 }

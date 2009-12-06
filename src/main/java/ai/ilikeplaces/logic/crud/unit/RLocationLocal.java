@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Location;
 
 import javax.ejb.Local;
+import java.util.List;
 
 /**
  * @author Ravindranath Akila
@@ -23,4 +24,6 @@ public interface RLocationLocal {
     public Location doRLocation(final long locationId);
 
     public Location doDirtyRLocation(final long locationId);
+
+    public List<String> doDirtyRLikeLocation(final String locationName);
 }

@@ -46,15 +46,18 @@ final public class Controller extends HttpServletWrapper {
         main(
                 "ai/ilikeplaces/Main.xhtml",
                 Controller.Page.mainTitle,
+                Controller.Page.Main_othersidebar_identity,
+                Controller.Page.Main_othersidebar_profile_link,
+                Controller.Page.Main_othersidebar_upload_file_sh,
+                Controller.Page.Main_notice_sh,
                 Controller.Page.Main_center_main,
+                Controller.Page.Main_notice,
                 Controller.Page.Main_center_main_location_title,
                 Controller.Page.Main_center_content,
                 Controller.Page.Main_left_column,
                 Controller.Page.Main_right_column,
                 Controller.Page.Main_sidebar,
-                Controller.Page.Main_login_widget,
-                Controller.Page.hot,
-                Controller.Page.cool) {
+                Controller.Page.Main_login_widget) {
 
             @Override
             public String toString() {
@@ -132,6 +135,7 @@ final public class Controller extends HttpServletWrapper {
                 return "include";
             }
         };
+
         /*Photo Descrition Specific IDs*/
         final static public String pd = "pd";
         final static public String close = "close";
@@ -140,15 +144,18 @@ final public class Controller extends HttpServletWrapper {
         final static public String pd_photo_description = "pd_photo_description";
         /*Main Specific IDs*/
         final static public String mainTitle = "mainTitle";
+        final static public String Main_othersidebar_identity = "Main_othersidebar_identity";
+        final static public String Main_othersidebar_profile_link = "Main_othersidebar_profile_link";
+        final static public String Main_othersidebar_upload_file_sh = "Main_othersidebar_upload_file_sh";
         final static public String Main_center_main = "Main_center_main";
+        final static public String Main_notice = "Main_notice";
+        final static public String Main_notice_sh = "Main_notice_sh";
         final static public String Main_center_main_location_title = "Main_center_main_location_title";
         final static public String Main_center_content = "Main_center_content";
         final static public String Main_left_column = "Main_left_column";
         final static public String Main_right_column = "Main_right_column";
         final static public String Main_sidebar = "Main_sidebar";
         final static public String Main_login_widget = "Main_login_widget";
-        final static public String hot = "hot";
-        final static public String cool = "cool";
         /*PhotoCRUD Specific IDs*/
         final static public String pc_photo_title = "pc_photo_title";
         final static public String pc_close = "pc_close";
@@ -252,7 +259,7 @@ final public class Controller extends HttpServletWrapper {
     private static void pathResolver(final ItsNatServletRequest request__) {
         final String pathInfo = ((HttpServletRequest) request__.getServletRequest()).getPathInfo();
         final String URL__ = pathInfo == null ? "" : ((HttpServletRequest) request__.getServletRequest()).getPathInfo().substring(1);//Removes preceeding slash
-        if(isHomePage(URL__)){
+        if (isHomePage(URL__)) {
             staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
             @TODO(task = "PREPARE THIS PAGE")
             int i;
@@ -301,7 +308,7 @@ final public class Controller extends HttpServletWrapper {
      * @param URL__
      * @return boolean
      */
-    @FIXME(issue="Location should not contain underscores")
+    @FIXME(issue = "Location should not contain underscores")
     static private boolean isCorrectLocationFormat(final String URL__) {
         /*"_" (underscore) check first is vital as the photo and me urls might have "/"*/
         return !(URL__.startsWith("_") || URL__.contains("/") || URL__.contains(",") || URL__.contains("?"));

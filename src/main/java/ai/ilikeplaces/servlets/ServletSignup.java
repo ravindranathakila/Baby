@@ -3,6 +3,7 @@ package ai.ilikeplaces.servlets;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
@@ -28,7 +29,6 @@ import java.util.ResourceBundle;
 final public class ServletSignup extends HttpServlet {
 
     final Logger logger = LoggerFactory.getLogger(ServletSignup.class.getName());
-    final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
 
     /*Session related static id references*/
     final static private String Username = "Username";
@@ -66,10 +66,12 @@ final public class ServletSignup extends HttpServlet {
      * @throws ServletException
      * @throws IOException      if an I/O error occurs
      */
+    @TODO(task = "GET USERS NAME IN JSP. SET THE OTHER PARAMETERS TAKEN FROM THE USER!")
     protected void processRequest(final HttpServletRequest request__, final HttpServletResponse response__)
             throws ServletException, IOException {
 
         response__.setContentType("text/html;charset=UTF-8");
+        final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
 
         final Enumeration enumerated = request__.getParameterNames();
         logger.debug(logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0003"));
