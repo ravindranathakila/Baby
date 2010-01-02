@@ -1,9 +1,6 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.FIXME;
-import ai.ilikeplaces.doc.FieldPreamble;
-import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.util.EntityLifeCyleListener;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +19,9 @@ public class PublicPhoto implements Serializable {
 
     @NOTE(note = "PRE PERSISTED ENTITIES WILL HAVE NULL IDS. HENCE USING PRE PERSISTED IDS IS NOT PRACTICAL.")
     final private UUID uUID = UUID.randomUUID();
+
     private static final long serialVersionUID = 1L;
+
     private Long publicPhotoId = null;
      
     private String publicPhotoFilePath;
@@ -89,6 +88,7 @@ public class PublicPhoto implements Serializable {
         this.publicPhotoDescription = publicPhotoDescription;
     }
 
+    @WARNING(warning = "The cascade types of HumansPublicPhoto, Location and this method, are very CascadeType sensitive. Any mistakee will trigger rollbacks.")
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     public HumansPublicPhoto getHumansPublicPhoto() {
         return humansPublicPhoto;
@@ -98,7 +98,6 @@ public class PublicPhoto implements Serializable {
         this.humansPublicPhoto = humansPublicPhoto;
     }
 
-    @FIXME(issue = "Break Location table by this field. i.e. LocationsPublicPhoto(P.K. = locationId), as that will ease transaction")
     @ManyToOne(cascade = {CascadeType.MERGE})
     public Location getLocation() {
         return location;
@@ -150,7 +149,6 @@ public class PublicPhoto implements Serializable {
         this.publicPhotoUploadDate = publicPhotoUploadDate;
     }
 
-    @FIXME(issue = "VERIFY THAT UUID IS NOT RESOURCE INTENSIVE.")
     @Override
     public int hashCode() {
         return (int) (this.getPublicPhotoId() != null ? this.getPublicPhotoId() : uUID.hashCode());

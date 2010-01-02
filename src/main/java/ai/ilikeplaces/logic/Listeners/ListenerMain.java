@@ -1,9 +1,11 @@
 package ai.ilikeplaces.logic.Listeners;
 
+import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.logic.Listeners.widgets.Photo$Description;
+import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractListener;
@@ -53,41 +55,47 @@ public class ListenerMain implements ItsNatServletRequestListener {
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor + JSCodeToSend.FnLocationId + JSCodeToSend.FnLocationName + JSCodeToSend.FnSetTitle);
                 final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
-                setMainTitle:
+                layoutNeededForAllPages:
                 {
-                    try {
-                        $(mainTitle).setTextContent("Welcome to ilikeplaces!");
-                    } catch (final Exception e__) {
-                        logger.debug(e__.getMessage());
+                    setLoginWidget:
+                    {
+                        new SignInOn(itsNatDocument__, $(Main_login_widget)) {
+                        };
                     }
-                }
-                signOnActions:
-                {
-                    if (getUsername() != null) {
 
-                        setUsersDisplayNameIfLoggedIn:
-                        {
+                    setMainTitle:
+                    {
+                        try {
+                            //$(mainTitle).setTextContent("Welcome to ilikeplaces!");
+                        } catch (
+                                @FIXME(issue = "This is very important for SEO. Contact ItsNat and find out why exception always occurs here. It says element not found.")
+                                final Exception e__) {
+                            logger.debug(e__.getMessage());
+                        }
+                    }
+                    signOnDisplayLink:
+                    {
+                        if (getUsername() != null) {
                             final Element usersName = $(MarkupTag.P);
                             usersName.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0004") + getUsername());
                             $(Main_othersidebar_identity).appendChild(usersName);
+                        } else {
+                            final Element locationElem = $(MarkupTag.P);
+                            locationElem.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0005") + location);
+                            $(Main_othersidebar_identity).appendChild(locationElem);
                         }
-                        setProfileLink:
-                        {
+
+                    }
+                    setProfileLink:
+                    {
+                        if (getUsername() != null) {
                             $(Main_othersidebar_profile_link).setAttribute("href", RBGet.config.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0002"));
-                        }
-                    } else {
-                        setSignupLink:
-                        {
+                        } else {
                             $(Main_othersidebar_profile_link).setAttribute("href", RBGet.config.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0003"));
-                        }
-                        setDisplayNameAlternative:
-                        {
-                            final Element location = $(MarkupTag.P);
-                            location.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0005") + location);
-                            $(Main_othersidebar_identity).appendChild(location);
                         }
                     }
                 }
+
                 final Location loc_ = DB.getHumanCRUDLocationLocal(true).doDirtyHumanRLocation(location, null);
 
                 if (loc_ != null) {
@@ -177,7 +185,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                         + " Were you looking for " + Arrays.toString(DB.getHumanCRUDLocationLocal(true).doDirtyHumanRLikeLocationName(location).toArray())
                                 ))));
                         $(Main_notice_sh).setAttribute("style", "display:block;");
-                        logger.debug(RBGet.logMsgs.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0001"), DB.getHumanCRUDLocationLocal(true).doDirtyHumanRLikeLocationName(location));
                     }
                 }
 

@@ -5,8 +5,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * This is just a utility annotation to indicate the class is in working condition along with
- * a review by anybody.
+ * This is just a utility annotation to indicate a class is in working condition along with
+ * an ok for a review by anybody.
  *
  * @author Ravindranath Akila
  */

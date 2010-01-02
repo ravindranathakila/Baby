@@ -1,7 +1,11 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.entities.PublicPhoto;
+import ai.ilikeplaces.util.Return;
+
 import javax.ejb.Local;
+import java.util.List;
 
 /**
  *
@@ -15,7 +19,7 @@ public interface HumanCRUDPublicPhotoLocal {
 
     public boolean doHumanCPublicPhoto(final String humanId, final long locationId, final String fileName, final String publicPhotoName, final String publicPhotoDescription, final String publicPhotoURLPath, final int retries);
 
-    public boolean doHumanRPublicPhoto();
+    public Return<List<PublicPhoto>> doHumanRPublicPhoto(final String humanId);
 
     public boolean doHumanUPublicPhotoDescription(final String humanId, final long publicPhotoId, final String publicPhotoDescription);
 

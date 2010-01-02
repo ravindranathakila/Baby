@@ -18,4 +18,6 @@ public interface DBLocal {
     public HumanCRUDLocationLocal getHumanCRUDLocationLocal();
 
     public HumanCRUDHumanLocal getHumanCRUDHumanLocal();
+
+    public HumanCRUDMapLocal getHumanCRUDMapLocal();    
 }

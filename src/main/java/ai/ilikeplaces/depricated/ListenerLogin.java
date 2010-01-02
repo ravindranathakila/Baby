@@ -8,6 +8,7 @@ import org.itsnat.core.event.ItsNatServletRequestListener;
  *
  * @author Ravindranath Akila
  */
+@Deprecated
 public class ListenerLogin implements ItsNatServletRequestListener {
 
     /**

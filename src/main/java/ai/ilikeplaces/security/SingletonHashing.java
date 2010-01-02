@@ -1,17 +1,17 @@
 package ai.ilikeplaces.security;
 
-import ai.ilikeplaces.exception.ConstructorInvokationException;
-import ai.ilikeplaces.util.AbstractSNGLTNBCallbacks;
+import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.security.blowfish.BlowFishLocal;
 import ai.ilikeplaces.security.face.SingletonHashingFace;
-import javax.annotation.PostConstruct;
+import ai.ilikeplaces.util.AbstractSNGLTNBCallbacks;
+
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 
 /**
- *
  * @author Ravindranath Akila
  */
+@OK
 @Singleton
 public class SingletonHashing extends AbstractSNGLTNBCallbacks implements SingletonHashingFace {
 
@@ -19,45 +19,6 @@ public class SingletonHashing extends AbstractSNGLTNBCallbacks implements Single
     private BlowFishLocal blowFishLocal;
 
     /**
-     *
-     */
-    /**
-     *
-     */
-    @PostConstruct
-    @Override
-    public void postConstruct(){
-        boolean initializeFailed = true;
-        final StringBuilder log = new StringBuilder();
-        init:
-        {
-            if (this.blowFishLocal == null) {
-                log.append("\nSORRY! I COULDN'T INITIALIZED VARIBALE blowFishLocal WHICH IS NOW " + this.blowFishLocal);
-                break init;
-            }
-
-            /**
-             * break. Do not let this statement be reachable if initialization
-             * failed. Instead, break immediately where initialization failed.
-             * At this point, we set the initializeFailed to false and thereby,
-             * allow initialization of an instance
-             */
-            initializeFailed = false;
-        }
-        if (initializeFailed) {
-            throw new ConstructorInvokationException(log.toString());
-        }
-        System.out.println(log);
-    }
-
-    /**
-     *
-     * @param plaintext__
-     * @param salt__
-     * @return
-     */
-    /**
-     *
      * @param plaintext__
      * @param salt__
      * @return

@@ -1,6 +1,8 @@
 package ai.ilikeplaces.entities;
 
+import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.util.EntityLifeCyleListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,6 +109,7 @@ public class Location implements Serializable {
         this.locationSuperSet = locationSuperSet__;
     }
 
+    @FIXME(issue = "Break Location table by this field. i.e. LocationsPublicPhoto(P.K. = locationId), as that will ease transaction. Use secondary tables PrimaryKeyJoinTable")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     public List<PublicPhoto> getPublicPhotos() {
         return publicPhotos;
@@ -120,8 +123,9 @@ public class Location implements Serializable {
      * @return toString_
      */
     @Override
+    @WARNING(warning = "The first location i.e. The Planet Earth, will have itself as its super. Hence will induce a stack overflow if superset.tostring is called.")
     public String toString() {
-        return locationName + " of " + locationSuperSet == null ? "" : locationSuperSet.toString();
+        return locationName + ((locationSuperSet == null || this.getLocationId() == locationSuperSet.getLocationId()) ? "" : " of " + locationSuperSet.toString());
     }
 
     /**

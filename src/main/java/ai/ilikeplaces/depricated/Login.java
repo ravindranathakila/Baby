@@ -21,6 +21,7 @@ import org.w3c.dom.html.HTMLDocument;
  *
  * @author Ravindranath Akila
  */
+@Deprecated
 class Login implements EventListener {
 
     private ItsNatHTMLDocument itsNatHTMLDocument;

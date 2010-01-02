@@ -12,7 +12,7 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.SOURCE)
 public @interface TODO {
 
-    String task();
+    String task() default "";
 
     String[] tasks() default {};
 }

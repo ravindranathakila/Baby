@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansPublicPhoto;
 import ai.ilikeplaces.entities.Location;
@@ -13,6 +14,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import java.util.List;
 
 /**
  * @author Ravindranath Akila
@@ -26,7 +28,9 @@ public class RPublicPhoto implements RPublicPhotoLocal {
     @EJB
     private CrudServiceLocal<Location> crudServiceLocation_;
     @EJB
-    private CrudServiceLocal<PublicPhoto> CrudServicPublicPhoto_;
+    private CrudServiceLocal<PublicPhoto> crudServicPublicPhoto_;
+    @EJB
+    private CrudServiceLocal<HumansPublicPhoto> humansPublicPhotoCrudServiceLocal_;
 
     public RPublicPhoto() {
         logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", RPublicPhoto.class, this.hashCode());
@@ -36,6 +40,13 @@ public class RPublicPhoto implements RPublicPhotoLocal {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public PublicPhoto doRPublicPhotoLocal(final String humanId, final long locationId, final PublicPhoto publicPhoto) {
         return doCommonRPublicPhotoLocal(humanId, locationId, publicPhoto);
+    }
+
+    @NOTE(note = "Avoiding transactions as it is a bulk read")
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<PublicPhoto> doRAllPublicPhotos(final String humanId) {
+        return humansPublicPhotoCrudServiceLocal_.find(HumansPublicPhoto.class, humanId).getPublicPhotos();
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
@@ -49,7 +60,7 @@ public class RPublicPhoto implements RPublicPhotoLocal {
         publicPhoto.setLocation(location);
         publicPhoto.setHumansPublicPhoto(humansPublicPhto);
 
-        final PublicPhoto managedPublicPhoto = CrudServicPublicPhoto_.create(publicPhoto);
+        final PublicPhoto managedPublicPhoto = crudServicPublicPhoto_.create(publicPhoto);
 
         location.getPublicPhotos().add(managedPublicPhoto);
         humansPublicPhto.getPublicPhotos().add(managedPublicPhoto);
