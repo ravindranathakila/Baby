@@ -1,24 +1,25 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.*;
-import ai.ilikeplaces.util.MarkupTagFace;
+import ai.ilikeplaces.doc.FIXME;
+import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.servlets.Controller;
-import java.util.HashSet;
-import java.util.Set;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServlet;
 import org.itsnat.core.html.ItsNatHTMLDocFragmentTemplate;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.html.HTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
-import static ai.ilikeplaces.servlets.Controller.*;
+import org.w3c.dom.html.HTMLDocument;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import static ai.ilikeplaces.servlets.Controller.Page;
 
 /**
- * 
  * Each widget itself knows its functionality.
  * Hence, each widget should register its own event listeners.
  * But there will be several copies of the same widget in the same page.
@@ -49,7 +50,6 @@ public abstract class AbstractWidgetListener {
     private boolean visible = true;
 
     /**
-     *
      * @param itsNatDocument__
      * @param page__
      * @param appendToElement__
@@ -76,6 +76,7 @@ public abstract class AbstractWidgetListener {
      * Use ItsNatHTMLDocument variable stored in the AbstractListener class
      * Do not call this method anywhere, just implement it, as it will be
      * automatically called by the contructor
+     *
      * @param itsNatHTMLDocument_
      * @param hTMLDocument_
      */
@@ -125,14 +126,13 @@ public abstract class AbstractWidgetListener {
     }
 
     /**
-     *
      * @return HashSet<String> widgetElements
      */
     final protected Set<String> getWidgetElements() {
         return Controller.GlobalPageIdRegistry.get(page);
     }
 
-    @NOTE(note = "ASSUMING THIS METHOD CANNOT BE CALLED  AFTER hide() IF ALL ELEMENTS ARE HIDDEN.")
+    @Deprecated
     protected void toggleVisible(final String toggleLink) {
         final Set<String> widgetElements = getWidgetElements();
         if (visible) {
@@ -150,7 +150,7 @@ public abstract class AbstractWidgetListener {
         } else {
             for (String elementId__ : widgetElements) {
                 if (!elementId__.equals(toggleLink)) {
-                    @FIXME(issue="THIS IS WRONG. CSS CAN HAVE NECESSARY SPACES. E.G. backgroound-image:0% 0% url(/path/image.png);")
+                    @FIXME(issue = "this is wrong. css can have necessary spaces. e.g. backgroound-image:0% 0% url(/path/image.png);")
                     final String existingVal = $$(elementId__).getAttribute("style").replace(" ", "");
 
                     if (existingVal.contains("display:none")) {
@@ -176,9 +176,17 @@ public abstract class AbstractWidgetListener {
         return hTMLDocument_.createElement(tagNameInAllCaps.toString());
     }
 
-    final protected void remove(final EventListener eventListener_, final EventTarget eventTarget_) {
+    /**
+     *
+     * @param eventTarget_
+     * @param eventType_
+     * @param eventListener_
+     * @param useCapture ... default false
+     */
+    final protected void remove(final EventTarget eventTarget_, final EventType eventType_, final EventListener eventListener_, final Boolean... useCapture) {
         logger.debug("HELLO, REMOVING WIDGET LISTENER");
-        itsNatDocument_.removeEventListener(eventTarget_, "click", eventListener_, false);
+        itsNatDocument_.removeEventListener(eventTarget_, eventType_.toString(), eventListener_, useCapture.length == 0 ? false : useCapture[0]);
     }
+
     final static Logger logger = LoggerFactory.getLogger(AbstractWidgetListener.class);
 }

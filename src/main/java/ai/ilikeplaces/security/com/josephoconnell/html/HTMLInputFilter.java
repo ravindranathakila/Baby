@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  * http://us2.php.net/manual/en/reference.pcre.pattern.modifiers.php
  * http://www.regular-expressions.info/modifiers.html
  * 
- * A note on naming conventions: instance variables are prefixed with a "v"; global
+ * A note on naming conventions: instance variables are prefixed with a "impl"; global
  * constants are in all caps.
  * 
  * Sample use:

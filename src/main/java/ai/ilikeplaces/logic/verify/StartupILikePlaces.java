@@ -37,6 +37,7 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         System.out.println("********* ********* ********* ********* *********");
         System.out.println("");
         System.out.println(RBGet.config.getString("bn"));
+        System.out.println(RBGet.config.getString("codename"));
         System.out.println("");
         System.out.println("PLEASE NOTE GENERAL SETUP");
         System.out.println("1. Make sure openejb.log in shows no issues.");
@@ -87,11 +88,11 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
             }
         }
 
-
+        System.out.println("Check title, Check ads, Check location Search Auto Suggest or Suggest on feed.");
+        System.out.println("");
         System.out.println("********* ********* ********* ********* *********");
         System.out.println("********* START UP CHECK DONE ILIKEPLACES");
         System.out.println("********* ********* ********* ********* *********");
-        System.out.println("Check title, Check ads, Check location Search Auto Suggest or Suggest on feed.");
         System.out.println("");
     }
 

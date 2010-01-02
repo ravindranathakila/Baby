@@ -8,6 +8,9 @@ import java.util.Random;
  *
  * @author Ravindranath Akila
  */
+@Deprecated
+@FIXME(issue = "this class is not being used. it was returning wrong values and was not debugged")
+@OK
 final public class FileRandom {
 
     final static private Random r = new Random(System.currentTimeMillis());

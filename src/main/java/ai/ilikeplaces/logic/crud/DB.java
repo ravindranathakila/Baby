@@ -22,7 +22,7 @@ import java.util.logging.Level;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Singleton
 @NOTE(note = "MADE FINAL AS CONSTRUCTOR THROWS EXCEPTION TO PREVENT UNINITIALIZED VARIABLES. SUBCLASSING SINGLETON NO SENSE ANYWAY.")
-@FIXME(issue = "NON INJECTED CALL SHOULD BE VERIFIED IF A USER SENDS FALSE")
+@FIXME(issue = "non injected call should be verified if a user sends false")
 @Startup
 final public class DB implements DBLocal {
 
@@ -123,6 +123,30 @@ final public class DB implements DBLocal {
             logger.error("{}", ex);
         }
         return h != null ? h : (HumanCRUDLocationLocal) LogNull.logThrow();
+
+    }
+
+    @Override
+    public HumanCRUDMapLocal getHumanCRUDMapLocal() {
+        isOK();
+        HumanCRUDMapLocal h = null;
+        try {
+            h = (HumanCRUDMapLocal) Context_.lookup(HumanCRUDMapLocal.NAME);
+        } catch (NamingException ex) {
+            logger.error("{}", ex);
+        }
+        return h != null ? h : (HumanCRUDMapLocal) LogNull.logThrow();
+    }
+
+    public static HumanCRUDMapLocal getHumanCRUDMapLocal(final boolean nonInjected) {
+        isOK();
+        HumanCRUDMapLocal h = null;
+        try {
+            h = ((DBLocal) Context_.lookup(DBLocal.NAME)).getHumanCRUDMapLocal();
+        } catch (NamingException ex) {
+            logger.error("{}", ex);
+        }
+        return h != null ? h : (HumanCRUDMapLocal) LogNull.logThrow();
 
     }
 }

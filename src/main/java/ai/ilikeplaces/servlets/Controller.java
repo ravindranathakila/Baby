@@ -2,8 +2,8 @@ package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.depricated.ListenerLogin;
 import ai.ilikeplaces.doc.FIXME;
-import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.logic.Listeners.ListenerAarrr;
 import ai.ilikeplaces.logic.Listeners.ListenerHuman;
 import ai.ilikeplaces.logic.Listeners.ListenerMain;
 import ai.ilikeplaces.logic.Listeners.ListenerPhoto;
@@ -29,9 +29,11 @@ final public class Controller extends HttpServletWrapper {
     private final static Map<PageFace, String> PrettyURLMap_ = new IdentityHashMap<PageFace, String>();//Please read javadoc before making any changes to this implementation
     final static private Logger staticLogger = LoggerFactory.getLogger(Controller.class.getName());
     private static final ResourceBundle logMsgs = ResourceBundle.getBundle("ai/ilikeplaces/rbs/LogMsgs_en_US");
+    private static final String ITSNAT_DOC_NAME = "itsnat_doc_name";
 
     @WARNING(warning = "Initializer for pages with their ids and paths.\n"
-            + "Note that the pages with ID's shall be initialized only once as they will "
+
+
             + "be used within this class only. The rest shall write the the list")
     public enum Page implements PageFace {
 
@@ -62,6 +64,17 @@ final public class Controller extends HttpServletWrapper {
             @Override
             public String toString() {
                 return "main";
+            }
+        },
+        Aarrr(
+                "ai/ilikeplaces/AARRR.xhtml",
+                Controller.Page.AarrrTitle,
+                Controller.Page.AarrrEmail,
+                Controller.Page.AarrrFunTypes) {
+
+            @Override
+            public String toString() {
+                return DocAarrr;
             }
         },
         Photo$Description(
@@ -134,6 +147,14 @@ final public class Controller extends HttpServletWrapper {
             public String toString() {
                 return "include";
             }
+        },
+        SignInOn(
+                "ai/ilikeplaces/widgets/SignInOn.xhtml") {
+
+            @Override
+            public String toString() {
+                return "SignInOn";
+            }
         };
 
         /*Photo Descrition Specific IDs*/
@@ -142,6 +163,16 @@ final public class Controller extends HttpServletWrapper {
         final static public String pd_photo_permalink = "pd_photo_permalink";
         final static public String pd_photo = "pd_photo";
         final static public String pd_photo_description = "pd_photo_description";
+
+        
+        /*Aarrr Page*/
+        final static public String DocAarrr = "Aarrr";
+        /*Aarrr Specific IDs*/
+        final static public String AarrrTitle = "AarrrTitle";
+        final static public String AarrrFunTypes = "AarrrFunTypes";
+        final static public String AarrrEmail = "AarrrEmail";
+
+
         /*Main Specific IDs*/
         final static public String mainTitle = "mainTitle";
         final static public String Main_othersidebar_identity = "Main_othersidebar_identity";
@@ -174,6 +205,12 @@ final public class Controller extends HttpServletWrapper {
             PutAllPageElementIdsByPage(this, ids__);
         }
     }
+
+    final PageFace main = Page.main;
+    final PageFace aarrr = Page.Aarrr;
+    final PageFace photoCRUD = Page.PhotoCRUD;
+    final PageFace photo$Description = Page.Photo$Description;
+    final PageFace signInOn = Page.SignInOn;
 
     /**
      * @param serveletConfig__
@@ -214,7 +251,7 @@ final public class Controller extends HttpServletWrapper {
                 /*if(itsNatDocument != null && ((HttpServletRequest) request__.getServletRequest()).getPathInfo().contains("itsnat_doc_name")){
                 throw new java.lang.RuntimeException("INVALID URL");//This code does not seem to work, please verify.
                 }*/
-                if (itsNatDocument__ == null && request__.getServletRequest().getAttribute("itsnat_doc_name") == null) {
+                if (itsNatDocument__ == null && request__.getServletRequest().getAttribute(ITSNAT_DOC_NAME) == null) {
                     final HttpServletRequest httpServletRequest = (HttpServletRequest) request__.getServletRequest();
                     pathResolver(request__);
                     request__.getItsNatServlet().processRequest(httpServletRequest, response__.getServletResponse());
@@ -223,21 +260,30 @@ final public class Controller extends HttpServletWrapper {
         });
 
         final String realPath__ = getServletContext().getRealPath("/");
-        final String pathPrefix__ = realPath__ + "WEB-INF/pages/";
+        //final String pathPrefix__ = realPath__ + "WEB-INF/pages/";
 
-        final PageFace main = Page.main;
+        final String pathPrefix__ = RBGet.getGlobalConfigKey("PAGEFILES") != null ? RBGet.getGlobalConfigKey("PAGEFILES") : realPath__ + "WEB-INF/pages/";
 
-        inhs__.registerItsNatDocumentTemplate(main.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(main)).addItsNatServletRequestListener(new ListenerMain());
+        registerDocumentTemplates:
+        {
+            inhs__.registerItsNatDocumentTemplate(aarrr.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(aarrr)).addItsNatServletRequestListener(new ListenerAarrr());
 
-        inhs__.registerItsNatDocumentTemplate("photo", "text/html", pathPrefix__ + PrettyURLMap_.get(main)).addItsNatServletRequestListener(new ListenerPhoto());
+            inhs__.registerItsNatDocumentTemplate(main.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(main)).addItsNatServletRequestListener(new ListenerMain());
 
-        final PageFace PhotoCRUD = Page.PhotoCRUD;
-        inhs__.registerItsNatDocumentTemplate(PhotoCRUD.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(main)).addItsNatServletRequestListener(new ListenerHuman());
-        inhs__.registerItsNatDocFragmentTemplate(PhotoCRUD.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(PhotoCRUD));
+            inhs__.registerItsNatDocumentTemplate("photo", "text/html", pathPrefix__ + PrettyURLMap_.get(main)).addItsNatServletRequestListener(new ListenerPhoto());
 
-        final PageFace photo$Description = Page.Photo$Description;
-        inhs__.registerItsNatDocFragmentTemplate(photo$Description.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(photo$Description));
-//
+            inhs__.registerItsNatDocumentTemplate(photoCRUD.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(main)).addItsNatServletRequestListener(new ListenerHuman());
+        }
+
+        registerDocumentFragmentTemplatesAKAWidgets:
+        {
+            inhs__.registerItsNatDocFragmentTemplate(photoCRUD.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(photoCRUD));
+
+            inhs__.registerItsNatDocFragmentTemplate(photo$Description.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(photo$Description));
+
+            inhs__.registerItsNatDocFragmentTemplate(signInOn.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(signInOn));
+        }
+
 //        final PageFace photoUpload = Page.PhotoUpload;
 //        inhs__.registerItsNatDocFragmentTemplate(photoUpload.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(photoUpload));
 
@@ -261,38 +307,40 @@ final public class Controller extends HttpServletWrapper {
         final String URL__ = pathInfo == null ? "" : ((HttpServletRequest) request__.getServletRequest()).getPathInfo().substring(1);//Removes preceeding slash
         if (isHomePage(URL__)) {
             staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
-            @TODO(task = "PREPARE THIS PAGE")
-            int i;
-        }
-        if (isNonLocationPage(URL__)) {
-            if (isPhotoPage(URL__)) {
-                request__.getServletRequest().setAttribute(RBGet.config.getString("HttpSessionAttr.location"), getPhotoLocation(URL__));
-                request__.getServletRequest().setAttribute("photoURL", getPhotoURL(URL__));
-                request__.getServletRequest().setAttribute("itsnat_doc_name", "photo");/*Framework specific*/
-                staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0005") + getPhotoLocation(URL__));
-                staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0006") + getPhotoURL(URL__));
-            } else if (isHumanPage(URL__)) {
-                request__.getServletRequest().setAttribute("itsnat_doc_name", "me");/*Framework specific*/
-                staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0007"));
-            } else {
-                request__.getServletRequest().setAttribute("location", "main");
-                request__.getServletRequest().setAttribute("itsnat_doc_name", "main");/*Framework specific*/
-                staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
-            }
-        } else if (isCorrectLocationFormat(URL__)) {
-            request__.getServletRequest().setAttribute("location", URL__);
-            request__.getServletRequest().setAttribute("itsnat_doc_name", "main");/*Framework specific*/
-            staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0009") + URL__);
+            request__.getServletRequest().setAttribute("location", "");
+            request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
         } else {
-            request__.getServletRequest().setAttribute("location", "main");/*Main shall serve as the main page*/
-            request__.getServletRequest().setAttribute("itsnat_doc_name", "main");/*Framework specific*/
-            staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0010"));
+            if (isNonLocationPage(URL__)) {
+                if (isPhotoPage(URL__)) {
+                    request__.getServletRequest().setAttribute(RBGet.config.getString("HttpSessionAttr.location"), getPhotoLocation(URL__));
+                    request__.getServletRequest().setAttribute("photoURL", getPhotoURL(URL__));
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, "photo");/*Framework specific*/
+                    staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0005") + getPhotoLocation(URL__));
+                    staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0006") + getPhotoURL(URL__));
+                } else if (isHumanPage(URL__)) {
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, "me");/*Framework specific*/
+                    staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0007"));
+                } else {
+                    request__.getServletRequest().setAttribute("location", "main");
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, "main");/*Framework specific*/
+                    staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
+                }
+            } else if (isCorrectLocationFormat(URL__)) {
+                request__.getServletRequest().setAttribute("location", URL__);
+                request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, "main");/*Framework specific*/
+                staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0009") + URL__);
+            } else {/*Divert to home page*/
+                staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
+                request__.getServletRequest().setAttribute("location", "");
+                request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
+            }
         }
     }
 
     /**
      * Check if the place contains any odd/special characters that are not valid
      * Also check if the url is of itsnat?docblablabla format with "?"
+     * Home page will not have any parameters. e.g. ilikeplaces.com/ilikeplaces/page/[nothing here]
      *
      * @param URL__
      * @return boolean

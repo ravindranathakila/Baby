@@ -1,0 +1,52 @@
+/**
+ * Created by IntelliJ IDEA.
+ * User: Ravindranath Akila
+ * Date: Jan 1, 2010
+ * Time: 4:22:04 PM
+ * To change this template use File | Settings | File Templates.
+ */
+package ai.ilikeplaces.logic.validators;
+
+import ai.ilikeplaces.logic.validators.faces.ValidatorFace;
+import ai.ilikeplaces.util.Factory;
+import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.util.ReturnImpl;
+
+public class Validator implements ValidatorFace, Factory {
+    final private static Validator Instance = new Validator();
+
+    public static Validator getInstance() {
+        return Instance;
+    }
+
+    public Validator getNewInstance() {
+        return Instance;
+    }
+
+    /**
+     * Returns a factory object of the given type
+     *
+     * @param initArgs
+     * @return a factory object of the given type
+     */
+    @Override
+    public Factory getFactory(final Object... initArgs) {
+        return Instance;
+    }
+
+    @Override
+    public ValidatorFace getInstance(final Object... initArgs) {
+        return Instance;
+    }
+
+    private Validator() {
+    }
+
+
+    @Override
+    public Return isLessThan1000(final String input) {
+        return new ReturnImpl<String>(input, "");
+    }
+
+
+}

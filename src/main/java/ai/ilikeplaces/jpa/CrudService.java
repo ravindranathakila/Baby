@@ -29,8 +29,8 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
     /**
      * Please not that this is a field of Stateless session bean
      */
-    @FIXME(issue = "FIND OUT HOW THE MANAGER HANDLES CONCURRENT REQUESTS. SAME CACHE OR DIFFERENT? IF DIFFERENT, COME ON, THIS A CLASS VARIABLE!" +
-            "RESOLVED! CHECK OUT THTE HIBERNATE SITE ARTICLE ON THIS. APPARENTLY, CONTAINER DOES THIS. AMAZING!")
+    @FIXME(issue = "find out how the manager handles concurrent requests. same cache or different? if different, come on, this a class variable!" +
+            "resolved! check out thte hibernate site article on this. apparently, container does this. amazing!")
     @PersistenceContext(unitName = "adimpression_ilikeplaces_war_1.6-SNAPSHOTPU", type = PersistenceContextType.TRANSACTION)
     public EntityManager entityManager;
 

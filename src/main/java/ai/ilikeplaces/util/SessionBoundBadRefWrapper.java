@@ -16,10 +16,12 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
+ * Initially this class was designed to help the nosuchejb exception bein thrown when the session
+ * bound variable is attempted to be removed, but has already been discarded by the container.
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@FIXME(issue = "MANNY",
+@FIXME(issue = "MANY",
         issues =
                 {"This class can be broken in several. One for suppressing NoSuchEJBException, one for Notifications and one for httpsessionbinding. Kind of in the form of a pipeline. If this is Pipe and notification needy classes are A & B, then Pipe pipelines notifications between A and B.",
                         "i18n"})

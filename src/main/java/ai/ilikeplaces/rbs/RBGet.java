@@ -19,13 +19,15 @@ import java.util.Set;
         "CALLER IS THE ONE WHO KNOWS THE DIALECT." +
         "IN THE CASE OF logMsgs THE DEVELOPER CAN SET THE APPLICATION SPECIFIC LOCALIZAION IN THE" +
         "STARTUP SERVLET. config WILL ALWAYS HAVE NO DIALECT.")
-public class RBGet {
+public class
+        RBGet {
 
     final static public ResourceBundle config = ResourceBundle.getBundle("ai.ilikeplaces.rbs.Config");
     @CONVENTION(convention = "THIS SHOULD BE AN IDENTICAL COPY OF Config.properties. IDEALLY GlobalConfig SHOULD BE IN THE SERVER PATH SO THAT IT CAN BE EDITED DURING RUNTIME.")
     static private ResourceBundle globalConfig;
     final static public ResourceBundle logMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.LogMsgs");
     final static public ResourceBundle expMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.ExceptionMsgs");
+    final static public ResourceBundle l33t = ResourceBundle.getBundle("ai.ilikeplaces.rbs.l33t");
 
     static {
         try {

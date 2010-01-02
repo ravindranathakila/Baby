@@ -11,7 +11,7 @@ import static org.apache.commons.lang.StringEscapeUtils.*;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@FIXME(issue = "TRIM BEFORE DB AND AFTER DB. SAY trimAllIn trimAllOut. REASON: SQL ESCAPE ONLY UPON IN")
+@FIXME(issue = "trim before db and after db. say trimallin trimallout. reason: sql escape only upon in")
 public class Trim {
 
     private Trim() {

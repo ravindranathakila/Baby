@@ -1,3 +1,7 @@
+Make Home page
+SILO widget analyziz
+Leet Widget
+
 Maintain Order Please!
 
 
@@ -6,8 +10,14 @@ Maintain Order Please!
 5. ADD DATABASE NON AVAILABILITY EXCEPTION WRAPPER.
 6. GENDER BASED PROFILES (INCLUDE GENDER NEUTRAL)
 7. DATABASE POLLING FOR GROUP MESSAGES.
-8. Customers are starting to expect the companies they do business with to use these tools and communities. If I have a problem with a product and I blog or Tweet about it, it�s really nice when the company shows up and helps me. The expectation of many consumers is that their technology or media companies will use social media. The expectation for, say, financial services companies, is lower (except for Wells Fargo, which happens to use Twitter).
-9. How do you look if you don�t have a presence on Facebook? Customers are saying, �This is where I live, where I want to have a dialogue, and if you don�t want to engage with me here, you probably don�t want my business.�
+8. Customers are starting to expect the companies they do business with to use these tools and communities.
+    If I have a problem with a product and I blog or Tweet about it,
+    it's really nice when the company shows up and helps me. The expectation of many consumers is that their technology
+    or media companies will use social media. The expectation for, say, financial services companies, is lower
+    (except for Wells Fargo, which happens to use Twitter).
+9. How do you look if you don't have a presence on Facebook? Customers are saying,
+    This is where I live, where I want to have a dialogue, and if you don't want to engage with me here,
+    you probably don't want my business.
 10. fix location enum which is A BUG!!!
 11. Randomize non ranked photos
 12. Share Widget
@@ -23,12 +33,12 @@ Okay, let us be honest.
 We wanted to build you a good social network on the internet but,
 We simply couldn't do that to you. Meeting people online? Duh, get a life!
 Instead, we decided to do the right thing,
-get you socialized "on the internet" and "the real world"(yes there is such
-a thing as the "real world" apart from the "internet")!
-And thats why you are at iLikePlaces.com
+get you socialized "on the internet" AND "the real world"!
+And that's why you are at iLikePlaces.com
 to be known, to earn your worth, and to socialize both on net and off net!
+to have fun and to socialize!
 
-So be it a trip, family reunion, hanging out with bros, or just the annual event of
+Be it a trip, family reunion, hanging out with bros, or just the annual event of
 your company, we do it on net, and we do it off net, and we do it right here, at
 iLikePlaces.com. Because we do it right!
 
