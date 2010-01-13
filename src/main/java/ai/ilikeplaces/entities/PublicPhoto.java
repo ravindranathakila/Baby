@@ -15,9 +15,10 @@ import java.util.UUID;
  */
 @Entity
 @EntityListeners(EntityLifeCyleListener.class)
+@OK
 public class PublicPhoto implements Serializable {
 
-    @NOTE(note = "PRE PERSISTED ENTITIES WILL HAVE NULL IDS. HENCE USING PRE PERSISTED IDS IS NOT PRACTICAL.")
+    @NOTE(note = "Pre persisted entities will have null ids. hence using pre persisted ids is not practical.")
     final private UUID uUID = UUID.randomUUID();
 
     private static final long serialVersionUID = 1L;
@@ -36,9 +37,10 @@ public class PublicPhoto implements Serializable {
 
     @FieldPreamble(description = "Required to calculate ranking")
     private Date publicPhotoUploadDate;
-    @FieldPreamble(description = "Required to calculate rank position")
 
+    @FieldPreamble(description = "Required to calculate rank position")
     private Date publicPhotoTakenDate;
+
     @FieldPreamble(description = "Required to calculate rank position")
     private Long publicPhotoRankUnits;
 
@@ -49,9 +51,7 @@ public class PublicPhoto implements Serializable {
             "Since the whole concept of ilikeplaces relies on content richness, preserving this in this table important.")
     private Location location;
 
-    @FieldPreamble(description = "Who uploaded this image? Wil he request to delete it? " +
-            "Privacy important? " +
-            "Lets preserve the info.")
+    @FieldPreamble(description = "Who uploaded this image? Will he request to delete it?")
     private HumansPublicPhoto humansPublicPhoto;
 
     @Id
@@ -193,39 +193,25 @@ public class PublicPhoto implements Serializable {
     }
 
     /**
-     * @return toString_
+     * 
+     * @return
      */
     @Override
     public String toString() {
-        String toString_ = new String(getClass().getName());
-        try {
-            final Field[] fields = {getClass().getDeclaredField("publicPhotoId")};
-
-            for (final Field field : fields) {
-                try {
-                    toString_ += "\n{" + field.getName() + "," + field.get(this) + "}";
-                } catch (IllegalArgumentException ex) {
-                    LoggerFactory.getLogger(Location.class.getName()).error(null, ex);
-                } catch (IllegalAccessException ex) {
-                    LoggerFactory.getLogger(Location.class.getName()).error(null, ex);
-                }
-            }
-        } catch (NoSuchFieldException ex) {
-            LoggerFactory.getLogger(Location.class.getName()).error(null, ex);
-        } catch (SecurityException ex) {
-            LoggerFactory.getLogger(Location.class.getName()).error(null, ex);
-        }
-
-        return toString_;
+        return "PublicPhoto{" +
+                "uUID=" + uUID +
+                ", publicPhotoId=" + publicPhotoId +
+                ", publicPhotoFilePath='" + publicPhotoFilePath + '\'' +
+                ", publicPhotoURLPath='" + publicPhotoURLPath + '\'' +
+                ", publicPhotoName='" + publicPhotoName + '\'' +
+                ", publicPhotoDescription='" + publicPhotoDescription + '\'' +
+                ", publicPhotoUploadDate=" + publicPhotoUploadDate +
+                ", publicPhotoTakenDate=" + publicPhotoTakenDate +
+                ", publicPhotoRankUnits=" + publicPhotoRankUnits +
+                ", publicPhotoRankTurns=" + publicPhotoRankTurns +
+                ", location=" + location +
+                ", humansPublicPhoto=" + humansPublicPhoto.toString() +
+                '}';
     }
 
-    /**
-     * @param showChangeLog__
-     * @return changeLog
-     */
-    public String toString(final boolean showChangeLog__) {
-        String changeLog = new String(toString() + "\n");
-        changeLog += "20090914 Added this class \n";
-        return showChangeLog__ ? changeLog : toString();
-    }
 }
