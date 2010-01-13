@@ -20,9 +20,9 @@ import javax.persistence.Temporal;
  * @author Ravindranath Akila
  */
 @Entity
-public class HumansIdentity implements Serializable {
+public class HumansIdentity implements HumanPkJoinFace, Serializable {
 
-    final Logger logger = LoggerFactory.getLogger(HumansIdentity.class.getName());
+    final static Logger logger = LoggerFactory.getLogger(HumansIdentity.class.getName());
     private static final long serialVersionUID = 1L;
     private String humanId;
     private Human human;
@@ -40,7 +40,7 @@ public class HumansIdentity implements Serializable {
         this.humanId = humanId__;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REFRESH)
     @PrimaryKeyJoinColumn
     public Human getHuman() {
         return human;
