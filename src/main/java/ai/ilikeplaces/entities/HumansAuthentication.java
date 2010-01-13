@@ -2,9 +2,7 @@ package ai.ilikeplaces.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.CascadeType;
@@ -15,7 +13,7 @@ import javax.persistence.CascadeType;
  * @author Ravindranath Akila
  */
 @Entity
-public class HumansAuthentication implements Serializable {
+public class HumansAuthentication implements HumanPkJoinFace, Serializable {
 
     private static final long serialVersionUID = 1L;
     private String humanId;
@@ -32,7 +30,7 @@ public class HumansAuthentication implements Serializable {
         this.humanId = humanId__;
     }
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade=CascadeType.REFRESH)
     @PrimaryKeyJoinColumn
     public Human getHuman() {
         return human;
