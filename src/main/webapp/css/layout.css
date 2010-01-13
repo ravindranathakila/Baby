@@ -17,22 +17,19 @@
 }
 
 .nav_link {
-    background-color:#ff6f00;
+    background-color:#a9abf1;
     color:white;
     height:25px;
     text-align:center;
     line-height:25px;
     font-size: 14px;
 } .nav_link:hover {
-    background-color: #ff801f;
+    background-color: #cee7ef;
 }.nav_link a {
     vertical-align:middle;
     text-decoration: underline;
 } .nav_link a:link{
     color:white;
-} .nav_link a:visited{
-    color: #fffb00;
-    font-size: 14px;
 } .nav_link a:active{
     color: #0000ff;
 } .nav_link a:hover{
