@@ -28,7 +28,7 @@ import java.util.List;
                 query = "SELECT loc.locationName FROM Location loc WHERE UPPER(loc.locationName) LIKE :locationName")})
 public class Location implements Serializable {
 
-    final Logger logger = LoggerFactory.getLogger(Location.class.getName());
+    final static Logger logger = LoggerFactory.getLogger(Location.class.getName());
     final static public String FindAllLocationsByName = "FindAllLocationsByName";
     final static public String FindAllLocationsByLikeName = "FindAllLocationNamesByLikeName";
     final static public String LocationName = "locationName";
