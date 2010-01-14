@@ -19,4 +19,6 @@ public @interface NOTE {
     String[] notes() default {};
 
     String see() default "";
+
+    String mustsee() default "";
 }
