@@ -8,6 +8,7 @@ import java.lang.annotation.RetentionPolicy;
  *
  * @author Ravindranath Akila
  */
+
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Documented
 @Retention(RetentionPolicy.SOURCE)
@@ -16,4 +17,6 @@ public @interface NOTE {
     String note();
 
     String[] notes() default {};
+
+    String see() default "";
 }
