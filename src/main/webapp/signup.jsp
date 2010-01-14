@@ -13,15 +13,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-        <link rel="stylesheet" href="/ilikeplaces/css/blueprint/screen.css" type="text/css" media="screen, projection"/>
-        <link rel="stylesheet" href="/ilikeplaces/css/blueprint/print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"/>
         <!--[if lt IE 8]><link rel="stylesheet" href="../../blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
-        <link rel="stylesheet" href="/ilikeplaces/css/buttons.css" type="text/css"/>
-        <%--script src="/ilikeplaces/js/jquery-1.3.2.js" type="text/javascript"></script--%>
+        <link rel="stylesheet" href="/css/buttons.css" type="text/css"/>
+        <%--script src="/js/jquery-1.3.2.js" type="text/javascript"></script--%>
         <title>Let's Join ilikeplaces!</title>
     </head>
     <body>
-        <form action="/ilikeplaces/signup" method="post">
+        <form action="/signup" method="post">
             <br/>
             <br/>
             <br/>
