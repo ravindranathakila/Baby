@@ -1,9 +1,13 @@
 package ai.ilikeplaces.exception;
 
+import ai.ilikeplaces.doc.License;
+
 /**
  * Throw this exception if constructor failed to initialize
  * @author Ravindranath Akila
  */
+
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class ConstructorInvokationException extends RuntimeException {
 
     final static private String SeeLogs = "\nSORRY! I COULD NOT INITIALIZE THIS INSTANCE. PLEASE SEE LOGS FOR MORE DETAILS.";

@@ -1,5 +1,6 @@
 package ai.ilikeplaces.util;
 
+import ai.ilikeplaces.doc.License;
 import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -9,6 +10,8 @@ import org.slf4j.Logger;
  *
  * @author Ravindranath Akila
  */
+
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class AbstractSBCallbacks {
 
     /**

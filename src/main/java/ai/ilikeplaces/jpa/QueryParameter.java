@@ -1,11 +1,15 @@
 package ai.ilikeplaces.jpa;
 
+import ai.ilikeplaces.doc.License;
+
 import java.util.*;
 
 /**
  *
  * @author Ravindranath Akila
  */
+
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class QueryParameter {
 
     final private Map parameters_;
