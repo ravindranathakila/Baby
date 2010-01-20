@@ -1,0 +1,223 @@
+/*
+------------------------------
+The idea is to
+Definitely use white as the background of page
+Light colors as background of elements
+White or darker color of the background as foreground
+Divineness through white foreground
+------------------------------
+*/
+
+/**DEFAULT*/
+BODY{
+    color: white;
+}
+
+DIV{
+    color: white;
+}
+
+P{
+    color: white;
+}
+
+/*DEFAULTS**/
+
+/**BLUE*/
+/**Light Blue*/
+.fg_e9eaff
+{
+    color:#e9eaff
+}
+.bg_e9eaff
+{
+    background-color: #e9eaff
+}
+
+.fg_d6ebff
+{
+    color:#d6ebff
+} 
+.bg_d6ebff
+{
+    background-color: #d6ebff
+}
+
+
+.fg_cee7ef
+{
+    color:#cee7ef
+}
+.bg_cee7ef
+{
+    background-color: #cee7ef
+}
+/**Light Blue**/
+.fg_a9abf1
+{
+    color: #a9abf1
+}
+.bg_a9abf1
+{
+    background-color: #a9abf1
+}
+
+.fg_blue
+{
+    color: blue
+}
+.bg_blue
+{
+    background-color: blue
+}
+/*BLUE**/
+
+/**GOLD*/
+.fg_f1cf69
+{
+    color:#f1cf69
+}
+.bg_f1cf69
+{
+    background-color: #f1cf69
+}
+/*GOLD**/
+
+
+/**YELLOW*/
+.fg_ffffad
+{
+    color:#ffffad
+}
+.bg_ffffad
+{
+    background-color: #ffffad
+}
+
+.fg_feffac
+{
+    color:#feffac
+}
+.bg_feffac
+{
+    background-color: #feffac
+}
+/*YELLOW**/
+
+/**PURPLE*/
+.fg_f8bdff
+{
+    color:#f8bdff
+}
+.bg_f8bdff
+{
+    background-color: #f8bdff
+}
+
+.fg_f6adff
+{
+    color:#f6adff
+}
+.bg_f6adff
+{
+    background-color: #f6adff
+}
+
+.fg_purple
+{
+    color:purple
+}
+.bg_purple
+{
+    background-color: purple
+}
+
+/*PURPLE**/
+
+/**ORANGE*/
+
+.fg_fdd17c
+{
+    color:#fdd17c
+}
+.bg_fdd17c
+{
+    background-color: #fdd17c
+}
+
+.fg_orange
+{
+    color:orange
+}
+.bg_orange
+{
+    background-color: orange
+}
+
+/*ORANGE**/
+
+/**GREEN*/
+
+.fg_a5dbb0
+{
+    color:#a5dbb0
+}
+.bg_a5dbb0
+{
+    background-color: #a5dbb0
+}
+.fg_green
+{
+    color:#276434
+}
+.bg_green
+{
+    background-color: #276434
+}
+
+/*GREEN**/
+
+/**RED*/
+
+.fg_ff6c6c
+{
+    color:#ff6c6c
+}
+.bg_ff6c6c
+{
+    background-color: #ff6c6c
+}
+.fg_red
+{
+    color:#b30000
+}
+.bg_red
+{
+    background-color: #b30000
+}
+
+/*RED**/
+/**YELLOW*/
+
+.fg_fff277
+{
+    color:#fff277
+}
+.bg_fff277
+{
+    background-color: #fff277
+}
+.fg_yellow
+{
+    color:#ffe400
+}
+.bg_yellow
+{
+    background-color: #ffe400
+}
+
+/*YELLOW**/
+
+
+
+
