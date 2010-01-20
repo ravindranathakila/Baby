@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.Listeners;
 
+import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.logic.Listeners.widgets.Photo$Description;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractListener;
@@ -32,6 +33,8 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
      */
     @Override
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
+
+        @NOTE(note = "This value will be set per request. Remember that this is both for logged in and out users.")
         final String publicPhotoURLPath = (String) request__.getServletRequest().getAttribute("photoURL");
 
         new AbstractListener(request__) {
