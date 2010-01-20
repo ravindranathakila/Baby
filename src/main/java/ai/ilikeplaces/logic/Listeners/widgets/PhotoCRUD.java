@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.entities.PublicPhoto;
-import ai.ilikeplaces.exception.ConstructorInvokationException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.servlets.Controller.Page;
@@ -22,7 +22,6 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
 import javax.naming.Context;
-import javax.naming.InitialContext;
 import java.util.Properties;
 
 import static ai.ilikeplaces.security.xss.Trim.trimAll;
@@ -31,7 +30,9 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 /**
  * @author Ravindranath Akila
  */
+
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@OK
 abstract public class PhotoCRUD extends AbstractWidgetListener {
 
     PublicPhoto publicPhoto;
@@ -44,56 +45,29 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
     final String humanId;
 
     /**
+     * 
      * @param itsNatDocument__
      * @param appendToElement__
+     * @param publicPhoto__
+     * @param humanId__
      */
-    @SuppressWarnings("unchecked")
-    public PhotoCRUD(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final PublicPhoto t_, final String humanId) {
+    public PhotoCRUD(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final PublicPhoto publicPhoto__, final String humanId__) {
         super(itsNatDocument__, Page.PhotoCRUD, appendToElement__);
-        this.humanId = humanId;
-
-        boolean initializeFailed = true;
-        final StringBuilder log = new StringBuilder();
-        init:
-        {
-            try {
-
-                p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
-                context = new InitialContext(p_);
-
-                this.publicPhoto =  t_;
-
-
-            } catch (Exception ex) {
-                log.append("\nSORRY! COULD NOT INITIALIZE " + getClass().getName() + " SERVLET DUE TO AN EXCEPTION!");
-                logger.info("\nSORRY! COULD NOT INITIALIZE " + getClass().getName() + " DUE TO AN EXCEPTION!", ex);
-                break init;
-            }
-
-            /**
-             * break. Do not let this statement be reachable if initialization
-             * failed. Instead, break immediately where initialization failed.
-             * At this point, we set the initializeFailed to false and thereby,
-             * allow initialization of an instance
-             */
-            initializeFailed = false;
-        }
-        if (initializeFailed) {
-            throw new ConstructorInvokationException(log.toString());
-        }
+        this.humanId = humanId__;
+        this.publicPhoto = publicPhoto__;
     }
 
     /**
      *
      */
     @Override
-    protected void init() {
+    protected void init(final Object ... initArgs) {
     }
 
     @Override
-    protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
+    protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
 
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(pc_close), EventType.click.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(pc_close), EventType.click.toString(), new EventListener() {
 
             @Override
             public void handleEvent(final Event evt_) {
@@ -101,26 +75,26 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
             }
         }, false);
 
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(pc_delete), EventType.click.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(pc_delete), EventType.click.toString(), new EventListener() {
 
             final EventListener self = this;
 
             @Override
             public void handleEvent(final Event evt_) {
-                DB.getHumanCRUDPublicPhotoLocal(true).doHumanDPublicPhoto(humanId, publicPhoto.getPublicPhotoId());
+                DB.getHumanCRUDPublicPhotoLocal(true).dPublicPhoto(humanId, publicPhoto.getPublicPhotoId());
                 remove(evt_.getTarget(), EventType.click, self);
                 toggleVisible(pc_close);
             }
         }, false);
 
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(pc_photo_description), EventType.blur.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(pc_photo_description), EventType.blur.toString(), new EventListener() {
 
             final EventListener self = this;
 
             @Override
             public void handleEvent(final Event evt_) {
                 logger.debug("{}", ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
-                DB.getHumanCRUDPublicPhotoLocal(true).doHumanUPublicPhotoDescription(humanId, publicPhoto.getPublicPhotoId(), trimAll(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value())));
+                DB.getHumanCRUDPublicPhotoLocal(true).uPublicPhotoDescription(humanId, publicPhoto.getPublicPhotoId(), trimAll(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value())));
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
     }

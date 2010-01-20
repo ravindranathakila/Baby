@@ -1,11 +1,8 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.FIXME;
-import ai.ilikeplaces.entities.HumansPrivatePhoto;
-import ai.ilikeplaces.entities.HumansPublicPhoto;
+import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PublicPhoto;
-import ai.ilikeplaces.exception.ConstructorInvokationException;
-import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.logic.Listeners.widgets.PhotoCRUD;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.crud.DB;
@@ -24,11 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import java.util.List;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
@@ -36,49 +29,12 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 /**
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@OK
 public class ListenerHuman implements ItsNatServletRequestListener {
 
-    final private Properties p_ = new Properties();
-    private Context context = null;
-    private CrudServiceLocal<HumansPublicPhoto> crudHumansPublicPhoto_ = null;
-    private CrudServiceLocal<HumansPrivatePhoto> crudHumansPrivatePhoto_ = null;
     final private Logger logger = LoggerFactory.getLogger(ListenerHuman.class.getName());
-
-    /**
-     *
-     */
-    @SuppressWarnings("unchecked")
-    public ListenerHuman() {
-        boolean initializeFailed = true;
-        final StringBuilder log = new StringBuilder();
-        init:
-        {
-            try {
-                p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
-                context = new InitialContext(p_);
-
-                crudHumansPublicPhoto_ = (CrudServiceLocal<HumansPublicPhoto>) context.lookup("CrudServiceLocal");
-
-                crudHumansPrivatePhoto_ = (CrudServiceLocal<HumansPrivatePhoto>) context.lookup("CrudServiceLocal");
-
-            } catch (NamingException ex) {
-                log.append("\nSORRY! COULD NOT INITIALIZE " + getClass().getName() + " SERVLET DUE TO A NAMING EXCEPTION!");
-                logger.info("\nSORRY! COULD NOT INITIALIZE " + getClass().getName() + " DUE TO A NAMING EXCEPTION!", ex);
-                break init;
-            }
-
-            /**
-             * break. Do not let this statement be reachable if initialization
-             * failed. Instead, break immediately where initialization failed.
-             * At this point, we set the initializeFailed to false and thereby,
-             * allow initialization of an instance
-             */
-            initializeFailed = false;
-        }
-        if (initializeFailed) {
-            throw new ConstructorInvokationException(log.toString());
-        }
-    }
 
     /**
      * @param request__
@@ -131,23 +87,22 @@ public class ListenerHuman implements ItsNatServletRequestListener {
                     setProfileLink:
                     {
                         if (getUsername() != null) {
-                            $(Main_othersidebar_profile_link).setAttribute("href", RBGet.config.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0002"));
+                            $(Main_othersidebar_profile_link).setAttribute("href", Controller.Page.signup.getURL());
                         } else {
                             $(Main_othersidebar_profile_link).setAttribute("href", RBGet.config.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0003"));
                         }
                     }
                 }
                 if (getUsername() != null) {
-                    //@TODO(task = "USE DBLocal")
-                    //HumansPublicPhoto humansPublicPhoto = crudHumansPublicPhoto_.find(HumansPublicPhoto.class, getUsername());
-                    Return<List<PublicPhoto>> r = DB.getHumanCRUDPublicPhotoLocal(true).doHumanRPublicPhoto(getUsername());
+
+                    Return<List<PublicPhoto>> r = DB.getHumanCRUDPublicPhotoLocal(true).rPublicPhoto(getUsername());
 
                     if (r.returnStatus() == 0) {
                         for (final PublicPhoto publicPhoto : r.returnValue()) {
                             new PhotoCRUD(itsNatDocument__, $(Controller.Page.Main_center_main), publicPhoto, getUsername()) {
 
                                 @Override
-                                protected void init() {
+                                protected void init(final Object ... initArgs) {
 
                                     $$(pc_photo_permalink).setAttribute(MarkupTag.A.href(), "");
                                     $$(pc_photo).setAttribute(MarkupTag.A.src(), publicPhoto.getPublicPhotoURLPath());

@@ -19,6 +19,8 @@ import java.util.logging.Level;
  *
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Singleton
 @NOTE(note = "MADE FINAL AS CONSTRUCTOR THROWS EXCEPTION TO PREVENT UNINITIALIZED VARIABLES. SUBCLASSING SINGLETON NO SENSE ANYWAY.")
@@ -68,7 +70,6 @@ final public class DB implements DBLocal {
     }
 
     public static HumanCRUDPublicPhotoLocal getHumanCRUDPublicPhotoLocal(final boolean nonInjected) {
-        isOK();
         HumanCRUDPublicPhotoLocal h = null;
         try {
             h = ((DBLocal) Context_.lookup(DBLocal.NAME)).getHumanCRUDPublicPhotoLocal();
@@ -91,7 +92,6 @@ final public class DB implements DBLocal {
     }
 
     public static HumanCRUDHumanLocal getHumanCRUDHumanLocal(final boolean nonInjected) {
-        isOK();
         HumanCRUDHumanLocal h = null;
         try {
             h = ((DBLocal) Context_.lookup(DBLocal.NAME)).getHumanCRUDHumanLocal();
@@ -115,7 +115,6 @@ final public class DB implements DBLocal {
     }
 
     public static HumanCRUDLocationLocal getHumanCRUDLocationLocal(final boolean nonInjected) {
-        isOK();
         HumanCRUDLocationLocal h = null;
         try {
             h = ((DBLocal) Context_.lookup(DBLocal.NAME)).getHumanCRUDLocationLocal();
@@ -139,7 +138,6 @@ final public class DB implements DBLocal {
     }
 
     public static HumanCRUDMapLocal getHumanCRUDMapLocal(final boolean nonInjected) {
-        isOK();
         HumanCRUDMapLocal h = null;
         try {
             h = ((DBLocal) Context_.lookup(DBLocal.NAME)).getHumanCRUDMapLocal();
@@ -149,4 +147,53 @@ final public class DB implements DBLocal {
         return h != null ? h : (HumanCRUDMapLocal) LogNull.logThrow();
 
     }
+
+    @Override
+    public HumanCRUDPrivateEventLocal getHumanCrudPrivateEventLocal() {
+        isOK();
+        HumanCRUDPrivateEventLocal h = null;
+        try {
+            h = (HumanCRUDPrivateEventLocal) Context_.lookup(HumanCRUDPrivateEventLocal.NAME);
+        } catch (NamingException ex) {
+            logger.error("{}", ex);
+        }
+        return h != null ? h : (HumanCRUDPrivateEventLocal) LogNull.logThrow();
+    }
+
+    public static HumanCRUDPrivateEventLocal getHumanCrudPrivateEventLocal(final boolean nonInjected) {
+        HumanCRUDPrivateEventLocal h = null;
+        try {
+            h = ((DBLocal) Context_.lookup(DBLocal.NAME)).getHumanCrudPrivateEventLocal();
+        } catch (NamingException ex) {
+            logger.error("{}", ex);
+        }
+        return h != null ? h : (HumanCRUDPrivateEventLocal) LogNull.logThrow();
+    } 
+
+
+
+    @Override
+    public HumanCRUDPrivateLocationLocal getHumanCrudPrivateLocationLocal() {
+        isOK();
+        HumanCRUDPrivateLocationLocal h = null;
+        try {
+            h = (HumanCRUDPrivateLocationLocal) Context_.lookup(HumanCRUDPrivateLocationLocal.NAME);
+        } catch (NamingException ex) {
+            logger.error("{}", ex);
+        }
+        return h != null ? h : (HumanCRUDPrivateLocationLocal) LogNull.logThrow();
+
+    }
+
+    public static  HumanCRUDPrivateLocationLocal getHumanCrudPrivateLocationLocal(final boolean nonInjected) {
+        HumanCRUDPrivateLocationLocal h = null;
+        try {
+            h = ((DBLocal) Context_.lookup(DBLocal.NAME)).getHumanCrudPrivateLocationLocal();
+        } catch (NamingException ex) {
+            logger.error("{}", ex);
+        }
+        return h != null ? h : (HumanCRUDPrivateLocationLocal) LogNull.logThrow();
+
+    }
+
 }

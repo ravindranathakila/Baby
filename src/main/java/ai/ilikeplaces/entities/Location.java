@@ -18,6 +18,8 @@ import java.util.List;
  *
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 @Entity
 @EntityListeners(EntityLifeCyleListener.class)

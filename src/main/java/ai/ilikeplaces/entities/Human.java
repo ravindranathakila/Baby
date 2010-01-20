@@ -8,6 +8,8 @@ import java.io.Serializable;
 /**
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners(EntityLifeCyleListener.class)
 public class Human implements HumanIdFace, Serializable {
@@ -26,6 +28,8 @@ public class Human implements HumanIdFace, Serializable {
     private HumansPublicPhoto humansPublicPhoto;
     private HumansPrivatePhoto HumansPrivatePhoto;
     private HumansNet humansNet;
+    private HumansPrivateLocation humansPrivateLocation;
+    private HumansPrivateEvent humansPrivateEvent;
 
     @Id
     public String getHumanId() {
@@ -94,6 +98,26 @@ public class Human implements HumanIdFace, Serializable {
         this.humansNet = humansNet;
     }
 
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public HumansPrivateLocation getHumansPrivateLocation() {
+        return humansPrivateLocation;
+    }
+
+    public void setHumansPrivateLocation(final HumansPrivateLocation humansPrivateLocation) {
+        this.humansPrivateLocation = humansPrivateLocation;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public HumansPrivateEvent getHumansPrivateEvent() {
+        return humansPrivateEvent;
+    }
+
+    public void setHumansPrivateEvent(final HumansPrivateEvent humansPrivateEvent) {
+        this.humansPrivateEvent = humansPrivateEvent;
+    }
 
     @Override
     public String toString() {

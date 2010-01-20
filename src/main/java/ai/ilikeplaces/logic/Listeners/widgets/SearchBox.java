@@ -12,6 +12,7 @@ import org.w3c.dom.html.HTMLDocument;
  *
  * @author Ravindranath Akila
  */
+
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class SearchBox extends AbstractWidgetListener {
 
@@ -25,7 +26,7 @@ public class SearchBox extends AbstractWidgetListener {
     }
 
     @Override
-    protected void init() {
+    protected void init(final Object ... initArgs) {
     }
 
     @Override

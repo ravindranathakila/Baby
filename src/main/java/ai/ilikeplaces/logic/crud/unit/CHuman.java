@@ -15,6 +15,8 @@ import javax.ejb.TransactionAttributeType;
 /**
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
 public class CHuman extends AbstractSLBCallbacks implements CHumanLocal {

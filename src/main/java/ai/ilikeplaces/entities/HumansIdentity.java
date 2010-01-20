@@ -19,6 +19,8 @@ import javax.persistence.Temporal;
  *
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 public class HumansIdentity implements HumanPkJoinFace, Serializable {
 

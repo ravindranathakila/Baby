@@ -17,6 +17,8 @@ import java.lang.reflect.Method;
 /**
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Startup
 @Singleton
@@ -47,6 +49,7 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         System.out.println("5. Verify that classfiles also include .properties files in war.");
         System.out.println("6. Verify that derbyclient.lib is the same version of the derby you installed in the OS.");
         System.out.println("7. Verify that the first entry for location \"The Planet Earth\" was set");
+        System.out.println("8. Configure tomcat from localhost to domain name, www.ilikeplaces.com");
         System.out.println("");
         logger.debug(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0004"), System.getProperty("java.class.path"));
         System.out.println("STARTING TO VERIFY CLASSES");
@@ -90,6 +93,10 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
 
         System.out.println("Check title, Check ads, Check location Search Auto Suggest or Suggest on feed.");
         System.out.println("");
+
+        System.out.println(RBGet.config.getString("bn"));
+        System.out.println(RBGet.config.getString("codename"));
+        
         System.out.println("********* ********* ********* ********* *********");
         System.out.println("********* START UP CHECK DONE ILIKEPLACES");
         System.out.println("********* ********* ********* ********* *********");

@@ -6,6 +6,8 @@ package ai.ilikeplaces.util;
  * Date: Jan 1, 2010
  * Time: 5:19:59 PM
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public interface Factory<T> {
 
     /**

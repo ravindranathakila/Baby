@@ -4,8 +4,6 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.rbs.RBGet;
 
-import java.util.ResourceBundle;
-
 /**
  * LogNull does not always log a null. instead, it outputs exceptions or dumps
  * so that you can figure out where exactly the null occurred.
@@ -22,6 +20,8 @@ import java.util.ResourceBundle;
  *
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class LogNull {
 
@@ -52,6 +52,15 @@ final public class LogNull {
      */
     static public Object logThrow() {
         throw new NullPointerException(MSG);
+    }
+
+    /**
+     * This stops the thread execution by throwing a NPE immediately
+     *
+     * @return Object
+     */
+    static public Object logThrow(final String customMsg__) {
+        throw new NullPointerException(MSG + "\n" + customMsg__);
     }
 
     /**

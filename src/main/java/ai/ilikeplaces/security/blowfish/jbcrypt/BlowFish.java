@@ -10,6 +10,8 @@ import javax.ejb.TransactionAttributeType;
  *
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Singleton
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class BlowFish extends AbstractSNGLTNBCallbacks implements BlowFishLocal {

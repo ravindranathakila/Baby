@@ -3,9 +3,11 @@ package ai.ilikeplaces.servlets;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.rbs.RBGet;
+import ai.ilikeplaces.util.Return;
 import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
@@ -28,6 +30,8 @@ import java.util.ResourceBundle;
 /**
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class ServletFileUploads extends HttpServlet {
 
     final Logger logger = LoggerFactory.getLogger(ServletFileUploads.class.getName());
@@ -168,12 +172,12 @@ final public class ServletFileUploads extends HttpServlet {
 
                                         String fileExtension = "error";
 
-                                        if (userUploadedFileName.toLowerCase().endsWith("jpg")) {
-                                            fileExtension = "jpg";
-                                        } else if (userUploadedFileName.toLowerCase().endsWith("jpeg")) {
-                                            fileExtension = "jpeg";
-                                        } else if (userUploadedFileName.toLowerCase().endsWith("png")) {
-                                            fileExtension = "png";
+                                        if (userUploadedFileName.toLowerCase().endsWith(".jpg")) {
+                                            fileExtension = ".jpg";
+                                        } else if (userUploadedFileName.toLowerCase().endsWith(".jpeg")) {
+                                            fileExtension = ".jpeg";
+                                        } else if (userUploadedFileName.toLowerCase().endsWith(".png")) {
+                                            fileExtension = ".png";
                                         } else {
                                             errorFileType(out, gUI.getString("ai.ilikeplaces.servlets.ServletFileUploads.0019"));
                                             break processRequest;
@@ -211,8 +215,8 @@ final public class ServletFileUploads extends HttpServlet {
                                             handlePublicPrivateness:
                                             {
                                                 if (isPublic) {
-                                                    persisted = DB.getHumanCRUDPublicPhotoLocal(true).doHumanCPublicPhoto(sBLoggedOnUserLocal.getHumanUserId(), locationId, absoluteFileSystemFileName, photoName, photoDescription, new String(CDN + randomFileName), 4);
-                                                    if (persisted) {
+                                                    Return<PublicPhoto> r = DB.getHumanCRUDPublicPhotoLocal(true).cPublicPhoto(sBLoggedOnUserLocal.getHumanUserId(), locationId, absoluteFileSystemFileName, photoName, photoDescription, new String(CDN + randomFileName), 4);
+                                                    if (r.returnStatus() == 0) {
                                                         successFileName(out, usersFileName, logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0016"));
                                                     } else {
                                                         errorBusy(out);
@@ -350,7 +354,7 @@ final public class ServletFileUploads extends HttpServlet {
 
     @WARNING(warning = "DO NOT USE _(UNDERSCORE) AS URL SPLITTING WORKS USING UNDERSCORE. SEE Controller FOR FURTHER INFO")
     final static private String getRandomFileName(final long locationId) {
-        return "photo-of-" + DB.getHumanCRUDLocationLocal(true).doDirtyHumanRLocation(locationId).getLocationName() + "-" + random.nextLong() + System.currentTimeMillis();
+        return "photo-of-" + DB.getHumanCRUDLocationLocal(true).dirtyRLocation(locationId).getLocationName() + "-" + random.nextLong() + System.currentTimeMillis();
     }
 
 

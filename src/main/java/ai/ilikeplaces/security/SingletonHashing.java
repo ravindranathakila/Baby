@@ -11,6 +11,8 @@ import javax.ejb.Singleton;
 /**
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 @Singleton
 public class SingletonHashing extends AbstractSNGLTNBCallbacks implements SingletonHashingFace {

@@ -9,6 +9,9 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt;
 import ai.ilikeplaces.security.face.SingletonHashingFace;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import ai.ilikeplaces.util.DBOffilne;
+import ai.ilikeplaces.util.MethodParams;
+import ai.ilikeplaces.util.MethodTimer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,12 +19,16 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
 
 /**
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
+@Interceptors({DBOffilne.class, MethodTimer.class, MethodParams.class})
 public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHumanLocal {
 
     @EJB
@@ -74,6 +81,14 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         final HumansIdentity hid = new HumansIdentity();
         hid.setHumanId(newUser.getHumanId());
         newUser.setHumansIdentity(hid);
+
+        final HumansPrivateLocation hpl = new HumansPrivateLocation();
+        hpl.setHumanId(newUser.getHumanId());
+        newUser.setHumansPrivateLocation(hpl);
+
+        final HumansPrivateEvent hpe = new HumansPrivateEvent();
+        hpe.setHumanId(newUser.getHumanId());
+        newUser.setHumansPrivateEvent(hpe);
 
         final HumansPrivatePhoto hprp = new HumansPrivatePhoto();
         hprp.setHumanId(newUser.getHumanId());

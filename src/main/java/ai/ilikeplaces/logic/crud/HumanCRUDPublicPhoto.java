@@ -6,9 +6,7 @@ import ai.ilikeplaces.logic.crud.unit.CPublicPhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.DPublicPhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.RPublicPhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.UPublicPhotoLocal;
-import ai.ilikeplaces.util.AbstractSLBCallbacks;
-import ai.ilikeplaces.util.Return;
-import ai.ilikeplaces.util.ReturnImpl;
+import ai.ilikeplaces.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,16 +14,20 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
 import java.util.List;
 
 /**
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@CONVENTION(convention = "DO ALL THE POSSIBLE NEEDFUL9SETTERS ETC) BEFORE GOING INTO THE TRANSACTION, VIA AN INTERMEDIATE METHOD. SAVES RESOURCES. " +
-        "WHY NOT LET THE CALLER DO THIS? LETS DO THE HARD WORK. GIVE THE GUY A BREAK! BESIDES, WE CAN ENFORCE HIM TO GIVE US REQUIRED FIELDS. THIS ALSO " +
-        "FACILITATES SETTING GRANULAR ROLE PERMISSIONS.")
+@CONVENTION(convention = "do all the possible needful9setters etc) before going into the transaction, via an intermediate method. saves resources. " +
+        "why not let the caller do this? lets do the hard work. give the guy a break! besides, we can enforce him to give us required fields. this also " +
+        "facilitates setting granular role permissions.")
+@Interceptors({MethodTimer.class, MethodParams.class})
 final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements HumanCRUDPublicPhotoLocal {
 
     @EJB
@@ -60,21 +62,25 @@ final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements 
 
     @FIXME(issue = "When adding a location, there cannot be two equal location names such that super locations are equal too. Please update specific CRUD service. Also His As, My As.")
     @Override
-    public boolean doHumanCPublicPhoto(final String humanId, final long locationId, final String fileName, final String publicPhotoName, final String publicPhotoDescription, final String publicPhotoURLPath, final int retries) {
+    public Return<PublicPhoto> cPublicPhoto(final String humanId, final long locationId, final String fileName, final String publicPhotoName, final String publicPhotoDescription, final String publicPhotoURLPath, final int retries) {
+        Return<PublicPhoto> r;
+        try {
+            final PublicPhoto publicPhoto = new PublicPhoto();
 
-        final PublicPhoto publicPhoto = new PublicPhoto();
-
-        publicPhoto.setPublicPhotoName(publicPhotoName);
-        publicPhoto.setPublicPhotoFilePath(fileName);
-        publicPhoto.setPublicPhotoDescription(publicPhotoDescription);
-        publicPhoto.setPublicPhotoURLPath(publicPhotoURLPath);
-
-        return doHumanCPublicPhoto(humanId, locationId, publicPhoto);
+            publicPhoto.setPublicPhotoName(publicPhotoName);
+            publicPhoto.setPublicPhotoFilePath(fileName);
+            publicPhoto.setPublicPhotoDescription(publicPhotoDescription);
+            publicPhoto.setPublicPhotoURLPath(publicPhotoURLPath);
+            r = new ReturnImpl<PublicPhoto>(cPublicPhotoLocal_.doNTxCPublicPhotoLocal(humanId, locationId, publicPhoto), "Create photo by human with location Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<PublicPhoto>(t, "Create photo by human with location FAILED!", true);
+        }
+        return r;
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Return<List<PublicPhoto>> doHumanRPublicPhoto(final String humanId) {
+    public Return<List<PublicPhoto>> rPublicPhoto(final String humanId) {
         Return<List<PublicPhoto>> r;
         try {
             r = new ReturnImpl<List<PublicPhoto>>(rPublicPhotoLocal_.doRAllPublicPhotos(humanId), "Find all photos by human Successful!");
@@ -88,13 +94,13 @@ final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements 
 
     @Override
     @TODO(task = "verify if it is the right human before deleting")
-    public boolean doHumanUPublicPhotoDescription(final String humanId, final long publicPhotoId, final String publicPhotoDescription) {
+    public boolean uPublicPhotoDescription(final String humanId, final long publicPhotoId, final String publicPhotoDescription) {
         return doHumanUPublicPhotoDescription(publicPhotoId, publicPhotoDescription);
     }
 
     @Override
     @TODO(task = "verify if it is the right human before deleting")
-    public boolean doHumanDPublicPhoto(final String humanId, final long publicPhotoId) {
+    public boolean dPublicPhoto(final String humanId, final long publicPhotoId) {
         return doHumanDPublicPhoto(publicPhotoId);
     }
     /*END OF NON TRANSACTIONAL METHODS*/

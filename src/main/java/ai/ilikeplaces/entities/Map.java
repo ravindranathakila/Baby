@@ -10,6 +10,8 @@ import javax.persistence.*;
  * Date: Jan 1, 2010
  * Time: 10:46:46 PM
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners(EntityLifeCyleListener.class)
 public class Map {

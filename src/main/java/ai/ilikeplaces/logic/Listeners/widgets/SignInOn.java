@@ -17,6 +17,7 @@ import static ai.ilikeplaces.servlets.Controller.Page.close;
  *
  * @author Ravindranath Akila
  */
+
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class SignInOn extends AbstractWidgetListener {
 
@@ -33,7 +34,7 @@ abstract public class SignInOn extends AbstractWidgetListener {
      *
      */
     @Override
-    protected void init() {
+    protected void init(final Object ... initArgs) {
     }
 
     @Override

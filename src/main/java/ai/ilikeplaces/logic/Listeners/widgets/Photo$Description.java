@@ -17,6 +17,7 @@ import org.w3c.dom.html.HTMLDocument;
  *
  * @author Ravindranath Akila
  */
+
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class Photo$Description extends AbstractWidgetListener {
 
@@ -33,8 +34,7 @@ abstract public class Photo$Description extends AbstractWidgetListener {
      *
      */
     @Override
-    protected void init() {
-        $$("pd").setAttribute("style", "color:red");
+    protected void init(final Object ... initArgs) {
     }
 
     @Override
