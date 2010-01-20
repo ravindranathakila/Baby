@@ -15,7 +15,7 @@
 */
 
 .btn { display: block; position: relative; background: transparent; padding: 3px; float: left; color: #fff; text-decoration: none; cursor: url; }
-.btn * { font-style: normal; background-image: url(/ilikeplaces/images/btn2.png); background-repeat: no-repeat; display: block; position: relative; }
+.btn * { font-style: normal; background-image: url(../images/btn2.png); background-repeat: no-repeat; display: block; position: relative; }
 .btn i          { background-position: top left;        position: absolute; margin-bottom: -3px; top: 0; left: 0; width: 3px; height: 3px; }
 .btn span       { background-position: bottom left;     left: -3px; padding: 0 0 3px 6px; margin-bottom: -3px; }
 .btn span span  { background-position: top right;       position: absolute; right: -6px; margin-left: 6px; top: -3px; height: 0; }
@@ -34,7 +34,7 @@
 .btn.dark_yellow { background:rgb(255,198,0); }
 .btn:hover { background-color: #a00; }
 .btn:active { background-color: #444; }
-.btn[class] { background-image: url(/ilikeplaces/images/shade.png); background-position: bottom; }
+.btn[class] { background-image: url(../images/shade.png); background-position: bottom; }
 
 /*IE BEGIN*/
 * html .btn { border: 3px double #aaa; }
