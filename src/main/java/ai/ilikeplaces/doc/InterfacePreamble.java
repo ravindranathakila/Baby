@@ -24,6 +24,8 @@ import java.lang.annotation.Target;
  * @author Ravindranath Akila
  *
  */
+
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.SOURCE)
