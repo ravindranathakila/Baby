@@ -190,6 +190,11 @@
             <version>1.4.2</version>
             <scope>provided</scope>
         </dependency>
+        <!--dependency>
+            <groupId>net.sf.oval</groupId>
+            <artifactId>oval</artifactId>
+            <version>1.4</version>
+        </dependency-->
     </dependencies>
     <build>
         <resources>
@@ -280,6 +285,13 @@
     <properties>
         <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
     </properties>
+    <repositories>
+        <repository>
+          <id>mvnrepository</id>
+          <url>http://mvnrepository.com</url>
+        </repository>
+     </repositories>
+
 </project>
 
 

@@ -1,0 +1,25 @@
+Any
+---
+Check if firebug is on.
+
+Input tags
+----------
+
+1.Provide an empty value attribute.
+
+AbstractWidgetListeners and Listeners
+-------------------------------------
+
+Always have internal reference variables if refering to any outer class varaibles.
+
+User RefString when using string to avoid any issues seen/unseen.
+
+Check in Widget constructor if correct Page is registered
+
+
+CRUD Classes
+------------
+
+If NPE, make sure you check the openejb.log for environment issues. Check log till the bottom entry.
+Sometimes, application logs intersect.
+

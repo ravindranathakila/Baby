@@ -8,6 +8,8 @@ import java.util.Random;
  *
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Deprecated
 @FIXME(issue = "this class is not being used. it was returning wrong values and was not debugged")
 @OK

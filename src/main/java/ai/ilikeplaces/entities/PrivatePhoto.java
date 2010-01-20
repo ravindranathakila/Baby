@@ -1,26 +1,19 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.FieldPreamble;
+import ai.ilikeplaces.doc.TODO;
+import org.slf4j.LoggerFactory;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
 
-import ai.ilikeplaces.doc.TODO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-
 /**
- *
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 public class PrivatePhoto implements Serializable {
 
@@ -28,18 +21,18 @@ public class PrivatePhoto implements Serializable {
     private Long privatePhotoId;
 
     @FieldPreamble(description = "Put in folders?" +
-    "Folders might be renamed due to change in location names if you use location names in folders." +
-    "Well having the location name in the file name is important for SEO. e.g. paris.jpg" +
-    "Would an approach like {random_number}_location.jpg work?" +
-    "Would an approach like {sequence_number}_location.jpg work?()")
+            "Folders might be renamed due to change in location names if you use location names in folders." +
+            "Well having the location name in the file name is important for SEO. e.g. paris.jpg" +
+            "Would an approach like {random_number}_location.jpg work?" +
+            "Would an approach like {sequence_number}_location.jpg work?()")
     private String privatePhotoFilePath;
 
     @FieldPreamble(description = "The path should be very random as it will be exposed to the www." +
-    "Also make sure this supports good SEO.")
+            "Also make sure this supports good SEO.")
     private String privatePhotoURLPath;
 
     private String privatePhotoName;
-    
+
     private String privatePhotoDescription;
 
     @FieldPreamble(description = "Required to calculate ranking")
@@ -49,12 +42,12 @@ public class PrivatePhoto implements Serializable {
     private Date privatePhotoTakenDate;
 
     @FieldPreamble(description = "Required when rebuilding a database from scratch someday." +
-    "Since the whole concept of ilikeplaces relies on content richness, preserving this in this table important.")
+            "Since the whole concept of ilikeplaces relies on content richness, preserving this in this table important.")
     private Location privatePhotoOfLocation;
 
     @FieldPreamble(description = "Who uploaded this image? Wil he request to delete it? " +
-    "Privacy important? " +
-    "Lets preserve the info.")
+            "Privacy important? " +
+            "Lets preserve the info.")
     private HumansPrivatePhoto humansPrivatePhoto;
 
     private Location location;
@@ -163,7 +156,6 @@ public class PrivatePhoto implements Serializable {
     }
 
     /**
-     *
      * @return toString_
      */
     @Override
@@ -171,29 +163,28 @@ public class PrivatePhoto implements Serializable {
         String toString_ = new String(getClass().getName());
         try {
             final Field[] fields = {getClass().getDeclaredField("locationId"),
-                getClass().getDeclaredField("locationName"),
-                getClass().getDeclaredField("locationSuperSet")};
+                    getClass().getDeclaredField("locationName"),
+                    getClass().getDeclaredField("locationSuperSet")};
 
             for (final Field field : fields) {
                 try {
                     toString_ += "\n{" + field.getName() + "," + field.get(this) + "}";
                 } catch (IllegalArgumentException ex) {
-                    LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
+                    LoggerFactory.getLogger(Location.class.getName()).error(null, ex);
                 } catch (IllegalAccessException ex) {
-                    LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
+                    LoggerFactory.getLogger(Location.class.getName()).error(null, ex);
                 }
             }
         } catch (NoSuchFieldException ex) {
-            LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
+            LoggerFactory.getLogger(Location.class.getName()).error(null, ex);
         } catch (SecurityException ex) {
-            LoggerFactory.getLogger(Location.class.getName()).error( null, ex);
+            LoggerFactory.getLogger(Location.class.getName()).error(null, ex);
         }
 
         return toString_;
     }
 
     /**
-     *
      * @param showChangeLog__
      * @return changeLog
      */

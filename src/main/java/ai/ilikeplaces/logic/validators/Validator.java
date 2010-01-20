@@ -11,7 +11,9 @@ import ai.ilikeplaces.logic.validators.faces.ValidatorFace;
 import ai.ilikeplaces.util.Factory;
 import ai.ilikeplaces.util.Return;
 import ai.ilikeplaces.util.ReturnImpl;
+import ai.ilikeplaces.util.ReturnParams;
 
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class Validator implements ValidatorFace, Factory {
     final private static Validator Instance = new Validator();
 
@@ -46,6 +48,26 @@ public class Validator implements ValidatorFace, Factory {
     @Override
     public Return isLessThan1000(final String input) {
         return new ReturnImpl<String>(input, "");
+    }
+
+    @Override
+    public Return<ReturnParams> isPriavateEventName(final String input) {
+        return new ReturnImpl<ReturnParams>((new ReturnParams(true, input)), "");
+    }
+
+    @Override
+    public Return<ReturnParams> isPrivateEventInfo(final String input) {
+        return new ReturnImpl<ReturnParams>((new ReturnParams(true, input)), "");
+    }
+
+    @Override
+    public Return<ReturnParams> isPrivateLocationName(final String input) {
+        return new ReturnImpl<ReturnParams>((new ReturnParams(true, input)), "");
+    }
+
+    @Override
+    public Return<ReturnParams> isPrivateLocationInfo(final String input) {
+        return new ReturnImpl<ReturnParams>((new ReturnParams(true, input)), "");
     }
 
 

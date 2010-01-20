@@ -1,6 +1,7 @@
 package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.FIXME;
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.servlets.Controller;
 import org.itsnat.core.ItsNatDocument;
@@ -10,6 +11,7 @@ import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
@@ -28,6 +30,8 @@ import static ai.ilikeplaces.servlets.Controller.Page;
  *
  * @author Ravindranath Akila
  */
+
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public abstract class AbstractWidgetListener {
 
     protected final ItsNatDocument itsNatDocument_;
@@ -54,8 +58,8 @@ public abstract class AbstractWidgetListener {
      * @param page__
      * @param appendToElement__
      */
-    public AbstractWidgetListener(final ItsNatDocument itsNatDocument__, final Page page__, final Element appendToElement__) {
-
+    public AbstractWidgetListener(final ItsNatDocument itsNatDocument__, final Page page__, final Element appendToElement__, final Object... initArgs) {
+        
         instanceId = InstanceCounter_++;
         page = page__;
         this.itsNatDocument_ = itsNatDocument__;
@@ -66,11 +70,11 @@ public abstract class AbstractWidgetListener {
         appendToElement__.appendChild(inhdft_.loadDocumentFragmentBody(itsNatDocument_));
 
         setWidgetElementIds(Controller.GlobalPageIdRegistry.get(page));
-        init();
+        init(initArgs);
         registerEventListeners(itsNatHTMLDocument_, hTMLDocument_);
     }
 
-    protected abstract void init();
+    protected abstract void init(final Object... initArgs);
 
     /**
      * Use ItsNatHTMLDocument variable stored in the AbstractListener class
@@ -122,7 +126,9 @@ public abstract class AbstractWidgetListener {
         if (elementId__ == null) {
             throw new java.lang.NullPointerException("SORRY! I FIND THAT ELEMENT \"" + key__ + "\" CONTAINS NULL OR NO REFERENCE IN REGISTRY!");
         }
-        return hTMLDocument_.getElementById(elementId__ + instanceId);
+        final Element returnVal = hTMLDocument_.getElementById(elementId__ + instanceId);
+        return returnVal != null ? returnVal : (Element) LogNull.logThrow("SORRY! COULD NOT FETCH THE ELEMENT NAMED " + key__ + " FROM FILE." +
+                "\nTHIS COULD HAPPEN IF THE WRONG PAGE IS REGISTERED IN THE WIDGET CONSTRUCTOR WHEN CALLING SUPER.");
     }
 
     /**
@@ -177,15 +183,21 @@ public abstract class AbstractWidgetListener {
     }
 
     /**
-     *
      * @param eventTarget_
      * @param eventType_
      * @param eventListener_
-     * @param useCapture ... default false
+     * @param useCapture     ... default false
      */
     final protected void remove(final EventTarget eventTarget_, final EventType eventType_, final EventListener eventListener_, final Boolean... useCapture) {
         logger.debug("HELLO, REMOVING WIDGET LISTENER");
         itsNatDocument_.removeEventListener(eventTarget_, eventType_.toString(), eventListener_, useCapture.length == 0 ? false : useCapture[0]);
+    }
+
+    final protected void clear(final Element element__) {
+        final NodeList childNodes = element__.getChildNodes();
+        for (int i = 0; i < childNodes.getLength(); i++) {
+            element__.removeChild(childNodes.item(i));
+        }
     }
 
     final static Logger logger = LoggerFactory.getLogger(AbstractWidgetListener.class);

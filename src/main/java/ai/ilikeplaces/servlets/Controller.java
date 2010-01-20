@@ -2,11 +2,9 @@ package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.depricated.ListenerLogin;
 import ai.ilikeplaces.doc.FIXME;
-import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.logic.Listeners.ListenerAarrr;
-import ai.ilikeplaces.logic.Listeners.ListenerHuman;
-import ai.ilikeplaces.logic.Listeners.ListenerMain;
-import ai.ilikeplaces.logic.Listeners.ListenerPhoto;
+import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.logic.Listeners.*;
 import ai.ilikeplaces.rbs.RBGet;
 import org.itsnat.core.*;
 import org.itsnat.core.event.ItsNatServletRequestListener;
@@ -18,28 +16,128 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
  * @author Ravindranath Akila
  * @TODO Code to disable url calls with itsnat_doc_name=### type urls if possible
  */
+
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class Controller extends HttpServletWrapper {
 
     private final static Map<PageFace, String> PrettyURLMap_ = new IdentityHashMap<PageFace, String>();//Please read javadoc before making any changes to this implementation
     final static private Logger staticLogger = LoggerFactory.getLogger(Controller.class.getName());
-    private static final ResourceBundle logMsgs = ResourceBundle.getBundle("ai/ilikeplaces/rbs/LogMsgs_en_US");
     private static final String ITSNAT_DOC_NAME = "itsnat_doc_name";
 
-    @WARNING(warning = "Initializer for pages with their ids and paths.\n"
-
-
-            + "be used within this class only. The rest shall write the the list")
+    @NOTE(note = "Inner Enums are static. Therefore, the lists shall be populated only once.")
     public enum Page implements PageFace {
+
+
+        Organize(null
+        ) {
+
+            @Override
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "page/_org";
+            }
+
+            @Override
+            public String toString() {
+                return DocOrganize;
+            }},
+
+        Skeleton("ai/ilikeplaces/Skeleton.xhtml",
+                Controller.Page.skeletonTitle,
+                Controller.Page.Skeleton_center,
+                Controller.Page.Skeleton_center_content,
+                Controller.Page.Skeleton_center_skeleton,
+                Controller.Page.Skeleton_file_list,
+                Controller.Page.Skeleton_left_column,
+                Controller.Page.Skeleton_login_widget,
+                Controller.Page.Skeleton_notice,
+                Controller.Page.Skeleton_notice_sh,
+                Controller.Page.Skeleton_othersidebar,
+                Controller.Page.Skeleton_othersidebar_identity,
+                Controller.Page.Skeleton_othersidebar_organizer_link,
+                Controller.Page.Skeleton_othersidebar_photo_manager_link,
+                Controller.Page.Skeleton_othersidebar_places_link,
+                Controller.Page.Skeleton_othersidebar_profile_link,
+                Controller.Page.Skeleton_othersidebar_upload_file_sh,
+                Controller.Page.Skeleton_right_column,
+                Controller.Page.Skeleton_sidebar
+
+        ) {
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocSkeleton;
+            }},
+        PrivateLocationCreate("ai/ilikeplaces/widgets/privatelocation/private_location_create.xhtml",
+                Controller.Page.privateLocationCreateName,
+                Controller.Page.privateLocationCreateInfo,
+                Controller.Page.privateLocationCreateSave,
+                Controller.Page.privateLocationCreateNotice
+        ) {
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocPrivateLocationCreate;
+            }},
+
+        PrivateLocationView("ai/ilikeplaces/widgets/privatelocation/private_location_view.xhtml",
+                Controller.Page.privateLocationViewNotice,
+                Controller.Page.privateLocationViewName,
+                Controller.Page.privateLocationViewInfo,
+                Controller.Page.privateLocationViewOwners,
+                Controller.Page.privateLocationViewVisitors
+        ) {
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocPrivateLocationView;
+            }},
+
+
+        PrivateLocationDelete("ai/ilikeplaces/widgets/privatelocation/private_location_delete.xhtml",
+                Controller.Page.privateLocationDeleteName,
+                Controller.Page.privateLocationDeleteInfo,
+                Controller.Page.privateLocationDeleteNotice,
+                Controller.Page.privateLocationDelete
+        ) {
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocPrivateLocationDelete;
+            }},
 
         home(
                 null) {
-
+            @Override
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "page/main";
+            }
             @Override
             public String toString() {
                 return "/ilikeplaces/page/main";
@@ -60,7 +158,10 @@ final public class Controller extends HttpServletWrapper {
                 Controller.Page.Main_right_column,
                 Controller.Page.Main_sidebar,
                 Controller.Page.Main_login_widget) {
-
+            @Override
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "page/main";
+            }
             @Override
             public String toString() {
                 return "main";
@@ -71,6 +172,10 @@ final public class Controller extends HttpServletWrapper {
                 Controller.Page.AarrrTitle,
                 Controller.Page.AarrrEmail,
                 Controller.Page.AarrrFunTypes) {
+            @Override
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "page/";
+            }
 
             @Override
             public String toString() {
@@ -86,6 +191,11 @@ final public class Controller extends HttpServletWrapper {
                 Controller.Page.pd_photo_description) {
 
             @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
             public String toString() {
                 return "Photo-Description";
             }
@@ -94,24 +204,35 @@ final public class Controller extends HttpServletWrapper {
                 "ai/ilikeplaces/widgets/PhotoUpload.xhtml") {
 
             @Override
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "page/main";
+            }
+
+            @Override
             public String toString() {
                 return "PhotoUpload";
             }
         },
         signup(
                 null) {
-
+            @Override
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "signup";
+            }
             @Override
             public String toString() {
-                return "/ilikeplaces/signup";
+                return RBGet.getGlobalConfigKey("AppRoot") + "signup";
             }
         },
         login(
                 null) {
-
+            @Override
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "login";
+            }
             @Override
             public String toString() {
-                return "/login";
+                return RBGet.getGlobalConfigKey("AppRoot") + "login";
             }
         },
         PhotoCRUD(
@@ -126,7 +247,10 @@ final public class Controller extends HttpServletWrapper {
                 Controller.Page.pc_photo_description,
                 Controller.Page.pc_delete,
                 Controller.Page.pc_update_description) {
-
+            @Override
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "page/_me";
+            }
             @Override
             public String toString() {
                 return "me";
@@ -134,7 +258,10 @@ final public class Controller extends HttpServletWrapper {
         },
         oldlogin(
                 "ai/ilikeplaces/security/login.xhtml") {
-
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS JUST A TEMPLATE OF WHICH YOU WANT THE URL.");
+            }
             @Override
             public String toString() {
                 return "login";
@@ -142,20 +269,76 @@ final public class Controller extends HttpServletWrapper {
         },
         include(
                 "ai/ilikeplaces/security/include.xhtml") {
-
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS JUST A TEMPLATE OF WHICH YOU WANT THE URL.");
+            }
             @Override
             public String toString() {
                 return "include";
             }
         },
         SignInOn(
-                "ai/ilikeplaces/widgets/SignInOn.xhtml") {
-
+                "ai/ilikeplaces/widgets/SignInOn.xhtml",
+                Controller.Page.signinon_login) {
+            @Override
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "page/main";
+            }
             @Override
             public String toString() {
-                return "SignInOn";
+                return "DocSignInOn";
             }
         };
+        /*Organize Page*/
+        final static public String DocOrganize = "DocOrganize";
+
+        /*Skeleton Page*/
+        final static public String DocSkeleton = "DocPrivateLocationCreate";
+        /*Skeleton Create IDs*/
+        final static public String skeletonTitle = "skeletonTitle";
+        final static public String Skeleton_login_widget = "Skeleton_login_widget";
+        final static public String Skeleton_othersidebar = "Skeleton_othersidebar";
+        final static public String Skeleton_othersidebar_identity = "Skeleton_othersidebar_identity";
+        final static public String Skeleton_othersidebar_places_link = "Skeleton_othersidebar_places_link";
+        final static public String Skeleton_othersidebar_profile_link = "Skeleton_othersidebar_profile_link";
+        final static public String Skeleton_othersidebar_photo_manager_link = "Skeleton_othersidebar_photo_manager_link";
+        final static public String Skeleton_othersidebar_organizer_link = "Skeleton_othersidebar_organizer_link";
+        final static public String Skeleton_othersidebar_upload_file_sh = "Skeleton_othersidebar_upload_file_sh";
+        final static public String Skeleton_file_list = "Skeleton_file_list";
+        final static public String Skeleton_center = "Skeleton_center";
+        final static public String Skeleton_center_skeleton = "Skeleton_center_skeleton";
+        final static public String Skeleton_notice_sh = "Skeleton_notice_sh";
+        final static public String Skeleton_notice = "Skeleton_notice";
+        final static public String Skeleton_center_content = "Skeleton_center_content";
+        final static public String Skeleton_left_column = "Skeleton_left_column";
+        final static public String Skeleton_right_column = "Skeleton_right_column";
+        final static public String Skeleton_sidebar = "Skeleton_sidebar";
+
+        /*Private Location Page*/
+        final static public String DocPrivateLocationView = "PrivateLocationView";
+        /*Private Location Create IDs*/
+        final static public String privateLocationViewNotice = "privateLocationViewNotice";
+        final static public String privateLocationViewName = "privateLocationViewName";
+        final static public String privateLocationViewInfo = "privateLocationViewInfo";
+        final static public String privateLocationViewOwners = "privateLocationViewOwners";
+        final static public String privateLocationViewVisitors = "privateLocationViewVisitor";
+
+        /*Private Location Page*/
+        final static public String DocPrivateLocationCreate = "PrivateLocationCreate";
+        /*Private Location Create IDs*/
+        final static public String privateLocationCreateName = "privateLocationCreateName";
+        final static public String privateLocationCreateInfo = "privateLocationCreateInfo";
+        final static public String privateLocationCreateSave = "privateLocationCreateSave";
+        final static public String privateLocationCreateNotice = "privateLocationCreateNotice";
+
+        /*Private Location Page*/
+        final static public String DocPrivateLocationDelete = "PrivateLocationDelete";
+        /*Private Location Create IDs*/
+        final static public String privateLocationDeleteName = "privateLocationDeleteName";
+        final static public String privateLocationDeleteInfo = "privateLocationDeleteInfo";
+        final static public String privateLocationDeleteNotice = "privateLocationDeleteNotice";
+        final static public String privateLocationDelete = "privateLocationDelete";
 
         /*Photo Descrition Specific IDs*/
         final static public String pd = "pd";
@@ -164,7 +347,7 @@ final public class Controller extends HttpServletWrapper {
         final static public String pd_photo = "pd_photo";
         final static public String pd_photo_description = "pd_photo_description";
 
-        
+
         /*Aarrr Page*/
         final static public String DocAarrr = "Aarrr";
         /*Aarrr Specific IDs*/
@@ -199,11 +382,23 @@ final public class Controller extends HttpServletWrapper {
         final static public String pc_delete = "pc_delete";
         final static public String pc_update_description = "pc_update_description";
 
+        /*SignInOn Page*/
+        final static public String DocSignInOn = "SignInOn";
+        /*SignInOn Specific IDs*/
+        final static public String signinon_login = "signinon_login";
+
         private Page(final String path__, final String... ids__) {
+            staticLogger.debug("HELLO, ENUM VAL:" + this.name());
+            staticLogger.debug("HELLO, ENUM PATH:" + path__);
+            staticLogger.debug("HELLO, ENUM IDS:" + Arrays.toString(ids__));
             PrettyURLMap_.put(this, path__);
             PutAllPageElementIds(ids__);
             PutAllPageElementIdsByPage(this, ids__);
         }
+
+        abstract public String toString();
+
+        abstract public String getURL();
     }
 
     final PageFace main = Page.main;
@@ -211,6 +406,11 @@ final public class Controller extends HttpServletWrapper {
     final PageFace photoCRUD = Page.PhotoCRUD;
     final PageFace photo$Description = Page.Photo$Description;
     final PageFace signInOn = Page.SignInOn;
+    final PageFace privateLocationCreate = Page.PrivateLocationCreate;
+    final PageFace privateLocationView = Page.PrivateLocationView;
+    final PageFace privateLocationDelete = Page.PrivateLocationDelete;
+    final PageFace organize = Page.Organize;
+    final PageFace skeleton = Page.Skeleton;
 
     /**
      * @param serveletConfig__
@@ -234,12 +434,12 @@ final public class Controller extends HttpServletWrapper {
 
         setDefaultLocale:
         {
-            staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0001"));
+            staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0001"));
             Locale.setDefault(new Locale("en", "US"));
-            staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0002"), Locale.getDefault().toString());
+            staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0002"), Locale.getDefault().toString());
         }
 
-        staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0003"), Locale.getDefault().toString());
+        staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0003"), Locale.getDefault().toString());
 
 
         /*Add a listner to convert pretty urls to proper urls*/
@@ -273,6 +473,8 @@ final public class Controller extends HttpServletWrapper {
             inhs__.registerItsNatDocumentTemplate("photo", "text/html", pathPrefix__ + PrettyURLMap_.get(main)).addItsNatServletRequestListener(new ListenerPhoto());
 
             inhs__.registerItsNatDocumentTemplate(photoCRUD.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(main)).addItsNatServletRequestListener(new ListenerHuman());
+
+            inhs__.registerItsNatDocumentTemplate(organize.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerOrganize());
         }
 
         registerDocumentFragmentTemplatesAKAWidgets:
@@ -282,6 +484,12 @@ final public class Controller extends HttpServletWrapper {
             inhs__.registerItsNatDocFragmentTemplate(photo$Description.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(photo$Description));
 
             inhs__.registerItsNatDocFragmentTemplate(signInOn.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(signInOn));
+
+            inhs__.registerItsNatDocFragmentTemplate(privateLocationCreate.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateLocationCreate));
+
+            inhs__.registerItsNatDocFragmentTemplate(privateLocationView.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateLocationView));
+
+            inhs__.registerItsNatDocFragmentTemplate(privateLocationDelete.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateLocationDelete));
         }
 
 //        final PageFace photoUpload = Page.PhotoUpload;
@@ -306,31 +514,44 @@ final public class Controller extends HttpServletWrapper {
         final String pathInfo = ((HttpServletRequest) request__.getServletRequest()).getPathInfo();
         final String URL__ = pathInfo == null ? "" : ((HttpServletRequest) request__.getServletRequest()).getPathInfo().substring(1);//Removes preceeding slash
         if (isHomePage(URL__)) {
-            staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
+            staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
             request__.getServletRequest().setAttribute("location", "");
             request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
         } else {
             if (isNonLocationPage(URL__)) {
-                if (isPhotoPage(URL__)) {
+                final HttpSession httpSession = ((HttpServletRequest) request__.getServletRequest()).getSession(false);
+                if (isSignOut(URL__)) {
+                    if (httpSession != null) {
+                        try {
+                            ((HttpServletRequest) request__.getServletRequest()).getSession(false).invalidate();
+                        } finally {
+                            request__.getServletRequest().setAttribute("location", "");
+                            request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
+                        }
+                    }
+                } else if (isPhotoPage(URL__)) {
                     request__.getServletRequest().setAttribute(RBGet.config.getString("HttpSessionAttr.location"), getPhotoLocation(URL__));
                     request__.getServletRequest().setAttribute("photoURL", getPhotoURL(URL__));
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, "photo");/*Framework specific*/
-                    staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0005") + getPhotoLocation(URL__));
-                    staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0006") + getPhotoURL(URL__));
+                    staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0005") + getPhotoLocation(URL__));
+                    staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0006") + getPhotoURL(URL__));
                 } else if (isHumanPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, "me");/*Framework specific*/
-                    staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0007"));
+                    staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0007"));
+                } else if (isOrganizePage(URL__)) {
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocOrganize);/*Framework specific*/
+                    staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0013"));
                 } else {
                     request__.getServletRequest().setAttribute("location", "main");
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, "main");/*Framework specific*/
-                    staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
+                    staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
                 }
             } else if (isCorrectLocationFormat(URL__)) {
                 request__.getServletRequest().setAttribute("location", URL__);
                 request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, "main");/*Framework specific*/
-                staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0009") + URL__);
+                staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0009") + URL__);
             } else {/*Divert to home page*/
-                staticLogger.info(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
+                staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
                 request__.getServletRequest().setAttribute("location", "");
                 request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
             }
@@ -382,6 +603,14 @@ final public class Controller extends HttpServletWrapper {
         return URL_.replace("_photo_", "").split("_")[1];
     }
 
+    static private boolean isOrganizePage(final String URL_) {
+        return (URL_.startsWith("_org"));
+    }
+
+    static private boolean isSignOut(final String URL_) {
+        return (URL_.equals("_so"));
+    }
+
     /**
      * This Map is static as Id's in html documents should be universally identical, i.e. as htmldocname_elementId
      */
@@ -402,7 +631,7 @@ final public class Controller extends HttpServletWrapper {
                  */
                 GlobalHTMLIdRegistry.put(id_, id_);
             } else {
-                throw new SecurityException(logMsgs.getString("ai.ilikeplaces.servlets.Controller.0011" + id_));
+                throw new SecurityException(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0011" + id_));
             }
         }
     }

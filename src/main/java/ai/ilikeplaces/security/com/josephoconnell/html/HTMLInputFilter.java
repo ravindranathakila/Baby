@@ -43,6 +43,8 @@ import java.util.regex.Pattern;
  * @author Joseph O'Connell <joe.oconnell at gmail dot com>
  * @version 1.0 
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class HTMLInputFilter
 {	
 	/** 

@@ -27,6 +27,8 @@ import java.util.ResourceBundle;
 /**
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @TODO(task = "rename to listenerlocation. do a string search on listenermain to find usage first. current search shows no issues. refac delayed till next check")
 public class ListenerAarrr implements ItsNatServletRequestListener {
 

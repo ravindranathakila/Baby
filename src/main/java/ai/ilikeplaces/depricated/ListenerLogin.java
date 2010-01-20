@@ -8,6 +8,8 @@ import org.itsnat.core.event.ItsNatServletRequestListener;
  *
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Deprecated
 public class ListenerLogin implements ItsNatServletRequestListener {
 

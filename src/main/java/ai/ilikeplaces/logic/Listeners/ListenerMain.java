@@ -3,13 +3,15 @@ package ai.ilikeplaces.logic.Listeners;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.Location;
+import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.entities.PublicPhoto;
-import ai.ilikeplaces.logic.Listeners.widgets.Photo$Description;
-import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
+import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.rbs.RBGet;
+import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractListener;
 import ai.ilikeplaces.util.MarkupTag;
+import ai.ilikeplaces.util.Return;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -20,7 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -30,6 +32,8 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 /**
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @TODO(task = "RENAME TO LISTENERLOCATION. DO A STRING SEARCH ON LISTENERMAIN TO FIND USAGE FIRST. CURRENT SEARCH SHOWS NO ISSUES. REFAC DELAYED TILL NEXT CHECK")
 public class ListenerMain implements ItsNatServletRequestListener {
 
@@ -51,7 +55,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
              */
             @Override
             @SuppressWarnings("unchecked")
-            @TODO(task = "IF LOCATION IS NOT AVAILABLE, IT SHOULD BE ADDED THROUGH A WIDGET(OR FRAGMENT MAYBE?)")
+            @TODO(task = "If location is not available, it should be added through a widget(or fragment maybe?)")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor + JSCodeToSend.FnLocationId + JSCodeToSend.FnLocationName + JSCodeToSend.FnSetTitle);
                 final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
@@ -59,8 +63,12 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 {
                     setLoginWidget:
                     {
-                        new SignInOn(itsNatDocument__, $(Main_login_widget)) {
-                        };
+                        try {
+                            new SignInOn(itsNatDocument__, $(Main_login_widget)) {
+                            };
+                        } catch (final Throwable t) {
+                            logger.error("", t);
+                        }
                     }
 
                     setMainTitle:
@@ -68,78 +76,126 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         try {
                             //$(mainTitle).setTextContent("Welcome to ilikeplaces!");
                         } catch (
-                                @FIXME(issue = "This is very important for SEO. Contact ItsNat and find out why exception always occurs here. It says element not found.")
+                                @FIXME(issue = "Once its nat final release is made, set head as nocache and set. then works.")
                                 final Exception e__) {
                             logger.debug(e__.getMessage());
                         }
                     }
                     signOnDisplayLink:
                     {
-                        if (getUsername() != null) {
-                            final Element usersName = $(MarkupTag.P);
-                            usersName.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0004") + getUsername());
-                            $(Main_othersidebar_identity).appendChild(usersName);
-                        } else {
-                            final Element locationElem = $(MarkupTag.P);
-                            locationElem.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0005") + location);
-                            $(Main_othersidebar_identity).appendChild(locationElem);
+                        try {
+                            if (getUsername() != null) {
+                                final Element usersName = $(MarkupTag.P);
+                                usersName.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0004") + getUsername());
+                                $(Main_othersidebar_identity).appendChild(usersName);
+                            } else {
+                                final Element locationElem = $(MarkupTag.P);
+                                locationElem.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0005") + location);
+                                $(Main_othersidebar_identity).appendChild(locationElem);
+                            }
+                        } catch (final Throwable t) {
+                            logger.error("", t);
                         }
 
                     }
                     setProfileLink:
                     {
-                        if (getUsername() != null) {
-                            $(Main_othersidebar_profile_link).setAttribute("href", RBGet.config.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0002"));
-                        } else {
-                            $(Main_othersidebar_profile_link).setAttribute("href", RBGet.config.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0003"));
+                        try {
+                            if (getUsername() != null) {
+                                $(Main_othersidebar_profile_link).setAttribute("href", Controller.Page.home.getURL());
+                            } else {
+                                $(Main_othersidebar_profile_link).setAttribute("href", Controller.Page.signup.getURL());
+                            }
+                        } catch (final Throwable t) {
+                            logger.error("", t);
                         }
                     }
                 }
 
-                final Location loc_ = DB.getHumanCRUDLocationLocal(true).doDirtyHumanRLocation(location, null);
+                final Return<Location> r = DB.getHumanCRUDLocationLocal(true).dirtyRLocation(location, null);
 
-                if (loc_ != null) {
-                    final Location existingLocation_ = loc_;
+
+                if (r.returnStatus() == 0 && r.returnValue() != null) {
+                    final Location existingLocation_ = r.returnValue();
 
                     showUploadFileLink:
                     {
-                        if (getUsername() != null) {
-                            $(Main_othersidebar_upload_file_sh).setAttribute("style", "display:block;");
+                        try {
+                            if (getUsername() != null) {
+                                displayBlock($(Main_othersidebar_upload_file_sh));
+                            }
+                        } catch (final Throwable t) {
+                            logger.error("", t);
                         }
                     }
 
                     setLocationIdForJSReference:
                     {
-                        final Element hiddenLocationIdInputTag = $(MarkupTag.INPUT);
-                        hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.type(), MarkupTag.INPUT.typeValueHidden());
-                        hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.id(), JSCodeToSend.LocationId);
-                        hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.value(), existingLocation_.getLocationId().toString());
-                        hTMLDocument__.getBody().appendChild(hiddenLocationIdInputTag);
+                        try {
+                            final Element hiddenLocationIdInputTag = $(MarkupTag.INPUT);
+                            hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.type(), MarkupTag.INPUT.typeValueHidden());
+                            hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.id(), JSCodeToSend.LocationId);
+                            hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.value(), existingLocation_.getLocationId().toString());
+                            hTMLDocument__.getBody().appendChild(hiddenLocationIdInputTag);
+                        } catch (final Throwable t) {
+                            logger.error("", t);
+                        }
                     }
 
                     setLocationNameForJSReference:
                     {
-                        @TODO(task = "MOVE TO GUI MSGS I18N METHODICALLY")
-                        final Element hiddenLocationIdInputTag = $(MarkupTag.INPUT);
-                        hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.type(), MarkupTag.INPUT.typeValueHidden());
-                        hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.id(), JSCodeToSend.LocationName);
-                        hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.value(),
-                                "This is " + existingLocation_.getLocationName() + " of " + existingLocation_.getLocationSuperSet().getLocationName() + ". " +
-                                        "You are at " + existingLocation_.getLocationName() + " in " + existingLocation_.getLocationSuperSet().getLocationName() + ". ");
-                        hTMLDocument__.getBody().appendChild(hiddenLocationIdInputTag);
+                        try {
+                            @TODO(task = "MOVE TO GUI MSGS I18N METHODICALLY")
+                            final Element hiddenLocationIdInputTag = $(MarkupTag.INPUT);
+                            hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.type(), MarkupTag.INPUT.typeValueHidden());
+                            hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.id(), JSCodeToSend.LocationName);
+                            hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.value(),
+                                    "This is " + existingLocation_.getLocationName() + " of " + existingLocation_.getLocationSuperSet().getLocationName() + ". " +
+                                            "You are at " + existingLocation_.getLocationName() + " in " + existingLocation_.getLocationSuperSet().getLocationName() + ". ");
+                            hTMLDocument__.getBody().appendChild(hiddenLocationIdInputTag);
+                        } catch (final Throwable t) {
+                            logger.error("", t);
+                        }
                     }
 
                     setLocationAsTitle:
                     {
-                        @TODO(task = "CONTACT JOSE MARIA REGARDING THE EXCEPTION OF TAG NOT BEING AVAILABLE WHEN SETTITLE IS USED")
-                        final String pageTitle = existingLocation_.getLocationName();
+                        try {
+                            final String pageTitle = existingLocation_.getLocationName();
+                        } catch (final Throwable t) {
+                            logger.error("", t);
+                        }
                     }
 
                     setLocationAsPageTopic:
                     {
-                        $(Main_center_main_location_title).setTextContent("This is " + existingLocation_.getLocationName() + " of " + existingLocation_.getLocationSuperSet());
+                        try {
+                            $(Main_center_main_location_title).setTextContent("This is " + existingLocation_.getLocationName() + " of " + existingLocation_.getLocationSuperSet());
+                        } catch (final Throwable t) {
+                            logger.error("", t);
+                        }
                     }
 
+                    setLocationCreateTemp:
+                    {
+                        if (getUsername() != null) {
+                            try {
+                                new PrivateLocationCreate(itsNatDocument__, $(Main_center_main), getUsername()) {
+                                };
+                            } catch (final Throwable t) {
+                                logger.error("", t);
+                            }
+
+                            for (final PrivateLocation privateLocation : DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(getUsername()).getHumansPrivateLocation().getPrivateLocations()) {
+                                try {
+                                    new PrivateLocationDelete(itsNatDocument__, $(Main_center_main), getUsername(), privateLocation.getPrivateLocationId()) {
+                                    };
+                                } catch (final Throwable t) {
+                                    logger.error("", t);
+                                }
+                            }
+                        }
+                    }
 
                     getAndDisplayAllThePhotos:
                     {
@@ -149,30 +205,35 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         @TODO(task = "INVERT COLORS AND SET PHOTO NAME")
                         int i = 0;
                         for (final Iterator<PublicPhoto> it = listPublicPhoto.iterator(); it.hasNext(); i++) {
-                            final PublicPhoto publicPhoto = it.next();
-                            if (i % 2 == 0) {
-                                new Photo$Description(itsNatDocument__, $(Main_center_main)) {
-                                    @Override
-                                    protected void init() {
-                                        $$(pd_photo_permalink).setAttribute("href", publicPhoto.getPublicPhotoURLPath() + "|" + publicPhoto.getPublicPhotoName());
-                                        $$(pd_photo).setAttribute("src", publicPhoto.getPublicPhotoURLPath());
-                                        final Element descriptionText = $$(MarkupTag.P);
-                                        descriptionText.setTextContent(publicPhoto.getPublicPhotoDescription());
-                                        $$(pd_photo_description).appendChild(descriptionText);
-                                    }
-                                };
-                            } else {
-                                new Photo$Description(itsNatDocument__, $(Main_center_main)) {
-                                    @Override
-                                    protected void init() {
-                                        $$(pd_photo_permalink).setAttribute("href", publicPhoto.getPublicPhotoURLPath() + "|" + publicPhoto.getPublicPhotoName());
-                                        $$(pd_photo).setAttribute("src", publicPhoto.getPublicPhotoURLPath());
-                                        final Element descriptionText = $$(MarkupTag.P);
-                                        descriptionText.setTextContent(publicPhoto.getPublicPhotoDescription());
-                                        $$(pd_photo_description).appendChild(descriptionText);
 
-                                    }
-                                };
+                            try {
+                                final PublicPhoto publicPhoto = it.next();
+                                if (i % 2 == 0) {
+                                    new Photo$Description(itsNatDocument__, $(Main_center_main)) {
+                                        @Override
+                                        protected void init(final Object... initArgs) {
+                                            $$(pd_photo_permalink).setAttribute(MarkupTag.A.href(), publicPhoto.getPublicPhotoURLPath() + "|" + publicPhoto.getPublicPhotoName());
+                                            $$(pd_photo).setAttribute(MarkupTag.A.src(), publicPhoto.getPublicPhotoURLPath());
+                                            //final Element descriptionText = $$(MarkupTag.P);
+                                            //descriptionText.setTextContent(publicPhoto.getPublicPhotoDescription());
+                                            $$(pd_photo_description).setTextContent(publicPhoto.getPublicPhotoDescription());
+                                        }
+                                    };
+                                } else {
+                                    new Photo$Description(itsNatDocument__, $(Main_center_main)) {
+                                        @Override
+                                        protected void init(final Object... initArgs) {
+                                            $$(pd_photo_permalink).setAttribute(MarkupTag.A.href(), publicPhoto.getPublicPhotoURLPath() + "|" + publicPhoto.getPublicPhotoName());
+                                            $$(pd_photo).setAttribute(MarkupTag.A.src(), publicPhoto.getPublicPhotoURLPath());
+                                            //final Element descriptionText = $$(MarkupTag.P);
+                                            //descriptionText.setTextContent(publicPhoto.getPublicPhotoDescription());
+                                            $$(pd_photo_description).setTextContent(publicPhoto.getPublicPhotoDescription());
+
+                                        }
+                                    };
+                                }
+                            } catch (final Throwable t) {
+                                logger.error("", t);
                             }
                         }
                     }
@@ -180,11 +241,19 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 } else {
                     noSupportForNewLocationsYet:
                     {
-                        $(Main_notice).appendChild(($(MarkupTag.P).appendChild(
-                                hTMLDocument__.createTextNode(RBGet.logMsgs.getString("CANT_FIND_LOCATION")
-                                        + " Were you looking for " + Arrays.toString(DB.getHumanCRUDLocationLocal(true).doDirtyHumanRLikeLocationName(location).toArray())
-                                ))));
-                        $(Main_notice_sh).setAttribute("style", "display:block;");
+                        try {
+                            $(Main_notice).appendChild(($(MarkupTag.P).appendChild(
+                                    hTMLDocument__.createTextNode(RBGet.logMsgs.getString("CANT_FIND_LOCATION")
+                                            + " Were you looking for "
+                                    ))));
+                            DB.getHumanCRUDLocationLocal(true).dirtyRLikeLocationName(location);
+                            for (final Element element : generateLocationLinks(DB.getHumanCRUDLocationLocal(true).dirtyRLikeLocationName(location))) {
+                                $(Main_notice).appendChild(element);
+                                displayBlock($(Main_notice_sh));
+                            }
+                        } catch (final Throwable t) {
+                            logger.error("", t);
+                        }
                     }
                 }
 
@@ -194,45 +263,45 @@ public class ListenerMain implements ItsNatServletRequestListener {
              * Use ItsNatHTMLDocument variable stored in the AbstractListener class
              */
             @Override
-            protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
-/*
-                *//*Abstract implementation*//*
-                itsNatHTMLDocument__.addEventListener((EventTarget) $("cool"), Click, new EventListener() {
+            protected void registerEventListeners
+                    (
+                            final ItsNatHTMLDocument itsNatHTMLDocument__,
+                            final HTMLDocument hTMLDocument__,
+                            final ItsNatDocument itsNatDocument__) {
+//                ItsNatDocument itsNatDoc = itsNatDocument__;
+//                Document docEvent = (Document) itsNatDoc;
+//
+//                MouseEvent mouseEvent = (MouseEvent) itsNatDoc.createEvent("MouseEvent");
+//
+//                mouseEvent.initMouseEvent("click", true, true, ((DocumentView) itsNatDoc).getDefaultView(), 0,
+//                        0, 0, 0, 0, false, false, false, false, (short) 0/*left button*/, null);
+//
+//                itsNatDoc.dispatchEvent((EventTarget) $(Main_notice), mouseEvent);
 
-                    @Override
-                    public void handleEvent(final Event evt_) {
-                        $(Main_sidebar).appendChild(hTMLDocument__.createTextNode(sessionBoundBadRefWrapper != null ? sessionBoundBadRefWrapper.boundInstance.getHumanUserId() : "Logged Out!"));
-                        $(Main_sidebar).appendChild(hTMLDocument__.createTextNode("COOL! "));
-                        new Photo$Description(itsNatDocument__, $(Main_left_column)) {
-                        };
-                    }
-                }, false);
 
-                *//*Abstract implementation*//*
-                itsNatHTMLDocument__.addEventListener((EventTarget) $("hot"), Click, new EventListener() {
-
-                    @Override
-                    public void handleEvent(final Event evt_) {
-                        $(Main_sidebar).appendChild(hTMLDocument__.createTextNode("HOT! "));
-                        new Photo$Description(itsNatDocument, $(Main_right_column)) {
-                        };
-                    }
-                }, false);
-                */
             }
-        };
-    }
 
-    /**
-     * @param showChangeLog__
-     * @return changeLog
-     */
-    public String toString(final boolean showChangeLog__) {
-        String changeLog = new String(toString() + "\n");
-        changeLog += "20090918 crudServiceLocal was throwing a bug(exception). Should be due to garbage colection of outer class."
-                + "Moved it to init. Did not pursue reason as now implementation is sane and previous was not.\n";
-        changeLog += "20090924 crudServiceLocal was shifter back to the original position with validation. Not a bug. "
-                + "Outer class has a reference from the inner class so never gets garbage collected.";
-        return showChangeLog__ ? changeLog : toString();
+            private List<Element> generateLocationLinks
+                    (
+                            final List<String> locationList) {
+
+                List<Element> links = new ArrayList<Element>();
+
+                for (String locationName : locationList) {
+                    final Element link = $(MarkupTag.A);
+                    link.setAttribute(MarkupTag.A.href(), "/page/" + locationName);
+                    link.setTextContent(locationName);
+                    link.setAttribute(MarkupTag.A.alt(), "/page/" + locationName);
+                    final Element linkDiv = $(MarkupTag.DIV);
+                    linkDiv.appendChild(link);
+                    links.add(linkDiv);
+                }
+
+                return links;
+
+            }
+        }
+
+                ;
     }
 }

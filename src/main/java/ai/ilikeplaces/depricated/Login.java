@@ -21,6 +21,8 @@ import org.w3c.dom.html.HTMLDocument;
  *
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Deprecated
 class Login implements EventListener {
 

@@ -9,7 +9,7 @@
 
 #shareit-body {
     width:138px; height:100px;
-    background:transparent url(/ilikeplaces/images/shareitback.png);
+    background:transparent url(../images/shareitback.png);
     border-color:black;
     border-style:groove;
 }
@@ -25,7 +25,7 @@
 
 #shareit-url input.field{
     width:100px; height:26px;
-    background: transparent url(/ilikeplaces/images/field.gif) no-repeat;
+    background: transparent url(../images/field.gif) no-repeat;
     border:none; outline:none;
     padding:7px 5px 0 5px;
     margin:3px auto;font-size:11px;

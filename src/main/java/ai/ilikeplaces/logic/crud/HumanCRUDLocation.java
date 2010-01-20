@@ -1,23 +1,29 @@
 package ai.ilikeplaces.logic.crud;
 
+import ai.ilikeplaces.entities.PublicPhoto;
+import ai.ilikeplaces.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.logic.crud.unit.RLocationLocal;
-import ai.ilikeplaces.util.AbstractSLBCallbacks;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
 import java.util.List;
 
 /**
  *
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
+@Interceptors({MethodTimer.class, MethodParams.class})
 public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUDLocationLocal{
 
     @EJB
@@ -29,19 +35,26 @@ public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUD
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Location doDirtyHumanRLocation(final String locationName, final String superLocationName) {
-        return rLocationLocal_.doDirtyRLocation(locationName, superLocationName);
+    public Return<Location> dirtyRLocation(final String locationName, final String superLocationName) {
+
+        Return<Location> r;
+        try {
+            r = new ReturnImpl<Location>(rLocationLocal_.doDirtyRLocation(locationName, superLocationName), "Find location by location and super location names Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Location>(t, "Find location by location and super location names FAILED!", true);
+        }
+        return r;
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Location doDirtyHumanRLocation(final long locationId) {
+    public Location dirtyRLocation(final long locationId) {
         return rLocationLocal_.doDirtyRLocation(locationId);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<String> doDirtyHumanRLikeLocationName(final String likeLocationName){
+    public List<String> dirtyRLikeLocationName(final String likeLocationName){
         return rLocationLocal_.doDirtyRLikeLocation(likeLocationName);
     }
 

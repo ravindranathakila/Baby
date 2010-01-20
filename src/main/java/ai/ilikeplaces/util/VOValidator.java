@@ -1,6 +1,7 @@
 package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.ClassPreamble;
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.MethodPreamble;
 import java.lang.reflect.InvocationTargetException;
 
@@ -12,6 +13,8 @@ import javax.interceptor.InvocationContext;
  *
  * @author Ravindranath Akila
  */
+
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @ClassPreamble(
     authors = {"Ravindranath Akila"},
     version = 1,

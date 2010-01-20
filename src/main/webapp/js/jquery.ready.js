@@ -209,7 +209,7 @@ $(document).ready(function(){
 
     
     var fub = new AjaxUpload(button,{
-        action: '/ilikeplaces/fileuploads',
+        action: '/fileuploads',
         name: 'myfile',
         onChange : function(file, ext){
 

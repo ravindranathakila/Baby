@@ -19,8 +19,10 @@ import javax.persistence.PrimaryKeyJoinColumn;
  *
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-public class HumansPrivatePhoto implements Serializable {
+public class HumansPrivatePhoto implements HumanIdFace, Serializable {
     private static final long serialVersionUID = 1L;
 
     private String humanId;
@@ -36,7 +38,7 @@ public class HumansPrivatePhoto implements Serializable {
         this.humanId = humanId__;
     }
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade=CascadeType.REFRESH)
     @PrimaryKeyJoinColumn
     public Human getHuman() {
         return human;

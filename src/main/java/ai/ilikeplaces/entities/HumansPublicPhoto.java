@@ -15,6 +15,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
  *
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 public class HumansPublicPhoto implements HumanIdFace, Serializable {
 

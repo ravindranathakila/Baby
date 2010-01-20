@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @FIXME(issue = "Each tag can be exposed through an interface to ensure type " +
         "safety and also, proper method calls. Current approach is simpler to use. " +
         "Using an interface based approach is easy to make changes to")
@@ -57,7 +59,7 @@ public enum MarkupTag implements MarkupTagFace {
             return "hidden";
         }
     },
-    
+
     TEXTAREA() {
         @Override
         public String toString() {
@@ -92,7 +94,17 @@ public enum MarkupTag implements MarkupTagFace {
         public String src() {
             return "src";
         }
+    },
+
+    DIV() {
+
+        @Override
+        public String toString() {
+            return "DIV";
+        }
+
     };
+
     final static Logger logger = LoggerFactory.getLogger(MarkupTag.class.getName());
     final static String ExceptionMsg = "SORRY! I RECEIVED A CALL ON NON OVERRIDDEN ATTRIBUTE. PROBABLY THIS ATTRIBUTE IS NOT RELEVANT TO THIS ELEMENT TYPE, OR IT WAS NOT IMPLEMENTED.";
 
@@ -147,7 +159,7 @@ public enum MarkupTag implements MarkupTagFace {
     }
 
     @Override
-    public String tag(){
+    public String tag() {
         return toString();
     }
 }

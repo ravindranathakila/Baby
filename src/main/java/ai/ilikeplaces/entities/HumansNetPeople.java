@@ -13,8 +13,10 @@ import java.util.List;
  * Date: Dec 8, 2009
  * Time: 9:54:03 PM
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-public class HumansNetPeople {
+public class HumansNetPeople implements HumanPkJoinFace {
     private String humanId;
     private Human human;
     private List<HumansNetPeople> humansNetPeoples;
@@ -28,10 +30,15 @@ public class HumansNetPeople {
         this.humanId = humanId__;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REFRESH)
     @PrimaryKeyJoinColumn
     public Human getHuman() {
         return human;
+    }
+
+    @Override
+    public void setHuman(final Human human) {
+        this.human = human;
     }
 
     @NOTE(note = "MANY IS THE OWNING SIDE, HENCE MERGE. SINCE THIS IS SELF REFERENTIAL, A MERGE MEANS SELF MERGE WHICH SHOULD NOT HAPPEN.")

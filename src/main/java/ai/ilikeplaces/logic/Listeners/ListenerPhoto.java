@@ -1,40 +1,32 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.entities.Location;
-import ai.ilikeplaces.exception.ConstructorInvokationException;
-import ai.ilikeplaces.jpa.CrudServiceLocal;
-import ai.ilikeplaces.logic.Listeners.widgets.*;
+import ai.ilikeplaces.logic.Listeners.widgets.Photo$Description;
+import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.naming.NamingException;
+import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
-import ai.ilikeplaces.servlets.Controller;
-import static ai.ilikeplaces.servlets.Controller.Page.*;
-
-import java.util.Properties;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.html.HTMLDocument;
 
+import static ai.ilikeplaces.servlets.Controller.Page.pd_photo;
+import static ai.ilikeplaces.servlets.Controller.Page.pd_photo_permalink;
+
 /**
- *
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class ListenerPhoto implements ItsNatServletRequestListener {
 
-    final static protected String LocationId = "locationId";
-    final protected static String JsCodeToSend = "document.monitor = new EventMonitor(); \n" +
-            "document.getItsNatDoc().addEventMonitor(document.monitor); \n";
     final private String permaLink = null;
-    final private Logger logger = LoggerFactory.getLogger(ListenerPhoto.class.getName());
+
+    final static private Logger logger = LoggerFactory.getLogger(ListenerPhoto.class.getName());
 
     /**
-     *
      * @param request__
      * @param response__
      */
@@ -51,12 +43,12 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
             @SuppressWarnings("unchecked")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
 
-                itsNatDocument.addCodeToSend(JsCodeToSend);
+                itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor + JSCodeToSend.FnLocationId + JSCodeToSend.FnLocationName + JSCodeToSend.FnSetTitle);
 
                 new Photo$Description(itsNatDocument__, $(Controller.Page.Main_center_main)) {
 
                     @Override
-                    protected void init() {
+                    protected void init(final Object... initArgs) {
 
                         $$(pd_photo_permalink).setAttribute("href", permaLink + "|" + location);
                         $$(pd_photo).setAttribute("src", publicPhotoURLPath);
@@ -72,7 +64,6 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
     }
 
     /**
-     *
      * @param showChangeLog__
      * @return changeLog
      */

@@ -7,6 +7,8 @@ import java.security.SecureRandom;
  *
  * @author Ravindranath Akila
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public interface JBCryptWrapperFace extends BlowFishLocal{
 
     /**

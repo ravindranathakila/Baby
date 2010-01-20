@@ -7,6 +7,8 @@ package ai.ilikeplaces.util;
  * Date: Dec 8, 2009
  * Time: 11:17:06 PM
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public enum EventType {
     click() {
         @Override

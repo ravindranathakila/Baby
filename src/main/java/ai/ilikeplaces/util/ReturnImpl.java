@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
  * Date: Jan 1, 2010
  * Time: 4:29:55 PM
  */
+
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class ReturnImpl<T> implements Return {
 
     final static private Logger logger = LoggerFactory.getLogger(ReturnImpl.class);
@@ -34,11 +36,19 @@ final public class ReturnImpl<T> implements Return {
         this.returnStatus = 0;
         this.returnValue = returnValue;
         this.returnMsg = returnMsg;
+//        if (log.length > 0 && (Boolean) log[0]) {
+//            logger.info("HELLO, RETURN VALUES:{}",
+//                    "ReturnImpl{" +
+//                            "returnStatus=" + returnStatus +
+//                            ", returnValue=" + returnValue != null ? returnValue.toString() : "null" +
+//                            ", returnMsg='" + returnMsg + '\'' +
+//                            '}');
+//        }
     }
 
     public ReturnImpl(final Throwable returnError, final String returnMsg, final boolean shouldLog) {
         if (shouldLog) {
-            logger.error(logMsgBeginning + returnMsg + "\n{}", returnError);
+            logger.error(logMsgBeginning + returnMsg + "\n", returnError);
         }
         this.returnStatus = 1;
         this.returnError = returnError;
@@ -69,9 +79,9 @@ final public class ReturnImpl<T> implements Return {
     public String toString() {
         return "ReturnImpl{" +
                 "returnStatus=" + returnStatus +
-                ", returnValue=" + returnValue != null ? returnValue.toString() : "" +
-                ", returnError=" + returnError != null ? returnError.toString() : "" +
-                ", returnMsg='" + returnMsg + '\'' +
+                ", returnValue=" + returnValue != null ? returnValue.toString() : "null" +
+                ", returnError=" + returnError != null ? returnError.toString() : "null" +
+                ", returnMsg='" + returnMsg != null ? returnMsg : "" + '\'' +
                 '}';
     }
 }
