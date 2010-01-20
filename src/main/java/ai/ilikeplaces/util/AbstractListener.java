@@ -1,5 +1,6 @@
 package ai.ilikeplaces.util;
 
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
@@ -19,6 +20,8 @@ import java.util.Map;
 /**
  * @author Ravindranath Akila
  */
+
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public abstract class AbstractListener {
 
     /**
@@ -137,6 +140,14 @@ public abstract class AbstractListener {
         }
         final Element element__ = hTMLDocument_.getElementById(elementId__);
         return element__ != null ? element__ : (Element) LogNull.logThrow();
+    }
+
+    protected final void displayBlock(final Element element__){
+         element__.setAttribute("style","display:block;");
+    }
+
+    protected final void displayNone(final Element element__){
+         element__.setAttribute("style","display:none;");
     }
 
     /**

@@ -1,7 +1,6 @@
 package ai.ilikeplaces.jpa;
 
-import ai.ilikeplaces.doc.CONVENTION;
-import ai.ilikeplaces.doc.FIXME;
+import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 
 import javax.ejb.Stateless;
@@ -21,16 +20,19 @@ import java.util.Set;
  * @author Ravindranath Akila
  * @param <T>
  */
+
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@CONVENTION(convention = "CALLER ASSUMES THIS CLASS METHODS ARE OF TX SCOPE SUPPORTS, " +
-        "BUT CREATE AND UPDATES HERE ARE OF SCOPE MANDATORY WHICH WILL ENSURE CALLER DOES NO MISTAKE.")
+@CONVENTION(convention = "Caller assumes this class methods are of tx scope supports, " +
+        "but create and updates here are of scope mandatory which will ensure caller does no mistake.")
+@OK
 final public class CrudService<T> extends AbstractSLBCallbacks implements CrudServiceLocal<T> {
 
     /**
      * Please not that this is a field of Stateless session bean
      */
-    @FIXME(issue = "find out how the manager handles concurrent requests. same cache or different? if different, come on, this a class variable!" +
-            "resolved! check out thte hibernate site article on this. apparently, container does this. amazing!")
+    @NOTE( note = "find out how the manager handles concurrent requests. same cache or different? if different, come on, this a class variable!" +
+            "resolved! check out the hibernate site article on this. apparently, container does this. amazing!")
     @PersistenceContext(unitName = "adimpression_ilikeplaces_war_1.6-SNAPSHOTPU", type = PersistenceContextType.TRANSACTION)
     public EntityManager entityManager;
 

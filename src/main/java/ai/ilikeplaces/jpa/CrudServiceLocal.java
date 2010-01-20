@@ -1,5 +1,8 @@
 package ai.ilikeplaces.jpa;
 
+import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.OK;
+
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
@@ -9,7 +12,10 @@ import javax.ejb.Local;
  * @param <T>
  * @author Ravindranath Akila
  */
+
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Local
+@OK
 public interface CrudServiceLocal<T> {
 
     /**

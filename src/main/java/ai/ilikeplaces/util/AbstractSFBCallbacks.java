@@ -1,5 +1,7 @@
 package ai.ilikeplaces.util;
 
+import ai.ilikeplaces.doc.License;
+
 import javax.ejb.PostActivate;
 import javax.ejb.PrePassivate;
 import javax.ejb.Remove;
@@ -8,6 +10,8 @@ import javax.ejb.Remove;
  *
  * @author Ravindranath Akila
  */
+
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class AbstractSFBCallbacks extends AbstractSBCallbacks {
 
     final static private String MsgPassivate = "HELLO, I JUST PASSIVATED AN INSTANCE OF ";
