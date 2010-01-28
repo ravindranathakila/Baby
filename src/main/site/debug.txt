@@ -23,3 +23,5 @@ CRUD Classes
 If NPE, make sure you check the openejb.log for environment issues. Check log till the bottom entry.
 Sometimes, application logs intersect.
 
+If onetomany manytomany values do not get added to list, check if the loaded entities are WITHIN TRANSACTION
+

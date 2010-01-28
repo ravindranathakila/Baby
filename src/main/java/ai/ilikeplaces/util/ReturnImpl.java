@@ -77,11 +77,11 @@ final public class ReturnImpl<T> implements Return {
 
     @Override
     public String toString() {
-        return "ReturnImpl{" +
+        return "Return{" +
                 "returnStatus=" + returnStatus +
-                ", returnValue=" + returnValue != null ? returnValue.toString() : "null" +
-                ", returnError=" + returnError != null ? returnError.toString() : "null" +
-                ", returnMsg='" + returnMsg != null ? returnMsg : "" + '\'' +
+                ", returnValue=" + (returnValue != null ? returnValue.toString() : "null") +
+                ", returnError=" + (returnError != null ? returnError.toString() : "null") +
+                ", returnMsg='" + (returnMsg != null ? returnMsg : "") + '\'' +
                 '}';
     }
 }

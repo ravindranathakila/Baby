@@ -20,5 +20,5 @@ public interface RHumanLocal {
 
     public Human doDirtyRHuman(String humanId);
 
-    boolean doDirtyCheckHuman(String humanId);
+    public boolean doDirtyCheckHuman(String humanId);
 }

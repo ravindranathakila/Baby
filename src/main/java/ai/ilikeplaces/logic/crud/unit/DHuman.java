@@ -18,20 +18,20 @@ import javax.ejb.TransactionAttributeType;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-public class CHuman extends AbstractSLBCallbacks implements CHumanLocal {
+public class DHuman extends AbstractSLBCallbacks implements DHumanLocal {
 
     @EJB
     private CrudServiceLocal<Human> crudServiceLocal_;
 
-    public CHuman() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", CHuman.class, this.hashCode());
+    public DHuman() {
+        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", DHuman.class, this.hashCode());
     }
 
-    final static Logger logger = LoggerFactory.getLogger(CHuman.class);
+    final static Logger logger = LoggerFactory.getLogger(DHuman.class);
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public void doNTxCHuman(final Human newUser) {
-        crudServiceLocal_.create(newUser);
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void doDHuman(final String humanId) {
+        crudServiceLocal_.delete(Human.class, humanId);
     }
 }

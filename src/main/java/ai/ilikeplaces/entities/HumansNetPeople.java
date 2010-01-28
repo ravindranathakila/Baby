@@ -1,6 +1,8 @@
 package ai.ilikeplaces.entities;
 
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc.UNIDIRECTIONAL;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
  * Time: 9:54:03 PM
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 public class HumansNetPeople implements HumanPkJoinFace {
     private String humanId;
@@ -41,8 +43,9 @@ public class HumansNetPeople implements HumanPkJoinFace {
         this.human = human;
     }
 
-    @NOTE(note = "MANY IS THE OWNING SIDE, HENCE MERGE. SINCE THIS IS SELF REFERENTIAL, A MERGE MEANS SELF MERGE WHICH SHOULD NOT HAPPEN.")
-    @OneToMany
+    @NOTE(note = "MANY IS THE OWNING SIDE, HENCE REFRESH. SINCE THIS IS SELF REFERENTIAL, A REFRESH WITH SELF SHOULD NOT HAPPEN.")
+    @UNIDIRECTIONAL(note = "Asymmetric Relationship")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     public List<HumansNetPeople> getHumansNetPeoples() {
         return humansNetPeoples;
     }

@@ -1,5 +1,7 @@
 package ai.ilikeplaces.util;
 
+import ai.ilikeplaces.doc.License;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Ravindranath Akila
@@ -7,7 +9,7 @@ package ai.ilikeplaces.util;
  * Time: 10:41:07 PM
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class RefString implements RefStringFace{
 
     private String string;

@@ -2,11 +2,11 @@ package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.logic.Listeners.widgets.PhotoCRUD;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractListener;
 import ai.ilikeplaces.util.MarkupTag;
@@ -32,6 +32,7 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 
 // @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
+@TODO(task = "try/catch all interface elements")
 public class ListenerHuman implements ItsNatServletRequestListener {
 
     final private Logger logger = LoggerFactory.getLogger(ListenerHuman.class.getName());
@@ -86,10 +87,14 @@ public class ListenerHuman implements ItsNatServletRequestListener {
                     }
                     setProfileLink:
                     {
-                        if (getUsername() != null) {
-                            $(Main_othersidebar_profile_link).setAttribute("href", Controller.Page.signup.getURL());
-                        } else {
-                            $(Main_othersidebar_profile_link).setAttribute("href", RBGet.config.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0003"));
+                        try {
+                            if (getUsername() != null) {
+                                $(Main_othersidebar_profile_link).setAttribute("href", Controller.Page.home.getURL());
+                            } else {
+                                $(Main_othersidebar_profile_link).setAttribute("href", Controller.Page.signup.getURL());
+                            }
+                        } catch (final Throwable t) {
+                            logger.error("", t);
                         }
                     }
                 }
@@ -102,7 +107,7 @@ public class ListenerHuman implements ItsNatServletRequestListener {
                             new PhotoCRUD(itsNatDocument__, $(Controller.Page.Main_center_main), publicPhoto, getUsername()) {
 
                                 @Override
-                                protected void init(final Object ... initArgs) {
+                                protected void init(final Object... initArgs) {
 
                                     $$(pc_photo_permalink).setAttribute(MarkupTag.A.href(), "");
                                     $$(pc_photo).setAttribute(MarkupTag.A.src(), publicPhoto.getPublicPhotoURLPath());

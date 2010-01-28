@@ -3,6 +3,8 @@ package ai.ilikeplaces.util;
 import ai.ilikeplaces.doc.License;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 
 import javax.persistence.*;
 
@@ -10,22 +12,48 @@ import javax.persistence.*;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class EntityLifeCyleListener {
 
+    Marker marker = MarkerFactory.getMarker("Life");
+
+    public static final RefObj<Boolean> PRE_ACTIONS = new Obj<Boolean>(true) {
+
+        @Override
+        public void setObj(final Boolean status) {
+            if (status != null) {
+                obj = status;
+            } else {
+                throw new SecurityException("SORRY! YOU CANNOT ASSIGN A NULL.");
+            }
+        }
+    };
+
+    public static final RefObj<Boolean> POST_ACTIONS = new Obj<Boolean>(true) {
+
+        @Override
+        public void setObj(final Boolean status) {
+            if (status != null) {
+                obj = status;
+            } else {
+                throw new SecurityException("SORRY! YOU CANNOT ASSIGN A NULL.");
+            }
+        }
+    };
+
     public EntityLifeCyleListener() {
-        //logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", EntityLifeCyleListener.class, this.hashCode());
     }
 
     @PrePersist
     public void PrePersist(final Object entity) {
-        //logger.debug("PrePersist:{}.", entity);
+        if (PRE_ACTIONS.getObj()) {
+            logger.debug(marker, "PrePersist:{}.", entity);
+        }
     }
 
     @PostPersist
     public void PostPersist(final Object entity) {
-        logger.debug("PostPersist:{}.", entity);
+        //logger.debug("PostPersist:{}.", entity);
 
     }
 
@@ -37,25 +65,29 @@ final public class EntityLifeCyleListener {
 
     @PreUpdate
     public void PreUpdate(final Object entity) {
-        //logger.debug("PreUpdate:{}.", entity);
+        if (PRE_ACTIONS.getObj()) {
+            logger.debug(marker,"PreUpdate:{}.", entity);
+        }
 
     }
 
     @PostUpdate
     public void PostUpdate(final Object entity) {
-        logger.debug("PostUpdate:{}.", entity);
+        //logger.debug("PostUpdate:{}.", entity);
 
     }
 
     @PreRemove
     public void PreRemove(final Object entity) {
-        //logger.debug("PreRemove:{}.", entity);
+        if (PRE_ACTIONS.getObj()) {
+            logger.debug(marker,"PreRemove:{}.", entity);
+        }
 
     }
 
     @PostRemove
     public void PostRemove(final Object entity) {
-        logger.debug("PostRemove:{}.", entity);
+        //logger.debug("PostRemove:{}.", entity);
 
     }
 

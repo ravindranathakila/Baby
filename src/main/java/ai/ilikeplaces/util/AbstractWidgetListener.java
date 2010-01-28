@@ -3,6 +3,7 @@ package ai.ilikeplaces.util;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.servlets.Controller;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServlet;
@@ -11,7 +12,7 @@ import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
@@ -53,13 +54,16 @@ public abstract class AbstractWidgetListener {
     final private static String Id = "id";
     private boolean visible = true;
 
+
     /**
      * @param itsNatDocument__
      * @param page__
      * @param appendToElement__
      */
+    @WARNING(warning = "If you want your variables initialized by the time you reach registereventlisteners, do the asignmen in init, NOT the implemented subclass constructer" +
+            "which runs as super, init, registereventlisteners and THEN the remainder of the constructer.")
     public AbstractWidgetListener(final ItsNatDocument itsNatDocument__, final Page page__, final Element appendToElement__, final Object... initArgs) {
-        
+
         instanceId = InstanceCounter_++;
         page = page__;
         this.itsNatDocument_ = itsNatDocument__;
@@ -194,11 +198,19 @@ public abstract class AbstractWidgetListener {
     }
 
     final protected void clear(final Element element__) {
-        final NodeList childNodes = element__.getChildNodes();
-        for (int i = 0; i < childNodes.getLength(); i++) {
-            element__.removeChild(childNodes.item(i));
+        final Node owner = (Node) element__;
+        int i = 1;
+        while (owner.hasChildNodes()) {
+            owner.removeChild(owner.getFirstChild());
+            logger.debug("LOOP:" + i++);
         }
+//        if (owner.hasChildNodes()) {
+//            final NodeList childNodes = element__.getChildNodes();
+//            for (int i = 0; i < childNodes.getLength(); i++) {
+//                element__.removeChild(childNodes.item(i));
+//            }
+//        }
     }
 
-    final static Logger logger = LoggerFactory.getLogger(AbstractWidgetListener.class);
+    final static protected Logger logger = LoggerFactory.getLogger(AbstractWidgetListener.class);
 }

@@ -4,9 +4,11 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.validators.faces.ValidatorFace;
+import ai.ilikeplaces.logic.validators.unit.Info;
+import ai.ilikeplaces.logic.validators.unit.SimpleName;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
+import net.sf.oval.Validator;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -29,9 +31,9 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 @OK
 abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
-    RefStringFace privateLocationName = null;
+    RefObj<String> privateLocationName = null;
 
-    RefStringFace privateLocationInfo = null;
+    RefObj<String> privateLocationInfo = null;
 
     RefString humanId = null;
 
@@ -40,6 +42,7 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
     /**
      * @param itsNatDocument__
      * @param appendToElement__
+     * @param humanId__
      */
     public PrivateLocationCreate(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final String humanId__) {
         super(itsNatDocument__, Page.PrivateLocationCreate, appendToElement__, humanId__);
@@ -51,8 +54,10 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
     @Override
     protected void init(final Object... initArgs) {
         this.humanId = new RefString((String) initArgs[0]);
-        this.privateLocationName = new RefString(null);
-        this.privateLocationInfo = new RefString(null);
+
+        this.privateLocationName = new SimpleName();
+
+        this.privateLocationInfo = new Info();
     }
 
     @Override
@@ -60,40 +65,40 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateName), EventType.blur.toString(), new EventListener() {
 
-            final RefStringFace myprivateLocationName = privateLocationName;
+            final RefObj<String> myprivateLocationName = privateLocationName;
+            final Validator v = new Validator();
+            RefObj<String> name;
 
             @Override
             public void handleEvent(final Event evt_) {
-                final String name = ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value());
+                name = new SimpleName(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
                 logger.debug("{}", name);
 
-                ReturnParamsFace returnParams = ((Factory<ValidatorFace>) ValidatorFace.impl.getFactory()).getInstance().isPrivateLocationName(name).returnValue();
-
-                if ((Boolean) returnParams.get(0)) {
-                    myprivateLocationName.setString((String) returnParams.get(1));
+                if (name.validate(v) == 0) {
+                    myprivateLocationName.setObj(name.getObj());
                     clear($$(privateLocationCreateNotice));
                 } else {
-                    $$(privateLocationCreateNotice).setTextContent((String) returnParams.get(1));
+                    $$(privateLocationCreateNotice).setTextContent(name.getViolationAsString());
                 }
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateInfo), EventType.blur.toString(), new EventListener() {
 
-            final RefStringFace myprivateLocationInfo = privateLocationInfo;
+            final RefObj<String> myprivateLocationInfo = privateLocationInfo;
+            final Validator v = new Validator();
+            RefObj<String> info;
 
             @Override
             public void handleEvent(final Event evt_) {
-                final String info = ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value());
+                info = new Info(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
                 logger.debug("{}", info);
 
-                ReturnParamsFace returnParams = ((Factory<ValidatorFace>) ValidatorFace.impl.getFactory()).getInstance().isPrivateLocationName(info).returnValue();
-
-                if ((Boolean) returnParams.get(0)) {
-                    myprivateLocationInfo.setString((String) returnParams.get(1));
+                if (info.validate(v) == 0) {
+                    myprivateLocationInfo.setObj(info.getObj());
                     clear($$(privateLocationCreateNotice));
                 } else {
-                    $$(privateLocationCreateNotice).setTextContent((String) returnParams.get(1));
+                    $$(privateLocationCreateNotice).setTextContent(info.getViolationAsString());
                 }
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
@@ -101,16 +106,17 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateSave), EventType.click.toString(), new EventListener() {
 
             final RefString myhumanId = humanId;
-            final RefStringFace myprivateLocationName = privateLocationName;
-            final RefStringFace myprivateLocationInfo = privateLocationInfo;
+            final RefObj<String> myprivateLocationName = privateLocationName;
+            final RefObj<String> myprivateLocationInfo = privateLocationInfo;
+            final Validator v = new Validator();
 
             @Override
             public void handleEvent(final Event evt_) {
                 logger.debug("{}", "HELLO! CLICKED SAVE.");
 
-                if (myprivateLocationName.getString() != null && myprivateLocationInfo.getString() != null &&
-                        !myprivateLocationName.getString().equals("") && !myprivateLocationInfo.getString().equals("")) {
-                    final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).cPrivateLocation(myhumanId.getString(), myprivateLocationName.getString(), myprivateLocationInfo.getString());
+
+                if (myprivateLocationName.validate(v) == 0 && myprivateLocationInfo.validate(v) == 0) {
+                    final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).cPrivateLocation(myhumanId.getString(), myprivateLocationName.getObj(), myprivateLocationInfo.getObj());
                     if (r.returnStatus() == 0) {
                         logger.debug("{}", "HELLO! SAVED.");
                         remove(evt_.getTarget(), EventType.click, this);
@@ -120,10 +126,8 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
                         $$(privateLocationCreateNotice).setTextContent(r.returnMsg());
                     }
                 } else {
-                    $$(privateLocationCreateNotice).setTextContent("Please specify BOTH name AND information.");
+                    //Validation message should've already been given to the users by above individual listeners
                 }
-
-
             }
         }, false);
     }

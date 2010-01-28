@@ -14,7 +14,8 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n%n</Pattern>
+            <!--Pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n%n</Pattern-->
+            <Pattern>%thread>%logger{10}:%line>%msg%n%n</Pattern>
         </layout>
     </appender>
 
