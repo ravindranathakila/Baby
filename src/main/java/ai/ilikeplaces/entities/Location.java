@@ -28,18 +28,21 @@ import java.util.List;
                 query = "SELECT loc FROM Location loc WHERE loc.locationName = :locationName"),
         @NamedQuery(name = "FindAllLocationNamesByLikeName",
                 query = "SELECT loc.locationName FROM Location loc WHERE UPPER(loc.locationName) LIKE :locationName")})
-public class Location implements Serializable {
+public class Location implements Serializable, Clearance {
 
     final static Logger logger = LoggerFactory.getLogger(Location.class.getName());
     final static public String FindAllLocationsByName = "FindAllLocationsByName";
     final static public String FindAllLocationsByLikeName = "FindAllLocationNamesByLikeName";
     final static public String LocationName = "locationName";
     final static private long serialVersionUID = 1L;
+
     private Long locationId;
+    private Long clearance = 0L;
     private String locationName;
     private String locationInfo;
     private Location locationSuperSet;
     private List<PublicPhoto> publicPhotos;
+
 
     /**
      * @return locationId
@@ -55,6 +58,16 @@ public class Location implements Serializable {
      */
     public void setLocationId(final Long locationId__) {
         this.locationId = locationId__;
+    }
+
+    @Override
+    public Long getClearance() {
+        return clearance;
+    }
+
+    @Override
+    public void setClearance(final Long clearance) {
+        this.clearance = clearance;
     }
 
     /**

@@ -1,5 +1,7 @@
 package ai.ilikeplaces.entities;
 
+import ai.ilikeplaces.doc.License;
+
 import javax.persistence.*;
 
 /**
@@ -74,7 +76,7 @@ import javax.persistence.*;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 public class HumansNet implements HumanPkJoinFace {
 
@@ -102,6 +104,9 @@ public class HumansNet implements HumanPkJoinFace {
         this.human = human;
     }
 
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     public HumansNetPeople getHumansNetPeople() {
         return humansNetPeople;
     }

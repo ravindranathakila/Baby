@@ -190,11 +190,14 @@
             <version>1.4.2</version>
             <scope>provided</scope>
         </dependency>
-        <!--dependency>
+        <dependency>
             <groupId>net.sf.oval</groupId>
             <artifactId>oval</artifactId>
             <version>1.4</version>
-        </dependency-->
+            <scope>system</scope>
+            <systemPath>D:/1/adimpression/oval/oval-1.40-with-dependencies/oval-1.40.jar
+            </systemPath>            
+        </dependency>
     </dependencies>
     <build>
         <resources>

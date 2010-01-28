@@ -12,7 +12,7 @@ import java.io.Serializable;
 // @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners(EntityLifeCyleListener.class)
-public class Human implements HumanIdFace, Serializable {
+public class Human implements HumanIdFace, Serializable, Clearance {
 
     private String humanId;
 
@@ -23,6 +23,10 @@ public class Human implements HumanIdFace, Serializable {
      * Important: This is also the switch for the privacy policy.
      */
     private Boolean humanAlive;
+
+    private Long clearance = 0L;
+
+
     private HumansAuthentication humansAuthentication;
     private HumansIdentity humansIdentity;
     private HumansPublicPhoto humansPublicPhoto;
@@ -46,6 +50,16 @@ public class Human implements HumanIdFace, Serializable {
 
     public void setHumanAlive(final Boolean humanAlive) {
         this.humanAlive = humanAlive;
+    }
+
+    @Override
+    public Long getClearance() {
+        return clearance;
+    }
+
+    @Override
+    public void setClearance(final Long clearance) {
+        this.clearance = clearance;
     }
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -123,6 +137,7 @@ public class Human implements HumanIdFace, Serializable {
     public String toString() {
         return "Human{" +
                 "humanId='" + humanId + '\'' +
+                ", clearance=" + clearance +
                 ", humanAlive=" + humanAlive +
                 '}';
     }

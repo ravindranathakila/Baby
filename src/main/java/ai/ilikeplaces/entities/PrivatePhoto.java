@@ -13,7 +13,6 @@ import java.util.Date;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 public class PrivatePhoto implements Serializable {
 

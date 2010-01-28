@@ -35,6 +35,58 @@ final public class Controller extends HttpServletWrapper {
     public enum Page implements PageFace {
 
 
+        FindFriend("ai/ilikeplaces/widgets/friend/friend_find.xhtml",
+                Controller.Page.friendFindSearchTextInput,
+                Controller.Page.friendFindSearchButtonInput,
+                Controller.Page.friendFindSearchResults
+        ) {
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocFindFriend;
+            }},
+
+        FriendAdd("ai/ilikeplaces/widgets/friend/friend_add.xhtml",
+                Controller.Page.friendAddAddButton,
+                Controller.Page.friendAddBirthYearLabel,
+                Controller.Page.friendAddFirstNameLabel,
+                Controller.Page.friendAddLastNameLabel,
+                Controller.Page.friendAddLocationLabel
+        ) {
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocFriendAdd;
+            }},
+
+        FriendDelete("ai/ilikeplaces/widgets/friend/friend_delete.xhtml",
+                Controller.Page.friendDeleteAddButton,
+                Controller.Page.friendDeleteBirthYearLabel,
+                Controller.Page.friendDeleteFirstNameLabel,
+                Controller.Page.friendDeleteLastNameLabel,
+                Controller.Page.friendDeleteLocationLabel
+        ) {
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocFriendDelete;
+            }},
+
         Organize(null
         ) {
 
@@ -46,6 +98,19 @@ final public class Controller extends HttpServletWrapper {
             @Override
             public String toString() {
                 return DocOrganize;
+            }},
+
+        Friends(null
+        ) {
+
+            @Override
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "page/_friends";
+            }
+
+            @Override
+            public String toString() {
+                return DocFriends;
             }},
 
         Skeleton("ai/ilikeplaces/Skeleton.xhtml",
@@ -290,8 +355,37 @@ final public class Controller extends HttpServletWrapper {
                 return "DocSignInOn";
             }
         };
+
+        /*FindFriend Page*/
+        final static public String DocFindFriend = "DocFindFriend";
+        /*FindFriend IDs*/
+        final static public String friendFindSearchTextInput = "friendFindSearchTextInput";
+        final static public String friendFindSearchButtonInput = "friendFindSearchButtonInput";
+        final static public String friendFindSearchResults = "friendFindSearchResults";
+
+        /*AddFriend Page*/
+        final static public String DocFriendAdd = "DocFriendAdd";
+        /*AddFriend IDs*/
+        final static public String friendAddFirstNameLabel = "friendAddFirstNameLabel";
+        final static public String friendAddLastNameLabel = "friendAddLastNameLabel";
+        final static public String friendAddBirthYearLabel = "friendAddBirthYearLabel";
+        final static public String friendAddLocationLabel = "friendAddLocationLabel";
+        final static public String friendAddAddButton = "friendAddAddButton";
+
+        /*DeleteFriend Page*/
+        final static public String DocFriendDelete = "DocFriendDelete";
+        /*DeleteFriend IDs*/
+        final static public String friendDeleteFirstNameLabel = "friendDeleteFirstNameLabel";
+        final static public String friendDeleteLastNameLabel = "friendDeleteLastNameLabel";
+        final static public String friendDeleteBirthYearLabel = "friendDeleteBirthYearLabel";
+        final static public String friendDeleteLocationLabel = "friendDeleteLocationLabel";
+        final static public String friendDeleteAddButton = "friendDeleteDeleteButton";
+
         /*Organize Page*/
         final static public String DocOrganize = "DocOrganize";
+
+        /*FriendFind Page*/
+        final static public String DocFriends = "DocFriends";
 
         /*Skeleton Page*/
         final static public String DocSkeleton = "DocPrivateLocationCreate";
@@ -370,6 +464,7 @@ final public class Controller extends HttpServletWrapper {
         final static public String Main_right_column = "Main_right_column";
         final static public String Main_sidebar = "Main_sidebar";
         final static public String Main_login_widget = "Main_login_widget";
+
         /*PhotoCRUD Specific IDs*/
         final static public String pc_photo_title = "pc_photo_title";
         final static public String pc_close = "pc_close";
@@ -406,11 +501,19 @@ final public class Controller extends HttpServletWrapper {
     final PageFace photoCRUD = Page.PhotoCRUD;
     final PageFace photo$Description = Page.Photo$Description;
     final PageFace signInOn = Page.SignInOn;
+
     final PageFace privateLocationCreate = Page.PrivateLocationCreate;
     final PageFace privateLocationView = Page.PrivateLocationView;
     final PageFace privateLocationDelete = Page.PrivateLocationDelete;
-    final PageFace organize = Page.Organize;
+
     final PageFace skeleton = Page.Skeleton;
+    final PageFace organize = Page.Organize;
+    final PageFace findFriend = Page.Friends;
+
+    final PageFace findFriendWidget = Page.FindFriend;
+    final PageFace friendAdd = Page.FriendAdd;
+    final PageFace friendDelete = Page.FriendDelete;
+
 
     /**
      * @param serveletConfig__
@@ -475,6 +578,8 @@ final public class Controller extends HttpServletWrapper {
             inhs__.registerItsNatDocumentTemplate(photoCRUD.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(main)).addItsNatServletRequestListener(new ListenerHuman());
 
             inhs__.registerItsNatDocumentTemplate(organize.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerOrganize());
+
+            inhs__.registerItsNatDocumentTemplate(findFriend.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerFriends());
         }
 
         registerDocumentFragmentTemplatesAKAWidgets:
@@ -490,6 +595,12 @@ final public class Controller extends HttpServletWrapper {
             inhs__.registerItsNatDocFragmentTemplate(privateLocationView.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateLocationView));
 
             inhs__.registerItsNatDocFragmentTemplate(privateLocationDelete.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateLocationDelete));
+
+            inhs__.registerItsNatDocFragmentTemplate(findFriendWidget.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(findFriendWidget));
+
+            inhs__.registerItsNatDocFragmentTemplate(friendAdd.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(friendAdd));
+
+            inhs__.registerItsNatDocFragmentTemplate(friendDelete.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(friendDelete));
         }
 
 //        final PageFace photoUpload = Page.PhotoUpload;
@@ -540,6 +651,9 @@ final public class Controller extends HttpServletWrapper {
                     staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0007"));
                 } else if (isOrganizePage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocOrganize);/*Framework specific*/
+                    staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0013"));
+                } else if (isFriendsPage(URL__)) {
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocFriends);/*Framework specific*/
                     staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0013"));
                 } else {
                     request__.getServletRequest().setAttribute("location", "main");
@@ -605,6 +719,10 @@ final public class Controller extends HttpServletWrapper {
 
     static private boolean isOrganizePage(final String URL_) {
         return (URL_.startsWith("_org"));
+    }
+
+    static private boolean isFriendsPage(final String URL_) {
+        return (URL_.startsWith("_friends"));
     }
 
     static private boolean isSignOut(final String URL_) {

@@ -218,7 +218,7 @@ final public class ServletSignup extends HttpServlet {
             }
 
             try {
-                DB.getHumanCRUDHumanLocal(true).doCHuman(username, password);
+                DB.getHumanCRUDHumanLocal(true).doCHuman(username, password, email, gender, dateOfBirth);
             } catch (
                     @NOTE(note = "COINCIDENCE. ANOTHER USER SIGNED UP IN SAME NAME WHILE THIS USER WAS DOING IT.")
                     final IllegalAccessException e) {

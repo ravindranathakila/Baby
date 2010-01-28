@@ -3,12 +3,14 @@ package ai.ilikeplaces.logic.verify;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.logic.crud.HumanCRUDHumanLocal;
 import ai.ilikeplaces.logic.verify.util.Verify;
 import ai.ilikeplaces.rbs.RBGet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import java.lang.reflect.InvocationTargetException;
@@ -18,12 +20,13 @@ import java.lang.reflect.Method;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Startup
 @Singleton
 @NOTE(note = "USE s.o.p FOR LOGGING AS LOGGER MIGHT FAIL TOO!")
 public class StartupILikePlaces implements StartupILikePlacesLocal {
+    @EJB
+    private HumanCRUDHumanLocal humanCRUDHumanLocal_;
 
     public StartupILikePlaces() {
     }
@@ -55,6 +58,21 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         System.out.println("STARTING TO VERIFY CLASSES");
         System.out.println("");
 
+        try {
+            try {
+                System.out.println("VERIFICATION OF " + humanCRUDHumanLocal_.getClass().getSimpleName() + ":" +
+                        humanCRUDHumanLocal_.getClass().getMethod("verify", new Class[]{}).invoke(humanCRUDHumanLocal_, new Object[]{}));
+            } catch (IllegalAccessException e) {
+                logger.error("{}", e);
+            } catch (InvocationTargetException e) {
+                logger.error("{}", e);
+            } catch (NoSuchMethodException e) {
+                logger.error("{}", e);
+            }
+        } catch (final Exception e) {
+            e.printStackTrace(System.out);
+        }
+
         @TODO(task = "LOAD FROM PROPERTIES FILE WHICH MAKES IT POSSIBLE TO DEPLOY ON ERRORS" +
                 "PROPERTIES FILE SHOULD BE EDITABLE, HENCE IN AN ACCESSIBLE PATH")
         String[] verifyClasses = {RBGet.class.getName()};
@@ -63,30 +81,34 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
             System.out.println("");
             try {
                 try {
-                    final Method m = Class.forName(verifyClass).getMethod("verify", new Class[]{});
-                    if (Verify.class.isInstance(verifyClass)) {
-                        try {
-                            System.out.println("VERIFICATION OF " + verifyClass + ":" + m.invoke(Class.forName(verifyClass).newInstance(), new Object[]{}));
-                        } catch (final IllegalAccessException e) {
-                            e.printStackTrace(System.out);
-                        } catch (final InvocationTargetException e) {
-                            e.printStackTrace(System.out);
-                        } catch (final InstantiationException e) {
-                            e.printStackTrace(System.out);
+                    try {
+                        final Method m = Class.forName(verifyClass).getMethod("verify", new Class[]{});
+                        if (Verify.class.isInstance(verifyClass)) {
+                            try {
+                                System.out.println("VERIFICATION OF " + verifyClass + ":" + m.invoke(Class.forName(verifyClass).newInstance(), new Object[]{}));
+                            } catch (final IllegalAccessException e) {
+                                e.printStackTrace(System.out);
+                            } catch (final InvocationTargetException e) {
+                                e.printStackTrace(System.out);
+                            } catch (final InstantiationException e) {
+                                e.printStackTrace(System.out);
+                            }
+                        } else { /*Assumed to be a static method, which cannot implement the interface*/
+                            try {
+                                System.out.println("VERIFICATION OF " + verifyClass + ":" + m.invoke(null, new Object[]{}));
+                            } catch (final IllegalAccessException e) {
+                                e.printStackTrace(System.out);
+                            } catch (final InvocationTargetException e) {
+                                e.printStackTrace(System.out);
+                            }
                         }
-                    } else { /*Assumed to be a static method, which cannot implement the interface*/
-                        try {
-                            System.out.println("VERIFICATION OF " + verifyClass + ":" + m.invoke(null, new Object[]{}));
-                        } catch (final IllegalAccessException e) {
-                            e.printStackTrace(System.out);
-                        } catch (final InvocationTargetException e) {
-                            e.printStackTrace(System.out);
-                        }
+                    } catch (final NoSuchMethodException e) {
+                        e.printStackTrace(System.out);
                     }
-                } catch (final NoSuchMethodException e) {
+                } catch (final ClassNotFoundException e) {
                     e.printStackTrace(System.out);
                 }
-            } catch (final ClassNotFoundException e) {
+            } catch (final Exception e) {
                 e.printStackTrace(System.out);
             }
         }
@@ -96,7 +118,7 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
 
         System.out.println(RBGet.config.getString("bn"));
         System.out.println(RBGet.config.getString("codename"));
-        
+
         System.out.println("********* ********* ********* ********* *********");
         System.out.println("********* START UP CHECK DONE ILIKEPLACES");
         System.out.println("********* ********* ********* ********* *********");

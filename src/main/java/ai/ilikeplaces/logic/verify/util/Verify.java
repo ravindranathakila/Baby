@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.verify.util;
 
 import ai.ilikeplaces.doc.CONVENTION;
+import ai.ilikeplaces.doc.License;
 
 /**
  * Created by IntelliJ IDEA.
@@ -9,7 +10,7 @@ import ai.ilikeplaces.doc.CONVENTION;
  * Time: 6:12:52 PM
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @CONVENTION(convention = "IF YOU HAVE A STATIC ONLY CLASS, THEN SIMPLY DEFINE THIS METHOD AS STATIC WITH THE REST" +
         "OF THE SIGNATURE SAME. DURING VERIFICATION, IT WILL BE CALLED IF REGISTERED REGARDLESS OF WHETHER IT IMPLEMENTS" +
         "THIS INTEFACE OR NOT.")
