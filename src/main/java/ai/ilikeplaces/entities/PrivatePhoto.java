@@ -1,13 +1,14 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.FieldPreamble;
-import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.exception.PendingEqualsMethodException;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Ravindranath Akila
@@ -19,11 +20,7 @@ public class PrivatePhoto implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long privatePhotoId;
 
-    @FieldPreamble(description = "Put in folders?" +
-            "Folders might be renamed due to change in location names if you use location names in folders." +
-            "Well having the location name in the file name is important for SEO. e.g. paris.jpg" +
-            "Would an approach like {random_number}_location.jpg work?" +
-            "Would an approach like {sequence_number}_location.jpg work?()")
+    @FieldPreamble(description = "CDN security issue. Put in folders?")
     private String privatePhotoFilePath;
 
     @FieldPreamble(description = "The path should be very random as it will be exposed to the www." +
@@ -34,22 +31,24 @@ public class PrivatePhoto implements Serializable {
 
     private String privatePhotoDescription;
 
-    @FieldPreamble(description = "Required to calculate ranking")
+    @FieldPreamble(description = "Required to show users")
     private Date privatePhotoUploadDate;
 
-    @FieldPreamble(description = "Required to calculate rank position")
+    @FieldPreamble(description = "Required to show users")
     private Date privatePhotoTakenDate;
-
-    @FieldPreamble(description = "Required when rebuilding a database from scratch someday." +
-            "Since the whole concept of ilikeplaces relies on content richness, preserving this in this table important.")
-    private Location privatePhotoOfLocation;
 
     @FieldPreamble(description = "Who uploaded this image? Wil he request to delete it? " +
             "Privacy important? " +
             "Lets preserve the info.")
     private HumansPrivatePhoto humansPrivatePhoto;
 
+    @NOTE(note = "Rank. Calculated by Referrer Ranking and Hits.")
+    private long hits;
+
     private Location location;
+
+    private List<Album> albums;
+    final static public String albumsCol = "albums";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -103,14 +102,7 @@ public class PrivatePhoto implements Serializable {
         this.privatePhotoFilePath = privatePhotoFilePath;
     }
 
-    @ManyToOne
-    public Location getPrivatePhotoOfLocation() {
-        return privatePhotoOfLocation;
-    }
 
-    public void setPrivatePhotoOfLocation(Location privatePhotoOfLocation) {
-        this.privatePhotoOfLocation = privatePhotoOfLocation;
-    }
 
     @Temporal(javax.persistence.TemporalType.DATE)
     public Date getPrivatePhotoTakenDate() {
@@ -138,6 +130,25 @@ public class PrivatePhoto implements Serializable {
         this.privatePhotoUploadDate = privatePhotoUploadDate;
     }
 
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
+    @WARNING(warning = "Owning as deleting a photo should automatically reflect in albums, not vice versa.")
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    public List<Album> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
+    }
+
+    public long getHits() {
+        return hits;
+    }
+
+    public void setHits(long hits) {
+        this.hits = hits;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -151,7 +162,7 @@ public class PrivatePhoto implements Serializable {
     @SuppressWarnings({"EqualsWhichDoesntCheckParameterClass", "EqualsWhichDoesntCheckParameterClass"})
     @TODO(task = "DO AS IN PublicPhoto.class, UUID")
     public boolean equals(Object object) {
-        throw new UnsupportedOperationException("PLEASE PROVIDE THE BODY OF THIS EQUALS METHOD!");
+        throw new PendingEqualsMethodException();
     }
 
     /**

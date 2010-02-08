@@ -31,20 +31,21 @@ public class
     final static public ResourceBundle expMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.ExceptionMsgs");
     final static public ResourceBundle l33t = ResourceBundle.getBundle("ai.ilikeplaces.rbs.l33t");
 
+    final static Logger logger = LoggerFactory.getLogger(RBGet.class);
+
     static {
         try {
             globalConfig = ResourceBundle.getBundle("GlobalConfig");
         } catch (@NOTE(note = "WE DON'T NEED THE STACK TRACE")
         final MissingResourceException e_) {
-            System.out.println(e_.getMessage());
+            logger.error("PLEASE INCLUDE GLOBALCONFIG.PROPERTIES IN WEB SERVER CLASSPATH. FALLING BACK TO USING INTERNAL CONFIG.", e_);
+            globalConfig = ResourceBundle.getBundle("ai.ilikeplaces.rbs.Config");
         }
     }
 
     private RBGet() {
         logger.debug(logMsgs.getString("common.Constructor.Init"), RBGet.class, this.hashCode());
     }
-
-    final static Logger logger = LoggerFactory.getLogger(RBGet.class);
 
 
     /**

@@ -1,12 +1,11 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.ilikeplaces.entities.PublicPhoto;
+import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.Location;
+import ai.ilikeplaces.logic.crud.unit.RLocationLocal;
 import ai.ilikeplaces.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ai.ilikeplaces.doc.*;
-import ai.ilikeplaces.entities.Location;
-import ai.ilikeplaces.logic.crud.unit.RLocationLocal;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

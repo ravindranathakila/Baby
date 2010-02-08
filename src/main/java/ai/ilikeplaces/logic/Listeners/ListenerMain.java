@@ -5,13 +5,15 @@ import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.entities.PublicPhoto;
-import ai.ilikeplaces.logic.Listeners.widgets.*;
+import ai.ilikeplaces.logic.Listeners.widgets.Photo$Description;
+import ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationCreate;
+import ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationDelete;
+import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.util.AbstractListener;
-import ai.ilikeplaces.util.MarkupTag;
-import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -20,6 +22,9 @@ import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
 import java.util.ArrayList;
@@ -59,15 +64,25 @@ public class ListenerMain implements ItsNatServletRequestListener {
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor + JSCodeToSend.FnLocationId + JSCodeToSend.FnLocationName + JSCodeToSend.FnSetTitle);
                 final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
+
+                logTheQueryLocationPerUser:
+                {
+                    if (getUsername() != null) {
+                        Loggers.USER.info(getUsername() + " queries for location " + location);
+                    } else {
+                        Loggers.NON_USER.info("queries for location " + location);
+                    }
+                }
+
                 layoutNeededForAllPages:
                 {
                     setLoginWidget:
                     {
                         try {
-                            new SignInOn(itsNatDocument__, $(Main_login_widget)) {
+                            new SignInOn(itsNatDocument__, $(Main_login_widget), new HumanId(getUsername())) {
                             };
                         } catch (final Throwable t) {
-                            logger.error("", t);
+                            Loggers.EXCEPTION.error("", t);
                         }
                     }
 
@@ -94,7 +109,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 $(Main_othersidebar_identity).appendChild(locationElem);
                             }
                         } catch (final Throwable t) {
-                            logger.error("", t);
+                            Loggers.EXCEPTION.error("", t);
                         }
 
                     }
@@ -107,7 +122,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 $(Main_othersidebar_profile_link).setAttribute("href", Controller.Page.signup.getURL());
                             }
                         } catch (final Throwable t) {
-                            logger.error("", t);
+                            Loggers.EXCEPTION.error("", t);
                         }
                     }
                 }
@@ -125,7 +140,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 displayBlock($(Main_othersidebar_upload_file_sh));
                             }
                         } catch (final Throwable t) {
-                            logger.error("", t);
+                            Loggers.EXCEPTION.error("", t);
                         }
                     }
 
@@ -138,7 +153,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             hiddenLocationIdInputTag.setAttribute(MarkupTag.INPUT.value(), existingLocation_.getLocationId().toString());
                             hTMLDocument__.getBody().appendChild(hiddenLocationIdInputTag);
                         } catch (final Throwable t) {
-                            logger.error("", t);
+                            Loggers.EXCEPTION.error("", t);
                         }
                     }
 
@@ -154,7 +169,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                             "You are at " + existingLocation_.getLocationName() + " in " + existingLocation_.getLocationSuperSet().getLocationName() + ". ");
                             hTMLDocument__.getBody().appendChild(hiddenLocationIdInputTag);
                         } catch (final Throwable t) {
-                            logger.error("", t);
+                            Loggers.EXCEPTION.error("", t);
                         }
                     }
 
@@ -163,7 +178,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         try {
                             final String pageTitle = existingLocation_.getLocationName();
                         } catch (final Throwable t) {
-                            logger.error("", t);
+                            Loggers.EXCEPTION.error("", t);
                         }
                     }
 
@@ -172,7 +187,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         try {
                             $(Main_center_main_location_title).setTextContent("This is " + existingLocation_.getLocationName() + " of " + existingLocation_.getLocationSuperSet());
                         } catch (final Throwable t) {
-                            logger.error("", t);
+                            Loggers.EXCEPTION.error("", t);
                         }
                     }
 
@@ -183,15 +198,15 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 new PrivateLocationCreate(itsNatDocument__, $(Main_center_main), getUsername()) {
                                 };
                             } catch (final Throwable t) {
-                                logger.error("", t);
+                                Loggers.EXCEPTION.error("", t);
                             }
 
-                            for (final PrivateLocation privateLocation : DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(getUsername()).getHumansPrivateLocation().getPrivateLocations()) {
+                            for (final PrivateLocation privateLocation : DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(getUsername()).getHumansPrivateLocation().getPrivateLocationsViewed()) {
                                 try {
                                     new PrivateLocationDelete(itsNatDocument__, $(Main_center_main), getUsername(), privateLocation.getPrivateLocationId()) {
                                     };
                                 } catch (final Throwable t) {
-                                    logger.error("", t);
+                                    Loggers.EXCEPTION.error("", t);
                                 }
                             }
                         }
@@ -233,7 +248,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                     };
                                 }
                             } catch (final Throwable t) {
-                                logger.error("", t);
+                                Loggers.EXCEPTION.error("", t);
                             }
                         }
                     }
@@ -252,7 +267,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 displayBlock($(Main_notice_sh));
                             }
                         } catch (final Throwable t) {
-                            logger.error("", t);
+                            Loggers.EXCEPTION.error("", t);
                         }
                     }
                 }

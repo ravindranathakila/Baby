@@ -1,9 +1,9 @@
 package ai.ilikeplaces.doc;
 
+import javax.ejb.TransactionAttributeType;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import javax.ejb.TransactionAttributeType;
 
 /**
  *

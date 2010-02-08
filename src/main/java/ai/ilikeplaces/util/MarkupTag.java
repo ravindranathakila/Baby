@@ -96,6 +96,21 @@ public enum MarkupTag implements MarkupTagFace {
         }
     },
 
+    LI() {
+        @Override
+        public String toString() {
+            return "LI";
+        }
+        @Override
+        public String ul() {
+            return "UL";
+        }
+        @Override
+        public String ol() {
+            return "OL";
+        }
+    },
+
     DIV() {
 
         @Override
@@ -161,6 +176,16 @@ public enum MarkupTag implements MarkupTagFace {
     @Override
     public String tag() {
         return toString();
+    }
+
+    @Override
+    public String ul() {
+        throw new UnsupportedOperationException(ExceptionMsg);
+    }
+
+    @Override
+    public String ol() {
+        throw new UnsupportedOperationException(ExceptionMsg);
     }
 }
 

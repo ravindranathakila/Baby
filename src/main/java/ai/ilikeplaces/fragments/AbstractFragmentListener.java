@@ -1,21 +1,10 @@
 package ai.ilikeplaces.fragments;
 
-import ai.ilikeplaces.servlets.Controller;
-import java.util.Map;
-import org.itsnat.core.ItsNatDocument;
-import org.itsnat.core.ItsNatServlet;
-import org.itsnat.core.ItsNatServletRequest;
-import org.itsnat.core.html.ItsNatHTMLDocFragmentTemplate;
-import org.itsnat.core.html.ItsNatHTMLDocFragmentTemplate;
-import org.itsnat.core.html.ItsNatHTMLDocument;
-import org.w3c.dom.DocumentFragment;
-import org.w3c.dom.html.HTMLDocument;
-import org.w3c.dom.Element;
-
 /**
  *
  * @author Ravindranath Akila
  */
+@Deprecated
 public abstract class AbstractFragmentListener {
 
     /**

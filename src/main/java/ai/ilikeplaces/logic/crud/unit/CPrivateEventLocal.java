@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud.unit;
 
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivateEvent;
-import ai.ilikeplaces.util.Return;
 
 import javax.ejb.Local;
 import java.util.Date;
@@ -13,10 +13,15 @@ import java.util.Date;
  * Time: 12:07:04 AM
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Local
 public interface CPrivateEventLocal {
 
-    public Return<PrivateEvent> doNTxCPrivateEvent(final String humanId, final String eventName, final String eventInfo, final Date startDate, final Date endDate);
+    public PrivateEvent doNTxCPrivateEvent(final String humanId,
+                                           final long privateLocationId,
+                                           final String eventName,
+                                           final String eventInfo,
+                                           final Date startDate,
+                                           final Date endDate);
 
 }

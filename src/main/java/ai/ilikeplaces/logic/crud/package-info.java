@@ -1,6 +1,6 @@
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @NOTE(note = "This package handles all db cruds.")
-@CONVENTION(convention = "Plenty",
+@CONVENTION(convention = "Some of these are old conventions. See crud.jpg",
         conventions = {
                 "C=Create\n"
                         + "R=Read\n"

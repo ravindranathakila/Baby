@@ -12,4 +12,11 @@ import java.lang.annotation.RetentionPolicy;
 @Documented
 @Retention(RetentionPolicy.SOURCE)
 public @interface BIDIRECTIONAL {
+    enum OWNING{
+        IS,
+        NOT,
+        TODO
+    }
+
+    public OWNING ownerside() default OWNING.TODO;
 }

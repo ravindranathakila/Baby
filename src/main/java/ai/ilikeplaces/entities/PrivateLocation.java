@@ -1,8 +1,9 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.BIDIRECTIONAL;
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
-import ai.ilikeplaces.doc.UNIDIRECTIONAL;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.util.EntityLifeCyleListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ import java.util.List;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 @Entity
 @EntityListeners(EntityLifeCyleListener.class)
@@ -43,17 +44,22 @@ public class PrivateLocation implements Serializable {
 
     /**
      * Usually other members having rights to that place.
-     * They cannot delete the location though. Only the creater can.
+     * They cannot delete the location though. Only the creator can.
      */
     private List<HumansPrivateLocation> privateLocationOwners;
+    final static public String privateLocationOwnersCOL = "privateLocationOwners";
+
+    private List<HumansPrivateLocation> privateLocationViewers;
+    final static public String privateLocationViewersCOL = "privateLocationViewers";
 
     private List<PrivateEvent> privateEvents;
+
 
     /**
      * @return privateLocationId
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getPrivateLocationId() {
         return privateLocationId;
     }
@@ -68,7 +74,7 @@ public class PrivateLocation implements Serializable {
     /**
      * @return privateLocationName
      */
-    @Column(unique = false, nullable = false)
+    @Column(unique = false, nullable = false, length = 255)
     public String getPrivateLocationName() {
         return privateLocationName;
     }
@@ -103,15 +109,9 @@ public class PrivateLocation implements Serializable {
         this.privateLocationInfo = privateLocationInfo__;
     }
 
-    @OneToMany(
-            /**
-             * (NO ALL||REMOVE)
-             * Deleting a location should not delete a user
-             * (NO PERSIST||MERGE)
-             * Creating a location should not create a user
-             */
-            cascade = CascadeType.REFRESH)
-    @UNIDIRECTIONAL
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
+    @WARNING(warning = "Owning as deleting a location should automatically reflect in humans, not vice versa.")
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     public List<HumansPrivateLocation> getPrivateLocationOwners() {
         return privateLocationOwners;
     }
@@ -120,10 +120,24 @@ public class PrivateLocation implements Serializable {
         this.privateLocationOwners = privateLocationOwners;
     }
 
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
+    @WARNING(warning = "Owning as deleting a location should automatically reflect in humans, not vice versa.")
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    public List<HumansPrivateLocation> getPrivateLocationViewers() {
+        return privateLocationViewers;
+    }
+
+    public void setPrivateLocationViewers(List<HumansPrivateLocation> privateLocationViewers) {
+        this.privateLocationViewers = privateLocationViewers;
+    }
+
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
     @OneToMany(
+            mappedBy = PrivateEvent.privateLocationCOL,
             /*All events are associated to a location*/
-            cascade = CascadeType.ALL)
-    @BIDIRECTIONAL 
+            /*No cascade ALL as we have to return an instance to the user, hence list cascading not possible.*/
+            cascade = {CascadeType.REFRESH, CascadeType.REMOVE},
+            fetch = FetchType.EAGER)
     public List<PrivateEvent> getPrivateEvents() {
         return privateEvents;
     }

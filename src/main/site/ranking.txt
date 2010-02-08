@@ -1,0 +1,36 @@
+This document ranks this software itself by standards it chooses to use.
+These standards are given below.
+Before each release, please check whether they hold good.
+
+1. Simplicity. Users navigation and usage of software, should be made to do as fewer mistakes as possible.
+
+This is for, clicks, and other user interface operations.
+You should try to make the software behave and perform heuristics in exact expectation.
+
+2. Does each component clearly state what it does?
+
+For example, a widget says "This is a trip planner", and should not say "Event Planner".
+Try to break down the users operations into a few steps if you need to simplify the messages.
+
+3. Is the business model clearly active on the interface/widget? Does it speak for itself?
+
+4. How does the interface promote Seek mode or Retention?
+
+5. Does the interface promote user tolerance? Give tolerance to take.
+
+For example, if the user enters june 21st instead of june 21, is this tolerated?
+If this cannot be done, then users will drop out of your site at strange locations.
+If the software does not tolerate, the user will not tolerate.
+
+6. In validation, if validation fails, give a clear example of the proper format.
+
+
+7. Avoid branching navigation and promote unit interfaces.
+
+8. Does the URL act as a breadcrumb.
+
+9. Does the search result in sane links?
+
+10. Does a search or navigation maximise the users probabity to find what he wants without confusion?
+
+11. Are your searches case insensitive? Did you inform the user this?

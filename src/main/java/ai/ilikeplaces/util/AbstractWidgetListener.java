@@ -96,12 +96,16 @@ public abstract class AbstractWidgetListener {
      * @param key__
      * @return Element
      */
+    @WARNING(warning="You cannot actually use this method as it will definitely throw a NPE. Check if fetching a main xhtml template element works. Should." +
+            "Nevertheless, having this is bug friendly as $ instead of $$ is an easy miss for widgets.")
+    @Deprecated
     protected final Element $(final String key__) {
         final String elementId__ = Controller.GlobalHTMLIdRegistry.get(key__);
         if (elementId__ == null) {
             throw new java.lang.NullPointerException("SORRY! I FIND THAT ELEMENT \"" + key__ + "\" CONTAINS NULL OR NO REFERENCE IN REGISTRY!");
         }
-        return hTMLDocument_.getElementById(elementId__);
+        final Element returnVal = hTMLDocument_.getElementById(elementId__);
+        return returnVal != null ? returnVal : (Element) LogNull.logThrow("SORRY! CANNOT FETCH THE ELEMENT " + key__+". YOU PROBABLY WERE SUPPOSED TO USE $$ INSTEAD OF $");
     }
 
     /**
@@ -172,6 +176,13 @@ public abstract class AbstractWidgetListener {
             }
             visible = true;
         }
+    }
+     protected final void displayBlock(final Element element__){
+         element__.setAttribute("style","display:block;");
+    }
+
+    protected final void displayNone(final Element element__){
+         element__.setAttribute("style","display:none;");
     }
 
     @NOTE(note = "toogleVisitble CANNOT BE CALLED IF ALL ELEMENTS ARE HIDDEN. SO WE JUST HIDE OVERRIDING STYLES AS HIDE WOULD BE PERMANENT.")

@@ -14,7 +14,6 @@ import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
-import org.w3c.dom.Text;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;

@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.util.Return;
 

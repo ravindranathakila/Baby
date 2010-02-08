@@ -4,16 +4,16 @@ import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.util.LogNull;
-import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.Properties;
-import java.util.logging.Level;
+import java.util.ResourceBundle;
 
 /**
  *

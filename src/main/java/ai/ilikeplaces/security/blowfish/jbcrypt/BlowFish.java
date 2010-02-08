@@ -1,11 +1,12 @@
 package ai.ilikeplaces.security.blowfish.jbcrypt;
 
-import ai.ilikeplaces.util.AbstractSNGLTNBCallbacks;
 import ai.ilikeplaces.security.blowfish.BlowFishLocal;
-import java.security.SecureRandom;
+import ai.ilikeplaces.util.AbstractSNGLTNBCallbacks;
+
 import javax.ejb.Singleton;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import java.security.SecureRandom;
 /**
  *
  * @author Ravindranath Akila

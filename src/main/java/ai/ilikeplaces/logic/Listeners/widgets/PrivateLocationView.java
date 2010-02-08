@@ -6,14 +6,12 @@ import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
-import ai.ilikeplaces.util.LogNull;
 import ai.ilikeplaces.util.Return;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
-import org.w3c.dom.Text;
 import org.w3c.dom.html.HTMLDocument;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
@@ -48,7 +46,6 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
 
         final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).rPrivateLocation(humanId, privateLocationId);
 
-        LogNull.logThrow(r);
 
         LoggerFactory.getLogger(PrivateLocationView.class.getName()).debug(r.toString());
 

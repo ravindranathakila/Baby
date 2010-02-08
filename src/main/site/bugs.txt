@@ -1,0 +1,3 @@
+human already exists exception during startup
+
+add self as friend is possible but should not be

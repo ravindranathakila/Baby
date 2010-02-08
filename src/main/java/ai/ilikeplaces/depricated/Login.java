@@ -3,7 +3,6 @@ package ai.ilikeplaces.depricated;
 import org.itsnat.comp.ItsNatComponent;
 import org.itsnat.comp.ItsNatComponentManager;
 import org.itsnat.comp.inc.ItsNatFreeInclude;
-import org.itsnat.comp.layer.ItsNatModalLayer;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServlet;
 import org.itsnat.core.html.ItsNatHTMLDocFragmentTemplate;

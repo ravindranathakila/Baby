@@ -1,7 +1,8 @@
 package ai.ilikeplaces.entities;
 
+import ai.ilikeplaces.doc.BIDIRECTIONAL;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.UNIDIRECTIONAL;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.util.EntityLifeCyleListener;
 
 import javax.persistence.*;
@@ -27,9 +28,13 @@ public class Album {
 
     private List<PrivatePhoto> albumPhotos;
 
-    private List<Human> albumOwners;
+    private List<HumansAlbum> albumOwners;
+    final static public String albumOwnersCOL = "albumOwners";
 
-    private List<Human> albumVisitors;
+    private List<HumansAlbum> albumVisitors;
+    final static public String albumVisitorsCOL = "albumVisitors";
+
+    private PrivateEvent privateEvent;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -59,18 +64,30 @@ public class Album {
         this.albumName = albumName;
     }
 
-    @UNIDIRECTIONAL
+    public PrivateEvent getPrivateEvent() {
+        return privateEvent;
+    }
+
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
+    @OneToOne(mappedBy = PrivateEvent.albumCOL, fetch = FetchType.EAGER)
+    public void setPrivateEvent(PrivateEvent privateEvent) {
+        this.privateEvent = privateEvent;
+    }
+
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    public List<Human> getAlbumOwners() {
+    public List<HumansAlbum> getAlbumOwners() {
         return albumOwners;
     }
 
-    public void setAlbumOwners(final List<Human> albumOwners) {
+    public void setAlbumOwners(final List<HumansAlbum> albumOwners) {
         this.albumOwners = albumOwners;
     }
 
-    @UNIDIRECTIONAL
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @WARNING(warning = "Not owner because when a photo is deleted, the albums will automatically reflect it." +
+            "The other way round is not feasible because a user will photos, not albums.")
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
+    @ManyToMany(mappedBy = PrivatePhoto.albumsCol, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     public List<PrivatePhoto> getAlbumPhotos() {
         return albumPhotos;
     }
@@ -80,13 +97,13 @@ public class Album {
     }
 
 
-    @UNIDIRECTIONAL
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    public List<Human> getAlbumVisitors() {
+    public List<HumansAlbum> getAlbumVisitors() {
         return albumVisitors;
     }
 
-    public void setAlbumVisitors(final List<Human> albumVisitors) {
+    public void setAlbumVisitors(final List<HumansAlbum> albumVisitors) {
         this.albumVisitors = albumVisitors;
     }
 }

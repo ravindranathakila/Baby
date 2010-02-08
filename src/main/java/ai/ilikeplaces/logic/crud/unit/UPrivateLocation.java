@@ -106,7 +106,7 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
 
         for (final String humanId : privateLocationVisitors__) {
             try {
-                humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId).getPrivateLocations().add(privateLocation_);
+                humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId).getPrivateLocationsViewed().add(privateLocation_);
             } catch (final Exception e) {
                 logger.error("SORRY! I ENCOUNTERED AN ERROR DURING LIST MANIPULATION", e);
             }
@@ -122,7 +122,7 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
         final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__);
         for (final String humanId : privateLocationVisitors__) {
             try {
-                humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId).getPrivateLocations().remove(privateLocation_);
+                humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId).getPrivateLocationsViewed().remove(privateLocation_);
             } catch (final Exception e) {
                 logger.error("SORRY! I ENCOUNTERED AN ERROR DURING LIST MANIPULATION", e);
             }

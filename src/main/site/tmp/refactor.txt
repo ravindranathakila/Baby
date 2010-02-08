@@ -1,0 +1,52 @@
+        PrivateEventCreate("ai/ilikeplaces/widgets/privateevent/private_event_create.xhtml",
+                Controller.Page.privateEventCreateName,
+                Controller.Page.privateEventCreateInfo,
+                Controller.Page.privateEventCreateSave,
+                Controller.Page.privateEventCreateNotice
+        ) {
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocPrivateEventCreate;
+            }},
+
+        PrivateEventView("ai/ilikeplaces/widgets/privateevent/private_event_view.xhtml",
+                Controller.Page.privateEventViewNotice,
+                Controller.Page.privateEventViewName,
+                Controller.Page.privateEventViewInfo,
+                Controller.Page.privateEventViewOwners,
+                Controller.Page.privateEventViewVisitors
+        ) {
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocPrivateEventView;
+            }},
+
+
+        PrivateEventDelete("ai/ilikeplaces/widgets/privateevent/private_event_delete.xhtml",
+                Controller.Page.privateEventDeleteName,
+                Controller.Page.privateEventDeleteInfo,
+                Controller.Page.privateEventDeleteNotice,
+                Controller.Page.privateEventDelete
+        ) {
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocPrivateEventDelete;
+            }},

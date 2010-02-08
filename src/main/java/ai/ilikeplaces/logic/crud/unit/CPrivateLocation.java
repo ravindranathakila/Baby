@@ -9,6 +9,8 @@ import ai.ilikeplaces.util.AbstractSLBCallbacks;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 /**
  * Created by IntelliJ IDEA.
@@ -32,6 +34,7 @@ public class CPrivateLocation extends AbstractSLBCallbacks implements CPrivateLo
 
 
     @Override
+    @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public PrivateLocation doNTxCPrivateLocation(final String humanId, final String locationName, final String locationInfo) {
         final Human owner = humanCrudServiceLocal_.find(Human.class, humanId);
 
@@ -45,8 +48,11 @@ public class CPrivateLocation extends AbstractSLBCallbacks implements CPrivateLo
         /*Give rights to CRUD private location*/
         returnVal.getPrivateLocationOwners().add(owner.getHumansPrivateLocation());
 
+        /*Give rights to View private location*/
+        returnVal.getPrivateLocationViewers().add(owner.getHumansPrivateLocation());
+
         /*Enrolled private locations. Right to view only*/
-        owner.getHumansPrivateLocation().getPrivateLocations().add(returnVal);
+        owner.getHumansPrivateLocation().getPrivateLocationsViewed().add(returnVal);
 
         return returnVal;
 

@@ -1,7 +1,8 @@
 package ai.ilikeplaces.entities;
 
+import ai.ilikeplaces.doc.BIDIRECTIONAL;
 import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.doc.UNIDIRECTIONAL;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.util.EntityLifeCyleListener;
 
 import javax.persistence.*;
@@ -25,10 +26,9 @@ public class HumansPrivateLocation implements HumanPkJoinFace {
 
     private Human human;
 
-    /**
-     *
-     */
-    private List<PrivateLocation> privateLocations;
+    private List<PrivateLocation> privateLocationsViewed;
+
+    private List<PrivateLocation> privateLocationsOwned;
 
 
     @Id
@@ -51,15 +51,28 @@ public class HumansPrivateLocation implements HumanPkJoinFace {
     }
 
 
-    @UNIDIRECTIONAL
+    @BIDIRECTIONAL
+    @WARNING(warning = "Not owner as deleting a location should automatically reflect in here, not vice versa.")
     @NOTE(note = "Locations which this user is INVOLVED with, NOT specifically OWNS.")
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    public List<PrivateLocation> getPrivateLocations() {
-        return privateLocations;
+    @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = PrivateLocation.privateLocationViewersCOL, fetch = FetchType.EAGER)
+    public List<PrivateLocation> getPrivateLocationsViewed() {
+        return privateLocationsViewed;
     }
 
-    public void setPrivateLocations(final List<PrivateLocation> privateLocations) {
-        this.privateLocations = privateLocations;
+    public void setPrivateLocationsViewed(final List<PrivateLocation> privateLocationsViewed) {
+        this.privateLocationsViewed = privateLocationsViewed;
+    }
+
+    @BIDIRECTIONAL
+    @WARNING(warning = "Not owner as deleting a location should automatically reflect in here, not vice versa.")
+    @NOTE(note = "Locations which this user is INVOLVED with, NOT specifically OWNS.")
+    @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = PrivateLocation.privateLocationOwnersCOL, fetch = FetchType.EAGER)
+    public List<PrivateLocation> getPrivateLocationsOwned() {
+        return privateLocationsOwned;
+    }
+
+    public void setPrivateLocationsOwned(List<PrivateLocation> privateLocationsOwned) {
+        this.privateLocationsOwned = privateLocationsOwned;
     }
 
     @Override
@@ -83,7 +96,7 @@ public class HumansPrivateLocation implements HumanPkJoinFace {
     public String toString() {
         return "HumansPrivateLocation{" +
                 "human=" + human +
-                ", privateLocations=" + privateLocations +
+                ", privateLocationsViewed=" + privateLocationsViewed +
                 '}';
     }
 

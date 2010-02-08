@@ -1,8 +1,6 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.FIXME;
-import ai.ilikeplaces.doc.OK;
-import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.util.EntityLifeCyleListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +17,7 @@ import java.util.List;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 @Entity
 @EntityListeners(EntityLifeCyleListener.class)
@@ -41,7 +39,10 @@ public class Location implements Serializable, Clearance {
     private String locationName;
     private String locationInfo;
     private Location locationSuperSet;
+    private String locationGeo1;
+    private String locationGeo2;
     private List<PublicPhoto> publicPhotos;
+    private List<PrivateEvent> privateEvents;
 
 
     /**
@@ -124,14 +125,44 @@ public class Location implements Serializable, Clearance {
         this.locationSuperSet = locationSuperSet__;
     }
 
-    @FIXME(issue = "Break Location table by this field. i.e. LocationsPublicPhoto(P.K. = locationId), as that will ease transaction. Use secondary tables PrimaryKeyJoinTable")
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @FIXME(issue = "Break Location table by this field or use lazy fetching(better). i.e. LocationsPublicPhoto(P.K. = locationId), as that will ease transaction. Use secondary tables PrimaryKeyJoinTable")
+    @OneToMany(mappedBy = PublicPhoto.locationCOL, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     public List<PublicPhoto> getPublicPhotos() {
         return publicPhotos;
     }
 
     public void setPublicPhotos(List<PublicPhoto> publicPhotos) {
         this.publicPhotos = publicPhotos;
+    }
+
+    @Column(length = 63)
+    public String getLocationGeo1() {
+        return locationGeo1;
+    }
+
+    public void setLocationGeo1(String locationGeo1) {
+        this.locationGeo1 = locationGeo1;
+    }
+
+    @Column(length = 63)
+    public String getLocationGeo2() {
+        return locationGeo2;
+    }
+
+    public void setLocationGeo2(String locationGeo2) {
+        this.locationGeo2 = locationGeo2;
+    }
+
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
+    @OneToMany(mappedBy = PrivateEvent.locationCOL,
+            cascade = {CascadeType.REFRESH, CascadeType.REMOVE},
+            fetch = FetchType.LAZY)
+    public List<PrivateEvent> getPrivateEvents() {
+        return privateEvents;
+    }
+
+    public void setPrivateEvents(List<PrivateEvent> privateEvents) {
+        this.privateEvents = privateEvents;
     }
 
     /**
@@ -141,24 +172,5 @@ public class Location implements Serializable, Clearance {
     @WARNING(warning = "The first location i.e. The Planet Earth, will have itself as its super. Hence will induce a stack overflow if superset.tostring is called.")
     public String toString() {
         return locationName + ((locationSuperSet == null || this.getLocationId() == locationSuperSet.getLocationId()) ? "" : " of " + locationSuperSet.toString());
-    }
-
-    /**
-     * @param showChangeLog__
-     * @return changeLog
-     */
-    public String toString(final boolean showChangeLog__) {
-        String changeLog = new String(toString() + "\n");
-        changeLog += "20090914 Added locationId \n";
-        changeLog += "20090914 Added locationSuperSet \n";
-        changeLog += "20090914 Added toString \n";
-        changeLog += "20090914 Added NamedQuery \n";
-        changeLog += "20090915 Added Basic Validation \n";
-        changeLog += "20090915 Removed Basic Validation \n";
-        changeLog += "20090915 Added Annotated Validation \n";
-        changeLog += "20090924 Changed locationId type to Long from long \n";
-        changeLog += "20090925 Changed Superset fetch type to lazy\n";
-        changeLog += "20090925 Added logger as a class field\n";
-        return showChangeLog__ ? changeLog : toString();
     }
 }

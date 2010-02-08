@@ -3,9 +3,9 @@ package ai.ilikeplaces.jpa;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 
+import javax.ejb.Local;
 import java.util.List;
 import java.util.Map;
-import javax.ejb.Local;
 
 /**
  *

@@ -15,12 +15,101 @@
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <!--Pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n%n</Pattern-->
-            <Pattern>%thread>%logger{10}:%line>%msg%n%n</Pattern>
+            <Pattern>%thread|%date|%logger:%line>%msg%n%n</Pattern>
         </layout>
     </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>../logs/ilp.log</file>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%thread|%date|%logger:%line>%msg%n%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE_LOGIC" class="ch.qos.logback.core.FileAppender">
+        <file>../logs/ilp_logic.log</file>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%thread|%date|%logger:%line>%msg%n%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE_EXCEPTION" class="ch.qos.logback.core.FileAppender">
+        <file>../logs/ilp_exception.log</file>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%thread|%date|%logger:%line>%msg%n%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE_DEBUG" class="ch.qos.logback.core.FileAppender">
+        <file>../logs/ilp_debug.log</file>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%thread|%date|%logger:%line>%msg%n%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE_INFO" class="ch.qos.logback.core.FileAppender">
+        <file>../logs/ilp_info.log</file>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%thread|%date|%logger:%line>%msg%n%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE_SERV" class="ch.qos.logback.core.FileAppender">
+        <file>../logs/ilp_serv.log</file>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%thread|%date|%logger:%line>%msg%n%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE_USER" class="ch.qos.logback.core.FileAppender">
+        <file>../logs/ilp_user.log</file>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%date>%msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE_NON_USER" class="ch.qos.logback.core.FileAppender">
+        <file>../logs/ilp_non_user.log</file>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%thread|%date>%msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <logger name="ai" level="debug">
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <logger name="ai.ilikeplaces.logic" level="debug">
+        <appender-ref ref="FILE_LOGIC" />
+    </logger>
+
+    <logger name="ai.ilikeplaces.servlets" level="debug">
+            <appender-ref ref="FILE_SERV" />
+    </logger>
+
+    <logger name="USER" level="debug">
+            <appender-ref ref="FILE_USER" />
+    </logger>
+
+    <logger name="NON_USER" level="debug">
+            <appender-ref ref="FILE_NON_USER" />
+    </logger>
+
+    <logger name="EXCEPTION" level="error">
+            <appender-ref ref="FILE_EXCEPTION" />
+    </logger>
+
+    <logger name="DEBUG" level="debug">
+            <appender-ref ref="FILE_DEBUG" />
+    </logger>
+
+    <logger name="INFO" level="info">
+            <appender-ref ref="FILE_INFO" />
+    </logger>
+
 
     <root level="debug">
         <appender-ref ref="STDOUT" />
     </root>
-    
+
 </configuration>

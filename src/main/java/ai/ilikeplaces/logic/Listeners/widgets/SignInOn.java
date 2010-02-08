@@ -1,20 +1,16 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
-import static ai.ilikeplaces.servlets.Controller.Page.close;
-
 /**
- *
  * @author Ravindranath Akila
  */
 
@@ -22,19 +18,26 @@ import static ai.ilikeplaces.servlets.Controller.Page.close;
 abstract public class SignInOn extends AbstractWidgetListener {
 
     /**
-     *
      * @param itsNatDocument__
      * @param appendToElement__
      */
-    public SignInOn(final ItsNatDocument itsNatDocument__, final Element appendToElement__) {
-        super(itsNatDocument__, Page.SignInOn, appendToElement__);
+    public SignInOn(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final HumanId humanId) {
+        super(itsNatDocument__, Page.SignInOn, appendToElement__, humanId);
     }
 
     /**
      *
      */
     @Override
-    protected void init(final Object ... initArgs) {
+    protected void init(final Object... initArgs) {
+        final HumanId humanId = (HumanId) initArgs[0];
+        if (humanId.validate() == 0) {
+            displayBlock($$(Controller.Page.signinon_logon));
+            displayNone($$(Controller.Page.signinon_login));
+        } else {
+            displayBlock($$(Controller.Page.signinon_login));
+            displayNone($$(Controller.Page.signinon_logon));
+        }
     }
 
     @Override

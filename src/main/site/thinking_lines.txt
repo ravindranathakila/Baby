@@ -1,0 +1,11 @@
+Album
+-----
+
+Album should have owners and visitors
+Owners to manage it
+Visitors to limit access
+
+
+Albums should be many to many
+Many humans may point to one album
+One human may point to many albums
