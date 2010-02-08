@@ -1,7 +1,6 @@
 package ai.ilikeplaces.security.blowfish.jbcrypt;
 
 import java.io.UnsupportedEncodingException;
-
 import java.security.SecureRandom;
 
 /**

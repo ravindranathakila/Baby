@@ -3,11 +3,11 @@ package ai.ilikeplaces.logic.Listeners;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.logic.Listeners.widgets.FindFriend;
-import ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationCreate;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractListener;
+import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MarkupTag;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
@@ -56,10 +56,10 @@ public class ListenerFriends implements ItsNatServletRequestListener {
                     setLoginWidget:
                     {
                         try {
-                            new SignInOn(itsNatDocument__, $(Skeleton_login_widget)) {
+                            new SignInOn(itsNatDocument__, $(Skeleton_login_widget), new HumanId(getUsername())) {
                             };
                         } catch (final Throwable t) {
-                            logger.error("{}", t);
+                            Loggers.EXCEPTION.error("{}", t);
                         }
                     }
 
@@ -86,7 +86,7 @@ public class ListenerFriends implements ItsNatServletRequestListener {
                                 $(Skeleton_othersidebar_identity).appendChild(locationElem);
                             }
                         } catch (final Throwable t) {
-                            logger.error("{}", t);
+                            Loggers.EXCEPTION.error("{}", t);
                         }
 
                     }
@@ -99,7 +99,7 @@ public class ListenerFriends implements ItsNatServletRequestListener {
                                 $(Skeleton_othersidebar_profile_link).setAttribute("href", Controller.Page.signup.getURL());
                             }
                         } catch (final Throwable t) {
-                            logger.error("{}", t);
+                            Loggers.EXCEPTION.error("{}", t);
 
                         }
                     }
@@ -109,7 +109,7 @@ public class ListenerFriends implements ItsNatServletRequestListener {
                         new FindFriend(itsNatDocument, $(Skeleton_center_skeleton), new HumanId(getUsername())) {
                         };
                     } catch (final Throwable t) {
-                        logger.error("{}", t);
+                        Loggers.EXCEPTION.error("{}", t);
                     }
                 }
             }

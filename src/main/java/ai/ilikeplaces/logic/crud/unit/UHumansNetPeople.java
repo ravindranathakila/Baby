@@ -7,7 +7,6 @@ import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
-import ai.ilikeplaces.util.RefObj;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

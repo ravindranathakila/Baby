@@ -1,6 +1,7 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.CASCADE;
+import ai.ilikeplaces.doc.BIDIRECTIONAL;
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.util.EntityLifeCyleListener;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ import java.util.List;
  * Time: 10:26:37 PM
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners(EntityLifeCyleListener.class)
 public class HumansPrivateEvent implements HumanPkJoinFace {
@@ -22,7 +23,10 @@ public class HumansPrivateEvent implements HumanPkJoinFace {
 
     private Human human;
 
-    private List<PrivateEvent> privateEvents;
+    private List<PrivateEvent> privateEventOwned;
+    private List<PrivateEvent> privateEventViewed;
+    private List<PrivateEvent> privateEventInvited;
+    private List<PrivateEvent> privateEventRejected;
 
 
     @Id
@@ -44,12 +48,43 @@ public class HumansPrivateEvent implements HumanPkJoinFace {
         this.human = human;
     }
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    public List<PrivateEvent> getPrivateEvents() {
-        return privateEvents;
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
+    @ManyToMany(mappedBy = PrivateEvent.privateEventOwnersCOL, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    public List<PrivateEvent> getPrivateEventOwned() {
+        return privateEventOwned;
     }
 
-    public void setPrivateEvents(final List<PrivateEvent> privateEvents) {
-        this.privateEvents = privateEvents;
+    public void setPrivateEventOwned(List<PrivateEvent> privateEventOwned) {
+        this.privateEventOwned = privateEventOwned;
+    }
+
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
+    @ManyToMany(mappedBy = PrivateEvent.privateEventViewersCOL, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    public List<PrivateEvent> getPrivateEventViewed() {
+        return privateEventViewed;
+    }
+
+    public void setPrivateEventViewed(List<PrivateEvent> privateEventViewed) {
+        this.privateEventViewed = privateEventViewed;
+    }
+
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
+    @ManyToMany(mappedBy = PrivateEvent.privateEventInvitesCOL, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    public List<PrivateEvent> getPrivateEventInvited() {
+        return privateEventInvited;
+    }
+
+    public void setPrivateEventInvited(List<PrivateEvent> privateEventInvited) {
+        this.privateEventInvited = privateEventInvited;
+    }
+
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
+    @ManyToMany(mappedBy = PrivateEvent.privateEventRejectsCOL, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    public List<PrivateEvent> getPrivateEventRejected() {
+        return privateEventRejected;
+    }
+
+    public void setPrivateEventRejected(List<PrivateEvent> privateEventRejected) {
+        this.privateEventRejected = privateEventRejected;
     }
 }

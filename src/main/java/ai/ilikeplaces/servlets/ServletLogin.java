@@ -11,6 +11,7 @@ import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.face.SingletonHashingFace;
 import ai.ilikeplaces.servlets.Controller.Page;
+import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -154,11 +155,13 @@ final public class ServletLogin extends HttpServlet {
                                 userSession_.setAttribute(HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_, true)));
                                 final PageFace home = Page.home;
                                 logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0001") + ((SessionBoundBadRefWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).boundInstance.getHumanUserId());
+                                Loggers.USER.info(humanUserLocal.getHumanUserId()+" logged in.");
                                 response__.sendRedirect(home.toString());
                                 break doLogin;/*This is unnecessary but lets not leave chance for introducing bugs*/
                             } else {/*Ok password wrong. What do we do with this guy? First lets make his session object null*/
                                 userSession_.invalidate();
                                 logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0002"));
+                                Loggers.USER.info(humanUserLocal.getHumanUserId()+" entered wrong password.");
                                 final PageFace home = Page.home;
                                 response__.sendRedirect(home.toString());
                                 break doLogin;

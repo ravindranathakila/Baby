@@ -1,18 +1,23 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.Location;
-import static ai.ilikeplaces.entities.Location.*;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import java.util.List;
+
+import static ai.ilikeplaces.entities.Location.*;
 
 /**
  *

@@ -9,6 +9,8 @@ import ai.ilikeplaces.util.AbstractSLBCallbacks;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 /**
  * Created by IntelliJ IDEA.
@@ -29,14 +31,31 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
     private CrudServiceLocal<HumansPrivateLocation> humansPrivateLocationCrudServiceLocal_;
 
     @Override
-    public PrivateLocation doDirtyRPrivateEvent(final String humanId, final Long privateLocationId) {
+    public PrivateLocation doDirtyRPrivateLocation(final String humanId, final Long privateLocationId) {
         final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId);
         final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId);
 
         securityChecks:
         {
             if (!(privateLocation_.getPrivateLocationOwners().contains(humansPrivateLocation_)
-                    || humansPrivateLocation_.getPrivateLocations().contains(privateLocation_))) {
+                    || humansPrivateLocation_.getPrivateLocationsViewed().contains(privateLocation_))) {
+                throw new SecurityException(RBGet.expMsgs.getString("ai.ilikeplaces.logic.crud.unit.RPrivateLocation.0001"));
+            }
+        }
+
+        return privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId);
+    }
+    
+    @Override
+    @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
+    public PrivateLocation doRPrivateLocation(final String humanId, final Long privateLocationId) {
+        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId);
+        final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId);
+
+        securityChecks:
+        {
+            if (!(privateLocation_.getPrivateLocationOwners().contains(humansPrivateLocation_)
+                    || humansPrivateLocation_.getPrivateLocationsViewed().contains(privateLocation_))) {
                 throw new SecurityException(RBGet.expMsgs.getString("ai.ilikeplaces.logic.crud.unit.RPrivateLocation.0001"));
             }
         }

@@ -2,8 +2,6 @@ package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.License;
 
-import javax.ejb.Remove;
-
 /**
  *
  * @author Ravindranath Akila

@@ -8,7 +8,10 @@ import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 
-import javax.ejb.*;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 /**
  * Created by IntelliJ IDEA.
@@ -33,7 +36,7 @@ public class DPrivateLocation extends AbstractSLBCallbacks implements DPrivateLo
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public boolean doNTxDPrivateLocation(final String humanId, final long privateLocationId) {
 
-        boolean returnVal;
+        boolean returnVal = false;
 
         checkIfOwner:
         {

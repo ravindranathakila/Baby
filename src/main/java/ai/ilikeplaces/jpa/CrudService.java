@@ -1,6 +1,9 @@
 package ai.ilikeplaces.jpa;
 
-import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.doc.CONVENTION;
+import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 
 import javax.ejb.Stateless;

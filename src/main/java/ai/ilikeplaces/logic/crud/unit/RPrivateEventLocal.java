@@ -4,7 +4,6 @@ import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.util.Return;
 
 import javax.ejb.Local;
-import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.

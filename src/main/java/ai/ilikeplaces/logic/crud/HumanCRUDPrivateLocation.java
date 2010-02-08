@@ -48,7 +48,7 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
     public Return<PrivateLocation> rPrivateLocation(final String humanId, final long privateLocationId) {
         Return<PrivateLocation> r;
         try {
-            r = new ReturnImpl<PrivateLocation>(rPrivateLocationLocal.doDirtyRPrivateEvent(humanId, privateLocationId), "View private location Successful!");
+            r = new ReturnImpl<PrivateLocation>(rPrivateLocationLocal.doDirtyRPrivateLocation(humanId, privateLocationId), "View private location Successful!");
         } catch (final Throwable t) {
             r = new ReturnImpl<PrivateLocation>(t, "View private location FAILED!", true);
         }

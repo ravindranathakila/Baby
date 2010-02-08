@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSFBCallbacks;
 import ai.ilikeplaces.util.DelegatedObservable;
+import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.ManageObservers;
 
 import javax.annotation.PreDestroy;
@@ -63,6 +64,7 @@ final public class HumanUser extends AbstractSFBCallbacks implements HumanUserLo
     @Remove
     @Override
     public void remove() {
+        Loggers.USER.info(humanUserId_+ " logged out");
         logger.info(RBGet.logMsgs.getString("javax.ejb.Remove"));
     }
 

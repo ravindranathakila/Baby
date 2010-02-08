@@ -198,6 +198,10 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         hpe.setHumanId(newUser.getHumanId());
         newUser.setHumansPrivateEvent(hpe);
 
+        final HumansAlbum hal = new HumansAlbum();
+        hal.setHumanId(newUser.getHumanId());
+        newUser.setHumansAlbum(hal);
+
         final HumansPrivatePhoto hprp = new HumansPrivatePhoto();
         hprp.setHumanId(newUser.getHumanId());
         newUser.setHumansPrivatePhoto(hprp);

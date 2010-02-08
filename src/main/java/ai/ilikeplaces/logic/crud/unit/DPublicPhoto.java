@@ -1,13 +1,14 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.rbs.RBGet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.rbs.RBGet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;

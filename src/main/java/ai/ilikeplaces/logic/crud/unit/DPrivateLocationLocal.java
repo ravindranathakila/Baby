@@ -1,9 +1,5 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.entities.PrivateEvent;
-import ai.ilikeplaces.entities.PrivateLocation;
-import ai.ilikeplaces.util.Return;
-
 import javax.ejb.Local;
 
 /**

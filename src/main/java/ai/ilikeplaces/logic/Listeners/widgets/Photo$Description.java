@@ -2,16 +2,16 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.servlets.Controller.Page;
-import static ai.ilikeplaces.servlets.Controller.Page.*;
-
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
+import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
+
+import static ai.ilikeplaces.servlets.Controller.Page.close;
 
 /**
  *

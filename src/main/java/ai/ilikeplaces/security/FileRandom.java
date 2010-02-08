@@ -1,8 +1,10 @@
 package ai.ilikeplaces.security;
 
-import ai.ilikeplaces.doc.*;
-import java.util.WeakHashMap;
+import ai.ilikeplaces.doc.FIXME;
+import ai.ilikeplaces.doc.OK;
+
 import java.util.Random;
+import java.util.WeakHashMap;
 
 /**
  *

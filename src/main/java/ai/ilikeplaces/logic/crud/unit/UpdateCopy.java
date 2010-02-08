@@ -1,9 +1,10 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import java.util.logging.Level;
+import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.NOTE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ai.ilikeplaces.doc.*;
+
 import java.lang.reflect.Field;
 
 /**

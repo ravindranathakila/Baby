@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Human;
 
 import javax.ejb.Local;

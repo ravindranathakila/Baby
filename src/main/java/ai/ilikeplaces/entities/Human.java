@@ -1,5 +1,6 @@
 package ai.ilikeplaces.entities;
 
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.util.EntityLifeCyleListener;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import java.io.Serializable;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners(EntityLifeCyleListener.class)
 public class Human implements HumanIdFace, Serializable, Clearance {
@@ -34,6 +35,7 @@ public class Human implements HumanIdFace, Serializable, Clearance {
     private HumansNet humansNet;
     private HumansPrivateLocation humansPrivateLocation;
     private HumansPrivateEvent humansPrivateEvent;
+    private HumansAlbum humansAlbum;
 
     @Id
     public String getHumanId() {
@@ -131,6 +133,16 @@ public class Human implements HumanIdFace, Serializable, Clearance {
 
     public void setHumansPrivateEvent(final HumansPrivateEvent humansPrivateEvent) {
         this.humansPrivateEvent = humansPrivateEvent;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public HumansAlbum getHumansAlbum() {
+        return humansAlbum;
+    }
+
+    public void setHumansAlbum(HumansAlbum humansAlbum) {
+        this.humansAlbum = humansAlbum;
     }
 
     @Override

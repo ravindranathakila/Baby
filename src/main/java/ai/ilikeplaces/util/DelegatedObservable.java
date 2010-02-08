@@ -1,6 +1,7 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.doc.ClassPreamble;
+
 import java.util.Observable;
 
 /**

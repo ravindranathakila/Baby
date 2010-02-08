@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.PublicPhoto;
+
 import javax.ejb.Local;
 
 /**

@@ -7,8 +7,10 @@ import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.logic.Listeners.widgets.PhotoCRUD;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractListener;
+import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MarkupTag;
 import ai.ilikeplaces.util.Return;
 import org.itsnat.core.ItsNatDocument;
@@ -58,7 +60,7 @@ public class ListenerHuman implements ItsNatServletRequestListener {
                 {
                     setLoginWidget:
                     {
-                        new SignInOn(itsNatDocument__, $(Main_login_widget)) {
+                        new SignInOn(itsNatDocument__, $(Main_login_widget), new HumanId(getUsername())) {
                         };
                     }
 
@@ -94,7 +96,7 @@ public class ListenerHuman implements ItsNatServletRequestListener {
                                 $(Main_othersidebar_profile_link).setAttribute("href", Controller.Page.signup.getURL());
                             }
                         } catch (final Throwable t) {
-                            logger.error("", t);
+                            Loggers.EXCEPTION.error("", t);
                         }
                     }
                 }

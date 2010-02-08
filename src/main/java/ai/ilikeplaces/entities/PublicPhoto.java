@@ -2,11 +2,9 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.util.EntityLifeCyleListener;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.UUID;
 
@@ -52,6 +50,7 @@ public class PublicPhoto implements Serializable {
     @FieldPreamble(description = "Required when rebuilding a database from scratch someday." +
             "Since the whole concept of ilikeplaces relies on content richness, preserving this in this table important.")
     private Location location;
+    final static public String locationCOL = "location";
 
     @FieldPreamble(description = "Who uploaded this image? Will he request to delete it?")
     private HumansPublicPhoto humansPublicPhoto;
@@ -100,7 +99,8 @@ public class PublicPhoto implements Serializable {
         this.humansPublicPhoto = humansPublicPhoto;
     }
 
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
+    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     public Location getLocation() {
         return location;
     }
