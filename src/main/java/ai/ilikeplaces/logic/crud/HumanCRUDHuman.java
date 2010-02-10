@@ -1,13 +1,12 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.TODO;
-import ai.ilikeplaces.doc.VERIFY;
+import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
+import ai.ilikeplaces.logic.verify.IntegrityTester;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt;
 import ai.ilikeplaces.security.face.SingletonHashingFace;
@@ -182,6 +181,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
             hnp.setHumanId(newUser.getHumanId());
 
             final HumansNet hn = new HumansNet();
+            hn.setDisplayName("TODO:" +newUser.getHumanId());
             hn.setHumanId(newUser.getHumanId());
 
             hn.setHumansNetPeople(hnp);
@@ -224,6 +224,9 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
      * @return The Result Of Verification. e.g. Done, Error-Resource Down.
      */
     @Override
+    @Deprecated
+    @NOTE(note = "Will be centralized",see = "IntegrityTester.class")
+    @FIXME(issue = "Throws exception for duplicate key. Check why.")
     public String verify() {
         final String random = this.getClass().getSimpleName() + System.currentTimeMillis();
         DB.getHumanCRUDMapLocal(true).createEntry("verify", random);
