@@ -1,5 +1,7 @@
 package ai.ilikeplaces.entities;
 
+import ai.ilikeplaces.doc.License;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Ravindranath Akila
@@ -7,7 +9,7 @@ package ai.ilikeplaces.entities;
  * Time: 4:15:31 PM
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public interface HumanIdFace {
 
     public String getHumanId();
