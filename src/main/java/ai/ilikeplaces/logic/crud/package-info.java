@@ -1,5 +1,13 @@
 /** This package handles all db cruds
 
+ First note that all the stateless beans were made as granular as possible so that,
+ in the event of a large system taking up a lot of memory, services can be fine tuned.
+ This approach was taken against one huge service class to do this optimization later.
+ How ever, fine grained control on stateless beans are yet to be supported by vendors.
+
+
+ Following content is rather old and out dated
+ 
  C=Create
   R=Read
   U=Update
