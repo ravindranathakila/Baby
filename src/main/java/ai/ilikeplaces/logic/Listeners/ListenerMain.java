@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.FIXME;
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PrivateLocation;
@@ -38,7 +39,7 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @TODO(task = "RENAME TO LISTENERLOCATION. DO A STRING SEARCH ON LISTENERMAIN TO FIND USAGE FIRST. CURRENT SEARCH SHOWS NO ISSUES. REFAC DELAYED TILL NEXT CHECK")
 public class ListenerMain implements ItsNatServletRequestListener {
 
