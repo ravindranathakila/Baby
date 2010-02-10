@@ -1,6 +1,7 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.BIDIRECTIONAL;
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.util.EntityLifeCyleListener;
@@ -17,7 +18,7 @@ import java.util.List;
  * Time: 6:11:09 PM
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners(EntityLifeCyleListener.class)
 public class HumansPrivateLocation implements HumanPkJoinFace {
