@@ -77,14 +77,14 @@ public abstract class AbstractListener {
     }
 
     /**
-     * Intialize your document here by appending fragments
+     * Initialize your document here by appending fragments
      */
     protected abstract void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__);
 
     /**
      * Use ItsNatHTMLDocument variable stored in the AbstractListener class
      * Do not call this method anywhere, just implement it, as it will be
-     * automatically called by the contructor
+     * automatically called by the constructor
      *
      * @param itsNatHTMLDocument_
      * @param itsNatDocument__
