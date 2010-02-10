@@ -192,27 +192,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         }
                     }
 
-                    setLocationCreateTemp:
-                    {
-                        if (getUsername() != null) {
-                            try {
-                                new PrivateLocationCreate(itsNatDocument__, $(Main_center_main), getUsername()) {
-                                };
-                            } catch (final Throwable t) {
-                                Loggers.EXCEPTION.error("", t);
-                            }
-
-                            for (final PrivateLocation privateLocation : DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(getUsername()).getHumansPrivateLocation().getPrivateLocationsViewed()) {
-                                try {
-                                    new PrivateLocationDelete(itsNatDocument__, $(Main_center_main), getUsername(), privateLocation.getPrivateLocationId()) {
-                                    };
-                                } catch (final Throwable t) {
-                                    Loggers.EXCEPTION.error("", t);
-                                }
-                            }
-                        }
-                    }
-
                     getAndDisplayAllThePhotos:
                     {
                         List<PublicPhoto> listPublicPhoto = existingLocation_.getPublicPhotos();
