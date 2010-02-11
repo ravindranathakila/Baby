@@ -46,7 +46,7 @@ public class FriendDelete extends AbstractWidgetListener {
 
         $$(Controller.Page.friendDeleteFirstNameLabel).setTextContent(humanId.getObj());
         $$(Controller.Page.friendDeleteLastNameLabel).setTextContent("TODO");
-        $$(Controller.Page.friendDeleteBirthYearLabel).setTextContent(Integer.toString(hid.getHumansIdentityDateOfBirth().getYear()));
+        //$$(Controller.Page.friendDeleteBirthYearLabel).setTextContent(Integer.toString(hid.getHumansIdentityDateOfBirth().getYear()));
     }
 
     /**

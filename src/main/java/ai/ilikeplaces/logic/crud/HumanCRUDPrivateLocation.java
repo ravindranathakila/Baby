@@ -1,15 +1,19 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.crud.unit.CPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.DPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.RPrivateLocationLocal;
+import ai.ilikeplaces.logic.crud.unit.UPrivateLocationLocal;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -30,7 +34,11 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
     private RPrivateLocationLocal rPrivateLocationLocal;
 
     @EJB
+    private UPrivateLocationLocal uPrivateLocationLocal;
+
+    @EJB
     private DPrivateLocationLocal dPrivateLocationLocal;
+
 
     @Override
     public Return<PrivateLocation> cPrivateLocation(final String humanId, final String privateLocationName, final String privateLocationInfo) {
@@ -42,6 +50,41 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
         }
         return r;
 
+    }
+
+    @Deprecated
+    @Override
+    public Return<PrivateLocation> uPrivateLocationAddOwners(final String humanId__, final long privateLocationId__, final List<String> privateLocationOwners__) {
+        Return<PrivateLocation> r;
+        try {
+            r = new ReturnImpl<PrivateLocation>(uPrivateLocationLocal.doUPrivateLocationAddOwners(humanId__, privateLocationId__, privateLocationOwners__), "Update private location Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<PrivateLocation>(t, "Update private location FAILED!", true);
+        }
+        return r;
+
+    }
+
+    @Override
+    public Return<PrivateLocation> uPrivateLocationAddOwner(final HumanId humanId__, final long privateLocationId__, final HumansFriend owner) {
+        Return<PrivateLocation> r;
+        try {
+            r = new ReturnImpl<PrivateLocation>(uPrivateLocationLocal.doUPrivateLocationAddOwner(humanId__.getObj(), privateLocationId__, owner), "Update private location Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<PrivateLocation>(t, "Update private location FAILED!", true);
+        }
+        return r;
+    }
+
+    @Override
+    public Return<PrivateLocation> uPrivateLocationRemoveOwner(final HumanId humanId__, final long privateLocationId__, final HumansFriend owner) {
+        Return<PrivateLocation> r;
+        try {
+            r = new ReturnImpl<PrivateLocation>(uPrivateLocationLocal.doUPrivateLocationRemoveOwner(humanId__.getObj(), privateLocationId__, owner), "Update private location Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<PrivateLocation>(t, "Update private location FAILED!", true);
+        }
+        return r;
     }
 
     @Override

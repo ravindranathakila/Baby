@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.exception.NoPrivilegesException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
@@ -39,13 +40,13 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
         {
             if (!(privateLocation_.getPrivateLocationOwners().contains(humansPrivateLocation_)
                     || humansPrivateLocation_.getPrivateLocationsViewed().contains(privateLocation_))) {
-                throw new SecurityException(RBGet.expMsgs.getString("ai.ilikeplaces.logic.crud.unit.RPrivateLocation.0001"));
+                throw new NoPrivilegesException(humanId, "view private location:" + privateLocation_.toString());
             }
         }
 
         return privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId);
     }
-    
+
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     public PrivateLocation doRPrivateLocation(final String humanId, final Long privateLocationId) {

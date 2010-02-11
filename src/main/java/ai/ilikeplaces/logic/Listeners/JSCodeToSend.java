@@ -23,4 +23,5 @@ final public class JSCodeToSend {
     final static public String LocationName = "locationName";
     final static public String FnLocationName = "\nfunction getLocationName(){return document.getElementById('" + LocationName + "').value;}\n";
     final static public String FnSetTitle = "\ndocument.title=getLocationName();\n";
+    final static public String RefreshPage = "\nwindow.location.href=window.location.href;\n";
 }

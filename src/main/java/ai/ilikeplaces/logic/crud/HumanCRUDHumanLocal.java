@@ -1,9 +1,7 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.Human;
-import ai.ilikeplaces.entities.HumansIdentity;
-import ai.ilikeplaces.entities.HumansNetPeople;
+import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.verify.util.Verify;
 import ai.ilikeplaces.util.RefObj;
@@ -26,13 +24,19 @@ public interface HumanCRUDHumanLocal extends Verify {
 
     public Human doDirtyRHuman(final RefObj<String> humanId);
 
+    public HumansAuthentication doDirtyRHumansAuthentication(final RefObj<String> humanId);
+
     public HumansNetPeople doDirtyRHumansNetPeople(final RefObj<String> humanId);
+
+    public Return<HumansPrivateLocation> doDirtyRHumansPrivateLocation(final RefObj<String> humanId);
 
     public Return<Boolean> doNTxAddHumansNetPeople(final RefObj<String> adderHumanId, final RefObj<String> addeeHumanId);
 
     public Return<Boolean> doNTxRemoveHumansNetPeople(final RefObj<String> adderHumanId, final RefObj<String> addeeHumanId);
 
     public Return<Boolean> doNTxIsHumansNetPeople(final RefObj<String> adderHumanId, final RefObj<String> addeeHumanId);
+
+    public Return<Boolean> doDirtyIsHumansNetPeople(final RefObj<String> adderHumanId, final RefObj<String> addeeHumanId);
 
     public List<HumansIdentity> doDirtyRHumansIdentitiesByEmails(final List<Email> emails);
 

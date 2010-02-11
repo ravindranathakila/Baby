@@ -33,6 +33,13 @@ final public class Loggers {
     final static public Logger EXCEPTION = LoggerFactory.getLogger("EXCEPTION");
 
     /**
+     * User generated exceptions due to various mishandling(wrong parameters) of which logging should be
+     * possible to be disabled. This is because high traffic with wrong parameters can introduce millions of
+     * exceptions. So a separated logger is in place to log them. Logging them is important for analysis.
+     */
+    final static public Logger USER_EXCEPTION = LoggerFactory.getLogger("USER_EXCEPTION");
+
+    /**
      * Just for ease of user instead of creating loggers everywhere
      */
     final static public Logger DEBUG = LoggerFactory.getLogger("DEBUG");

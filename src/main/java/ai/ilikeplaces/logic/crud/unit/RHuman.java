@@ -1,8 +1,10 @@
 package ai.ilikeplaces.logic.crud.unit;
 
+import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.Human;
+import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
@@ -50,8 +52,9 @@ public class RHuman extends AbstractSLBCallbacks implements RHumanLocal {
 
     /**
      * If a user exists, returns true;
+     *
      * @param humanId
-     * @return  userExists
+     * @return userExists
      */
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)

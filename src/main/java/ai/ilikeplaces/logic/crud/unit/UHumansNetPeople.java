@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.crud.unit;
 
+import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
@@ -7,6 +8,7 @@ import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import ai.ilikeplaces.util.Loggers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,6 +71,16 @@ public class UHumansNetPeople extends AbstractSLBCallbacks implements UHumansNet
     public boolean doNTxIsHumansNetPeople(final String adderHumanId, final String addeeHumanId) {
         final HumansNetPeople adder = rHumansNetPeopleLocal_.doRHumansNetPeople(adderHumanId);
         final HumansNetPeople addee = rHumansNetPeopleLocal_.doRHumansNetPeople(addeeHumanId);
+        Loggers.DEBUG.debug("Is friend:"+adder.getHumansNetPeoples().contains(addee));
+        return adder.getHumansNetPeoples().contains(addee);
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public boolean doDirtyIsHumansNetPeople(final String adderHumanId, final String addeeHumanId) {
+        final HumansNetPeople adder = rHumansNetPeopleLocal_.doRHumansNetPeople(adderHumanId);
+        final HumansNetPeople addee = rHumansNetPeopleLocal_.doRHumansNetPeople(addeeHumanId);
+        Loggers.DEBUG.debug("Is friend:"+adder.getHumansNetPeoples().contains(addee));
         return adder.getHumansNetPeoples().contains(addee);
     }
 

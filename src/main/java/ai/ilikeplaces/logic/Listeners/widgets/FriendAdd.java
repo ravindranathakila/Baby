@@ -49,7 +49,7 @@ abstract public class FriendAdd extends AbstractWidgetListener {
 
         $$(Controller.Page.friendAddFirstNameLabel).setTextContent(humanId.getObj());
         $$(Controller.Page.friendAddLastNameLabel).setTextContent("TODO");
-        $$(Controller.Page.friendAddBirthYearLabel).setTextContent(Integer.toString(hid.getHumansIdentityDateOfBirth().getYear()));
+        //$$(Controller.Page.friendAddBirthYearLabel).setTextContent(Integer.toString(hid.getHumansIdentityDateOfBirth().getYear()));
         $$(Controller.Page.friendAddLocationLabel).setTextContent("TODO");
     }
 

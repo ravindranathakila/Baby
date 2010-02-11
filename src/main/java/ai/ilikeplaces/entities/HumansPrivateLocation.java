@@ -4,7 +4,11 @@ import ai.ilikeplaces.doc.BIDIRECTIONAL;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.exception.DBException;
+import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.EntityLifeCyleListener;
+import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,7 +25,7 @@ import java.util.List;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners(EntityLifeCyleListener.class)
-public class HumansPrivateLocation implements HumanPkJoinFace {
+public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFace, HumansFriend {
 
     private String humanId;
 
@@ -45,6 +49,23 @@ public class HumansPrivateLocation implements HumanPkJoinFace {
     @PrimaryKeyJoinColumn
     public Human getHuman() {
         return human;
+    }
+
+    @NOTE(note = "This implementation will be fast a.l.a the Human entity has lazy in its getters.")
+    @Override
+    @Transient
+    public String getDisplayName() {
+        return this.human.getHumansNet().getDisplayName();
+    }
+
+    @Override
+    @Transient
+    public boolean isFriend(final String friendsHumanId) {
+        final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doDirtyIsHumansNetPeople(new HumanId(this.humanId), new HumanId(friendsHumanId));
+        if (r.returnStatus() != 0) {
+            throw new DBException(r.returnError());
+        }
+        return r.returnValue();
     }
 
     public void setHuman(final Human human) {
@@ -79,13 +100,15 @@ public class HumansPrivateLocation implements HumanPkJoinFace {
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        final HumansPrivateLocation that = (HumansPrivateLocation) o;
+        if (o == null) return false;
 
-        if (humanId != null ? !humanId.equals(that.humanId) : that.humanId != null) return false;
-
-        return true;
+        if (getClass() == o.getClass()) {
+            final HumansPrivateLocation that = (HumansPrivateLocation) o;
+            return (!(this.getHumanId() == null || that.getHumanId() == null)) && this.getHumanId().equals(that.getHumanId());
+        } else {
+            return matchHumanId(o);
+        }
     }
 
     @Override
