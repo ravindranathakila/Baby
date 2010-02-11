@@ -1,6 +1,12 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.exception.DBException;
+import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
 
@@ -78,10 +84,18 @@ import javax.persistence.*;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-public class HumansNet implements HumanPkJoinFace {
+public class HumansNet implements HumanPkJoinFace, HumansFriend {
 
     private String humanId;
     private Human human;
+
+    @NOTE(note = "Display name is used for adding removing users etc. This can also be the nick name." +
+            "The compulsory requirement for this name is that others know the user by this name." +
+            "This name is important for us as it helps DB performance(instead of loading identity bean." +
+            "This is one place where the benefit breaking table with PK is elaborated.(we made this displayName entry much " +
+            "later in the development cycle)")
+    private String displayName;
+
     private HumansNetPeople humansNetPeople;
 
     @Id
@@ -104,8 +118,29 @@ public class HumansNet implements HumanPkJoinFace {
         this.human = human;
     }
 
+    public String getDisplayName() {
+        return displayName;
+    }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @Override
+    @Transient
+    public boolean isFriend(final String friendsHumanId) {
+        final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doDirtyIsHumansNetPeople(new HumanId(this.humanId), new HumanId(friendsHumanId));
+        if (r.returnStatus() != 0) {
+            throw new DBException(r.returnError());
+        }
+        return r.returnValue();
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    @WARNING(warning = "Do not change LAZY loading.",
+            warnings = {"If you are changing, check with Human which fetches this eager.",
+                    "If you are changing, check how to efficiently fetch displayName.",
+                    "You could use pkjoincolumn between HumansNet and the requiring entity."})
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     public HumansNetPeople getHumansNetPeople() {
         return humansNetPeople;

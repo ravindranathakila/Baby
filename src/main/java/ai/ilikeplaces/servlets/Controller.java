@@ -1,6 +1,5 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.depricated.ListenerLogin;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
@@ -137,6 +136,36 @@ final public class Controller extends HttpServletWrapper {
             @Override
             public String toString() {
                 return DocFriendDelete;
+            }},
+
+        FriendList("ai/ilikeplaces/widgets/friend/friend_list.xhtml",
+                Controller.Page.FriendListList
+
+        ) {
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocFriendList;
+            }},
+
+        GenericButton("ai/ilikeplaces/widgets/button.xhtml",
+                Controller.Page.GenericButtonLink
+
+        ) {
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocGenericButton;
             }},
 
         Organize(null
@@ -438,8 +467,26 @@ final public class Controller extends HttpServletWrapper {
         final static public String friendDeleteLocationLabel = "friendDeleteLocationLabel";
         final static public String friendDeleteAddButton = "friendDeleteDeleteButton";
 
+        /*FriendList Page*/
+        final static public String DocFriendList = "DocFriendList";
+        /*FriendList IDs*/
+        final static public String FriendListList = "FriendListList";
+        /*FriendList Page*/
+        final static public String DocGenericButton = "DocGenericButton";
+        /*FriendList IDs*/
+        final static public String GenericButtonLink = "GenericButtonLink";
+
         /*Organize Page*/
         final static public String DocOrganize = "DocOrganize";
+        /*Organize Attributes*/
+        final static public String DocOrganizeCategory = "category";
+        final static public int DocOrganizeModeOrganize = 0;
+        final static public String DocOrganizeLocation = "location";
+        final static public int DocOrganizeModeLocation = 1;
+        final static public String DocOrganizeEvent = "event";
+        final static public int DocOrganizeModePrivateLocation = 2;
+        final static public String DocOrganizeAlbum = "album";
+        final static public int DocOrganizeModeEvent = 3;
 
         /*FriendFind Page*/
         final static public String DocFriends = "DocFriends";
@@ -574,7 +621,9 @@ final public class Controller extends HttpServletWrapper {
     final PageFace findFriendWidget = Page.FindFriend;
     final PageFace friendAdd = Page.FriendAdd;
     final PageFace friendDelete = Page.FriendDelete;
+    final PageFace friendList = Page.FriendList;
 
+    final PageFace genericButton = Page.GenericButton;
 
     /**
      * @param serveletConfig__
@@ -662,6 +711,10 @@ final public class Controller extends HttpServletWrapper {
             inhs__.registerItsNatDocFragmentTemplate(friendAdd.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(friendAdd));
 
             inhs__.registerItsNatDocFragmentTemplate(friendDelete.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(friendDelete));
+
+            inhs__.registerItsNatDocFragmentTemplate(friendList.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(friendList));
+
+            inhs__.registerItsNatDocFragmentTemplate(genericButton.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(genericButton));
         }
     }
 
@@ -702,29 +755,34 @@ final public class Controller extends HttpServletWrapper {
                     staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0007"));
                 } else if (isOrganizePage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocOrganize);/*Framework specific*/
-                    final String c = request__.getServletRequest().getParameter("category");
-                    if (c != null) {
-                        try {
-                            Integer category = null;
-                            category = Integer.parseInt(c);
-                            switch (category) {
-                                /*Manage Mode*/
-                                case 0:
-                                    break;
-                                /*Location Mode*/
-                                case 1:
-                                    
-                                    break;
-                                /*Private Location Mode*/
-                                case 2:
-                                    break;
-                                default:
-                                    throw new NumberFormatException("SORRY! WRONG CATEGORY.");
-                            }
-                        } catch (final NumberFormatException e_) {
-                            Loggers.EXCEPTION.error("SORRY! I ENCOUNTERED A CATEGORY FORMAT ERROR.", e_);
-                        }
-                    }
+                    request__.getServletRequest().setAttribute(Page.DocOrganizeCategory, request__.getServletRequest().getParameter(Page.DocOrganizeCategory));
+                    request__.getServletRequest().setAttribute(Page.DocOrganizeLocation, request__.getServletRequest().getParameter(Page.DocOrganizeLocation));
+                    request__.getServletRequest().setAttribute(Page.DocOrganizeEvent, request__.getServletRequest().getParameter(Page.DocOrganizeEvent));
+                    request__.getServletRequest().setAttribute(Page.DocOrganizeAlbum, request__.getServletRequest().getParameter(Page.DocOrganizeAlbum));
+
+//                    final String c = request__.getServletRequest().getParameter("category");
+//                    if (c != null) {
+//                        try {
+//                            Integer category = null;
+//                            category = Integer.parseInt(c);
+//                            switch (category) {
+//                                /*Manage Mode*/
+//                                case 0:
+//                                    break;
+//                                /*Location Mode*/
+//                                case 1:
+//
+//                                    break;
+//                                /*Private Location Mode*/
+//                                case 2:
+//                                    break;
+//                                default:
+//                                    throw new NumberFormatException("SORRY! WRONG CATEGORY.");
+//                            }
+//                        } catch (final NumberFormatException e_) {
+//                            Loggers.EXCEPTION.error("SORRY! I ENCOUNTERED A CATEGORY FORMAT ERROR.", e_);
+//                        }
+//                    }
 
                     staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0013"));
                 } else if (isFriendsPage(URL__)) {

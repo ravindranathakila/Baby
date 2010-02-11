@@ -77,6 +77,22 @@ public class HumansIdentity implements HumanPkJoinFace, Serializable {
         this.human = human;
     }
 
+    public String getHumansIdentityFirstName() {
+        return humansIdentityFirstName;
+    }
+
+    public void setHumansIdentityFirstName(String humansIdentityFirstName) {
+        this.humansIdentityFirstName = humansIdentityFirstName;
+    }
+
+    public String getHumansIdentityLastName() {
+        return humansIdentityLastName;
+    }
+
+    public void setHumansIdentityLastName(String humansIdentityLastName) {
+        this.humansIdentityLastName = humansIdentityLastName;
+    }
+
     public String getHumansIdentityEmail() {
         return humansIdentityEmail;
     }

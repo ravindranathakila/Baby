@@ -1,7 +1,12 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.exception.DBException;
+import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.EntityLifeCyleListener;
+import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +18,7 @@ import java.io.Serializable;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners(EntityLifeCyleListener.class)
-public class Human implements HumanIdFace, Serializable, Clearance {
+public class Human implements HumanIdFace, Serializable, Clearance, HumansFriend {
 
     private String humanId;
 
@@ -46,6 +51,29 @@ public class Human implements HumanIdFace, Serializable, Clearance {
         this.humanId = humanId__;
     }
 
+    @Transient
+    @Override
+    public Human getHuman() {
+        return this;
+    }
+
+    @Transient
+    @Override
+    public String getDisplayName() {
+        return getHumansNet().getDisplayName();
+    }
+
+    @Override
+    @Transient
+    public boolean isFriend(final String friendsHumanId) {
+        final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doDirtyIsHumansNetPeople(new HumanId(this.humanId), new HumanId(friendsHumanId));
+        if (r.returnStatus() != 0) {
+            throw new DBException(r.returnError());
+        }
+        return r.returnValue();
+    }
+
+
     public Boolean getHumanAlive() {
         return humanAlive;
     }
@@ -64,7 +92,7 @@ public class Human implements HumanIdFace, Serializable, Clearance {
         this.clearance = clearance;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     public HumansAuthentication getHumansAuthentications() {
         return humansAuthentication;
@@ -74,7 +102,7 @@ public class Human implements HumanIdFace, Serializable, Clearance {
         this.humansAuthentication = humansAuthentications;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     public HumansIdentity getHumansIdentity() {
         return humansIdentity;
@@ -84,7 +112,7 @@ public class Human implements HumanIdFace, Serializable, Clearance {
         this.humansIdentity = humansIdentity;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     public HumansPrivatePhoto getHumansPrivatePhoto() {
         return HumansPrivatePhoto;
@@ -94,7 +122,7 @@ public class Human implements HumanIdFace, Serializable, Clearance {
         this.HumansPrivatePhoto = HumansPrivatePhoto;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     public HumansPublicPhoto getHumansPublicPhoto() {
         return humansPublicPhoto;
@@ -104,7 +132,8 @@ public class Human implements HumanIdFace, Serializable, Clearance {
         this.humansPublicPhoto = humansPublicPhoto;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @NOTE(note = "HumansNet is a simple entity with no List based getters and setters.")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @PrimaryKeyJoinColumn
     public HumansNet getHumansNet() {
         return humansNet;
@@ -115,7 +144,7 @@ public class Human implements HumanIdFace, Serializable, Clearance {
     }
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     public HumansPrivateLocation getHumansPrivateLocation() {
         return humansPrivateLocation;
@@ -125,7 +154,7 @@ public class Human implements HumanIdFace, Serializable, Clearance {
         this.humansPrivateLocation = humansPrivateLocation;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     public HumansPrivateEvent getHumansPrivateEvent() {
         return humansPrivateEvent;
@@ -135,7 +164,7 @@ public class Human implements HumanIdFace, Serializable, Clearance {
         this.humansPrivateEvent = humansPrivateEvent;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     public HumansAlbum getHumansAlbum() {
         return humansAlbum;

@@ -1,10 +1,13 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.Return;
 
 import javax.ejb.Local;
+import java.util.List;
 
 
 /**
@@ -23,6 +26,12 @@ public interface HumanCRUDPrivateLocationLocal {
     public Return<PrivateLocation> cPrivateLocation(final String humanId, final String privateLocationName, final String privateLocationInfo);
 
     public Return<PrivateLocation> rPrivateLocation(final String humanId, final long privateLocationId);
+
+    public Return<PrivateLocation> uPrivateLocationAddOwners(final String humanId__, final long privateLocationId__, final List<String> privateLocationOwners__);
+
+    public Return<PrivateLocation> uPrivateLocationAddOwner(final HumanId humanId__, final long privateLocationId__, final HumansFriend owner);
+    
+    public Return<PrivateLocation> uPrivateLocationRemoveOwner(final HumanId humanId__, final long privateLocationId__, final HumansFriend owner);
 
     public Return<Boolean> dPrivateLocation(final String humanId, final long privateLocationId);
 }

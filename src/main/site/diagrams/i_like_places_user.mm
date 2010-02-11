@@ -3,8 +3,8 @@
 <node COLOR="#000000" CREATED="1265820657562" ID="Freemind_Link_928670984" MODIFIED="1265831127609" STYLE="bubble" TEXT="What Is I Like Place?&#xa;What Can I Do Here?">
 <edge COLOR="#009999" WIDTH="2"/>
 <font BOLD="true" NAME="Comic Sans MS" SIZE="20"/>
-<hook NAME="accessories/plugins/HierarchicalIcons.properties"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
+<hook NAME="accessories/plugins/HierarchicalIcons.properties"/>
 <hook NAME="accessories/plugins/NodeNote.properties">
 <text>This mind map should help you&#xa;figure out the purpose of the site.&#xa;You should also be able to:&#xa;1. Find out how you can use it&#xa;2. Find out how you can work with us&#xa;3. Help out fellow humans to enjoy and have fun</text>
 </hook>
@@ -33,7 +33,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1265820767109" HGAP="23" ID="Freemind_Link_809209352" MODIFIED="1265828339234" POSITION="right" STYLE="bubble" TEXT="Find Out &#xa;Good Places To Visit" VSHIFT="93">
+<node COLOR="#0033ff" CREATED="1265820767109" HGAP="23" ID="Freemind_Link_809209352" MODIFIED="1265903782515" POSITION="right" STYLE="bubble" TEXT="Find Out &#xa;Good Places To Visit" VSHIFT="93">
 <font NAME="Comic Sans MS" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1265820795828" ID="Freemind_Link_1390735058" MODIFIED="1265828339234" STYLE="fork" TEXT="How To &#xa;Find Good Places To Visit?">
 <font NAME="Comic Sans MS" SIZE="16"/>
@@ -123,7 +123,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1265821475421" ID="Freemind_Link_1722935537" MODIFIED="1265828339078" POSITION="left" STYLE="bubble" TEXT="Organize &#xa;Events in Places" VSHIFT="73">
+<node COLOR="#0033ff" CREATED="1265821475421" ID="Freemind_Link_1722935537" MODIFIED="1265903812015" POSITION="left" STYLE="bubble" TEXT="Organize &#xa;Events in Places" VSHIFT="73">
 <font NAME="Comic Sans MS" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1265821573609" ID="Freemind_Link_1121862" MODIFIED="1265828339062" STYLE="fork" TEXT="Where &#xa;Can I Organize Events?">
 <arrowlink DESTINATION="Freemind_Link_1416123445" ENDARROW="Default" ENDINCLINATION="55;0;" ID="Freemind_Arrow_Link_1277072609" STARTARROW="None" STARTINCLINATION="55;0;"/>
@@ -267,6 +267,21 @@
 </node>
 <node COLOR="#990000" CREATED="1265831307156" ID="Freemind_Link_526031956" MODIFIED="1265831312062" STYLE="bubble" TEXT="Help With Recommending Us">
 <font NAME="Comic Sans MS" SIZE="14"/>
+</node>
+</node>
+</node>
+<node COLOR="#0033ff" CREATED="1265900606859" ID="Freemind_Link_1610318784" MODIFIED="1265900616000" POSITION="right" TEXT="Socialize With Friends">
+<font NAME="Comic Sans MS" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1265900617609" ID="Freemind_Link_342924107" MODIFIED="1265900638031" STYLE="fork" TEXT="How&#xa;Do I Socialize With Friends?">
+<font NAME="Comic Sans MS" SIZE="16"/>
+<node COLOR="#990000" CREATED="1265900650515" ID="Freemind_Link_777642861" MODIFIED="1265900803796" STYLE="bubble" TEXT="First Find and Add People As Your Friends">
+<font NAME="Comic Sans MS" SIZE="14"/>
+<node COLOR="#111111" CREATED="1265900820171" ID="Freemind_Link_256081836" MODIFIED="1265900824937" STYLE="fork" TEXT="then?">
+<node COLOR="#111111" CREATED="1265900825562" ID="Freemind_Link_244737653" MODIFIED="1265903812031" STYLE="bubble" TEXT="Start Using I Like Places With Them">
+<arrowlink DESTINATION="Freemind_Link_809209352" ENDARROW="Default" ENDINCLINATION="984;0;" ID="Freemind_Arrow_Link_1223109696" STARTARROW="None" STARTINCLINATION="984;0;"/>
+<arrowlink DESTINATION="Freemind_Link_1722935537" ENDARROW="Default" ENDINCLINATION="1568;0;" ID="Freemind_Arrow_Link_1654698630" STARTARROW="None" STARTINCLINATION="1568;0;"/>
+</node>
+</node>
 </node>
 </node>
 </node>

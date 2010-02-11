@@ -6,7 +6,6 @@ import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
-import ai.ilikeplaces.logic.verify.IntegrityTester;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt;
 import ai.ilikeplaces.security.face.SingletonHashingFace;
@@ -54,6 +53,12 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     @EJB
     private SingletonHashingFace singletonHashingFace;
 
+    @EJB
+    private RHumansAuthenticationLocal rHumansAuthenticationLocal_;
+
+    @EJB
+    private RHumansPrivateLocationLocal rHumansPrivateLocation_;
+
 
     public HumanCRUDHuman() {
         logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", HumanCRUDHuman.class, this.hashCode());
@@ -68,13 +73,32 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Human doDirtyRHuman(final RefObj<String> humanId) {
-        return rHumanLocal_.doDirtyRHuman(humanId.getObj());
+        return
+                rHumanLocal_.doDirtyRHuman(humanId.getObj());
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public HumansAuthentication doDirtyRHumansAuthentication(final RefObj<String> humanId) {
+        return rHumansAuthenticationLocal_.doDirtyRHumansAuthentication(humanId.getObj());
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public HumansNetPeople doDirtyRHumansNetPeople(final RefObj<String> humanId) {
         return rHumansNetPeopleLocal_.doDirtyRHumansNetPeople(humanId.getObj());
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<HumansPrivateLocation> doDirtyRHumansPrivateLocation(final RefObj<String> humanId) {
+        Return<HumansPrivateLocation> r;
+        try {
+            r = new ReturnImpl<HumansPrivateLocation>(rHumansPrivateLocation_.doDirtyRHumansPrivateLocation(humanId.getObj()), "Read HumansPrivateLocation Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<HumansPrivateLocation>(t, "Read HumansPrivateLocation FAILED!", true);
+        }
+        return r;
     }
 
     @Override
@@ -107,6 +131,18 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         Return<Boolean> r;
         try {
             r = new ReturnImpl<Boolean>(uHumansNetPeopleLocal_.doNTxIsHumansNetPeople(adderHumanId.getObj(), addeeHumanId.getObj()), "Check friend Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Boolean>(t, "Check friend FAILED!", true);
+        }
+        return r;
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<Boolean> doDirtyIsHumansNetPeople(final RefObj<String> adderHumanId, final RefObj<String> addeeHumanId) {
+        Return<Boolean> r;
+        try {
+            r = new ReturnImpl<Boolean>(uHumansNetPeopleLocal_.doDirtyIsHumansNetPeople(adderHumanId.getObj(), addeeHumanId.getObj()), "Check friend Successful!");
         } catch (final Throwable t) {
             r = new ReturnImpl<Boolean>(t, "Check friend FAILED!", true);
         }
@@ -181,7 +217,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
             hnp.setHumanId(newUser.getHumanId());
 
             final HumansNet hn = new HumansNet();
-            hn.setDisplayName("TODO:" +newUser.getHumanId());
+            hn.setDisplayName("TODO:" + newUser.getHumanId());
             hn.setHumanId(newUser.getHumanId());
 
             hn.setHumansNetPeople(hnp);
@@ -225,7 +261,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
      */
     @Override
     @Deprecated
-    @NOTE(note = "Will be centralized",see = "IntegrityTester.class")
+    @NOTE(note = "Will be centralized", see = "IntegrityTester.class")
     @FIXME(issue = "Throws exception for duplicate key. Check why.")
     public String verify() {
         final String random = this.getClass().getSimpleName() + System.currentTimeMillis();

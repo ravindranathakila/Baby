@@ -40,6 +40,13 @@
         </layout>
     </appender>
 
+    <appender name="FILE_USER_EXCEPTION" class="ch.qos.logback.core.FileAppender">
+        <file>../logs/ilp_user_exception.log</file>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%thread|%date|%logger:%line>%msg%n%n</Pattern>
+        </layout>
+    </appender>
+
     <appender name="FILE_DEBUG" class="ch.qos.logback.core.FileAppender">
         <file>../logs/ilp_debug.log</file>
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -97,6 +104,10 @@
 
     <logger name="EXCEPTION" level="error">
             <appender-ref ref="FILE_EXCEPTION" />
+    </logger>
+
+    <logger name="USER_EXCEPTION" level="debug">
+            <appender-ref ref="FILE_USER_EXCEPTION" />
     </logger>
 
     <logger name="DEBUG" level="debug">
