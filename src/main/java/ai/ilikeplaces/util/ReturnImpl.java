@@ -36,19 +36,11 @@ final public class ReturnImpl<T> implements Return {
         this.returnStatus = 0;
         this.returnValue = returnValue;
         this.returnMsg = returnMsg;
-//        if (log.length > 0 && (Boolean) log[0]) {
-//            logger.info("HELLO, RETURN VALUES:{}",
-//                    "ReturnImpl{" +
-//                            "returnStatus=" + returnStatus +
-//                            ", returnValue=" + returnValue != null ? returnValue.toString() : "null" +
-//                            ", returnMsg='" + returnMsg + '\'' +
-//                            '}');
-//        }
     }
 
     public ReturnImpl(final Throwable returnError, final String returnMsg, final boolean shouldLog) {
         if (shouldLog) {
-            logger.error(logMsgBeginning + returnMsg + "\n", returnError);
+            Loggers.EXCEPTION.error(logMsgBeginning + returnMsg + "\n", returnError);
         }
         this.returnStatus = 1;
         this.returnError = returnError;
