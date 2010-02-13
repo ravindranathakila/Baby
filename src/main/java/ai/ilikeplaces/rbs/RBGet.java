@@ -33,6 +33,8 @@ public class
 
     final static Logger logger = LoggerFactory.getLogger(RBGet.class);
 
+    final static public String url_CDN_STATIC = "url.CDN_STATIC";
+
     static {
         try {
             globalConfig = ResourceBundle.getBundle("GlobalConfig");
