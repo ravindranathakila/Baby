@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.util.Return;
 
@@ -21,7 +22,17 @@ public interface HumanCRUDPrivateEventLocal {
     
     public Return<PrivateEvent> cPrivateEvent(final String humanId, final String privateEventName, final String privateEventInfo);
 
-    public Return<PrivateEvent> rPrivateEvent(final String humanId, final long privateEventId);
+    public Return<PrivateEvent> rDirtyPrivateEvent(final String humanId, final long privateEventId);
+
+    public Return<Boolean> dirtyRPrivateEventIsOwner(final String humanId, final Long privateEventId);
+
+    public Return<PrivateEvent> uPrivateEventAddOwner(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__, final HumansFriend owner);
+
+    public Return<PrivateEvent> uPrivateEventAddVisitor(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__, final HumansFriend owner);
+
+    public Return<PrivateEvent> uPrivateEventRemoveOwner(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__, final HumansFriend owner);
+
+    public Return<PrivateEvent> uPrivateEventRemoveVisitor(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__, final HumansFriend owner);
 
     public Return<Boolean> dPrivateEvent(final String humanId, final long privateEventId);
 }

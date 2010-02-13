@@ -33,10 +33,8 @@ abstract public class Button extends AbstractWidgetListener {
      */
     public Button(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final String buttonText, final boolean doRefreshPageOnClick, final Object ... params) {
         super(itsNatDocument__, Page.GenericButton, appendToElement__, buttonText, doRefreshPageOnClick, params);
-        
-        Loggers.DEBUG.debug("EXECUTING");
-        
-        $$(Controller.Page.GenericButtonLink).setTextContent(buttonText);
+               
+        $$(Controller.Page.GenericButtonText).setTextContent(buttonText);
 
         if (doRefreshPageOnClick) {
             ((ItsNatHTMLDocument) itsNatDocument_).addEventListener((EventTarget) $$(Controller.Page.GenericButtonLink), EventType.click.toString(), new EventListener() {

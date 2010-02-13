@@ -4,8 +4,11 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.rbs.RBGet;
+import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
+import ai.ilikeplaces.util.MarkupTag;
 import ai.ilikeplaces.util.Return;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -44,18 +47,18 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
         final String humanId = (String) initArgs[0];
         final long privateLocationId = (Long) initArgs[1];
 
-        final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).rPrivateLocation(humanId, privateLocationId);
+        final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).rDirtyPrivateLocation(humanId, privateLocationId);
 
 
         LoggerFactory.getLogger(PrivateLocationView.class.getName()).debug(r.toString());
 
         if (r.returnStatus() == 0) {
             LoggerFactory.getLogger(PrivateLocationView.class.getName()).debug("Setting values");
-            $$(privateLocationViewName).setTextContent("Location Name: "+r.returnValue().getPrivateLocationName());
-            $$(privateLocationViewInfo).setTextContent("Location Info: "+r.returnValue().getPrivateLocationInfo());
+            $$(privateLocationViewName).setTextContent("Place: " + r.returnValue().getPrivateLocationName());
+            $$(privateLocationViewInfo).setTextContent("Details: " + r.returnValue().getPrivateLocationInfo());
         } else {
             LoggerFactory.getLogger(PrivateLocationView.class.getName()).debug("Error");
-            $$(privateLocationViewNotice).setTextContent("Alert: " +r.returnMsg());
+            $$(privateLocationViewNotice).setTextContent("Alert: " + r.returnMsg());
         }
 
     }

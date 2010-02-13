@@ -2,10 +2,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.entities.HumanIdFace;
 import ai.ilikeplaces.entities.HumansFriend;
-import ai.ilikeplaces.entities.HumansPrivateLocation;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
@@ -18,10 +15,9 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-
-import static ai.ilikeplaces.servlets.Controller.Page.pc_close;
+import java.util.Set;
 
 
 /**
@@ -29,19 +25,28 @@ import static ai.ilikeplaces.servlets.Controller.Page.pc_close;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-abstract public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>, RETURN_TYPE> extends AbstractWidgetListener {
+public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>, RETURN_TYPE> extends AbstractWidgetListener {
 
 
     final private Logger logger = LoggerFactory.getLogger(MemberHandler.class.getName());
+    final static public String Added = " is added";
+    final static public String Removed = " is not added";
 
     M m;
     T poss;
+    Set<String> existAll;
     Save<RETURN_TYPE> saveAdd;
     Save<RETURN_TYPE> saveRemove;
 
     /**
+     *
      * @param itsNatDocument__
      * @param appendToElement__
+     * @param m
+     * @param possibilities
+     * @param existingAll
+     * @param saveAdd
+     * @param saveRemove
      */
     public MemberHandler(final ItsNatDocument itsNatDocument__,
                          final Element appendToElement__,
@@ -49,9 +54,11 @@ abstract public class MemberHandler<M extends HumansFriend, T extends List<Human
                          final M m,
                          @NOTE(note = "The list containing possible adds to be added.")
                          final List<? extends HumansFriend> possibilities,
+                         @NOTE(note = "The list of existing users contains users this guy does not know.")
+                         final List<? extends HumansFriend> existingAll,
                          final Save<RETURN_TYPE> saveAdd,
                          final Save<RETURN_TYPE> saveRemove) {
-        super(itsNatDocument__, Controller.Page.FriendList, appendToElement__, m, possibilities, saveAdd, saveRemove);
+        super(itsNatDocument__, Controller.Page.FriendList, appendToElement__, m, possibilities, existingAll, saveAdd, saveRemove);
     }
 
 
@@ -59,30 +66,37 @@ abstract public class MemberHandler<M extends HumansFriend, T extends List<Human
     protected void init(final Object... initArgs) {
         m = (M) initArgs[0];
         poss = (T) initArgs[1];
-        saveAdd = (Save<RETURN_TYPE>) initArgs[2];
-        saveRemove = (Save<RETURN_TYPE>) initArgs[3];
 
-        Loggers.DEBUG.debug("INIT:" + Arrays.toString(poss.toArray()));
+        existAll = new HashSet<String>();
+        for (final HumansFriend f : (T) initArgs[2]) {
+            existAll.add(f.getHumanId());
+        }
+
+        saveAdd = (Save<RETURN_TYPE>) initArgs[3];
+        saveRemove = (Save<RETURN_TYPE>) initArgs[4];
     }
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
         for (final HumansFriend possibility : poss) {
+
             final Element li = $$(MarkupTag.LI);
-            li.setTextContent(possibility.getHumanId());
+            li.setTextContent(possibility.getHuman().getDisplayName() + (existAll.contains(possibility.getHumanId()) ? Added : Removed));
+
             $$(Controller.Page.FriendListList).appendChild(li);
+
             itsNatHTMLDocument__.addEventListener((EventTarget) li, EventType.click.toString(), new EventListener() {
-                Boolean positive = false;
+                Boolean positive = existAll.contains(possibility.getHumanId());
 
                 @Override
                 public void handleEvent(final Event evt_) {
                     positive = !positive;
                     if (positive) {
-                        saveAdd.save(new HumanId(m.getHumanId()), possibility);
-                        ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getHumanId() + " Added");
+                        saveAdd.save(new ai.ilikeplaces.logic.validators.unit.HumanId(m.getHumanId()), possibility);
+                        ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getHuman().getDisplayName() + Added);
                     } else {
-                        saveRemove.save(new HumanId(m.getHumanId()), possibility);
-                        ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getHumanId() + " Removed");
+                        saveRemove.save(new ai.ilikeplaces.logic.validators.unit.HumanId(m.getHumanId()), possibility);
+                        ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getHuman().getDisplayName() + Removed);
                     }
                 }
             }, false);
