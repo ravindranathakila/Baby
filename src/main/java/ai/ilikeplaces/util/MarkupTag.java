@@ -95,6 +95,22 @@ public enum MarkupTag implements MarkupTagFace {
             return "src";
         }
     },
+    IMG() {
+        @Override
+        public String toString() {
+            return "IMG";
+        }
+
+        @Override
+        public String alt() {
+            return "alt";
+        }
+
+        @Override
+        public String src() {
+            return "src";
+        }
+    },
 
     LI() {
         @Override
