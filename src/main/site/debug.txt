@@ -16,6 +16,8 @@ User RefString when using string to avoid any issues seen/unseen.
 
 Check in Widget constructor if correct Page is registered
 
+If NPE, check if in the web ui, the id has incremented or if it just plain.
+
 
 CRUD Classes
 ------------
