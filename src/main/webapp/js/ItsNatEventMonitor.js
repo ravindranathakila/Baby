@@ -1,3 +1,11 @@
+    bef =  function(){
+		$.blockUI()
+		};
+
+    aft = function(){
+		$.unblockUI()
+		};
+
 function EventMonitor()
 {
     this.before = before;
@@ -7,11 +15,11 @@ function EventMonitor()
     this.count = 0;
 
     post_fun_arg = {
-                  msg:"Your Request Was Comleted Successfully!"
+                  msg:"Your Request Was Completed Successfully!"
                 }
 
     post_fun = function(obj){
-                alert(obj.msg);
+                 //alert(obj.msg);
                 };
 
 
@@ -21,12 +29,12 @@ function EventMonitor()
             //this.monitor.style.position = "relative";
             //this.monitor.style.pixelTop= event.clientX;
             //this.monitor.style.pixelLeft = event.clientY;
-            //$("#monitorId").css( { "left": 100 + "px", "top":100 + "px" } );
-            $('#body').css("cursor","wait");
             //this.monitor.style.display = "block";
+            $('#monitorId').show();
         }
 
         this.count++;
+        //bef();
     }
 
     function after(evt)
@@ -38,8 +46,8 @@ function EventMonitor()
         this.count--;
 
         if (this.count == 0) {
-            $('#body').css("cursor","default");
             //this.monitor.style.display = "none";
+            $('#monitorId').hide();
         }
 
         post_fun(post_fun_arg);
