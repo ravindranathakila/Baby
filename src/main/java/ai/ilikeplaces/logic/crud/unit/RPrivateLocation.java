@@ -48,6 +48,13 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
     }
 
     @Override
+    public boolean doDirtyRPrivateLocationIsOwner(final String humanId, final Long privateLocationId) {
+        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId);
+        final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId);
+        return privateLocation_.getPrivateLocationOwners().contains(humansPrivateLocation_);
+    }
+
+    @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     public PrivateLocation doRPrivateLocation(final String humanId, final Long privateLocationId) {
         final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId);

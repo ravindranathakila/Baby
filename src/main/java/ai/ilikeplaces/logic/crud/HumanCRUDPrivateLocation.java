@@ -7,13 +7,11 @@ import ai.ilikeplaces.logic.crud.unit.CPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.DPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.RPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.UPrivateLocationLocal;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -52,21 +50,10 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
 
     }
 
-    @Deprecated
-    @Override
-    public Return<PrivateLocation> uPrivateLocationAddOwners(final String humanId__, final long privateLocationId__, final List<String> privateLocationOwners__) {
-        Return<PrivateLocation> r;
-        try {
-            r = new ReturnImpl<PrivateLocation>(uPrivateLocationLocal.doUPrivateLocationAddOwners(humanId__, privateLocationId__, privateLocationOwners__), "Update private location Successful!");
-        } catch (final Throwable t) {
-            r = new ReturnImpl<PrivateLocation>(t, "Update private location FAILED!", true);
-        }
-        return r;
 
-    }
 
     @Override
-    public Return<PrivateLocation> uPrivateLocationAddOwner(final HumanId humanId__, final long privateLocationId__, final HumansFriend owner) {
+    public Return<PrivateLocation> uPrivateLocationAddOwner(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateLocationId__, final HumansFriend owner) {
         Return<PrivateLocation> r;
         try {
             r = new ReturnImpl<PrivateLocation>(uPrivateLocationLocal.doUPrivateLocationAddOwner(humanId__.getObj(), privateLocationId__, owner), "Update private location Successful!");
@@ -77,7 +64,7 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
     }
 
     @Override
-    public Return<PrivateLocation> uPrivateLocationRemoveOwner(final HumanId humanId__, final long privateLocationId__, final HumansFriend owner) {
+    public Return<PrivateLocation> uPrivateLocationRemoveOwner(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateLocationId__, final HumansFriend owner) {
         Return<PrivateLocation> r;
         try {
             r = new ReturnImpl<PrivateLocation>(uPrivateLocationLocal.doUPrivateLocationRemoveOwner(humanId__.getObj(), privateLocationId__, owner), "Update private location Successful!");
@@ -88,7 +75,29 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
     }
 
     @Override
-    public Return<PrivateLocation> rPrivateLocation(final String humanId, final long privateLocationId) {
+    public Return<PrivateLocation> uPrivateLocationAddVisitor(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateLocationId__, final HumansFriend owner) {
+        Return<PrivateLocation> r;
+        try {
+            r = new ReturnImpl<PrivateLocation>(uPrivateLocationLocal.doUPrivateLocationAddViewer(humanId__.getObj(), privateLocationId__, owner), "Update private location Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<PrivateLocation>(t, "Update private location FAILED!", true);
+        }
+        return r;
+    }
+
+    @Override
+    public Return<PrivateLocation> uPrivateLocationRemoveVisitor(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateLocationId__, final HumansFriend owner) {
+        Return<PrivateLocation> r;
+        try {
+            r = new ReturnImpl<PrivateLocation>(uPrivateLocationLocal.doUPrivateLocationRemoveViewer(humanId__.getObj(), privateLocationId__, owner), "Update private location Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<PrivateLocation>(t, "Update private location FAILED!", true);
+        }
+        return r;
+    }
+
+    @Override
+    public Return<PrivateLocation> rDirtyPrivateLocation(final String humanId, final long privateLocationId) {
         Return<PrivateLocation> r;
         try {
             r = new ReturnImpl<PrivateLocation>(rPrivateLocationLocal.doDirtyRPrivateLocation(humanId, privateLocationId), "View private location Successful!");
@@ -97,6 +106,17 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
         }
         return r;
 
+    }
+
+    @Override
+    public Return<Boolean> dirtyRPrivateLocationIsOwner(final String humanId, final Long privateLocationId) {
+        Return<Boolean> r;
+        try {
+            r = new ReturnImpl<Boolean>(rPrivateLocationLocal.doDirtyRPrivateLocationIsOwner(humanId, privateLocationId), "View private location Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Boolean>(t, "View private location FAILED!", true);
+        }
+        return r;
     }
 
     @Override

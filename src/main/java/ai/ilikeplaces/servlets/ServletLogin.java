@@ -47,17 +47,17 @@ final public class ServletLogin extends HttpServlet {
      * Username, an email address to which the reset password link can be mailed
      */
     public final static String Username = "Username";
+    
     /**
      * Password hash
      */
     public final static String Password = "Password";
-    /**
-     *
-     */
+
     final Logger logger = LoggerFactory.getLogger(ServletLogin.class.getName());
     final private Properties p_ = new Properties();
     private Context context = null;
     private SingletonHashingFace singletonHashingFace = null;
+    private static final String HEADER_REFERER = "Referer";
 
 
     @Override
@@ -155,13 +155,13 @@ final public class ServletLogin extends HttpServlet {
                                 userSession_.setAttribute(HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_, true)));
                                 logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0001") + ((SessionBoundBadRefWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).boundInstance.getHumanUserId());
                                 Loggers.USER.info(humanUserLocal.getHumanUserId() + " logged in.");
-                                response__.sendRedirect(request__.getRequestURI());
+                                response__.sendRedirect(request__.getHeader(HEADER_REFERER));
                                 break doLogin;/*This is unnecessary but lets not leave chance for introducing bugs*/
                             } else {/*Ok password wrong. What do we do with this guy? First lets make his session object null*/
                                 userSession_.invalidate();
                                 logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0002"));
                                 Loggers.USER.info(humanUserLocal.getHumanUserId() + " entered wrong password.");
-                                response__.sendRedirect(request__.getRequestURI());
+                                response__.sendRedirect(request__.getHeader(HEADER_REFERER));
                                 break doLogin;
                             }
                         } else {/*There is no such user. Ask if he forgor username or whether to create a new account :)*/
@@ -178,13 +178,13 @@ final public class ServletLogin extends HttpServlet {
                     }
                 } else {/*Why was the user sent here without either username or password or both(by the page)? Send him back!*/
                     logger.warn(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0009") + request__.getRequestURL().toString());
-                    response__.sendRedirect(request__.getRequestURI());
+                    response__.sendRedirect(request__.getHeader(HEADER_REFERER));
                     break doLogin;
                 }
 
             } else {/*Why did the user come to this page if he was already logged on? Send him back!*/
                 logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0005") + ((SessionBoundBadRefWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).boundInstance.getHumanUserId());
-                response__.sendRedirect(request__.getRequestURI());
+                response__.sendRedirect(request__.getHeader(HEADER_REFERER));
             }
         }
     }

@@ -154,7 +154,9 @@ final public class Controller extends HttpServletWrapper {
             }},
 
         GenericButton("ai/ilikeplaces/widgets/button.xhtml",
-                Controller.Page.GenericButtonLink
+                Controller.Page.GenericButtonLink,
+                Controller.Page.GenericButtonText,
+                Controller.Page.GenericButtonImage
 
         ) {
 
@@ -471,10 +473,13 @@ final public class Controller extends HttpServletWrapper {
         final static public String DocFriendList = "DocFriendList";
         /*FriendList IDs*/
         final static public String FriendListList = "FriendListList";
+
         /*FriendList Page*/
         final static public String DocGenericButton = "DocGenericButton";
         /*FriendList IDs*/
         final static public String GenericButtonLink = "GenericButtonLink";
+        final static public String GenericButtonText = "GenericButtonText";
+        final static public String GenericButtonImage = "GenericButtonImage";
 
         /*Organize Page*/
         final static public String DocOrganize = "DocOrganize";
@@ -902,16 +907,5 @@ final public class Controller extends HttpServletWrapper {
             ids_.add(id_);
         }
         GlobalPageIdRegistry.put(page__, ids_);
-    }
-
-    /**
-     * @param showChangeLog__
-     * @return changeLog
-     */
-    public String toString(final boolean showChangeLog__) {
-        String changeLog = new String(toString() + "\n");
-        changeLog += "20090918 Addedhome link in the enum, to be used by everybody. \n";
-        changeLog += "20090924 Changed enum type to be accessible via interface for flexibility\n";
-        return showChangeLog__ ? changeLog : toString();
     }
 }

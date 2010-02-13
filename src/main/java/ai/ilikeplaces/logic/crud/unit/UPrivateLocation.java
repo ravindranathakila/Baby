@@ -1,12 +1,11 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.exception.DBDishonourException;
 import ai.ilikeplaces.exception.NoPrivilegesException;
 import ai.ilikeplaces.exception.NotFriendsException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
@@ -16,8 +15,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -56,32 +53,6 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
 
 
     @Override
-    @TODO(task = "Verify owner")
-    @NOTE(note = "Make loop run even upon failures. Action should complete upon failures")
-    public PrivateLocation doUPrivateLocationAddOwners(final String humanId__, final long privateLocationId__, final List<String> privateLocationOwners__) {
-        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__);
-        final List<HumansPrivateLocation> list = new ArrayList<HumansPrivateLocation>();
-
-        for (final String humanId : privateLocationOwners__) {
-            try {
-                list.add(humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId));
-            } catch (final Exception e) {
-                logger.error("SORRY! I ENCOUNTERED AN ERROR DURING LIST MANIPULATION", e);
-            }
-        }
-
-        for (final HumansPrivateLocation humansPrivateLocation : list) {
-            try {
-                privateLocation_.getPrivateLocationOwners().add(humansPrivateLocation);
-            } catch (final Exception e) {
-                logger.error("SORRY! I ENCOUNTERED AN ERROR DURING LIST MANIPULATION", e);
-            }
-        }
-
-        return privateLocation_;
-    }
-
-    @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public PrivateLocation doUPrivateLocationAddOwner(final String adder, final long privateLocationId__, final HumansFriend addee) {
 
@@ -93,51 +64,80 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
 
         final HumansPrivateLocation adeehumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, addee.getHumanId());
 
-        final HumansPrivateLocation adderhumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, adder);
+        //also safe to keep adder scoped within
+        checkAuthority:
+        {
+            final HumansPrivateLocation adderhumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, adder);
 
-        if (!privateLocation_.getPrivateLocationOwners().contains(adderhumansPrivateLocation)) {
-            throw new NoPrivilegesException(adderhumansPrivateLocation.getHumanId(), "manage private location:" + privateLocation_.toString());
+            if (!privateLocation_.getPrivateLocationOwners().contains(adderhumansPrivateLocation)) {
+                throw new NoPrivilegesException(adderhumansPrivateLocation.getHumanId(), "manage private location:" + privateLocation_.toString());
+            }
         }
 
 
         wiringBothSides:
         {
-            privateLocation_.getPrivateLocationOwners().add(adeehumansPrivateLocation);
-            adeehumansPrivateLocation.getPrivateLocationsOwned().add(privateLocation_);
+            if (!privateLocation_.getPrivateLocationOwners().contains(adeehumansPrivateLocation)) {//Concurrent update safe
+                privateLocation_.getPrivateLocationOwners().add(adeehumansPrivateLocation);
+            } else {
+                throw new DBDishonourException("Adding an existing owner");
+            }
+            if (!adeehumansPrivateLocation.getPrivateLocationsOwned().contains(privateLocation_)) {//Concurrent update safe
+                adeehumansPrivateLocation.getPrivateLocationsOwned().add(privateLocation_);
+            } else {
+                throw new DBDishonourException("Adding an existing location");
+            }
         }
 
 
         return privateLocation_;
     }
 
-    @Override
-    @TODO(task = "Verify owner")
-    @NOTE(note = "Make loop run even upon failures. Action should complete upon failures")
-    public PrivateLocation doUPrivateLocationRemoveOwners(final String humanId__, final String privateLocationId__, final List<String> privateLocationOwners__) {
-        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__);
-        final List<HumansPrivateLocation> list = new ArrayList<HumansPrivateLocation>();
-
-        for (final String humanId : privateLocationOwners__) {
-            try {
-                list.add(humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId));
-            } catch (final Exception e) {
-                logger.error("SORRY! I ENCOUNTERED AN ERROR DURING LIST MANIPULATION", e);
-            }
-        }
-
-        for (final HumansPrivateLocation humansPrivateLocation : list) {
-            try {
-                privateLocation_.getPrivateLocationOwners().remove(humansPrivateLocation);
-            } catch (final Exception e) {
-                logger.error("SORRY! I ENCOUNTERED AN ERROR DURING LIST MANIPULATION", e);
-            }
-        }
-        return privateLocation_;
-    }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateLocation doUPrivateLocationRemoveOwner(final String adder, final long privateLocationId__, final HumansFriend addee) {
+    public PrivateLocation doUPrivateLocationRemoveOwner(final String remover, final long privateLocationId__, final HumansFriend removee) {
+
+        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removee.getHumanId())) {
+            throw new NotFriendsException(remover, removee.getHumanId());
+        }
+
+        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__);
+
+        //also safe to keep adder scoped within
+        checkAuthority:
+        {
+            final HumansPrivateLocation removerhumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, remover);
+
+            if (!privateLocation_.getPrivateLocationOwners().contains(removerhumansPrivateLocation)) {
+                throw new NoPrivilegesException(removerhumansPrivateLocation.getHumanId(), "manage private location:" + privateLocation_.toString());
+            }
+        }
+
+        wiringBothSides:
+        {
+            final HumansPrivateLocation removeehumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, removee.getHumanId());
+
+            if (privateLocation_.getPrivateLocationOwners().contains(removeehumansPrivateLocation)) {//Concurrent update safe
+                privateLocation_.getPrivateLocationOwners().remove(removeehumansPrivateLocation);
+            } else {
+                throw new DBDishonourException("Removing a non existing owner");
+            }
+            if (removeehumansPrivateLocation.getPrivateLocationsOwned().contains(privateLocation_)) {//Concurrent update safe
+                removeehumansPrivateLocation.getPrivateLocationsOwned().remove(privateLocation_);
+            } else {
+                throw new DBDishonourException("Removing a non existing location");
+            }
+        }
+
+
+        return privateLocation_;
+    }
+
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public PrivateLocation doUPrivateLocationAddViewer(final String adder, final long privateLocationId__, final HumansFriend addee) {
 
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addee.getHumanId())) {
             throw new NotFriendsException(adder, addee.getHumanId());
@@ -145,57 +145,31 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
 
         final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__);
 
-        final HumansPrivateLocation adeehumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, addee.getHumanId());
 
-        final HumansPrivateLocation adderhumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, adder);
+        //also safe to keep adder scoped within
+        checkAuthority:
+        {
+            final HumansPrivateLocation adderhumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, adder);
 
-        if (!privateLocation_.getPrivateLocationOwners().contains(adderhumansPrivateLocation)) {
-            throw new NoPrivilegesException(adderhumansPrivateLocation.getHumanId(), "manage private location:" + privateLocation_.toString());
+            if (!privateLocation_.getPrivateLocationViewers().contains(adderhumansPrivateLocation)) {
+                throw new NoPrivilegesException(adderhumansPrivateLocation.getHumanId(), "manage private location:" + privateLocation_.toString());
+            }
         }
 
 
         wiringBothSides:
         {
-            privateLocation_.getPrivateLocationOwners().remove(adeehumansPrivateLocation);
-            adeehumansPrivateLocation.getPrivateLocationsOwned().remove(privateLocation_);
-        }
+            final HumansPrivateLocation adeehumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, addee.getHumanId());
 
-
-        return privateLocation_;
-    }
-
-    @Override
-    @NOTE(note = "Make loop run even upon failures. Action should complete upon failures")
-    public PrivateLocation doUPrivateLocationAddVisitors(final String humanId__, final String privateLocationId__, final List<String> privateLocationVisitors__) {
-
-        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__);
-
-        for (final String humanId : privateLocationVisitors__) {
-            try {
-                humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId).getPrivateLocationsViewed().add(privateLocation_);
-            } catch (final Exception e) {
-                logger.error("SORRY! I ENCOUNTERED AN ERROR DURING LIST MANIPULATION", e);
+            if (!privateLocation_.getPrivateLocationViewers().contains(adeehumansPrivateLocation)) {//Concurrent update safe
+                privateLocation_.getPrivateLocationViewers().add(adeehumansPrivateLocation);
+            } else {
+                throw new DBDishonourException("Adding an existing viewer");
             }
-        }
-
-        return privateLocation_;
-    }
-
-    @Override
-    public PrivateLocation doUPrivateLocationAddVisitor(String humanId__, String privateLocationId__, HumansFriend privateLocationVisitor__) {
-        throw new UnsupportedOperationException("TODO");
-    }
-
-    @Override
-    @NOTE(note = "Make loop run even upon failures. Action should complete upon failures")
-    public PrivateLocation doUPrivateLocationRemoveVisitors(final String humanId__, final String privateLocationId__, final List<String> privateLocationVisitors__) {
-
-        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__);
-        for (final String humanId : privateLocationVisitors__) {
-            try {
-                humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId).getPrivateLocationsViewed().remove(privateLocation_);
-            } catch (final Exception e) {
-                logger.error("SORRY! I ENCOUNTERED AN ERROR DURING LIST MANIPULATION", e);
+            if (!adeehumansPrivateLocation.getPrivateLocationsViewed().contains(privateLocation_)) {//Concurrent update safe
+                adeehumansPrivateLocation.getPrivateLocationsViewed().add(privateLocation_);
+            } else {
+                throw new DBDishonourException("Adding an existing location");
             }
         }
 
@@ -203,8 +177,45 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
         return privateLocation_;
     }
 
+
     @Override
-    public PrivateLocation doUPrivateLocationRemoveVisitor(String humanId__, String privateLocationId__, HumansFriend privateLocationVisitor__) {
-        throw new UnsupportedOperationException("TODO");
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public PrivateLocation doUPrivateLocationRemoveViewer(final String remover, final long privateLocationId__, final HumansFriend removee) {
+
+        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removee.getHumanId())) {
+            throw new NotFriendsException(remover, removee.getHumanId());
+        }
+
+        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__);
+
+        //also safe to keep adder scoped within
+        checkAuthority:
+        {
+            final HumansPrivateLocation removeehumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, remover);
+
+            if (!privateLocation_.getPrivateLocationOwners().contains(removeehumansPrivateLocation)) {
+                throw new NoPrivilegesException(removeehumansPrivateLocation.getHumanId(), "manage private location:" + privateLocation_.toString());
+            }
+        }
+
+        wiringBothSides:
+        {
+            final HumansPrivateLocation removerhumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, removee.getHumanId());
+
+            if (privateLocation_.getPrivateLocationViewers().contains(removerhumansPrivateLocation)) {//Concurrent update safe
+                privateLocation_.getPrivateLocationViewers().remove(removerhumansPrivateLocation);
+            } else {
+                throw new DBDishonourException("Removing a non existing viewer");
+            }
+            if (removerhumansPrivateLocation.getPrivateLocationsViewed().contains(privateLocation_)) {//Concurrent update safe
+                removerhumansPrivateLocation.getPrivateLocationsViewed().remove(privateLocation_);
+            } else {
+                throw new DBDishonourException("Removing a non existing location");
+            }
+        }
+
+
+        return privateLocation_;
     }
+
 }

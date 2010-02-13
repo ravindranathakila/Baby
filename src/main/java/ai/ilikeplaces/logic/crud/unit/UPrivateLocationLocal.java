@@ -5,7 +5,6 @@ import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateLocation;
 
 import javax.ejb.Local;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,24 +19,12 @@ public interface UPrivateLocationLocal {
 
     public PrivateLocation doUPrivateLocationData(final String humanId__, final String privateLocationId__, final String privateLocationName__, final String privateLocationInfo__);
 
-    @Deprecated
-    public PrivateLocation doUPrivateLocationAddOwners(final String humanId__, final long privateLocationId__, final List<String> privateLocationOwners__);
-
     public PrivateLocation doUPrivateLocationAddOwner(final String humanId__, final long privateLocationId__, final HumansFriend privateLocationOwner__);
-
-    @Deprecated
-    public PrivateLocation doUPrivateLocationRemoveOwners(final String humanId__, final String privateLocationId__, final List<String> privateLocationOwners__);
 
     public PrivateLocation doUPrivateLocationRemoveOwner(final String humanId__, final long privateLocationId__, final HumansFriend privateLocationOwner__);
 
-    @Deprecated
-    public PrivateLocation doUPrivateLocationAddVisitors(final String humanId__, final String privateLocationId__, final List<String> privateLocationVisitors__);
+    public PrivateLocation doUPrivateLocationAddViewer(final String humanId__, final long privateLocationId__, final HumansFriend privateLocationVisitor__);
 
-    public PrivateLocation doUPrivateLocationAddVisitor(final String humanId__, final String privateLocationId__, final HumansFriend privateLocationVisitor__);
-
-    @Deprecated
-    public PrivateLocation doUPrivateLocationRemoveVisitors(final String humanId__, final String privateLocationId__, final List<String> privateLocationVisitors__);
-
-    public PrivateLocation doUPrivateLocationRemoveVisitor(final String humanId__, final String privateLocationId__, final HumansFriend privateLocationVisitor__);
+    public PrivateLocation doUPrivateLocationRemoveViewer(final String humanId__, final long privateLocationId__, final HumansFriend privateLocationVisitor__);
 
 }
