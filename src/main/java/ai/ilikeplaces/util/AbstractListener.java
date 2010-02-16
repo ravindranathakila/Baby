@@ -142,12 +142,12 @@ public abstract class AbstractListener {
         return element__ != null ? element__ : (Element) LogNull.logThrow();
     }
 
-    protected final void displayBlock(final Element element__){
-         element__.setAttribute("style","display:block;");
+    protected final void displayBlock(final Element element__) {
+        element__.setAttribute("style", "display:block;");
     }
 
-    protected final void displayNone(final Element element__){
-         element__.setAttribute("style","display:none;");
+    protected final void displayNone(final Element element__) {
+        element__.setAttribute("style", "display:none;");
     }
 
     /**
@@ -164,6 +164,6 @@ public abstract class AbstractListener {
      * @return The Username of the Logged in user, and null, if not logged in
      */
     final protected String getUsername() {
-        return sessionBoundBadRefWrapper != null ? sessionBoundBadRefWrapper.boundInstance.getHumanUserId():null;
+        return sessionBoundBadRefWrapper != null ? sessionBoundBadRefWrapper.boundInstance.getHumanUserId() : null;
     }
 }
