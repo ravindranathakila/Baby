@@ -1,6 +1,7 @@
 package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.doc.FIXME;
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.PublicPhoto;
@@ -31,7 +32,7 @@ import java.util.ResourceBundle;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class ServletFileUploads extends HttpServlet {
 
     final Logger logger = LoggerFactory.getLogger(ServletFileUploads.class.getName());
