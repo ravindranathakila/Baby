@@ -114,7 +114,7 @@ public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
                     @NOTE(note = "THIS CAN NEVER BE NULL")
                     final Location superLocation = location.getLocationSuperSet();
                     if (superLocation.getLocationName().equals(superLocationName)) {
-                        tempVal = existingLocations.get(0);
+                        tempVal = location;
                         found = true;
                         break superLocationMatchLoop;
                     }
