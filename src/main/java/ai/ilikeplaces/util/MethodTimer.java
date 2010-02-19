@@ -21,11 +21,11 @@ public class MethodTimer {
 
     @AroundInvoke
     public Object profile(InvocationContext invocation) throws Exception {
-        long startTime = System.currentTimeMillis();
+        final long startTime = System.currentTimeMillis();
         try {
             return invocation.proceed();
         } finally {
-            long endTime = System.currentTimeMillis() - startTime;
+            final long endTime = System.currentTimeMillis() - startTime;
             logger.debug("HELLO, METHOD " + invocation.getMethod() + " TOOK " + endTime + " (ms)");
         }
     }

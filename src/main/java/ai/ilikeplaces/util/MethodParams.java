@@ -22,11 +22,11 @@ public class MethodParams {
 
     @AroundInvoke
     public Object profile(InvocationContext invocation) throws Exception {
-        Object[] args = invocation.getParameters();
+        final Object[] args = invocation.getParameters();
         try {
             return invocation.proceed();
         } finally {
-            for (Object arg : args) {
+            for (final Object arg : args) {
                 logger.debug("HELLO, METHOD " + invocation.getMethod() + " RECEIVED PARAMETERS:" + Arrays.toString(args));
             }
         }
