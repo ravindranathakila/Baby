@@ -22,7 +22,7 @@ public enum MarkupTag implements MarkupTagFace {
 
         @Override
         public String toString() {
-            return "P";
+            return P_TAG;
         }
 
     },
@@ -30,46 +30,46 @@ public enum MarkupTag implements MarkupTagFace {
 
         @Override
         public String toString() {
-            return "INPUT";
+            return INPUT_TAG;
         }
 
 
         @Override
         public String value() {
-            return "value";
+            return VALUE;
         }
 
         @Override
         public String type() {
-            return "type";
+            return TYPE;
         }
 
         @Override
         public String typeValueText() {
-            return "text";
+            return TEXT;
         }
 
         @Override
         public String typeValueSelect() {
-            return "select";
+            return SELECT;
         }
 
         @Override
         public String typeValueHidden() {
-            return "hidden";
+            return HIDDEN;
         }
     },
 
     TEXTAREA() {
         @Override
         public String toString() {
-            return "TEXTAREA";
+            return TEXTAREA_TAG;
         }
 
 
         @Override
         public String value() {
-            return "value";
+            return VALUE;
         }
 
     },
@@ -77,53 +77,53 @@ public enum MarkupTag implements MarkupTagFace {
     A() {
         @Override
         public String toString() {
-            return "A";
+            return A_TAG;
         }
 
         @Override
         public String href() {
-            return "href";
+            return HREF;
         }
 
         @Override
         public String alt() {
-            return "alt";
+            return ALT;
         }
 
         @Override
         public String src() {
-            return "src";
+            return SRC;
         }
     },
     IMG() {
         @Override
         public String toString() {
-            return "IMG";
+            return IMG_TAG;
         }
 
         @Override
         public String alt() {
-            return "alt";
+            return ALT;
         }
 
         @Override
         public String src() {
-            return "src";
+            return SRC;
         }
     },
 
     LI() {
         @Override
         public String toString() {
-            return "LI";
+            return LI_TAG;
         }
         @Override
         public String ul() {
-            return "UL";
+            return UL;
         }
         @Override
         public String ol() {
-            return "OL";
+            return OL;
         }
     },
 
@@ -131,22 +131,41 @@ public enum MarkupTag implements MarkupTagFace {
 
         @Override
         public String toString() {
-            return "DIV";
+            return DIV_TAG;
         }
 
     };
+    private static final String INPUT_TAG = "INPUT";
+    private static final String P_TAG = "P";
+    private static final String VALUE = "value";
+    private static final String TYPE = "type";
+    private static final String TEXT = "text";
+    private static final String SELECT = "select";
+    private static final String HIDDEN = "hidden";
+    private static final String TEXTAREA_TAG = "TEXTAREA";
+    private static final String DIV_TAG = "DIV";
+    private static final String OL = "OL";
+    private static final String UL = "UL";
+    private static final String LI_TAG = "LI";
+    private static final String A_TAG = "A";
+    private static final String IMG_TAG = "IMG";
+    private static final String HREF = "href";
+    private static final String SRC = "src";
+    private static final String ALT = "alt";
 
     final static Logger logger = LoggerFactory.getLogger(MarkupTag.class.getName());
     final static String ExceptionMsg = "SORRY! I RECEIVED A CALL ON NON OVERRIDDEN ATTRIBUTE. PROBABLY THIS ATTRIBUTE IS NOT RELEVANT TO THIS ELEMENT TYPE, OR IT WAS NOT IMPLEMENTED.";
+    private static final String STYLE = "style";
+    private static final String ID = "id";
 
     @Override
     public String id() {
-        return "id";
+        return ID;
     }
 
     @Override
     public String style() {
-        return "style";
+        return STYLE;
     }
 
     @Override
