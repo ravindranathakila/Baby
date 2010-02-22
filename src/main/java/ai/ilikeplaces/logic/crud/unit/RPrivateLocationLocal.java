@@ -20,5 +20,9 @@ public interface RPrivateLocationLocal {
 
     public boolean doDirtyRPrivateLocationIsOwner(final String humanId, final Long privateLocationId);
 
-    public PrivateLocation doRPrivateLocation(final String humanId, final Long privateLocationId);
+    public boolean doDirtyRPrivateLocationIsViewer(final String humanId, final Long privateLocationId);
+
+    public PrivateLocation doRPrivateLocationAsViewer(final String humanId, final Long privateLocationId);
+
+    public PrivateLocation doRPrivateLocationAsOwner(final String humanId, final Long privateLocationId);
 }

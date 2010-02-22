@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.crud.unit;
 
+import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.util.Return;
 
@@ -19,4 +20,11 @@ public interface UPrivateEventLocal {
 
     public Return<PrivateEvent> doNTxCPrivateEvent(final String humanId, final String eventName, final String eventInfo, final Date startDate, final Date endDate);
 
+    PrivateEvent doUPrivateEventAddOwner(String obj, long privateEventId__, HumansFriend owner);
+
+    PrivateEvent doUPrivateEventRemoveOwner(String obj, long privateEventId__, HumansFriend owner);
+
+    PrivateEvent doUPrivateEventAddViewer(String obj, long privateEventId__, HumansFriend owner);
+
+    PrivateEvent doUPrivateEventRemoveViewer(String obj, long privateEventId__, HumansFriend owner);
 }

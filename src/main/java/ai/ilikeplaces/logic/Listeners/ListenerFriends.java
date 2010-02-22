@@ -106,7 +106,7 @@ public class ListenerFriends implements ItsNatServletRequestListener {
                 }
                 if (getUsername() != null) {
                     try {
-                        new FindFriend(itsNatDocument, $(Skeleton_center_skeleton), new HumanId(getUsername())) {
+                        new FindFriend(itsNatDocument, $(Skeleton_center_skeleton), new HumanId(getUsernameAsValid())) {
                         };
                     } catch (final Throwable t) {
                         Loggers.EXCEPTION.error("{}", t);

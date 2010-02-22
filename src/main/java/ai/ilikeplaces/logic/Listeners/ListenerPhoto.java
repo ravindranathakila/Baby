@@ -53,7 +53,7 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
                     @Override
                     protected void init(final Object... initArgs) {
 
-                        $$(pd_photo_permalink).setAttribute("href", permaLink + "|" + location);
+                        $$(pd_photo_permalink).setAttribute("href", permaLink + "|" + "TODO");
                         $$(pd_photo).setAttribute("src", publicPhotoURLPath);
                     }
                 };

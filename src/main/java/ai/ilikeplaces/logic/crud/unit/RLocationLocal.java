@@ -27,5 +27,9 @@ public interface RLocationLocal {
 
     public Location doDirtyRLocation(final long locationId);
 
-    public List<String> doDirtyRLikeLocation(final String locationName);
+    public List<String> doDirtyRLikeLocationNames(final String locationName);
+
+    public List<Location> doDirtyRLikeLocations(final String locationName);
+
+    public List<Location> doNTxRLocationsBySuperLocation(final Location locationSuperset);
 }

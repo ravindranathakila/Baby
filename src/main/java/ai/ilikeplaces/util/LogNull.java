@@ -76,4 +76,17 @@ final public class LogNull {
             return obj;
         }
     }
+    /**
+     * This stops the thread execution by throwing a NPE immediately if the
+     * given parameter is null
+     *
+     * @return Object
+     */
+    static public Object logThrow(final Object obj, final String causeOfNpe) {
+        if (obj == null) {
+            throw new NullPointerException(causeOfNpe);
+        } else {
+            return obj;
+        }
+    }
 }

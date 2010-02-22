@@ -120,6 +120,17 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
     }
 
     @Override
+    public Return<Boolean> dirtyRPrivateLocationIsViewer(final String humanId, final Long privateLocationId) {
+        Return<Boolean> r;
+        try {
+            r = new ReturnImpl<Boolean>(rPrivateLocationLocal.doDirtyRPrivateLocationIsViewer(humanId, privateLocationId), "View private location Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Boolean>(t, "View private location FAILED!", true);
+        }
+        return r;
+    }
+
+    @Override
     public Return<Boolean> dPrivateLocation(final String humanId, final long privateLocationId) {
         Return<Boolean> r;
         try {

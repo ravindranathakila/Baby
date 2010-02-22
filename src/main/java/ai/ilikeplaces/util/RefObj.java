@@ -1,7 +1,9 @@
 package ai.ilikeplaces.util;
 
+import ai.ilikeplaces.doc.NOTE;
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
+import net.sf.oval.exception.ConstraintsViolatedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +28,24 @@ public abstract class RefObj<T> {
 
     abstract public T getObj();
 
+    public T getObjectAsValid() {
+        return getObj();
+    }
+
     public void setObj(final T obj) {
         constraintViolations = null;//So that validation is consistent
         this.obj = obj;
+    }
+
+    @NOTE(note = "This approach is specially used when internally creating objects that should be valid as opposed to a web user." +
+            "This approach will prevent the code from setting null values and other violated states.")
+    public void setObjAsValid(final T obj) {
+        constraintViolations = null;//So that validation is consistent
+        this.obj = obj;
+        if (this.validate() != 0) {
+            this.obj = null;
+            throw new ConstraintsViolatedException(this.getViolations());
+        }
     }
 
     /**

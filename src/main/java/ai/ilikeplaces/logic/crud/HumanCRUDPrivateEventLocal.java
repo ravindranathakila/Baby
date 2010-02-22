@@ -6,6 +6,7 @@ import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.util.Return;
 
 import javax.ejb.Local;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,7 +21,7 @@ public interface HumanCRUDPrivateEventLocal {
 
     public static final String NAME = HumanCRUDPrivateEventLocal.class.getSimpleName();
     
-    public Return<PrivateEvent> cPrivateEvent(final String humanId, final String privateEventName, final String privateEventInfo);
+    public Return<PrivateEvent> cPrivateEvent(final String humanId, final long privateLocationId, final String privateEventName, final String privateEventInfo, final Date startDate, final Date endDate);
 
     public Return<PrivateEvent> rDirtyPrivateEvent(final String humanId, final long privateEventId);
 

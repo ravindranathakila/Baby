@@ -4,9 +4,10 @@ import ai.ilikeplaces.doc.BIDIRECTIONAL;
 import ai.ilikeplaces.doc.CREATED_BY;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.util.EntityLifeCyleListener;
+import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ import java.util.List;
 @CREATED_BY(who = {PrivateEvent.class},
         note = "We need to return this entity to the user for CRUD, hence cascade creation not possible.")
 @Entity
-@EntityListeners(EntityLifeCyleListener.class)
+@EntityListeners(EntityLifeCycleListener.class)
 public class PrivateEvent {
 
     private Long privateEventId;
@@ -28,6 +29,10 @@ public class PrivateEvent {
     private String privateEventName;
 
     private String privateEventInfo;
+
+    private Date privateEventStartDate;
+
+    private Date privateEventEndDate;
 
     private Boolean extendedAccess;
 
@@ -76,6 +81,24 @@ public class PrivateEvent {
 
     public void setPrivateEventInfo(String privateEventInfo) {
         this.privateEventInfo = privateEventInfo;
+    }
+
+    @Temporal(TemporalType.DATE)
+    public Date getPrivateEventStartDate() {
+        return privateEventStartDate;
+    }
+
+    public void setPrivateEventStartDate(Date privateEventStartDate) {
+        this.privateEventStartDate = privateEventStartDate;
+    }
+
+    @Temporal(TemporalType.DATE)
+    public Date getPrivateEventEndDate() {
+        return privateEventEndDate;
+    }
+
+    public void setPrivateEventEndDate(Date privateEventEndDate) {
+        this.privateEventEndDate = privateEventEndDate;
     }
 
     public Boolean isExtendedAccess() {

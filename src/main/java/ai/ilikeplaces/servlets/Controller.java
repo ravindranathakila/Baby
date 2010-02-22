@@ -302,6 +302,7 @@ final public class Controller extends HttpServletWrapper {
                 Controller.Page.Main_notice,
                 Controller.Page.Main_center_main_location_title,
                 Controller.Page.Main_center_content,
+                Controller.Page.Main_yox,
                 Controller.Page.Main_left_column,
                 Controller.Page.Main_right_column,
                 Controller.Page.Main_sidebar,
@@ -572,6 +573,7 @@ final public class Controller extends HttpServletWrapper {
         final static public String Main_notice_sh = "Main_notice_sh";
         final static public String Main_center_main_location_title = "Main_center_main_location_title";
         final static public String Main_center_content = "Main_center_content";
+        final static public String Main_yox = "Main_yox";
         final static public String Main_left_column = "Main_left_column";
         final static public String Main_right_column = "Main_right_column";
         final static public String Main_sidebar = "Main_sidebar";
@@ -618,6 +620,10 @@ final public class Controller extends HttpServletWrapper {
     final PageFace privateLocationCreate = Page.PrivateLocationCreate;
     final PageFace privateLocationView = Page.PrivateLocationView;
     final PageFace privateLocationDelete = Page.PrivateLocationDelete;
+
+    final PageFace privateEventCreate = Page.PrivateEventCreate;
+    final PageFace privateEventView = Page.PrivateEventView;
+    final PageFace privateEventDelete = Page.PrivateEventDelete;
 
     final PageFace skeleton = Page.Skeleton;
     final PageFace organize = Page.Organize;
@@ -711,6 +717,12 @@ final public class Controller extends HttpServletWrapper {
 
             inhs__.registerItsNatDocFragmentTemplate(privateLocationDelete.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateLocationDelete));
 
+            inhs__.registerItsNatDocFragmentTemplate(privateEventCreate.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateEventCreate));
+
+            inhs__.registerItsNatDocFragmentTemplate(privateEventView.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateEventView));
+
+            inhs__.registerItsNatDocFragmentTemplate(privateEventDelete.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateEventDelete));
+
             inhs__.registerItsNatDocFragmentTemplate(findFriendWidget.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(findFriendWidget));
 
             inhs__.registerItsNatDocFragmentTemplate(friendAdd.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(friendAdd));
@@ -764,31 +776,6 @@ final public class Controller extends HttpServletWrapper {
                     request__.getServletRequest().setAttribute(Page.DocOrganizeLocation, request__.getServletRequest().getParameter(Page.DocOrganizeLocation));
                     request__.getServletRequest().setAttribute(Page.DocOrganizeEvent, request__.getServletRequest().getParameter(Page.DocOrganizeEvent));
                     request__.getServletRequest().setAttribute(Page.DocOrganizeAlbum, request__.getServletRequest().getParameter(Page.DocOrganizeAlbum));
-
-//                    final String c = request__.getServletRequest().getParameter("category");
-//                    if (c != null) {
-//                        try {
-//                            Integer category = null;
-//                            category = Integer.parseInt(c);
-//                            switch (category) {
-//                                /*Manage Mode*/
-//                                case 0:
-//                                    break;
-//                                /*Location Mode*/
-//                                case 1:
-//
-//                                    break;
-//                                /*Private Location Mode*/
-//                                case 2:
-//                                    break;
-//                                default:
-//                                    throw new NumberFormatException("SORRY! WRONG CATEGORY.");
-//                            }
-//                        } catch (final NumberFormatException e_) {
-//                            Loggers.EXCEPTION.error("SORRY! I ENCOUNTERED A CATEGORY FORMAT ERROR.", e_);
-//                        }
-//                    }
-
                     staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0013"));
                 } else if (isFriendsPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocFriends);/*Framework specific*/

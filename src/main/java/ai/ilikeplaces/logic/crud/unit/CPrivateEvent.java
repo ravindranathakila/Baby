@@ -1,11 +1,9 @@
 package ai.ilikeplaces.logic.crud.unit;
 
+import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.entities.Human;
-import ai.ilikeplaces.entities.HumansPrivateLocation;
-import ai.ilikeplaces.entities.PrivateEvent;
-import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 
@@ -20,7 +18,6 @@ import java.util.Date;
  * Time: 12:04:30 AM
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
 public class CPrivateEvent extends AbstractSLBCallbacks implements CPrivateEventLocal {
@@ -38,36 +35,54 @@ public class CPrivateEvent extends AbstractSLBCallbacks implements CPrivateEvent
     private CrudServiceLocal<Human> humanCrudServiceLocal_;
 
     @EJB
+    private CrudServiceLocal<HumansPrivateEvent> humansPrivateEventCrudServiceLocal_;
+
+    @EJB
     private RPrivateLocationLocal rPrivateLocationLocal_;
 
 
     @Override
     public PrivateEvent doNTxCPrivateEvent(final String humanId, final long privateLocationId, final String locationName, final String locationInfo, final Date startDate, final Date endDate) {
-        final Human managedOwner = humanCrudServiceLocal_.find(Human.class, humanId);
+        final HumansPrivateEvent managedOwner = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, humanId);
 
 
         @WARNING(warning = "This call will throw an exception if user has not rights to the location So do not move it to AFTER creation of PrivateEvent." +
                 "Even so, the transaction manager will roll this back too, but do it the safe way.")
-        final PrivateLocation managedPrivateLocation = rPrivateLocationLocal_.doRPrivateLocation(humanId, privateLocationId);
+        @FIXME(issue = "Make crud classes based on roles. For example, this call should be made to a method, doRPrivateLocationAsOwner")
+        final PrivateLocation managedPrivateLocation = rPrivateLocationLocal_.doRPrivateLocationAsOwner(humanId, privateLocationId);
 
 
         final PrivateEvent privateEvent = new PrivateEvent();
 
         privateEvent.setPrivateEventName(locationName);
         privateEvent.setPrivateEventInfo(locationInfo);
+        privateEvent.setPrivateEventStartDate(startDate);
+        privateEvent.setPrivateEventEndDate(endDate);
 
         final PrivateEvent managedPrivateEvent = privateEventCrudServiceLocal_.create(privateEvent);
 
-        managedPrivateEvent.setPrivateLocation(managedPrivateLocation);
-        managedPrivateLocation.getPrivateEvents().add(managedPrivateEvent);
-        
-        managedPrivateEvent.getPrivateEventOwners().add(managedOwner.getHumansPrivateEvent());
-        managedOwner.getHumansPrivateEvent().getPrivateEventOwned().add(managedPrivateEvent);
+        wireLocation:
+        {
+            managedPrivateEvent.setPrivateLocation(managedPrivateLocation);
+            managedPrivateLocation.getPrivateEvents().add(managedPrivateEvent);
+        }
 
-        managedPrivateEvent.getPrivateEventViewers().add(managedOwner.getHumansPrivateEvent());
-        managedOwner.getHumansPrivateEvent().getPrivateEventViewed().add(managedPrivateEvent);
-        
+        wireOwnership:
+        {
+            managedPrivateEvent.getPrivateEventOwners().add(managedOwner);
+            managedOwner.getPrivateEventOwned().add(managedPrivateEvent);
+        }
 
+        wireViewership:
+        {
+            managedPrivateEvent.getPrivateEventViewers().add(managedOwner);
+            managedOwner.getPrivateEventViewed().add(managedPrivateEvent);
+        }
+        wireInvitedship:
+        {
+            managedPrivateEvent.getPrivateEventInvites().add(managedOwner);
+            managedOwner.getPrivateEventInvited().add(managedPrivateEvent);
+        }
 
         return managedPrivateEvent;
 

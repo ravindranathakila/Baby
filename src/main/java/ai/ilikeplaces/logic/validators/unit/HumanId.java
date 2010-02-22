@@ -23,6 +23,15 @@ public class HumanId extends RefObj<String> {
         obj = humanId;
     }
 
+    public HumanId(final String humanId, final boolean doValidateAndThrow) {
+        if (doValidateAndThrow) {
+            /*Threading issue possible here as the validator thread will accesses the object before creation finishes*/
+            setObjAsValid(humanId);
+        } else {
+            obj = humanId;
+        }
+    }
+
     @IsInvariant
     @NotNull
     @Length(min = 1)

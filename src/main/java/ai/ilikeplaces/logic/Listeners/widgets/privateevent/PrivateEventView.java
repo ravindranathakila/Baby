@@ -45,7 +45,7 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
         final String humanId = (String) initArgs[0];
         final long privateEventId = (Long) initArgs[1];
 
-        final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).rPrivateEvent(humanId, privateEventId);
+        final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).rDirtyPrivateEvent(humanId, privateEventId);
 
 
         LoggerFactory.getLogger(PrivateEventView.class.getName()).debug(r.toString());

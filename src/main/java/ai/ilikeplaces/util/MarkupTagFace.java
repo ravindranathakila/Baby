@@ -42,4 +42,6 @@ public interface MarkupTagFace {
     public String ul();
 
     public String ol();
+
+    public String classs();
 }

@@ -5,13 +5,11 @@ import ai.ilikeplaces.doc.License;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.apache.commons.lang.StringEscapeUtils.*;
 
 /**
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @FIXME(issue = "trim before db and after db. say trimallin trimallout. reason: sql escape only upon in")
 public class Trim {
@@ -34,6 +32,7 @@ public class Trim {
     }
 
     final static private String trimAllLocal(final String inputString) {
-        return escapeSql(escapeJavaScript(escapeHtml(inputString)));
+        //return escapeSql(escapeJavaScript(escapeHtml(inputString)));
+        throw new UnsupportedOperationException("Apache commons lang has a memory leak this this method was removed. Try finding a new XSS solution.");
     }
 }

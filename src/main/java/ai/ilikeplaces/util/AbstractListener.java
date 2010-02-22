@@ -44,10 +44,7 @@ public abstract class AbstractListener {
      *
      */
     final private ItsNatHttpSession itsNatHttpSession;
-    /**
-     *
-     */
-    final protected String location;
+
     /**
      *
      */
@@ -68,7 +65,6 @@ public abstract class AbstractListener {
         this.itsNatHttpSession = (ItsNatHttpSession) request_.getItsNatSession();
         final Object attribute__ = itsNatHttpSession.getAttribute(ServletLogin.HumanUser);
         this.sessionBoundBadRefWrapper = attribute__ == null ? null : (SessionBoundBadRefWrapper<HumanUserLocal>) attribute__;
-        this.location = (String) request_.getServletRequest().getAttribute(RBGet.config.getString("HttpSessionAttr.location"));
 
         init(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument);
 
@@ -165,5 +161,21 @@ public abstract class AbstractListener {
      */
     final protected String getUsername() {
         return sessionBoundBadRefWrapper != null ? sessionBoundBadRefWrapper.boundInstance.getHumanUserId() : null;
+    }
+
+    /**
+     * Get the Username of the Logged in user, or throw exception.
+     * This is a call by prevention where the calls will be made to this method after one
+     * validation that the user is logged in. This is the safe approach to code that assumes logged in.
+     * When code gets bulky, at times calls to just getUserName might trigger null if not used in this form.
+     * With this approach, we expect to throw an exception immediately instead of late discovery.
+     *
+     * @return The Username of the Logged in user, and null, if not logged in
+     */
+    final protected String getUsernameAsValid() {
+        if (sessionBoundBadRefWrapper == null) {
+            throw new IllegalStateException("SORRY! THE CODE REFLECTING THIS CALL SHOULD ONLY WORK IF THE USER IS LOGGED IN, BUT ACTUALLY IS NOT.");
+        }
+        return sessionBoundBadRefWrapper.boundInstance.getHumanUserId();
     }
 }

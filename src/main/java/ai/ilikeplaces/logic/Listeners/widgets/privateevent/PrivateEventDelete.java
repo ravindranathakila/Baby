@@ -55,7 +55,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
         this.humanId = new RefString((String) initArgs[0]);
         this.privateEventId = (Long) initArgs[1];
 
-        final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).rPrivateEvent(humanId.getString(), privateEventId);
+        final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).rDirtyPrivateEvent(humanId.getString(), privateEventId);
         if (r.returnStatus() == 0) {
             $$(privateEventDeleteName).setTextContent(r.returnValue().getPrivateEventName());
             $$(privateEventDeleteInfo).setTextContent(r.returnValue().getPrivateEventInfo());

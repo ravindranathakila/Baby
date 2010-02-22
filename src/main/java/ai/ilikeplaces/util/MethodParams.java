@@ -20,17 +20,31 @@ public class MethodParams {
 
     final static private Logger logger = LoggerFactory.getLogger(MethodParams.class);
 
-    @AroundInvoke
-    public Object profile(InvocationContext invocation) throws Exception {
-        final Object[] args = invocation.getParameters();
-        try {
-            return invocation.proceed();
-        } finally {
-            for (final Object arg : args) {
-                logger.debug("HELLO, METHOD " + invocation.getMethod() + " RECEIVED PARAMETERS:" + Arrays.toString(args));
+    public static final RefObj<Boolean> DO_LOG = new Obj<Boolean>(true) {
+
+        @Override
+        public void setObj(final Boolean status) {
+            if (status != null) {
+                obj = status;
+            } else {
+                throw new SecurityException("SORRY! YOU CANNOT ASSIGN A NULL.");
             }
         }
+    };
+
+    @AroundInvoke
+    public Object profile(InvocationContext invocation) throws Exception {
+        if (DO_LOG.getObj()) {
+            final Object[] args = invocation.getParameters();
+            try {
+                return invocation.proceed();
+            } finally {
+                for (final Object arg : args) {
+                    logger.debug("METHOD NAME:\n\t" + invocation.getMethod().getName() + "\nPARAMETERS:\n\t" + Arrays.toString(args));
+                }
+            }
+        } else {
+            return invocation.proceed();
+        }
     }
-
-
 }

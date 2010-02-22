@@ -94,7 +94,7 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
             @Override
             public void handleEvent(final Event evt_) {
                 logger.debug("{}", ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
-                DB.getHumanCRUDPublicPhotoLocal(true).uPublicPhotoDescription(humanId, publicPhoto.getPublicPhotoId(), trimAll(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value())));
+                DB.getHumanCRUDPublicPhotoLocal(true).uPublicPhotoDescription(humanId, publicPhoto.getPublicPhotoId(), ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
     }
