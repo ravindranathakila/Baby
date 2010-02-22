@@ -1,7 +1,7 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.*;
-import ai.ilikeplaces.util.EntityLifeCyleListener;
+import ai.ilikeplaces.util.EntityLifeCycleListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,18 +20,26 @@ import java.util.List;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 @Entity
-@EntityListeners(EntityLifeCyleListener.class)
+@EntityListeners(EntityLifeCycleListener.class)
 @NamedQueries({
         @NamedQuery(name = "FindAllLocationsByName",
                 query = "SELECT loc FROM Location loc WHERE loc.locationName = :locationName"),
+        @NamedQuery(name = "FindAllLocationsBySuperLocation",
+                query = "SELECT loc FROM " + Location.LocationEntity + " loc WHERE loc." + Location.LocationSuperSet + " = :" + Location.LocationSuperSet),
         @NamedQuery(name = "FindAllLocationNamesByLikeName",
-                query = "SELECT loc.locationName FROM Location loc WHERE UPPER(loc.locationName) LIKE :locationName")})
-public class Location implements Serializable, Clearance {
+                query = "SELECT loc.locationName FROM Location loc WHERE UPPER(loc.locationName) LIKE :locationName"),
+        @NamedQuery(name = "FindAllLocationsByLikeName",
+                query = "SELECT loc FROM Location loc WHERE UPPER(loc.locationName) LIKE :locationName")})
+public class Location implements Serializable, Clearance, Comparable<Location> {
 
     final static Logger logger = LoggerFactory.getLogger(Location.class.getName());
+    final static public String LocationEntity = "Location";
     final static public String FindAllLocationsByName = "FindAllLocationsByName";
-    final static public String FindAllLocationsByLikeName = "FindAllLocationNamesByLikeName";
+    final static public String FindAllLocationsBySuperLocation = "FindAllLocationsBySuperLocation";
+    final static public String FindAllLocationNamesByLikeName = "FindAllLocationNamesByLikeName";
+    final static public String FindAllLocationsByLikeName = "FindAllLocationsByLikeName";
     final static public String LocationName = "locationName";
+    final static public String LocationSuperSet = "locationSuperSet";
     final static private long serialVersionUID = 1L;
 
     private Long locationId;
@@ -112,7 +120,7 @@ public class Location implements Serializable, Clearance {
     /**
      * @return locationSuperSet
      */
-    @OneToOne(optional = true,
+    @OneToOne(optional = false,
             targetEntity = Location.class)
     public Location getLocationSuperSet() {
         return locationSuperSet;
@@ -172,5 +180,10 @@ public class Location implements Serializable, Clearance {
     @WARNING(warning = "The first location i.e. The Planet Earth, will have itself as its super. Hence will induce a stack overflow if superset.tostring is called.")
     public String toString() {
         return locationName + ((locationSuperSet == null || this.getLocationId() == locationSuperSet.getLocationId()) ? "" : " of " + locationSuperSet.toString());
+    }
+
+    @Override
+    public int compareTo(Location o) {
+        return this.toString().compareTo(o.toString());
     }
 }

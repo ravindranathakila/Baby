@@ -53,8 +53,20 @@ public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUD
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<String> dirtyRLikeLocationName(final String likeLocationName){
-        return rLocationLocal_.doDirtyRLikeLocation(likeLocationName);
+    public List<String> dirtyRLikeLocationNames(final String likeLocationName){
+        return rLocationLocal_.doDirtyRLikeLocationNames(likeLocationName);
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Location> dirtyRLikeLocations(final String likeLocationName){
+        return rLocationLocal_.doDirtyRLikeLocations(likeLocationName);
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Location> doNTxRLocationsBySuperLocation(final Location locationSuperset){
+        return rLocationLocal_.doNTxRLocationsBySuperLocation(locationSuperset);
     }
 
     final static Logger logger = LoggerFactory.getLogger(HumanCRUDLocation.class);

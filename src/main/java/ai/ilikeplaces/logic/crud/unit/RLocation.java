@@ -1,9 +1,6 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.doc.TODO;
-import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.jpa.QueryParameter;
@@ -15,16 +12,16 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static ai.ilikeplaces.entities.Location.*;
 
 /**
- *
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
 @TODO(task = "i18n")
@@ -52,7 +49,7 @@ public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
     @WARNING(warning = "SUPER LOCATION CAN BE NULL(CALLER SENDS NULL OR DB HAS NULL). HENCE JUST FIND BY LOCATION. IF PLENTY(THEN SUPER IS DEFINITELY THERE, MATCH SUPER.")
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Location doNTxRLocation(final String locationName, final String superLocationName) {
-        return doCommonRLocation(locationName,superLocationName);
+        return doCommonRLocation(locationName, superLocationName);
     }
 
     /**
@@ -70,11 +67,10 @@ public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
     @WARNING(warning = "SUPER LOCATION CAN BE NULL(CALLER SENDS NULL OR DB HAS NULL). HENCE JUST FIND BY LOCATION. IF PLENTY(THEN SUPER IS DEFINITELY THERE, MATCH SUPER.")
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Location doRLocation(final String locationName, final String superLocationName) {
-        return doCommonRLocation(locationName,superLocationName);
+        return doCommonRLocation(locationName, superLocationName);
     }
 
     /**
-     *
      * @param locationName
      * @param superLocationName
      * @return
@@ -83,7 +79,7 @@ public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
     @WARNING(warning = "SUPER LOCATION CAN BE NULL(CALLER SENDS NULL OR DB HAS NULL). HENCE JUST FIND BY LOCATION. IF PLENTY(THEN SUPER IS DEFINITELY THERE, MATCH SUPER.")
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Location doDirtyRLocation(final String locationName, final String superLocationName) {
-        return doCommonRLocation(locationName,superLocationName);
+        return doCommonRLocation(locationName, superLocationName);
     }
 
 
@@ -94,7 +90,7 @@ public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
      */
     @WARNING(warning = "SUPER LOCATION CAN BE NULL(CALLER SENDS NULL OR DB HAS NULL). HENCE JUST FIND BY LOCATION. IF PLENTY(THEN SUPER IS DEFINITELY THERE, MATCH SUPER.")
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    private  Location doCommonRLocation(final String locationName, final String superLocationName) {
+    private Location doCommonRLocation(final String locationName, final String superLocationName) {
 
         logger.debug("HELLO, I AM QUERYING FOR A LOCATION {} OF WHICH SUPER LOCATION IS {}.", locationName, superLocationName);
 
@@ -148,9 +144,28 @@ public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<String> doDirtyRLikeLocation(final String locationName){
-        return crudServiceLocation_.findWithNamedQuery(FindAllLocationsByLikeName,
-                QueryParameter.with(LocationName, locationName.toUpperCase()+"%").parameters());
+    public List<String> doDirtyRLikeLocationNames(final String locationName) {
+        return crudServiceLocation_.findWithNamedQuery(FindAllLocationNamesByLikeName,
+                QueryParameter.with(LocationName, locationName.toUpperCase() + "%").parameters());
     }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Location> doDirtyRLikeLocations(final String locationName) {
+        return crudServiceLocation_.findWithNamedQuery(FindAllLocationsByLikeName,
+                QueryParameter.with(LocationName, locationName.toUpperCase() + "%").parameters());
+    }
+
+    @WARNING(warning = "We can receive a detached entity which JPA cannot use to query. It needs an attached entity.")
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public List<Location> doNTxRLocationsBySuperLocation(final Location locationSuperset) {
+        @FIXME(issue = "The list JPA returns in read only. Using orderby makes it a db ordering. This uses shallow copy")
+        final List<Location> sort = new ArrayList<Location>(crudServiceLocation_.findWithNamedQuery(FindAllLocationsBySuperLocation,
+                QueryParameter.with(LocationSuperSet, doRLocation(locationSuperset.getLocationId())).parameters()));
+        Collections.sort(sort);
+        return sort;
+    }
+
     final static Logger logger = LoggerFactory.getLogger(RLocation.class);
 }

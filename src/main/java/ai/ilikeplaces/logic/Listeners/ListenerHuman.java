@@ -78,11 +78,11 @@ public class ListenerHuman implements ItsNatServletRequestListener {
                     {
                         if (getUsername() != null) {
                             final Element usersName = $(MarkupTag.P);
-                            usersName.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0004") + getUsername());
+                            usersName.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0004") + getUsernameAsValid());
                             $(Main_othersidebar_identity).appendChild(usersName);
                         } else {
                             final Element locationElem = $(MarkupTag.P);
-                            locationElem.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0005") + location);
+                            //locationElem.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0005") + location);
                             $(Main_othersidebar_identity).appendChild(locationElem);
                         }
 
@@ -102,11 +102,11 @@ public class ListenerHuman implements ItsNatServletRequestListener {
                 }
                 if (getUsername() != null) {
 
-                    Return<List<PublicPhoto>> r = DB.getHumanCRUDPublicPhotoLocal(true).rPublicPhoto(getUsername());
+                    Return<List<PublicPhoto>> r = DB.getHumanCRUDPublicPhotoLocal(true).rPublicPhoto(getUsernameAsValid());
 
                     if (r.returnStatus() == 0) {
                         for (final PublicPhoto publicPhoto : r.returnValue()) {
-                            new PhotoCRUD(itsNatDocument__, $(Controller.Page.Main_center_main), publicPhoto, getUsername()) {
+                            new PhotoCRUD(itsNatDocument__, $(Controller.Page.Main_center_main), publicPhoto, getUsernameAsValid()) {
 
                                 @Override
                                 protected void init(final Object... initArgs) {

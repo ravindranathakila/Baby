@@ -158,6 +158,7 @@ public enum MarkupTag implements MarkupTagFace {
     final static String ExceptionMsg = "SORRY! I RECEIVED A CALL ON NON OVERRIDDEN ATTRIBUTE. PROBABLY THIS ATTRIBUTE IS NOT RELEVANT TO THIS ELEMENT TYPE, OR IT WAS NOT IMPLEMENTED.";
     private static final String STYLE = "style";
     private static final String ID = "id";
+    private static final String CLASS = "class";
 
     @Override
     public String id() {
@@ -222,6 +223,11 @@ public enum MarkupTag implements MarkupTagFace {
     @Override
     public String ol() {
         throw new UnsupportedOperationException(ExceptionMsg);
+    }
+
+    @Override
+    public String classs() {
+        return CLASS;
     }
 }
 

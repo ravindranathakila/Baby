@@ -4,7 +4,7 @@ import ai.ilikeplaces.doc.BIDIRECTIONAL;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.util.EntityLifeCyleListener;
+import ai.ilikeplaces.util.EntityLifeCycleListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +23,7 @@ import java.util.List;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 @Entity
-@EntityListeners(EntityLifeCyleListener.class)
+@EntityListeners(EntityLifeCycleListener.class)
 @NamedQueries({
         @NamedQuery(name = "FindAllPrivateLocationsByName",
                 query = "SELECT loc FROM PrivateLocation loc WHERE loc.privateLocationName = :privateLocationName"),

@@ -19,4 +19,5 @@ public interface DPrivateEventLocal {
 
     public Return<PrivateEvent> doNTxCPrivateEvent(final String humanId, final String eventName, final String eventInfo, final Date startDate, final Date endDate);
 
+    Boolean doNTxDPrivateEvent(String humanId, long privateEventId);
 }

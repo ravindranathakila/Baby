@@ -27,6 +27,8 @@ public interface HumanCRUDPrivateLocationLocal {
 
     public Return<Boolean> dirtyRPrivateLocationIsOwner(final String humanId, final Long privateLocationId);
 
+    public Return<Boolean> dirtyRPrivateLocationIsViewer(final String humanId, final Long privateLocationId);
+
     public Return<PrivateLocation> uPrivateLocationAddOwner(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateLocationId__, final HumansFriend owner);
 
     public Return<PrivateLocation> uPrivateLocationAddVisitor(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateLocationId__, final HumansFriend owner);

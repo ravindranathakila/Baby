@@ -49,25 +49,45 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
 
     @Override
     public boolean doDirtyRPrivateLocationIsOwner(final String humanId, final Long privateLocationId) {
-        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId);
-        final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId);
-        return privateLocation_.getPrivateLocationOwners().contains(humansPrivateLocation_);
+        return privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId).getPrivateLocationOwners()
+                .contains(humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId));
+    }
+
+    @Override
+    public boolean doDirtyRPrivateLocationIsViewer(final String humanId, final Long privateLocationId) {
+        return privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId).getPrivateLocationViewers()
+                .contains(humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId));
     }
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public PrivateLocation doRPrivateLocation(final String humanId, final Long privateLocationId) {
+    public PrivateLocation doRPrivateLocationAsViewer(final String humanId, final Long privateLocationId) {
         final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId);
         final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId);
 
         securityChecks:
         {
-            if (!(privateLocation_.getPrivateLocationOwners().contains(humansPrivateLocation_)
-                    || humansPrivateLocation_.getPrivateLocationsViewed().contains(privateLocation_))) {
-                throw new SecurityException(RBGet.expMsgs.getString("ai.ilikeplaces.logic.crud.unit.RPrivateLocation.0001"));
+            if (!(humansPrivateLocation_.getPrivateLocationsViewed().contains(privateLocation_))) {
+                throw new NoPrivilegesException(RBGet.expMsgs.getString("ai.ilikeplaces.logic.crud.unit.RPrivateLocation.0001"));
             }
         }
 
-        return privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId);
+        return privateLocation_;
+    }
+
+    @Override
+    @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
+    public PrivateLocation doRPrivateLocationAsOwner(final String humanId, final Long privateLocationId) {
+        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId);
+        final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId);
+
+        securityChecks:
+        {
+            if (!(privateLocation_.getPrivateLocationOwners().contains(humansPrivateLocation_))) {
+                throw new NoPrivilegesException(RBGet.expMsgs.getString("ai.ilikeplaces.logic.crud.unit.RPrivateLocation.0002"));
+            }
+        }
+
+        return privateLocation_;
     }
 }

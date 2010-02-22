@@ -13,9 +13,7 @@ import javax.persistence.*;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-final public class EntityLifeCyleListener {
-
-    Marker marker = MarkerFactory.getMarker("Life");
+final public class EntityLifeCycleListener {
 
     public static final RefObj<Boolean> PRE_ACTIONS = new Obj<Boolean>(true) {
 
@@ -41,13 +39,13 @@ final public class EntityLifeCyleListener {
         }
     };
 
-    public EntityLifeCyleListener() {
+    public EntityLifeCycleListener() {
     }
 
     @PrePersist
     public void PrePersist(final Object entity) {
         if (PRE_ACTIONS.getObj()) {
-            logger.debug(marker, "PrePersist:{}.", entity);
+            Loggers.DEBUG.debug("PrePersist:{}.", entity);
         }
     }
 
@@ -59,14 +57,15 @@ final public class EntityLifeCyleListener {
 
     @PostLoad
     public void PostLoad(final Object entity) {
-        logger.debug("PostLoad:{}.", entity);
-
+        if (POST_ACTIONS.getObj()) {
+            Loggers.DEBUG.debug("PostLoad:{}.", entity);
+        }
     }
 
     @PreUpdate
     public void PreUpdate(final Object entity) {
         if (PRE_ACTIONS.getObj()) {
-            logger.debug(marker,"PreUpdate:{}.", entity);
+            Loggers.DEBUG.debug("PreUpdate:{}.", entity);
         }
 
     }
@@ -80,7 +79,7 @@ final public class EntityLifeCyleListener {
     @PreRemove
     public void PreRemove(final Object entity) {
         if (PRE_ACTIONS.getObj()) {
-            logger.debug(marker,"PreRemove:{}.", entity);
+            Loggers.DEBUG.debug("PreRemove:{}.", entity);
         }
 
     }
@@ -90,6 +89,4 @@ final public class EntityLifeCyleListener {
         //logger.debug("PostRemove:{}.", entity);
 
     }
-
-    final static Logger logger = LoggerFactory.getLogger(EntityLifeCyleListener.class);
 }

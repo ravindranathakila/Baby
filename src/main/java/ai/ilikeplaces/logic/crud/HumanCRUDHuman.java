@@ -59,6 +59,9 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     @EJB
     private RHumansPrivateLocationLocal rHumansPrivateLocation_;
 
+    @EJB
+    private RHumansPrivateEventLocal rHumansPrivateEvent_;
+
 
     public HumanCRUDHuman() {
         logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", HumanCRUDHuman.class, this.hashCode());
@@ -97,6 +100,18 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
             r = new ReturnImpl<HumansPrivateLocation>(rHumansPrivateLocation_.doDirtyRHumansPrivateLocation(humanId.getObj()), "Read HumansPrivateLocation Successful!");
         } catch (final Throwable t) {
             r = new ReturnImpl<HumansPrivateLocation>(t, "Read HumansPrivateLocation FAILED!", true);
+        }
+        return r;
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<HumansPrivateEvent> doDirtyRHumansPrivateEvent(final RefObj<String> humanId) {
+        Return<HumansPrivateEvent> r;
+        try {
+            r = new ReturnImpl<HumansPrivateEvent>(rHumansPrivateEvent_.doDirtyRHumansPrivateEvent(humanId.getObj()), "Read HumansPrivateEvent Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<HumansPrivateEvent>(t, "Read HumansPrivateEvent FAILED!", true);
         }
         return r;
     }

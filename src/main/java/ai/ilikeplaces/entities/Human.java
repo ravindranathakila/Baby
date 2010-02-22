@@ -4,7 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.util.EntityLifeCyleListener;
+import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
@@ -16,7 +16,7 @@ import java.io.Serializable;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-@EntityListeners(EntityLifeCyleListener.class)
+@EntityListeners(EntityLifeCycleListener.class)
 public class Human implements HumanIdFace, Serializable, Clearance, HumansFriend {
 
     private String humanId;

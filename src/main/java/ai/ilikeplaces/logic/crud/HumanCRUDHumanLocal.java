@@ -30,6 +30,8 @@ public interface HumanCRUDHumanLocal extends Verify {
 
     public Return<HumansPrivateLocation> doDirtyRHumansPrivateLocation(final RefObj<String> humanId);
 
+    public Return<HumansPrivateEvent> doDirtyRHumansPrivateEvent(final RefObj<String> humanId);
+
     public Return<Boolean> doNTxAddHumansNetPeople(final RefObj<String> adderHumanId, final RefObj<String> addeeHumanId);
 
     public Return<Boolean> doNTxRemoveHumansNetPeople(final RefObj<String> adderHumanId, final RefObj<String> addeeHumanId);

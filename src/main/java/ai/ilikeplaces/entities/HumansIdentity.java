@@ -1,7 +1,7 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.util.EntityLifeCyleListener;
+import ai.ilikeplaces.util.EntityLifeCycleListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +19,7 @@ import java.util.Date;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-@EntityListeners(EntityLifeCyleListener.class)
+@EntityListeners(EntityLifeCycleListener.class)
 @NamedQueries({
         @NamedQuery(name = "FindPaginatedHumansByEmails",
                 query = "SELECT hi FROM HumansIdentity hi WHERE hi.humansIdentityEmail IN(:humansIdentityEmails)")})

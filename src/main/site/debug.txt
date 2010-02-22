@@ -18,6 +18,8 @@ Check in Widget constructor if correct Page is registered
 
 If NPE, check if in the web ui, the id has incremented or if it just plain.
 
+if NPE, chech the controller and see if the widget was registered.
+
 
 CRUD Classes
 ------------

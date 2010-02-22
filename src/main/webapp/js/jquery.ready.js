@@ -194,7 +194,7 @@ function getExt(file){
 
 
 $(document).ready(function(){
-
+    $('.yoxview').yoxview();
 
     $('a[rel=shareit], #shareit-box').mouseenter(shareEnter);
 

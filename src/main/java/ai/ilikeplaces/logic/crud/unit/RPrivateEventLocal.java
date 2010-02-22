@@ -18,4 +18,7 @@ public interface RPrivateEventLocal {
 
     public Return<PrivateEvent> doNTxCPrivateEvent(final String humanId, final Long privateEventId);
 
+    PrivateEvent doDirtyRPrivateEvent(String humanId, long privateEventId);
+
+    Boolean doDirtyRPrivateEventIsOwner(String humanId, Long privateEventId);
 }

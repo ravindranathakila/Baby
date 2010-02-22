@@ -163,16 +163,16 @@
             <artifactId>commons-fileupload</artifactId>
             <version>1.2.1</version>
         </dependency>
-        <dependency>
+        <!-- dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>1.3.2</version>
-        </dependency>
-        <dependency>
+        </dependency -->
+        <!-- dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.4</version>
-        </dependency>
+        </dependency -->
         <dependency>
             <groupId>org.apache.openejb</groupId>
             <artifactId>ejb31-api-experimental</artifactId>
@@ -218,7 +218,7 @@
                 </includes>
             </resource>
             <!--resource>
-                <directory>src/LocationMain/java</directory>
+                <directory>src/main/java</directory>
                 <includes>
                     <include>**/*.java</include>
                 </includes>

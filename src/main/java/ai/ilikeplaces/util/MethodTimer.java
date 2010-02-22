@@ -19,16 +19,30 @@ public class MethodTimer {
 
     final static private Logger logger = LoggerFactory.getLogger(MethodTimer.class);
 
+    public static final RefObj<Boolean> DO_LOG = new Obj<Boolean>(true) {
+
+        @Override
+        public void setObj(final Boolean status) {
+            if (status != null) {
+                obj = status;
+            } else {
+                throw new SecurityException("SORRY! YOU CANNOT ASSIGN A NULL.");
+            }
+        }
+    };
+
     @AroundInvoke
     public Object profile(InvocationContext invocation) throws Exception {
-        final long startTime = System.currentTimeMillis();
-        try {
+        if (DO_LOG.getObj()) {
+            final long startTime = System.currentTimeMillis();
+            try {
+                return invocation.proceed();
+            } finally {
+                final long endTime = System.currentTimeMillis() - startTime;
+                logger.debug("METHOD NAME:\n\t" + invocation.getMethod() + "\nTOOK:\n\t " + endTime + "(ms)");
+            }
+        } else {
             return invocation.proceed();
-        } finally {
-            final long endTime = System.currentTimeMillis() - startTime;
-            logger.debug("HELLO, METHOD " + invocation.getMethod() + " TOOK " + endTime + " (ms)");
         }
     }
-
-
 }
