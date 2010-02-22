@@ -1,6 +1,7 @@
 package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.FIXME;
+import ai.ilikeplaces.doc.License;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @FIXME(issue = "Each tag can be exposed through an interface to ensure type " +
         "safety and also, proper method calls. Current approach is simpler to use. " +
         "Using an interface based approach is easy to make changes to")
