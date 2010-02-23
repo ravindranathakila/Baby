@@ -174,6 +174,11 @@ public class Location implements Serializable, Clearance, Comparable<Location> {
         this.privateEvents = privateEvents;
     }
 
+    @Transient
+    public long getWOEID() {
+        return locationId;
+    }
+
     /**
      * @return toString_
      */
