@@ -41,6 +41,7 @@ public class Location implements Serializable, Clearance, Comparable<Location> {
     final static public String LocationName = "locationName";
     final static public String LocationSuperSet = "locationSuperSet";
     final static private long serialVersionUID = 1L;
+    final static public String WOEID = "WOEID";
 
     private Long locationId;
     private Long clearance = 0L;
