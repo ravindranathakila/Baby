@@ -21,7 +21,6 @@ window.onload=function(){
     Nifty("div.ntySB","small bottom");
     Nifty("div.ntySBL","small bl");
     Nifty("div.ntySBR","small br");
-    document.getElementById('Main_display').style.display = 'block';
 }
 
 /*
