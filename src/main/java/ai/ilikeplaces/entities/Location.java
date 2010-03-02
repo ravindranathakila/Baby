@@ -52,6 +52,8 @@ public class Location implements Serializable, Clearance, Comparable<Location> {
     private String locationGeo2;
     private List<PublicPhoto> publicPhotos;
     private List<PrivateEvent> privateEvents;
+    public static final String OF_SPACE = " of ";
+    public static final String OF_SCORE = "_of_";
 
 
     /**
@@ -175,7 +177,7 @@ public class Location implements Serializable, Clearance, Comparable<Location> {
     }
 
     @Transient
-    public long getWOEID() {
+    public Long getWOEID() {
         return locationId;
     }
 
@@ -185,7 +187,7 @@ public class Location implements Serializable, Clearance, Comparable<Location> {
     @Override
     @WARNING(warning = "The first location i.e. The Planet Earth, will have itself as its super. Hence will induce a stack overflow if superset.tostring is called.")
     public String toString() {
-        return locationName + ((locationSuperSet == null || this.getLocationId() == locationSuperSet.getLocationId()) ? "" : " of " + locationSuperSet.toString());
+        return locationName + ((locationSuperSet == null || this.getLocationId() == locationSuperSet.getLocationId() || this.getLocationId() == 1) ? "" : OF_SPACE + locationSuperSet.toString());
     }
 
     @Override

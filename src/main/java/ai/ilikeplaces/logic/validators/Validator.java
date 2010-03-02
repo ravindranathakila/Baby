@@ -3,17 +3,17 @@
  * User: Ravindranath Akila
  * Date: Jan 1, 2010
  * Time: 4:22:04 PM
- * To change this template use File | Settings | File Templates.
  */
 package ai.ilikeplaces.logic.validators;
 
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.logic.validators.faces.ValidatorFace;
 import ai.ilikeplaces.util.Factory;
 import ai.ilikeplaces.util.Return;
 import ai.ilikeplaces.util.ReturnImpl;
 import ai.ilikeplaces.util.ReturnParams;
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class Validator implements ValidatorFace, Factory {
     final private static Validator Instance = new Validator();
 

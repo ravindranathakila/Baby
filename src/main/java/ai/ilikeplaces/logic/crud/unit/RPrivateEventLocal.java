@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.crud.unit;
 
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.util.Return;
 
@@ -12,13 +13,17 @@ import javax.ejb.Local;
  * Time: 12:07:04 AM
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Local
 public interface RPrivateEventLocal {
 
-    public Return<PrivateEvent> doNTxCPrivateEvent(final String humanId, final Long privateEventId);
+    public PrivateEvent doDirtyRPrivateEvent(final String humanId, final long privateEventId);
 
-    PrivateEvent doDirtyRPrivateEvent(String humanId, long privateEventId);
+    public boolean doDirtyRPrivateEventIsOwner(final String humanId, final Long privateEventId);
 
-    Boolean doDirtyRPrivateEventIsOwner(String humanId, Long privateEventId);
+    public boolean doDirtyRPrivateEventIsViewer(final String humanId, final Long privateEventId);
+
+    public PrivateEvent doRPrivateEventAsViewer(final String humanId, final Long privateEventId);
+
+    public PrivateEvent doRPrivateEventAsOwner(final String humanId, final Long privateEventId);
 }

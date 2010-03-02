@@ -21,7 +21,7 @@ public interface CPrivateEventLocal {
                                            final long privateLocationId,
                                            final String eventName,
                                            final String eventInfo,
-                                           final Date startDate,
-                                           final Date endDate);
+                                           final String startDate,
+                                           final String endDate);
 
 }

@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class Loggers {
+    private static final String NULL = "null";
+
     private Loggers() {
         throw new UnsupportedOperationException("Static usage only");
     }
@@ -53,4 +55,8 @@ final public class Loggers {
      * Just for ease of user instead of creating loggers everywhere
      */
     final static public Logger WARN = LoggerFactory.getLogger("WARN");
+
+    final static public Object ifNullToString(final Object object) {
+        return object != null ? object : NULL;
+    }
 }

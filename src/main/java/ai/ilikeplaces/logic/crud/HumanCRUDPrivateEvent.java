@@ -13,7 +13,6 @@ import ai.ilikeplaces.util.*;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
-import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,7 +40,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
 
 
     @Override
-    public Return<PrivateEvent> cPrivateEvent(final String humanId, final long privateLocationId, final String privateEventName, final String privateEventInfo, final Date startDate, final Date endDate) {
+    public Return<PrivateEvent> cPrivateEvent(final String humanId, final long privateLocationId, final String privateEventName, final String privateEventInfo, final String startDate, final String endDate) {
         Return<PrivateEvent> r;
         try {
             r = new ReturnImpl<PrivateEvent>(cPrivateEventLocal.doNTxCPrivateEvent(humanId, privateLocationId, privateEventName, privateEventInfo, startDate, endDate), "Save private event Successful!");

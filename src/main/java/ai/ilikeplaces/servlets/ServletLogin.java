@@ -47,7 +47,7 @@ final public class ServletLogin extends HttpServlet {
      * Username, an email address to which the reset password link can be mailed
      */
     public final static String Username = "Username";
-    
+
     /**
      * Password hash
      */
@@ -164,9 +164,9 @@ final public class ServletLogin extends HttpServlet {
                                 response__.sendRedirect(request__.getHeader(HEADER_REFERER));
                                 break doLogin;
                             }
-                        } else {/*There is no such user. Ask if he forgor username or whether to create a new account :)*/
-                            response__.sendRedirect("/ilikeplaces/signup");
+                        } else {/*There is no such user. Ask if he forgot username or whether to create a new account :)*/
                             logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0003"));
+                            response__.sendRedirect(request__.getHeader(HEADER_REFERER));
                             break doLogin;
                         }
 

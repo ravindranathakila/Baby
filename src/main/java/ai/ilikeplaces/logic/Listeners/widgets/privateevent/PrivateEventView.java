@@ -21,7 +21,6 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 abstract public class PrivateEventView extends AbstractWidgetListener {

@@ -205,12 +205,12 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
             if (privateLocation_.getPrivateLocationViewers().contains(removerhumansPrivateLocation)) {//Concurrent update safe
                 privateLocation_.getPrivateLocationViewers().remove(removerhumansPrivateLocation);
             } else {
-                throw new DBDishonourException("Removing a non existing viewer");
+                throw DBDishonourException.REMOVING_A_NON_EXISTING_VALUE;
             }
             if (removerhumansPrivateLocation.getPrivateLocationsViewed().contains(privateLocation_)) {//Concurrent update safe
                 removerhumansPrivateLocation.getPrivateLocationsViewed().remove(privateLocation_);
             } else {
-                throw new DBDishonourException("Removing a non existing location");
+                throw DBDishonourException.REMOVING_A_NON_EXISTING_VALUE;
             }
         }
 

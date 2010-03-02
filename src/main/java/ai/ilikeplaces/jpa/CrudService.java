@@ -34,10 +34,12 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
     /**
      * Please not that this is a field of Stateless session bean
      */
-    @NOTE( note = "find out how the manager handles concurrent requests. same cache or different? if different, come on, this a class variable!" +
+    @NOTE(note = "find out how the manager handles concurrent requests. same cache or different? if different, come on, this a class variable!" +
             "resolved! check out the hibernate site article on this. apparently, container does this. amazing!")
     @PersistenceContext(unitName = "adimpression_ilikeplaces_war_1.6-SNAPSHOTPU", type = PersistenceContextType.TRANSACTION)
     public EntityManager entityManager;
+
+    final static private NullPointerException ENTITY_NOT_FOUND_EXCEPTION = new NullPointerException("SORRY! NO SUCH ENTITY IN DATABASE.");
 
     /**
      * @param t
@@ -62,6 +64,23 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public T find(final Class type, final Object id) {
         return (T) entityManager.find(type, id);
+    }
+
+    /**
+     * @param type
+     * @param id
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public T findBadly(final Class type, final Object id) {
+        final Object object = entityManager.find(type, id);
+        if (object != null) {
+            return (T) object;
+        } else {
+            throw ENTITY_NOT_FOUND_EXCEPTION;
+        }
     }
 
     /**

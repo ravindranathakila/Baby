@@ -122,16 +122,10 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
             @Override
             public void handleEvent(final Event evt_) {
                 logger.debug("{}", "HELLO! CLICKED SAVE.");
-                Date d = null;
-                try {
-                    d = (new SimpleDateFormat("yyyy-MM-DD")).parse("2012-12-21");
-                } catch (ParseException e) {
-                    logger.error("SORRY! THIS SHOULD NOT HAPPEN. NON-VALIDATED DATE RECEIVED: {}", e);
-                }
 
                 if (myprivateEventName.validate(v) == 0 && myprivateEventInfo.validate(v) == 0) {
 
-                    final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).cPrivateEvent(myhumanId.getObj(), myprivateLocationId, myprivateEventName.getObjectAsValid(), myprivateEventInfo.getObjectAsValid(), d, d);
+                    final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).cPrivateEvent(myhumanId.getObj(), myprivateLocationId, myprivateEventName.getObjectAsValid(), myprivateEventInfo.getObjectAsValid(), "TODO DATE", "TODO DATE");
                     if (r.returnStatus() == 0) {
                         logger.debug("{}", "HELLO! SAVED.");
                         remove(evt_.getTarget(), EventType.click, this);

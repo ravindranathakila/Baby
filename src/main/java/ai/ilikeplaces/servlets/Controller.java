@@ -306,7 +306,8 @@ final public class Controller extends HttpServletWrapper {
                 Controller.Page.Main_left_column,
                 Controller.Page.Main_right_column,
                 Controller.Page.Main_sidebar,
-                Controller.Page.Main_login_widget) {
+                Controller.Page.Main_login_widget,
+                Controller.Page.Main_flickr) {
             @Override
             public String getURL() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "page/main";
@@ -578,6 +579,7 @@ final public class Controller extends HttpServletWrapper {
         final static public String Main_right_column = "Main_right_column";
         final static public String Main_sidebar = "Main_sidebar";
         final static public String Main_login_widget = "Main_login_widget";
+        final static public String Main_flickr = "Main_flickr";
 
         /*PhotoCRUD Specific IDs*/
         final static public String pc_photo_title = "pc_photo_title";
@@ -747,7 +749,6 @@ final public class Controller extends HttpServletWrapper {
         final String URL__ = pathInfo == null ? "" : ((HttpServletRequest) request__.getServletRequest()).getPathInfo().substring(1);//Removes preceeding slash
         if (isHomePage(URL__)) {
             staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
-            request__.getServletRequest().setAttribute("location", "");
             request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
         } else {
             if (isNonLocationPage(URL__)) {/*i.e. starts with underscore*/
@@ -819,7 +820,7 @@ final public class Controller extends HttpServletWrapper {
     @FIXME(issue = "Location should not contain underscores")
     static private boolean isCorrectLocationFormat(final String URL__) {
         /*"_" (underscore) check first is vital as the photo and me urls might have "/"*/
-        return !(URL__.startsWith("_") || URL__.contains("/") || URL__.contains(",") || URL__.contains("?"));
+        return !(URL__.startsWith("_") || URL__.contains(","));
     }
 
     static private boolean isNonLocationPage(final String URL_) {

@@ -9,3 +9,19 @@ Visitors to limit access
 Albums should be many to many
 Many humans may point to one album
 One human may point to many albums
+
+
+Albums can be viewed regardless of location or event view/own policies
+
+
+Location Private/Public
+-----------------------
+
+Locations Private - Public differentiate only in the sense that who can see it.
+=> For users, they still will be made to known as "Locations" with a sense of "My Locations".
+
+Events Public/Private
+---------------------
+
+Events Public - Private differentiate only in the sense that owners/viewers.
+=> An owner/owners makes it. Viewers are "everybody" without restriction.

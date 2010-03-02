@@ -21,7 +21,7 @@ public interface HumanCRUDPrivateEventLocal {
 
     public static final String NAME = HumanCRUDPrivateEventLocal.class.getSimpleName();
     
-    public Return<PrivateEvent> cPrivateEvent(final String humanId, final long privateLocationId, final String privateEventName, final String privateEventInfo, final Date startDate, final Date endDate);
+    public Return<PrivateEvent> cPrivateEvent(final String humanId, final long privateLocationId, final String privateEventName, final String privateEventInfo, final String startDate, final String endDate);
 
     public Return<PrivateEvent> rDirtyPrivateEvent(final String humanId, final long privateEventId);
 

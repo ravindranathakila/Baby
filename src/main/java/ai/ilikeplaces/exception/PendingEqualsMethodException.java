@@ -10,10 +10,12 @@ import ai.ilikeplaces.doc.License;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public class PendingEqualsMethodException extends RuntimeException {
+final public class PendingEqualsMethodException extends RuntimeException {
     final static private String MSG = "SORRY! YOU HAVE NOT IMPLEMENTED THE BODY OF EQUALS METHOD.";
 
-    public PendingEqualsMethodException() {
+    final static public PendingEqualsMethodException SINGLETON = new PendingEqualsMethodException();
+
+    private PendingEqualsMethodException() {
         super(MSG);
     }
 }

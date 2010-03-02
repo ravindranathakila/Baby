@@ -4,72 +4,55 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
         <title id="mainTitle">
-            Main
+            Discover and Have Fun in Places!
         </title>
         <!-- START STATIC IMPORTS -->
         <!-- Framework CSS -->
-        <link rel="stylesheet" href="../css/blueprint/screen.css" type="text/css" media="screen, projection"/>
-        <link rel="stylesheet" href="../css/blueprint/print.css" type="text/css" media="print"/>
-        <!--[if lt IE 8]><link rel="stylesheet" href="../../blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+        <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"/>
+        <!--[if lt IE 8]><link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
 
-        <link rel="stylesheet" type="text/css" href="../css/theme/divine_msg.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/theme/divine_msg.css"/>
 
-        <link rel="stylesheet" type="text/css" href="../nifty/niftyCorners.css"/>
+        <link rel="stylesheet" type="text/css" href="/nifty/niftyCorners.css"/>
 
-        <link rel="stylesheet" type="text/css" href="../js/jquery.yoxview/yoxview.css"/>
+        <link rel="stylesheet" type="text/css" href="/js/jquery.yoxview/yoxview.css"/>
+
+        <link rel="stylesheet" type="text/css" href="/css/getflickr.css">
         <!--link rel="stylesheet" type="text/css" href="/cdn/js/niftyPrint.css" media="print"/-->
 
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script>
-        <!-- script src="../js/jquery-1.3.2.js" type="text/javascript"></script -->
-        <script src="../js/ajaxupload.3.5.js" type="text/javascript"></script>
-        <script src="../js/jquery-impromptu.2.7.min.js" type="text/javascript"></script>
-        <script type="text/javascript" src="../nifty/niftycube.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+        <!-- script type="text/javascript" src="/js/jquery-1.3.2.js"></script -->
+        <script type="text/javascript" src="/js/ajaxupload.3.5.js"></script>
+        <script type="text/javascript" src="/js/jquery-impromptu.2.7.min.js"></script>
+        <script type="text/javascript" src="/nifty/niftycube.js"></script>
+        <script type="text/javascript" src="http://c0804152.cdn.cloudfiles.rackspacecloud.com/getflickr.js"></script>
         <!-- END STATIC IMPORTS -->
 
         <!-- START DYNAMIC IMPORTS -->
-        <link rel="stylesheet" href="../css/layout.css" type="text/css"/>
-        <link rel="stylesheet" href="../css/buttons.css" type="text/css"/>
-        <link rel="stylesheet" href="../css/shareit.css" type="text/css"/>
-        <link rel="stylesheet" href="../css/FileUploadButton.css" type="text/css"/>
-        <link rel="stylesheet" href="../css/impromptu.css" type="text/css"/>
-        <script src="../js/jquery.ready.js" type="text/javascript"></script>
-        <script src="../js/Nifty.onload.js" type="text/javascript"></script>
-        <script src="../js/ItsNatEventMonitor.js" type="text/javascript"></script>
-        <script type="text/javascript" language="javascript" src="../js/jquery.yoxview/yoxview-init.js"></script>
-        <script type="text/javascript" language="javascript" src="../js/jquery.yoxview/jquery.yoxview-0.9.min.js"></script>
-        <script type="text/javascript" language="javascript" src="../js/jquery.yoxview/jquery.timers-1.2.min.js"></script>
+        <link rel="stylesheet" href="/css/layout.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/buttons.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/shareit.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/FileUploadButton.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/impromptu.css" type="text/css"/>
+        <script src="/js/jquery.ready.js" type="text/javascript"></script>
+        <script src="/js/Nifty.onload.js" type="text/javascript"></script>
+        <script src="/js/ItsNatEventMonitor.js" type="text/javascript"></script>
+        <script type="text/javascript" language="javascript" src="/js/jquery.yoxview/yoxview-init.js"></script>
+        <script type="text/javascript" language="javascript" src="/js/jquery.yoxview/jquery.yoxview-0.9.min.js"></script>
+        <script type="text/javascript" language="javascript" src="/js/jquery.yoxview/jquery.timers-1.2.min.js"></script>
         <!-- END DYNAMIC IMPORTS -->
 
-        <!-- -->
         <style type="text/css">
+                    .just_link A:link {text-decoration: none}
+                    .just_link A:visited {text-decoration: none}
+                    .just_link A:active {text-decoration: none}
+                    .just_link A:hover {text-decoration: none}
         </style>
-        <style type="text/css">
-        </style>
-        <!-- -->
+
     </head>
     <body style="background:white;" id="body">
-        <!--darkorange:e36100 -->
-        <!-- div id="monitorId" style="background:transparent;z-index:2;display:none; position:absolute;">
-            Please wait... <img src="../images/circle.gif" alt="Busy" height="17" width="23" />
-        </div -->
-        <div id="shareit-box" style="background:transparent;z-index:2;">
-            <div id="shareit-header"></div>
-            <div id="shareit-body">
-                <div id="shareit-blank"></div>
-                <div id="shareit-url"><input type="text" value="" name="shareit-field" id="shareit-field" class="field"/></div>
-                <div id="shareit-icon">
-                    <ul>
-                        <li><a href="#" rel="shareit-mail" class="shareit-sm"><img src="../images/sm_mail.gif" width="16" height="16" alt="ml" title="Mail" /></a></li>
-                        <li><a href="#" rel="shareit-facebook" class="shareit-sm"><img src="http://www.facebook.com/favicon.ico" width="16" height="16" alt="fb" title="Facebook" /></a></li>
-                        <li><a href="#" rel="shareit-stumbleupon" class="shareit-sm"><img src="http://www.stumbleupon.com/favicon.ico" width="16" height="16" alt="gle" title="Stumbleupon" /></a></li>
-                        <li><a href="#" rel="shareit-twitter" class="shareit-sm"><img src="http://www.twitter.com/favicon.ico" width="16" height="16" alt="twt" title="Twitter" /></a></li>
-                        <li><a href="#" rel="shareit-digg" class="shareit-sm"><img src="http://digg.com/favicon.ico" width="16" height="16" alt="digg" title="Digg" /></a></li>
-                        <li><a href="#" rel="shareit-delicious" class="shareit-sm"><img src="http://delicious.com/favicon.ico" width="16" height="16" alt="del" title="Delicious" /></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div id="Main_display" class="container showgrid" itsnat:nocache="true" style="display:block;">
+        <div id="Main_display" class="container" itsnat:nocache="true" style="display:block;">
             <div class="span-24 last">
                 <div class="span-24 last height_5 bg_a9abf1 ntyST">
                     &nbsp;
@@ -77,7 +60,7 @@
                 <div class="span-24 last height_40 bg_a9abf1">
                     <div class="span-24 last inherit_height">
                         <div class="span-10 inherit_height line_height_40">
-                            <span class="ilp_title fg_cee7ef inherit_height inherit_line_height" style="color:white;">&nbsp; I Like Places!</span>
+                            <span class="ilp_title fg_cee7ef inherit_height inherit_line_height strong" style="color:white;font-size:13px;">&nbsp;Discover &amp; Have Fun in Places!</span>
                         </div>
                         <div id="Main_login_widget" class="span-14 last inherit_height">
 
@@ -108,10 +91,10 @@
                                 </div>
                                 <div class="span-5 last">
                                     <div class="span-1 nav_link">
-                                        <img src="../images/location.jpg" alt="home" />
+                                        <img src="/images/location.jpg" alt="home" />
                                     </div>
                                     <div class="span-4 last nav_link ntyS">
-                                        <a href="../page/_friends" class="white_fg">Friends</a>
+                                        <a href="/page/_friends" class="white_fg">Friends</a>
                                     </div>
                                 </div>
                                 <div class="span-5 last height_10">
@@ -119,7 +102,7 @@
                                 </div>
                                 <div class="span-5 last">
                                     <div class="span-1 nav_link">
-                                        <img src="../images/home.png" alt="home" />
+                                        <img src="/images/home.png" alt="home" />
                                     </div>
                                     <div class="span-4 last nav_link ntyS">
                                         <a id="Main_othersidebar_profile_link" href="#" >Profile</a>
@@ -130,10 +113,10 @@
                                 </div>
                                 <div class="span-5 last">
                                     <div class="span-1 nav_link">
-                                        <img src="../images/friends.jpg" alt="home" />
+                                        <img src="/images/friends.jpg" alt="home" />
                                     </div>
                                     <div class="span-4 last nav_link ntyS">
-                                        <a href="../page/_me">Manage Photos</a>
+                                        <a href="/page/_me">Manage Photos</a>
                                     </div>
                                 </div>
                                 <div class="span-5 last height_10">
@@ -141,10 +124,10 @@
                                 </div>
                                 <div class="span-5 last">
                                     <div class="span-1 nav_link">
-                                        <img src="../images/settings.jpg" alt="home" />
+                                        <img src="/images/settings.jpg" alt="home" />
                                     </div>
                                     <div class="span-4 last nav_link ntyS">
-                                        <a href="../page/_org">Organize</a>
+                                        <a href="/page/_org">Organize</a>
                                     </div>
                                 </div>
                                 <div class="span-5 last height_10">
@@ -155,7 +138,7 @@
                                         <div class="span-5 last wrapper">
                                             <div class="span-5 last button">
                                                 <div class="span-1 nav_link">
-                                                    <img src="../images/save.jpg" alt="home" />
+                                                    <img src="/images/save.jpg" alt="home" />
                                                 </div>
                                                 <div class="span-4 last nav_link ntyS">
                                                     <a id="button1" href="#" >Add Photos</a>
@@ -168,7 +151,7 @@
                                                 &nbsp;
                                             </div>
                                             <span class="span-3 prepend-1 append-1 bold black_fg center">&nbsp; &nbsp; Photos Added</span>
-                                            <ul class="files" style="list-style-image:url(../css/blueprint/plugins/buttons/icons/tick.png);">
+                                            <ul class="files" style="list-style-image:url(/css/blueprint/plugins/buttons/icons/tick.png);">
                                                 <li style="visibility:hidden">Ouch! I didn't want to show this to you</li>
                                             </ul>
                                         </div>
@@ -179,46 +162,55 @@
                         <div class="span-14" id="Main_center">
                             <div class="span-14 last" id="Main_center_main">
                                 <div id="Main_notice_sh" class="span-14 last" style="display:block;">
-                                    <div class="span-12 prepend-1 append-1 last" style="background:#feffac;">
+                                    <div class="span-12 prepend-1 append-1 last bg_e9eaff fg_a9abf1 nty">
                                         <p id="Main_notice" class="yellow_fg bold large"></p>
                                     </div>
                                 </div>
 
+                                <br/>
+                                <br/>
+                                
                                 <div class="span-14 last">
-                                    <div class="span-12 prepend-1 append-1 last bg_feffac ntyBT">
-                                        <p class="fg_f1cf69 bold large">Find places you can visit!</p>
+                                    <div class="span-12 prepend-1 append-1 last bg_e9eaff fg_a9abf1 ntyBT">
+                                        <p class="bg_e9eaff fg_a9abf1 bold large">Find places you can visit!</p>
                                     </div>
                                 </div>
-                                <div class="span-14 last bg_feffac">
-                                    <div class="span-1 bg_feffac height_total">
+                                <div class="span-14 last bg_e9eaff fg_a9abf1">
+                                    <div class="span-1 bg_e9eaff fg_a9abf1 height_total">
                                         &nbsp;
                                     </div>
                                     <div class="span-12 title_blend white_bg">
                                         <div class="span-10 prepend-1 append-1 title_blend white_bg">
                                             <br/>
                                             <p id="Main_center_main_location_title" class="title_blend bold">
-                                                Is this where you want to be? If so,
-                                                check out the images below, if not,
+                                               &nbsp;
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="span-1 last bg_feffac height_total">
+                                    <div class="span-1 last bg_e9eaff fg_a9abf1 height_total">
                                         &nbsp;
                                     </div>
                                 </div>
 
-                                <div class="span-14 last bg_feffac">
+                                <div class="span-14 last bg_e9eaff fg_a9abf1">
+                                    <!-- form method="post" id="html_login" action="/login">
                                     <fieldset style="border:none;padding:0px;margin:0px;">
-                                        <label for="LocationSearch" class="fg_f1cf69">
+                                        <label for="LocationSearch" class="bg_e9eaff fg_a9abf1">
                                             &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
                                             Discover places, type in a a name:
                                             &nbsp; &nbsp; &nbsp; &nbsp;
                                         </label>
-                                        <input class="dark_orange_fg bg_a9abf1 bold" id="LocationSearch" name="LocationSearch" type="text" />
+                                        <input class="dark_orange_fg  bg_e9eaff bold" id="LocationSearch" name="LocationSearch" type="text" value=""/>
+                                        <a href="#" onclick="javascript:window.location=''+getElementById('LocationSearch').value;">search</a>
                                     </fieldset>
+                                    </form -->
+                                    <br/><br/>
+                                    <div class="span-2 last prepend-12">
+                                        <a id="Main_flickr" href="http://flickr.com/photos/tags/Sri+Lanka" class="getflickrphotos btn bg_a9abf1"><i></i><span><span></span><i></i>Try Flickr</span></a>
+                                    </div>
                                 </div>
 
-                                <div class="span-14 last bg_feffac height_10 ntyBB">
+                                <div class="span-14 last  bg_e9eaff fg_a9abf1 height_10 ntyBB">
                                     &nbsp;
                                 </div>
                                 <div class="span-14 last height_10">
@@ -252,24 +244,54 @@
                         </div>
                         <div class="span-5 last" id="Main_sidebar">
                             <div class="span-5 last" style="float:right;">
-                                <div class="span-5 last" style="float:right;">
-                                    &nbsp;
+                                <div class="span-5 last">
+                                    <script type="text/javascript"><!--
+                                    google_ad_client = "pub-6582809080416673";
+                                    /* I Like Places Text Ads */
+                                    google_ad_slot = "5595068175";
+                                    google_ad_width = 180;
+                                    google_ad_height = 150;
+                                    //-->
+                                    </script>
+                                    <script type="text/javascript"
+                                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                                    </script>
                                 </div>
                                 <div class="span-5 last" style="float:right;">
                                     &nbsp;
                                 </div>
                             </div>
                             <div class="span-5 last">
-                                <div class="span-5 last lite_gray_bg">
-                                    &nbsp;
+                                <div class="span-5 last">
+                                    <script type="text/javascript"><!--
+                                    google_ad_client = "pub-6582809080416673";
+                                    /* I Like Places Text Ads */
+                                    google_ad_slot = "5595068175";
+                                    google_ad_width = 180;
+                                    google_ad_height = 150;
+                                    //-->
+                                    </script>
+                                    <script type="text/javascript"
+                                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                                    </script>
                                 </div>
                                 <div class="span-5 last center">
                                     &nbsp;
                                 </div>
                             </div>
                             <div class="span-5 last">
-                                <div class="span-5 last lite_gray_bg">
-                                    &nbsp;
+                                <div class="span-5 last">
+                                    <script type="text/javascript"><!--
+                                    google_ad_client = "pub-6582809080416673";
+                                    /* I Like Places Text Ads */
+                                    google_ad_slot = "5595068175";
+                                    google_ad_width = 180;
+                                    google_ad_height = 150;
+                                    //-->
+                                    </script>
+                                    <script type="text/javascript"
+                                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                                    </script>
                                 </div>
                                 <div class="span-5 last center">
                                     &nbsp;

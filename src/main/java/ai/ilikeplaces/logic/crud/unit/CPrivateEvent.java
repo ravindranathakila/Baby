@@ -9,7 +9,6 @@ import ai.ilikeplaces.util.AbstractSLBCallbacks;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -42,7 +41,7 @@ public class CPrivateEvent extends AbstractSLBCallbacks implements CPrivateEvent
 
 
     @Override
-    public PrivateEvent doNTxCPrivateEvent(final String humanId, final long privateLocationId, final String locationName, final String locationInfo, final Date startDate, final Date endDate) {
+    public PrivateEvent doNTxCPrivateEvent(final String humanId, final long privateLocationId, final String locationName, final String locationInfo, final String startDate, final String endDate) {
         final HumansPrivateEvent managedOwner = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, humanId);
 
 
@@ -70,18 +69,18 @@ public class CPrivateEvent extends AbstractSLBCallbacks implements CPrivateEvent
         wireOwnership:
         {
             managedPrivateEvent.getPrivateEventOwners().add(managedOwner);
-            managedOwner.getPrivateEventOwned().add(managedPrivateEvent);
+            managedOwner.getPrivateEventsOwned().add(managedPrivateEvent);
         }
 
         wireViewership:
         {
             managedPrivateEvent.getPrivateEventViewers().add(managedOwner);
-            managedOwner.getPrivateEventViewed().add(managedPrivateEvent);
+            managedOwner.getPrivateEventsViewed().add(managedPrivateEvent);
         }
         wireInvitedship:
         {
             managedPrivateEvent.getPrivateEventInvites().add(managedOwner);
-            managedOwner.getPrivateEventInvited().add(managedPrivateEvent);
+            managedOwner.getPrivateEventsInvited().add(managedPrivateEvent);
         }
 
         return managedPrivateEvent;
