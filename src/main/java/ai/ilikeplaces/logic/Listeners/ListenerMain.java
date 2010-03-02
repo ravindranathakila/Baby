@@ -21,9 +21,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
+
 import static ai.ilikeplaces.util.MarkupTag.*;
 
-import java.util.ArrayList;
+import java.text.MessageFormat;import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -55,6 +56,8 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
             protected String superLocation;
 
+            protected Long WOEID;
+
             /**
              * Intialize your document here by appending fragments
              */
@@ -63,12 +66,26 @@ public class ListenerMain implements ItsNatServletRequestListener {
             @TODO(task = "If location is not available, it should be added through a widget(or fragment maybe?)")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
                 //this.location = (String) request_.getServletRequest().getAttribute(RBGet.config.getString("HttpSessionAttr.location"));
-                final String[] attr = ((String) request__.getServletRequest().getAttribute(RBGet.config.getString("HttpSessionAttr.location"))).split("_");
-                location = attr[0];
-                if (attr.length == 3) {
-                    superLocation = attr[2];
-                } else {
-                    superLocation = "";
+                getLocationSuperLocation:
+                {
+                    final String[] attr = ((String) request__.getServletRequest().getAttribute(RBGet.config.getString("HttpSessionAttr.location"))).split("_");
+                    location = attr[0];
+                    if (attr.length == 3) {
+                        superLocation = attr[2];
+                    } else {
+                        superLocation = "";
+                    }
+                    tryLocationId:
+                    {
+                        try {
+                            final String w = request__.getServletRequest().getParameter(Location.WOEID);
+                            if (w != null) {
+                                WOEID = Long.parseLong(request__.getServletRequest().getParameter(Location.WOEID));
+                            }
+                        } catch (final NumberFormatException e) {
+                            Loggers.USER_EXCEPTION.error("SORRY! WRONG WOEID FORMAT", e);
+                        }
+                    }
                 }
 
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor + JSCodeToSend.FnLocationId + JSCodeToSend.FnLocationName + JSCodeToSend.FnSetTitle);
@@ -136,7 +153,12 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     }
                 }
 
-                final Return<Location> r = DB.getHumanCRUDLocationLocal(true).dirtyRLocation(location, superLocation);
+                final Return<Location> r;
+                if (WOEID != null) {
+                    r = DB.getHumanCRUDLocationLocal(true).dirtyRLocation(WOEID);
+                } else {
+                    r = DB.getHumanCRUDLocationLocal(true).dirtyRLocation(location, superLocation);
+                }
 
 
                 if (r.returnStatus() == 0 && r.returnValue() != null) {
@@ -209,6 +231,11 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                     }
 
+                    setFlickrLink:
+                    {
+                        $(Main_flickr).setAttribute(MarkupTag.A.href(), MessageFormat.format(RBGet.config.getString("flickr.json"), location.toLowerCase().replace(" ", "+").replace("/", "+")));
+                    }
+
                     getAndDisplayAllThePhotos:
                     {
                         List<PublicPhoto> listPublicPhoto = existingLocation_.getPublicPhotos();
@@ -220,44 +247,20 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             try {
                                 final PublicPhoto publicPhoto = it.next();
 
-                                newMode:
+                                newMode://old mode pasted end of class if needed
                                 {
                                     final Element image = $(IMG);
                                     image.setAttribute(IMG.src(), publicPhoto.getPublicPhotoURLPath());
                                     image.setAttribute(IMG.alt(), publicPhoto.getPublicPhotoDescription());
-                                    image.setAttribute(IMG.style(),"width:110px;");
+                                    image.setAttribute(IMG.style(), "width:110px;");
 
                                     final Element link = $(A);
-                                    link.setAttribute(A.href(),publicPhoto.getPublicPhotoURLPath());
-                                    
+                                    link.setAttribute(A.href(), publicPhoto.getPublicPhotoURLPath());
+
                                     link.appendChild(image);
-                                    
+
                                     $(Main_yox).appendChild(link);
                                 }
-
-//                                oldMode:
-//                                {
-//                                    if (i % 2 == 0) {
-//                                        new Photo$Description(itsNatDocument__, $(Main_center_main)) {
-//                                            @Override
-//                                            protected void init(final Object... initArgs) {
-//                                                $$(pd_photo_permalink).setAttribute(A.href(), publicPhoto.getPublicPhotoURLPath() + "|" + publicPhoto.getPublicPhotoName());
-//                                                $$(pd_photo).setAttribute(A.src(), publicPhoto.getPublicPhotoURLPath());
-//                                                $$(pd_photo_description).setTextContent(publicPhoto.getPublicPhotoDescription());
-//                                            }
-//                                        };
-//                                    } else {
-//                                        new Photo$Description(itsNatDocument__, $(Main_center_main)) {
-//                                            @Override
-//                                            protected void init(final Object... initArgs) {
-//                                                $$(pd_photo_permalink).setAttribute(A.href(), publicPhoto.getPublicPhotoURLPath() + "|" + publicPhoto.getPublicPhotoName());
-//                                                $$(pd_photo).setAttribute(A.src(), publicPhoto.getPublicPhotoURLPath());
-//                                                $$(pd_photo_description).setTextContent(publicPhoto.getPublicPhotoDescription());
-//
-//                                            }
-//                                        };
-//                                    }
-//                                }
                             } catch (final Throwable t) {
                                 Loggers.EXCEPTION.error("", t);
                             }
@@ -269,7 +272,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     {
                         try {
                             $(Main_notice).appendChild(($(P).appendChild(
-                                    hTMLDocument__.createTextNode(RBGet.logMsgs.getString("CANT_FIND_LOCATION")
+                                    hTMLDocument__.createTextNode(RBGet.logMsgs.getString("CANT_FIND_LOCATION")                 
                                             + " Were you looking for "
                                     ))));
                             for (final Element element : generateLocationLinks(DB.getHumanCRUDLocationLocal(true).dirtyRLikeLocations(location))) {
@@ -311,9 +314,14 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 for (Location location : locationList) {
                     final Element link = $(A);
 
-                    link.setAttribute(A.href(),
-                            "/page/" + location.getLocationName() + "_of_" + location.getLocationSuperSet().getLocationName());
                     link.setTextContent(location.getLocationName() + " of " + location.getLocationSuperSet().getLocationName());
+
+                    link.setAttribute(A.href(),
+                            "/page/"
+                                    + location.getLocationName()
+                                    + "_of_"
+                                    + location.getLocationSuperSet().getLocationName()
+                                    + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
 
                     link.setAttribute(A.alt(),
                             "/page/" + location.getLocationName() + "_of_" + location.getLocationSuperSet().getLocationName());
@@ -330,3 +338,28 @@ public class ListenerMain implements ItsNatServletRequestListener {
         };//Listener
     }
 }
+
+
+//                                oldMode:
+//                                {
+//                                    if (i % 2 == 0) {
+//                                        new Photo$Description(itsNatDocument__, $(Main_center_main)) {
+//                                            @Override
+//                                            protected void init(final Object... initArgs) {
+//                                                $$(pd_photo_permalink).setAttribute(A.href(), publicPhoto.getPublicPhotoURLPath() + "|" + publicPhoto.getPublicPhotoName());
+//                                                $$(pd_photo).setAttribute(A.src(), publicPhoto.getPublicPhotoURLPath());
+//                                                $$(pd_photo_description).setTextContent(publicPhoto.getPublicPhotoDescription());
+//                                            }
+//                                        };
+//                                    } else {
+//                                        new Photo$Description(itsNatDocument__, $(Main_center_main)) {
+//                                            @Override
+//                                            protected void init(final Object... initArgs) {
+//                                                $$(pd_photo_permalink).setAttribute(A.href(), publicPhoto.getPublicPhotoURLPath() + "|" + publicPhoto.getPublicPhotoName());
+//                                                $$(pd_photo).setAttribute(A.src(), publicPhoto.getPublicPhotoURLPath());
+//                                                $$(pd_photo_description).setTextContent(publicPhoto.getPublicPhotoDescription());
+//
+//                                            }
+//                                        };
+//                                    }
+//                                }

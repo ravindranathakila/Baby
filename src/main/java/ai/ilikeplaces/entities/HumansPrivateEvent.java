@@ -23,10 +23,10 @@ public class HumansPrivateEvent implements HumanPkJoinFace {
 
     private Human human;
 
-    private List<PrivateEvent> privateEventOwned;
-    private List<PrivateEvent> privateEventViewed;
-    private List<PrivateEvent> privateEventInvited;
-    private List<PrivateEvent> privateEventRejected;
+    private List<PrivateEvent> privateEventsOwned;
+    private List<PrivateEvent> privateEventsViewed;
+    private List<PrivateEvent> privateEventsInvited;
+    private List<PrivateEvent> privateEventsRejected;
 
 
     @Id
@@ -50,41 +50,41 @@ public class HumansPrivateEvent implements HumanPkJoinFace {
 
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
     @ManyToMany(mappedBy = PrivateEvent.privateEventOwnersCOL, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    public List<PrivateEvent> getPrivateEventOwned() {
-        return privateEventOwned;
+    public List<PrivateEvent> getPrivateEventsOwned() {
+        return privateEventsOwned;
     }
 
-    public void setPrivateEventOwned(List<PrivateEvent> privateEventOwned) {
-        this.privateEventOwned = privateEventOwned;
+    public void setPrivateEventsOwned(List<PrivateEvent> privateEventsOwned) {
+        this.privateEventsOwned = privateEventsOwned;
     }
 
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
     @ManyToMany(mappedBy = PrivateEvent.privateEventViewersCOL, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    public List<PrivateEvent> getPrivateEventViewed() {
-        return privateEventViewed;
+    public List<PrivateEvent> getPrivateEventsViewed() {
+        return privateEventsViewed;
     }
 
-    public void setPrivateEventViewed(List<PrivateEvent> privateEventViewed) {
-        this.privateEventViewed = privateEventViewed;
+    public void setPrivateEventsViewed(List<PrivateEvent> privateEventsViewed) {
+        this.privateEventsViewed = privateEventsViewed;
     }
 
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
     @ManyToMany(mappedBy = PrivateEvent.privateEventInvitesCOL, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    public List<PrivateEvent> getPrivateEventInvited() {
-        return privateEventInvited;
+    public List<PrivateEvent> getPrivateEventsInvited() {
+        return privateEventsInvited;
     }
 
-    public void setPrivateEventInvited(List<PrivateEvent> privateEventInvited) {
-        this.privateEventInvited = privateEventInvited;
+    public void setPrivateEventsInvited(List<PrivateEvent> privateEventsInvited) {
+        this.privateEventsInvited = privateEventsInvited;
     }
 
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
     @ManyToMany(mappedBy = PrivateEvent.privateEventRejectsCOL, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    public List<PrivateEvent> getPrivateEventRejected() {
-        return privateEventRejected;
+    public List<PrivateEvent> getPrivateEventsRejected() {
+        return privateEventsRejected;
     }
 
-    public void setPrivateEventRejected(List<PrivateEvent> privateEventRejected) {
-        this.privateEventRejected = privateEventRejected;
+    public void setPrivateEventsRejected(List<PrivateEvent> privateEventsRejected) {
+        this.privateEventsRejected = privateEventsRejected;
     }
 }

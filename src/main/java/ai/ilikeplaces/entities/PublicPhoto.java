@@ -24,7 +24,7 @@ public class PublicPhoto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long publicPhotoId = null;
-     
+
     private String publicPhotoFilePath;
 
     @FieldPreamble(description = "The path should be very random as it will be exposed to the www." +
@@ -80,11 +80,12 @@ public class PublicPhoto implements Serializable {
     public void setPublicPhotoName(String publicPhotoName) {
         this.publicPhotoName = publicPhotoName;
     }
-    
+
     @Column(length = 1000)
     public String getPublicPhotoDescription() {
         return publicPhotoDescription;
     }
+
     public void setPublicPhotoDescription(final String publicPhotoDescription) {
         this.publicPhotoDescription = publicPhotoDescription;
     }
@@ -195,24 +196,12 @@ public class PublicPhoto implements Serializable {
     }
 
     /**
-     * 
      * @return
      */
     @Override
     public String toString() {
         return "PublicPhoto{" +
-                "uUID=" + uUID +
                 ", publicPhotoId=" + publicPhotoId +
-                ", publicPhotoFilePath='" + publicPhotoFilePath + '\'' +
-                ", publicPhotoURLPath='" + publicPhotoURLPath + '\'' +
-                ", publicPhotoName='" + publicPhotoName + '\'' +
-                ", publicPhotoDescription='" + publicPhotoDescription + '\'' +
-                ", publicPhotoUploadDate=" + publicPhotoUploadDate +
-                ", publicPhotoTakenDate=" + publicPhotoTakenDate +
-                ", publicPhotoRankUnits=" + publicPhotoRankUnits +
-                ", publicPhotoRankTurns=" + publicPhotoRankTurns +
-                ", location=" + location +
-                ", humansPublicPhoto=" + humansPublicPhoto.toString() +
                 '}';
     }
 

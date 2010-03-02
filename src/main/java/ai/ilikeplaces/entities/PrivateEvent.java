@@ -30,9 +30,9 @@ public class PrivateEvent {
 
     private String privateEventInfo;
 
-    private Date privateEventStartDate;
+    private String privateEventStartDate;
 
-    private Date privateEventEndDate;
+    private String privateEventEndDate;
 
     private Boolean extendedAccess;
 
@@ -83,21 +83,19 @@ public class PrivateEvent {
         this.privateEventInfo = privateEventInfo;
     }
 
-    @Temporal(TemporalType.DATE)
-    public Date getPrivateEventStartDate() {
+    public String getPrivateEventStartDate() {
         return privateEventStartDate;
     }
 
-    public void setPrivateEventStartDate(Date privateEventStartDate) {
+    public void setPrivateEventStartDate(String privateEventStartDate) {
         this.privateEventStartDate = privateEventStartDate;
     }
 
-    @Temporal(TemporalType.DATE)
-    public Date getPrivateEventEndDate() {
+    public String getPrivateEventEndDate() {
         return privateEventEndDate;
     }
 
-    public void setPrivateEventEndDate(Date privateEventEndDate) {
+    public void setPrivateEventEndDate(String privateEventEndDate) {
         this.privateEventEndDate = privateEventEndDate;
     }
 

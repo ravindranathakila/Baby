@@ -1,23 +1,20 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.entities.PrivateEvent;
-import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.doc.License;
 
 import javax.ejb.Local;
-import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
  * User: Ravindranath Akila
- * Date: Jan 13, 2010
- * Time: 12:07:04 AM
+ * Date: Jan 12, 2010
+ * Time: 10:31:21 PM
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Local
 public interface DPrivateEventLocal {
 
-    public Return<PrivateEvent> doNTxCPrivateEvent(final String humanId, final String eventName, final String eventInfo, final Date startDate, final Date endDate);
+    public boolean doNTxDPrivateEvent(final String humanId, final long privateEventId);
 
-    Boolean doNTxDPrivateEvent(String humanId, long privateEventId);
 }

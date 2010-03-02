@@ -355,7 +355,7 @@ final public class ServletFileUploads extends HttpServlet {
 
     @WARNING(warning = "DO NOT USE _(UNDERSCORE) AS URL SPLITTING WORKS USING UNDERSCORE. SEE Controller FOR FURTHER INFO")
     final static private String getRandomFileName(final long locationId) {
-        return "photo-of-" + DB.getHumanCRUDLocationLocal(true).dirtyRLocation(locationId).getLocationName() + "-" + random.nextLong() + System.currentTimeMillis();
+        return "photo-of-" + DB.getHumanCRUDLocationLocal(true).dirtyRLocation(locationId).returnValue().getLocationName() + "-" + random.nextLong() + System.currentTimeMillis();
     }
 
 

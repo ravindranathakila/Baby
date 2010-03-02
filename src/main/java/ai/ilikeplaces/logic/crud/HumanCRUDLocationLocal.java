@@ -20,7 +20,7 @@ public interface HumanCRUDLocationLocal {
 
     public Return<Location> dirtyRLocation(final String locationName, final String superLocationName);
 
-    public Location dirtyRLocation(final long locationId);
+    public Return<Location> dirtyRLocation(final long locationId);
 
     public List<String> dirtyRLikeLocationNames(final String likeLocationName);
 

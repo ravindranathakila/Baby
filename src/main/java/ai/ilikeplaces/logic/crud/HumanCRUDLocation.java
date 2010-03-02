@@ -15,7 +15,6 @@ import javax.interceptor.Interceptors;
 import java.util.List;
 
 /**
- *
  * @author Ravindranath Akila
  */
 
@@ -23,7 +22,7 @@ import java.util.List;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
 @Interceptors({MethodTimer.class, MethodParams.class})
-public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUDLocationLocal{
+public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUDLocationLocal {
 
     @EJB
     private RLocationLocal rLocationLocal_;
@@ -47,25 +46,31 @@ public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUD
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Location dirtyRLocation(final long locationId) {
-        return rLocationLocal_.doDirtyRLocation(locationId);
+    public Return<Location> dirtyRLocation(final long locationId) {
+        Return<Location> r;
+        try {
+            r = new ReturnImpl<Location>(rLocationLocal_.doDirtyRLocation(locationId), "Find location by location id Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Location>(t, "Find location by location id FAILED!", true);
+        }
+        return r;
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<String> dirtyRLikeLocationNames(final String likeLocationName){
+    public List<String> dirtyRLikeLocationNames(final String likeLocationName) {
         return rLocationLocal_.doDirtyRLikeLocationNames(likeLocationName);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Location> dirtyRLikeLocations(final String likeLocationName){
+    public List<Location> dirtyRLikeLocations(final String likeLocationName) {
         return rLocationLocal_.doDirtyRLikeLocations(likeLocationName);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Location> doNTxRLocationsBySuperLocation(final Location locationSuperset){
+    public List<Location> doNTxRLocationsBySuperLocation(final Location locationSuperset) {
         return rLocationLocal_.doNTxRLocationsBySuperLocation(locationSuperset);
     }
 

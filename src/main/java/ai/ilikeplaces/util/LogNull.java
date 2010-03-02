@@ -21,12 +21,12 @@ import ai.ilikeplaces.rbs.RBGet;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class LogNull {
 
     @NOTE(note = "ASSIGNING VALUE TO STATIC STRING TO GAIN SPEED. THESE METHODS SHOULD WORK FAST TO FACILITATE THEIR PURPOSE.")
     final static private String MSG = RBGet.expMsgs.getString("ai.ilikeplaces.util.LogNull.0001");
+    final static private NullPointerException NPE = new NullPointerException(MSG);
 
     private LogNull() {
     }
@@ -51,7 +51,7 @@ final public class LogNull {
      * @return Object
      */
     static public Object logThrow() {
-        throw new NullPointerException(MSG);
+        throw NPE;
     }
 
     /**
@@ -71,7 +71,7 @@ final public class LogNull {
      */
     static public Object logThrow(final Object obj) {
         if (obj == null) {
-            throw new NullPointerException(MSG);
+            throw NPE;
         } else {
             return obj;
         }

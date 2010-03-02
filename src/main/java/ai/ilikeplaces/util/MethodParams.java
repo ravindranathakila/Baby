@@ -20,6 +20,7 @@ public class MethodParams {
 
     final static private Logger logger = LoggerFactory.getLogger(MethodParams.class);
 
+    private static final String SORRY_YOU_CANNOT_ASSIGN_A_NULL = "SORRY! YOU CANNOT ASSIGN A NULL.";
     public static final RefObj<Boolean> DO_LOG = new Obj<Boolean>(true) {
 
         @Override
@@ -27,7 +28,7 @@ public class MethodParams {
             if (status != null) {
                 obj = status;
             } else {
-                throw new SecurityException("SORRY! YOU CANNOT ASSIGN A NULL.");
+                throw new SecurityException(SORRY_YOU_CANNOT_ASSIGN_A_NULL);
             }
         }
     };
@@ -35,14 +36,9 @@ public class MethodParams {
     @AroundInvoke
     public Object profile(InvocationContext invocation) throws Exception {
         if (DO_LOG.getObj()) {
-            final Object[] args = invocation.getParameters();
-            try {
-                return invocation.proceed();
-            } finally {
-                for (final Object arg : args) {
-                    logger.debug("METHOD NAME:\n\t" + invocation.getMethod().getName() + "\nPARAMETERS:\n\t" + Arrays.toString(args));
-                }
-            }
+
+            logger.debug("TARGET:\n\t"+invocation.getTarget().toString()+"\nMETHOD NAME:\n\t" + invocation.getMethod().getName() + "\nPARAMETERS:\n\t" + Arrays.toString(invocation.getParameters()));
+            return invocation.proceed();
         } else {
             return invocation.proceed();
         }

@@ -69,8 +69,6 @@
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/page/*</url-pattern>
-        <url-pattern>/Home</url-pattern>
-        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <session-config>
@@ -91,7 +89,7 @@
         <location>/</location>
     </error-page>
     <error-page>
-        <exception-type>java.lang.Throwable</exception-type> 
+        <exception-type>java.lang.Throwable</exception-type>
         <location>/</location>
     </error-page>
 </web-app>

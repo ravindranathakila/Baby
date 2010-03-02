@@ -1,30 +1,38 @@
 package ai.ilikeplaces.logic.crud.unit;
 
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateEvent;
-import ai.ilikeplaces.util.Return;
 
 import javax.ejb.Local;
-import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
  * User: Ravindranath Akila
- * Date: Jan 13, 2010
- * Time: 12:07:04 AM
+ * Date: Jan 12, 2010
+ * Time: 10:31:21 PM
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Local
 public interface UPrivateEventLocal {
 
-    public Return<PrivateEvent> doNTxCPrivateEvent(final String humanId, final String eventName, final String eventInfo, final Date startDate, final Date endDate);
+    public PrivateEvent doUPrivateEventData(final String humanId__, final long privateEventId__, final String privateEventName__, final String privateEventInfo__, final String privateEventStartDate__, final String privateEventE);
 
-    PrivateEvent doUPrivateEventAddOwner(String obj, long privateEventId__, HumansFriend owner);
+    public PrivateEvent doUPrivateEventAddOwner(final String humanId__, final long privateEventId__, final HumansFriend privateEventOwner__);
 
-    PrivateEvent doUPrivateEventRemoveOwner(String obj, long privateEventId__, HumansFriend owner);
+    public PrivateEvent doUPrivateEventRemoveOwner(final String humanId__, final long privateEventId__, final HumansFriend privateEventOwner__);
 
-    PrivateEvent doUPrivateEventAddViewer(String obj, long privateEventId__, HumansFriend owner);
+    public PrivateEvent doUPrivateEventAddViewer(final String humanId__, final long privateEventId__, final HumansFriend privateEventViewer__);
 
-    PrivateEvent doUPrivateEventRemoveViewer(String obj, long privateEventId__, HumansFriend owner);
+    public PrivateEvent doUPrivateEventRemoveViewer(final String humanId__, final long privateEventId__, final HumansFriend privateEventViewer__);
+
+    public PrivateEvent doUPrivateEventAddInvite(final String humanId__, final long privateEventId__, final HumansFriend privateEventInvite__);
+
+    public PrivateEvent doUPrivateEventRemoveInvite(final String humanId__, final long privateEventId__, final HumansFriend privateEventInvite__);
+
+    public PrivateEvent doUPrivateEventAddReject(final String humanId__, final long privateEventId__, final HumansFriend privateEventReject__);
+
+    public PrivateEvent doUPrivateEventRemoveReject(final String humanId__, final long privateEventId__, final HumansFriend privateEventReject__);
+
 }

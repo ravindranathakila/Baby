@@ -162,7 +162,7 @@ public class PrivatePhoto implements Serializable {
     @SuppressWarnings({"EqualsWhichDoesntCheckParameterClass", "EqualsWhichDoesntCheckParameterClass"})
     @TODO(task = "DO AS IN PublicPhoto.class, UUID")
     public boolean equals(Object object) {
-        throw new PendingEqualsMethodException();
+        throw PendingEqualsMethodException.SINGLETON;
     }
 
     /**
