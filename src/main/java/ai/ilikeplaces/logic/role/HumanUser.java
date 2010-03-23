@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.role;
 
 import ai.ilikeplaces.doc.FIXME;
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSFBCallbacks;
 import ai.ilikeplaces.util.DelegatedObservable;
@@ -8,6 +9,7 @@ import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.ManageObservers;
 
 import javax.annotation.PreDestroy;
+import javax.ejb.PrePassivate;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.servlet.http.HttpSessionBindingEvent;
@@ -17,7 +19,7 @@ import java.util.Observer;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateful
 final public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, ManageObservers {
 
