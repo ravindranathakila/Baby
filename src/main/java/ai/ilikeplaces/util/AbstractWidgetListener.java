@@ -2,7 +2,6 @@ package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.servlets.Controller;
 import org.itsnat.core.ItsNatDocument;
@@ -11,8 +10,8 @@ import org.itsnat.core.html.ItsNatHTMLDocFragmentTemplate;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
@@ -37,6 +36,7 @@ public abstract class AbstractWidgetListener {
 
     protected final ItsNatDocument itsNatDocument_;
     private final HTMLDocument hTMLDocument_;
+    private final Document document_;
     /**
      * As a widget may have many instances within a document, we register each
      * instance with unique ids. i.e. the existing id is appended with the
@@ -54,6 +54,14 @@ public abstract class AbstractWidgetListener {
     final private static String Id = "id";
     private boolean visible = true;
     final static private String NPE_1 = "SORRY! THIS DOCUMENT APPEARS NOT TO HAVE BEEN REGISTERED. PLEASE VERIFY THIS FIRST.(CAUSE OF NPE COULD BE DIFFERENT)";
+    private static final String SORRY_I_FIND_THAT_ELEMENT = "SORRY! I FIND THAT ELEMENT \"";
+    private static final String CONTAINS_NULL_OR_NO_REFERENCE_IN_REGISTRY = "\" CONTAINS NULL OR NO REFERENCE IN REGISTRY!";
+    private static final String SORRY_COULD_NOT_FETCH_THE_ELEMENT_NAMED = "SORRY! COULD NOT FETCH THE ELEMENT NAMED ";
+    private static final String FROM_FILE = " FROM FILE.";
+    private static final String THIS_COULD_HAPPEN_IF_THE_WRONG_PAGE_IS_REGISTERED_IN_THE_WIDGET_CONSTRUCTOR_WHEN_CALLING_SUPER = "\nTHIS COULD HAPPEN IF THE WRONG PAGE IS REGISTERED IN THE WIDGET CONSTRUCTOR WHEN CALLING SUPER.";
+    private static final String STYLE = "style";
+    private static final String DISPLAY_BLOCK = "display:block;";
+    private static final String DISPLAY_NONE = "display:none;";
 
 
     /**
@@ -70,6 +78,7 @@ public abstract class AbstractWidgetListener {
         this.itsNatDocument_ = itsNatDocument__;
         final ItsNatHTMLDocument itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument_;
         this.hTMLDocument_ = itsNatHTMLDocument_.getHTMLDocument();
+        this.document_ = itsNatDocument_.getDocument();
         final ItsNatServlet itsNatServlet_ = itsNatDocument_.getItsNatDocumentTemplate().getItsNatServlet();
         final ItsNatHTMLDocFragmentTemplate inhdft_ = (ItsNatHTMLDocFragmentTemplate) itsNatServlet_.getItsNatDocFragmentTemplate(page__.toString());
         LogNull.logThrow(inhdft_, NPE_1);//Do not remove unless performance degrade is evident.
@@ -85,7 +94,7 @@ public abstract class AbstractWidgetListener {
     /**
      * Use ItsNatHTMLDocument variable stored in the AbstractListener class
      * Do not call this method anywhere, just implement it, as it will be
-     * automatically called by the contructor
+     * automatically called by the constructor
      *
      * @param itsNatHTMLDocument_
      * @param hTMLDocument_
@@ -106,7 +115,7 @@ public abstract class AbstractWidgetListener {
         if (elementId__ == null) {
             throw new java.lang.NullPointerException("SORRY! I FIND THAT ELEMENT \"" + key__ + "\" CONTAINS NULL OR NO REFERENCE IN REGISTRY!");
         }
-        final Element returnVal = hTMLDocument_.getElementById(elementId__);
+        final Element returnVal = document_.getElementById(elementId__);
         return returnVal != null ? returnVal : (Element) LogNull.logThrow("SORRY! CANNOT FETCH THE ELEMENT " + key__ + ". YOU PROBABLY WERE SUPPOSED TO USE $$ INSTEAD OF $");
     }
 
@@ -117,7 +126,7 @@ public abstract class AbstractWidgetListener {
      */
     private final void setWidgetElementIds(final HashSet<String> ids__) {
         for (final String id_ : ids__) {
-            hTMLDocument_.getElementById(id_).setAttribute(Id, id_ + instanceId);
+            document_.getElementById(id_).setAttribute(Id, id_ + instanceId);
         }
     }
 
@@ -136,8 +145,8 @@ public abstract class AbstractWidgetListener {
         if (elementId__ == null) {
             throw new java.lang.NullPointerException("SORRY! I FIND THAT ELEMENT \"" + key__ + "\" CONTAINS NULL OR NO REFERENCE IN REGISTRY!");
         }
-        final Element returnVal = hTMLDocument_.getElementById(elementId__ + instanceId);
-        return returnVal != null ? returnVal : (Element) LogNull.logThrow("SORRY! COULD NOT FETCH THE ELEMENT NAMED " + key__ + " FROM FILE." +
+        final Element returnVal = document_.getElementById(elementId__ + instanceId);
+        return returnVal != null ? returnVal : (Element) LogNull.logThrow("SORRY! COULD NOT FETCH THE ELEMENT NAMED " + key__ + " FROM PAGE:" + page.toString() +
                 "\nTHIS COULD HAPPEN IF THE WRONG PAGE IS REGISTERED IN THE WIDGET CONSTRUCTOR WHEN CALLING SUPER.");
     }
 
@@ -154,11 +163,11 @@ public abstract class AbstractWidgetListener {
         if (visible) {
             for (String elementId__ : widgetElements) {
                 if (!elementId__.equals(toggleLink)) {
-                    final String existingVal = $$(elementId__).getAttribute("style");
+                    final String existingVal = $$(elementId__).getAttribute(STYLE);
                     if (existingVal.contains("display:block")) {
-                        $$(elementId__).setAttribute("style", existingVal.replace("display:block", "display:none"));
+                        $$(elementId__).setAttribute(STYLE, existingVal.replace("display:block", "display:none"));
                     } else {
-                        $$(elementId__).setAttribute("style", "display:none;" + existingVal);
+                        $$(elementId__).setAttribute(STYLE, DISPLAY_NONE + existingVal);
                     }
                 }
             }
@@ -167,12 +176,12 @@ public abstract class AbstractWidgetListener {
             for (String elementId__ : widgetElements) {
                 if (!elementId__.equals(toggleLink)) {
                     @FIXME(issue = "this is wrong. css can have necessary spaces. e.g. backgroound-image:0% 0% url(/path/image.png);")
-                    final String existingVal = $$(elementId__).getAttribute("style").replace(" ", "");
+                    final String existingVal = $$(elementId__).getAttribute(STYLE).replace(" ", "");
 
                     if (existingVal.contains("display:none")) {
-                        $$(elementId__).setAttribute("style", existingVal.replace("display:none", "display:block"));
+                        $$(elementId__).setAttribute(STYLE, existingVal.replace("display:none", "display:block"));
                     } else {
-                        $$(elementId__).setAttribute("style", "display:block;" + existingVal);
+                        $$(elementId__).setAttribute(STYLE, DISPLAY_BLOCK + existingVal);
                     }
                 }
             }
@@ -181,23 +190,15 @@ public abstract class AbstractWidgetListener {
     }
 
     protected final void displayBlock(final Element element__) {
-        element__.setAttribute("style", "display:block;");
+        element__.setAttribute(STYLE, DISPLAY_BLOCK);
     }
 
     protected final void displayNone(final Element element__) {
-        element__.setAttribute("style", "display:none;");
-    }
-
-    @NOTE(note = "toogleVisitble CANNOT BE CALLED IF ALL ELEMENTS ARE HIDDEN. SO WE JUST HIDE OVERRIDING STYLES AS HIDE WOULD BE PERMANENT.")
-    protected void hide(final String toggleLink) {
-        final Set<String> widgetElements = getWidgetElements();
-        for (String elementId__ : widgetElements) {
-            $$(elementId__).setAttribute("style", "display:none;");
-        }
+        element__.setAttribute(STYLE, DISPLAY_NONE);
     }
 
     final protected Element $$(MarkupTagFace tagNameInAllCaps) {
-        return hTMLDocument_.createElement(tagNameInAllCaps.toString());
+        return document_.createElement(tagNameInAllCaps.toString());
     }
 
     /**
@@ -211,19 +212,43 @@ public abstract class AbstractWidgetListener {
         itsNatDocument_.removeEventListener(eventTarget_, eventType_.toString(), eventListener_, useCapture.length == 0 ? false : useCapture[0]);
     }
 
-    final protected void clear(final Element element__) {
-        final Node owner = (Node) element__;
-        int i = 1;
-        while (owner.hasChildNodes()) {
-            owner.removeChild(owner.getFirstChild());
-            logger.debug("LOOP:" + i++);
+    /**
+     * @param whoseChildrenRemoved
+     * @return whoseChildrenRemoved
+     */
+    final protected Element clear(final Element whoseChildrenRemoved) {
+        try {
+            whoseChildrenRemoved.normalize();//Clearing the air for text nodes
+            while (whoseChildrenRemoved.hasChildNodes()) {
+                whoseChildrenRemoved.removeChild(whoseChildrenRemoved.getFirstChild());
+            }
+        } catch (final Exception e) {
+            Loggers.EXCEPTION.error("SORRY! AN ERROR OCCURRED WHILE CLEARING CONTENT.", e);
         }
+        return whoseChildrenRemoved;
 //        if (owner.hasChildNodes()) {
 //            final NodeList childNodes = element__.getChildNodes();
 //            for (int i = 0; i < childNodes.getLength(); i++) {
 //                element__.removeChild(childNodes.item(i));
 //            }
 //        }
+    }
+
+    /**
+     * Note: suppresses NPE occured due to element not having any children.
+     * Advice: use &nbsp;
+     *
+     * @param elementToBeSetTextOf
+     * @param textToBeSet
+     * @return elementToBeSetTextOf
+     */
+    static protected Element $$setText(final Element elementToBeSetTextOf, final String textToBeSet) {
+        try {
+            ElementComposer.$ElementSetText(elementToBeSetTextOf, textToBeSet);
+        } catch (final NullPointerException npe) {
+            Loggers.EXCEPTION.error("SORRY! THIS ELEMENT DOES NOT HAVE ANY CHILDREN", npe);
+        }
+        return elementToBeSetTextOf;
     }
 
     final static protected Logger logger = LoggerFactory.getLogger(AbstractWidgetListener.class);

@@ -43,7 +43,7 @@ abstract public class Photo$Description extends AbstractWidgetListener {
 
             @Override
             public void handleEvent(final Event evt_) {
-                toggleVisible(close);
+                displayNone($$(close));
             }
         }, false);
     }

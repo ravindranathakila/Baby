@@ -32,7 +32,7 @@
 .btn.orange { background: #ff6f00; }
 .btn.yellow { background:rgb(254,237,33); }
 .btn.dark_yellow { background:rgb(255,198,0); }
-.btn:hover { background-color: #a00; }
+.btn:hover { background-color: #a9abf1; }
 .btn:active { background-color: #444; }
 .btn[class] { background-image: url(../images/shade.png); background-position: bottom; }
 
@@ -44,6 +44,6 @@
 * html .btn.orange { border-color: #ff6f00; }
 * .btn.yellow { background:rgb(254,237,33); }
 * html .btn.dark_yellow { background:rgb(255,198,0); }
-* html .btn:hover { border-color: #a00; }
+* html .btn:hover { border-color: #a9abf1; }
 /*IE END*/
 

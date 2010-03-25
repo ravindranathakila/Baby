@@ -51,6 +51,8 @@ public abstract class AbstractListener {
     final static protected String Click = "click";
 
     final private SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper;
+    private static final IllegalArgumentException ILLEGAL_ARGUMENT_EXCEPTION = new IllegalArgumentException("SORRY! I RECEIVED A NUMBER OF PARAMETERS WHICH I CANNOT HANDLE.");
+    private static final IllegalStateException ILLEGAL_STATE_EXCEPTION = new IllegalStateException("SORRY! THE CODE REFLECTING THIS CALL SHOULD ONLY WORK IF THE USER IS LOGGED IN, BUT ACTUALLY IS NOT.");
 
 
     /**
@@ -126,6 +128,43 @@ public abstract class AbstractListener {
         return getElementById(iDOfElementRequired__);
     }
 
+    /**
+     * Get a link element with given attributes
+     *
+     * @param displayText       displayText
+     * @param url               URL
+     * @param alt_title_classes alt attribute title of element, and space separated classes
+     * @return Link Element
+     */
+    protected final Element $A(final String displayText, final String url, final String... alt_title_classes) {
+        final Element link = $(MarkupTag.A);
+        link.setTextContent(displayText);
+        ElementComposer.$ElementSetHref(link, url);
+        if (alt_title_classes != null) {
+            switch (alt_title_classes.length) {
+                case 1:
+                    ElementComposer.compose(link)
+                            .$ElementSetAlt(alt_title_classes[0]);
+                    break;
+                case 2:
+                    ElementComposer.compose(link)
+                            .$ElementSetAlt(alt_title_classes[0])
+                            .$ElementSetTitle(alt_title_classes[1]);
+                    break;
+                case 3:
+                    ElementComposer.compose(link)
+                            .$ElementSetAlt(alt_title_classes[0])
+                            .$ElementSetTitle(alt_title_classes[1])
+                            .$ElementSetClasses(alt_title_classes[2]);
+                    break;
+                default:
+                    throw ILLEGAL_ARGUMENT_EXCEPTION;
+            }
+        }
+        return link;
+    }
+
+
     private final Element getElementById(final String key__) {
         final String elementId__ = GlobalHTMLIdRegistry_.get(key__);
         if (elementId__ == null) {
@@ -174,7 +213,7 @@ public abstract class AbstractListener {
      */
     final protected String getUsernameAsValid() {
         if (sessionBoundBadRefWrapper == null) {
-            throw new IllegalStateException("SORRY! THE CODE REFLECTING THIS CALL SHOULD ONLY WORK IF THE USER IS LOGGED IN, BUT ACTUALLY IS NOT.");
+            throw ILLEGAL_STATE_EXCEPTION;
         }
         return sessionBoundBadRefWrapper.boundInstance.getHumanUserId();
     }

@@ -1,7 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
@@ -45,12 +44,8 @@ abstract public class FriendAdd extends AbstractWidgetListener {
     protected void init(final Object... initArgs) {
         this.humanId = (HumanId) initArgs[0];
         this.caller = (HumanId) initArgs[1];
-        final HumansIdentity hid = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(humanId).getHumansIdentity();
 
-        $$(Controller.Page.friendAddFirstNameLabel).setTextContent(humanId.getObj());
-        $$(Controller.Page.friendAddLastNameLabel).setTextContent("TODO");
-        //$$(Controller.Page.friendAddBirthYearLabel).setTextContent(Integer.toString(hid.getHumansIdentityDateOfBirth().getYear()));
-        $$(Controller.Page.friendAddLocationLabel).setTextContent("TODO");
+        $$(Controller.Page.friendAddDisplayNameLabel).setTextContent(DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(humanId).getDisplayName());
     }
 
     /**
@@ -63,7 +58,7 @@ abstract public class FriendAdd extends AbstractWidgetListener {
      */
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.friendAddAddButton), EventType.click.toString(), new EventListener() {
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.friendAddAddButton), EventType.CLICK.toString(), new EventListener() {
 
             private HumanId myhumanId = humanId;
             private HumanId mycaller = caller;
@@ -72,9 +67,13 @@ abstract public class FriendAdd extends AbstractWidgetListener {
             public void handleEvent(final Event evt_) {
                 logger.debug("{}", "Clicked Find");
                 Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doNTxAddHumansNetPeople(mycaller, myhumanId);
-                logger.debug("{}", r.toString());
-                $$(Controller.Page.friendAddAddButton).setTextContent("DONE");
-                remove(evt_.getTarget(), EventType.click, this);
+                if (r.returnStatus() == 0) {
+                    logger.debug("{}", r.toString());
+                    $$(Controller.Page.friendAddAddButton).setTextContent("DONE");
+                    remove(evt_.getTarget(), EventType.CLICK, this);
+                }else{
+                    //DO something!
+                }
             }
         }, false);
     }

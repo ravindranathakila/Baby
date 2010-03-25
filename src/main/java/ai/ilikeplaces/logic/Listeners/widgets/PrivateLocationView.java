@@ -2,14 +2,12 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.rbs.RBGet;
-import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
-import ai.ilikeplaces.util.AbstractWidgetListener;
-import ai.ilikeplaces.util.MarkupTag;
-import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
@@ -47,15 +45,59 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
         final String humanId = (String) initArgs[0];
         final long privateLocationId = (Long) initArgs[1];
 
-        final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).rDirtyPrivateLocation(humanId, privateLocationId);
+        final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocation(humanId, privateLocationId);
 
 
         LoggerFactory.getLogger(PrivateLocationView.class.getName()).debug(r.toString());
 
         if (r.returnStatus() == 0) {
             LoggerFactory.getLogger(PrivateLocationView.class.getName()).debug("Setting values");
-            $$(privateLocationViewName).setTextContent("Place: " + r.returnValue().getPrivateLocationName());
-            $$(privateLocationViewInfo).setTextContent("Details: " + r.returnValue().getPrivateLocationInfo());
+            $$(privateLocationViewName).setTextContent(r.returnValue().getPrivateLocationName());
+            $$(privateLocationViewInfo).setTextContent(r.returnValue().getPrivateLocationInfo());
+            new Button(itsNatDocument_, $$(privateLocationViewLink), "Link to " + r.returnValue().getPrivateLocationName(), false, r.returnValue()) {
+                PrivateLocation privateLocation = null;
+
+                @Override
+                protected void init(final Object... initArgs) {
+                    privateLocation = (PrivateLocation) (((Object[]) initArgs[2])[0]);
+                    SetLocationLink:
+                    {
+                        setLink:
+                        {
+                            $$(GenericButtonLink).setAttribute(MarkupTag.A.href(),
+                                    new Parameter(Organize.getURL())
+                                            .append(DocOrganizeCategory, 2, true)
+                                            .append(DocOrganizeLocation, privateLocation.getPrivateLocationId())
+                                            .get());
+                        }
+                        setImage:
+                        {
+                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.config.getString(RBGet.url_CDN_STATIC) + "arrow-right.gif");
+                        }
+                    }
+                }
+            };
+            SetEventList:
+            {
+                for (final PrivateEvent pe : r.returnValue().getPrivateEvents())
+                    if (DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventIsViewer(humanId, pe.getPrivateEventId()).returnValue()) {
+                        $$(privateLocationViewEventList).appendChild(
+                                ElementComposer.compose($$(MarkupTag.LI))
+                                        .wrapThis(
+                                                ElementComposer.compose($$(MarkupTag.A))
+                                                        .$ElementSetText(pe.getPrivateEventName())
+                                                        .$ElementSetHref(
+                                                                new Parameter(Organize.getURL())
+                                                                        .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
+                                                                        .append(DocOrganizeLocation, r.returnValue().getPrivateLocationId())
+                                                                        .append(DocOrganizeEvent, pe.getPrivateEventId())
+                                                                        .get()
+                                                        )
+                                                        .get()
+                                        )
+                                        .get());
+                    }
+            }
         } else {
             LoggerFactory.getLogger(PrivateLocationView.class.getName()).debug("Error");
             $$(privateLocationViewNotice).setTextContent("Alert: " + r.returnMsg());

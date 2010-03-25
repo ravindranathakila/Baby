@@ -14,5 +14,5 @@ import javax.ejb.Local;
 @Local
 public interface RHumansPrivateEventLocal {
 
-    public HumansPrivateEvent doDirtyRHumansPrivateEvent(String humanId);
+    public HumansPrivateEvent doNTxRHumansPrivateEvent(String humanId);
 }

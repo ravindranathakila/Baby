@@ -80,9 +80,6 @@ public class PrivateLocation implements Serializable {
     }
 
     /**
-     * Important, if privateLocationName & privateLocationSuperSet of two objects are equal,
-     * then the two are talking about the same privateLocation. They should be merged.
-     * i.e. Made to have the same id.
      *
      * @param privateLocationName__
      */

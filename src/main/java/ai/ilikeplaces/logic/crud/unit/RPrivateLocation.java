@@ -1,11 +1,11 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.exception.NoPrivilegesException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 
 import javax.ejb.EJB;
@@ -31,44 +31,66 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
     @EJB
     private CrudServiceLocal<HumansPrivateLocation> humansPrivateLocationCrudServiceLocal_;
 
+    @EJB
+    private CrudServiceLocal<Human> humanCrudServiceLocal_;
+
+    private static final String VIEW_PRIVATE_LOCATION = "view private location:";
+
+    @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
     @Override
     public PrivateLocation doDirtyRPrivateLocation(final String humanId, final Long privateLocationId) {
-        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId);
-        final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId);
+        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId);
+        //final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId);
+        final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
 
         securityChecks:
         {
-            if (!(privateLocation_.getPrivateLocationOwners().contains(humansPrivateLocation_)
-                    || humansPrivateLocation_.getPrivateLocationsViewed().contains(privateLocation_))) {
-                throw new NoPrivilegesException(humanId, "view private location:" + privateLocation_.toString());
+            //This old check was taking up too much time. Nevertheless, left here in case the new approach introduces bugs
+            //Also note that there is an unwanted two way check here.
+            //Note that the not clause is not clear too
+//            if (!(privateLocation_.getPrivateLocationOwners().contains(humansPrivateLocation_)
+//                    || humansPrivateLocation_.getPrivateLocationsViewed().contains(privateLocation_))) {
+//                throw new NoPrivilegesException(humanId, VIEW_PRIVATE_LOCATION + privateLocation_.toString());
+//            }
+            if (!privateLocation_.getPrivateLocationOwners().contains(human)) {
+                throw new NoPrivilegesException(humanId, VIEW_PRIVATE_LOCATION + privateLocation_.toString());
             }
         }
-
-        return privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId);
+        return privateLocation_;
     }
 
+    @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
     @Override
     public boolean doDirtyRPrivateLocationIsOwner(final String humanId, final Long privateLocationId) {
-        return privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId).getPrivateLocationOwners()
-                .contains(humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId));
+//        return privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).getPrivateLocationOwners()
+//                .contains(humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId));
+        return privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).getPrivateLocationOwners()
+                .contains(humanCrudServiceLocal_.findBadly(Human.class, humanId));
     }
 
+    @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
     @Override
     public boolean doDirtyRPrivateLocationIsViewer(final String humanId, final Long privateLocationId) {
-        return privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId).getPrivateLocationViewers()
-                .contains(humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId));
+//        return privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).getPrivateLocationViewers()
+//                .contains(humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId));
+        return privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).getPrivateLocationViewers()
+                .contains(humanCrudServiceLocal_.findBadly(Human.class, humanId));
     }
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     public PrivateLocation doRPrivateLocationAsViewer(final String humanId, final Long privateLocationId) {
-        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId);
-        final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId);
+        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId);
+        // final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId);
+        final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
 
         securityChecks:
         {
-            if (!(humansPrivateLocation_.getPrivateLocationsViewed().contains(privateLocation_))) {
-                throw new NoPrivilegesException(RBGet.expMsgs.getString("ai.ilikeplaces.logic.crud.unit.RPrivateLocation.0001"));
+//            if (!(humansPrivateLocation_.getPrivateLocationsViewed().contains(privateLocation_))) {
+//                throw new NoPrivilegesException(RBGet.expMsgs.getString("ai.ilikeplaces.logic.crud.unit.RPrivateLocation.0001"));
+//            }
+            if (!privateLocation_.getPrivateLocationViewers().contains(human)) {
+                throw new NoPrivilegesException(humanId, VIEW_PRIVATE_LOCATION + privateLocation_.toString());
             }
         }
 
@@ -78,13 +100,17 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     public PrivateLocation doRPrivateLocationAsOwner(final String humanId, final Long privateLocationId) {
-        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId);
-        final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId);
+        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId);
+//        final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId);
+        final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
 
         securityChecks:
         {
-            if (!(privateLocation_.getPrivateLocationOwners().contains(humansPrivateLocation_))) {
-                throw new NoPrivilegesException(RBGet.expMsgs.getString("ai.ilikeplaces.logic.crud.unit.RPrivateLocation.0002"));
+//            if (!(privateLocation_.getPrivateLocationOwners().contains(humansPrivateLocation_))) {
+//                throw new NoPrivilegesException(RBGet.expMsgs.getString("ai.ilikeplaces.logic.crud.unit.RPrivateLocation.0002"));
+//            }
+            if (!privateLocation_.getPrivateLocationOwners().contains(human)) {
+                throw new NoPrivilegesException(humanId, VIEW_PRIVATE_LOCATION + privateLocation_.toString());
             }
         }
 

@@ -12,6 +12,8 @@ import ai.ilikeplaces.util.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 
 /**
@@ -23,7 +25,7 @@ import javax.interceptor.Interceptors;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@Interceptors({MethodTimer.class, MethodParams.class})
+@Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class})
 public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements HumanCRUDPrivateEventLocal {
 
     @EJB
@@ -37,6 +39,10 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
 
     @EJB
     private DPrivateEventLocal dPrivateEventLocal;
+    private static final String CHECK_OWNERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL = "Check ownership of private event Successful!";
+    private static final String CHECK_OWNERSHIP_OF_PRIVATE_EVENT_FAILED = "Check ownership of private event FAILED!";
+    private static final String CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL = "Check viewership of private event Successful!";
+    private static final String CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_FAILED = "Check viewership of private event FAILED!";
 
 
     @Override
@@ -96,8 +102,9 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         return r;
     }
 
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     @Override
-    public Return<PrivateEvent> rDirtyPrivateEvent(final String humanId, final long privateEventId) {
+    public Return<PrivateEvent> dirtyRPrivateEvent(final String humanId, final long privateEventId) {
         Return<PrivateEvent> r;
         try {
             r = new ReturnImpl<PrivateEvent>(rPrivateEventLocal.doDirtyRPrivateEvent(humanId, privateEventId), "View private event Successful!");
@@ -108,13 +115,26 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
 
     }
 
+    @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
     @Override
     public Return<Boolean> dirtyRPrivateEventIsOwner(final String humanId, final Long privateEventId) {
         Return<Boolean> r;
         try {
-            r = new ReturnImpl<Boolean>(rPrivateEventLocal.doDirtyRPrivateEventIsOwner(humanId, privateEventId), "View private event Successful!");
+            r = new ReturnImpl<Boolean>(rPrivateEventLocal.doDirtyRPrivateEventIsOwner(humanId, privateEventId), CHECK_OWNERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final Throwable t) {
-            r = new ReturnImpl<Boolean>(t, "View private event FAILED!", true);
+            r = new ReturnImpl<Boolean>(t, CHECK_OWNERSHIP_OF_PRIVATE_EVENT_FAILED, true);
+        }
+        return r;
+    }
+
+    @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
+    @Override
+    public Return<Boolean> dirtyRPrivateEventIsViewer(final String humanId, final Long privateEventId) {
+        Return<Boolean> r;
+        try {
+            r = new ReturnImpl<Boolean>(rPrivateEventLocal.doDirtyRPrivateEventIsViewer(humanId, privateEventId), CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL);
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Boolean>(t, CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_FAILED, true);
         }
         return r;
     }

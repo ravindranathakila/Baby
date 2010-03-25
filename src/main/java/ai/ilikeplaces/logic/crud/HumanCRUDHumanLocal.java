@@ -2,7 +2,7 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.*;
-import ai.ilikeplaces.logic.validators.unit.Email;
+import ai.ilikeplaces.logic.validators.unit.*;
 import ai.ilikeplaces.logic.verify.util.Verify;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
@@ -24,7 +24,7 @@ public interface HumanCRUDHumanLocal extends Verify {
 
     public Human doDirtyRHuman(final RefObj<String> humanId);
 
-    public HumansAuthentication doDirtyRHumansAuthentication(final RefObj<String> humanId);
+    public Return<HumansAuthentication> doDirtyRHumansAuthentication(final RefObj<String> humanId);
 
     public HumansNetPeople doDirtyRHumansNetPeople(final RefObj<String> humanId);
 
@@ -38,11 +38,13 @@ public interface HumanCRUDHumanLocal extends Verify {
 
     public Return<Boolean> doNTxIsHumansNetPeople(final RefObj<String> adderHumanId, final RefObj<String> addeeHumanId);
 
+    public Return<Boolean> doNTxUDisplayName(final HumanId humanId, DisplayNameString displayName);
+    
     public Return<Boolean> doDirtyIsHumansNetPeople(final RefObj<String> adderHumanId, final RefObj<String> addeeHumanId);
 
     public List<HumansIdentity> doDirtyRHumansIdentitiesByEmails(final List<Email> emails);
 
-    public void doCHuman(final String username, final String password, final String email, final String gender, final String dateOfBirth) throws IllegalAccessException;
+    public Return<Boolean>  doCHuman(final HumanId username, final Password password, Email email) throws IllegalAccessException;
 
     public boolean doDirtyCheckHuman(final String humanId);
 

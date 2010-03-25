@@ -3,9 +3,14 @@ package ai.ilikeplaces.logic.Listeners.widgets.privateevent;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.logic.Listeners.widgets.Button;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
+import ai.ilikeplaces.util.MarkupTag;
+import ai.ilikeplaces.util.Parameter;
 import ai.ilikeplaces.util.Return;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -44,18 +49,43 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
         final String humanId = (String) initArgs[0];
         final long privateEventId = (Long) initArgs[1];
 
-        final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).rDirtyPrivateEvent(humanId, privateEventId);
+        final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEvent(humanId, privateEventId);
 
 
         LoggerFactory.getLogger(PrivateEventView.class.getName()).debug(r.toString());
 
         if (r.returnStatus() == 0) {
             LoggerFactory.getLogger(PrivateEventView.class.getName()).debug("Setting values");
-            $$(privateEventViewName).setTextContent("Event Name: "+r.returnValue().getPrivateEventName());
-            $$(privateEventViewInfo).setTextContent("Event Info: "+r.returnValue().getPrivateEventInfo());
+            $$(privateEventViewName).setTextContent(r.returnValue().getPrivateEventName());
+            $$(privateEventViewInfo).setTextContent(r.returnValue().getPrivateEventInfo());
+            new Button(itsNatDocument_, $$(privateEventViewLink), "Link to " + r.returnValue().getPrivateEventName(), false, r.returnValue()) {
+                PrivateEvent privateEvent = null;
+
+                @Override
+                protected void init(final Object... initArgs) {
+                    privateEvent = (PrivateEvent) (((Object[]) initArgs[2])[0]);
+                    SetLocationLink:
+                    {
+                        setLink:
+                        {
+                            $$(GenericButtonLink).setAttribute(MarkupTag.A.href(),
+                                    new Parameter(Organize.getURL())
+                                            .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
+                                            .append(DocOrganizeLocation, r.returnValue().getPrivateLocation().getPrivateLocationId())
+                                            .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
+                                            .get()
+                            );
+                        }
+                        setImage:
+                        {
+                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.config.getString(RBGet.url_CDN_STATIC) + "arrow-right.gif");
+                        }
+                    }
+                }
+            };
+
         } else {
-            LoggerFactory.getLogger(PrivateEventView.class.getName()).debug("Error");
-            $$(privateEventViewNotice).setTextContent("Alert: " +r.returnMsg());
+            $$(privateEventViewNotice).setTextContent(r.returnMsg());
         }
 
     }

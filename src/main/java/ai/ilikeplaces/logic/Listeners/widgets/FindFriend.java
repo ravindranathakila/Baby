@@ -23,6 +23,7 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -57,55 +58,107 @@ abstract public class FindFriend extends AbstractWidgetListener {
         } else {
             throw new ConstraintsViolatedException(((HumanId) initArgs[0]).getViolations());
         }
+
+        List<String> emails = new ArrayList<String>();
+        for (final HumansNetPeople hnp : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId).getHumansNetPeoples()) {
+            emails.add(hnp.getHumanId());
+        }
+
+        UCDisplayExistingUserMails:
+        {
+            /**
+             * Normal approach
+             */
+            $$(Controller.Page.friendFindSearchTextInput).setAttribute(MarkupTag.TEXTAREA.value(), Arrays.toString(emails.toArray()));
+
+            /**
+             * For chrome!
+             */
+            $$(Controller.Page.friendFindSearchTextInput).setTextContent(Arrays.toString(emails.toArray()));
+        }
     }
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
 
+        UCProcessUserEmailInput:
+        {
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.friendFindSearchTextInput), EventType.blur.toString(), new EventListener() {
+            itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.friendFindSearchTextInput), EventType.BLUR.toString(), new EventListener() {
 
-            private HumanId myhumanId = humanId;
-            private RefObj<List<HumansIdentity>> mymatches = matches;
+                private HumanId myhumanId = humanId;
+                private RefObj<List<HumansIdentity>> mymatches = matches;
 
-            @Override
-            public void handleEvent(final Event evt_) {
-                final String emailString = ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value());
-                logger.debug("{}", emailString);
+                @Override
+                public void handleEvent(final Event evt_) {
+                    final String emailString = ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value());
+                    logger.debug("{}", emailString);
+                    final List<Email> mails = Email.emails(emailString);
+                    final List<HumansIdentity> existingUsers = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentitiesByEmails(mails);
+                    UCExistingFriendAdd:
+                    {
+                        mymatches.setObj(existingUsers);
+                    }
 
-                mymatches.setObj(DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentitiesByEmails(Email.emails(emailString)));
-            }
-        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+                    /**
+                     * remember, multiple entries in browser mailto "to" parameter separated by commas,
+                     * doesn't work in some browser though they appear to support it.
+                     * They in fact don't send the mail.
+                     */
+                    UCNonExistingFriendInvite:
+                    {
+                        /**
+                         * Just include subject, and body.
+                         */
+                        UCSimpleMailToLink:
+                        {
+                            //This is there in the template
+                        }
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.friendFindSearchButtonInput), EventType.click.toString(), new EventListener() {
+                        /**
+                         * Invite each friend individually link.
+                         */
+                        UCIndividualMailToLink:
+                        {
+                            //postponed, may not be necessary. kind of a headache to the user too.
+                        }
+                    }
 
-            private HumanId myhumanId = humanId;
-            private RefObj<List<HumansIdentity>> mymatches = matches;
-
-            @Override
-            public void handleEvent(final Event evt_) {
-                logger.debug("{}", "Clicked Find");
-                final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(myhumanId);
-
-                List<String> humansNetPeoples = new ArrayList<String>();
-                for (final HumansNetPeople h : humansNetPeople.getHumansNetPeoples()) {
-                    humansNetPeoples.add(h.getHumanId());
                 }
+            }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+        }
 
-                clear($$(Controller.Page.friendFindSearchResults));
+        UCAddRemoveFriends:
+        {
 
-                for (final HumansIdentity humansIdentity : mymatches.getObj()) {
-                    if (!humansNetPeoples.contains(humansIdentity.getHumanId())) {
-                        new FriendAdd(itsNatDocument_, $$(Controller.Page.friendFindSearchResults), new HumanId(humansIdentity.getHumanId()), myhumanId) {
-                        };
-                    } else {
-                        new FriendDelete(itsNatDocument_, $$(Controller.Page.friendFindSearchResults), new HumanId(humansIdentity.getHumanId()), myhumanId) {
-                        };
+            itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.friendFindSearchButtonInput), EventType.CLICK.toString(), new EventListener() {
+
+                private HumanId myhumanId = humanId;
+                private RefObj<List<HumansIdentity>> mymatches = matches;
+
+                @Override
+                public void handleEvent(final Event evt_) {
+                    logger.debug("{}", "Clicked Find");
+                    final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(myhumanId);
+
+                    List<String> humansNetPeoples = new ArrayList<String>();
+                    for (final HumansNetPeople h : humansNetPeople.getHumansNetPeoples()) {
+                        humansNetPeoples.add(h.getHumanId());
+                    }
+
+                    clear($$(Controller.Page.friendFindSearchResults));
+
+                    for (final HumansIdentity humansIdentity : mymatches.getObj()) {
+                        if (!humansNetPeoples.contains(humansIdentity.getHumanId())) {
+                            new FriendAdd(itsNatDocument_, $$(Controller.Page.friendFindSearchResults), new HumanId(humansIdentity.getHumanId()), myhumanId) {
+                            };
+                        } else {
+                            new FriendDelete(itsNatDocument_, $$(Controller.Page.friendFindSearchResults), new HumanId(humansIdentity.getHumanId()), myhumanId) {
+                            };
+                        }
                     }
                 }
-            }
-        }, false);
-
-
+            }, false);
+        }
     }
 }

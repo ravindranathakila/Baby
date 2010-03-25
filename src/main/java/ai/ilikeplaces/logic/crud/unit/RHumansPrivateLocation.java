@@ -34,9 +34,12 @@ public class RHumansPrivateLocation extends AbstractSLBCallbacks implements RHum
 
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public HumansPrivateLocation doDirtyRHumansPrivateLocation(String humanId) {
-        return humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, humanId);
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public HumansPrivateLocation doNTxRHumansPrivateLocation(String humanId) {
+        final HumansPrivateLocation hpl = humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId);
+        hpl.getPrivateLocationsOwned().size();//Initializing list
+        hpl.getPrivateLocationsViewed().size();//initializing list
+        return hpl;
     }
 
     final static Logger logger = LoggerFactory.getLogger(RHumansPrivateLocation.class);

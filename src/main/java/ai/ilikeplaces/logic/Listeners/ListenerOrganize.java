@@ -31,12 +31,13 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 /**
  * @author Ravindranath Akila
  */
-
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class ListenerOrganize implements ItsNatServletRequestListener {
 
     final private Logger logger = LoggerFactory.getLogger(ListenerOrganize.class.getName());
     private static final NumberFormatException CATEGORY_NUMBER_FORMAT_EXCEPTION = new NumberFormatException("SORRY! INVALID CATEGORY VALUE.");
+    public static final int ModeIntroduction = 123;
+    public static final int ModeCreatePlace = 143;
 
     /**
      * @param request__
@@ -65,7 +66,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                     setLoginWidget:
                     {
                         try {
-                            new SignInOn(itsNatDocument__, $(Skeleton_login_widget), new HumanId(getUsername())) {
+                            new SignInOn(itsNatDocument__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
                             };
                         } catch (final Throwable t) {
                             Loggers.EXCEPTION.error("{}", t);
@@ -88,7 +89,9 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                             if (getUsername() != null) {
                                 final Element usersName = $(MarkupTag.P);
                                 usersName.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0004") + getUsernameAsValid());
-                                $(Skeleton_othersidebar_identity).appendChild(usersName);
+                                //$(Skeleton_othersidebar_identity).appendChild(usersName);
+                                new DisplayName(itsNatDocument__, $(Skeleton_othersidebar_identity), new HumanId(getUsernameAsValid()), request__.getServletRequest()) {
+                                };
                             } else {
                                 final Element locationElem = $(MarkupTag.P);
                                 locationElem.setTextContent(gUI.getString("NoLogin"));
@@ -122,11 +125,36 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                     int category = 0;
                                     try {
                                         final String tolerantCategory = request__.getServletRequest().getParameter(Controller.Page.DocOrganizeCategory);
-                                        category = Integer.parseInt(tolerantCategory != null ? tolerantCategory : "0");
+                                        category = Integer.parseInt(tolerantCategory != null ? tolerantCategory : "123");
                                     } catch (final NumberFormatException nfe_) {
                                         Loggers.USER_EXCEPTION.error("", nfe_);
                                     }
                                     switch (category) {
+                                        case ModeIntroduction:
+                                            UCEngage:
+                                            {
+                                                try {
+                                                    UCIntroduction:
+                                                    {
+                                                        $(SkeletonCPageTitle).setTextContent(gUI.getString("organize.main.title"));
+                                                        $(SkeletonCPageTitle).setAttribute(MarkupTag.GENERIC.title(), gUI.getString("organize.main.title.title"));
+                                                        $(SkeletonCPageIntro).setTextContent(gUI.getString("organize.main.intro"));
+                                                        $(SkeletonCPageTitle).setAttribute(MarkupTag.GENERIC.title(), gUI.getString("organize.main.intro.title"));
+                                                    }
+                                                    UCListOfActions:
+                                                    {
+                                                        for (final PrivateLocation prvLoc : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPrivateLocation(new HumanId(getUsernameAsValid())).returnValue().getPrivateLocationsViewed()) {
+                                                            new PrivateLocationView(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), prvLoc.getPrivateLocationId()) {
+                                                            };
+                                                        }
+                                                        new PrivateLocationCreate(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
+                                                        };
+                                                    }
+                                                } catch (final Throwable t) {
+                                                    Loggers.EXCEPTION.error("{}", t);
+                                                }
+                                            }
+                                            break;
                                         case Controller.Page.DocOrganizeModeOrganize:
                                             UCOrganize:
                                             {
@@ -136,25 +164,19 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                                     for (final PrivateLocation prvLoc : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPrivateLocation(new HumanId(getUsernameAsValid())).returnValue().getPrivateLocationsViewed()) {
                                                         new PrivateLocationView(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), prvLoc.getPrivateLocationId()) {
                                                         };
-                                                        new Button(itsNatDocument__, $(Skeleton_center_skeleton), "Visit", false, prvLoc) {
-                                                            PrivateLocation privateLocation = null;
-
-                                                            @Override
-                                                            protected void init(final Object... initArgs) {
-                                                                privateLocation = (PrivateLocation) (((Object[]) initArgs[2])[0]);
-                                                                setLink:
-                                                                {
-                                                                    $$(Controller.Page.GenericButtonLink).setAttribute(MarkupTag.A.href(), Controller.Page.Organize.getURL() + "?"
-                                                                            + Controller.Page.DocOrganizeCategory + "=" + 2 + "&"
-                                                                            + Controller.Page.DocOrganizeLocation + "=" + prvLoc.getPrivateLocationId());
-                                                                }
-                                                                setImage:
-                                                                {
-                                                                    $$(Controller.Page.GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.config.getString(RBGet.url_CDN_STATIC) + "arrow-right.gif");
-                                                                }
-                                                            }
-                                                        };
                                                     }
+
+                                                } catch (final Throwable t) {
+                                                    Loggers.EXCEPTION.error("{}", t);
+                                                }
+                                            }
+                                            break;
+                                        case ModeCreatePlace:
+                                            UCCretePlace:
+                                            {
+                                                try {
+                                                    new PrivateLocationCreate(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
+                                                    };
                                                 } catch (final Throwable t) {
                                                     Loggers.EXCEPTION.error("{}", t);
                                                 }
@@ -180,129 +202,139 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                             {
                                                 @NOTE(note = "Outside try as this is caught by the outermost common Number format exception.")
                                                 final long requestedPrivateLocation = Long.parseLong(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeLocation));
-                                                try {
-
-                                                    setBackButton:
-                                                    {
-                                                        new Button(itsNatDocument__, $(Skeleton_center_skeleton), "Locations", false) {
-                                                            @Override
-                                                            protected void init(final Object... initArgs) {
-                                                                $$(Controller.Page.GenericButtonLink).setAttribute(MarkupTag.A.href(), Controller.Page.Organize.getURL() + "?"
-                                                                        + Controller.Page.DocOrganizeCategory + "=" + 0);
-                                                                $$(Controller.Page.GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.config.getString(RBGet.url_CDN_STATIC) + "arrow-left.gif");
-                                                            }
-                                                        };
-                                                    }
-                                                    checkAuthority:
-                                                    {
-                                                        final boolean isOwner = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationIsOwner(getUsernameAsValid(), requestedPrivateLocation).returnValue();
-                                                        final boolean isViewer = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationIsViewer(getUsernameAsValid(), requestedPrivateLocation).returnValue();
-
-                                                        final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).rDirtyPrivateLocation(getUsername(), requestedPrivateLocation);
-
-                                                        if ((isOwner || isViewer) && r.returnStatus() == 0) {
-                                                            final long validPrivateLocationId = r.returnValue().getPrivateLocationId();
-
-                                                            UseCaseIntroduction:
+                                                final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocation(getUsername(), requestedPrivateLocation);
+                                                if (r.returnStatus() == 0)
+                                                    UCPrivateLocationIsExistent:
                                                             {
-                                                                if (!isOwner) {
-                                                                    new PrivateLocationView(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), requestedPrivateLocation) {
-                                                                    };
-                                                                } else {
-                                                                    new PrivateLocationDelete(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), requestedPrivateLocation) {
-                                                                    };
-                                                                }
 
-                                                                if (isOwner)
-                                                                    proceedsOnlyIfOwner:
+                                                                try {
+
+                                                                    setBackButton:
+                                                                    {
+                                                                        new Button(itsNatDocument__, $(Skeleton_center_skeleton), "Locations", false) {
+                                                                            @Override
+                                                                            protected void init(final Object... initArgs) {
+                                                                                $$(Controller.Page.GenericButtonLink).setAttribute(MarkupTag.A.href(), Controller.Page.Organize.getURL() + "?"
+                                                                                        + Controller.Page.DocOrganizeCategory + "=" + 0);
+                                                                                $$(Controller.Page.GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.config.getString(RBGet.url_CDN_STATIC) + "arrow-left.gif");
+                                                                            }
+                                                                        };
+                                                                    }
+                                                                    checkAuthority:
+                                                                    {
+                                                                        final boolean isOwner = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationIsOwner(getUsernameAsValid(), requestedPrivateLocation).returnValue();
+                                                                        final boolean isViewer = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationIsViewer(getUsernameAsValid(), requestedPrivateLocation).returnValue();
+
+
+                                                                        if ((isOwner || isViewer) && r.returnStatus() == 0) {
+                                                                            final long validPrivateLocationId = r.returnValue().getPrivateLocationId();
+
+                                                                            UseCaseIntroduction:
                                                                             {
-                                                                                if (r.returnStatus() == 0) {
-                                                                                    this.owners = r.returnValue().getPrivateLocationOwners();
-                                                                                    final HumansNetPeople user = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(getUsernameAsValid()));
-                                                                                    this.possibilities = user.getHumansNetPeoples();
-
-                                                                                    AddRemoveOwners:
-                                                                                    {
-                                                                                        new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateLocation>>(
-                                                                                                itsNatDocument__,
-                                                                                                $(Skeleton_center_skeleton),
-                                                                                                user.getHumansNet(),
-                                                                                                possibilities,
-                                                                                                r.returnValue().getPrivateLocationOwners(),
-                                                                                                new Save<Return<PrivateLocation>>() {
-
-                                                                                                    final long myprivateLocationId = validPrivateLocationId;
-
-                                                                                                    @Override
-                                                                                                    public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
-                                                                                                        return DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationAddOwner(humanId, myprivateLocationId, humansFriend);
-                                                                                                    }
-                                                                                                },
-                                                                                                new Save<Return<PrivateLocation>>() {
-
-                                                                                                    final long myprivateLocationId = validPrivateLocationId;
-
-                                                                                                    @Override
-                                                                                                    public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
-                                                                                                        return DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationRemoveOwner(humanId, myprivateLocationId, humansFriend);
-                                                                                                    }
-                                                                                                }) {
-                                                                                        };
-                                                                                    }
-                                                                                    AddRemoveVisitors:
-                                                                                    {
-                                                                                        new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateLocation>>(
-                                                                                                itsNatDocument__,
-                                                                                                $(Skeleton_center_skeleton),
-                                                                                                user.getHumansNet(),
-                                                                                                possibilities,
-                                                                                                r.returnValue().getPrivateLocationViewers(),
-                                                                                                new Save<Return<PrivateLocation>>() {
-
-                                                                                                    final long myprivateLocationId = validPrivateLocationId;
-
-                                                                                                    @Override
-                                                                                                    public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
-                                                                                                        return DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationAddVisitor(humanId, myprivateLocationId, humansFriend);
-                                                                                                    }
-                                                                                                },
-                                                                                                new Save<Return<PrivateLocation>>() {
-
-                                                                                                    final long myprivateLocationId = validPrivateLocationId;
-
-                                                                                                    @Override
-                                                                                                    public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
-                                                                                                        return DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationRemoveVisitor(humanId, myprivateLocationId, humansFriend);
-                                                                                                    }
-                                                                                                }) {
-                                                                                        };
-                                                                                    }
-                                                                                    UseCaseCreatePrivateEvents:
-                                                                                    {
-                                                                                        new PrivateEventCreate(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), validPrivateLocationId) {
-                                                                                        };
-                                                                                    }
-
+                                                                                if (!isOwner) {
+                                                                                    new PrivateLocationView(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), requestedPrivateLocation) {
+                                                                                    };
                                                                                 } else {
-                                                                                    //warn user about the failure
+                                                                                    new PrivateLocationDelete(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), requestedPrivateLocation) {
+                                                                                    };
+                                                                                }
+
+                                                                                if (isOwner)
+                                                                                    proceedsOnlyIfOwner:
+                                                                                            {
+                                                                                                if (r.returnStatus() == 0) {
+                                                                                                    this.owners = r.returnValue().getPrivateLocationOwners();
+                                                                                                    final HumansNetPeople user = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(getUsernameAsValid()));
+                                                                                                    this.possibilities = user.getHumansNetPeoples();
+
+                                                                                                    AddRemoveOwners:
+                                                                                                    {
+                                                                                                        new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateLocation>>(
+                                                                                                                itsNatDocument__,
+                                                                                                                $(Skeleton_center_skeleton),
+                                                                                                                user.getHumansNet(),
+                                                                                                                possibilities,
+                                                                                                                r.returnValue().getPrivateLocationOwners(),
+                                                                                                                new Save<Return<PrivateLocation>>() {
+
+                                                                                                                    final long myprivateLocationId = validPrivateLocationId;
+
+                                                                                                                    @Override
+                                                                                                                    public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
+                                                                                                                        return DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationAddOwner(humanId, myprivateLocationId, humansFriend);
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                new Save<Return<PrivateLocation>>() {
+
+                                                                                                                    final long myprivateLocationId = validPrivateLocationId;
+
+                                                                                                                    @Override
+                                                                                                                    public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
+                                                                                                                        return DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationRemoveOwner(humanId, myprivateLocationId, humansFriend);
+                                                                                                                    }
+                                                                                                                }) {
+                                                                                                        };
+                                                                                                    }
+                                                                                                    AddRemoveVisitors:
+                                                                                                    {
+                                                                                                        new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateLocation>>(
+                                                                                                                itsNatDocument__,
+                                                                                                                $(Skeleton_center_skeleton),
+                                                                                                                user.getHumansNet(),
+                                                                                                                possibilities,
+                                                                                                                r.returnValue().getPrivateLocationViewers(),
+                                                                                                                new Save<Return<PrivateLocation>>() {
+
+                                                                                                                    final long myprivateLocationId = validPrivateLocationId;
+
+                                                                                                                    @Override
+                                                                                                                    public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
+                                                                                                                        return DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationAddVisitor(humanId, myprivateLocationId, humansFriend);
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                new Save<Return<PrivateLocation>>() {
+
+                                                                                                                    final long myprivateLocationId = validPrivateLocationId;
+
+                                                                                                                    @Override
+                                                                                                                    public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
+                                                                                                                        return DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationRemoveVisitor(humanId, myprivateLocationId, humansFriend);
+                                                                                                                    }
+                                                                                                                }) {
+                                                                                                        };
+                                                                                                    }
+                                                                                                    UseCaseCreatePrivateEvents:
+                                                                                                    {
+                                                                                                        new PrivateEventCreate(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), validPrivateLocationId) {
+                                                                                                        };
+                                                                                                    }
+
+                                                                                                } else {
+                                                                                                    //warn user about the failure
+                                                                                                }
+                                                                                            }
+
+                                                                                UseCaseViewPrivateEvents:
+                                                                                {
+                                                                                    for (final PrivateEvent p : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPrivateEvent(new HumanId(getUsernameAsValid())).returnValue().getPrivateEventsViewed())
+                                                                                        if (p.getPrivateLocation().getPrivateLocationId() == validPrivateLocationId) {
+                                                                                            new PrivateEventView(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), p.getPrivateEventId()) {
+                                                                                            };
+                                                                                        }
                                                                                 }
                                                                             }
-
-                                                                UseCaseViewPrivateEvents:
-                                                                {
-                                                                    for (final PrivateEvent p : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPrivateEvent(new HumanId(getUsernameAsValid())).returnValue().getPrivateEventsViewed())
-                                                                        if (p.getPrivateLocation().getPrivateLocationId() == validPrivateLocationId) {
-                                                                            new PrivateEventView(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), p.getPrivateEventId()) {
-                                                                            };
                                                                         }
+                                                                    }
+                                                                } catch (
+                                                                        final Throwable t) {
+                                                                    Loggers.EXCEPTION.error("{}", t);
                                                                 }
                                                             }
-                                                        }
-                                                    }
-                                                } catch (
-                                                        final Throwable t) {
-                                                    Loggers.EXCEPTION.error("{}", t);
-                                                }
+                                                else
+                                                    NonExistentLocation:
+                                                            {
+                                                                $(Skeleton_notice).setTextContent("Either this place does not exist anymore or something went wrong while I looked for it.");
+                                                            }
                                             }
                                             break;
                                         case Controller.Page.DocOrganizeModeEvent: {
@@ -313,7 +345,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                             final long event = Long.parseLong(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeEvent));
 
                                             try {
-                                                setBackButton:
+                                                SetBackButton:
                                                 {
                                                     new Button(itsNatDocument__, $(Skeleton_center_skeleton), "Locations", false) {
                                                         @Override
@@ -324,15 +356,25 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                                         }
                                                     };
                                                 }
-                                                showEvent:
+                                                ShowEvent:
                                                 {
-                                                    if (!DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventIsOwner(getUsernameAsValid(), event).returnValue()) {
-                                                        new PrivateEventView(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), event) {
-                                                        };
-                                                    } else {
-                                                        new PrivateEventDelete(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), event) {
-                                                        };
-                                                    }
+                                                    final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventIsViewer(getUsernameAsValid(), event);
+                                                    if (r.returnStatus() == 0)
+                                                        UCReadPrivateEventOK:
+                                                                {
+                                                                    if (!r.returnValue()) {
+                                                                        new PrivateEventView(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), event) {
+                                                                        };
+                                                                    } else {
+                                                                        new PrivateEventDelete(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), event) {
+                                                                        };
+                                                                    }
+                                                                }
+                                                    else
+                                                        UCReadNonExistingPrivateEventEtc:
+                                                                {
+                                                                    Loggers.userError(getUsernameAsValid(), r.returnMsg());
+                                                                }
                                                 }
 
                                             } catch (final Throwable t) {
@@ -354,14 +396,11 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
              * Use ItsNatHTMLDocument variable stored in the AbstractListener class
              */
             @Override
-            protected void registerEventListeners
-                    (
-                            final ItsNatHTMLDocument itsNatHTMLDocument__,
-                            final HTMLDocument hTMLDocument__,
-                            final ItsNatDocument itsNatDocument__) {
+            protected void registerEventListeners(
+                    final ItsNatHTMLDocument itsNatHTMLDocument__,
+                    final HTMLDocument hTMLDocument__,
+                    final ItsNatDocument itsNatDocument__) {
             }
-        }
-
-                ;
+        };
     }
 }

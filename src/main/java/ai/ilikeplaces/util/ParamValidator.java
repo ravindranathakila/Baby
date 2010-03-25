@@ -13,6 +13,9 @@ import javax.interceptor.InvocationContext;
 import java.util.*;
 
 /**
+ * Made only to support simple param validations. Later on, add complex parameter validations.
+ * A null anyyway should throw an exception
+ * <p/>
  * Created by IntelliJ IDEA.
  * User: Ravindranath Akila
  * Date: Jan 15, 2010
@@ -24,6 +27,7 @@ public class ParamValidator {
 
     final static private Logger logger = LoggerFactory.getLogger(ParamValidator.class);
 
+
     @AroundInvoke
     public Object validate(InvocationContext invocation) throws Exception {
         final Object[] args = invocation.getParameters();
@@ -31,10 +35,12 @@ public class ParamValidator {
         final Validator v = new Validator();
 
         for (final Object param : args) {
-            violations.addAll(recurrsiveCollectionValidator(param, v));
+            //violations.addAll(recurrsiveCollectionValidator(param, v));
+            violations.addAll(v.validate(param));
         }
-        
+
         if (violations.size() != 0) {
+            Loggers.EXCEPTION.error(RefObj.validationMessages(violations));
             throw new ConstraintsViolatedException(violations);
         }
         return invocation.proceed();

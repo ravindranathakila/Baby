@@ -21,10 +21,6 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 
 
@@ -71,7 +67,7 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventCreateName), EventType.blur.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventCreateName), EventType.BLUR.toString(), new EventListener() {
 
             final RefObj<String> myprivateEventName = privateEventName;
             final Validator v = new Validator();
@@ -91,7 +87,7 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventCreateInfo), EventType.blur.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventCreateInfo), EventType.BLUR.toString(), new EventListener() {
 
             final RefObj<String> myprivateEventInfo = privateEventInfo;
             final Validator v = new Validator();
@@ -111,7 +107,7 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventCreateSave), EventType.click.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventCreateSave), EventType.CLICK.toString(), new EventListener() {
 
             final HumanId myhumanId = humanId;
             final RefObj<String> myprivateEventName = privateEventName;
@@ -128,9 +124,16 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
                     final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).cPrivateEvent(myhumanId.getObj(), myprivateLocationId, myprivateEventName.getObjectAsValid(), myprivateEventInfo.getObjectAsValid(), "TODO DATE", "TODO DATE");
                     if (r.returnStatus() == 0) {
                         logger.debug("{}", "HELLO! SAVED.");
-                        remove(evt_.getTarget(), EventType.click, this);
+                        remove(evt_.getTarget(), EventType.CLICK, this);
                         logger.debug("{}", "HELLO! REMOVED CLICK.");
-                        clear($$(privateEventCreateNotice));
+                        $$(privateEventCreateNotice).setTextContent(myprivateEventName.getObj() + " was created!");
+                        $$(privateEventCreateSave).setAttribute(MarkupTag.A.href(),
+                                new Parameter(Organize.getURL())
+                                        .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
+                                        .append(DocOrganizeLocation, r.returnValue().getPrivateLocation().getPrivateLocationId())
+                                        .append(DocOrganizeEvent, r.returnValue().getPrivateEventId())
+                                        .get()
+                        );
                     } else {
                         $$(privateEventCreateNotice).setTextContent(r.returnMsg());
                     }

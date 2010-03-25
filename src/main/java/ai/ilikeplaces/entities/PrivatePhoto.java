@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Ravindranath Akila
  */
-
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 public class PrivatePhoto implements Serializable {
 
@@ -42,11 +42,6 @@ public class PrivatePhoto implements Serializable {
             "Lets preserve the info.")
     private HumansPrivatePhoto humansPrivatePhoto;
 
-    @NOTE(note = "Rank. Calculated by Referrer Ranking and Hits.")
-    private long hits;
-
-    private Location location;
-
     private List<Album> albums;
     final static public String albumsCol = "albums";
 
@@ -60,6 +55,12 @@ public class PrivatePhoto implements Serializable {
         this.privatePhotoId = privatePhotoId;
     }
 
+    @Transient
+    public PrivatePhoto setPrivatePhotoIdR(Long privatePhotoId) {
+        setPrivatePhotoId(privatePhotoId);
+        return this;
+    }
+
     public String getPrivatePhotoName() {
         return privatePhotoName;
     }
@@ -68,12 +69,24 @@ public class PrivatePhoto implements Serializable {
         this.privatePhotoName = privatePhotoName;
     }
 
+    @Transient
+    public PrivatePhoto setPrivatePhotoNameR(String privatePhotoName) {
+        setPrivatePhotoName(privatePhotoName);
+        return this;
+    }
+
     public String getPrivatePhotoDescription() {
         return privatePhotoDescription;
     }
 
     public void setPrivatePhotoDescription(final String privatePhotoDescription) {
         this.privatePhotoDescription = privatePhotoDescription;
+    }
+
+    @Transient
+    public PrivatePhoto setPrivatePhotoDescriptionR(final String privatePhotoDescription) {
+        setPrivatePhotoDescription(privatePhotoDescription);
+        return this;
     }
 
     @OneToOne
@@ -85,23 +98,25 @@ public class PrivatePhoto implements Serializable {
         this.humansPrivatePhoto = humansPrivatePhoto;
     }
 
+    @Transient
+    public PrivatePhoto setHumansPrivatePhotoR(HumansPrivatePhoto humansPrivatePhoto) {
+        setHumansPrivatePhoto(humansPrivatePhoto);
+        return this;
+    }
+
     public String getPrivatePhotoFilePath() {
         return privatePhotoFilePath;
-    }
-
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
     }
 
     public void setPrivatePhotoFilePath(String privatePhotoFilePath) {
         this.privatePhotoFilePath = privatePhotoFilePath;
     }
 
+    @Transient
+    public PrivatePhoto setPrivatePhotoFilePathR(String privatePhotoFilePath) {
+        setPrivatePhotoFilePath(privatePhotoFilePath);
+        return this;
+    }
 
 
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -113,12 +128,24 @@ public class PrivatePhoto implements Serializable {
         this.privatePhotoTakenDate = privatePhotoTakenDate;
     }
 
+    @Transient
+    public PrivatePhoto setPrivatePhotoTakenDateR(Date privatePhotoTakenDate) {
+        setPrivatePhotoTakenDate(privatePhotoTakenDate);
+        return this;
+    }
+
     public String getPrivatePhotoURLPath() {
         return privatePhotoURLPath;
     }
 
     public void setPrivatePhotoURLPath(String privatePhotoURLPath) {
         this.privatePhotoURLPath = privatePhotoURLPath;
+    }
+
+    @Transient
+    public PrivatePhoto setPrivatePhotoURLPathR(String privatePhotoURLPath) {
+        setPrivatePhotoURLPath(privatePhotoURLPath);
+        return this;
     }
 
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -128,6 +155,12 @@ public class PrivatePhoto implements Serializable {
 
     public void setPrivatePhotoUploadDate(Date privatePhotoUploadDate) {
         this.privatePhotoUploadDate = privatePhotoUploadDate;
+    }
+
+    @Transient
+    public PrivatePhoto setPrivatePhotoUploadDateR(Date privatePhotoUploadDate) {
+        setPrivatePhotoUploadDate(privatePhotoUploadDate);
+        return this;
     }
 
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
@@ -141,26 +174,16 @@ public class PrivatePhoto implements Serializable {
         this.albums = albums;
     }
 
-    public long getHits() {
-        return hits;
-    }
-
-    public void setHits(long hits) {
-        this.hits = hits;
-    }
-
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 37 * hash + (this.privatePhotoId != null ? this.privatePhotoId.hashCode() : 0);
-        hash = 37 * hash + (this.privatePhotoFilePath != null ? this.privatePhotoFilePath.hashCode() : 0);
-        hash = 37 * hash + (this.privatePhotoURLPath != null ? this.privatePhotoURLPath.hashCode() : 0);
         return hash;
     }
 
     @Override
     @SuppressWarnings({"EqualsWhichDoesntCheckParameterClass", "EqualsWhichDoesntCheckParameterClass"})
-    @TODO(task = "DO AS IN PublicPhoto.class, UUID")
+    @TODO(task = "DO AS IN PrivatePhoto.class, UUID")
     public boolean equals(Object object) {
         throw PendingEqualsMethodException.SINGLETON;
     }

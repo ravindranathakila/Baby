@@ -31,21 +31,34 @@ public interface CrudServiceLocal<T> {
     public T find(Class type, Object id);
 
     /**
+     * 
+     * @param type
+     * @param id
+     * @return
+     */
+    public T getReference(final Class type, final Object id);
+
+    /**
      * This method can be used for eager loading, but with a
      * thrown npe exception if null. In fact, this method
      * makes sure you can avoid a null check. If you are doing
      * a null check, you do not need to call this. use find
      * instead.
+     *
+     * A common approach to using this method is when you are sure a given ID is in the database when looking it up.
+     * While this maybe tagged defensive, this approach actually reveals a possible null at the earliest.
+     * Noticing a null, which is an attribute of all classes and has no type, at the earliest is best.
+     *
      * <p/>
      * Use find if this check is not required.
      * <p/>
      * Use getReference if you need to load lazy with this behavior.
      *
-     * @param type
-     * @param id
+     * @param typeOfEntity
+     * @param idByWhichToLookup
      * @return
      */
-    public T findBadly(Class type, Object id);
+    public T findBadly(Class typeOfEntity, Object idByWhichToLookup);
 
     /**
      * @param t

@@ -74,8 +74,21 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
     @SuppressWarnings("unchecked")
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public T findBadly(final Class type, final Object id) {
-        final Object object = entityManager.find(type, id);
+    public T getReference(final Class type, final Object id) {
+        return (T) entityManager.getReference(type, id);
+    }
+
+    /**
+     *
+     * @param typeOfEntity
+     * @param idByWhichToLookup
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public T findBadly(Class typeOfEntity, Object idByWhichToLookup) {
+        final Object object = entityManager.find(typeOfEntity, idByWhichToLookup);
         if (object != null) {
             return (T) object;
         } else {

@@ -28,8 +28,19 @@ public abstract class RefObj<T> {
 
     abstract public T getObj();
 
-    public T getObjectAsValid() {
-        return getObj();
+    /**
+     * User this method to obtain an object that is expected to be valid.
+     * 
+     * @param validator
+     * @return valid object
+     */
+    public T getObjectAsValid(final Validator... validator) {
+        final Validator v = validator.length == 0 ? new Validator() : validator[0];
+        constraintViolations = v.validate(this);
+        if (constraintViolations.size() != 0) {
+            throw new ConstraintsViolatedException(constraintViolations);
+        }
+        return obj;
     }
 
     public void setObj(final T obj) {
@@ -57,7 +68,7 @@ public abstract class RefObj<T> {
     static public String validationMessages(final List<ConstraintViolation> e) {
         String returnVal = "";
         for (final ConstraintViolation v : e) {
-            returnVal += v.getMessage() + ". \n";
+            returnVal += v.getMessage() + "\n";
         }
         return returnVal;
     }
@@ -87,6 +98,22 @@ public abstract class RefObj<T> {
         final Validator v = validator.length == 0 ? new Validator() : validator[0];
         constraintViolations = v.validate(this);
         return constraintViolations.size();
+    }
+
+    /**
+     * validator is useful if you are using profiling or if you need to avoid lots of validator instances
+     * being created
+     *
+     * @param validator
+     * @return 0 if no errors or number of errors
+     */
+    public T validateThrow(final Validator... validator) {
+        final Validator v = validator.length == 0 ? new Validator() : validator[0];
+        constraintViolations = v.validate(this);
+        if (constraintViolations.size() != 0) {
+            throw new ConstraintsViolatedException(constraintViolations);
+        }
+        return obj;
     }
 
     public List<ConstraintViolation> getViolations() {

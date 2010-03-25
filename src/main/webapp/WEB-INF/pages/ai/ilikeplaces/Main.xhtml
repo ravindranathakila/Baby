@@ -1,8 +1,9 @@
 <!--?xml version="1.0" encoding="windows-1252"?-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">
-    <head>
+    <head  itsnat:nocache="true">
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
+        <meta id="mainMetaDesc" name="Description" content="Discover and Have Fun in Places!"/>
         <title id="mainTitle">
             Discover and Have Fun in Places!
         </title>
@@ -15,6 +16,9 @@
         <link rel="stylesheet" type="text/css" href="/css/theme/divine_msg.css"/>
 
         <link rel="stylesheet" type="text/css" href="/nifty/niftyCorners.css"/>
+        
+        <script type="text/javascript" src="/js/vtip.js"></script>
+        <link rel="stylesheet" type="text/css" href="/css/vtip.css" />
 
         <link rel="stylesheet" type="text/css" href="/js/jquery.yoxview/yoxview.css"/>
 
@@ -27,6 +31,8 @@
         <script type="text/javascript" src="/js/jquery-impromptu.2.7.min.js"></script>
         <script type="text/javascript" src="/nifty/niftycube.js"></script>
         <script type="text/javascript" src="http://c0804152.cdn.cloudfiles.rackspacecloud.com/getflickr.js"></script>
+        <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=true_or_false&amp;key=ABQIAAAAHZRdzKv28xq0_XcHxHxXfBS9EVSNZwL5zfIrTpz_X5_CttifKhS-WLi0e8kEMyJzCwXGhjISm8sYnA" type="text/javascript"></script>
+        <script type="text/javascript" src="/js/jquery.gmap-1.0.3.js"></script>
         <!-- END STATIC IMPORTS -->
 
         <!-- START DYNAMIC IMPORTS -->
@@ -35,12 +41,13 @@
         <link rel="stylesheet" href="/css/shareit.css" type="text/css"/>
         <link rel="stylesheet" href="/css/FileUploadButton.css" type="text/css"/>
         <link rel="stylesheet" href="/css/impromptu.css" type="text/css"/>
-        <script src="/js/jquery.ready.js" type="text/javascript"></script>
+        <script src="/js/jquery.ready.yox.js" type="text/javascript"></script>
         <script src="/js/Nifty.onload.js" type="text/javascript"></script>
         <script src="/js/ItsNatEventMonitor.js" type="text/javascript"></script>
         <script type="text/javascript" language="javascript" src="/js/jquery.yoxview/yoxview-init.js"></script>
         <script type="text/javascript" language="javascript" src="/js/jquery.yoxview/jquery.yoxview-0.9.min.js"></script>
         <script type="text/javascript" language="javascript" src="/js/jquery.yoxview/jquery.timers-1.2.min.js"></script>
+        <script src="/js/util.js" type="text/javascript"></script>
         <!-- END DYNAMIC IMPORTS -->
 
         <style type="text/css">
@@ -94,7 +101,7 @@
                                         <img src="/images/location.jpg" alt="home" />
                                     </div>
                                     <div class="span-4 last nav_link ntyS">
-                                        <a href="/page/_friends" class="white_fg">Friends</a>
+                                        <a href="/page/_friends">Friends</a>
                                     </div>
                                 </div>
                                 <div class="span-5 last height_10">
@@ -152,7 +159,7 @@
                                             </div>
                                             <span class="span-3 prepend-1 append-1 bold black_fg center">&nbsp; &nbsp; Photos Added</span>
                                             <ul class="files" style="list-style-image:url(/css/blueprint/plugins/buttons/icons/tick.png);">
-                                                <li style="visibility:hidden">Ouch! I didn't want to show this to you</li>
+                                                <li style="display:none;">&nbsp;</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -161,6 +168,10 @@
                         </div>
                         <div class="span-14" id="Main_center">
                             <div class="span-14 last" id="Main_center_main">
+                                <div class="span-14 last">
+                                    <div id="map" class="vtip" title="<i>Double-click to Zoom<br/>Links open in new tabs</i>" style="height:400px;"></div>
+                                </div>
+
                                 <div id="Main_notice_sh" class="span-14 last" style="display:block;">
                                     <div class="span-12 prepend-1 append-1 last bg_e9eaff fg_a9abf1 nty">
                                         <p id="Main_notice" class="yellow_fg bold large"></p>
@@ -182,9 +193,9 @@
                                     <div class="span-12 title_blend white_bg">
                                         <div class="span-10 prepend-1 append-1 title_blend white_bg">
                                             <br/>
-                                            <p id="Main_center_main_location_title" class="title_blend bold">
+                                            <h1 id="Main_center_main_location_title" class="title_blend bold" style="font-size:12px;">
                                                &nbsp;
-                                            </p>
+                                            </h1>
                                         </div>
                                     </div>
                                     <div class="span-1 last bg_e9eaff fg_a9abf1 height_total">

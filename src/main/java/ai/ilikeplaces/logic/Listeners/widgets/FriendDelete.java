@@ -1,7 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
@@ -42,10 +41,8 @@ public class FriendDelete extends AbstractWidgetListener {
     protected void init(final Object... initArgs) {
         this.humanId = ((HumanId) initArgs[0]);
         this.caller = ((HumanId) initArgs[1]);
-        final HumansIdentity hid = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(humanId).getHumansIdentity();
 
-        $$(Controller.Page.friendDeleteFirstNameLabel).setTextContent(humanId.getObj());
-        $$(Controller.Page.friendDeleteLastNameLabel).setTextContent("TODO");
+        $$(Controller.Page.friendDeleteDisplayNameLabel).setTextContent(DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(humanId).getDisplayName());
         //$$(Controller.Page.friendDeleteBirthYearLabel).setTextContent(Integer.toString(hid.getHumansIdentityDateOfBirth().getYear()));
     }
 
@@ -59,7 +56,7 @@ public class FriendDelete extends AbstractWidgetListener {
      */
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.friendDeleteAddButton), EventType.click.toString(), new EventListener() {
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.friendDeleteAddButton), EventType.CLICK.toString(), new EventListener() {
 
             private HumanId myhumanId = humanId;
             private HumanId mycaller = caller;
@@ -68,9 +65,13 @@ public class FriendDelete extends AbstractWidgetListener {
             public void handleEvent(final Event evt_) {
                 logger.debug("{}", "Clicked Delete");
                 Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doNTxRemoveHumansNetPeople(mycaller, myhumanId);
-                logger.debug("{}", r.toString());
-                $$(Controller.Page.friendDeleteAddButton).setTextContent("DONE");
-                remove(evt_.getTarget(), EventType.click, this);
+                if (r.returnStatus() == 0) {
+                    logger.debug("{}", r.toString());
+                    $$(Controller.Page.friendDeleteAddButton).setTextContent("DONE");
+                    remove(evt_.getTarget(), EventType.CLICK, this);
+                } else {
+                    //DO something!
+                }
             }
         }, false);
 

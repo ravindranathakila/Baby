@@ -26,5 +26,5 @@ public interface HumanCRUDLocationLocal {
 
     public List<Location> dirtyRLikeLocations(final String likeLocationName);
 
-    public List<Location> doNTxRLocationsBySuperLocation(final Location locationSuperset);
+    public List<Location> doDirtyRLocationsBySuperLocation(final Location locationSuperset);
 }

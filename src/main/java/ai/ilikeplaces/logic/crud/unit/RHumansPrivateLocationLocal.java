@@ -14,5 +14,5 @@ import javax.ejb.Local;
 @Local
 public interface RHumansPrivateLocationLocal {
 
-    public HumansPrivateLocation doDirtyRHumansPrivateLocation(String humanId);
+    public HumansPrivateLocation doNTxRHumansPrivateLocation(String humanId);
 }

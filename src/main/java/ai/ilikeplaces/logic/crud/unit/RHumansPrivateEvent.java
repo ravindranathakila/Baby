@@ -34,9 +34,14 @@ public class RHumansPrivateEvent extends AbstractSLBCallbacks implements RHumans
 
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public HumansPrivateEvent doDirtyRHumansPrivateEvent(String humanId) {
-        return humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, humanId);
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public HumansPrivateEvent doNTxRHumansPrivateEvent(String humanId) {
+        final HumansPrivateEvent hpe = humansPrivateEventCrudServiceLocal_.findBadly(HumansPrivateEvent.class, humanId);
+        hpe.getPrivateEventsViewed().size();
+        hpe.getPrivateEventsOwned().size();
+        hpe.getPrivateEventsInvited().size();
+        hpe.getPrivateEventsRejected().size();
+        return hpe;
     }
 
     final static Logger logger = LoggerFactory.getLogger(RHumansPrivateEvent.class);

@@ -20,13 +20,11 @@ import ai.ilikeplaces.rbs.RBGet;
  *
  * @author Ravindranath Akila
  */
-
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class LogNull {
 
     @NOTE(note = "ASSIGNING VALUE TO STATIC STRING TO GAIN SPEED. THESE METHODS SHOULD WORK FAST TO FACILITATE THEIR PURPOSE.")
     final static private String MSG = RBGet.expMsgs.getString("ai.ilikeplaces.util.LogNull.0001");
-    final static private NullPointerException NPE = new NullPointerException(MSG);
 
     private LogNull() {
     }
@@ -51,12 +49,13 @@ final public class LogNull {
      * @return Object
      */
     static public Object logThrow() {
-        throw NPE;
+        throw new NullPointerException(MSG);
     }
 
     /**
      * This stops the thread execution by throwing a NPE immediately
      *
+     * @param customMsg__
      * @return Object
      */
     static public Object logThrow(final String customMsg__) {
@@ -67,26 +66,29 @@ final public class LogNull {
      * This stops the thread execution by throwing a NPE immediately if the
      * given parameter is null
      *
+     * @param objectToBeCheckedForNull
      * @return Object
      */
-    static public Object logThrow(final Object obj) {
-        if (obj == null) {
-            throw NPE;
+    static public Object logThrow(final Object objectToBeCheckedForNull) {
+        if (objectToBeCheckedForNull == null) {
+            throw new NullPointerException(MSG);
         } else {
-            return obj;
+            return objectToBeCheckedForNull;
         }
     }
     /**
      * This stops the thread execution by throwing a NPE immediately if the
      * given parameter is null
      *
+     * @param objectToBeCheckedForNull
+     * @param causeOfNpe
      * @return Object
      */
-    static public Object logThrow(final Object obj, final String causeOfNpe) {
-        if (obj == null) {
+    static public Object logThrow(final Object objectToBeCheckedForNull, final String causeOfNpe) {
+        if (objectToBeCheckedForNull == null) {
             throw new NullPointerException(causeOfNpe);
         } else {
-            return obj;
+            return objectToBeCheckedForNull;
         }
     }
 }

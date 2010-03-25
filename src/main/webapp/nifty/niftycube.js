@@ -31,12 +31,12 @@ else window.onload=function(){AddCss();NiftyLoad()};
 
 function AddCss(){
 niftyCss=true;
-//var l=CreateEl("link");
-//l.setAttribute("type","text/css");
-//l.setAttribute("rel","stylesheet");
-//l.setAttribute("href","niftyCorners.css");
-//l.setAttribute("media","screen");
-//document.getElementsByTagName("head")[0].appendChild(l);
+var l=CreateEl("link");
+l.setAttribute("type","text/css");
+l.setAttribute("rel","stylesheet");
+l.setAttribute("href","/nifty/niftyCorners.css");
+l.setAttribute("media","screen");
+document.getElementsByTagName("head")[0].appendChild(l);
 }
 
 function Nifty(selector,options){
@@ -139,7 +139,11 @@ function CreateStrip(index,side,color,border,btype){
 var x=CreateEl("b");
 x.className=btype+index;
 x.style.backgroundColor=color;
-x.style.borderColor=border;
+try{//IE throws error at times as some elements do not support this property
+    x.style.borderColor=border;
+}catch(err){
+      //Fixes IE bug
+}
 if(side=="left"){
     x.style.borderRightWidth="0";
     x.style.marginRight="0";

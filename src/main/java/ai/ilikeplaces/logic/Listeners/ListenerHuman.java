@@ -60,7 +60,7 @@ public class ListenerHuman implements ItsNatServletRequestListener {
                 {
                     setLoginWidget:
                     {
-                        new SignInOn(itsNatDocument__, $(Main_login_widget), new HumanId(getUsername())) {
+                        new SignInOn(itsNatDocument__, $(Main_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
                         };
                     }
 

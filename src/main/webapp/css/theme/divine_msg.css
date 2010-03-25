@@ -10,15 +10,15 @@ Divineness through white foreground
 
 /**DEFAULT*/
 BODY{
-    color: black;
+    color: #000000;
 }
 
 DIV{
-    color: black;
+    color: #000000;
 }
 
 P{
-    color: black;
+    color: #000000;
 }
 
 /*DEFAULTS**/
@@ -64,11 +64,11 @@ P{
 
 .fg_blue
 {
-    color: blue
+    color: #0000ff
 }
 .bg_blue
 {
-    background-color: blue
+    background-color: #0000ff
 }
 /*BLUE**/
 
@@ -125,11 +125,11 @@ P{
 
 .fg_purple
 {
-    color:purple
+    color:#800080
 }
 .bg_purple
 {
-    background-color: purple
+    background-color: #800080
 }
 
 /*PURPLE**/
@@ -147,11 +147,11 @@ P{
 
 .fg_orange
 {
-    color:orange
+    color:#ffa500
 }
 .bg_orange
 {
-    background-color: orange
+    background-color: #ffa500
 }
 
 /*ORANGE**/
@@ -178,6 +178,15 @@ P{
 /*GREEN**/
 
 /**RED*/
+
+.fg_ff9696
+{
+    color:#ff9696
+}
+.bg_ff9696
+{
+    background-color: #ff9696
+}
 
 .fg_ff6c6c
 {

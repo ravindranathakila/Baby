@@ -18,6 +18,7 @@ import java.util.Observer;
 /**
  * Initially this class was designed to help the nosuchejb exception bein thrown when the session
  * bound variable is attempted to be removed, but has already been discarded by the container.
+ *
  * @author Ravindranath Akila
  */
 
@@ -65,7 +66,7 @@ final public class SessionBoundBadRefWrapper<T> implements HttpSessionBindingLis
     @Override
     @FIXME(issue = "This class should be a pipeline between the two objects expecting notification. Split split!!!")
     public void update(Observable o, Object dying) {
-        if (dying instanceof Boolean && (Boolean) dying == true) {
+        if (dying instanceof Boolean && (Boolean) dying) {
             this.isAlive = false;
             try {
                 bindingInstance.invalidate();
@@ -135,10 +136,14 @@ final public class SessionBoundBadRefWrapper<T> implements HttpSessionBindingLis
             } catch (final IllegalArgumentException ex) {
                 Loggers.EXCEPTION.error(null, ex);
             } catch (final InvocationTargetException ex) {
-                Loggers.EXCEPTION.error(null, ex);
-            } catch (final NoSuchEJBException ex__) {
                 /*This is the whole purpose of this wrapper. i.e. Ignore this exception*/
                 /*If you have more specific exceptions which need logging, add them here*/
+                Loggers.EXCEPTION.info("HELLO, NO SUCH EJB EXCEPTION JUST OCCURRED DUE TO A INVALIDATION OF REMOVED EJB.");
+            } catch (final NoSuchEJBException ex__) {
+                /**
+                 * According to invoke specs of method "InvocationTargetException - if the underlying method throws an exception." which means
+                 *  any exception will be wrapped. Hence this might not be a valid catch
+                 */
                 Loggers.EXCEPTION.info("HELLO, NO SUCH EJB EXCEPTION JUST OCCURRED DUE TO A INVALIDATION OF REMOVED EJB.");
             }
         } catch (final NoSuchMethodException ex) {
