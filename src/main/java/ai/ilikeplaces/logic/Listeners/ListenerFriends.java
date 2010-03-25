@@ -56,7 +56,7 @@ public class ListenerFriends implements ItsNatServletRequestListener {
                     setLoginWidget:
                     {
                         try {
-                            new SignInOn(itsNatDocument__, $(Skeleton_login_widget), new HumanId(getUsername())) {
+                            new SignInOn(itsNatDocument__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
                             };
                         } catch (final Throwable t) {
                             Loggers.EXCEPTION.error("{}", t);

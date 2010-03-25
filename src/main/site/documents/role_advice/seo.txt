@@ -1,0 +1,8 @@
+The intention of this document is to provide some guidelines to an SEO specialist.
+
+1. When using keywords, try to put them in present tense. e.g Travel to India => Traveling to India
+
+This approach grabs both Search engine terms Travel + Traveling.
+This approach gives the user more faith in what is being told, and a sense of togetherness.
+Have a look at http://www.seomoz.org/blog/making-the-most-of-meta-description-tags for meta description tags
+Also about title tags http://www.seomoz.org/blog/best-practices-for-title-tags

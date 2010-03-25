@@ -2,6 +2,8 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
@@ -24,6 +26,7 @@ import java.util.Set;
  * @author Ravindranath Akila
  */
 
+@TODO(task = "Operation fail notification target should be sent in with object creation as parameter so that notifications can be appended")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>, RETURN_TYPE> extends AbstractWidgetListener {
 
@@ -39,7 +42,6 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
     Save<RETURN_TYPE> saveRemove;
 
     /**
-     *
      * @param itsNatDocument__
      * @param appendToElement__
      * @param m
@@ -85,18 +87,24 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
 
             $$(Controller.Page.FriendListList).appendChild(li);
 
-            itsNatHTMLDocument__.addEventListener((EventTarget) li, EventType.click.toString(), new EventListener() {
+            itsNatHTMLDocument__.addEventListener((EventTarget) li, EventType.CLICK.toString(), new EventListener() {
                 Boolean positive = existAll.contains(possibility.getHumanId());
 
                 @Override
                 public void handleEvent(final Event evt_) {
                     positive = !positive;
                     if (positive) {
-                        saveAdd.save(new ai.ilikeplaces.logic.validators.unit.HumanId(m.getHumanId()), possibility);
-                        ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getHuman().getDisplayName() + Added);
+                        @WARNING(warning = "Assuming return type to be Return. Check Save as it is generic.")
+                        final Return r = (Return) saveAdd.save(new ai.ilikeplaces.logic.validators.unit.HumanId(m.getHumanId()), possibility);
+                        if (r.returnStatus() == 0) {
+                            ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getHuman().getDisplayName() + Added);
+                        }
                     } else {
-                        saveRemove.save(new ai.ilikeplaces.logic.validators.unit.HumanId(m.getHumanId()), possibility);
-                        ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getHuman().getDisplayName() + Removed);
+                        @WARNING(warning = "Assuming return type to be Return. Check Save as it is generic.")
+                        final Return r = (Return) saveRemove.save(new ai.ilikeplaces.logic.validators.unit.HumanId(m.getHumanId()), possibility);
+                        if (r.returnStatus() == 0) {
+                            ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getHuman().getDisplayName() + Removed);
+                        }
                     }
                 }
             }, false);

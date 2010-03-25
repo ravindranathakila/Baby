@@ -24,7 +24,6 @@ import org.w3c.dom.html.HTMLDocument;
 import javax.naming.Context;
 import java.util.Properties;
 
-import static ai.ilikeplaces.security.xss.Trim.trimAll;
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 
 /**
@@ -67,7 +66,7 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(pc_close), EventType.click.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(pc_close), EventType.CLICK.toString(), new EventListener() {
 
             @Override
             public void handleEvent(final Event evt_) {
@@ -75,19 +74,19 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
             }
         }, false);
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(pc_delete), EventType.click.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(pc_delete), EventType.CLICK.toString(), new EventListener() {
 
             final EventListener self = this;
 
             @Override
             public void handleEvent(final Event evt_) {
                 DB.getHumanCRUDPublicPhotoLocal(true).dPublicPhoto(humanId, publicPhoto.getPublicPhotoId());
-                remove(evt_.getTarget(), EventType.click, self);
+                remove(evt_.getTarget(), EventType.CLICK, self);
                 toggleVisible(pc_close);
             }
         }, false);
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(pc_photo_description), EventType.blur.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(pc_photo_description), EventType.BLUR.toString(), new EventListener() {
 
             final EventListener self = this;
 

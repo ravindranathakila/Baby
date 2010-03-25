@@ -50,6 +50,10 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
         return human;
     }
 
+    public void setHuman(final Human human) {
+        this.human = human;
+    }
+
     @NOTE(note = "This implementation will be fast a.l.a the Human entity has lazy in its getters.")
     @Override
     @Transient
@@ -67,15 +71,12 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
         return r.returnValue();
     }
 
-    public void setHuman(final Human human) {
-        this.human = human;
-    }
-
-
     @BIDIRECTIONAL
-    @WARNING(warning = "Not owner as deleting a location should automatically reflect in here, not vice versa.")
+    @WARNING(warning = "Many",
+            warnings = {"Not owner as deleting a location should automatically reflect in here, not vice versa.",
+                    "DO NOT MAKE EAGER WHEN LOADING, WHICH CAUSES A GALACTIC FETCH ON ALMOST THE ENTIRE TABLE. MAKING LAZY MADE A HUGE PERFORMANCE IMPACT OF SCALE 10^2"})
     @NOTE(note = "Locations which this user is INVOLVED with, NOT specifically OWNS.")
-    @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = PrivateLocation.privateLocationViewersCOL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = PrivateLocation.privateLocationViewersCOL, fetch = FetchType.LAZY)
     public List<PrivateLocation> getPrivateLocationsViewed() {
         return privateLocationsViewed;
     }
@@ -85,9 +86,11 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
     }
 
     @BIDIRECTIONAL
-    @WARNING(warning = "Not owner as deleting a location should automatically reflect in here, not vice versa.")
+    @WARNING(warning = "Many",
+            warnings = {"Not owner as deleting a location should automatically reflect in here, not vice versa.",
+                    "DO NOT MAKE EAGER WHEN LOADING, WHICH CAUSES A GALACTIC FETCH ON ALMOST THE ENTIRE TABLE. MAKING LAZY MADE A HUGE PERFORMANCE IMPACT OF SCALE 10^2"})
     @NOTE(note = "Locations which this user is INVOLVED with, NOT specifically OWNS.")
-    @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = PrivateLocation.privateLocationOwnersCOL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = PrivateLocation.privateLocationOwnersCOL, fetch = FetchType.LAZY)
     public List<PrivateLocation> getPrivateLocationsOwned() {
         return privateLocationsOwned;
     }

@@ -34,7 +34,7 @@ public class Album {
     private List<HumansAlbum> albumVisitors;
     final static public String albumVisitorsCOL = "albumVisitors";
 
-    private PrivateEvent privateEvent;
+    private PrivateEvent albumPrivateEvent;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,32 +46,51 @@ public class Album {
         this.albumId = albumId;
     }
 
+    @Transient
+    public Album setAlbumIdR(final Long albumId) {
+        setAlbumId(albumId);
+        return this;
+    }
+
+    @Column(length = 1023)
     public String getAlbumDescription() {
         return albumDescription;
     }
 
-    @Column(length = 1023)
     public void setAlbumDescription(final String albumDescription) {
         this.albumDescription = albumDescription;
     }
 
+    @Transient
+    public Album setAlbumDescriptionR(final String albumDescription) {
+        this.albumDescription = albumDescription;
+        return this;
+    }
+
+    @Column(length = 255)
     public String getAlbumName() {
         return albumName;
     }
 
-    @Column(length = 255)
     public void setAlbumName(final String albumName) {
         this.albumName = albumName;
     }
 
-    public PrivateEvent getPrivateEvent() {
-        return privateEvent;
+    @Transient
+    public Album setAlbumNameR(final String albumName) {
+        this.albumName = albumName;
+        return this;
     }
 
+
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
-    @OneToOne(mappedBy = PrivateEvent.albumCOL, fetch = FetchType.EAGER)
-    public void setPrivateEvent(PrivateEvent privateEvent) {
-        this.privateEvent = privateEvent;
+    @OneToOne(mappedBy = PrivateEvent.privateEventAlbumCOL, fetch = FetchType.EAGER)
+    public PrivateEvent getAlbumPrivateEvent() {
+        return albumPrivateEvent;
+    }
+
+    public void setAlbumPrivateEvent(PrivateEvent albumPrivateEvent) {
+        this.albumPrivateEvent = albumPrivateEvent;
     }
 
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
@@ -85,7 +104,7 @@ public class Album {
     }
 
     @WARNING(warning = "Not owner because when a photo is deleted, the albums will automatically reflect it." +
-            "The other way round is not feasible because a user will photos, not albums.")
+            "The other way round is not feasible because a user will own photos, not albums.")
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
     @ManyToMany(mappedBy = PrivatePhoto.albumsCol, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     public List<PrivatePhoto> getAlbumPhotos() {

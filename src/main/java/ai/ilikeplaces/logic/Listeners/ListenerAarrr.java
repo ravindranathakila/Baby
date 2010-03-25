@@ -60,7 +60,7 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
              */
             @Override
             protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
-                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.AarrrFunTypes), EventType.blur.toString(), new EventListener() {
+                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.AarrrFunTypes), EventType.BLUR.toString(), new EventListener() {
 
                     final ValidatorFace v = ValidatorFace.impl.getInstance();
 
@@ -73,7 +73,7 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
                     }
                 }, false, new NodePropertyTransport(MarkupTag.INPUT.value()));
 
-                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.AarrrEmail), EventType.blur.toString(), new EventListener() {
+                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.AarrrEmail), EventType.BLUR.toString(), new EventListener() {
 
                     final ValidatorFace v = ValidatorFace.impl.getInstance();
 

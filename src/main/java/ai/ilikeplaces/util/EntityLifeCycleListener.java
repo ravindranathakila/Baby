@@ -1,17 +1,12 @@
 package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.License;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
-import org.slf4j.MarkerFactory;
 
 import javax.persistence.*;
 
 /**
  * @author Ravindranath Akila
  */
-
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class EntityLifeCycleListener {
 

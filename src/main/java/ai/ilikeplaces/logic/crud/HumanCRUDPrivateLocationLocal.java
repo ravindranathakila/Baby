@@ -22,7 +22,7 @@ public interface HumanCRUDPrivateLocationLocal {
 
     public Return<PrivateLocation> cPrivateLocation(final String humanId, final String privateLocationName, final String privateLocationInfo);
 
-    public Return<PrivateLocation> rDirtyPrivateLocation(final String humanId, final long privateLocationId);
+    public Return<PrivateLocation> dirtyRPrivateLocation(final String humanId, final long privateLocationId);
 
     public Return<Boolean> dirtyRPrivateLocationIsOwner(final String humanId, final Long privateLocationId);
 

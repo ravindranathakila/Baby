@@ -17,7 +17,7 @@ import java.io.Serializable;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners(EntityLifeCycleListener.class)
-public class Human implements HumanIdFace, Serializable, Clearance, HumansFriend {
+public class Human extends HumanEquals implements HumanIdFace, Serializable, Clearance, HumansFriend {
 
     private String humanId;
 
@@ -171,6 +171,20 @@ public class Human implements HumanIdFace, Serializable, Clearance, HumansFriend
 
     public void setHumansAlbum(HumansAlbum humansAlbum) {
         this.humansAlbum = humansAlbum;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+
+        if (o == null) return false;
+
+        if (getClass() == o.getClass()) {
+            final Human that = (Human) o;
+            return (!(this.getHumanId() == null || that.getHumanId() == null)) && this.getHumanId().equals(that.getHumanId());
+        } else {
+            return matchHumanId(o);
+        }
     }
 
     @Override

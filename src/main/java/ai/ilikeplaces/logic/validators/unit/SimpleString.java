@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.validators.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.util.RefObj;
 import net.sf.oval.configuration.annotation.IsInvariant;
+import net.sf.oval.constraint.NotEmpty;
 import net.sf.oval.constraint.NotNull;
 
 /**
@@ -23,7 +24,7 @@ public class SimpleString extends RefObj<String> {
     }
 
     @IsInvariant
-    @NotNull(message = "Sorry! You must specify a value.")
+    @NotNull(message = "Sorry! You must enter a value.")
     @Override
     public String getObj() {
         return obj;

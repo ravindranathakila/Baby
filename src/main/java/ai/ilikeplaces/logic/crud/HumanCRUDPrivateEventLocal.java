@@ -23,9 +23,11 @@ public interface HumanCRUDPrivateEventLocal {
     
     public Return<PrivateEvent> cPrivateEvent(final String humanId, final long privateLocationId, final String privateEventName, final String privateEventInfo, final String startDate, final String endDate);
 
-    public Return<PrivateEvent> rDirtyPrivateEvent(final String humanId, final long privateEventId);
+    public Return<PrivateEvent> dirtyRPrivateEvent(final String humanId, final long privateEventId);
 
     public Return<Boolean> dirtyRPrivateEventIsOwner(final String humanId, final Long privateEventId);
+
+    public Return<Boolean> dirtyRPrivateEventIsViewer(final String humanId, final Long privateEventId);
 
     public Return<PrivateEvent> uPrivateEventAddOwner(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__, final HumansFriend owner);
 

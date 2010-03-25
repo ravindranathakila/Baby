@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.HumansNetPeople;
+import ai.ilikeplaces.exception.DBDishonourException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
@@ -40,13 +41,16 @@ public class UHumansNetPeople extends AbstractSLBCallbacks implements UHumansNet
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @WARNING(warning = "ADD will not work if you remove transaction as entities will be unmanaged.")
     public boolean doNTxAddHumansNetPeople(final String adderHumanId, final String addeeHumanId) {
+        if(adderHumanId.equals(addeeHumanId)){
+            throw new DBDishonourException("SORRY! ADDING SELF IS NOT SUPPORTED!");
+        }
         final HumansNetPeople adder = rHumansNetPeopleLocal_.doRHumansNetPeople(adderHumanId);
         final HumansNetPeople addee = rHumansNetPeopleLocal_.doRHumansNetPeople(addeeHumanId);
 
         if (!adder.getHumansNetPeoples().contains(addee)) {
             adder.getHumansNetPeoples().add(addee);
         } else {
-            throw new IllegalArgumentException("SORRY! THIS SHOULD NOT HAPPEN. YOU ARE ADDING AN EXISTING FRIEND.");
+            throw DBDishonourException.ADDING_AN_EXISTING_VALUE;
         }
         return true;
     }
@@ -61,7 +65,7 @@ public class UHumansNetPeople extends AbstractSLBCallbacks implements UHumansNet
         if (adder.getHumansNetPeoples().contains(addee)) {
             adder.getHumansNetPeoples().remove(addee);
         } else {
-            throw new IllegalArgumentException("SORRY! THIS SHOULD NOT HAPPEN. YOU ARE REMOVING A NON-EXISTING FRIEND.");
+            throw DBDishonourException.REMOVING_A_NON_EXISTING_VALUE;
         }
         return true;
     }

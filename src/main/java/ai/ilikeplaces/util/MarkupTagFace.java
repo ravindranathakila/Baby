@@ -1,10 +1,12 @@
 package ai.ilikeplaces.util;
 
+import ai.ilikeplaces.doc.License;
+
 /**
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public interface MarkupTagFace {
 
     public String id();
@@ -35,6 +37,8 @@ public interface MarkupTagFace {
 
     public String alt();
 
+    public String title();    
+
     public String src();
 
     public String tag();
@@ -44,4 +48,9 @@ public interface MarkupTagFace {
     public String ol();
 
     public String classs();
+
+    public String namee();
+
+    public String content();
+
 }

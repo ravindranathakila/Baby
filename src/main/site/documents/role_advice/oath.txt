@@ -1,0 +1,16 @@
+This oath is for anybody working in the IT field.
+Advice is to read it before you start work.
+Some of these are derivations of TPS.
+
+1. I will work in simple granular tasks and pre/post document them.
+2. I will not move or switch to a new task unless a small granular task is well complete.
+3. I will start from abstract levels of a task, first finishing off abstractions.
+4. I will get the abstract system running which is the #1 goal. Others come after.
+5. I will try my best to postpone a task and take up a rebounding task.
+6. I will completely set aside bugs and huge issues to sort themselves out by next visit.
+7. I will not do any work that does not make something "very" clearly easy, productive and profitable.
+8. I will prepare a "process" for every repetitive task and document it.
+
+And finally,
+
+I love my users and I will always love them.

@@ -17,7 +17,7 @@ import java.util.List;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners(EntityLifeCycleListener.class)
-public class HumansPrivateEvent implements HumanPkJoinFace {
+public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace {
 
     private String humanId;
 
@@ -49,7 +49,7 @@ public class HumansPrivateEvent implements HumanPkJoinFace {
     }
 
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
-    @ManyToMany(mappedBy = PrivateEvent.privateEventOwnersCOL, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = PrivateEvent.privateEventOwnersCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<PrivateEvent> getPrivateEventsOwned() {
         return privateEventsOwned;
     }
@@ -59,7 +59,7 @@ public class HumansPrivateEvent implements HumanPkJoinFace {
     }
 
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
-    @ManyToMany(mappedBy = PrivateEvent.privateEventViewersCOL, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = PrivateEvent.privateEventViewersCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<PrivateEvent> getPrivateEventsViewed() {
         return privateEventsViewed;
     }
@@ -69,7 +69,7 @@ public class HumansPrivateEvent implements HumanPkJoinFace {
     }
 
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
-    @ManyToMany(mappedBy = PrivateEvent.privateEventInvitesCOL, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = PrivateEvent.privateEventInvitesCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<PrivateEvent> getPrivateEventsInvited() {
         return privateEventsInvited;
     }
@@ -79,12 +79,26 @@ public class HumansPrivateEvent implements HumanPkJoinFace {
     }
 
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
-    @ManyToMany(mappedBy = PrivateEvent.privateEventRejectsCOL, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = PrivateEvent.privateEventRejectsCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<PrivateEvent> getPrivateEventsRejected() {
         return privateEventsRejected;
     }
 
     public void setPrivateEventsRejected(List<PrivateEvent> privateEventsRejected) {
         this.privateEventsRejected = privateEventsRejected;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+
+        if (o == null) return false;
+
+        if (getClass() == o.getClass()) {
+            final HumansPrivateEvent that = (HumansPrivateEvent) o;
+            return (!(this.getHumanId() == null || that.getHumanId() == null)) && this.getHumanId().equals(that.getHumanId());
+        } else {
+            return matchHumanId(o);
+        }
     }
 }

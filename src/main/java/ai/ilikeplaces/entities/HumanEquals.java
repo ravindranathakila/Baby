@@ -21,6 +21,8 @@ import ai.ilikeplaces.util.Loggers;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public abstract class HumanEquals {
+    private static final UnsupportedOperationException UNSUPPORTED_OPERATION_EXCEPTION = new UnsupportedOperationException("SORRY! YOU ARE COMPARING OBJECTS OF THE SAME CLASS IN THIS METHOD, WHICH IS NOT CORRECT.");
+    private static final UnsupportedOperationException NOT_EXTEND = new UnsupportedOperationException("SORRY! THE OTHER OBJECT DOES NOT EXTEND HumanEquals.");
 
     abstract public String getHumanId();
 
@@ -39,8 +41,33 @@ public abstract class HumanEquals {
     public boolean matchHumanId(final Object other) {
         Loggers.DEBUG.debug(this.getClass().getSimpleName() + " " + other.getClass().getSimpleName());
         if (this.getClass() == other.getClass()) {
-            throw new UnsupportedOperationException("SORRY! YOU ARE COMPARING OBECTS OF THE SAME CLASS IN THIS METHOD, WHICH IS NOT CORRECT.");
+            throw UNSUPPORTED_OPERATION_EXCEPTION;
         }
-        return other instanceof HumanEquals && this.getHumanId().equals(((HumanEquals) other).getHumanId());
+        //Warning: added later. check for sanity with existing code
+        if (!(other instanceof HumanEquals)) {
+            throw NOT_EXTEND;
+        }
+//        return other instanceof HumanEquals && this.getHumanId().equals(((HumanEquals) other).getHumanId());
+        return this.getHumanId().equals(((HumanEquals) other).getHumanId());
     }
+
+    /**
+     * New approach on HumanEquals but not tested. Check intensively if you are using this static appraoch
+     * 
+     * @param main
+     * @param other
+     * @return
+     */
+    static public boolean staticMatchHumanId(final HumanEquals main, final Object other) {
+        Loggers.DEBUG.debug(main.getClass().getSimpleName() + " " + other.getClass().getSimpleName());
+        if (main.getClass() == other.getClass()) {
+            throw UNSUPPORTED_OPERATION_EXCEPTION;
+        }
+        if (!(other instanceof HumanEquals)) {
+            throw NOT_EXTEND;
+        }
+        return main.getHumanId().equals(((HumanEquals) other).getHumanId());
+    }
+
+
 }

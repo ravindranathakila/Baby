@@ -3,6 +3,7 @@ package ai.ilikeplaces.servlets;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.logic.Listeners.*;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
@@ -33,6 +34,16 @@ final public class Controller extends HttpServletWrapper {
 
     @NOTE(note = "Inner Enums are static. Therefore, the lists shall be populated only once.")
     public enum Page implements PageFace {
+        DisplayName("ai/ilikeplaces/widgets/DisplayName.xhtml",
+                Controller.Page.DisplayNameDisplay) {
+            @Override
+            public String toString() {
+                return DocDisplayName;
+            }
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }},
         PrivateEventCreate("ai/ilikeplaces/widgets/privateevent/private_event_create.xhtml",
                 Controller.Page.privateEventCreateName,
                 Controller.Page.privateEventCreateInfo,
@@ -55,7 +66,8 @@ final public class Controller extends HttpServletWrapper {
                 Controller.Page.privateEventViewName,
                 Controller.Page.privateEventViewInfo,
                 Controller.Page.privateEventViewOwners,
-                Controller.Page.privateEventViewVisitors
+                Controller.Page.privateEventViewVisitors,
+                Controller.Page.privateEventViewLink
         ) {
 
             @Override
@@ -73,7 +85,8 @@ final public class Controller extends HttpServletWrapper {
                 Controller.Page.privateEventDeleteName,
                 Controller.Page.privateEventDeleteInfo,
                 Controller.Page.privateEventDeleteNotice,
-                Controller.Page.privateEventDelete
+                Controller.Page.privateEventDelete,
+                Controller.Page.privateEventDeleteLink
         ) {
 
             @Override
@@ -104,10 +117,11 @@ final public class Controller extends HttpServletWrapper {
 
         FriendAdd("ai/ilikeplaces/widgets/friend/friend_add.xhtml",
                 Controller.Page.friendAddAddButton,
-                Controller.Page.friendAddBirthYearLabel,
-                Controller.Page.friendAddFirstNameLabel,
-                Controller.Page.friendAddLastNameLabel,
-                Controller.Page.friendAddLocationLabel
+//                Controller.Page.friendAddBirthYearLabel,
+//                Controller.Page.friendAddFirstNameLabel,
+//                Controller.Page.friendAddLastNameLabel,
+//                Controller.Page.friendAddLocationLabel
+                Controller.Page.friendAddDisplayNameLabel
         ) {
 
             @Override
@@ -122,10 +136,11 @@ final public class Controller extends HttpServletWrapper {
 
         FriendDelete("ai/ilikeplaces/widgets/friend/friend_delete.xhtml",
                 Controller.Page.friendDeleteAddButton,
-                Controller.Page.friendDeleteBirthYearLabel,
-                Controller.Page.friendDeleteFirstNameLabel,
-                Controller.Page.friendDeleteLastNameLabel,
-                Controller.Page.friendDeleteLocationLabel
+                Controller.Page.friendDeleteDisplayNameLabel
+//                Controller.Page.friendDeleteBirthYearLabel,
+//                Controller.Page.friendDeleteFirstNameLabel,
+//                Controller.Page.friendDeleteLastNameLabel,
+//                Controller.Page.friendDeleteLocationLabel
         ) {
 
             @Override
@@ -198,6 +213,9 @@ final public class Controller extends HttpServletWrapper {
 
         Skeleton("ai/ilikeplaces/Skeleton.xhtml",
                 Controller.Page.skeletonTitle,
+                Controller.Page.SkeletonCPageTitle,
+                Controller.Page.SkeletonCPageIntro,
+                Controller.Page.SkeletonCPageNotice,
                 Controller.Page.Skeleton_center,
                 Controller.Page.Skeleton_center_content,
                 Controller.Page.Skeleton_center_skeleton,
@@ -231,7 +249,9 @@ final public class Controller extends HttpServletWrapper {
                 Controller.Page.privateLocationCreateName,
                 Controller.Page.privateLocationCreateInfo,
                 Controller.Page.privateLocationCreateSave,
-                Controller.Page.privateLocationCreateNotice
+                Controller.Page.PrivateLocationCreateCNotice,
+                Controller.Page.PrivateLocaionCreateCTitle,
+                Controller.Page.PrivateLocaionCreateCIntro
         ) {
 
             @Override
@@ -249,7 +269,9 @@ final public class Controller extends HttpServletWrapper {
                 Controller.Page.privateLocationViewName,
                 Controller.Page.privateLocationViewInfo,
                 Controller.Page.privateLocationViewOwners,
-                Controller.Page.privateLocationViewVisitors
+                Controller.Page.privateLocationViewVisitors,
+                Controller.Page.privateLocationViewLink,
+                Controller.Page.privateLocationViewEventList
         ) {
 
             @Override
@@ -284,16 +306,17 @@ final public class Controller extends HttpServletWrapper {
                 null) {
             @Override
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "page/main";
+                return RBGet.getGlobalConfigKey("AppRoot") + "";
             }
             @Override
             public String toString() {
-                return "/page/main";
+                return "";
             }
         },
         LocationMain(
                 "ai/ilikeplaces/Main.xhtml",
                 Controller.Page.mainTitle,
+                Controller.Page.mainMetaDesc,
                 Controller.Page.Main_othersidebar_identity,
                 Controller.Page.Main_othersidebar_profile_link,
                 Controller.Page.Main_othersidebar_upload_file_sh,
@@ -409,6 +432,7 @@ final public class Controller extends HttpServletWrapper {
         SignInOn(
                 "ai/ilikeplaces/widgets/SignInOn.xhtml",
                 Controller.Page.signinon_login,
+                Controller.Page.signinon_signup,
                 Controller.Page.signinon_logon
         ) {
             @Override
@@ -421,6 +445,11 @@ final public class Controller extends HttpServletWrapper {
             }
         };
 
+        /*DisplayName Page*/
+        final static public String DocDisplayName = "DocDisplayName";
+        /*DisplayName IDs*/
+        final static public String DisplayNameDisplay = "DisplayNameDisplay";
+
         /*Private Event Page*/
         final static public String DocPrivateEventView = "PrivateEventView";
         /*Private Event Create IDs*/
@@ -429,6 +458,7 @@ final public class Controller extends HttpServletWrapper {
         final static public String privateEventViewInfo = "privateEventViewInfo";
         final static public String privateEventViewOwners = "privateEventViewOwners";
         final static public String privateEventViewVisitors = "privateEventViewVisitor";
+        final static public String privateEventViewLink = "privateEventViewLink";
 
         /*Private Event Page*/
         final static public String DocPrivateEventCreate = "PrivateEventCreate";
@@ -445,6 +475,7 @@ final public class Controller extends HttpServletWrapper {
         final static public String privateEventDeleteInfo = "privateEventDeleteInfo";
         final static public String privateEventDeleteNotice = "privateEventDeleteNotice";
         final static public String privateEventDelete = "privateEventDelete";
+        final static public String privateEventDeleteLink = "privateEventDeleteLink";
 
         /*FindFriend Page*/
         final static public String DocFindFriend = "DocFindFriend";
@@ -456,19 +487,21 @@ final public class Controller extends HttpServletWrapper {
         /*AddFriend Page*/
         final static public String DocFriendAdd = "DocFriendAdd";
         /*AddFriend IDs*/
-        final static public String friendAddFirstNameLabel = "friendAddFirstNameLabel";
-        final static public String friendAddLastNameLabel = "friendAddLastNameLabel";
-        final static public String friendAddBirthYearLabel = "friendAddBirthYearLabel";
-        final static public String friendAddLocationLabel = "friendAddLocationLabel";
+        final static public String friendAddDisplayNameLabel = "friendAddDisplayNameLabel";
+//        final static public String friendAddFirstNameLabel = "friendAddFirstNameLabel";
+//        final static public String friendAddLastNameLabel = "friendAddLastNameLabel";
+//        final static public String friendAddBirthYearLabel = "friendAddBirthYearLabel";
+//        final static public String friendAddLocationLabel = "friendAddLocationLabel";
         final static public String friendAddAddButton = "friendAddAddButton";
 
         /*DeleteFriend Page*/
         final static public String DocFriendDelete = "DocFriendDelete";
         /*DeleteFriend IDs*/
-        final static public String friendDeleteFirstNameLabel = "friendDeleteFirstNameLabel";
-        final static public String friendDeleteLastNameLabel = "friendDeleteLastNameLabel";
-        final static public String friendDeleteBirthYearLabel = "friendDeleteBirthYearLabel";
-        final static public String friendDeleteLocationLabel = "friendDeleteLocationLabel";
+        final static public String friendDeleteDisplayNameLabel = "friendDeleteDisplayNameLabel";
+//        final static public String friendDeleteFirstNameLabel = "friendDeleteFirstNameLabel";
+//        final static public String friendDeleteLastNameLabel = "friendDeleteLastNameLabel";
+//        final static public String friendDeleteBirthYearLabel = "friendDeleteBirthYearLabel";
+//        final static public String friendDeleteLocationLabel = "friendDeleteLocationLabel";
         final static public String friendDeleteAddButton = "friendDeleteDeleteButton";
 
         /*FriendList Page*/
@@ -528,6 +561,8 @@ final public class Controller extends HttpServletWrapper {
         final static public String privateLocationViewInfo = "privateLocationViewInfo";
         final static public String privateLocationViewOwners = "privateLocationViewOwners";
         final static public String privateLocationViewVisitors = "privateLocationViewVisitor";
+        final static public String privateLocationViewLink = "privateLocationViewLink";
+        final static public String privateLocationViewEventList = "privateLocationViewEventList";
 
         /*Private Location Page*/
         final static public String DocPrivateLocationCreate = "PrivateLocationCreate";
@@ -535,7 +570,6 @@ final public class Controller extends HttpServletWrapper {
         final static public String privateLocationCreateName = "privateLocationCreateName";
         final static public String privateLocationCreateInfo = "privateLocationCreateInfo";
         final static public String privateLocationCreateSave = "privateLocationCreateSave";
-        final static public String privateLocationCreateNotice = "privateLocationCreateNotice";
 
         /*Private Location Page*/
         final static public String DocPrivateLocationDelete = "PrivateLocationDelete";
@@ -566,6 +600,7 @@ final public class Controller extends HttpServletWrapper {
 
         /*Main Specific IDs*/
         final static public String mainTitle = "mainTitle";
+        final static public String mainMetaDesc = "mainMetaDesc";
         final static public String Main_othersidebar_identity = "Main_othersidebar_identity";
         final static public String Main_othersidebar_profile_link = "Main_othersidebar_profile_link";
         final static public String Main_othersidebar_upload_file_sh = "Main_othersidebar_upload_file_sh";
@@ -597,15 +632,45 @@ final public class Controller extends HttpServletWrapper {
         final static public String DocSignInOn = "SignInOn";
         /*SignInOn Specific IDs*/
         final static public String signinon_login = "signinon_login";
+        final static public String signinon_signup = "signinon_signup";
         final static public String signinon_logon = "signinon_logon";
 
+
+        /*Common IDs that should be present in any page*/
+        final static public String CPageTitle = "PageTitle";
+        final static public String CPageIntro = "PageIntro";
+        final static public String CPageNotice = "PageNotice";
+
+        final static public String SkeletonCPageTitle = CPageTitle;
+        final static public String MainCPageTitle = CPageTitle;//NOT IMPLEMENTED YET, UPDATE HTML AND CONSTRUCTOR PLS
+        final static public String PrivateLocaionCreateCTitle = "PrivateLocationCreateTitle";
+
+        final static public String SkeletonCPageIntro = CPageIntro;
+        final static public String MainCPageIntro = CPageIntro;//NOT IMPLEMENTED YET, UPDATE HTML AND CONSTRUCTOR PLS
+        final static public String PrivateLocaionCreateCIntro = "PrivateLocationCreateIntro";
+
+        final static public String SkeletonCPageNotice = CPageNotice;
+        final static public String MainCPageNotice = CPageNotice;//NOT IMPLEMENTED YET, UPDATE HTML AND CONSTRUCTOR PLS
+        final static public String PrivateLocationCreateCNotice = "PrivateLocationCreateNotice";
+/*End of common definitions*/
+
+
         private Page(final String path__, final String... ids__) {
-            Loggers.DEBUG.debug("HELLO, ENUM VAL:" + this.name());
-            Loggers.DEBUG.debug("HELLO, ENUM PATH:" + path__);
-            Loggers.DEBUG.debug("HELLO, ENUM IDS:" + Arrays.toString(ids__));
-            PrettyURLMap_.put(this, path__);
-            PutAllPageElementIds(ids__);
-            PutAllPageElementIdsByPage(this, ids__);
+            try {
+                Loggers.DEBUG.debug("HELLO, ENUM VAL:" + this.name());
+                Loggers.DEBUG.debug("HELLO, ENUM PATH:" + path__);
+                Loggers.DEBUG.debug("HELLO, ENUM IDS:" + Arrays.toString(ids__));
+                Loggers.DEBUG.debug("HELLO, ADDING ELEMENTS TO PRETTYURL MAP");
+                PrettyURLMap_.put(this, path__);
+                Loggers.DEBUG.debug("HELLO, ADDING ELEMENTS TO ALLPAGEELEMENTS");
+                PutAllPageElementIds(ids__);
+                Loggers.DEBUG.debug("HELLO, ADDING ELEMENTS TO ALLPAGEELEMENTS BY PAGE");
+                PutAllPageElementIdsByPage(this, ids__);
+            } catch (
+                    @WARNING(warning = "Don't remove this catch. You'll not see any duplicate id exceptions etc. anywhere if you do so.")
+                    final Exception e) {
+                Loggers.EXCEPTION.error("SORRY! SOMETHING WENT WRONG DURING INITIALIZATION. THIS SHOULD EXPTECTED TO BE FATAL.", e);
+            }
         }
 
         abstract public String toString();
@@ -637,6 +702,8 @@ final public class Controller extends HttpServletWrapper {
     final PageFace friendList = Page.FriendList;
 
     final PageFace genericButton = Page.GenericButton;
+
+    final PageFace displayName = Page.DisplayName;
 
     /**
      * @param serveletConfig__
@@ -734,6 +801,8 @@ final public class Controller extends HttpServletWrapper {
             inhs__.registerItsNatDocFragmentTemplate(friendList.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(friendList));
 
             inhs__.registerItsNatDocFragmentTemplate(genericButton.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(genericButton));
+
+            inhs__.registerItsNatDocFragmentTemplate(displayName.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(displayName));
         }
     }
 
@@ -746,9 +815,13 @@ final public class Controller extends HttpServletWrapper {
      */
     private static void pathResolver(final ItsNatServletRequest request__) {
         final String pathInfo = ((HttpServletRequest) request__.getServletRequest()).getPathInfo();
-        final String URL__ = pathInfo == null ? "" : ((HttpServletRequest) request__.getServletRequest()).getPathInfo().substring(1);//Removes preceeding slash
+        final String URL__ = pathInfo == null ? "" : ((HttpServletRequest) request__.getServletRequest()).getPathInfo().substring(1);//Removes preceding slash
         if (isHomePage(URL__)) {
             staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
+            staticLogger.info(((HttpServletRequest) request__.getServletRequest()).getRequestURL().toString()
+                    + (((HttpServletRequest) request__.getServletRequest()).getQueryString() != null
+                       ? ((HttpServletRequest) request__.getServletRequest()).getQueryString()
+                      : ""));
             request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
         } else {
             if (isNonLocationPage(URL__)) {/*i.e. starts with underscore*/
@@ -780,7 +853,7 @@ final public class Controller extends HttpServletWrapper {
                     staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0013"));
                 } else if (isFriendsPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocFriends);/*Framework specific*/
-                    staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0013"));
+                    staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0014"));
                 } else {/*Divert to home page*/
                     staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
                     request__.getServletRequest().setAttribute("location", "");
@@ -861,7 +934,7 @@ final public class Controller extends HttpServletWrapper {
     public final static Map<String, String> GlobalHTMLIdRegistry = new IdentityHashMap<String, String>();
 
     /**
-     * Register all your document keys before using. Acceps variable argument length.
+     * Register all your document keys before using. Accepts variable argument length.
      * Usage: putAllPageElementIds("id1","id2","id3");
      *
      * @param ids__

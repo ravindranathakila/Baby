@@ -1,0 +1,5 @@
+LIBRARIES
+============================================================
+
+vtip:
+vtip.js tooltip location altered to -5 and 30

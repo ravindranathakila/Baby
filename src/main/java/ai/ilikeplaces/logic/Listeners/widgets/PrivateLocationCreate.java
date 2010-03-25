@@ -6,6 +6,7 @@ import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.Info;
 import ai.ilikeplaces.logic.validators.unit.SimpleName;
+import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import net.sf.oval.Validator;
@@ -63,7 +64,7 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateName), EventType.blur.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateName), EventType.BLUR.toString(), new EventListener() {
 
             final RefObj<String> myprivateLocationName = privateLocationName;
             final Validator v = new Validator();
@@ -76,14 +77,14 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
                 if (name.validate(v) == 0) {
                     myprivateLocationName.setObj(name.getObj());
-                    clear($$(privateLocationCreateNotice));
+                    clear($$(PrivateLocationCreateCNotice));
                 } else {
-                    $$(privateLocationCreateNotice).setTextContent(name.getViolationAsString());
+                    $$(PrivateLocationCreateCNotice).setTextContent(name.getViolationAsString());
                 }
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateInfo), EventType.blur.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateInfo), EventType.BLUR.toString(), new EventListener() {
 
             final RefObj<String> myprivateLocationInfo = privateLocationInfo;
             final Validator v = new Validator();
@@ -96,14 +97,14 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
                 if (info.validate(v) == 0) {
                     myprivateLocationInfo.setObj(info.getObj());
-                    clear($$(privateLocationCreateNotice));
+                    clear($$(PrivateLocationCreateCNotice));
                 } else {
-                    $$(privateLocationCreateNotice).setTextContent(info.getViolationAsString());
+                    $$(PrivateLocationCreateCNotice).setTextContent(info.getViolationAsString());
                 }
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateSave), EventType.click.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateSave), EventType.CLICK.toString(), new EventListener() {
 
             final RefString myhumanId = humanId;
             final RefObj<String> myprivateLocationName = privateLocationName;
@@ -118,15 +119,21 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
                 if (myprivateLocationName.validate(v) == 0 && myprivateLocationInfo.validate(v) == 0) {
                     final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).cPrivateLocation(myhumanId.getString(), myprivateLocationName.getObj(), myprivateLocationInfo.getObj());
                     if (r.returnStatus() == 0) {
-                        logger.debug("{}", "HELLO! SAVED.");
-                        remove(evt_.getTarget(), EventType.click, this);
-                        logger.debug("{}", "HELLO! REMOVED CLICK.");
-                        clear($$(privateLocationCreateNotice));
+                        logger.debug("{}", "HELLO! SAVED PRIVATE LOCATION.");
+                        remove(evt_.getTarget(), EventType.CLICK, this);
+                        $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationName.getObj() + " was created!");
+                        $$(privateLocationCreateSave).setAttribute(MarkupTag.A.href(), Controller.Page.Organize.getURL() + "?"
+                                + Controller.Page.DocOrganizeCategory + "=" + 2 + "&"
+                                + Controller.Page.DocOrganizeLocation + "=" + r.returnValue().getPrivateLocationId());
                     } else {
-                        $$(privateLocationCreateNotice).setTextContent(r.returnMsg());
+                        $$(PrivateLocationCreateCNotice).setTextContent(r.returnMsg());
                     }
                 } else {
-                    //Validation message should've already been given to the users by above individual listeners
+                    if (myprivateLocationName.validate(v) != 0) {
+                        $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationName.getViolationAsString());
+                    } else if (myprivateLocationInfo.validate(v) != 0) {
+                        $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationInfo.getViolationAsString());
+                    }
                 }
             }
         }, false);

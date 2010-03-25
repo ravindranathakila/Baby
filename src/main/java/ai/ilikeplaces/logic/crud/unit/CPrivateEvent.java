@@ -50,15 +50,15 @@ public class CPrivateEvent extends AbstractSLBCallbacks implements CPrivateEvent
         @FIXME(issue = "Make crud classes based on roles. For example, this call should be made to a method, doRPrivateLocationAsOwner")
         final PrivateLocation managedPrivateLocation = rPrivateLocationLocal_.doRPrivateLocationAsOwner(humanId, privateLocationId);
 
-
-        final PrivateEvent privateEvent = new PrivateEvent();
-
-        privateEvent.setPrivateEventName(locationName);
-        privateEvent.setPrivateEventInfo(locationInfo);
-        privateEvent.setPrivateEventStartDate(startDate);
-        privateEvent.setPrivateEventEndDate(endDate);
-
-        final PrivateEvent managedPrivateEvent = privateEventCrudServiceLocal_.create(privateEvent);
+        final PrivateEvent managedPrivateEvent = privateEventCrudServiceLocal_.create(
+                new PrivateEvent()
+                        .setPrivateEventNameR(locationName)
+                        .setPrivateEventInfoR(locationInfo)
+                        .setPrivateEventStartDateR(startDate)
+                        .setPrivateEventEndDateR(endDate)
+                        .setPrivateEventAlbumR(
+                        new Album()
+                                .setAlbumNameR(locationName)));
 
         wireLocation:
         {

@@ -1,5 +1,7 @@
 package ai.ilikeplaces.util;
 
+import ai.ilikeplaces.doc.License;
+
 /**
  * DOM event types
  * 
@@ -8,15 +10,15 @@ package ai.ilikeplaces.util;
  * Time: 11:17:06 PM
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public enum EventType {
-    click() {
+    CLICK() {
         @Override
         public String toString() {
             return "click";
         }
     },
-    blur() {
+    BLUR() {
         @Override
         public String toString() {
             return "blur";

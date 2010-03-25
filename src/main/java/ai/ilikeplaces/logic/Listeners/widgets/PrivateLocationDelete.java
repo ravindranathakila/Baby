@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
@@ -25,8 +26,6 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 /**
  * @author Ravindranath Akila
  */
-
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 abstract public class PrivateLocationDelete extends AbstractWidgetListener {
@@ -53,7 +52,7 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
         this.humanId = new RefString((String) initArgs[0]);
         this.privateLocationId = (Long) initArgs[1];
 
-        final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).rDirtyPrivateLocation(humanId.getString(), privateLocationId);
+        final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocation(humanId.getString(), privateLocationId);
         if (r.returnStatus() == 0) {
             $$(privateLocationDeleteName).setTextContent(r.returnValue().getPrivateLocationName());
             $$(privateLocationDeleteInfo).setTextContent(r.returnValue().getPrivateLocationInfo());
@@ -65,7 +64,7 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationDelete), EventType.click.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationDelete), EventType.CLICK.toString(), new EventListener() {
 
             final RefString myhumanId = humanId;
             final Long myprivateLocationId = privateLocationId;
@@ -77,7 +76,7 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
                 final Return<Boolean> r = DB.getHumanCrudPrivateLocationLocal(true).dPrivateLocation(myhumanId.getString(), myprivateLocationId);
                 if (r.returnStatus() == 0) {
                     logger.debug("{}", "HELLO! DELETED. DB REPLY:" + r.returnValue());
-                    remove(evt_.getTarget(), EventType.click, this);
+                    remove(evt_.getTarget(), EventType.CLICK, this);
                     logger.debug("{}", "HELLO! REMOVED CLICK.");
                     clear($$(privateLocationDeleteNotice));
                 } else {
@@ -86,7 +85,7 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
 
 
             }
-        }, false);
+        }, false, JSCodeToSend.RefreshPage);
 
     }
 }

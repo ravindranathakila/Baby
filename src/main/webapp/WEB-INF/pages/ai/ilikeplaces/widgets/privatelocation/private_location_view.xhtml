@@ -1,3 +1,34 @@
+<!--&lt;!&ndash;?xml version="1.0" encoding="windows-1252"?&ndash;&gt;-->
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">-->
+<!--<html xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+    <!--<title>private_location_view</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="span-14 last nty" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">-->
+    <!--<ul>-->
+        <!--<li>-->
+            <!--<span id="privateLocationViewNotice">&nbsp;</span>-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<span id="privateLocationViewName">&nbsp;</span>-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<span id="privateLocationViewInfo">&nbsp;</span>-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<span id="privateLocationViewOwners">&nbsp;</span>-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<span id="privateLocationViewVisitor">&nbsp;</span>-->
+        <!--</li>-->
+    <!--</ul>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
 <!--?xml version="1.0" encoding="windows-1252"?-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">
@@ -6,23 +37,46 @@
 </head>
 <body>
 <div class="span-14 last nty" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
-    <ul>
-        <li>
-            <span id="privateLocationViewNotice">&nbsp;</span>
+    <hr/>
+    <ul style="list-style-type:none;" class="span-14 last center">
+        <li class="span-14 last black_fg">
+            <div class="span-14 last">&nbsp;</div>
+            <h3><span  id="privateLocationViewName" class="span-14 last fg_orange bold vtip"
+                    title="By sharing this place, you can invite friends to events held here.<br/><br/>
+                        A place can have many events held throughout its' lifetime.<br/><br/>
+                        An example would be 'Home'. By creating a places called 'Home', <br/>
+                        you can hold many events at 'Home' and invite people to them.">&nbsp;</span></h3>
         </li>
-        <li>
-            <span id="privateLocationViewName">&nbsp;</span>
+        <li class="span-14 last black_fg">
+            <h4><span id="privateLocationViewInfo" class="span-14 last fg_orange vtip"
+                    title="By sharing this place, you can invite friends to events held here.<br/><br/>
+                        A place can have many events held throughout its' lifetime.<br/><br/>
+                        An example would be 'Home'. By creating a places called 'Home', <br/>
+                        you can hold many events at 'Home' and invite people to them.">&nbsp;</span></h4>
+            <div class="span-14 last">&nbsp;</div>
         </li>
-        <li>
-            <span id="privateLocationViewInfo">&nbsp;</span>
+        <li class="span-14 last black_fg">
+            <span id="privateLocationViewNotice" class="span-14 last black_fg"></span>
+            <div class="span-14 last"></div>
         </li>
-        <li>
-            <span id="privateLocationViewOwners">&nbsp;</span>
+        <li class="span-14 last black_fg">
+            <span id="privateLocationViewOwners"></span>
         </li>
-        <li>
-            <span id="privateLocationViewVisitor">&nbsp;</span>
+        <li class="span-14 last black_fg">
+            <span id="privateLocationViewVisitor"></span>
+        </li>
+        <li class="span-14 last black_fg">
+            <div id="privateLocationViewLink" class="prepend-5 span-4 append-5 last">
+            </div>
+            <div class="span-14 last">&nbsp;</div>
         </li>
     </ul>
+    <ul id="privateLocationViewEventList" style="list-style-type:none;" class="span-14 last center">
+      <li style="display:none;">
+            &nbsp;<!--placeholder-->
+       </li>
+    </ul>
+    <hr/>
 </div>
 </body>
 </html>

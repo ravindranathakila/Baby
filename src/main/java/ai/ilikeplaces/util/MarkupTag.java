@@ -135,7 +135,77 @@ public enum MarkupTag implements MarkupTagFace {
             return DIV_TAG;
         }
 
-    };
+    },
+
+    BR() {
+        @Override
+        public String toString
+                () {
+            return BR_TAG;
+        }
+    },
+    META() {
+        @Override
+        public String namee() {
+            throw new UnsupportedOperationException(ExceptionMsg);
+        }
+
+        @Override
+        public String content() {
+            throw new UnsupportedOperationException(ExceptionMsg);
+        }
+    },
+
+    GENERIC() {
+
+        @Override
+        public String value() {
+            return VALUE;
+        }
+        @Override
+        public String type() {
+            return TYPE;
+        }
+        @Override
+        public String typeValueText() {
+            return TEXT;
+        }
+        @Override
+        public String typeValueSelect() {
+            return SELECT;
+        }
+        @Override
+        public String typeValueHidden() {
+            return HIDDEN;
+        }
+        @Override
+        public String href() {
+            return HREF;
+        }
+        @Override
+        public String alt() {
+            return ALT;
+        }
+
+        @Override
+        public String src() {
+            return SRC;
+        }
+
+        @Override
+        public String ul() {
+            return UL;
+        }
+        @Override
+        public String ol() {
+            return OL;
+        }
+        @Override
+        public String classs() {
+            return CLASS;
+        }};
+
+    private static final String BR_TAG = "BR";
     private static final String INPUT_TAG = "INPUT";
     private static final String P_TAG = "P";
     private static final String VALUE = "value";
@@ -159,6 +229,7 @@ public enum MarkupTag implements MarkupTagFace {
     private static final String STYLE = "style";
     private static final String ID = "id";
     private static final String CLASS = "class";
+    private static final String TITLE_ATTR = "title";
 
     @Override
     public String id() {
@@ -206,6 +277,11 @@ public enum MarkupTag implements MarkupTagFace {
     }
 
     @Override
+    public String title() {
+        return TITLE_ATTR;
+    }
+
+    @Override
     public String src() {
         throw new UnsupportedOperationException(ExceptionMsg);
     }
@@ -228,6 +304,16 @@ public enum MarkupTag implements MarkupTagFace {
     @Override
     public String classs() {
         return CLASS;
+    }
+
+    @Override
+    public String namee() {
+        throw new UnsupportedOperationException(ExceptionMsg);
+    }
+
+    @Override
+    public String content() {
+        throw new UnsupportedOperationException(ExceptionMsg);
     }
 }
 

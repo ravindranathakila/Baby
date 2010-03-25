@@ -3,12 +3,12 @@ package ai.ilikeplaces.logic.Listeners.widgets.privateevent;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
+import ai.ilikeplaces.logic.Listeners.widgets.Button;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
-import ai.ilikeplaces.util.AbstractWidgetListener;
-import ai.ilikeplaces.util.EventType;
-import ai.ilikeplaces.util.RefString;
-import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
@@ -52,10 +52,35 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
         this.humanId = new RefString((String) initArgs[0]);
         this.privateEventId = (Long) initArgs[1];
 
-        final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).rDirtyPrivateEvent(humanId.getString(), privateEventId);
+        final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEvent(humanId.getString(), privateEventId);
         if (r.returnStatus() == 0) {
             $$(privateEventDeleteName).setTextContent(r.returnValue().getPrivateEventName());
             $$(privateEventDeleteInfo).setTextContent(r.returnValue().getPrivateEventInfo());
+                        new Button(itsNatDocument_, $$(privateEventDeleteLink), "Link to " + r.returnValue().getPrivateEventName(), false, r.returnValue()) {
+                PrivateEvent privateEvent = null;
+
+                @Override
+                protected void init(final Object... initArgs) {
+                    privateEvent = (PrivateEvent) (((Object[]) initArgs[2])[0]);
+                    SetLocationLink:
+                    {
+                        setLink:
+                        {
+                            $$(GenericButtonLink).setAttribute(MarkupTag.A.href(),
+                                    new Parameter(Organize.getURL())
+                                            .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
+                                            .append(DocOrganizeLocation, r.returnValue().getPrivateLocation().getPrivateLocationId())
+                                            .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
+                                            .get()
+                            );
+                        }
+                        setImage:
+                        {
+                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.config.getString(RBGet.url_CDN_STATIC) + "arrow-right.gif");
+                        }
+                    }
+                }
+            };
         } else {
             $$(privateEventDeleteNotice).setTextContent(r.returnMsg());
         }
@@ -64,7 +89,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventDelete), EventType.click.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventDelete), EventType.CLICK.toString(), new EventListener() {
 
             final RefString myhumanId = humanId;
             final Long myprivateEventId = privateEventId;
@@ -76,7 +101,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                 final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dPrivateEvent(myhumanId.getString(), myprivateEventId);
                 if (r.returnStatus() == 0) {
                     logger.debug("{}", "HELLO! DELETED. DB REPLY:" + r.returnValue());
-                    remove(evt_.getTarget(), EventType.click, this);
+                    remove(evt_.getTarget(), EventType.CLICK, this);
                     logger.debug("{}", "HELLO! REMOVED CLICK.");
                     clear($$(privateEventDeleteNotice));
                 } else {
@@ -85,7 +110,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
 
             }
-        }, false);
+        }, false, JSCodeToSend.RefreshPage);
 
     }
 }

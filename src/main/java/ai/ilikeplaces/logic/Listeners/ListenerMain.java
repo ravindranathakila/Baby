@@ -1,11 +1,9 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PublicPhoto;
-import ai.ilikeplaces.logic.Listeners.widgets.Photo$Description;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -22,14 +20,14 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
 
-import static ai.ilikeplaces.util.MarkupTag.*;
-
-import java.text.MessageFormat;import java.util.ArrayList;
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
+import static ai.ilikeplaces.util.MarkupTag.*;
 
 /**
  * @author Ravindranath Akila
@@ -96,7 +94,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     if (getUsername() != null) {
                         Loggers.USER.info(getUsernameAsValid() + " queries for location " + location + " of " + superLocation);
                     } else {
-                        Loggers.NON_USER.info(" queries for location " + location + " of " + superLocation);
+                        Loggers.NON_USER.info(request__.getServletRequest().getRemoteHost() + " queries for location " + location + " of " + superLocation);
                     }
                 }
 
@@ -105,21 +103,28 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     setLoginWidget:
                     {
                         try {
-                            new SignInOn(itsNatDocument__, $(Main_login_widget), new HumanId(getUsername())) {
+                            new SignInOn(itsNatDocument__, $(Main_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
                             };
                         } catch (final Throwable t) {
                             Loggers.EXCEPTION.error("", t);
                         }
                     }
 
-                    setMainTitle:
+                    SEO:
                     {
                         try {
-                            //$(mainTitle).setTextContent("Welcome to ilikeplaces!");
-                        } catch (
-                                @FIXME(issue = "Once its nat final release is made, set head as nocache and set. then works.")
-                                final Exception e__) {
-                            logger.debug(e__.getMessage());
+                            setMainTitle:
+                            {
+                                $(mainTitle).setTextContent("Traveling to " + location + "? Reserve A Flight, Book A Hotel, and You're All Set!");
+
+                            }
+                            setMetaDescription:
+                            {
+                                $(mainMetaDesc).setAttribute(MarkupTag.META.name(),"Do a flight booking to " + location + " and find a hotel to stay. Hire a car to travel around. Click here to check for offers.");
+                            }
+                        }
+                        catch (final Throwable t) {
+                            logger.debug(t.getMessage());
                         }
                     }
                     signOnDisplayLink:
@@ -157,7 +162,8 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 if (WOEID != null) {
                     r = DB.getHumanCRUDLocationLocal(true).dirtyRLocation(WOEID);
                 } else {
-                    r = DB.getHumanCRUDLocationLocal(true).dirtyRLocation(location, superLocation);
+                    r = new ReturnImpl<Location>(ExceptionCache.UNSUPPORTED_OPERATION_EXCEPTION, "Search Unavailable", false);
+                    //r = DB.getHumanCRUDLocationLocal(true).dirtyRLocation(location, superLocation);
                 }
 
 
@@ -191,36 +197,29 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     setLocationNameForJSReference:
                     {
                         try {
-                            @TODO(task = "MOVE TO GUI MSGS I18N METHODICALLY")
                             final Element hiddenLocationIdInputTag = $(INPUT);
                             hiddenLocationIdInputTag.setAttribute(INPUT.type(), INPUT.typeValueHidden());
                             hiddenLocationIdInputTag.setAttribute(INPUT.id(), JSCodeToSend.LocationName);
-                            hiddenLocationIdInputTag.setAttribute(INPUT.value(),
-                                    "This is " + existingLocation_.getLocationName() + " of " + existingLocation_.getLocationSuperSet().getLocationName() + ". " +
-                                            "You are at " + existingLocation_.getLocationName() + " in " + existingLocation_.getLocationSuperSet().getLocationName() + ". ");
+                            hiddenLocationIdInputTag.setAttribute(INPUT.value(), existingLocation_.getLocationName() + " of " + existingLocation_.getLocationSuperSet().getLocationName());
                             hTMLDocument__.getBody().appendChild(hiddenLocationIdInputTag);
                         } catch (final Throwable t) {
                             Loggers.EXCEPTION.error("", t);
                         }
                     }
 
-                    setLocationAsTitle:
-                    {
-                        try {
-                            final String pageTitle = existingLocation_.getLocationName();
-                        } catch (final Throwable t) {
-                            Loggers.EXCEPTION.error("", t);
-                        }
-                    }
 
                     setLocationAsPageTopic:
                     {
                         try {
                             $(Main_center_main_location_title).setTextContent("This is " + existingLocation_.getLocationName() + " of " + existingLocation_.getLocationSuperSet());
 
+                            $(Main_notice).appendChild($(P).appendChild(hTMLDocument__.createTextNode("Back to: ")));
+                            $(Main_notice).appendChild(generateSimpleLocationLink(existingLocation_.getLocationSuperSet()));
+                            $(Main_notice).appendChild($(BR));
+
                             $(Main_notice).appendChild(($(P).appendChild(hTMLDocument__.createTextNode("At " + existingLocation_.getLocationName() + " you can visit: "))));
 
-                            for (final Element element : generateLocationLinks(DB.getHumanCRUDLocationLocal(true).doNTxRLocationsBySuperLocation(existingLocation_))) {
+                            for (final Element element : generateLocationLinks(DB.getHumanCRUDLocationLocal(true).doDirtyRLocationsBySuperLocation(existingLocation_))) {
                                 $(Main_notice).appendChild(element);
                                 displayBlock($(Main_notice_sh));
                             }
@@ -233,7 +232,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                     setFlickrLink:
                     {
-                        $(Main_flickr).setAttribute(MarkupTag.A.href(), MessageFormat.format(RBGet.config.getString("flickr.json"), location.toLowerCase().replace(" ", "+").replace("/", "+")));
+                        $(Main_flickr).setAttribute(MarkupTag.A.href(),RBGet.config.getString("flickr.json") + location.toLowerCase().replace(" ", "+").replace("/", "+"));
                     }
 
                     getAndDisplayAllThePhotos:
@@ -241,13 +240,13 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         List<PublicPhoto> listPublicPhoto = existingLocation_.getPublicPhotos();
                         logger.info(RBGet.logMsgs.getString("NUMBER_OF_PHOTOS_FOR_LOCATION"), existingLocation_.getLocationName(), listPublicPhoto.size());
 
-                        @TODO(task = "INVERT COLORS AND SET PHOTO NAME")
                         int i = 0;
                         for (final Iterator<PublicPhoto> it = listPublicPhoto.iterator(); it.hasNext(); i++) {
                             try {
                                 final PublicPhoto publicPhoto = it.next();
 
-                                newMode://old mode pasted end of class if needed
+                                //old mode pasted end of class if needed
+                                newMode:
                                 {
                                     final Element image = $(IMG);
                                     image.setAttribute(IMG.src(), publicPhoto.getPublicPhotoURLPath());
@@ -268,16 +267,20 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     }
 
                 } else {
-                    noSupportForNewLocationsYet:
+                    noSupportForNewLocations:
                     {
                         try {
-                            $(Main_notice).appendChild(($(P).appendChild(
-                                    hTMLDocument__.createTextNode(RBGet.logMsgs.getString("CANT_FIND_LOCATION")                 
-                                            + " Were you looking for "
-                                    ))));
-                            for (final Element element : generateLocationLinks(DB.getHumanCRUDLocationLocal(true).dirtyRLikeLocations(location))) {
-                                $(Main_notice).appendChild(element);
-                                displayBlock($(Main_notice_sh));
+//                            $(Main_notice).appendChild(($(P).appendChild(
+//                                    hTMLDocument__.createTextNode(RBGet.logMsgs.getString("CANT_FIND_LOCATION")
+//                                            + " Were you looking for "
+//                                    ))));
+//                            for (final Element element : generateLocationLinks(DB.getHumanCRUDLocationLocal(true).dirtyRLikeLocations(location))) {
+//                                $(Main_notice).appendChild(element);
+//                                displayBlock($(Main_notice_sh));
+//                            }
+                            NotSupportingLikeSearchTooForNow:
+                            {
+                                $(Main_notice).appendChild(($(P).appendChild(hTMLDocument__.createTextNode(RBGet.logMsgs.getString("CANT_FIND_LOCATION")))));
                             }
                         } catch (final Throwable t) {
                             Loggers.EXCEPTION.error("", t);
@@ -307,14 +310,16 @@ public class ListenerMain implements ItsNatServletRequestListener {
 //                itsNatDoc.dispatchEvent((EventTarget) $(Main_notice), mouseEvent);
             }
 
-            private List<Element> generateLocationLinks(final List<Location> locationList) {
+            private List<Element> generateLocationLinks
+                    (
+                            final List<Location> locationList) {
 
                 List<Element> links = new ArrayList<Element>();
 
                 for (Location location : locationList) {
                     final Element link = $(A);
 
-                    link.setTextContent(location.getLocationName() + " of " + location.getLocationSuperSet().getLocationName());
+                    link.setTextContent("Travel to " + location.getLocationName() + " of " + location.getLocationSuperSet().getLocationName());
 
                     link.setAttribute(A.href(),
                             "/page/"
@@ -325,6 +330,13 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                     link.setAttribute(A.alt(),
                             "/page/" + location.getLocationName() + "_of_" + location.getLocationSuperSet().getLocationName());
+
+                    link.setAttribute(A.title(),
+                            "Click to explore " + location.getLocationName() + " of " + location.getLocationSuperSet().getLocationName());
+
+                    link.setAttribute(A.classs(), "vtip");
+
+
                     final Element linkDiv = $(DIV);
 
                     linkDiv.appendChild(link);
@@ -334,6 +346,34 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                 return links;
 
+            }
+
+            private Element generateLocationLink(final Location location) {
+                final Element link = $(A);
+                link.setTextContent("Travel to " + location.getLocationName() + " of " + location.getLocationSuperSet().getLocationName());
+                link.setAttribute(A.href(),
+                        "/page/"
+                                + location.getLocationName()
+                                + "_of_"
+                                + location.getLocationSuperSet().getLocationName()
+                                + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
+
+                link.setAttribute(A.alt(),
+                        "/page/" + location.getLocationName() + "_of_" + location.getLocationSuperSet().getLocationName());
+                return link;
+            }
+
+            private Element generateSimpleLocationLink(final Location location) {
+                final Element link = $(A);
+                link.setTextContent(location.getLocationName());
+                link.setAttribute(A.href(),
+                        "/page/"
+                                + location.getLocationName()
+                                + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
+
+                link.setAttribute(A.alt(),
+                        "/page/" + location.getLocationName());
+                return link;
             }
         };//Listener
     }

@@ -3,8 +3,7 @@ package ai.ilikeplaces.logic.validators.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.util.RefObj;
 import net.sf.oval.configuration.annotation.IsInvariant;
-import net.sf.oval.constraint.Length;
-import net.sf.oval.constraint.NotNull;
+import net.sf.oval.constraint.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -34,7 +33,8 @@ public class HumanId extends RefObj<String> {
 
     @IsInvariant
     @NotNull
-    @Length(min = 1)
+    @net.sf.oval.constraint.Email(message = "SORRY! HUMAN ID SHOULD BE AN EMAIL ADDRESS.")
+    @Length(max = 255)
     @Override
     public String getObj() {
         return obj;

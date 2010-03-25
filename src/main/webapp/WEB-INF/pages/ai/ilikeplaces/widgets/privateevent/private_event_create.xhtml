@@ -1,6 +1,42 @@
-<!--
-  ~ @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-  -->
+<!--&lt;!&ndash;-->
+  <!--~ @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")-->
+  <!--&ndash;&gt;-->
+
+<!--&lt;!&ndash;?xml version="1.0" encoding="windows-1252"?&ndash;&gt;-->
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">-->
+<!--<html xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+    <!--<title>private_event_create</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="span-14 last nty" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">-->
+    <!--<ul style="list-style-type:none;">-->
+        <!--<li class="span-14 last black_fg">-->
+            <!--<span class="black_fg">Create an Event and Share It With People You Know</span>-->
+            <!--<br/>-->
+        <!--</li>-->
+        <!--<li class="span-14 last black_fg">-->
+            <!--<span id="privateEventCreateNotice" class="black_fg"> </span>-->
+        <!--</li>-->
+        <!--<li class="span-14 last black_fg">-->
+            <!--<input id="privateEventCreateName" class="vtip"-->
+                   <!--title="e.g.<br/><b>-->
+                    <!--I am throwing a party<br/>-->
+                    <!--Let's go on an outing<br/>-->
+                    <!--We are going on a TRIP!-->
+                    <!--</b>"/>-->
+        <!--</li>-->
+        <!--<li class="span-14 last black_fg">-->
+            <!--<input id="privateEventCreateInfo"/>-->
+        <!--</li>-->
+        <!--<li class="span-14 last black_fg">-->
+            <!--<input id="privateEventCreateSave" type="button"/>-->
+        <!--</li>-->
+    <!--</ul>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
 
 <!--?xml version="1.0" encoding="windows-1252"?-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -10,22 +46,48 @@
 </head>
 <body>
 <div class="span-14 last nty" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
-    <ul>
+    <ul style="list-style-type:none;" class="span-14 last center">
         <li class="span-14 last black_fg">
-            <span class="black_fg">Create Your Private Event and Share It With Visitors</span>
-            <br/>
+            <h2><span class="span-14 last fg_orange bold vtip"
+                    title="e.g.<br/><b>
+                    I am throwing a party<br/>
+                    Let's go on an outing<br/>
+                    We are going on a TRIP!
+                    </b>">Create an Event</span></h2>
+            <div class="span-14 last">&nbsp;</div>
         </li>
         <li class="span-14 last black_fg">
-            <span id="privateEventCreateNotice" class="black_fg"> </span>
+            <h3><span class="span-14 last fg_orange vtip"
+                    title="">After that, Share It With Your Friends</span></h3>
+            <div class="span-14 last">&nbsp;</div>
         </li>
         <li class="span-14 last black_fg">
-            <input id="privateEventCreateName"/>
+            <span id="privateEventCreateNotice" class="span-14 last black_fg"></span>
+            <div class="span-14 last">&nbsp;</div>
         </li>
         <li class="span-14 last black_fg">
-            <input id="privateEventCreateInfo"/>
+            <div class="span-14 last"><h3>What is this event?</h3></div>
+            <div class="span-14 last">&nbsp;</div>
+            <input class="span-6 prepend-4 append-4 last bold vtip" id="privateEventCreateName"
+                    title="e.g.<br/><b>
+                    I am throwing a party<br/>
+                    Let's go on an outing<br/>
+                    We are going on a TRIP!
+                    </b>"/>
+            <div class="span-14 last">&nbsp;</div>
+            <div class="span-14 last">&nbsp;</div>
         </li>
         <li class="span-14 last black_fg">
-            <input id="privateEventCreateSave" type="button"/>
+            <div class="span-14 last"><h3>Tell a bit more about it</h3></div>
+            <div class="span-14 last">&nbsp;</div>
+            <input class="span-6 prepend-4 append-4 last bold vtip" id="privateEventCreateInfo"
+                    title="e.g. Our usual meeting place, Near Aunt Lilly's"/>
+            <div class="span-14 last">&nbsp;</div>
+        </li>
+        <li class="span-14 last black_fg">
+            <div class="span-2 prepend-6 append-6 last">
+            <a href="#" id="privateEventCreateSave" class="btn center">&nbsp;&nbsp;Create&nbsp;&nbsp;</a>
+            </div>
         </li>
     </ul>
 </div>

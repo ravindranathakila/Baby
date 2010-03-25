@@ -18,7 +18,7 @@
 
 .nav_link {
     background-color:#a9abf1;
-    color:white;
+    color:#ffffff;
     height:25px;
     text-align:center;
     line-height:25px;
@@ -29,13 +29,13 @@
     vertical-align:middle;
     text-decoration: underline;
 } .nav_link a:link{
-    color:white;
+    color:#ffffff;
 } .nav_link a:active{
     color: #0000ff;
 } .nav_link a:hover{
     color: #ffffff;
 } .nav_link a:visited{
-    color:white;
+    color:#ffffff;
 } .nav_link img{
     width:100%;
 }
@@ -59,31 +59,33 @@
 }
 
 .pd{
-    background-color:orange;;
+    background-color:#ffa500;;
 }
 
 .white_bg{
-    background-color:white;
+    background-color:#ffffff;
 }
 
 .white_fg{
-    color:white;
+    color:#ffffff;
+    background-color: #000000;
 }
 
 .black_bg{
-    background-color:black;
+    background-color:#000000;
+    color: #000000;
 }
 
 .black_fg{
-    color:black;
+    color:#000000;
 }
 
 .orange_bg{
-    background-color:orange;
+    background-color:#ffa500;
 }
 
 .orange_fg{
-    color:orange;
+    color:#ffa500;
 }
 
 .dark_orange_bg{
@@ -203,31 +205,31 @@
 }
 
 .dbg_aqua{
-    outline-color:aqua;
+    outline-color:#000000;
     outline-style:dotted;
     outline-width:1px;
 }
 .dbg_lime{
-    outline-color:lime;
+    outline-color:#000000;
     outline-style:dotted;
     outline-width:1px;
 }
 .dbg_black{
-    outline-color:black;
+    outline-color:#000000;
     outline-style:dotted;
     outline-width:1px;
 }
 .dbg_black_thick{
-    outline-color:black;
+    outline-color:#000000;
     outline-style:dotted;
     outline-width:2px;
 }
 .dbg{
-    outline-color:black;
+    outline-color:#000000;
     outline-style:dotted;
     outline-width:1px;
 }.dbg div{
-    outline-color:black;
+    outline-color:#000000;
     outline-style:dotted;
     outline-width:1px;
 }

@@ -5,8 +5,12 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.Email;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
+import ai.ilikeplaces.util.Return;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,8 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
 
@@ -25,7 +27,6 @@ import java.util.ResourceBundle;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @FIXME(issue = "XSS")
 final public class ServletSignup extends HttpServlet {
@@ -51,9 +52,12 @@ final public class ServletSignup extends HttpServlet {
     final static private String EmailErrorMsg = "EmailErrorMsg";
     final static private String GenderErrorMsg = "GenderErrorMsg";
     final static private String DateOfBirthErrorMsg = "DateOfBirthErrorMsg";
-    final static private String ErrorStatusTrue = "true";
+    private static final String TRUE = "true";
+    final static private String ErrorStatusTrue = TRUE;
 
     private ResourceBundle logMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.LogMsgs");
+    private static final String JS_NULL = "null";
+    private static final String EMPTY = "";
 
     @Override
     @SuppressWarnings("unchecked")
@@ -85,17 +89,26 @@ final public class ServletSignup extends HttpServlet {
         }
         final String username = request__.getParameter(Username);/*DO NOT ASSIGN TO NEW STRING. NULL REPRESENTS FIRST ENTRANCE*/
         final String password = request__.getParameter(Password);/*DO NOT ASSIGN TO NEW STRING. NULL REPRESENTS FIRST ENTRANCE*/
-        final String email = request__.getParameter(Email);/*DO NOT ASSIGN TO NEW STRING. NULL REPRESENTS FIRST ENTRANCE*/
-        final String gender = request__.getParameter(Gender);/*DO NOT ASSIGN TO NEW STRING. NULL REPRESENTS FIRST ENTRANCE*/
-        final String dateOfBirth = request__.getParameter(DateOfBirth);/*DO NOT ASSIGN TO NEW STRING. NULL REPRESENTS FIRST ENTRANCE*/
+//        final String email = request__.getParameter(Email);/*DO NOT ASSIGN TO NEW STRING. NULL REPRESENTS FIRST ENTRANCE*/
+//        final String gender = request__.getParameter(Gender);/*DO NOT ASSIGN TO NEW STRING. NULL REPRESENTS FIRST ENTRANCE*/
+//        final String dateOfBirth = request__.getParameter(DateOfBirth);/*DO NOT ASSIGN TO NEW STRING. NULL REPRESENTS FIRST ENTRANCE*/
 
         processSignup:
         {
-
-            if(!isSignUpPermitted()){
+            if (!isSignUpPermitted()) {
                 request__.getRequestDispatcher("/signup.jsp").forward(request__, response__);
                 break processSignup;
             }
+
+            SleepForSpam:
+            {
+                try {
+                    Thread.sleep(signUpSleep());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
             if (request__.getSession(false) == null) {
                 request__.getRequestDispatcher("/signup.jsp").forward(request__, response__);
                 request__.getSession();
@@ -129,10 +142,10 @@ final public class ServletSignup extends HttpServlet {
             /*Lets set session values in case signup fails and user does not require to fill all fields again.
             Remember though, we will never be using these values for persisting, as a conventioin.*/
             userSession_.setAttribute(Username, username);
-            userSession_.setAttribute(Password, "");
-            userSession_.setAttribute(Email, email);
-            userSession_.setAttribute(Gender, gender);
-            userSession_.setAttribute(DateOfBirth, dateOfBirth);
+            userSession_.setAttribute(Password, EMPTY);
+//            userSession_.setAttribute(Email, email);
+//            userSession_.setAttribute(Gender, gender);
+//            userSession_.setAttribute(DateOfBirth, dateOfBirth);
 
             Boolean allParametersNotOkFlag = Boolean.FALSE;
             /**
@@ -142,9 +155,14 @@ final public class ServletSignup extends HttpServlet {
             {
                 validate_username:
                 {
-                    if (username == null || username.equals("") || username.equals("null")) {/*username*/
+                    final Email eemail = new Email(username);
+                    if (username == null || username.equals(EMPTY) || username.equals(JS_NULL)) {/*username*/
                         userSession_.setAttribute(UsernameError, ErrorStatusTrue);
                         userSession_.setAttribute(UsernameErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0002"));
+                        allParametersNotOkFlag = Boolean.TRUE;
+                    } else if ((new Email(username).validate()) != 0) {
+                        userSession_.setAttribute(UsernameError, ErrorStatusTrue);
+                        userSession_.setAttribute(UsernameErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0007"));
                         allParametersNotOkFlag = Boolean.TRUE;
                     } else if (DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(username)) {
                         userSession_.setAttribute(UsernameError, ErrorStatusTrue);
@@ -158,57 +176,61 @@ final public class ServletSignup extends HttpServlet {
                 validate_password:
                 {
                     /*Do NOT put the password into the session.*/
-                    if (password == null || password.equals("") || password.equals("null")) {/*password*/
+                    if (password == null || password.equals(EMPTY) || password.equals(JS_NULL)) {/*password*/
                         userSession_.setAttribute(PasswordError, ErrorStatusTrue);
                         userSession_.setAttribute(PasswordErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0004"));
+                        allParametersNotOkFlag = Boolean.TRUE;
+                    } else if (new Password(password).validate() != 0) {
+                        userSession_.setAttribute(PasswordError, ErrorStatusTrue);
+                        userSession_.setAttribute(PasswordErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0008"));
                         allParametersNotOkFlag = Boolean.TRUE;
                     } else {
                         logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0007"));
                     }
                 }
 
-                validate_email:
-                {
-                    if (email == null || email.equals("") || email.equals("null")) {/*email*/
-                        userSession_.setAttribute(EmailError, ErrorStatusTrue);
-                        userSession_.setAttribute(EmailErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0002"));
-                        allParametersNotOkFlag = Boolean.TRUE;
-                    } else {
-                        logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0008"));
-                    }
-                }
-
-                validate_gender:
-                {
-                    if (gender == null || gender.equals("") || gender.equals("null")) {/*gender*/
-                        userSession_.setAttribute(GenderError, ErrorStatusTrue);
-                        userSession_.setAttribute(GenderErrorMsg, gender);
-                        allParametersNotOkFlag = Boolean.TRUE;
-                    }   else {
-                        logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0009"));
-                    }
-                }
-
-                validate_dateOfBirth:
-                {
-                    if (dateOfBirth == null || dateOfBirth.equals("") || dateOfBirth.equals("null")) {/*dateofbirth*/
-                        userSession_.setAttribute(DateOfBirthError, ErrorStatusTrue);
-                        userSession_.setAttribute(DateOfBirthErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0002"));
-                        allParametersNotOkFlag = Boolean.TRUE;
-                    } else {
-                        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD");
-                        try {
-                            sdf.parse(dateOfBirth);
-                            logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0010"));
-                            logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0010"));
-                        } catch (final ParseException e) {
-                            //logger.error("{}", e);
-                            userSession_.setAttribute(DateOfBirthError, ErrorStatusTrue);
-                            userSession_.setAttribute(DateOfBirthErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0005"));
-                            allParametersNotOkFlag = Boolean.TRUE;
-                        }
-                    }
-                }
+//                validate_email:
+//                {
+//                    if (email == null || email.equals("") || email.equals("null")) {/*email*/
+//                        userSession_.setAttribute(EmailError, ErrorStatusTrue);
+//                        userSession_.setAttribute(EmailErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0002"));
+//                        allParametersNotOkFlag = Boolean.TRUE;
+//                    } else {
+//                        logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0008"));
+//                    }
+//                }
+//
+//                validate_gender:
+//                {
+//                    if (gender == null || gender.equals("") || gender.equals("null")) {/*gender*/
+//                        userSession_.setAttribute(GenderError, ErrorStatusTrue);
+//                        userSession_.setAttribute(GenderErrorMsg, gender);
+//                        allParametersNotOkFlag = Boolean.TRUE;
+//                    }   else {
+//                        logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0009"));
+//                    }
+//                }
+//
+//                validate_dateOfBirth:
+//                {
+//                    if (dateOfBirth == null || dateOfBirth.equals("") || dateOfBirth.equals("null")) {/*dateofbirth*/
+//                        userSession_.setAttribute(DateOfBirthError, ErrorStatusTrue);
+//                        userSession_.setAttribute(DateOfBirthErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0002"));
+//                        allParametersNotOkFlag = Boolean.TRUE;
+//                    } else {
+//                        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD");
+//                        try {
+//                            sdf.parse(dateOfBirth);
+//                            logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0010"));
+//                            logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0010"));
+//                        } catch (final ParseException e) {
+//                            //logger.error("{}", e);
+//                            userSession_.setAttribute(DateOfBirthError, ErrorStatusTrue);
+//                            userSession_.setAttribute(DateOfBirthErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0005"));
+//                            allParametersNotOkFlag = Boolean.TRUE;
+//                        }
+//                    }
+//                }
             }
 
 
@@ -218,10 +240,13 @@ final public class ServletSignup extends HttpServlet {
             }
 
             try {
-                DB.getHumanCRUDHumanLocal(true).doCHuman(username, password, email, gender, dateOfBirth);
+                final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doCHuman(new HumanId(username), new Password(password), new Email(username));
+                if (r.returnStatus() != 0) {
+                    throw r.returnError();
+                }
             } catch (
                     @NOTE(note = "COINCIDENCE. ANOTHER USER SIGNED UP IN SAME NAME WHILE THIS USER WAS DOING IT.")
-                    final IllegalAccessException e) {
+                    final Throwable e) {
                 userSession_.setAttribute(UsernameError, ErrorStatusTrue);
                 userSession_.setAttribute(UsernameErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0001") + username);
                 request__.getRequestDispatcher("/signup.jsp").forward(request__, response__);
@@ -234,10 +259,15 @@ final public class ServletSignup extends HttpServlet {
 
     }
 
-    final private boolean isSignUpPermitted(){
-         return RBGet.getGlobalConfigKey("signUpEnabled") != null && RBGet.getGlobalConfigKey("signUpEnabled").equals("true");
+    final private boolean isSignUpPermitted() {
+        return RBGet.getGlobalConfigKey("signUpEnabled") != null && RBGet.getGlobalConfigKey("signUpEnabled").equals(TRUE);
+    }
+
+    final private int signUpSleep() {
+        return RBGet.getGlobalConfigKey("signUpSleep") != null ? Integer.parseInt(RBGet.getGlobalConfigKey("signUpSleep")) : 1;
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *

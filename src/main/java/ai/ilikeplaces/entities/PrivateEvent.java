@@ -7,7 +7,6 @@ import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,8 +53,8 @@ public class PrivateEvent {
     private Location location;
     final static public String locationCOL = "location";
 
-    private Album album;
-    final static public String albumCOL = "album";
+    private Album privateEventAlbum;
+    final static public String privateEventAlbumCOL = "privateEventAlbum";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -67,12 +66,24 @@ public class PrivateEvent {
         this.privateEventId = privateEventId;
     }
 
+    @Transient
+    public PrivateEvent setPrivateEventIdR(final Long privateEventId) {
+        setPrivateEventId(privateEventId);
+        return this;
+    }
+
     public String getPrivateEventName() {
         return privateEventName;
     }
 
     public void setPrivateEventName(String privateEventName) {
         this.privateEventName = privateEventName;
+    }
+
+    @Transient
+    public PrivateEvent setPrivateEventNameR(String privateEventName) {
+        setPrivateEventName(privateEventName);
+        return this;
     }
 
     public String getPrivateEventInfo() {
@@ -83,12 +94,24 @@ public class PrivateEvent {
         this.privateEventInfo = privateEventInfo;
     }
 
+    @Transient
+    public PrivateEvent setPrivateEventInfoR(String privateEventInfo) {
+        setPrivateEventInfo(privateEventInfo);
+        return this;
+    }
+
     public String getPrivateEventStartDate() {
         return privateEventStartDate;
     }
 
     public void setPrivateEventStartDate(String privateEventStartDate) {
         this.privateEventStartDate = privateEventStartDate;
+    }
+
+    @Transient
+    public PrivateEvent setPrivateEventStartDateR(String privateEventStartDate) {
+        setPrivateEventStartDate(privateEventStartDate);
+        return this;
     }
 
     public String getPrivateEventEndDate() {
@@ -99,12 +122,24 @@ public class PrivateEvent {
         this.privateEventEndDate = privateEventEndDate;
     }
 
+    @Transient
+    public PrivateEvent setPrivateEventEndDateR(String privateEventEndDate) {
+        setPrivateEventEndDate(privateEventEndDate);
+        return this;
+    }
+
     public Boolean isExtendedAccess() {
         return extendedAccess;
     }
 
     public void setExtendedAccess(Boolean extendedAccess) {
         this.extendedAccess = extendedAccess;
+    }
+
+    @Transient
+    public PrivateEvent setExtendedAccessR(Boolean extendedAccess) {
+        setExtendedAccess(extendedAccess);
+        return this;
     }
 
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
@@ -117,6 +152,12 @@ public class PrivateEvent {
         this.privateLocation = privateLocation;
     }
 
+    @Transient
+    public PrivateEvent setPrivateLocationR(PrivateLocation privateLocation) {
+        this.privateLocation = privateLocation;
+        return this;
+    }
+
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     public Location getLocation() {
@@ -127,14 +168,26 @@ public class PrivateEvent {
         this.location = location;
     }
 
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @OneToOne(cascade = CascadeType.ALL)
-    public Album getAlbum() {
-        return album;
+    @Transient
+    public PrivateEvent setLocationR(Location location) {
+        setLocation(location);
+        return this;
     }
 
-    public void setAlbum(Album album) {
-        this.album = album;
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
+    @OneToOne(cascade = CascadeType.ALL)
+    public Album getPrivateEventAlbum() {
+        return privateEventAlbum;
+    }
+
+    public void setPrivateEventAlbum(Album privateEventAlbum) {
+        this.privateEventAlbum = privateEventAlbum;
+    }
+
+    @Transient
+    public PrivateEvent setPrivateEventAlbumR(Album privateEventAlbum) {
+        this.privateEventAlbum = privateEventAlbum;
+        return this;
     }
 
     @WARNING(warning = "Owner because once an event needs to be deleted, deleting this entity is easier if owner." +

@@ -21,13 +21,12 @@ import java.util.List;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
 @CONVENTION(convention = "do all the possible needful9setters etc) before going into the transaction, via an intermediate method. saves resources. " +
         "why not let the caller do this? lets do the hard work. give the guy a break! besides, we can enforce him to give us required fields. this also " +
         "facilitates setting granular role permissions.")
-@Interceptors({DBOffilne.class, MethodTimer.class, MethodParams.class})
+@Interceptors({DBOffilne.class,ParamValidator.class, MethodTimer.class, MethodParams.class})
 final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements HumanCRUDPublicPhotoLocal {
 
     @EJB

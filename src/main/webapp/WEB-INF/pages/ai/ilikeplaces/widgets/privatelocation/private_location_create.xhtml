@@ -1,3 +1,39 @@
+<!--&lt;!&ndash;?xml version="1.0" encoding="windows-1252"?&ndash;&gt;-->
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">-->
+<!--<html xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<title>private_location_create</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="span-14 last nty" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">-->
+<!--<ul>-->
+<!--<li class="span-14 last black_fg">-->
+<!--<span class="black_fg">Create Your Private Location and Share It With Visitors</span>-->
+<!--<br/>-->
+<!--</li>-->
+<!--<li class="span-14 last black_fg">-->
+<!--<span id="PrivateLocationCreateTitle" class="black_fg"> </span>-->
+<!--</li>-->
+<!--<li class="span-14 last black_fg">-->
+<!--<span id="PrivateLocationCreateIntro" class="black_fg"> </span>-->
+<!--</li>-->
+<!--<li class="span-14 last black_fg">-->
+<!--<span id="PrivateLocationCreateNotice" class="black_fg"> </span>-->
+<!--</li>-->
+<!--<li class="span-14 last black_fg">-->
+<!--<input id="privateLocationCreateName"/>-->
+<!--</li>-->
+<!--<li class="span-14 last black_fg">-->
+<!--<input id="privateLocationCreateInfo"/>-->
+<!--</li>-->
+<!--<li class="span-14 last black_fg">-->
+<!--<input id="privateLocationCreateSave" type="button"/>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
 <!--?xml version="1.0" encoding="windows-1252"?-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">
@@ -6,22 +42,46 @@
 </head>
 <body>
 <div class="span-14 last nty" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
-    <ul>
+    <ul style="list-style-type:none;" class="span-14 last center">
         <li class="span-14 last black_fg">
-            <span class="black_fg">Create Your Private Location and Share It With Visitors</span>
-            <br/>
+            <h2><span id="PrivateLocationCreateTitle" class="span-14 last fg_orange bold vtip"
+                    title="By sharing this place, you can invite friends to events held here.<br/><br/>
+                        A place can have many events held throughout its' lifetime.<br/><br/>
+                        An example would be 'Home'. By creating a places called 'Home', <br/>
+                        you can hold many events at 'Home' and invite people to them.">Add a Place You Know</span></h2>
+            <div class="span-14 last">&nbsp;</div>
         </li>
         <li class="span-14 last black_fg">
-            <span id="privateLocationCreateNotice" class="black_fg"> </span>
+            <h3><span id="PrivateLocationCreateIntro" class="span-14 last fg_orange vtip"
+                    title="By sharing this place, you can invite friends to events held here.<br/><br/>
+                        A place can have many events held throughout its' lifetime.<br/><br/>
+                        An example would be 'Home'. By creating a places called 'Home', <br/>
+                        you can hold many events at 'Home' and invite people to them.">Choose Places, Start Events and InviteFriends</span></h3>
+            <div class="span-14 last">&nbsp;</div>
         </li>
         <li class="span-14 last black_fg">
-            <input id="privateLocationCreateName"/>
+            <span id="PrivateLocationCreateNotice" class="span-14 last black_fg"></span>
+            <div class="span-14 last">&nbsp;</div>
         </li>
         <li class="span-14 last black_fg">
-            <input id="privateLocationCreateInfo"/>
+            <div class="span-14 last"><h3>What is this place called?</h3></div>
+            <div class="span-14 last">&nbsp;</div>
+            <input class="span-6 prepend-4 append-4 last bold vtip" id="privateLocationCreateName"
+                    title="e.g. Our Place, Juice Shop, Club at St. Peters, Rulle's Church"/>
+            <div class="span-14 last">&nbsp;</div>
+            <div class="span-14 last">&nbsp;</div>
         </li>
         <li class="span-14 last black_fg">
-            <input id="privateLocationCreateSave" type="button"/>
+            <div class="span-14 last"><h3>Tell a bit more about this places</h3></div>
+            <div class="span-14 last">&nbsp;</div>
+            <input class="span-6 prepend-4 append-4 last bold vtip" id="privateLocationCreateInfo"
+                    title="e.g. Our usual meeting place, Near Aunt Lilly's"/>
+            <div class="span-14 last">&nbsp;</div>
+        </li>
+        <li class="span-14 last black_fg">
+            <div class="span-2 prepend-6 append-6 last">
+            <a href="#" id="privateLocationCreateSave" class="btn center">&nbsp;&nbsp;Create&nbsp;&nbsp;</a>
+            </div>
         </li>
     </ul>
 </div>

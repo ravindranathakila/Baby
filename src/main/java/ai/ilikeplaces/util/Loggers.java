@@ -14,9 +14,11 @@ import org.slf4j.LoggerFactory;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class Loggers {
     private static final String NULL = "null";
+    private static final UnsupportedOperationException UNSUPPORTED_OPERATION_EXCEPTION = new UnsupportedOperationException("Static usage only");
+    private static final String CAUSED = " caused ";
 
     private Loggers() {
-        throw new UnsupportedOperationException("Static usage only");
+        throw UNSUPPORTED_OPERATION_EXCEPTION;
     }
 
     /**
@@ -56,7 +58,11 @@ final public class Loggers {
      */
     final static public Logger WARN = LoggerFactory.getLogger("WARN");
 
-    final static public Object ifNullToString(final Object object) {
+    static public Object ifNullToString(final Object object) {
         return object != null ? object : NULL;
+    }
+
+    static public void userError(final String username, final String error) {
+        USER_EXCEPTION.error(username + CAUSED + error);
     }
 }

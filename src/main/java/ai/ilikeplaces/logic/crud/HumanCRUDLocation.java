@@ -18,10 +18,9 @@ import java.util.List;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@Interceptors({MethodTimer.class, MethodParams.class})
+@Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class})
 public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUDLocationLocal {
 
     @EJB
@@ -32,7 +31,7 @@ public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUD
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
     public Return<Location> dirtyRLocation(final String locationName, final String superLocationName) {
 
         Return<Location> r;
@@ -70,7 +69,7 @@ public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUD
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Location> doNTxRLocationsBySuperLocation(final Location locationSuperset) {
+    public List<Location> doDirtyRLocationsBySuperLocation(final Location locationSuperset) {
         return rLocationLocal_.doNTxRLocationsBySuperLocation(locationSuperset);
     }
 

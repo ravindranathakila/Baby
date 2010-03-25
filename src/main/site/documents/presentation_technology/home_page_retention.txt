@@ -1,0 +1,25 @@
+Approach 1:
+Prioritizing social network in home page and highly promoting signup.
+This means hotel booking retention from web traffic is moved towards other location based pages. 
+
+Taking from facebook,
+
+"Facebook helps you connect and share with the people in your life.
+ 
+Sign Up
+It's free and anyone can join"
+
+From glimpses on other social networks, the home page has too many stuff in them. This diverts the users attention.
+
+Let's try I LIKE PLACES. We shall go according to thinking lines.
+
+"This website helps you socialize with people... in real life... in real places... 
+
+Its free, and anyone who likes to socialize and have fun, can join. See below."
+
+Next requirement is, to lead to other services through the website.
+
+Expose most services through signup only, and, allow location browsing with a "sense of" not seeing everything because you didn't sign up.
+
+Some poeple will not have interest in other links, so the assumption is that the basic "big" widget will suffice. On the other hand, the other widgets will
+

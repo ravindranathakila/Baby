@@ -33,7 +33,6 @@ import java.util.Properties;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @FIXME(issue = "XSS")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @TODO(task = "USE A STATIC METHOD TO GET THE LOGGED ON USER INSTANCE.")
@@ -59,6 +58,8 @@ final public class ServletLogin extends HttpServlet {
     private SingletonHashingFace singletonHashingFace = null;
     private static final String HEADER_REFERER = "Referer";
 
+    final PageFace home = Page.home;
+    final PageFace signup = Page.signup;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -146,7 +147,7 @@ final public class ServletLogin extends HttpServlet {
 
                         Human loggedOnUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(request__.getParameter(Username));
                         if (loggedOnUser != null) {/*Ok user name valid but now we check for password*/
-                            final HumansAuthentication humansAuthentications = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(request__.getParameter(Username)));
+                            final HumansAuthentication humansAuthentications = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(request__.getParameter(Username))).returnValue();
 
 
                             if (humansAuthentications.getHumanAuthenticationHash().equals(singletonHashingFace.getHash(request__.getParameter(Password), humansAuthentications.getHumanAuthenticationSalt()))) {
@@ -154,8 +155,8 @@ final public class ServletLogin extends HttpServlet {
                                 humanUserLocal.setHumanUserId(request__.getParameter(Username));
                                 userSession_.setAttribute(HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_, true)));
                                 logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0001") + ((SessionBoundBadRefWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).boundInstance.getHumanUserId());
-                                Loggers.USER.info(humanUserLocal.getHumanUserId() + " logged in.");
-                                response__.sendRedirect(request__.getHeader(HEADER_REFERER));
+                                final String referer = request__.getHeader(HEADER_REFERER);
+                                response__.sendRedirect(!referer.contains("signup") ? referer : home.getURL());
                                 break doLogin;/*This is unnecessary but lets not leave chance for introducing bugs*/
                             } else {/*Ok password wrong. What do we do with this guy? First lets make his session object null*/
                                 userSession_.invalidate();
@@ -170,10 +171,9 @@ final public class ServletLogin extends HttpServlet {
                             break doLogin;
                         }
 
-                    } catch (NamingException ex) {
-                        logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0004"), ex);
-                        final PageFace signup = Page.signup;
-                        response__.sendRedirect(signup.toString());
+                    } catch (final Exception ex) {
+                        logger.error(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0004"), ex);
+                        response__.sendRedirect(request__.getHeader(HEADER_REFERER));
                         break doLogin;
                     }
                 } else {/*Why was the user sent here without either username or password or both(by the page)? Send him back!*/

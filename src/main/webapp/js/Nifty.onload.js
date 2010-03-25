@@ -1,5 +1,5 @@
 window.onload=function(){
-    Nifty("div.ntyBH","big same-height");
+    //Nifty("div.ntyBH","big same-height");
     Nifty("div.ntyB","big");
     Nifty("div.ntyBT","big top");
     Nifty("div.ntyBTL","big tl");
