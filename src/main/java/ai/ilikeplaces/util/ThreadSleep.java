@@ -16,7 +16,7 @@ public class ThreadSleep {
     static public void sleep(final long durationToSleepMillis){
         try {
             Thread.sleep(durationToSleepMillis);
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
             Loggers.WARN.warn(THREAD_SLEEP_FAILED);
         }
     }
