@@ -19,7 +19,7 @@ import java.io.Serializable;
 @EntityListeners(EntityLifeCycleListener.class)
 public class Human extends HumanEquals implements HumanIdFace, Serializable, Clearance, HumansFriend {
 
-    private String humanId;
+    public String humanId;
 
     /**
      * If the user is not active on the site, he is considered dead and the
@@ -27,19 +27,19 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
      * The motivation is to get all humansAlive to be true on ilikeplaces.com:-)
      * Important: This is also the switch for the privacy policy.
      */
-    private Boolean humanAlive;
+    public Boolean humanAlive;
 
-    private Long clearance = 0L;
+    public Long clearance = 0L;
 
 
-    private HumansAuthentication humansAuthentication;
-    private HumansIdentity humansIdentity;
-    private HumansPublicPhoto humansPublicPhoto;
-    private HumansPrivatePhoto HumansPrivatePhoto;
-    private HumansNet humansNet;
-    private HumansPrivateLocation humansPrivateLocation;
-    private HumansPrivateEvent humansPrivateEvent;
-    private HumansAlbum humansAlbum;
+    public HumansAuthentication humansAuthentication;
+    public HumansIdentity humansIdentity;
+    public HumansPublicPhoto humansPublicPhoto;
+    public HumansPrivatePhoto HumansPrivatePhoto;
+    public HumansNet humansNet;
+    public HumansPrivateLocation humansPrivateLocation;
+    public HumansPrivateEvent humansPrivateEvent;
+    public HumansAlbum humansAlbum;
 
     @Id
     public String getHumanId() {

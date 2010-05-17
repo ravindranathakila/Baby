@@ -23,37 +23,37 @@ public class PublicPhoto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long publicPhotoId = null;
+    public Long publicPhotoId = null;
 
-    private String publicPhotoFilePath;
+    public String publicPhotoFilePath;
 
     @FieldPreamble(description = "The path should be very random as it will be exposed to the www." +
             "Also make sure this supports good SEO.")
-    private String publicPhotoURLPath;
+    public String publicPhotoURLPath;
 
-    private String publicPhotoName;
+    public String publicPhotoName;
 
-    private String publicPhotoDescription;
+    public String publicPhotoDescription;
 
     @FieldPreamble(description = "Required to calculate ranking")
-    private Date publicPhotoUploadDate;
+    public Date publicPhotoUploadDate;
 
     @FieldPreamble(description = "Required to calculate rank position")
-    private Date publicPhotoTakenDate;
+    public Date publicPhotoTakenDate;
 
     @FieldPreamble(description = "Required to calculate rank position")
-    private Long publicPhotoRankUnits;
+    public Long publicPhotoRankUnits;
 
     @FieldPreamble(description = "Required to calculate rank position")
-    private Long publicPhotoRankTurns;
+    public Long publicPhotoRankTurns;
 
     @FieldPreamble(description = "Required when rebuilding a database from scratch someday." +
             "Since the whole concept of ilikeplaces relies on content richness, preserving this in this table important.")
-    private Location location;
+    public Location location;
     final static public String locationCOL = "location";
 
     @FieldPreamble(description = "Who uploaded this image? Will he request to delete it?")
-    private HumansPublicPhoto humansPublicPhoto;
+    public HumansPublicPhoto humansPublicPhoto;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

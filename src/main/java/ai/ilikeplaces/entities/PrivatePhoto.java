@@ -18,31 +18,31 @@ import java.util.List;
 public class PrivatePhoto implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private Long privatePhotoId;
+    public Long privatePhotoId;
 
     @FieldPreamble(description = "CDN security issue. Put in folders?")
-    private String privatePhotoFilePath;
+    public String privatePhotoFilePath;
 
     @FieldPreamble(description = "The path should be very random as it will be exposed to the www." +
             "Also make sure this supports good SEO.")
-    private String privatePhotoURLPath;
+    public String privatePhotoURLPath;
 
-    private String privatePhotoName;
+    public String privatePhotoName;
 
-    private String privatePhotoDescription;
-
-    @FieldPreamble(description = "Required to show users")
-    private Date privatePhotoUploadDate;
+    public String privatePhotoDescription;
 
     @FieldPreamble(description = "Required to show users")
-    private Date privatePhotoTakenDate;
+    public Date privatePhotoUploadDate;
+
+    @FieldPreamble(description = "Required to show users")
+    public Date privatePhotoTakenDate;
 
     @FieldPreamble(description = "Who uploaded this image? Wil he request to delete it? " +
             "Privacy important? " +
             "Lets preserve the info.")
-    private HumansPrivatePhoto humansPrivatePhoto;
+    public HumansPrivatePhoto humansPrivatePhoto;
 
-    private List<Album> albums;
+    public List<Album> albums;
     final static public String albumsCol = "albums";
 
     @Id

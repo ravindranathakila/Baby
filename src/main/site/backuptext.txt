@@ -1,0 +1,1756 @@
+
+                                        <script language="JavaScript" For="window" Event="onload">
+                                        <!--
+                                        if(indexSelect[0].checked){indexSelect[0].click();}else if(indexSelect[1].checked){indexSelect[1].click();}else if(indexSelect[2].checked){indexSelect[2].click();}
+                                        else if(indexSelect[3].checked){indexSelect[3].click();}
+                                        if (indexSelect[1].checked) {
+                                        if(document.hotForm && document.hotForm.cityText) {
+                                        document.hotForm.cityText.focus();
+                                        }
+                                        }
+                                        //-->
+                                        </script>
+
+                                        <script language="javascript">
+                                        <!--
+                                        /* state = 1 - show element
+                                           state = 0 - hide element
+                                        */
+                                        function toggleDiv(divID, state){
+                                            if(document.layers){ //netscape 4+
+
+                                               document.layers[divID].visibility = state ? "show" : "hide";
+                                               document.layers[divID].display = state ? "block" : "none";
+
+                                            } else if(document.getElementById) { //netscape 6 internetExplorer 5+
+
+                                                document.getElementById(divID).style.visibility = state ? "visible" : "hidden";
+                                                document.getElementById(divID).style.display = state ? "block" : "none";
+
+                                            } else {    //Internet Explorer 4
+
+                                                document.all[divID].style.visibility = state ? "visible" : "hidden";
+                                                document.all[divID].style.display = state ? "block" : "none";
+
+                                            }
+                                        }
+
+                                            function isBrowserSupp() {
+                                                // Get the version of the browser
+                                                version =  parseFloat( navigator.appVersion );
+
+                                                if ( ( version >= 2.0 ) && ( version < 2.1 ) && ( navigator.appName.indexOf( "Netscape" ) != -1 ) ) {
+                                                    return false;
+                                                } else {
+                                                    return true;
+                                                }
+
+                                                return true;
+                                            }
+
+                                            function isLeapYear( yrStr ) {
+                                                var leapYear = false;
+                                                var year = parseInt( yrStr, 10 );
+                                                // every fourth year is a leap year
+                                                if ( year % 4 == 0 ) {
+                                                    leapYear = true;
+                                                    // unless it's a multiple of 100
+                                                    if( year % 100 == 0 ) {
+                                                        leapYear = false;
+                                                        // unless it's a multiple of 400
+                                                        if( year % 400 == 0 ) {
+                                                            leapYear=true;
+                                                        }
+                                                    }
+                                                }
+                                                return leapYear;
+                                            }
+
+                                            function getDaysInMonth( mthIdx, YrStr ) {
+                                                // all the rest have 31
+                                                var maxDays = 31
+                                                // expect Feb. (of course)
+                                                if( mthIdx == 1 ) {
+                                                    if( isLeapYear( YrStr ) ) {
+                                                        maxDays=29;
+                                                    } else {
+                                                        maxDays=28;
+                                                    }
+                                                }
+
+                                                // thirty days hath...
+                                                if( mthIdx == 3 || mthIdx == 5 || mthIdx == 8 || mthIdx == 10 ) {
+                                                    maxDays=30;
+                                                }
+                                                return maxDays;
+                                            }
+
+                                            function displayHotel(){
+                                                toggleDiv('hotelTable', 1);
+                                                toggleDiv('carTable', 0);
+                                                toggleDiv('flightTable', 0);
+                                                toggleDiv('cruiseTable', 0);
+
+                                                document.getElementById('air').checked=false;
+                                                document.getElementById('car').checked=false;
+                                                document.getElementById('hotel').checked=true;
+                                                document.getElementById('cruise').checked=false;
+                                                }
+
+                                                function displayCar(){
+                                                toggleDiv('hotelTable', 0);
+                                                toggleDiv('carTable', 1);
+                                                toggleDiv('flightTable', 0);
+                                                toggleDiv('cruiseTable', 0);
+
+                                                document.getElementById('air').checked=false;
+                                                document.getElementById('car').checked=true;
+                                                document.getElementById('hotel').checked=false;
+                                                document.getElementById('cruise').checked=false;
+                                                }
+
+                                                function displayCruise(){
+                                                toggleDiv('hotelTable', 0);
+                                                toggleDiv('carTable', 0);
+                                                toggleDiv('flightTable', 0);
+                                                toggleDiv('cruiseTable', 1);
+
+                                                document.getElementById('air').checked=false;
+                                                document.getElementById('car').checked=false;
+                                                document.getElementById('hotel').checked=false;
+                                                document.getElementById('cruise').checked=true;
+                                                }
+
+                                                function displayFlight(){
+                                                toggleDiv('hotelTable', 0);
+                                                toggleDiv('carTable', 0);
+                                                toggleDiv('flightTable', 1);
+                                                toggleDiv('cruiseTable', 0);
+
+                                                document.getElementById('air').checked=true;
+                                                document.getElementById('car').checked=false;
+                                                document.getElementById('hotel').checked=false;
+                                                document.getElementById('cruise').checked=false;
+                                                }
+
+                                            //the function which does some magic to the date fields
+                                            // return non-zero if it is the last day of the month
+                                            function adjustDate( mthIdx, Dt ) {
+                                                var value = 0;
+
+                                                var today = new Date()
+                                                var theYear = parseInt( today.getYear(), 10 )
+
+                                                if( mthIdx < today.getMonth() ) {
+                                                    theYear = ( parseInt( today.getYear(), 10 ) + 1 )
+                                                }
+                                                if( theYear < 100 ) {
+                                                    theYear = "19" + theYear
+                                                } else {
+                                                    if( ( theYear - 100 ) < 10 ) {
+                                                        theYear = "0" + ( theYear - 100 )
+                                                    } else {
+                                                        theYear = ( theYear - 100 ) + ""
+                                                    }
+                                                    theYear = "20" + theYear
+                                                }
+
+
+                                                var numDays = getDaysInMonth( mthIdx, theYear );
+
+                                                if( mthIdx == 1 ) {
+                                                    if( Dt.options.selectedIndex + 1 < numDays ) {
+                                                        return 0;
+                                                    } else {
+                                                        Dt.options.selectedIndex=numDays - 1;
+                                                        //check for leap year
+                                                        if( numDays == 29 ) {
+                                                            return 99;
+                                                        } else {
+                                                            return 1;
+                                                        }
+                                                    }
+                                                }
+
+                                                if( Dt.options.selectedIndex + 1 < numDays ) {
+                                                    value = 0;
+                                                } else {
+                                                    if ( Dt.options.selectedIndex + 1 > numDays ) {
+                                                        Dt.options.selectedIndex--;
+                                                        value = 3;
+                                                    } else {
+                                                        //index is 31 or 30
+                                                        value = 2;
+                                                    }
+                                                }
+                                                return value;
+                                            }
+
+                                            //changes departure month when arrival month is changed
+                                            function amadChange( inM, inD, outM, outD ) {
+                                                if ( !isBrowserSupp() ) {
+                                                    return;
+                                                }
+
+                                                var res = adjustDate( inM.options.selectedIndex, inD );
+                                                if( res != 0 ) {
+                                                       outD.options.selectedIndex = 0;
+                                                       if ( outM.options.selectedIndex == 11 ) {
+                                                            outM.options.selectedIndex = 0
+                                                       } else {
+                                                            outM.options.selectedIndex=inM.options.selectedIndex + 1;
+                                                            outD.options.selectedIndex = 1;
+                                                       }
+                                                } else {
+                                                    outM.options.selectedIndex = inM.options.selectedIndex;
+                                                    if (outD.options.selectedIndex <= inD.options.selectedIndex) {
+                                                        outD.options.selectedIndex = inD.options.selectedIndex + 2;
+                                                    }
+                                                }
+                                                return;
+                                            }
+
+
+                                            function dmddChange( outM, outD ) {
+                                                if ( !isBrowserSupp() ) {
+                                                    return;
+                                                }
+
+                                                adjustDate( outM.options.selectedIndex, outD );
+                                                return;
+                                            }
+
+
+
+                                         function OpenWindow(file, name, width, height) {
+                                                OpenWindow(file, name, width, height, false);
+                                            }
+
+                                            function OpenWindow(file, name, width, height, showLeftTopScrollbar) {
+                                                var attr = "";
+                                                if(showLeftTopScrollbar) {
+                                                    attr += "top=50,left=50,scrollbars=1,";
+                                                }
+                                                attr += "width=" + width + ",height=" + height + ",resizeable=1";
+                                                window.open(file, name, attr);
+                                            }
+
+                                           function loadDefaultDates() {
+                                                var airArrival = new Date();
+                                                var airDeparture = new Date();
+                                                var carArrival = new Date();
+                                                var carDeparture = new Date();
+                                                var hotelArrival = new Date();
+                                                var hotelDeparture = new Date();
+
+                                                var hotelAdvanceArrival = 21;
+                                                var hotelAdvanceDeparture = 23;
+                                                var carAdvanceArrival = 7;
+                                                var carAdvanceDeparture = 8;
+                                                var airAdvanceArrival = 14;
+                                                var airAdvanceDeparture = 15;
+
+                                                airArrival.setDate( airArrival.getDate() + airAdvanceArrival );
+                                                airDeparture.setDate( airDeparture.getDate() + airAdvanceDeparture );
+                                                carArrival.setDate( carArrival.getDate() + carAdvanceArrival );
+                                                carDeparture.setDate( carDeparture.getDate() + carAdvanceDeparture );
+                                                hotelArrival.setDate( hotelArrival.getDate() + hotelAdvanceArrival );
+                                                hotelDeparture.setDate( hotelDeparture.getDate() + hotelAdvanceDeparture );
+
+                                                document.forms['airForm'].departureMonth.value = airArrival.getMonth();
+                                                document.forms['airForm'].returnMonth.value = airDeparture.getMonth();
+                                                document.forms['airForm'].departureDay.value = airArrival.getDate();
+                                                document.forms['airForm'].returnDay.value = airDeparture.getDate();
+
+                                                document.forms['carForm'].pickUpMonth.value = carArrival.getMonth();
+                                                document.forms['carForm'].dropOffMonth.value = carDeparture.getMonth();
+                                                document.forms['carForm'].pickUpDay.value = carArrival.getDate();
+                                                document.forms['carForm'].dropOffDay.value = carDeparture.getDate();
+
+                                                document.forms['hotForm'].arrivalMonth.value = hotelArrival.getMonth();
+                                                document.forms['hotForm'].departureMonth.value = hotelDeparture.getMonth();
+                                                document.forms['hotForm'].arrivalDay.value = hotelArrival.getDate();
+                                                document.forms['hotForm'].departureDay.value = hotelDeparture.getDate();
+
+                                            }
+
+                                            function validateDepWindow(formName) {
+                                                if (document.forms[formName].tempDepTime[document.forms[formName].tempDepTime.selectedIndex].value==('M')) {
+                                                    window.document.forms[formName].tripWindow.value='5';
+                                                    window.document.forms[formName].departureTime.value='7AM';
+                                                } else if (document.forms[formName].tempDepTime[document.forms[formName].tempDepTime.selectedIndex].value==('A')) {
+                                                    window.document.forms[formName].tripWindow.value='5';
+                                                    window.document.forms[formName].departureTime.value='3PM';
+                                                } else if (document.forms[formName].tempDepTime[document.forms[formName].tempDepTime.selectedIndex].value==('E')) {
+                                                    window.document.forms[formName].tripWindow.value='5';
+                                                    window.document.forms[formName].departureTime.value='8PM';
+                                                } else if(document.forms[formName].tempDepTime[document.forms[formName].tempDepTime.selectedIndex].value==('ANT')) {
+                                                    window.document.forms[formName].tripWindow.value='9';
+                                                    window.document.forms[formName].departureTime.value='12PM';
+                                                } else {
+                                                    window.document.forms[formName].tripWindow.value='5';
+                                                    window.document.forms[formName].departureTime.value=document.forms[formName].tempDepTime.value;
+                                                }
+                                            }
+
+                                            function validateRetWindow(formName) {
+                                                if (document.forms[formName].tempRetTime[document.forms[formName].tempRetTime.selectedIndex].value==('M')) {
+                                                    window.document.forms[formName].returnTime.value='7AM';
+                                                } else if (document.forms[formName].tempRetTime[document.forms[formName].tempRetTime.selectedIndex].value==('A')) {
+                                                    window.document.forms[formName].returnTime.value='3PM';
+                                                } else if (document.forms[formName].tempRetTime[document.forms[formName].tempRetTime.selectedIndex].value==('E')) {
+                                                    window.document.forms[formName].returnTime.value='8PM';
+                                                } else if(document.forms[formName].tempRetTime[document.forms[formName].tempRetTime.selectedIndex].value==('ANT')) {
+                                                    window.document.forms[formName].returnTime.value='12PM';
+                                                } else {
+                                                    window.document.forms[formName].returnTime.value=window.document.forms[formName].tempRetTime.value;
+                                                }
+                                                   }
+
+                                        -->
+                                        </script>
+
+
+                                        <script langauage="javascript">
+                                        <!--
+                                        function update(themonth,theday){
+                                            document.forms[fName].elements[formType+'Day'].options[theday - 1].selected = true;
+                                            document.forms[fName].elements[formType+'Month'].options[themonth].selected = true;
+
+                                            testWindow.close();
+                                        }
+
+
+                                        function loadCalendar(viewMonth) {
+
+
+                                                testWindow.document.close();
+                                                testWindow.document.open();
+
+
+                                                var day_of_week = new Array("Sun","Mon","Tue","Wed","Thu","Fri","Sat");
+                                                var month_of_year = new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+
+                                                var dateObj = new Date();
+                                                var year = dateObj.getYear();	 // Returns year
+                                                var month = dateObj.getMonth();  // Returns month (0-11)
+                                                var today = dateObj.getDate();   // Returns day (1-31)
+                                                var weekday = dateObj.getDay();  // Returns day (1-31)
+
+                                                var DAYS_OF_WEEK = 7;   // "constant" for number of days in a week
+                                                var DAYS_OF_MONTH = 31; // "constant" for number of days in a month
+                                                var cal;                // Used for printing
+
+                                                if (viewMonth < month) {
+                                                        year = year + 1;
+                                                }
+
+                                                if(year < 1900){
+                                                        year += 1900; //done to solve the problem of netscape and mozilla returning year in form 10X for years > 2000
+                                                }
+
+                                                month = viewMonth;
+                                                dateObj.setDate(1);      // Start the calendar day at '1'
+                                                dateObj.setMonth(month); // Start the calendar month at now
+                                                dateObj.setYear((year));
+
+                                                // VARIABLES FOR FORMATTING
+                                                var TR_start = '<TR>';
+                                                var TR_end = '</TR>';
+                                                var highlight_start = '<TD WIDTH="30"><TABLE CELLSPACING=0 BORDER=1 BGCOLOR=DEDEFF BORDERCOLOR=CCCCCC><TR><TD WIDTH=20><B><CENTER>';
+                                                var highlight_end   = '</CENTER></TD></TR></TABLE></B>';
+                                                var TD_start = '<TD WIDTH="30"><CENTER>';
+                                                var TD_end = '</CENTER></TD>';
+                                                var prevM = month - 1;
+                                                var nextM = month + 1;
+
+                                                if (nextM == 12) {
+                                                        nextM = 0;
+                                                }
+
+                                                if (prevM == -1) {
+                                                        prevM = 11;
+                                                }
+
+                                                // BEGIN CODE FOR CALENDAR
+                                                cal =  '<html><head><title>Calendar</title></head><body>';
+                                                cal += "<style>a:link{cursor: hand}a:active{cursor: hand}a:hover{cursor: hand}a:visited{cursor: hand}body{cursor: default}</style>";
+
+                                            cal += '<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="0" BORDERCOLOR="BBBBBB" width="100%" height="200"><TR><TD>';
+                                                cal += '<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="2" width="100%">' + TR_start;
+                                                cal += '<TD COLSPAN="' + DAYS_OF_WEEK + '" BGCOLOR="#EFEFEF"><CENTER><B>';
+                                                cal += month_of_year[month]  + '   ' + year + '</B>' + TD_end + TR_end;
+                                                cal += TR_start;
+
+                                            ///////////////////////////////////
+                                            // DO NOT EDIT BELOW THIS POINT  //
+                                            ///////////////////////////////////
+
+                                                // LOOPS FOR EACH DAY OF WEEK
+                                                for(index=0; index < DAYS_OF_WEEK; index++) {
+                                                // PRINTS DAY
+                                                cal += TD_start + day_of_week[index] + TD_end;
+                                                }
+
+                                                cal += TD_end + TR_end;
+                                                cal += TR_start;
+
+                                                // FILL IN BLANK GAPS UNTIL TODAY'S DAY
+                                                for(index=0; index < dateObj.getDay(); index++) {
+                                                    cal += TD_start + '  ' + TD_end;
+                                            }
+
+                                                // LOOPS FOR EACH DAY IN CALENDAR
+                                            for(index=0; index < DAYS_OF_MONTH; index++) {
+                                                if( dateObj.getDate() > index ) {
+                                                    // RETURNS THE NEXT DAY TO PRINT
+                                                    week_day =dateObj.getDay();
+
+                                                    // START NEW ROW FOR FIRST DAY OF WEEK
+                                                    if(week_day == 0) {
+                                                        cal += TR_start;
+                                                    }
+
+                                                    if(week_day != DAYS_OF_WEEK) {
+                                                        // SET VARIABLE INSIDE LOOP FOR INCREMENTING PURPOSES
+                                                        var day  = dateObj.getDate();
+
+                                                        // PRINTS DAY
+                                                        cal += TD_start + "<span onclick='window.opener.update(" + month + "," + day + ")' style='cursor:hand;font-weight:bold;background:#EFEFEF;width:22px;'>" + day + "</span>" + TD_end;
+                                                    }
+
+                                                    // END ROW FOR LAST DAY OF WEEK
+                                                    if(week_day == DAYS_OF_WEEK) {
+                                                        cal += TR_end;
+                                                    }
+                                                }
+
+                                                // INCREMENTS UNTIL END OF THE MONTH
+                                                dateObj.setDate(dateObj.getDate()+1);
+
+                                            }// end for loop
+
+                                                cal += '</td></TR></TABLE></TABLE><br/>';
+                                            cal += '<div align="center"><a href="javascript:" onClick="window.opener.loadCalendar(' + prevM + ');">&lt;&lt;</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+                                                cal += '<a href="javascript:" onClick="window.opener.loadCalendar(' + nextM + ');">&gt;&gt;</a><br/><br/></div>';
+                                                cal += '<div align="right"><a href="javascript:window.close();">close</a></div>';
+                                                cal += '</body></html>';
+
+                                                //  PRINT CALENDAR
+                                                testWindow.document.write(cal);
+                                        }
+
+                                        var testWindow;
+                                        var formType;
+                                        var fName;
+
+                                        function openCalendar(formName,type) {
+                                                formType=type;
+                                                fName=formName;
+                                                testWindow = window.open('','dates','width=360,height=300,resizable=1,status=1,menubar=0,location=0');
+                                                loadCalendar(document.forms[fName].elements[formType+'Month'].selectedIndex);
+                                        }
+                                        //-->
+                                        </script>
+                                        <script language="JavaScript">
+                                        <!--
+                                        function groups(form) {
+                                            if (form.numberOfRooms.selectedIndex == 8) {
+                                                window.location="http://travel.ian.com/index.jsp?pageName=groups&cid=317285";
+                                                return false;
+                                            }
+                                            return submitGuestInfoForm(form);
+                                        }
+                                        -->
+                                        </script>
+
+                                        <!--<style>-->
+                                        <!--body,td,input,select {color:#000;font-size:11px;font-family:Arial,Helvetica,sans-serif;}-->
+                                        <!--.search-bold {color: #0d477f;font-weight:bold;font-size:12px;}-->
+                                        <!--.button {background-image: url(http://affiliate.travelnow.com/searchboximages/btn-green-bg.gif); color: #FFFFFF; font-weight: bold; font-size: 11px;border-bottom:none;border-top:none;border-left:none;border-right:none;height:16px;cursor:hand}-->
+                                        <!--.bannerborder {border: solid 1px #000000;}-->
+                                        <!--.switcheroo-border { background: #EEF3F9; border: solid 1px #0D447F;}-->
+                                        <!--a {color:#000000}-->
+                                        <!--</style>-->
+
+
+
+                                        <!-- switcheroo-->
+                                        <img src="http://affiliate.travelnow.com/searchboximages/images/i18n/en_switcheroo_tab.gif" border="0"/><br/>
+                                        <table cellspacing="0" cellpadding="0" border="0" width="442" class="switcheroo-border">
+                                            <tr>
+                                                <td><img src="http://affiliate.travelnow.com/searchboximages/p.gif" height="230" width="7" border="0"/></td>
+                                                <td width="428" align="center" valign="top">
+
+                                                    <div><img src="http://affiliate.travelnow.com/searchboximages/p.gif" height="7" width="100%" border="0"/></div>
+                                                    <div align="center">
+                                                        <table cellspacing=0 cellpadding="0" border="0" width="280">
+                                                            <tr>
+                                                                <td width="60" align="center" colspan="2"><a href="javascript:displayFlight();"><img src="http://affiliate.travelnow.com/searchboximages/launch-flights-icon.gif" border="0" alt="Flights"/></a></td>
+                                                                <td width="33"><img src="http://affiliate.travelnow.com/searchboximages/p.gif" height="1" width="50"/></td>
+                                                                <td width="60" align="center" colspan="2"><a href="javascript:displayHotel();"><img src="http://affiliate.travelnow.com/searchboximages/launch-hotels-icon.gif" border="0" alt="Hotels"/></a></td>
+                                                                <td width="33"><img src="http://affiliate.travelnow.com/searchboximages/p.gif" height="1" width="50"/></td>
+                                                                <td width="60" align="center" colspan="2"><a href="javascript:displayCar();"><img src="http://affiliate.travelnow.com/searchboximages/launch-cars-icon.gif" border="0" alt="Cars"/></a></td>
+                                                                <td width="33"><img src="http://affiliate.travelnow.com/searchboximages/p.gif" height="1" width="50"/></td>
+                                                                <td width="60" align="center" colspan="2"><a href="javascript:displayCruise();"><img src="http://affiliate.travelnow.com/searchboximages/launch-cruises-icon.gif" border="0" alt="Cruise"/></a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td width="5"><input type="radio" onClick="javascript:displayFlight();" name="indexSelect" id="air"/></td><td valign="middle"><a href="javascript:displayFlight();" class="search-link">Flights</a></td>
+                                                                <td width="33"><img src="http://affiliate.travelnow.com/searchboximages/p.gif" height="1" width="50"/></td>
+                                                                <td width="5"><input type="radio" checked onClick="javascript:displayHotel();" name="indexSelect" checked id="hotel"/></td><td valign="middle"><a href="javascript:displayHotel();" class="search-link">Hotels</a></td>
+                                                                <td width="33"><img src="http://affiliate.travelnow.com/searchboximages/p.gif" height="1" width="50"/></td>
+                                                                <td width="5"><input type="radio" onClick="javascript:displayCar();" name="indexSelect" id="car"/></td><td valign="middle"><a href="javascript:displayCar();" class="search-link">Cars</a></td>
+                                                                <td width="33"><img src="http://affiliate.travelnow.com/searchboximages/p.gif" height="1" width="50"/></td>
+                                                                <td width="5"><input type="radio" onClick="javascript:displayCruise();" name="indexSelect" id="cruise"/></td><td valign="middle"><a href="javascript:displayCruise();" class="search-link">Cruises</a></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div><img src="http://affiliate.travelnow.com/searchboximages/p.gif" height="7" width="100%" border="0"/></div>
+                                                    <!-- change tables -->
+
+                                                    <!-- HOTEL -->
+                                                    <div style="display:block;visibility:visible" id="hotelTable">
+                                                        <form Action="http://travel.ian.com/index.jsp" onSubmit="javascript: return groups(this);" METHOD="POST" NAME="hotForm" style="margin:0px;">
+                                                            <input type="hidden" name="pageName" value="hotSearch"/>
+                                                            <input type="hidden" name="cid" value="317285"/>
+                                                            <input type="hidden" name="locale" value="en_US"/>
+
+                                                            <input type="hidden" name="submitted" value="true"/>
+                                                            <input type="hidden" name="validateCity" value="true"/>
+                                                            <input type="hidden" name="avail" value="true"/>
+                                                            <input type="hidden" name="passThrough" value="true"/>
+                                                            <input type="hidden" name="passThrough2" value="true"/>
+                                                            <input type=hidden name="isHotels" value="true"/>
+                                                            <input type=hidden name="isCondos" value="false"/>
+                                                            <input type=hidden name="showCondos" value="true"/>
+                                                            <input type=hidden name="showHotels" value="true"/>
+                                                            <input type=hidden name="mode" value="2"/>
+                                                            <input type=hidden name="netOnly" value="false"/>
+                                                            <input type=hidden name="firstSearch" value="true"/>
+                                                            <input type=hidden name="isAdvancedSearch" value="false"/>
+                                                            <input type=hidden name="specials" value="false"/>
+                                                            <input type=hidden name="showPopUp" value="true"/>
+                                                            <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                                <tr>
+                                                                    <td>
+                                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                            <tr>
+                                                                                <td class="search-bold">Search for Hotels</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                                                                            <tr>
+                                                                                <td>Destination City:<br/><input type="text" size="24" name="city"/></td>
+                                                                                <td>Search by Property Type:<br/><select name="propertyType"><option value="A">All Properties</option><option value="C">Only Vacation Rentals</option></select> </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Check in:<br/><table cellpadding="2" cellspacing="0" border="0">
+                                                                                        <tr>
+
+                                                                                            <td>
+                                                                                                <select name="arrivalMonth" onchange="javascript:amadChange(document.hotForm.arrivalMonth, document.hotForm.arrivalDay, document.hotForm.departureMonth, document.hotForm.departureDay);">
+
+
+                                                                                                    <option value=0>January</option>
+                                                                                                    <option value=1>February</option>
+                                                                                                    <option value=2>March</option>
+                                                                                                    <option value=3>April</option>
+                                                                                                    <option value=4>May</option>
+                                                                                                    <option value=5>June</option>
+                                                                                                    <option value=6>July</option>
+                                                                                                    <option value=7>August</option>
+                                                                                                    <option value=8>September</option>
+                                                                                                    <option value=9>October</option>
+                                                                                                    <option value=10>November</option>
+                                                                                                    <option value=11>December</option>
+
+
+                                                                                                </select>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <select name="arrivalDay" onchange="amadChange(document.hotForm.arrivalMonth, document.hotForm.arrivalDay, document.hotForm.departureMonth, document.hotForm.departureDay)">
+                                                                                                    <option value=1>1</option>
+                                                                                                    <option value=2>2</option>
+                                                                                                    <option value=3>3</option>
+                                                                                                    <option value=4>4</option>
+                                                                                                    <option value=5>5</option>
+                                                                                                    <option value=6>6</option>
+                                                                                                    <option value=7>7</option>
+                                                                                                    <option value=8>8</option>
+                                                                                                    <option value=9>9</option>
+                                                                                                    <option value=10>10</option>
+                                                                                                    <option value=11>11</option>
+                                                                                                    <option value=12>12</option>
+                                                                                                    <option value=13>13</option>
+                                                                                                    <option value=14>14</option>
+                                                                                                    <option value=15>15</option>
+                                                                                                    <option value=16>16</option>
+                                                                                                    <option value=17>17</option>
+                                                                                                    <option value=18>18</option>
+                                                                                                    <option value=19>19</option>
+                                                                                                    <option value=20>20</option>
+                                                                                                    <option value=21>21</option>
+                                                                                                    <option value=22>22</option>
+                                                                                                    <option value=23>23</option>
+                                                                                                    <option value=24>24</option>
+                                                                                                    <option value=25 selected>25</option>
+                                                                                                    <option value=26>26</option>
+                                                                                                    <option value=27>27</option>
+                                                                                                    <option value=28>28</option>
+                                                                                                    <option value=29>29</option>
+                                                                                                    <option value=30>30</option>
+                                                                                                    <option value=31>31</option>
+                                                                                                </select>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <a href="javascript:openCalendar('hotForm', 'arrival');"><img src="http://affiliate.travelnow.com/searchboximages/blueFormCalendar.gif" border="0"/></a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                                <td>Check-out:<br/>
+                                                                                    <table cellpadding="2" cellspacing="0" border="0">
+                                                                                        <tr>
+
+                                                                                            <td><select name="departureMonth" onchange="javascript:dmddChange(document.hotForm.departureMonth,document.hotForm.departureDay);">
+
+
+                                                                                                    <option value=0>January</option>
+                                                                                                    <option value=1>February</option>
+                                                                                                    <option value=2>March</option>
+                                                                                                    <option value=3>April</option>
+                                                                                                    <option value=4>May</option>
+                                                                                                    <option value=5>June</option>
+                                                                                                    <option value=6>July</option>
+                                                                                                    <option value=7>August</option>
+                                                                                                    <option value=8>September</option>
+                                                                                                    <option value=9>October</option>
+                                                                                                    <option value=10>November</option>
+                                                                                                    <option value=11>December</option>
+
+
+                                                                                                </select>
+                                                                                            </td>
+
+                                                                                            <td><select name="departureDay" onchange="dmddChange(document.hotForm.departureMonth,document.hotForm.departureDay)">
+                                                                                                    <option value=1>1</option>
+                                                                                                    <option value=2>2</option>
+                                                                                                    <option value=3>3</option>
+                                                                                                    <option value=4>4</option>
+                                                                                                    <option value=5>5</option>
+                                                                                                    <option value=6>6</option>
+                                                                                                    <option value=7>7</option>
+                                                                                                    <option value=8>8</option>
+                                                                                                    <option value=9>9</option>
+                                                                                                    <option value=10>10</option>
+                                                                                                    <option value=11>11</option>
+                                                                                                    <option value=12>12</option>
+                                                                                                    <option value=13>13</option>
+                                                                                                    <option value=14>14</option>
+                                                                                                    <option value=15>15</option>
+                                                                                                    <option value=16>16</option>
+                                                                                                    <option value=17>17</option>
+                                                                                                    <option value=18>18</option>
+                                                                                                    <option value=19>19</option>
+                                                                                                    <option value=20>20</option>
+                                                                                                    <option value=21>21</option>
+                                                                                                    <option value=22>22</option>
+                                                                                                    <option value=23>23</option>
+                                                                                                    <option value=24>24</option>
+                                                                                                    <option value=25>25</option>
+                                                                                                    <option value=26>26</option>
+                                                                                                    <option value=27 selected>27</option>
+                                                                                                    <option value=28>28</option>
+                                                                                                    <option value=29>29</option>
+                                                                                                    <option value=30>30</option>
+                                                                                                    <option value=31>31</option>
+                                                                                                </select>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <a href="javascript:openCalendar('hotForm', 'departure');"><img src="http://affiliate.travelnow.com/searchboximages/blueFormCalendar.gif" border="0"/></a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td colspan="2"><div id="hot-search-params"></div></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td align="right" colspan="2">
+                                                                                    <table cellspacing="0" cellpadding="0" border="0"><tr><td>
+                                                                                                <img src="http://affiliate.travelnow.com/searchboximages/btn-green-cornerL.gif" alt=""
+                                                                                                     border="0"/></td><td class="buttonz">
+                                                                                                <input type="submit" name="Submit" value="Search" class="buttonz" /></td><td><img src="http://affiliate.travelnow.com/searchboximages/btn-green-cornerR.gif" alt="" border="0"/></td></tr></table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><img src="http://affiliate.travelnow.com/searchboximages/p.gif" height="5" width="1" border="0"/></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center"><span class="switcheroo-hr"><img src="http://affiliate.travelnow.com/searchboximages/p.gif" height="1" width="1" border="0"/></span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><img src="http://affiliate.travelnow.com/searchboximages/p.gif" height="5" width="1" border="0"/></td>
+                                                                </tr>
+                                                            </table>
+                                                        </form>
+                                                    </div>
+                                                    <!-- /HOTEL -->
+
+                                                    <!-- AIR -->
+                                                    <div style="display:none;visibility:hidden" id="flightTable">
+                                                        <form Action="http://travel.ian.com/index.jsp?pageName=airSearch&cid=317285&locale=en_US" METHOD="POST" NAME="airForm">
+                                                            <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                                <input type="hidden" name="submitted" value="true"/>
+                                                                <input type="hidden" name="validateCity" value="true"/>
+                                                                <input type="hidden" name="tripType" value="R"/>
+                                                                <input type="hidden" name="cabin" value="Y"/>
+                                                                <input type="hidden" name="avail" value="true"/>
+                                                                <input type="hidden" name="passThrough" value="true"/>
+                                                                <input type="hidden" name="showPopUp" value="true"/>
+                                                                <tr>
+                                                                    <td>
+                                                                        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                            <tr>
+                                                                                <td class="search-bold">Search for Flights</td>
+                                                                                <td width="20"></td>
+                                                                                <td><img src="http://affiliate.travelnow.com/searchboximages/p.gif" width="50" height="1" border="0"/>
+                                                                                    or search by
+                                                                                    <a href="http://travel.ian.com/index.jsp?pageName=airSearch&cid=317285&advancedOptions=true">
+                                                                                        Advanced Options</a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                                                                            <tr>
+                                                                                <td>Departure City:<br/><input type="text" size="25" name="departureCity"/></td>
+                                                                                <td colspan="2" nowrap>Depart<br/>
+                                                                                    <table cellspacing="0" cellpadding="2" border="0">
+                                                                                        <tr>
+
+                                                                                            <td><select name="departureMonth" onchange="javascript:amadChange(document.airForm.departureMonth, document.airForm.departureDay, document.airForm.returnMonth, document.airForm.returnDay);">
+
+
+                                                                                                    <option value=0>January</option>
+                                                                                                    <option value=1>February</option>
+                                                                                                    <option value=2>March</option>
+                                                                                                    <option value=3>April</option>
+                                                                                                    <option value=4>May</option>
+                                                                                                    <option value=5>June</option>
+                                                                                                    <option value=6>July</option>
+                                                                                                    <option value=7>August</option>
+                                                                                                    <option value=8>September</option>
+                                                                                                    <option value=9>October</option>
+                                                                                                    <option value=10>November</option>
+                                                                                                    <option value=11>December</option>
+
+
+                                                                                                </select>
+                                                                                            </td>
+
+                                                                                            <td><select name="departureDay" onchange="amadChange(document.airForm.departureMonth, document.airForm.departureDay, document.airForm.returnMonth, document.airForm.returnDay)">
+                                                                                                    <option value=1>1</option>
+                                                                                                    <option value=2>2</option>
+                                                                                                    <option value=3>3</option>
+                                                                                                    <option value=4>4</option>
+                                                                                                    <option value=5>5</option>
+                                                                                                    <option value=6>6</option>
+                                                                                                    <option value=7>7</option>
+                                                                                                    <option value=8>8</option>
+                                                                                                    <option value=9>9</option>
+                                                                                                    <option value=10>10</option>
+                                                                                                    <option value=11>11</option>
+                                                                                                    <option value=12>12</option>
+                                                                                                    <option value=13>13</option>
+                                                                                                    <option value=14>14</option>
+                                                                                                    <option value=15>15</option>
+                                                                                                    <option value=16>16</option>
+                                                                                                    <option value=17>17</option>
+                                                                                                    <option value=18>18</option>
+                                                                                                    <option value=19>19</option>
+                                                                                                    <option value=20>20</option>
+                                                                                                    <option value=21>21</option>
+                                                                                                    <option value=22>22</option>
+                                                                                                    <option value=23>23</option>
+                                                                                                    <option value=24>24</option>
+                                                                                                    <option value=25>25</option>
+                                                                                                    <option value=26>26</option>
+                                                                                                    <option value=27 selected>27</option>
+                                                                                                    <option value=28>28</option>
+                                                                                                    <option value=29>29</option>
+                                                                                                    <option value=30>30</option>
+                                                                                                    <option value=31>31</option>
+                                                                                                </select>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <a href="javascript:openCalendar('airForm', 'departure');"><img src="http://affiliate.travelnow.com/searchboximages/blueFormsCalendar.gif" border="0"/></a>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <select name="tempDepTime" onChange="validateDepWindow('airForm')">
+                                                                                                    <option value="ANT" selected>Anytime</option>
+                                                                                                    <option value="M">Morning</option>
+                                                                                                    <option value="A">Afternoon</option>
+                                                                                                    <option value="E">Evening</option>
+                                                                                                    <option value="1AM">1AM</option>
+                                                                                                    <option value="2AM">2AM</option>
+                                                                                                    <option value="3AM">3AM</option>
+                                                                                                    <option value="4AM">4AM</option>
+                                                                                                    <option value="5AM">5AM</option>
+                                                                                                    <option value="6AM">6AM</option>
+                                                                                                    <option value="7AM">7AM</option>
+                                                                                                    <option value="8AM">8AM</option>
+                                                                                                    <option value="9AM">9AM</option>
+                                                                                                    <option value="10AM">10AM</option>
+                                                                                                    <option value="11AM">11AM</option>
+                                                                                                    <option value="12PM">NOON</option>
+                                                                                                    <option value="1PM">1PM</option>
+                                                                                                    <option value="2PM">2PM</option>
+                                                                                                    <option value="3PM">3PM</option>
+                                                                                                    <option value="4PM">4PM</option>
+                                                                                                    <option value="5PM">5PM</option>
+                                                                                                    <option value="6PM">6PM</option>
+                                                                                                    <option value="7PM">7PM</option>
+                                                                                                    <option value="8PM">8PM</option>
+                                                                                                    <option value="9PM">9PM</option>
+                                                                                                    <option value="10PM">10PM</option>
+                                                                                                    <option value="11PM">11PM</option>
+                                                                                                    <option value="12AM">MDNT</option>
+                                                                                                </select>
+                                                                                                <input type="hidden" name="departureTime" value="12PM"/></td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Arrival City:<br/>
+                                                                                    <input type="text" size="25" name="destinationCity"/></td>
+                                                                                <td colspan="2" nowrap>Return:<br/>
+                                                                                    <table cellpadding="2" cellspacing="0" border="0">
+                                                                                        <tr>
+
+                                                                                            <td>
+                                                                                                <select name="returnMonth" onchange="javascript:dmddChange(document.airForm.returnMonth,document.airForm.returnDay);">
+
+
+                                                                                                    <option value=0>January</option>
+                                                                                                    <option value=1>February</option>
+                                                                                                    <option value=2>March</option>
+                                                                                                    <option value=3>April</option>
+                                                                                                    <option value=4>May</option>
+                                                                                                    <option value=5>June</option>
+                                                                                                    <option value=6>July</option>
+                                                                                                    <option value=7>August</option>
+                                                                                                    <option value=8>September</option>
+                                                                                                    <option value=9>October</option>
+                                                                                                    <option value=10>November</option>
+                                                                                                    <option value=11>December</option>
+
+
+                                                                                                </select>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <select name="returnDay" onchange="dmddChange(document.airForm.returnMonth,document.airForm.returnDay)">
+                                                                                                    <option value=1>1</option>
+                                                                                                    <option value=2>2</option>
+                                                                                                    <option value=3>3</option>
+                                                                                                    <option value=4>4</option>
+                                                                                                    <option value=5>5</option>
+                                                                                                    <option value=6>6</option>
+                                                                                                    <option value=7>7</option>
+                                                                                                    <option value=8>8</option>
+                                                                                                    <option value=9>9</option>
+                                                                                                    <option value=10>10</option>
+                                                                                                    <option value=11>11</option>
+                                                                                                    <option value=12>12</option>
+                                                                                                    <option value=13>13</option>
+                                                                                                    <option value=14>14</option>
+                                                                                                    <option value=15>15</option>
+                                                                                                    <option value=16>16</option>
+                                                                                                    <option value=17>17</option>
+                                                                                                    <option value=18>18</option>
+                                                                                                    <option value=19>19</option>
+                                                                                                    <option value=20>20</option>
+                                                                                                    <option value=21>21</option>
+                                                                                                    <option value=22>22</option>
+                                                                                                    <option value=23>23</option>
+                                                                                                    <option value=24>24</option>
+                                                                                                    <option value=25>25</option>
+                                                                                                    <option value=26>26</option>
+                                                                                                    <option value=27 selected>27</option>
+                                                                                                    <option value=28>28</option>
+                                                                                                    <option value=29>29</option>
+                                                                                                    <option value=30>30</option>
+                                                                                                    <option value=31>31</option>
+                                                                                                </select>
+                                                                                            </td>
+
+                                                                                            <td><a href="javascript:openCalendar('airForm', 'return');">
+                                                                                                    <img src="http://affiliate.travelnow.com/searchboximages/blueFormCalendar.gif" border="0"/></a></td>
+                                                                                            <td>
+                                                                                                <select name="tempRetTime" onChange="validateRetWindow('airForm')">
+                                                                                                    <option value="ANT" selected>Anytime</option>
+                                                                                                    <option value="M">Morning</option>
+                                                                                                    <option value="A">Afternoon</option>
+                                                                                                    <option value="E">Evening</option>
+                                                                                                    <option value="1AM">1AM</option>
+                                                                                                    <option value="2AM">2AM</option>
+                                                                                                    <option value="3AM">3AM</option>
+                                                                                                    <option value="4AM">4AM</option>
+                                                                                                    <option value="5AM">5AM</option>
+                                                                                                    <option value="6AM">6AM</option>
+                                                                                                    <option value="7AM">7AM</option>
+                                                                                                    <option value="8AM">8AM</option>
+                                                                                                    <option value="9AM">9AM</option>
+                                                                                                    <option value="10AM">10AM</option>
+                                                                                                    <option value="11AM">11AM</option>
+                                                                                                    <option value="12PM">NOON</option>
+                                                                                                    <option value="1PM">1PM</option>
+                                                                                                    <option value="2PM">2PM</option>
+                                                                                                    <option value="3PM">3PM</option>
+                                                                                                    <option value="4PM">4PM</option>
+                                                                                                    <option value="5PM">5PM</option>
+                                                                                                    <option value="6PM">6PM</option>
+                                                                                                    <option value="7PM">7PM</option>
+                                                                                                    <option value="8PM">8PM</option>
+                                                                                                    <option value="9PM">9PM</option>
+                                                                                                    <option value="10PM">10PM</option>
+                                                                                                    <option value="11PM">11PM</option>
+                                                                                                    <option value="12AM">MDNT</option>
+                                                                                                </select>
+                                                                                                <input type="hidden" name="departureTime" value="12PM"/>
+                                                                                            </td>
+                                                                                            <!--                                                </select>
+                                                                                                                                            </td>
+                                                                                            -->                                                <input type="hidden" name="returnTime" value="12PM"/>
+                                                                                            <input type="hidden" name="tripWindow" value="9"/>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                                            <tr>
+                                                                                <td align="left">Adults(19 - 61):</td>
+                                                                                <td>Seniors (62+):</td>
+                                                                                <td>Children (2-18):</td>
+                                                                                <td> </td>
+                                                                            </tr>
+                                                                            <tr>
+
+                                                                                <td align="left">
+                                                                                    <select name="adults">
+                                                                                        <option value="0">0</option>
+                                                                                        <option value="1" selected>1</option>
+                                                                                        <option value="2">2</option>
+                                                                                        <option value="3">3</option>
+                                                                                        <option value="4">4</option>
+                                                                                        <option value="5">5</option>
+                                                                                        <option value="6">6</option>
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td align="left" nowrap>
+                                                                                    <select name="seniors">
+                                                                                        <option value="0" selected>0</option>
+                                                                                        <option value="1" >1</option>
+                                                                                        <option value="2">2</option>
+                                                                                        <option value="3">3</option>
+                                                                                        <option value="4">4</option>
+                                                                                        <option value="5">5</option>
+                                                                                        <option value="6">6</option>
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <select name="children" onchange="setChildPTC(document.airForm.children.options[document.airForm.children.selectedIndex].value)">
+                                                                                        <option value="0" selected>0</option>
+                                                                                        <option value="1">1</option>
+                                                                                        <option value="2">2</option>
+                                                                                        <option value="3">3</option>
+                                                                                        <option value="4">4</option>
+                                                                                        <option value="5">5</option>
+                                                                                        <option value="6">6</option>
+                                                                                    </select>
+
+                                                                                    <input type="hidden" name="childPTC" value=""/>
+                                                                                    <input type="hidden" name="childPTC" value=""/>
+                                                                                    <input type="hidden" name="childPTC" value=""/>
+                                                                                    <input type="hidden" name="childPTC" value=""/>
+                                                                                    <input type="hidden" name="childPTC" value=""/>
+                                                                                    <input type="hidden" name="childPTC" value=""/>
+
+                                                                                    <script language="javascript">
+                                                                                        <!--
+                                                                                             function setChildPTC(numChildren) {
+                                                                                                 if (numChildren == 0) {
+                                                                                                      for(j=0; j < 6; j++){
+                                                                                                         eval("document.forms['airForm'].childPTC["+j+"].value=''");
+                                                                                                     }
+                                                                                                 } else {
+                                                                                                     for(j=1; j <= numChildren; j++){
+                                                                                                         var ptc=j-1;
+                                                                                                         eval("document.forms['airForm'].childPTC["+ptc+"].value=5");
+                                                                                                     }
+                                                                                                 }
+                                                                                             }
+                                                                                        -->
+                                                                                    </script>
+                                                                                </td>
+                                                                                <td valign="bottom" align="right">
+                                                                                    <table cellspacing="0" cellpadding="0" border="0">
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <img src="http://affiliate.travelnow.com/searchboximages/btn-green-cornerL.gif"
+                                                                                                     alt="" border="0"/></td>
+                                                                                            <td class="buttonz">
+                                                                                                <input type="submit" name="Submit" value="Search" class="buttonz" /></td>
+                                                                                            <td>
+                                                                                                <img src="http://affiliate.travelnow.com/searchboximages/btn-green-cornerR.gif" alt=""
+                                                                                                     border="0"/></td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <!--                        </td>
+                                                                                            </tr>-->
+                                                                        <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                                            <tr>
+                                                                                <td><img src="http://affiliate.travelnow.com/searchboximages/p.gif" height="6" width="1" border="0"/></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>A non-refundable
+                                                                                    <a href="javascript:OpenWindow('http://travel.ian.com/popups/airlines/processingFee.jsp?cid=317285','class','410','175')" title="Processing Fee">
+                                                                                        <font color="#000000">service fee</font>
+                                                                                    </a> will be charged at the time of booking.
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </form>
+                                                        <!--                </table>
+                                                        -->                </div>
+                                                    <!-- /AIR -->
+                                                    <!-- CAR -->
+                                                    <div style="display:none;visibility:hidden" id="carTable">
+                                                        <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                            <form Action="http://travel.ian.com/index.jsp" METHOD="POST" NAME="carForm">
+                                                                <input type="hidden" name="cid" value="317285"/>
+                                                                <input type="hidden" name="pageName" value="carSearch"/>
+                                                                <input type="hidden" name="locale" value="en_US"/>
+                                                                <input type="hidden" name="submitted" value="true"/>
+                                                                <input type="hidden" name="validateCity" value="true"/>
+                                                                <input type="hidden" name="avail" value="true"/>
+                                                                <input type="hidden" name="pickUpLocation" value="A"/>
+                                                                <input type="hidden" name="passThrough" value="true"/>
+                                                                <input type="hidden" name="showPopUp" value="true"/>
+
+                                                                <tr>
+                                                                    <td>
+                                                                        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                            <tr>
+                                                                                <td class="search-bold">Search for Cars</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                                                                            <tr>
+                                                                                <td>Enter a Pick-Up Location:<input type="text" size="25" name="city"/></td>
+                                                                                <td colspan="2" nowrap>Pickup:<br/>
+                                                                                    <table cellpadding="2" cellspacing="0" border="0">
+                                                                                        <tr>
+
+                                                                                            <td>
+                                                                                                <select name="pickUpMonth" onchange="javascript:amadChange(document.carForm.pickUpMonth, document.carForm.pickUpDay, document.carForm.dropOffMonth, document.carForm.dropOffDay);">
+
+
+                                                                                                    <option value=0>January</option>
+                                                                                                    <option value=1>February</option>
+                                                                                                    <option value=2>March</option>
+                                                                                                    <option value=3>April</option>
+                                                                                                    <option value=4>May</option>
+                                                                                                    <option value=5>June</option>
+                                                                                                    <option value=6>July</option>
+                                                                                                    <option value=7>August</option>
+                                                                                                    <option value=8>September</option>
+                                                                                                    <option value=9>October</option>
+                                                                                                    <option value=10>November</option>
+                                                                                                    <option value=11>December</option>
+
+
+                                                                                                </select>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <select name="pickUpDay" onchange="amadChange(document.carForm.pickUpMonth, document.carForm.pickUpDay, document.carForm.dropOffMonth, document.carForm.dropOffDay)">
+                                                                                                    <option value=1>1</option>
+                                                                                                    <option value=2>2</option>
+                                                                                                    <option value=3>3</option>
+                                                                                                    <option value=4>4</option>
+                                                                                                    <option value=5>5</option>
+                                                                                                    <option value=6>6</option>
+                                                                                                    <option value=7>7</option>
+                                                                                                    <option value=8>8</option>
+                                                                                                    <option value=9>9</option>
+                                                                                                    <option value=10>10</option>
+                                                                                                    <option value=11>11</option>
+                                                                                                    <option value=12>12</option>
+                                                                                                    <option value=13>13</option>
+                                                                                                    <option value=14>14</option>
+                                                                                                    <option value=15>15</option>
+                                                                                                    <option value=16>16</option>
+                                                                                                    <option value=17>17</option>
+                                                                                                    <option value=18>18</option>
+                                                                                                    <option value=19>19</option>
+                                                                                                    <option value=20>20</option>
+                                                                                                    <option value=21>21</option>
+                                                                                                    <option value=22>22</option>
+                                                                                                    <option value=23>23</option>
+                                                                                                    <option value=24>24</option>
+                                                                                                    <option value=25>25</option>
+                                                                                                    <option value=26>26</option>
+                                                                                                    <option value=27 selected>27</option>
+                                                                                                    <option value=28>28</option>
+                                                                                                    <option value=29>29</option>
+                                                                                                    <option value=30>30</option>
+                                                                                                    <option value=31>31</option>
+                                                                                                </select>
+                                                                                            </td>
+
+                                                                                            <td><a href="javascript:openCalendar('carForm', 'pickUp');"><img src="http://affiliate.travelnow.com/searchboximages/blueFormCalendar.gif" border="0"/></a></td>
+                                                                                            <td>
+                                                                                                <select name="pickUpTime">
+                                                                                                    <option value="1AM">1AM</option>
+                                                                                                    <option value="2AM">2AM</option>
+                                                                                                    <option value="3AM">3AM</option>
+                                                                                                    <option value="4AM">4AM</option>
+                                                                                                    <option value="5AM">5AM</option>
+                                                                                                    <option value="6AM">6AM</option>
+                                                                                                    <option value="7AM">7AM</option>
+                                                                                                    <option value="8AM">8AM</option>
+                                                                                                    <option value="9AM" selected>9AM</option>
+                                                                                                    <option value="10AM">10AM</option>
+                                                                                                    <option value="11AM">11AM</option>
+                                                                                                    <option value="12PM">NOON</option>
+                                                                                                    <option value="1PM">1PM</option>
+                                                                                                    <option value="2PM">2PM</option>
+                                                                                                    <option value="3PM">3PM</option>
+                                                                                                    <option value="4PM">4PM</option>
+                                                                                                    <option value="5PM">5PM</option>
+                                                                                                    <option value="6PM">6PM</option>
+                                                                                                    <option value="7PM">7PM</option>
+                                                                                                    <option value="8PM">8PM</option>
+                                                                                                    <option value="9PM">9PM</option>
+                                                                                                    <option value="10PM">10PM</option>
+                                                                                                    <option value="11PM">11PM</option>
+                                                                                                    <option value="12AM">MDNT</option>
+
+                                                                                                </select>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td> </td>
+                                                                                <td colspan="2" nowrap>Drop-off:<br/>
+                                                                                    <table cellpadding="2" cellspacing="0" border="0">
+                                                                                        <tr>
+
+                                                                                            <td>
+                                                                                                <select name="dropOffMonth" onchange="javascript:dmddChange(document.carForm.dropOffMonth,document.carForm.dropOffDay);">
+
+
+                                                                                                    <option value=0>January</option>
+                                                                                                    <option value=1>February</option>
+                                                                                                    <option value=2>March</option>
+                                                                                                    <option value=3>April</option>
+                                                                                                    <option value=4>May</option>
+                                                                                                    <option value=5>June</option>
+                                                                                                    <option value=6>July</option>
+                                                                                                    <option value=7>August</option>
+                                                                                                    <option value=8>September</option>
+                                                                                                    <option value=9>October</option>
+                                                                                                    <option value=10>November</option>
+                                                                                                    <option value=11>December</option>
+
+
+                                                                                                </select>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <select name="dropOffDay" onchange="dmddChange(document.carForm.dropOffMonth,document.carForm.dropOffDay)">
+                                                                                                    <option value=1>1</option>
+                                                                                                    <option value=2>2</option>
+                                                                                                    <option value=3>3</option>
+                                                                                                    <option value=4>4</option>
+                                                                                                    <option value=5>5</option>
+                                                                                                    <option value=6>6</option>
+                                                                                                    <option value=7>7</option>
+                                                                                                    <option value=8>8</option>
+                                                                                                    <option value=9>9</option>
+                                                                                                    <option value=10>10</option>
+                                                                                                    <option value=11>11</option>
+                                                                                                    <option value=12>12</option>
+                                                                                                    <option value=13>13</option>
+                                                                                                    <option value=14>14</option>
+                                                                                                    <option value=15>15</option>
+                                                                                                    <option value=16>16</option>
+                                                                                                    <option value=17>17</option>
+                                                                                                    <option value=18>18</option>
+                                                                                                    <option value=19>19</option>
+                                                                                                    <option value=20>20</option>
+                                                                                                    <option value=21>21</option>
+                                                                                                    <option value=22>22</option>
+                                                                                                    <option value=23>23</option>
+                                                                                                    <option value=24>24</option>
+                                                                                                    <option value=25>25</option>
+                                                                                                    <option value=26>26</option>
+                                                                                                    <option value=27 selected>27</option>
+                                                                                                    <option value=28>28</option>
+                                                                                                    <option value=29>29</option>
+                                                                                                    <option value=30>30</option>
+                                                                                                    <option value=31>31</option>
+                                                                                                </select>
+                                                                                            </td>
+
+                                                                                            <td><a href="javascript:openCalendar('carForm', 'dropOff');">
+                                                                                                    <img src="http://affiliate.travelnow.com/searchboximages/blueFormCalendar.gif"
+                                                                                                         border="0"/></a></td>
+                                                                                            <td>
+                                                                                                <select name="dropOffTime">
+                                                                                                    <option value="1AM">1AM</option>
+                                                                                                    <option value="2AM">2AM</option>
+                                                                                                    <option value="3AM">3AM</option>
+                                                                                                    <option value="4AM">4AM</option>
+                                                                                                    <option value="5AM">5AM</option>
+                                                                                                    <option value="6AM">6AM</option>
+                                                                                                    <option value="7AM">7AM</option>
+                                                                                                    <option value="8AM">8AM</option>
+                                                                                                    <option value="9AM" selected>9AM</option>
+                                                                                                    <option value="10AM">10AM</option>
+                                                                                                    <option value="11AM">11AM</option>
+                                                                                                    <option value="12PM">NOON</option>
+                                                                                                    <option value="1PM">1PM</option>
+                                                                                                    <option value="2PM">2PM</option>
+                                                                                                    <option value="3PM">3PM</option>
+                                                                                                    <option value="4PM">4PM</option>
+                                                                                                    <option value="5PM">5PM</option>
+                                                                                                    <option value="6PM">6PM</option>
+                                                                                                    <option value="7PM">7PM</option>
+                                                                                                    <option value="8PM">8PM</option>
+                                                                                                    <option value="9PM">9PM</option>
+                                                                                                    <option value="10PM">10PM</option>
+                                                                                                    <option value="11PM">11PM</option>
+                                                                                                    <option value="12AM">MDNT</option>
+                                                                                                </select>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top">Please Choose a <a href="javascript:OpenWindow('http://www.travelnow.com/cars/classes/index.jsp?locale=en_US','class','410','410');">Type</a> :<br/>
+                                                                                    <select style="width:150" name="classCode">
+
+
+                                                                                        <option value="ZZ">Best Buys</option>
+                                                                                        <option value="MZ">Mini (Non-US)</option>
+                                                                                        <option value="EZ">Economy</option>
+                                                                                        <option value="CZ">Compact</option>
+                                                                                        <option value="IZ">Intermediate</option>
+                                                                                        <option value="SZ">Standard</option>
+                                                                                        <option value="FZ">Full Size Van</option>
+                                                                                        <option value="ZT">Convertible</option>
+                                                                                        <option value="ZS">Sports Car</option>
+                                                                                        <option value="PZ">Premium</option>
+                                                                                        <option value="LZ">Luxury</option>
+                                                                                        <option value="MV">Minivan</option>
+                                                                                        <option value="FV">Full Size Van</option>
+                                                                                        <option value="ZF">Sport Utility</option>
+                                                                                        <option value="ZP">Pick-up Truck</option>
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td valign="top">What company do you prefer?:<br/>
+                                                                                    <select NAME="allList" style="width:150">
+
+
+                                                                                        <option value="" selected >All Available</option>
+                                                                                        <option value="AL">Alamo</option>
+                                                                                        <option value="ZT">Thrifty</option>
+                                                                                        <option value="ZR">Dollar</option>
+                                                                                        <option value="AD">Advantage</option>
+                                                                                        <option value="FX">Fox</option>
+                                                                                        <option value="ZI">Avis</option>
+                                                                                        <option value="ZD">Budget</option>
+                                                                                        <option value="ET">Enterprise</option>
+                                                                                        <option value="ZE">Hertz</option>
+                                                                                        <option value="ZL">National</option>
+                                                                                        <option value="FA">Able Rent A Car</option>
+                                                                                        <option value="AC">Ace</option>
+                                                                                        <option value="AI">Affinity</option>
+                                                                                        <option value="AZ">All International</option>
+                                                                                        <option value="AB">All-American</option>
+                                                                                        <option value="LV">Allstate</option>
+                                                                                        <option value="AF">Americar</option>
+                                                                                        <option value="ZU">Auto Europ</option>
+                                                                                        <option value="CP">Capital</option>
+                                                                                        <option value="CV">Capps Vans</option>
+                                                                                        <option value="CH">Charlie Ca</option>
+                                                                                        <option value="CY">City Rent</option>
+                                                                                        <option value="CO">Continental</option>
+                                                                                        <option value="DR">Der Travel</option>
+                                                                                        <option value="DS">Discount</option>
+                                                                                        <option value="EC">E.c.r</option>
+                                                                                        <option value="EP">Europcar</option>
+                                                                                        <option value="EZ">Ez Rent</option>
+                                                                                        <option value="TS">Its</option>
+                                                                                        <option value="KG">Kemwel</option>
+                                                                                        <option value="KN">Kenning</option>
+                                                                                        <option value="LM">L And M</option>
+                                                                                        <option value="MA">Marathon</option>
+                                                                                        <option value="MW">Midway</option>
+                                                                                        <option value="MU">Mudan Auto</option>
+                                                                                        <option value="NE">Nationwide</option>
+                                                                                        <option value="NF">New Fronti</option>
+                                                                                        <option value="AS">Practical</option>
+                                                                                        <option value="ZP">Practical Car</option>
+                                                                                        <option value="PI">Preferred</option>
+                                                                                        <option value="BL">Red And Blue</option>
+                                                                                        <option value="RB">Red/blue</option>
+                                                                                        <option value="RT">Routes Car Rental</option>
+                                                                                        <option value="RY">Royal Rac</option>
+                                                                                        <option value="SX">Sixt Gmbh</option>
+                                                                                        <option value="VR">Specialty</option>
+                                                                                        <option value="CC">Town Cntry</option>
+                                                                                        <option value="TR">Triangle</option>
+                                                                                        <option value="SV">U-Save</option>
+                                                                                        <option value="ZW">Wards</option>
+                                                                                        <option value="WC">West Coast</option>
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td valign="bottom" align="right">
+                                                                                    <table cellspacing="0" cellpadding="0" border="0"><tr><td>
+                                                                                                <img src="http://affiliate.travelnow.com/searchboximages/btn-green-cornerL.gif"
+                                                                                                     alt="" border="0"/></td><td class="buttonz">
+                                                                                                <input type="submit" name="Submit" value="Search" class="buttonz"/></td><td>
+                                                                                                <img src="http://affiliate.travelnow.com/searchboximages/btn-green-cornerR.gif"
+                                                                                                     alt="" border="0"/></td></tr></table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><img src="http://affiliate.travelnow.com/searchboximages/p.gif" height="5" width="1" border="0"/></td>
+                                                                </tr>
+                                                            </form>
+                                                        </table>
+                                                    </div>
+                                                    <!-- /CAR -->
+
+                                                    <!-- CRUISES -->
+                                                    <div style="display:none;visibility:visible" id="cruiseTable">
+                                                        <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                            <form name="cruiseForm" action="http://cruises.ian.com/s/c/results.asp" method="get">
+                                                                <input type="hidden" name="wdos" value="3"/>
+                                                                <input type="hidden" name="clp" value="1"/>
+                                                                <input type="hidden" name="SType" id="SType" value="A"/>
+                                                                <input type="hidden" name="sort" value="7"/>
+                                                                <input type="hidden" name="cid" value="317285"/>
+
+                                                                <tr>
+                                                                    <td>
+                                                                        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                            <tr>
+                                                                                <td class="search-bold">Search for Cruises</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                                                                            <tr>
+                                                                                <td>Select a destination:<br/><select name="places" size="1" style="width:160px">
+                                                                                        <option value="C" selected>Caribbean</option>
+                                                                                        <option value="A">Alaska</option>
+                                                                                        <option value="BH">Bahamas</option>
+                                                                                        <option value="BM">Bermuda</option>
+                                                                                        <option value="M">Mexico</option>
+                                                                                        <option value="">-------------</option>
+                                                                                        <option value="ALL">All Destinations</option>
+                                                                                        <option value="A">Alaska - All</option>
+                                                                                        <option value="AG">Alaska - Gulf of Alaska</option>
+                                                                                        <option value="AR">Alaska - Inside Passage</option>
+                                                                                        <option value="BH">Bahamas</option>
+                                                                                        <option value="BM">Bermuda</option>
+                                                                                        <option value="NN">Canada/New England/NY</option>
+                                                                                        <option value="C">Caribbean - All</option>
+                                                                                        <option value="CE">Caribbean - Eastern</option>
+                                                                                        <option value="CS">Caribbean - Southern</option>
+                                                                                        <option value="CW">Caribbean - Western</option>
+                                                                                        <option value="CN">Cruise to Nowhere</option>
+                                                                                        <option value="E">Europe - All</option>
+                                                                                        <option value="EE">Europe - E. Mediterranean</option>
+                                                                                        <option value="R">Europe - Mediterranean - All</option>
+                                                                                        <option value="N">Europe - Northern</option>
+                                                                                        <option value="EW">Europe - W. Mediterranean</option>
+                                                                                        <option value="W">Europe - Western</option>
+                                                                                        <option value="O">Exotic - Asia/Africa/Other</option>
+                                                                                        <option value="H">Hawaii</option>
+                                                                                        <option value="M">Mexico</option>
+                                                                                        <option value="T">Panama Canal/C. America</option>
+                                                                                        <option value="S">South America</option>
+                                                                                        <option value="I">South Pacific - All</option>
+                                                                                        <option value="P">South Pacific - Australia</option>
+                                                                                        <option value="TH">South Pacific - Tahiti</option>
+                                                                                        <option value="ET">Transatlantic</option>
+                                                                                        <option value="NA">U.S. - All</option>
+                                                                                        <option value="PC">U.S. - Pacific/Northwest</option>
+                                                                                        <option value="NC">U.S. - Southeast</option>
+                                                                                        <option value="WW">World Cruise</option>
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td colspan="2" nowrap>Show cruises sailing month:<br/><select size=1 name="Month"></select></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Show cruises sailing month:<br/><select size=1 name=operator style="width:160px">
+                                                                                        <option value=ALL selected>All Cruise Lines</option>
+                                                                                        <option value=1>Carnival Cruise Lines</option> <option
+                                                                                            value=11>Celebrity Cruises</option> <option
+                                                                                            value=14>Costa Cruises</option> <option
+                                                                                            value=17>Crystal Cruises</option> <option
+                                                                                            value=18>Cunard Line</option> <option value=20>Disney
+                                                                                            Cruise Line</option> <option value=24>Holland America
+                                                                                            Line</option> <option value=34>Norwegian Cruise
+                                                                                            Line</option> <option value=36>Orient Lines</option>
+                                                                                        <option value=40>Princess Cruises</option> <option
+                                                                                            value=41>Radisson Seven Seas Cruises</option> <option
+                                                                                            value=44>Royal Caribbean Cruises</option> <option
+                                                                                            value=48>Seabourn Cruise Line</option> <option
+                                                                                            value=50>Silversea Cruises</option> <option
+                                                                                            value=63>Windjammer Barefoot Cruises</option> <option
+                                                                                            value=64>Windstar Cruises</option>
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td nowrap>Cruise length:<br/>
+                                                                                    <select name="days" size="1" style="width:140px">
+                                                                                        <option selected value="ALL">All</option>
+                                                                                        <option value="1">1-6 Days/Nights</option>
+                                                                                        <option value="2">7-10 Days/Nights</option>
+                                                                                        <option value="3">11 Days/Nights +</option>
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td valign="bottom" align="right">
+                                                                                    <table cellspacing="0" cellpadding="0" border="0">
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <img src="http://affiliate.travelnow.com/searchboximages/btn-green-cornerL.gif"
+                                                                                                     alt="" border="0"/></td>
+                                                                                            <td class="buttonz">
+                                                                                                <input type="submit" name="Submit" value="Search" class="buttonz"/></td>
+                                                                                            <td>
+                                                                                                <img src="http://affiliate.travelnow.com/searchboximages/btn-green-cornerR.gif"
+                                                                                                     alt="" border="0"/></td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </form>
+                                                        </table>
+                                                        <script>
+                                                        var monthOptionList = document.forms['cruiseForm'].Month.options;
+                                                        var months = new Array();
+                                                        months[0] = "January";
+                                                        months[1] = "February";
+                                                        months[2] = "March";
+                                                        months[3] = "April";
+                                                        months[4] = "May";
+                                                        months[5] = "June";
+                                                        months[6] = "July";
+                                                        months[7] = "August";
+                                                        months[8] = "September";
+                                                        months[9] = "October";
+                                                        months[10] = "November";
+                                                        months[11] = "December";
+                                                        var numOfMonths = 18;
+
+                                                        function populateMonths() {
+                                                        var date = new Date();
+                                                        var month = date.getMonth();
+                                                        var year = date.getFullYear();
+                                                        var i;
+
+                                                        //clear option list
+                                                        ClearOptions(monthOptionList);
+
+                                                        //Add first option "All Dates" to the option list
+                                                        AddToOptionList(monthOptionList ,"ALL", "All Dates");
+
+                                                        //add months to the option list
+                                                        for(i=0; i<numOfMonths; i++) {
+                                                        var value = (month+1)+"/1/"+year;
+                                                        var Text = months[month]+" "+year;
+                                                        AddToOptionList(monthOptionList, value, Text);
+                                                        month++;
+                                                        if( month > 11 ) {
+                                                        month = 0;
+                                                        year++;
+                                                        }
+                                                        }
+
+                                                        }
+
+                                                        function ClearOptions(OptionList) {
+                                                        // Always clear an option list from the last entry to the first
+                                                        for (x = OptionList.length; x >= 0; x = x - 1) {
+                                                        OptionList[x] = null;
+                                                        }
+                                                        }
+
+
+                                                        function AddToOptionList(OptionList, OptionValue, OptionText) {
+                                                        // Add option to the bottom of the list
+                                                        OptionList[OptionList.length] = new Option(OptionText, OptionValue);
+                                                        }
+
+                                                        populateMonths();
+                                                        </script>
+                                                    </div>
+                                                    <!-- /CRUISES -->
+
+
+                                                    <!-- /change table -->
+                                                    <div><img src="http://affiliate.travelnow.com/searchboximages/p.gif" height="7" width="100%" border="0"/></div>
+                                                </td>
+                                                <!-- sets height of table so it wont move -->
+                                                <td>
+                                                    <img src="http://affiliate.travelnow.com/searchboximages/p.gif" height="230" width="7" border="0" onLoad="javascript:loadDefaultDates(),displayHotel();"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <!-- /switcheroo -->
+                                        <script language="javascript">
+                                        <!--
+                                            // NOTE: customize variables in this javascript block as appropriate.
+                                            var defaultAdults="2";
+                                            var cellStyle=" class='index-text'";
+                                            var childHelp="Please provide the ages of children in each room. Children's ages should be their age at the time of travel.";
+                                            var adultHelp="";
+                                            var textRooms="Rooms:";
+                                            var textAdults="Adults: (age 19+)";
+                                            var textChildren="Children: (0-18)";
+                                            var textChildError="Please specify the ages of all children.";
+                                            var pad='<img src="http://travel.ian.com/images/p.gif" width="5" height="1">';
+                                            // NOTE: Question marks ("?") get replaced with a numeric value
+                                            var textRoomX="Room ?:";
+                                            var textChildX="Child ?:";
+
+                                        //-->
+                                        </script>
+                                        <!-- NOTE: DO NOT MODIFY THIS JAVASCRIPT BLOCK -->
+                                        <script language="javascript">
+                                        <!--
+                                            var adultsPerRoom=new Array(defaultAdults);
+                                            var childrenPerRoom=new Array();
+                                            var childAgesPerRoom=new Array();
+                                            var numRooms=1;
+                                            var maxChildren=0;
+
+                                            refresh();
+
+                                            function setChildAge(room, child, age) {
+                                                if (childAgesPerRoom[room] == null) {
+                                                    childAgesPerRoom[room] = new Array();
+                                                }
+                                                childAgesPerRoom[room][child] = age;
+                                            }
+
+                                            function setNumAdults(room, numAdults) {
+                                                adultsPerRoom[room] = numAdults;
+                                            }
+
+                                            function setNumChildren(room, numChildren) {
+                                                childrenPerRoom[room] = numChildren;
+                                                refresh();
+                                            }
+
+                                            function setNumRooms(x) {
+                                                numRooms = x;
+                                                for (i = 0; i < x; i++) {
+                                                    if (adultsPerRoom[i] == null) {
+                                                        adultsPerRoom[i] = 2;
+                                                    }
+                                                    if (childrenPerRoom[i] == null) {
+                                                        childrenPerRoom[i] = 0;
+                                                    }
+                                                }
+                                                refresh();
+                                            }
+
+                                            function renderRoomSelect() {
+                                                var x = '';
+                                                x += '<select name="numberOfRooms" onchange="setNumRooms(this.options[this.selectedIndex].value);">';
+                                                for (var i = 1; i < 9; i++) {
+                                                    x += '<option value="'+i+'"'+(numRooms == i ? ' selected' : '')+'>' + i;
+                                                }
+                                                x += '<option value="9"'+(numRooms == 9 ? ' selected' : '')+'>9+';
+                                                x += '</select>';
+                                                return x;
+                                            }
+
+                                            function refresh() {
+                                                maxChildren = 0;
+                                                for (var i = 0; i < numRooms; i++) {
+                                                    if (childrenPerRoom[i] > maxChildren) {
+                                                        maxChildren = childrenPerRoom[i];
+                                                    }
+                                                }
+
+                                                var x = '';
+                                                if (adultHelp.length > 0) {
+                                                    x = adultHelp + "<p>\n";
+                                                }
+
+                                                if (numRooms > 8) {
+                                                    x += textRooms;
+                                                    x += renderRoomSelect();
+
+                                                } else {
+                                                    x += '<table border="0" cellspacing="2" cellpadding="0">\n';
+                                                    x += '<tr><td'+cellStyle+'>'+textRooms+pad+'</td>';
+                                                    if (numRooms > 1) {
+                                                        x += '<td'+cellStyle+'>&nbsp;</td>';
+                                                    }
+                                                    x += '<td'+cellStyle+'><nobr>'+textAdults+pad+'</nobr></td><td'+cellStyle+'><nobr>'+textChildren+pad+'</nobr></td></tr>\n';
+                                                    for (var i = 0; i < numRooms; i++) {
+                                                        x += '<tr><td'+cellStyle+'>';
+                                                        if (i == 0) {
+                                                            x += renderRoomSelect();
+                                                        } else {
+                                                            x += '&nbsp;';
+                                                        }
+                                                        x += '</td>';
+                                                        if (numRooms > 1) {
+                                                            x += '<td'+cellStyle+'><nobr>'+getValue(textRoomX, i+1)+pad + '</nobr></td>';
+                                                        }
+                                                        x += '<td'+cellStyle+'>';
+                                                        x += buildSelect('room-' + i + '-adult-total', 'setNumAdults(' + i + ', this.options[this.selectedIndex].value)', 1, 4, adultsPerRoom[i]);
+                                                        x += '</td><td'+cellStyle+'>';
+                                                        x += buildSelect('room-' + i + '-child-total', 'setNumChildren(' + i + ', this.options[this.selectedIndex].value)', 0, 6, childrenPerRoom[i]);
+                                                        x += '</td></tr>\n';
+                                                    }
+                                                    x += '</table>\n';
+
+                                                    var didHeader = false;
+                                                    for (var i = 0; i < numRooms; i++) {
+                                                        if (childrenPerRoom[i] > 0) {
+                                                            if (!didHeader) {
+                                                                x += '<table border="0" cellpadding="0" cellspacing="2">\n';
+                                                                x += '<tr><td'+cellStyle+' colspan="'+(maxChildren+1)+'">';
+                                                                x += '<img src="/images/p.gif" width="1" height="5"><br/>';
+                                                                x += childHelp;
+                                                                x += '<img src="/images/p.gif" width="1" height="5"><br/>';
+                                                                x += '</td></tr>\n<tr><td'+cellStyle+'>&nbsp;</td>';
+                                                                for (var j = 0; j < maxChildren; j++) {
+                                                                    x += '<td'+cellStyle+'><nobr>'+getValue(textChildX, j+1)+pad+'</nobr></td>\n';
+                                                                }
+                                                                didHeader = true;
+                                                            }
+                                                            x += '</tr>\n<tr><td'+cellStyle+'><nobr>'+getValue(textRoomX, i+1)+pad+'</nobr></td>';
+                                                            for (var j = 0; j < childrenPerRoom[i]; j++) {
+                                                                x += '<td'+cellStyle+'>';
+                                                                var def = -1;
+                                                                if (childAgesPerRoom[i] != null) {
+                                                                    if (childAgesPerRoom[i][j] != null) {
+                                                                        def = childAgesPerRoom[i][j];
+                                                                    }
+                                                                }
+                                                                x += '<select name="room-'+i+'-child-'+j+'-age" onchange="setChildAge('+i+', '+j+', this.options[this.selectedIndex].value);">';
+                                                                x += '<option value="-1"'+(def == -1 ? ' selected' : '')+'>-?-';
+                                                                x += '<option value="0"'+(def == 0 ? ' selected' : '')+'>&lt;1';
+                                                                for (var k = 1; k <= 18; k++) {
+                                                                    x += '<option value="'+k+'"'+(def == k ? ' selected' : '')+'>'+k;
+                                                                }
+                                                                x += '</td>';
+                                                            }
+                                                            if (childrenPerRoom[i] < maxChildren) {
+                                                                for (var j = childrenPerRoom[i]; j < maxChildren; j++) {
+                                                                    x += '<td'+cellStyle+'>&nbsp;</td>';
+                                                                }
+                                                            }
+                                                            x += '</tr>\n';
+                                                        }
+                                                    }
+                                                    if (didHeader) {
+                                                        x += '</table>\n';
+                                                    }
+                                                }
+
+                                                document.getElementById("hot-search-params").innerHTML = x;
+                                            }
+
+                                            function buildSelect(name, onchange, min, max, selected) {
+                                                var x = '<select name="' + name + '"';
+                                                if (onchange != null) {
+                                                    x += ' onchange="' + onchange + '"';
+                                                }
+                                                x +='>\n';
+                                                for (var i = min; i <= max; i++) {
+                                                    x += '<option value="' + i + '"';
+                                                    if (i == selected) {
+                                                        x += ' selected';
+                                                    }
+
+                                                    x += '>' + i + '\n';
+                                                }
+                                                x += '</select>';
+                                                return x;
+                                            }
+
+                                            function validateGuests(form) {
+                                                if (numRooms < 9) {
+                                                    var missingAge = false;
+                                                    for (var i = 0; i < numRooms; i++) {
+                                                        var numChildren = childrenPerRoom[i];
+                                                        if (numChildren != null && numChildren > 0) {
+                                                            for (var j = 0; j < numChildren; j++) {
+                                                                if (childAgesPerRoom[i] == null || childAgesPerRoom[i][j] == null || childAgesPerRoom[i][j] == -1) {
+                                                                    missingAge = true;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                    if (missingAge) {
+                                                        alert(textChildError);
+                                                        return false;
+                                                    } else {
+                                                        return true;
+                                                    }
+                                                } else {
+                                                    return true;
+                                                }
+                                            }
+
+                                            function submitGuestInfoForm(form) {
+                                                if (!validateGuests(form)) {
+                                                    return false;
+                                                }
+                                                return true;
+                                            }
+
+                                            function getValue(str, val) {
+                                                return str.replace(/\?/g, val);
+                                            }
+                                        //-->
+                                        </script>
+                                        <!--END-->

@@ -50,6 +50,14 @@
     text-align:center;
 }
 
+.left {
+    text-align:left;
+}
+
+.right {
+    text-align:right;
+}
+
 .border{
     padding:5px;
 }

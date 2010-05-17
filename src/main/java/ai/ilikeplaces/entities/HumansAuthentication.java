@@ -14,10 +14,10 @@ import java.io.Serializable;
 public class HumansAuthentication implements HumanPkJoinFace, Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String humanId;
-    private Human human;
-    private String humanAuthenticationHash;
-    private String humanAuthenticationSalt;
+    public String humanId;
+    public Human human;
+    public String humanAuthenticationHash;
+    public String humanAuthenticationSalt;
 
     @Id
     public String getHumanId() {

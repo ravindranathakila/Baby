@@ -3,10 +3,8 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateEvent;
-import ai.ilikeplaces.logic.crud.unit.CPrivateEventLocal;
-import ai.ilikeplaces.logic.crud.unit.DPrivateEventLocal;
-import ai.ilikeplaces.logic.crud.unit.RPrivateEventLocal;
-import ai.ilikeplaces.logic.crud.unit.UPrivateEventLocal;
+import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.*;
 
@@ -36,6 +34,9 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
 
     @EJB
     private UPrivateEventLocal uPrivateEventLocal;
+
+    @EJB
+    private CRUDWallLocal crudWallLocal_;
 
     @EJB
     private DPrivateEventLocal dPrivateEventLocal;
@@ -98,6 +99,91 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
             r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal.doUPrivateEventRemoveViewer(humanId__.getObj(), privateEventId__, owner), "Update private event Successful!");
         } catch (final Throwable t) {
             r = new ReturnImpl<PrivateEvent>(t, "Update private event FAILED!", true);
+        }
+        return r;
+    }
+
+    @Override
+    public Return<PrivateEvent> uPrivateEventAddInvite(final HumanId humanId__, final long privateEventId__, final HumansFriend owner) {
+        Return<PrivateEvent> r;
+        try {
+            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal.doUPrivateEventAddInvite(humanId__.getObj(), privateEventId__, owner), "Update private event Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<PrivateEvent>(t, "Update private event FAILED!", true);
+        }
+        return r;
+    }
+
+    @Override
+    public Return<PrivateEvent> uPrivateEventRemoveInvite(final HumanId humanId__, final long privateEventId__, final HumansFriend owner) {
+        Return<PrivateEvent> r;
+        try {
+            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal.doUPrivateEventRemoveInvite(humanId__.getObj(), privateEventId__, owner), "Update private event Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<PrivateEvent>(t, "Update private event FAILED!", true);
+        }
+        return r;
+    }
+
+    @Override
+    public Return<PrivateEvent> uPrivateEventAddReject(final HumanId humanId__, final long privateEventId__, final HumansFriend owner) {
+        Return<PrivateEvent> r;
+        try {
+            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal.doUPrivateEventAddReject(humanId__.getObj(), privateEventId__, owner), "Update private event Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<PrivateEvent>(t, "Update private event FAILED!", true);
+        }
+        return r;
+    }
+
+    @Override
+    public Return<PrivateEvent> uPrivateEventRemoveReject(final HumanId humanId__, final long privateEventId__, final HumansFriend owner) {
+        Return<PrivateEvent> r;
+        try {
+            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal.doUPrivateEventRemoveReject(humanId__.getObj(), privateEventId__, owner), "Update private event Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<PrivateEvent>(t, "Update private event FAILED!", true);
+        }
+        return r;
+    }
+
+    @Override
+    public Return<Wall> uPrivateEventAddToWall(HumanId humanId__, long privateEventId__, String contentToBeAppended) {
+
+        Return<Wall> r;
+        try {
+            r = new ReturnImpl<Wall>(crudWallLocal_
+                    .doNTxUAppendToWall(dirtyRPrivateEvent(humanId__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId(),
+                    contentToBeAppended), "Update private event Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Wall>(t, "Update private event FAILED!", true);
+        }
+        return r;
+
+
+    }
+
+    @Override
+    public Return<Wall> uPrivateEventClearWall(HumanId humanId__, long privateEventId__) {
+
+        Return<Wall> r;
+        try {
+            r = new ReturnImpl<Wall>(crudWallLocal_
+                    .doNTxUClearWall(dirtyRPrivateEvent(humanId__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId()), "Update private event Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Wall>(t, "Update private event FAILED!", true);
+        }
+        return r;
+    }
+    @Override
+    public Return<Wall> uPrivateEventReadWall(HumanId humanId__, long privateEventId__) {
+
+        Return<Wall> r;
+        try {
+            r = new ReturnImpl<Wall>(crudWallLocal_
+                    .doDirtyRWall(dirtyRPrivateEvent(humanId__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId()), "Read wall Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Wall>(t, "Read wall FAILED!", true);
         }
         return r;
     }

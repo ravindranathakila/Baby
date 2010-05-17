@@ -1,0 +1,19 @@
+package ai.ilikeplaces.logic.verify;
+
+import ai.ilikeplaces.doc.License;
+
+import javax.ejb.Local;
+import javax.persistence.Lob;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: Ravindranath Akila
+ * Date: Apr 29, 2010
+ * Time: 4:08:49 PM
+ */
+
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Local
+public interface MemcLocal {
+    public void logTime();
+}

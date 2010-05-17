@@ -58,7 +58,7 @@ public abstract class AbstractWidgetListener {
     private static final String CONTAINS_NULL_OR_NO_REFERENCE_IN_REGISTRY = "\" CONTAINS NULL OR NO REFERENCE IN REGISTRY!";
     private static final String SORRY_COULD_NOT_FETCH_THE_ELEMENT_NAMED = "SORRY! COULD NOT FETCH THE ELEMENT NAMED ";
     private static final String FROM_FILE = " FROM FILE.";
-    private static final String THIS_COULD_HAPPEN_IF_THE_WRONG_PAGE_IS_REGISTERED_IN_THE_WIDGET_CONSTRUCTOR_WHEN_CALLING_SUPER = "\nTHIS COULD HAPPEN IF THE WRONG PAGE IS REGISTERED IN THE WIDGET CONSTRUCTOR WHEN CALLING SUPER.";
+    private static final String THIS_COULD_HAPPEN_IF_THE_WRONG_PAGE_IS_REGISTERED_IN_THE_WIDGET_CONSTRUCTOR_WHEN_CALLING_SUPER = "\nTHIS COULD HAPPEN IF THE WRONG PAGE IS REGISTERED IN THE WIDGET CONSTRUCTOR WHEN CALLING SUPER OR IF THE ELEMENT WAS REGISTERED UNDER A WRONG ENTITY.";
     private static final String STYLE = "style";
     private static final String DISPLAY_BLOCK = "display:block;";
     private static final String DISPLAY_NONE = "display:none;";
@@ -147,7 +147,7 @@ public abstract class AbstractWidgetListener {
         }
         final Element returnVal = document_.getElementById(elementId__ + instanceId);
         return returnVal != null ? returnVal : (Element) LogNull.logThrow("SORRY! COULD NOT FETCH THE ELEMENT NAMED " + key__ + " FROM PAGE:" + page.toString() +
-                "\nTHIS COULD HAPPEN IF THE WRONG PAGE IS REGISTERED IN THE WIDGET CONSTRUCTOR WHEN CALLING SUPER.");
+                "\nTHIS COULD HAPPEN IF THE WRONG PAGE IS REGISTERED IN THE WIDGET CONSTRUCTOR WHEN CALLING SUPER OR IF THE ELEMENT WAS REGISTERED UNDER A WRONG ENTITY..");
     }
 
     /**

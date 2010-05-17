@@ -26,12 +26,12 @@ abstract public class Button extends AbstractWidgetListener {
      * @param itsNatDocument__
      * @param appendToElement__
      */
-    public Button(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final String buttonText, final boolean doRefreshPageOnClick, final Object ... params) {
+    public Button(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final String buttonText, final boolean doRefreshPageOnClick, final Object... params) {
         super(itsNatDocument__, Page.GenericButton, appendToElement__, buttonText, doRefreshPageOnClick, params);
-               
+
         $$(Controller.Page.GenericButtonText).setTextContent(buttonText);
-        $$(Controller.Page.GenericButtonText).setAttribute(MarkupTag.GENERIC.classs(),"vtip");
-        $$(Controller.Page.GenericButtonText).setAttribute(MarkupTag.GENERIC.title(),"Link to "+buttonText);
+        $$(Controller.Page.GenericButtonText).setAttribute(MarkupTag.GENERIC.classs(), "vtip");
+        $$(Controller.Page.GenericButtonText).setAttribute(MarkupTag.GENERIC.title(), buttonText);
 
 
         if (doRefreshPageOnClick) {

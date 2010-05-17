@@ -2,14 +2,14 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.entities.HumansFriend;
+import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller.Page;
-import ai.ilikeplaces.util.AbstractWidgetListener;
-import ai.ilikeplaces.util.EventType;
-import ai.ilikeplaces.util.RefString;
-import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
@@ -19,6 +19,8 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
+
+import java.util.List;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 
@@ -33,13 +35,11 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
 
     final private Logger logger = LoggerFactory.getLogger(PrivateLocationDelete.class.getName());
 
-    private RefString humanId = null;
+    private HumanId humanId = null;
     private Long privateLocationId = null;
+    Return<PrivateLocation> r;
+    List<HumansNetPeople> possibilities;
 
-    /**
-     * @param itsNatDocument__
-     * @param appendToElement__
-     */
     public PrivateLocationDelete(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final String humanId__, final long privateLocationId__) {
         super(itsNatDocument__, Page.PrivateLocationDelete, appendToElement__, humanId__, privateLocationId__);
     }
@@ -49,10 +49,10 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
      */
     @Override
     protected void init(final Object... initArgs) {
-        this.humanId = new RefString((String) initArgs[0]);
+        this.humanId = new HumanId((String) initArgs[0]);
         this.privateLocationId = (Long) initArgs[1];
 
-        final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocation(humanId.getString(), privateLocationId);
+        r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocation(humanId.getObj(), privateLocationId);
         if (r.returnStatus() == 0) {
             $$(privateLocationDeleteName).setTextContent(r.returnValue().getPrivateLocationName());
             $$(privateLocationDeleteInfo).setTextContent(r.returnValue().getPrivateLocationInfo());
@@ -66,14 +66,14 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationDelete), EventType.CLICK.toString(), new EventListener() {
 
-            final RefString myhumanId = humanId;
+            final HumanId myhumanId = humanId;
             final Long myprivateLocationId = privateLocationId;
 
             @Override
             public void handleEvent(final Event evt_) {
                 logger.debug("{}", "HELLO! CLICKED DELETE.");
 
-                final Return<Boolean> r = DB.getHumanCrudPrivateLocationLocal(true).dPrivateLocation(myhumanId.getString(), myprivateLocationId);
+                final Return<Boolean> r = DB.getHumanCrudPrivateLocationLocal(true).dPrivateLocation(myhumanId.getObj(), myprivateLocationId);
                 if (r.returnStatus() == 0) {
                     logger.debug("{}", "HELLO! DELETED. DB REPLY:" + r.returnValue());
                     remove(evt_.getTarget(), EventType.CLICK, this);
@@ -87,5 +87,64 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
             }
         }, false, JSCodeToSend.RefreshPage);
 
+        final HumansNetPeople user = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);
+        this.possibilities = user.getHumansNetPeoples();
+        
+        AddRemoveOwners:
+        {
+            new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateLocation>>(
+                    itsNatDocument_,
+                    $$(privateLocationDeleteOwners),
+                    user.getHumansNet(),
+                    possibilities,
+                    r.returnValue().getPrivateLocationOwners(),
+                    new Save<Return<PrivateLocation>>() {
+
+                        final long myprivateLocationId = r.returnValue().getPrivateLocationId();
+
+                        @Override
+                        public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
+                            return DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationAddOwner(humanId, myprivateLocationId, humansFriend);
+                        }
+                    },
+                    new Save<Return<PrivateLocation>>() {
+
+                        final long myprivateLocationId = r.returnValue().getPrivateLocationId();
+
+                        @Override
+                        public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
+                            return DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationRemoveOwner(humanId, myprivateLocationId, humansFriend);
+                        }
+                    }) {
+            };
+        }
+        AddRemoveVisitors:
+        {
+            new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateLocation>>(
+                    itsNatDocument_,
+                    $$(privateLocationDeleteVisitors),
+                    user.getHumansNet(),
+                    possibilities,
+                    r.returnValue().getPrivateLocationViewers(),
+                    new Save<Return<PrivateLocation>>() {
+
+                        final long myprivateLocationId = r.returnValue().getPrivateLocationId();
+
+                        @Override
+                        public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
+                            return DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationAddVisitor(humanId, myprivateLocationId, humansFriend);
+                        }
+                    },
+                    new Save<Return<PrivateLocation>>() {
+
+                        final long myprivateLocationId = r.returnValue().getPrivateLocationId();
+
+                        @Override
+                        public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
+                            return DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationRemoveVisitor(humanId, myprivateLocationId, humansFriend);
+                        }
+                    }) {
+            };
+        }
     }
 }

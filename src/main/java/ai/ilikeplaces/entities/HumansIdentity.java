@@ -30,14 +30,14 @@ public class HumansIdentity implements HumanPkJoinFace, Serializable {
     final static public String FindPaginatedHumansByEmails = "FindPaginatedHumansByEmails";
     final static public String HumansIdentityEmails = "humansIdentityEmails";
 
-    private String humanId;
-    private Human human;
-    private String humansIdentityEmail;
-    private Integer humansIdentityGenderCode;
-    private Date humansIdentityDateOfBirth;
-    private String humansIdentityFirstName;
-    private String humansIdentityLastName;
-    private String humansIdentityGUIPreferences;
+    public String humanId;
+    public Human human;
+    public String humansIdentityEmail;
+    public Integer humansIdentityGenderCode;
+    public Date humansIdentityDateOfBirth;
+    public String humansIdentityFirstName;
+    public String humansIdentityLastName;
+    public String humansIdentityGUIPreferences;
 
     public static enum GENDER {
         Neutral,

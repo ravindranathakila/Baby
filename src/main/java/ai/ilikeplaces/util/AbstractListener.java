@@ -76,6 +76,9 @@ public abstract class AbstractListener {
 
     /**
      * Initialize your document here by appending fragments
+     * @param itsNatHTMLDocument__
+     * @param hTMLDocument__
+     * @param itsNatDocument__
      */
     protected abstract void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__);
 

@@ -19,9 +19,9 @@ import javax.persistence.*;
 @EntityListeners(EntityLifeCycleListener.class)
 public class HumansAlbum implements HumanPkJoinFace {
 
-    private String humanId;
+    public String humanId;
 
-    private Human human;
+    public Human human;
 
 
     @Id

@@ -1,5 +1,6 @@
 package ai.ilikeplaces.entities;
 
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
@@ -11,16 +12,16 @@ import javax.persistence.*;
  * Time: 10:46:46 PM
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners(EntityLifeCycleListener.class)
 public class Map {
 
-    private Integer id;
+    public Integer id;
 
-    private String label;
+    public String label;
 
-    private String entry;
+    public String entry;
 
     @Id
     @GeneratedValue

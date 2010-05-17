@@ -85,17 +85,17 @@ import javax.persistence.*;
 @Entity
 public class HumansNet implements HumanPkJoinFace, HumansFriend {
 
-    private String humanId;
-    private Human human;
+    public String humanId;
+    public Human human;
 
     @NOTE(note = "Display name is used for adding removing users etc. This can also be the nick name." +
             "The compulsory requirement for this name is that others know the user by this name." +
             "This name is important for us as it helps DB performance(instead of loading identity bean." +
             "This is one place where the benefit breaking table with PK is elaborated.(we made this displayName entry much " +
             "later in the development cycle)")
-    private String displayName;
+    public String displayName;
 
-    private HumansNetPeople humansNetPeople;
+    public HumansNetPeople humansNetPeople;
 
     @Id
     public String getHumanId() {
