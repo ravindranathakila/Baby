@@ -13,7 +13,7 @@ public class HumansAuthorization implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String humanIdentification;
+    public String humanIdentification;
 
 
     @Id

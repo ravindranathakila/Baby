@@ -26,13 +26,13 @@ import java.util.List;
 @EntityListeners(EntityLifeCycleListener.class)
 public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFace, HumansFriend {
 
-    private String humanId;
+    public String humanId;
 
-    private Human human;
+    public Human human;
 
-    private List<PrivateLocation> privateLocationsViewed;
+    public List<PrivateLocation> privateLocationsViewed;
 
-    private List<PrivateLocation> privateLocationsOwned;
+    public List<PrivateLocation> privateLocationsOwned;
 
 
     @Id

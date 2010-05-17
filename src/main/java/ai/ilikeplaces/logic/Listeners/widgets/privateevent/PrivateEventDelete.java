@@ -2,10 +2,15 @@ package ai.ilikeplaces.logic.Listeners.widgets.privateevent;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.entities.HumansFriend;
+import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.Button;
+import ai.ilikeplaces.logic.Listeners.widgets.MemberHandler;
+import ai.ilikeplaces.logic.Listeners.widgets.WallWidget;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
@@ -18,6 +23,8 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
+
+import java.util.List;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 
@@ -33,8 +40,10 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
     final private Logger logger = LoggerFactory.getLogger(PrivateEventDelete.class.getName());
 
-    private RefString humanId = null;
+    private HumanId humanId = null;
     private Long privateEventId = null;
+    Return<PrivateEvent> r;
+    List<HumansNetPeople> possibilities;
 
     /**
      * @param itsNatDocument__
@@ -49,14 +58,14 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
      */
     @Override
     protected void init(final Object... initArgs) {
-        this.humanId = new RefString((String) initArgs[0]);
+        this.humanId = new HumanId((String) initArgs[0]);
         this.privateEventId = (Long) initArgs[1];
 
-        final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEvent(humanId.getString(), privateEventId);
+        r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEvent(humanId.getObj(), privateEventId);
         if (r.returnStatus() == 0) {
             $$(privateEventDeleteName).setTextContent(r.returnValue().getPrivateEventName());
             $$(privateEventDeleteInfo).setTextContent(r.returnValue().getPrivateEventInfo());
-                        new Button(itsNatDocument_, $$(privateEventDeleteLink), "Link to " + r.returnValue().getPrivateEventName(), false, r.returnValue()) {
+            new Button(itsNatDocument_, $$(privateEventDeleteLink), "Link to " + r.returnValue().getPrivateEventName(), false, r.returnValue()) {
                 PrivateEvent privateEvent = null;
 
                 @Override
@@ -81,6 +90,8 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                     }
                 }
             };
+            new WallWidget(itsNatDocument_,$$(Page.privateEventWall),humanId,r.returnValue().getPrivateEventId()){
+            };
         } else {
             $$(privateEventDeleteNotice).setTextContent(r.returnMsg());
         }
@@ -91,18 +102,17 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventDelete), EventType.CLICK.toString(), new EventListener() {
 
-            final RefString myhumanId = humanId;
+            final HumanId myhumanId = humanId;
             final Long myprivateEventId = privateEventId;
 
             @Override
             public void handleEvent(final Event evt_) {
-                logger.debug("{}", "HELLO! CLICKED DELETE.");
+                Loggers.USER.info(humanId.getObj()+" clicked delete for private event "+myprivateEventId);
 
-                final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dPrivateEvent(myhumanId.getString(), myprivateEventId);
+                final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dPrivateEvent(myhumanId.getObj(), myprivateEventId);
                 if (r.returnStatus() == 0) {
-                    logger.debug("{}", "HELLO! DELETED. DB REPLY:" + r.returnValue());
+                    Loggers.USER.info(humanId.getObj()+" clicked deleted private event "+r.returnValue());
                     remove(evt_.getTarget(), EventType.CLICK, this);
-                    logger.debug("{}", "HELLO! REMOVED CLICK.");
                     clear($$(privateEventDeleteNotice));
                 } else {
                     $$(privateEventDelete).setTextContent(r.returnMsg());
@@ -112,5 +122,91 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
             }
         }, false, JSCodeToSend.RefreshPage);
 
+        final HumansNetPeople user = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);
+        this.possibilities = user.getHumansNetPeoples();
+
+        AddRemoveOwners:
+        {
+            new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
+                    itsNatDocument_,
+                    $$(privateEventDeleteOwners),
+                    user.getHumansNet(),
+                    possibilities,
+                    r.returnValue().getPrivateEventOwners(),
+                    new Save<Return<PrivateEvent>>() {
+
+                        final long myprivateEventId = r.returnValue().getPrivateEventId();
+
+                        @Override
+                        public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
+                            return DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddOwner(humanId, myprivateEventId, humansFriend);
+                        }
+                    },
+                    new Save<Return<PrivateEvent>>() {
+
+                        final long myprivateEventId = r.returnValue().getPrivateEventId();
+
+                        @Override
+                        public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
+                            return DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveOwner(humanId, myprivateEventId, humansFriend);
+                        }
+                    }) {
+            };
+        }
+        AddRemoveVisitors:
+        {
+            new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
+                    itsNatDocument_,
+                    $$(privateEventDeleteVisitors),
+                    user.getHumansNet(),
+                    possibilities,
+                    r.returnValue().getPrivateEventViewers(),
+                    new Save<Return<PrivateEvent>>() {
+
+                        final long myprivateEventId = r.returnValue().getPrivateEventId();
+
+                        @Override
+                        public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
+                            return DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddVisitor(humanId, myprivateEventId, humansFriend);
+                        }
+                    },
+                    new Save<Return<PrivateEvent>>() {
+
+                        final long myprivateEventId = r.returnValue().getPrivateEventId();
+
+                        @Override
+                        public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
+                            return DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveVisitor(humanId, myprivateEventId, humansFriend);
+                        }
+                    }) {
+            };
+            AddRemoveInvitee:
+            {
+                new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
+                        itsNatDocument_,
+                        $$(privateEventDeleteInvitees),
+                        user.getHumansNet(),
+                        possibilities,
+                        r.returnValue().getPrivateEventInvites(),
+                        new Save<Return<PrivateEvent>>() {
+
+                            final long myprivateEventId = r.returnValue().getPrivateEventId();
+
+                            @Override
+                            public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
+                                return DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddInvite(humanId, myprivateEventId, humansFriend);
+                            }
+                        },
+                        new Save<Return<PrivateEvent>>() {
+
+                            final long myprivateEventId = r.returnValue().getPrivateEventId();
+
+                            @Override
+                            public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
+                                return DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveInvite(humanId, myprivateEventId, humansFriend);
+                            }
+                        });
+            }
+        }
     }
 }

@@ -117,4 +117,14 @@ public class ElementComposer {
         return element;
     }
 
+    public final ElementComposer $ElementSetAttribute(final String attributeName, final String attributeValue) {
+        element.setAttribute(attributeName, attributeValue);
+        return this;
+    }
+
+    static public final Element $ElementSetAttribute(final Element element, final String attributeName, final String attributeValue) {
+        element.setAttribute(attributeName, attributeValue);
+        return element;
+    }
+
 }

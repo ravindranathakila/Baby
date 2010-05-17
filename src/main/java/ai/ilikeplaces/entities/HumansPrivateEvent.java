@@ -2,7 +2,11 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.BIDIRECTIONAL;
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.exception.DBException;
+import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
+import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,16 +21,16 @@ import java.util.List;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners(EntityLifeCycleListener.class)
-public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace {
+public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace,HumansFriend {
 
-    private String humanId;
+    public String humanId;
 
-    private Human human;
+    public Human human;
 
-    private List<PrivateEvent> privateEventsOwned;
-    private List<PrivateEvent> privateEventsViewed;
-    private List<PrivateEvent> privateEventsInvited;
-    private List<PrivateEvent> privateEventsRejected;
+    public List<PrivateEvent> privateEventsOwned;
+    public List<PrivateEvent> privateEventsViewed;
+    public List<PrivateEvent> privateEventsInvited;
+    public List<PrivateEvent> privateEventsRejected;
 
 
     @Id
@@ -42,6 +46,23 @@ public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace {
     @PrimaryKeyJoinColumn
     public Human getHuman() {
         return human;
+    }
+
+    @NOTE(note = "This implementation will be fast a.l.a the Human entity has lazy in its getters.")
+    @Override
+    @Transient
+    public String getDisplayName() {
+        return this.human.getHumansNet().getDisplayName();
+    }
+
+    @Override
+    @Transient
+    public boolean isFriend(final String friendsHumanId) {
+        final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doDirtyIsHumansNetPeople(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId));
+        if (r.returnStatus() != 0) {
+            throw new DBException(r.returnError());
+        }
+        return r.returnValue();
     }
 
     public void setHuman(final Human human) {

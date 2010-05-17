@@ -22,9 +22,9 @@ import java.util.List;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 public class HumansNetPeople extends HumanEquals implements HumansFriend {
-    private String humanId;
-    private HumansNet humansNet;
-    private List<HumansNetPeople> humansNetPeoples;
+    public String humanId;
+    public HumansNet humansNet;
+    public List<HumansNetPeople> humansNetPeoples;
 
     @Id
     public String getHumanId() {

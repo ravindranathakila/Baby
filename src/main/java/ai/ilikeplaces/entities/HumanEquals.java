@@ -1,6 +1,7 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.util.Loggers;
 
 /**
@@ -52,12 +53,16 @@ public abstract class HumanEquals {
     }
 
     /**
-     * New approach on HumanEquals but not tested. Check intensively if you are using this static appraoch
+     * New approach on HumanEquals but not tested. Check intensively if you are using this static approach.
      * 
      * @param main
      * @param other
      * @return
      */
+    @Deprecated
+    @NOTE(note = "Use an interface based equals matching approach if you are using this. Logic is" +
+            "If the two classes of of different types, but instanceof same interface, then match humanid." +
+            "This approach avoids necessity to extend a class.")
     static public boolean staticMatchHumanId(final HumanEquals main, final Object other) {
         Loggers.DEBUG.debug(main.getClass().getSimpleName() + " " + other.getClass().getSimpleName());
         if (main.getClass() == other.getClass()) {

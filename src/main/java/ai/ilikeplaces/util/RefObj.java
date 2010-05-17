@@ -28,8 +28,23 @@ public abstract class RefObj<T> {
 
     abstract public T getObj();
 
+     /**
+     * Use this method to return this same object after validation.
+     *
+     * @param validator
+     * @return valid object
+     */
+    public RefObj<T> getSelfAsValid(final Validator... validator) {
+        final Validator v = validator.length == 0 ? new Validator() : validator[0];
+        constraintViolations = v.validate(this);
+        if (constraintViolations.size() != 0) {
+            throw new ConstraintsViolatedException(constraintViolations);
+        }
+        return this;
+    }
+    
     /**
-     * User this method to obtain an object that is expected to be valid.
+     * Use this method to obtain an object that is expected to be valid.
      * 
      * @param validator
      * @return valid object
@@ -43,9 +58,15 @@ public abstract class RefObj<T> {
         return obj;
     }
 
-    public void setObj(final T obj) {
+    /**
+     * Sets the value for this object.
+     * Each time this methods is called, validations should/will be reset
+     * 
+     * @param valueToBeSetToObj
+     */
+    public void setObj(final T valueToBeSetToObj) {
         constraintViolations = null;//So that validation is consistent
-        this.obj = obj;
+        this.obj = valueToBeSetToObj;
     }
 
     @NOTE(note = "This approach is specially used when internally creating objects that should be valid as opposed to a web user." +

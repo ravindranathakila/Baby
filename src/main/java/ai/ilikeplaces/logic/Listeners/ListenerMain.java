@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -120,7 +119,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             }
                             setMetaDescription:
                             {
-                                $(mainMetaDesc).setAttribute(MarkupTag.META.name(),"Do a flight booking to " + location + " and find a hotel to stay. Hire a car to travel around. Click here to check for offers.");
+                                $(mainMetaDesc).setAttribute(MarkupTag.META.namee(), "Do a flight booking to " + location + " and find a hotel to stay. Hire a car to travel around. Click here to check for offers.");
                             }
                         }
                         catch (final Throwable t) {
@@ -213,14 +212,13 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         try {
                             $(Main_center_main_location_title).setTextContent("This is " + existingLocation_.getLocationName() + " of " + existingLocation_.getLocationSuperSet());
 
-                            $(Main_notice).appendChild($(P).appendChild(hTMLDocument__.createTextNode("Back to: ")));
-                            $(Main_notice).appendChild(generateSimpleLocationLink(existingLocation_.getLocationSuperSet()));
-                            $(Main_notice).appendChild($(BR));
+                            $(Main_location_backlink).appendChild($(P).appendChild(hTMLDocument__.createTextNode("Back to: ")));
+                            $(Main_location_backlink).appendChild(generateSimpleLocationLink(existingLocation_.getLocationSuperSet()));
 
-                            $(Main_notice).appendChild(($(P).appendChild(hTMLDocument__.createTextNode("At " + existingLocation_.getLocationName() + " you can visit: "))));
+                            $(Main_location_list_header).appendChild(($(P).appendChild(hTMLDocument__.createTextNode("At " + existingLocation_.getLocationName() + " you can visit: "))));
 
                             for (final Element element : generateLocationLinks(DB.getHumanCRUDLocationLocal(true).doDirtyRLocationsBySuperLocation(existingLocation_))) {
-                                $(Main_notice).appendChild(element);
+                                $(Main_location_list).appendChild(element);
                                 displayBlock($(Main_notice_sh));
                             }
 
@@ -232,7 +230,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                     setFlickrLink:
                     {
-                        $(Main_flickr).setAttribute(MarkupTag.A.href(),RBGet.config.getString("flickr.json") + location.toLowerCase().replace(" ", "+").replace("/", "+"));
+                        $(Main_flickr).setAttribute(MarkupTag.A.href(), RBGet.config.getString("flickr.json") + location.toLowerCase().replace(" ", "+").replace("/", "+"));
                     }
 
                     getAndDisplayAllThePhotos:
@@ -310,11 +308,9 @@ public class ListenerMain implements ItsNatServletRequestListener {
 //                itsNatDoc.dispatchEvent((EventTarget) $(Main_notice), mouseEvent);
             }
 
-            private List<Element> generateLocationLinks
-                    (
-                            final List<Location> locationList) {
+            private List<Element> generateLocationLinks(final List<Location> locationList) {
 
-                List<Element> links = new ArrayList<Element>();
+                final ElementComposer UList = ElementComposer.compose($(UL)).$ElementSetAttribute(MarkupTag.UL.id(),"place_list");
 
                 for (Location location : locationList) {
                     final Element link = $(A);
@@ -339,14 +335,56 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                     final Element linkDiv = $(DIV);
 
+
                     linkDiv.appendChild(link);
 
-                    links.add(linkDiv);
+                    UList.wrapThis(
+                            ElementComposer.compose($(LI)).wrapThis(linkDiv).get()
+                    );
                 }
 
-                return links;
+                final List<Element> elements = new ArrayList<Element>();
+                elements.add(UList.get());
+                return elements;
 
             }
+//            private List<Element> generateLocationLinks
+//                    (
+//                            final List<Location> locationList) {
+//
+//                List<Element> links = new ArrayList<Element>();
+//
+//                for (Location location : locationList) {
+//                    final Element link = $(A);
+//
+//                    link.setTextContent("Travel to " + location.getLocationName() + " of " + location.getLocationSuperSet().getLocationName());
+//
+//                    link.setAttribute(A.href(),
+//                            "/page/"
+//                                    + location.getLocationName()
+//                                    + "_of_"
+//                                    + location.getLocationSuperSet().getLocationName()
+//                                    + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
+//
+//                    link.setAttribute(A.alt(),
+//                            "/page/" + location.getLocationName() + "_of_" + location.getLocationSuperSet().getLocationName());
+//
+//                    link.setAttribute(A.title(),
+//                            "Click to explore " + location.getLocationName() + " of " + location.getLocationSuperSet().getLocationName());
+//
+//                    link.setAttribute(A.classs(), "vtip");
+//
+//
+//                    final Element linkDiv = $(DIV);
+//
+//                    linkDiv.appendChild(link);
+//
+//                    links.add(linkDiv);
+//                }
+//
+//                return links;
+//
+//            }
 
             private Element generateLocationLink(final Location location) {
                 final Element link = $(A);

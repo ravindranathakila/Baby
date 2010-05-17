@@ -59,6 +59,14 @@ final public class ReturnImpl<T> implements Return {
     }
 
     @Override
+    final public T returnValueBadly() {
+        if (returnStatus() != 0) {
+            throw new RuntimeException(returnError);
+        }
+        return returnValue;
+    }
+
+    @Override
     final public Throwable returnError() {
         return returnError;
     }

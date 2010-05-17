@@ -1,6 +1,7 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.FIXME;
+import ai.ilikeplaces.doc.License;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,14 +12,14 @@ import java.util.List;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 public class HumansPublicPhoto implements HumanIdFace, Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String humanId;
-    private Human human;
-    private List<PublicPhoto> publicPhotos;
+    public String humanId;
+    public Human human;
+    public List<PublicPhoto> publicPhotos;
 
     @Id
     public String getHumanId() {

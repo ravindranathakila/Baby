@@ -78,6 +78,28 @@ final public class DB implements DBLocal {
     }
 
     @Override
+    public HumanCRUDPrivatePhotoLocal getHumanCRUDPrivatePhotoLocal() {
+        isOK();
+        HumanCRUDPrivatePhotoLocal h = null;
+        try {
+            h = (HumanCRUDPrivatePhotoLocal) Context_.lookup(HumanCRUDPrivatePhotoLocal.NAME);
+        } catch (NamingException ex) {
+            logger.error("{}", ex);
+        }
+        return h != null ? h : (HumanCRUDPrivatePhotoLocal) LogNull.logThrow();
+    }
+
+    public static HumanCRUDPrivatePhotoLocal getHumanCRUDPrivatePhotoLocal(final boolean nonInjected) {
+        HumanCRUDPrivatePhotoLocal h = null;
+        try {
+            h = ((DBLocal) Context_.lookup(DBLocal.NAME)).getHumanCRUDPrivatePhotoLocal();
+        } catch (NamingException ex) {
+            logger.error("{}", ex);
+        }
+        return h != null ? h : (HumanCRUDPrivatePhotoLocal) LogNull.logThrow();
+    }
+
+    @Override
     public HumanCRUDHumanLocal getHumanCRUDHumanLocal() {
         isOK();
         HumanCRUDHumanLocal h = null;

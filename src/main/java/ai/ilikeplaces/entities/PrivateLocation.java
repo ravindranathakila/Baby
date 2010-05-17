@@ -37,22 +37,22 @@ public class PrivateLocation implements Serializable {
     final static public String FindAllPrivateLocationNamesByLikeName = "FindAllPrivateLocationNamesByLikeName";
     final static public String PrivateLocationName = "privateLocationName";
 
-    private Long privateLocationId;
+    public Long privateLocationId;
 
-    private String privateLocationName;
-    private String privateLocationInfo;
+    public String privateLocationName;
+    public String privateLocationInfo;
 
     /**
      * Usually other members having rights to that place.
      * They cannot delete the location though. Only the creator can.
      */
-    private List<HumansPrivateLocation> privateLocationOwners;
+    public List<HumansPrivateLocation> privateLocationOwners;
     final static public String privateLocationOwnersCOL = "privateLocationOwners";
 
-    private List<HumansPrivateLocation> privateLocationViewers;
+    public List<HumansPrivateLocation> privateLocationViewers;
     final static public String privateLocationViewersCOL = "privateLocationViewers";
 
-    private List<PrivateEvent> privateEvents;
+    public List<PrivateEvent> privateEvents;
 
 
     /**

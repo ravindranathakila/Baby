@@ -20,21 +20,21 @@ import java.util.List;
 @EntityListeners({EntityLifeCycleListener.class})
 public class Album {
 
-    private Long albumId;
+    public Long albumId;
 
-    private String albumName;
+    public String albumName;
 
-    private String albumDescription;
+    public String albumDescription;
 
-    private List<PrivatePhoto> albumPhotos;
+    public List<PrivatePhoto> albumPhotos;
 
-    private List<HumansAlbum> albumOwners;
+    public List<HumansAlbum> albumOwners;
     final static public String albumOwnersCOL = "albumOwners";
 
-    private List<HumansAlbum> albumVisitors;
+    public List<HumansAlbum> albumVisitors;
     final static public String albumVisitorsCOL = "albumVisitors";
 
-    private PrivateEvent albumPrivateEvent;
+    public PrivateEvent albumPrivateEvent;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -20,7 +20,6 @@ import java.util.List;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 @Entity
-@EntityListeners(EntityLifeCycleListener.class)
 @NamedQueries({
         @NamedQuery(name = "FindAllLocationsByName",
                 query = "SELECT loc FROM Location loc WHERE loc.locationName = :locationName"),
@@ -43,15 +42,15 @@ public class Location implements Serializable, Clearance, Comparable<Location> {
     final static private long serialVersionUID = 1L;
     final static public String WOEID = "WOEID";
 
-    private Long locationId;
-    private Long clearance = 0L;
-    private String locationName;
-    private String locationInfo;
-    private Location locationSuperSet;
-    private String locationGeo1;
-    private String locationGeo2;
-    private List<PublicPhoto> publicPhotos;
-    private List<PrivateEvent> privateEvents;
+    public Long locationId;
+    public Long clearance = 0L;
+    public String locationName;
+    public String locationInfo;
+    public Location locationSuperSet;
+    public String locationGeo1;
+    public String locationGeo2;
+    public List<PublicPhoto> publicPhotos;
+    public List<PrivateEvent> privateEvents;
     public static final String OF_SPACE = " of ";
     public static final String OF_SCORE = "_of_";
 

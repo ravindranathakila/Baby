@@ -58,7 +58,7 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
                             setPrivatePhotoNameR(privatePhotoName)
                             .setPrivatePhotoFilePathR(fileName)
                             .setPrivatePhotoDescriptionR(privatePhotoDescription)
-                            .setPrivatePhotoURLPathR(privatePhotoURLPath)), "Create photo by human with location Successful!");
+                            .setPrivatePhotoURLPathR(privatePhotoURLPath)), "Create PrivatePhoto by human Successful!");
         } catch (final Throwable t) {
             r = new ReturnImpl<PrivatePhoto>(t, "Create photo by human FAILED!", true);
         }

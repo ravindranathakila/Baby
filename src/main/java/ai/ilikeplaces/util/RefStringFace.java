@@ -9,7 +9,6 @@ import ai.ilikeplaces.doc.License;
  * Time: 10:40:01 PM
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public interface RefStringFace {
 

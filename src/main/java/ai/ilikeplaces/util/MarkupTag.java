@@ -113,6 +113,13 @@ public enum MarkupTag implements MarkupTagFace {
         }
     },
 
+    UL() {
+         @Override
+        public String toString() {
+            return UL_TAG;
+        }
+    },
+
     LI() {
         @Override
         public String toString() {
@@ -120,7 +127,7 @@ public enum MarkupTag implements MarkupTagFace {
         }
         @Override
         public String ul() {
-            return UL;
+            return UL_TAG;
         }
         @Override
         public String ol() {
@@ -147,7 +154,7 @@ public enum MarkupTag implements MarkupTagFace {
     META() {
         @Override
         public String namee() {
-            throw new UnsupportedOperationException(ExceptionMsg);
+            return NAME;
         }
 
         @Override
@@ -194,7 +201,7 @@ public enum MarkupTag implements MarkupTagFace {
 
         @Override
         public String ul() {
-            return UL;
+            return UL_TAG;
         }
         @Override
         public String ol() {
@@ -204,6 +211,8 @@ public enum MarkupTag implements MarkupTagFace {
         public String classs() {
             return CLASS;
         }};
+    private static final String NAME = "name";
+    private static final String UL_TAG = "UL";
 
     private static final String BR_TAG = "BR";
     private static final String INPUT_TAG = "INPUT";
@@ -216,7 +225,6 @@ public enum MarkupTag implements MarkupTagFace {
     private static final String TEXTAREA_TAG = "TEXTAREA";
     private static final String DIV_TAG = "DIV";
     private static final String OL = "OL";
-    private static final String UL = "UL";
     private static final String LI_TAG = "LI";
     private static final String A_TAG = "A";
     private static final String IMG_TAG = "IMG";

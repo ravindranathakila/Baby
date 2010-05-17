@@ -23,37 +23,39 @@ import java.util.List;
 @EntityListeners(EntityLifeCycleListener.class)
 public class PrivateEvent {
 
-    private Long privateEventId;
+    public Long privateEventId;
 
-    private String privateEventName;
+    public String privateEventName;
 
-    private String privateEventInfo;
+    public String privateEventInfo;
 
-    private String privateEventStartDate;
+    public String privateEventStartDate;
 
-    private String privateEventEndDate;
+    public String privateEventEndDate;
 
-    private Boolean extendedAccess;
+    public Boolean extendedAccess;
 
-    private List<HumansPrivateEvent> privateEventOwners;
+    public Wall privateEventWall;
+
+    public List<HumansPrivateEvent> privateEventOwners;
     final static public String privateEventOwnersCOL = "privateEventOwners";
 
-    private List<HumansPrivateEvent> privateEventViewers;
+    public List<HumansPrivateEvent> privateEventViewers;
     final static public String privateEventViewersCOL = "privateEventViewers";
 
-    private List<HumansPrivateEvent> privateEventInvites;
+    public List<HumansPrivateEvent> privateEventInvites;
     final static public String privateEventInvitesCOL = "privateEventInvites";
 
-    private List<HumansPrivateEvent> privateEventRejects;
+    public List<HumansPrivateEvent> privateEventRejects;
     final static public String privateEventRejectsCOL = "privateEventRejects";
 
-    private PrivateLocation privateLocation;
+    public PrivateLocation privateLocation;
     final static public String privateLocationCOL = "privateLocation";
 
-    private Location location;
+    public Location location;
     final static public String locationCOL = "location";
 
-    private Album privateEventAlbum;
+    public Album privateEventAlbum;
     final static public String privateEventAlbumCOL = "privateEventAlbum";
 
     @Id
@@ -236,6 +238,22 @@ public class PrivateEvent {
 
     public void setPrivateEventRejects(final List<HumansPrivateEvent> privateEventRejects) {
         this.privateEventRejects = privateEventRejects;
+    }
+
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
+    @OneToOne(cascade = CascadeType.ALL)
+    public Wall getPrivateEventWall() {
+        return privateEventWall;
+    }
+
+    public void setPrivateEventWall(final Wall privateEventWall) {
+        this.privateEventWall = privateEventWall;
+    }
+
+    @Transient
+    public PrivateEvent setPrivateEventWallR(final Wall privateEventWall) {
+        this.privateEventWall = privateEventWall;
+        return this;
     }
 
     @Override

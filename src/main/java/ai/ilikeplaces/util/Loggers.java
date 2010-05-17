@@ -5,6 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Any loggers used outside the context of the variable name, might result in losing log entries.
+ * For example, do not use DEBUG.info("msg"). Use, DEBUG.debug("msg").
+ *
  * Created by IntelliJ IDEA.
  * User: Ravindranath Akila
  * Date: Jan 30, 2010
