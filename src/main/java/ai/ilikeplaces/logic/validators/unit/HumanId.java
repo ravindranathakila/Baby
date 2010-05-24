@@ -3,7 +3,8 @@ package ai.ilikeplaces.logic.validators.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.util.RefObj;
 import net.sf.oval.configuration.annotation.IsInvariant;
-import net.sf.oval.constraint.*;
+import net.sf.oval.constraint.Length;
+import net.sf.oval.constraint.NotNull;
 
 /**
  * Created by IntelliJ IDEA.

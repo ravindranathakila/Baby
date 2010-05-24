@@ -4,6 +4,10 @@ function hasParams()
 {
     return (window.location.href +"").indexOf("?") != -1;
 }
+function hasNavHash()
+{
+    return (window.location.href +"").indexOf("#") != -1;
+}
 function makeParam(key,value)
 {
     return ( hasParams() ? "&" : "?") + key + "=" + value;

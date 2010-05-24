@@ -82,6 +82,13 @@
         </layout>
     </appender>
 
+    <appender name="FILE_SERVER_STATUS" class="ch.qos.logback.core.FileAppender">
+        <file>../logs/ilp_server_status.log</file>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%date>%msg%n</Pattern>
+        </layout>
+    </appender>
+
     <logger name="ai" level="debug">
         <appender-ref ref="FILE" />
     </logger>
@@ -116,6 +123,10 @@
 
     <logger name="INFO" level="info">
             <appender-ref ref="FILE_INFO" />
+    </logger>
+
+    <logger name="SERVER_STATUS" level="info">
+            <appender-ref ref="FILE_SERVER_STATUS" />
     </logger>
 
 

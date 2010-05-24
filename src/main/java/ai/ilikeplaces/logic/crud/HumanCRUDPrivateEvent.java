@@ -176,7 +176,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         return r;
     }
     @Override
-    public Return<Wall> uPrivateEventReadWall(HumanId humanId__, long privateEventId__) {
+    public Return<Wall> rPrivateEventReadWall(HumanId humanId__, long privateEventId__) {
 
         Return<Wall> r;
         try {

@@ -30,30 +30,34 @@ public class ParamValidator {
 
     @AroundInvoke
     public Object validate(InvocationContext invocation) throws Exception {
-        final Object[] args = invocation.getParameters();
-        final List<ConstraintViolation> violations = new ArrayList<ConstraintViolation>();
-        final Validator v = new Validator();
+        try {
+            final Object[] args = invocation.getParameters();
+            final List<ConstraintViolation> violations = new ArrayList<ConstraintViolation>();
+            final Validator v = new Validator();
 
-        for (final Object param : args) {
-            //violations.addAll(recurrsiveCollectionValidator(param, v));
-            violations.addAll(v.validate(param));
-        }
+            for (final Object param : args) {
+                //violations.addAll(recursiveCollectionValidator(param, v));
+                violations.addAll(v.validate(param));
+            }
 
-        if (violations.size() != 0) {
-            Loggers.EXCEPTION.error(RefObj.validationMessages(violations));
-            throw new ConstraintsViolatedException(violations);
+            if (violations.size() != 0) {
+                Loggers.EXCEPTION.error(RefObj.validationMessages(violations));
+                throw new ConstraintsViolatedException(violations);
+            }
+        } catch (final Throwable t) {
+            throw new RuntimeException(t);
         }
         return invocation.proceed();
 
     }
 
     @NOTE(note = "This could be possibly simplified")
-    private List<ConstraintViolation> recurrsiveCollectionValidator(final Object object, final Validator v) {
+    private List<ConstraintViolation> recursiveCollectionValidator(final Object object, final Validator v) {
         if (object instanceof Collections) {
             final List<ConstraintViolation> violations = new ArrayList<ConstraintViolation>();
             for (final Object obj : (Collection) object) {
                 violations.addAll(obj instanceof Collections
-                        ? recurrsiveCollectionValidator(obj, v)
+                        ? recursiveCollectionValidator(obj, v)
                         : obj instanceof Arrays
                         ? recurrsiveArrayValidator(obj, v)
                         : v.validate(obj));
@@ -74,7 +78,7 @@ public class ParamValidator {
                 violations.addAll(obj instanceof Arrays
                         ? recurrsiveArrayValidator(obj, v)
                         : obj instanceof Collections
-                        ? recurrsiveCollectionValidator(obj, v)
+                        ? recursiveCollectionValidator(obj, v)
                         : v.validate(obj));
             }
             return violations;

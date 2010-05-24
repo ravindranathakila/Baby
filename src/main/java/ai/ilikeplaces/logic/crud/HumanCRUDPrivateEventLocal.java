@@ -50,7 +50,7 @@ public interface HumanCRUDPrivateEventLocal {
 
     public Return<Wall> uPrivateEventClearWall(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__);
 
-    public Return<Wall> uPrivateEventReadWall(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__);
+    public Return<Wall> rPrivateEventReadWall(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__);
 
     public Return<Boolean> dPrivateEvent(final String humanId, final long privateEventId);
 }

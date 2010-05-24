@@ -37,7 +37,10 @@ public class MethodParams {
     public Object profile(InvocationContext invocation) throws Exception {
         if (DO_LOG.getObj()) {
 
-            logger.debug("TARGET:\n\t"+invocation.getTarget().toString()+"\nMETHOD NAME:\n\t" + invocation.getMethod().getName() + "\nPARAMETERS:\n\t" + Arrays.toString(invocation.getParameters()));
+            logger.debug(
+                    "TARGET:\n\t"+invocation.getTarget().toString()+
+                        "\nMETHOD NAME:\n\t" + invocation.getMethod().getName() +
+                        "\nPARAMETERS:\n\t" + Arrays.toString(invocation.getParameters()));
             return invocation.proceed();
         } else {
             return invocation.proceed();

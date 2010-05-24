@@ -39,7 +39,7 @@ public class MethodTimer {
                 return invocation.proceed();
             } finally {
                 final long endTime = System.currentTimeMillis() - startTime;
-                logger.debug("METHOD NAME:\n\t" + invocation.getMethod() + "\nTOOK:\n\t " + endTime + "(ms)");
+                Loggers.STATUS.info("INVOKING:\n" + invocation.getMethod() + "\nTOOK:\n " + endTime + "(millis)");
             }
         } else {
             return invocation.proceed();
