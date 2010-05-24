@@ -28,7 +28,7 @@ public abstract class RefObj<T> {
 
     abstract public T getObj();
 
-     /**
+    /**
      * Use this method to return this same object after validation.
      *
      * @param validator
@@ -42,10 +42,10 @@ public abstract class RefObj<T> {
         }
         return this;
     }
-    
+
     /**
      * Use this method to obtain an object that is expected to be valid.
-     * 
+     *
      * @param validator
      * @return valid object
      */
@@ -61,7 +61,7 @@ public abstract class RefObj<T> {
     /**
      * Sets the value for this object.
      * Each time this methods is called, validations should/will be reset
-     * 
+     *
      * @param valueToBeSetToObj
      */
     public void setObj(final T valueToBeSetToObj) {
@@ -170,4 +170,8 @@ public abstract class RefObj<T> {
         return validationMessages(constraintViolations);
     }
 
+    @Override
+    public String toString() {
+        return obj != null ? obj.toString() : "null";
+    }
 }

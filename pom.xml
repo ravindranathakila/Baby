@@ -28,6 +28,11 @@
             <version>5.0-1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.1</version>
+        </dependency>
 
         <dependency>
             <groupId>ItsNat0.7</groupId>
@@ -263,6 +268,10 @@
         <repository>
           <id>mvnrepository</id>
           <url>http://mvnrepository.com</url>
+        </repository>
+        <repository>
+          <id>javamail</id>
+          <url>http://download.java.net/maven/2/javax/mail/mail/</url>
         </repository>
      </repositories>
 </project>

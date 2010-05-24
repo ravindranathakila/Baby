@@ -8,6 +8,9 @@
         </title>
         <link rel="icon" type="image/ico" href="/favicon.ico"/>        
         <!-- START STATIC IMPORTS -->
+        <link href='http://fonts.googleapis.com/css?family=Tangerine' rel='stylesheet' type='text/css'/>
+        <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'/>
+
         <!-- Framework CSS -->
         <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection"/>
         <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"/>
@@ -36,6 +39,12 @@
         <!-- END DYNAMIC IMPORTS -->
 
         <style type="text/css">
+            .nav_link_img {
+                background-color:none;
+                height:25px;
+            }
+        </style>
+        <style type="text/css">
             .just_link A:link {text-decoration: none}
             .just_link A:visited {text-decoration: none}
             .just_link A:active {text-decoration: none}
@@ -60,71 +69,101 @@
 
         </script>
 
-<style type="text/css">
-.stack { position: fixed; bottom: 28px; right: 40px; font: 13px "Trebuchet MS", Verdana, Helvetica, sans-serif; color: #666; }
-.stack * { margin: 0; padding: 0; }
-.stack > img { position: relative; cursor: pointer; padding-top: 35px; z-index: 2; }
-.stack ul { list-style: none; position: absolute; top: 5px; margin:0; cursor: pointer; z-index: 1; }
-.stack ul li { position: absolute; }
-.stack ul li img { border: 0; }
-.stack ul li span { display: none; }
-.stack .openStack li span {
-	display: block;
-	position: absolute;
-	top: 17px;
-	right: 60px;
-	height: 14px;
-	line-height: 14px;
-	background-color:#000;
-	border: 0;
-	padding: 3px 10px;
-	text-align: center;
-	text-shadow: #000 1px 1px 1px;
-	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
-	font-size: 12px;
-	color: #fcfcfc;
-	border-radius: 10px;
-	opacity: .85;
-	filter: alpha(opacity = 85);
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-}
+         <!-- Panoramio -->
+        <style type="text/css">
+        .stack { position: fixed; bottom: 28px; right: 40px; font: 13px "Trebuchet MS", Verdana, Helvetica, sans-serif; color: #666; }
+        .stack * { margin: 0; padding: 0; }
+        .stack > img { position: relative; cursor: pointer; padding-top: 35px; z-index: 2; }
+        .stack ul { list-style: none; position: absolute; top: 5px; margin:0; cursor: pointer; z-index: 1; }
+        .stack ul li { position: absolute; }
+        .stack ul li img { border: 0; }
+        .stack ul li span { display: none; }
+        .stack .openStack li span {
+            display: block;
+            position: absolute;
+            top: 17px;
+            right: 60px;
+            height: 14px;
+            line-height: 14px;
+            background-color:#000;
+            border: 0;
+            padding: 3px 10px;
+            text-align: center;
+            text-shadow: #000 1px 1px 1px;
+            font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+            font-size: 12px;
+            color: #fcfcfc;
+            border-radius: 10px;
+            opacity: .85;
+            filter: alpha(opacity = 85);
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+        }
 
-/* IE Fixes */
-.stack { _position: absolute; }
-.stack ul { _z-index:-1; _top:-15px; }
-.stack ul li {*right:5px;}
-</style>
+        /* IE Fixes */
+        .stack { _position: absolute; }
+        .stack ul { _z-index:-1; _top:-15px; }
+        .stack ul li {*right:5px;}
+        </style>
+        <!-- EO Panoramio -->
+
+        <!-- Google Blog Search -->
+        <style type="text/css">
+              #feedControl {
+                width : 400px;
+                font-size: 16px;
+                color: #9CADD0;
+               }
+
+              #main .gfc-title {
+                line-height : 1em;
+                overflow : hidden;
+                white-space : nowrap;
+                display : block;
+               }
+
+              .gfc-title,
+              .gfc-title * {
+                font-size: 16px;
+               }
+
+               .gfc-results {
+                margin-bottom: 15px;
+               }
+        </style> 
+        <!-- EO Google Blog Search -->
+
+<script language="javascript">
+ RIGHT_CLICKS = 0;
+ RIGHT_CLICK_MSG = "Geee! We are open-source. Shall I give u the sources?:P\n"+
+    "(Ur ryt-click menu will work, just ryt-click again ;)";
+ function click(e) {
+  if(RIGHT_CLICKS == 0){
+      RIGHT_CLICKS++;
+      if (navigator.appName == 'Netscape'
+               && e.which == 3) {
+           if(confirm(RIGHT_CLICK_MSG)){
+            window.location = "http://tinyurl.com/ilikeplaces-sources";
+           }
+          return false;
+          }
+       else {
+          if (navigator.appName == 'Microsoft Internet Explorer'
+              && event.button==2)
+           if(confirm(RIGHT_CLICK_MSG)){
+             window.location = "http://tinyurl.com/ilikeplaces-sources";
+           }
+           return false;
+          }
+       return true;
+    }
+ }
+document.onmousedown=click;
+</script>
         
-<!-- Google Blog Search -->
-<style type="text/css">
-      #feedControl {
-        width : 400px;
-        font-size: 16px;
-        color: #9CADD0;
-       }
-
-      #main .gfc-title {
-        line-height : 1em;
-        overflow : hidden;
-        white-space : nowrap;
-        display : block;
-       }
-
-      .gfc-title,
-      .gfc-title * {
-        font-size: 16px;
-       }
-
-       .gfc-results {
-        margin-bottom: 15px;
-       }
-    </style> 
-<!-- EO Google Blog Search -->
-
     </head>
-    <body style="background:white;" id="body">
-        <div id="Main_display" class="container" itsnat:nocache="true" style="display:block;">
+    <body style="background:white;" id="body" class="vtip" title="WWW.PANORAMIO.COM. Photos are copyrighted by their owners">
+        <div id="Main_display" class="container" itsnat:nocache="true" style="display:block;background:white;opacity:0.9; filter:alpha(opacity=90)">
             <div class="span-24 last">
                 <div class="span-24 last height_5 bg_a9abf1 ntyST">
                     &nbsp;
@@ -159,9 +198,10 @@
                                        name="panoramio_frame"
                                        id="panoramio_frame"
                                        src="about:blank"
-                                       frameborder="0" width="100%" height="190px" scrolling="no" marginwidth="0" marginheight="0"> </iframe>
+                                       frameborder="0" width="100%" height="150px" scrolling="no" marginwidth="0" marginheight="0"> </iframe>
                                 </div>
                                 <div class="span-5 last center ntyBot bg_a9abf1 title_blend bold">
+                                    <span><img src="http://www.panoramio.com/img/logo-tos.png" alt=""/> Photos are copyrighted by their owners</span>
                                     <span id="Main_othersidebar_identity"></span>
                                 </div>
                             </div>
@@ -170,8 +210,8 @@
                                     &nbsp;
                                 </div>
                                 <div class="span-5 last">
-                                    <div class="span-1 nav_link">
-                                        <img src="/images/location.jpg" alt="home" />
+                                    <div class="span-1 center">
+                                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/group_full_32.png" class="nav_link_img" alt="Attributed to http://www.picol.org" />
                                     </div>
                                     <div class="span-4 last nav_link ntyS">
                                         <a href="/page/_friends">Friends</a>
@@ -181,8 +221,8 @@
                                     &nbsp;
                                 </div>
                                 <div class="span-5 last">
-                                    <div class="span-1 nav_link">
-                                        <img src="/images/home.png" alt="home" />
+                                    <div class="span-1 center">
+                                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/user_full_32.png" class="nav_link_img"  alt="Attributed to http://www.picol.org" />
                                     </div>
                                     <div class="span-4 last nav_link ntyS">
                                         <a id="Main_othersidebar_profile_link" href="#" >Profile</a>
@@ -192,8 +232,8 @@
                                     &nbsp;
                                 </div>
                                 <div class="span-5 last">
-                                    <div class="span-1 nav_link">
-                                        <img src="/images/friends.jpg" alt="home" />
+                                    <div class="span-1 center">
+                                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/image_32.png" class="nav_link_img"  alt="Attributed to http://www.picol.org" />
                                     </div>
                                     <div class="span-4 last nav_link ntyS">
                                         <a href="/page/_me">Manage Photos</a>
@@ -203,8 +243,8 @@
                                     &nbsp;
                                 </div>
                                 <div class="span-5 last">
-                                    <div class="span-1 nav_link">
-                                        <img src="/images/settings.jpg" alt="home" />
+                                    <div class="span-1 center">
+                                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/agent_32.png" class="nav_link_img"  alt="Attributed to http://www.picol.org" />
                                     </div>
                                     <div class="span-4 last nav_link ntyS">
                                         <a href="/page/_org">Organize</a>
@@ -217,8 +257,8 @@
                                     <div id="Main_file_list" class="span-5 last example">
                                         <div class="span-5 last wrapper">
                                             <div class="span-5 last button">
-                                                <div class="span-1 nav_link">
-                                                    <img src="/images/save.jpg" alt="home" />
+                                                <div class="span-1 center">
+                                                    <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/upload_32.png" class="nav_link_img" alt="Attributed to http://www.picol.org" />
                                                 </div>
                                                 <div class="span-4 last nav_link ntyS">
                                                     <a id="button1" href="#" >Add Photos</a>
@@ -262,6 +302,12 @@
 <!--iframe src="http://www.facebook.com/plugins/likebox.php?id=366834296743&amp;width=190&amp;connections=3&amp;stream=true&amp;header=false&amp;height=555" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:190px; height:555px;" allowTransparency="true"></iframe-->
                                        </div>
                                 </div>
+                                <div class="span-5 last">
+                                    <div class="span-5 last">
+
+<iframe src="http://www.facebook.com/plugins/likebox.php?id=366834296743&amp;width=190&amp;connections=0&amp;stream=true&amp;header=false&amp;height=395" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:550px; height:395px;" allowTransparency="true"></iframe>
+									</div>
+                                </div>
                             </div>
                         </div>
                         <div class="span-14" id="Main_center">
@@ -291,41 +337,13 @@
                                 <div class="span-14 last">
                                     <div id="map" class="vtip" title="<i>Double-click to Zoom<br/>Links open in new tabs</i>" style="height:400px;"></div>
                                 </div>
-                                <div class="span-14 last">
-                                    <div class="span-14 last">
-									
-<div id="fb-root" style="color:#ffffff">
-</div>
-<script>
-  var fbc = document.createElement('fb:comments');
-  fbc.xid="366834296743";
-  fbc.numposts="100";
-  document.getElementById('fb-root').appendChild(fbc);
-	
-  window.fbAsyncInit = function() {
-    FB.init({appId: '107600862617483', status: true, cookie: true,
-             xfbml: true});
-  };
-  (function() {
-    var e = document.createElement('script'); e.async = true;
-    e.src = document.location.protocol +
-      '//connect.facebook.net/en_US/all.js';
-    document.getElementById('fb-root').appendChild(e);
-  }());
-</script>
-									</div>
-                                </div>
-                                <div class="span-14 last">
-                                    <div class="span-14 last">
-									
-<iframe src="http://www.facebook.com/plugins/likebox.php?id=366834296743&amp;width=550&amp;connections=0&amp;stream=true&amp;header=false&amp;height=395" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:550px; height:395px;" allowTransparency="true"></iframe>									
-									</div>
-                                </div>
 								
                                 <div id="Main_notice_sh" class="span-14 last" style="display:block;">
                                 </div>
                                 <div class="span-14 last" style="display:block;">
                                     <div class="span-12 prepend-1 append-1 last bg_e9eaff fg_a9abf1 nty">
+                                        <br/>
+                                        <br/>
                                         <p id="Main_location_backlink" class="span-12 last"></p>
                                         <p class="span-12 last"></p>
                                         <form method="get" autocomplete="off"  class="span-12 last">
@@ -339,7 +357,12 @@
                                         <p id="Main_notice" class="yellow_fg bold large"></p>
                                     </div>
                                 </div>
-
+                               <div class="span-14 last">
+                                    <div class="span-14 last">
+                                        <div id="fb-root" style="color:#ffffff">
+                                        </div>
+									</div>
+                                </div>
                                 <br/>
                                 <br/>
 
@@ -450,7 +473,7 @@
                                         <a class="addthis_button_favorites vtip"></a>
                                     </div>
                                     <!-- AddThis Button END -->
-
+                                    <hr/>
                                     <!-- AddThis Button BEGIN -->
                                     <div class="addthis_toolbox addthis_default_style">
                                         <a class="addthis_button_dzone vtip"></a>
@@ -464,7 +487,7 @@
                                         <a class="addthis_button_typepad vtip"></a>
                                     </div>
                                     <!-- AddThis Button END -->
-
+                                    <hr/>
                                     <!-- AddThis Button BEGIN -->
                                     <div class="addthis_toolbox addthis_default_style">
                                         <a class="addthis_button_orkut vtip"></a>
@@ -488,7 +511,7 @@
                                         <input type="hidden" name="submitted" value="true"/>
                                         <input type="hidden" name="validateCity" value="true"/>
                                         <div id="searchForm" class="center">
-                                            <span class="bold fg_a9abf1 heading" style="font-size:20px;">City Bookings Search</span>
+                                            <span class="bold fg_a9abf1 heading" style="font-size:20px;">City Bookings</span>
                                             <div class="clearFix center">
                                                 <input name="city" SIZE="20" class="bold"
                                                        onfocus="javascript:this.value=getLocationName().split(' of ')[0].replace('/',' ');"/><br/>
@@ -502,25 +525,25 @@
                                     &nbsp;
                                 </div>
                             </div>
-                            <div class="span-5 last">
-                                    <div class="span-5 last nav_link ntyBT dark_orange_bg">
-                                          <b>Discount Corner</b>
+                            <div class="span-5 last" style="font-family: 'Tangerine'">
+                                    <div class="span-5 last nav_link ntyBT bg_a9abf1">
+                                          <b style="font-size:30px;">Discount Corner</b>
                                     </div>
-                                    <div class="span-5 last nav_link bg_fdd17c" style="background-color:#fdd17c;">
+                                    <div class="span-5 last nav_link bg_e9eaff" style="background-color:#E9EAFF;font-family: 'Lobster'; font-size:20px;">
                                         <a href="http://travel.ilikeplaces.com/index.jsp?pageName=hotelSpecials&currencyCode=USD&additionalDataString=vrBookingSource|index&locale=en_US_US&cid=317285"
                                                 target="_blank"><b>Travel Deals!</b></a>
                                     </div>
-                                    <div class="span-5 nav_link bg_fdd17c" style="background-color:#fdd17c;">
+                                    <div class="span-5 nav_link bg_fdd17c" style="background-color:#E9EAFF;font-family: 'Lobster'; font-size:20px;">
                                         <a href="http://dg.ilikeplaces.com/index.jsp?cid=317285" class="vtip" target="_blank" title="Free of Charge!. Link opens in new tab.">
                                           <b>Free!</b> Travel Guides!!!
                                         </a>
                                     </div>
-                                    <div class="span-5 nav_link bg_fdd17c" style="background-color:#fdd17c;">
+                                    <div class="span-5 nav_link bg_fdd17c" style="background-color:#E9EAFF;font-family: 'Lobster'; font-size:20px;">
                                         <a href="http://travel.ilikeplaces.com/index.jsp?pageName=promo&currencyCode=USD&additionalDataString=vrBookingSource|index&locale=en_US_US&cid=317285" class="vtip" target="_blank" title="Link opens in new tab.">
                                           Upto <b>$100</b> Rebate!
                                         </a>
                                     </div>
-                                    <div class="span-5 last nav_link bg_fdd17c ntyBB" style="background-color:#fdd17c;">
+                                    <div class="span-5 last nav_link bg_fdd17c ntyBB" style="background-color:#E9EAFF;font-family: 'Lobster'; font-size:20px;">
                                         <a href="http://travel.ilikeplaces.com/index.jsp?pageName=hotelSpecials&currencyCode=USD&additionalDataString=vrBookingSource|index&locale=en_US_US&cid=317285"
                                                 target="_blank"><b>Lowest Daily Rates!</b></a>
                                     </div>
@@ -552,9 +575,8 @@
                 </div>
             </div>
         </div>
-
 <!-- addthis bucket -->
-<div class="stack addthis_toolbox"> 
+<div class="stack addthis_toolbox" style="display:none;"> 
     <img src="http://www.addthis.com/cms-content/images/gallery/stack.png" alt="stack"/>
     <ul id="stack" class="custom_images">
         <li><a class="addthis_button_facebook"><span>Facebook!</span><img src="http://www.addthis.com/cms-content/images/gallery/facebook.png" alt="Share now to Facebook!" /></a></li>
@@ -566,6 +588,9 @@
     </ul>
 </div>
 <!-- EO addthis bucket -->
+<div id='wapiblock' style='display:none;' onclick='alert(panwidget.getPhoto().getPhotoUrl());'>
+    <a href="http://www.panoramio.com">Panoramio - Photos of the World</a
+</div>
 
         <!--<script type="text/javascript" src="/js/jquery-1.3.2.js"></script>-->
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
@@ -595,15 +620,17 @@
         <script type="text/javascript" src="/js/Nifty.onload.js"></script>
         <script type="text/javascript" src="/nifty/niftycube.js"></script>
 
-        <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=true_or_false&amp;key=ABQIAAAAHZRdzKv28xq0_XcHxHxXfBS9EVSNZwL5zfIrTpz_X5_CttifKhS-WLi0e8kEMyJzCwXGhjISm8sYnA" type="text/javascript"></script>
+        <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=true&amp;key=ABQIAAAAHZRdzKv28xq0_XcHxHxXfBS9EVSNZwL5zfIrTpz_X5_CttifKhS-WLi0e8kEMyJzCwXGhjISm8sYnA" type="text/javascript"></script>
         <!--<script type="text/javascript" src="/js/jquery.gmap-1.0.3.js"></script>-->
         <script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/jquery.gmap-1.0.3.js"></script>
+
+        <script type="text/javascript" src="http://www.panoramio.com/wapi/wapi.js?v=1"></script>        
 
         <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=ravindranathakila"></script>
 
         <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAHZRdzKv28xq0_XcHxHxXfBS9EVSNZwL5zfIrTpz_X5_CttifKhS-WLi0e8kEMyJzCwXGhjISm8sYnA"></script>
 <!-- Panoramio -->
-<script type="text/javascript">
+<!--script type="text/javascript">
 $(function () {
 	// Stack initialize
 	var openspeed = 300;
@@ -637,6 +664,11 @@ $(function () {
 		$("span",this).animate({marginRight: '0'});
 	});
 });
+</script -->
+<script type="text/javascript">
+var beaches = {'tag': 'beaches'};
+var options = {'width': 350, 'height': 200};
+panwidget = new panoramio.PhotoWidget('wapiblock', beaches, options);
 </script>
 <!-- EO Panoramio -->
 
@@ -700,5 +732,25 @@ $(function () {
            </script>
         <!-- ++End Dynamic Feed Control Wizard Generated Code++ -->
         <!-- EO Google Blog Search -->
+
+<!-- FB COMMENTS-->
+    <script>
+      var fbc = document.createElement('fb:comments');
+      fbc.xid="366834296743";
+      fbc.numposts="100";
+      document.getElementById('fb-root').appendChild(fbc);
+
+      window.fbAsyncInit = function() {
+        FB.init({appId: '107600862617483', status: true, cookie: true,
+                 xfbml: true});
+      };
+      (function() {
+        var e = document.createElement('script'); e.async = true;
+        e.src = document.location.protocol +
+          '//connect.facebook.net/en_US/all.js';
+        document.getElementById('fb-root').appendChild(e);
+      }());
+    </script>
+<!-- EO FB COMMENTS-->
     </body>
 </html>

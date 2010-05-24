@@ -40,6 +40,11 @@ final public class Loggers {
     final static public Logger EXCEPTION = LoggerFactory.getLogger("EXCEPTION");
 
     /**
+     * Log server status/performance logs here
+     */
+    final static public Logger STATUS = LoggerFactory.getLogger("SERVER_STATUS");
+
+    /**
      * User generated exceptions due to various mishandling(wrong parameters) of which logging should be
      * possible to be disabled. This is because high traffic with wrong parameters can introduce millions of
      * exceptions. So a separated logger is in place to log them. Logging them is important for analysis.

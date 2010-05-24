@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
@@ -243,6 +244,8 @@ final public class ServletSignup extends HttpServlet {
                 final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doCHuman(new HumanId(username), new Password(password), new Email(username));
                 if (r.returnStatus() != 0) {
                     throw r.returnError();
+                } else {
+                    SendMail.getSendMailLocal().sendAsSimpleText("ravindranathakila@gmail.com", "Signup Complete", "Hello, your account has been created. YOu can login at ilikeplaces.com now.");
                 }
             } catch (
                     @NOTE(note = "COINCIDENCE. ANOTHER USER SIGNED UP IN SAME NAME WHILE THIS USER WAS DOING IT.")
