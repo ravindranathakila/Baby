@@ -1,8 +1,6 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.logic.Listeners.widgets.FindFriend;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
@@ -97,7 +95,7 @@ public class ListenerBookings implements ItsNatServletRequestListener {
                 if (getUsername() != null) {
                     try {
                         //Page content
-                        
+
                     } catch (final Throwable t) {
                         Loggers.EXCEPTION.error("{}", t);
                     }
@@ -108,14 +106,11 @@ public class ListenerBookings implements ItsNatServletRequestListener {
              * Use ItsNatHTMLDocument variable stored in the AbstractListener class
              */
             @Override
-            protected void registerEventListeners
-                    (
-                            final ItsNatHTMLDocument itsNatHTMLDocument__,
-                            final HTMLDocument hTMLDocument__,
-                            final ItsNatDocument itsNatDocument__) {
+            protected void registerEventListeners(
+                    final ItsNatHTMLDocument itsNatHTMLDocument__,
+                    final HTMLDocument hTMLDocument__,
+                    final ItsNatDocument itsNatDocument__) {
             }
-        }
-
-                ;
+        };
     }
 }
