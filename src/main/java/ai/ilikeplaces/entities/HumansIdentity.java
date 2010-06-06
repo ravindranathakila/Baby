@@ -25,8 +25,6 @@ import java.util.Date;
                 query = "SELECT hi FROM HumansIdentity hi WHERE hi.humansIdentityEmail IN(:humansIdentityEmails)")})
 public class HumansIdentity implements HumanPkJoinFace, Serializable {
 
-    final static Logger logger = LoggerFactory.getLogger(HumansIdentity.class.getName());
-
     final static public String FindPaginatedHumansByEmails = "FindPaginatedHumansByEmails";
     final static public String HumansIdentityEmails = "humansIdentityEmails";
 
@@ -38,6 +36,7 @@ public class HumansIdentity implements HumanPkJoinFace, Serializable {
     public String humansIdentityFirstName;
     public String humansIdentityLastName;
     public String humansIdentityGUIPreferences;
+    public String humansIdentityProfilePhoto;
 
     public static enum GENDER {
         Neutral,
@@ -124,6 +123,14 @@ public class HumansIdentity implements HumanPkJoinFace, Serializable {
 
     public void setHumansIdentityGUIPreferences(final String humansIdentityGUIPreferences) {
         this.humansIdentityGUIPreferences = humansIdentityGUIPreferences;
+    }
+
+    public String getHumansIdentityProfilePhoto() {
+        return humansIdentityProfilePhoto;
+    }
+
+    public void setHumansIdentityProfilePhoto(final String humansIdentityProfilePhoto) {
+        this.humansIdentityProfilePhoto = humansIdentityProfilePhoto;
     }
 
     @Override
