@@ -1,0 +1,25 @@
+It's social... It's I Like Places...!
+
+Well, it is June of 2010 already! It is time to give you our fans a few updates, we decided. So here you go.
+
+I Like Places is now a fairly ubiquitous social network. How we got here is a pretty interesting story. Back in 2009, somewhere around August, we decided we wanted to make an advertising plaform(boring!). Well, the idea was cool(yet boring!). We wanted to make advertisments available to users , exactly when they want them(hmmm..) and also, allow users to query ads when they need. For example, if you are buying a new house, the platform will help you compare adverts and buy(still, boring!!!).
+
+Okay, we decided. It was making US so bored, so clearly people who use it "might" feel the same. It was time to take a step back and recess.
+
+What was that? Social? Well yes. Back then social networks were doing good. We thought, "Socializing online is now a habit of people. On good social networks(privacy safe... ahem!), people did get things they want by socializing with people they know". So we decided to go social with the idea. Haha, well, we were still "a step back recessing".
+
+We thought, and thought(something we try to do a lot despite being stupid!). We finally figured, that the entire social thing was "common" but "sucks!". Why did we think so, even with our low-end brains? Well, people were "not that happy" on social networks. This, seriously, BUGGED us. They were loosing real people(hey, later, google "web 2.0 suicide machine").  We didn't want "depress" people. We didn't want to make an ad platform(once again, boring!) combined with a social network(depressed + boring).
+
+One more step back. More thinking(lol, by then we were getting to at it!).
+
+Finally, we figured. "We need do this "ad" with "social" but also "not depress" and "not bore" people". Well, we did it!
+
+Our baby bot, I Like Places was born. With a few lines of code, it set out to do one big thing. "To Get People to Socialize in REAL LIFE, not 'online'"(boring). I Like Places now goes with the following message:
+
+"i miss u.... u miss me.. it's complicated... its i like places!".
+
+Well, seriously, nice, but WHAT does that mean? Aha! Well, I like places gets you socializing in the real world. It gets you going places, and get together with people known to you. Helps you plan trips parties and other outings(you name it). 
+
+So what does the tagline mean anyway? Well, when you need to socialize(for real:D), you come to I Like Places. You plan an event in some places, organize it, etc. etc.(you can do a lot of things) and then you "leave the site" to actually "go do it!". So, the site will miss you(unlike other social networks, who instead of "letting go" with love, "hold onto you like... (leave it)") because you have gone offline to socialize for real. Well, so the "i miss u..." part. "u miss me..." is when you are "done" with your event and come back to the site. "it's complicated" because... hmm you figure it out... too complicated to explain... but it indeed is "i like places"...
+
+Anything else we need to tell you? hmmm yes.. We are Open Souce(AGPL Licensed). We'd love your help you know. We also believe being open-source will help you get rid of the whole privacy scare! 
