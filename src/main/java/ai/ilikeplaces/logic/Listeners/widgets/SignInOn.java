@@ -6,6 +6,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
+import ai.ilikeplaces.util.Loggers;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
@@ -19,7 +20,7 @@ import javax.servlet.ServletRequest;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class SignInOn extends AbstractWidgetListener {
     private static final String TRUE = "true";
-    
+
     private static final String ISSIGNUP = "issignup";
 
     /**
@@ -64,5 +65,11 @@ abstract public class SignInOn extends AbstractWidgetListener {
     static public boolean isSignUp(final ServletRequest request) {
         final String issignup = request.getParameter(ISSIGNUP);
         return issignup != null && issignup.equals(TRUE);
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        Loggers.finalized(this.getClass().getName());
+        super.finalize();
     }
 }

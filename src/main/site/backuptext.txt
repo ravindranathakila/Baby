@@ -1754,3 +1754,77 @@
                                         //-->
                                         </script>
                                         <!--END-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+  ~ @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>friend find</title>
+</head>
+<body>
+<div class="span-14 last nty" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
+    <div class="span-14 last black_fg">Paste a list of email addresses here and click search</div>
+    <div class="span-14 last black_fg">You can copy them off an email you sent to your friends, or off a CSV file.</div>
+    <div class="span-14 last">
+         <!--style="list-style-type:none;"-->
+        <ul style="list-style-type:none;">
+            <li class="span-14 last">
+                <TEXTAREA tabindex="1"
+                  style="height:50px;"
+                  id="friendFindSearchTextInput" class="span-10 last black_fg"
+                  value="Paste your list of email addresses here. If they are in humanly readable format, I can extract the list of emails from it. This means you can take the list of emails off an email you sent to your friends and paste it here.">
+                </TEXTAREA>
+            </li>
+             <li class="span-14 last" id="friendFindSearchButtonInput">
+                    <a href="#"
+                       class="btn bg_a9abf1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Search/Update&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+             </li>
+            <li class="span-14 last">
+                <ul class="span-7" style="list-style-type:none;">
+                   <li id="friendFindSearchResults">
+                    </li>
+                </ul>
+                <ul class="span-7 last" style="list-style-type:none;">
+                    <li id="friendFindSearchInvites">
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="span-14 last height_40">&nbsp;</div>
+</div>
+</body>
+</html>

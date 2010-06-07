@@ -16,7 +16,7 @@ function EventMonitor()
 
     post_fun_arg = {
                   msg:"Your Request Was Completed Successfully!"
-                }
+                };
 
     post_fun = function(obj){
                  //alert(obj.msg);
@@ -54,7 +54,7 @@ function EventMonitor()
     }
 
     post_fun_arg = {
-                }
+                };
 
     post_fun = function(obj){
                 };

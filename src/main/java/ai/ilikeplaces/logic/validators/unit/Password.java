@@ -31,10 +31,12 @@ public class Password extends RefObj<String> {
 
     @IsInvariant
     @NotNull
-    @Length(min = 8, max = 255)
-    @NotBlank
+    @Length(min = 8, max = 255, message = "Sorry! Password is not between 8 and 255 characters long.")
+    @NotBlank(message = "Sorry! Password cannot be blank.")
     @Override
     final public String getObj() {
         return obj;
     }
+
+
 }

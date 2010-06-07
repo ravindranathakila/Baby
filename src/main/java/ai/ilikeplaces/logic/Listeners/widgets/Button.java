@@ -6,6 +6,7 @@ import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.EventType;
+import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MarkupTag;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -25,6 +26,9 @@ abstract public class Button extends AbstractWidgetListener {
     /**
      * @param itsNatDocument__
      * @param appendToElement__
+     * @param buttonText
+     * @param doRefreshPageOnClick
+     * @param params
      */
     public Button(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final String buttonText, final boolean doRefreshPageOnClick, final Object... params) {
         super(itsNatDocument__, Page.GenericButton, appendToElement__, buttonText, doRefreshPageOnClick, params);
@@ -39,6 +43,12 @@ abstract public class Button extends AbstractWidgetListener {
                 @Override
                 public void handleEvent(final Event evt_) {
                 }
+
+                @Override
+                public void finalize() throws Throwable {
+                    Loggers.finalized(this.getClass().getName());
+                    super.finalize();
+                }
             }, false, JSCodeToSend.RefreshPage);
         }
     }
@@ -52,5 +62,19 @@ abstract public class Button extends AbstractWidgetListener {
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
+    }
+
+    protected void setBluePrintCSSSpan(final int span, final int prepend, final int append, final boolean isLast) {
+        $$(Controller.Page.GenericButtonWidth).setAttribute("class",
+                "span-" + span +
+                        (prepend == 0 ? "" : " prepend-" + prepend) +
+                        (append == 0 ? "" : " append-" + append) +
+                        (isLast ? " last" : ""));
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        Loggers.finalized(this.getClass().getName());
+        super.finalize();
     }
 }

@@ -35,11 +35,19 @@ public class MethodTimer {
     public Object profile(InvocationContext invocation) throws Exception {
         if (DO_LOG.getObj()) {
             final long startTime = System.currentTimeMillis();
+            final SmartLogger smartLogger = SmartLogger.start(
+                    Loggers.LEVEL.SERVER_STATUS,
+                    "Timing:" + invocation.getMethod(),
+                    0,//Escapes timeout
+                    null,//We don't need a start message (tedious when it comes out a lot in logs)
+                    true//This is what we need actually
+            );
             try {
                 return invocation.proceed();
             } finally {
-                final long endTime = System.currentTimeMillis() - startTime;
-                Loggers.STATUS.info("INVOKING:\n" + invocation.getMethod() + "\nTOOK:\n " + endTime + "(millis)");
+                smartLogger.complete(Loggers.LEVEL.SERVER_STATUS, Loggers.DONE);
+//                final long endTime = System.currentTimeMillis() - startTime;
+//                Loggers.STATUS.info("INVOKING:\n" + invocation.getMethod() + "\nTOOK:\n " + endTime + "(millis)");
             }
         } else {
             return invocation.proceed();

@@ -66,7 +66,10 @@ public abstract class AbstractListener {
         this.itsNatServlet_ = itsNatDocument.getItsNatDocumentTemplate().getItsNatServlet();
         this.itsNatHttpSession = (ItsNatHttpSession) request_.getItsNatSession();
         final Object attribute__ = itsNatHttpSession.getAttribute(ServletLogin.HumanUser);
-        this.sessionBoundBadRefWrapper = attribute__ == null ? null : (SessionBoundBadRefWrapper<HumanUserLocal>) attribute__;
+        this.sessionBoundBadRefWrapper =
+                attribute__ == null ?
+                null : (!((SessionBoundBadRefWrapper<HumanUserLocal>) attribute__).isAlive() ?
+                null : ((SessionBoundBadRefWrapper<HumanUserLocal>) attribute__));
 
         init(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument);
 
@@ -76,6 +79,7 @@ public abstract class AbstractListener {
 
     /**
      * Initialize your document here by appending fragments
+     *
      * @param itsNatHTMLDocument__
      * @param hTMLDocument__
      * @param itsNatDocument__
@@ -202,7 +206,9 @@ public abstract class AbstractListener {
      * @return The Username of the Logged in user, and null, if not logged in
      */
     final protected String getUsername() {
-        return sessionBoundBadRefWrapper != null ? sessionBoundBadRefWrapper.boundInstance.getHumanUserId() : null;
+        return sessionBoundBadRefWrapper != null ?
+                (sessionBoundBadRefWrapper.isAlive() ?
+                        sessionBoundBadRefWrapper.boundInstance.getHumanUserId() : null) : null;
     }
 
     /**
@@ -216,6 +222,8 @@ public abstract class AbstractListener {
      */
     final protected String getUsernameAsValid() {
         if (sessionBoundBadRefWrapper == null) {
+            throw ILLEGAL_STATE_EXCEPTION;
+        } else if (!sessionBoundBadRefWrapper.isAlive()) {//(Defensive)This is checked in the constructor of this class
             throw ILLEGAL_STATE_EXCEPTION;
         }
         return sessionBoundBadRefWrapper.boundInstance.getHumanUserId();

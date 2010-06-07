@@ -3,15 +3,11 @@ package ai.ilikeplaces.logic.Listeners.widgets.privateevent;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PrivateEvent;
-import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.Listeners.widgets.Button;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
-import ai.ilikeplaces.util.AbstractWidgetListener;
-import ai.ilikeplaces.util.MarkupTag;
-import ai.ilikeplaces.util.Parameter;
-import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
@@ -93,5 +89,11 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
         //No events as this is just a view widget/ Edit button???
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        Loggers.finalized(this.getClass().getName());
+        super.finalize();
     }
 }

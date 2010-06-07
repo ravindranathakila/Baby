@@ -85,11 +85,17 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
 
 
             }
+
+            @Override
+            public void finalize() throws Throwable {
+                Loggers.finalized(this.getClass().getName());
+                super.finalize();
+            }
         }, false, JSCodeToSend.RefreshPage);
 
         final HumansNetPeople user = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);
         this.possibilities = user.getHumansNetPeoples();
-        
+
         AddRemoveOwners:
         {
             new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateLocation>>(
@@ -146,5 +152,11 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
                     }) {
             };
         }
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        Loggers.finalized(this.getClass().getName());
+        super.finalize();
     }
 }

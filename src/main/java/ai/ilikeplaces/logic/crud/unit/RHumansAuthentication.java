@@ -7,6 +7,7 @@ import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.rbs.RBGet;
+import ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -3,12 +3,19 @@ package ai.ilikeplaces.logic.verify;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.logic.crud.HumanCRUDHumanLocal;
+import ai.ilikeplaces.management.MemorySafe;
+import ai.ilikeplaces.management.MemoryWarningSystem;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import ai.ilikeplaces.util.SmartLogger;
+import com.rackspacecloud.client.cloudfiles.FilesClient;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.*;
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * @author Ravindranath Akila
@@ -22,9 +29,9 @@ public class IntegrityTester implements StartupILikePlacesLocal {
     @EJB
     private MemcLocal memcLocal_;
 
-
     @EJB
     private HumanCRUDHumanLocal humanCRUDHumanLocal_;
+
 
     public IntegrityTester() {
     }
@@ -32,8 +39,24 @@ public class IntegrityTester implements StartupILikePlacesLocal {
     @PostConstruct
     public void postConstruct() {
         memcLocal_.logTime();
+
+        MemoryWarningSystem.setPercentageUsageThreshold(Double.parseDouble(RBGet.globalConfig.getString("MEMORY_THRESHOLD")));
+        MemoryWarningSystem.setPercentageUsageNormal(Double.parseDouble(RBGet.globalConfig.getString("MEMORY_NORMAL")));
+        MemorySafe.allocate(Runtime.getRuntime().freeMemory());
+
+        MemoryWarningSystem mws = new MemoryWarningSystem();
+        mws.addListener(new MemoryWarningSystem.MemoryListener() {
+
+            public void memoryUsageLow(long usedMemory, long maxMemory) {
+                Loggers.STATUS.warn("MEMORY USAGE TOO HIGH!!!");
+                MemorySafe.deallocate();
+                Memc.sendAlertMail("MEMORY USAGE TOO HIGH!!!");
+            }
+
+            public void memoryUsageNormal(long usedMemory, long maxMemory) {
+                Loggers.STATUS.info("Memory usage back to normal.");
+                MemorySafe.allocate(maxMemory - usedMemory);
+            }
+        });
     }
-
-
-    final static Logger logger = LoggerFactory.getLogger(IntegrityTester.class);
 }

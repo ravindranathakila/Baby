@@ -90,7 +90,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                     }
                 }
             };
-            new WallWidget(itsNatDocument_,$$(Page.privateEventWall),humanId,r.returnValue().getPrivateEventId()){
+            new WallWidget(itsNatDocument_, $$(Page.privateEventWall), humanId, r.returnValue().getPrivateEventId()) {
             };
         } else {
             $$(privateEventDeleteNotice).setTextContent(r.returnMsg());
@@ -107,11 +107,11 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
             @Override
             public void handleEvent(final Event evt_) {
-                Loggers.USER.info(humanId.getObj()+" clicked delete for private event "+myprivateEventId);
+                Loggers.USER.info(humanId.getObj() + " clicked delete for private event " + myprivateEventId);
 
                 final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dPrivateEvent(myhumanId.getObj(), myprivateEventId);
                 if (r.returnStatus() == 0) {
-                    Loggers.USER.info(humanId.getObj()+" clicked deleted private event "+r.returnValue());
+                    Loggers.USER.info(humanId.getObj() + " clicked deleted private event " + r.returnValue());
                     remove(evt_.getTarget(), EventType.CLICK, this);
                     clear($$(privateEventDeleteNotice));
                 } else {
@@ -119,6 +119,12 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                 }
 
 
+            }
+
+            @Override
+            public void finalize() throws Throwable {
+                Loggers.finalized(this.getClass().getName());
+                super.finalize();
             }
         }, false, JSCodeToSend.RefreshPage);
 
@@ -208,5 +214,11 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                         });
             }
         }
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        Loggers.finalized(this.getClass().getName());
+        super.finalize();
     }
 }

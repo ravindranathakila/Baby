@@ -11,6 +11,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
+import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Return;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
 
@@ -165,7 +167,7 @@ final public class ServletSignup extends HttpServlet {
                         userSession_.setAttribute(UsernameError, ErrorStatusTrue);
                         userSession_.setAttribute(UsernameErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0007"));
                         allParametersNotOkFlag = Boolean.TRUE;
-                    } else if (DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(username)) {
+                    } else if (DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(username).returnValue()) {
                         userSession_.setAttribute(UsernameError, ErrorStatusTrue);
                         userSession_.setAttribute(UsernameErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0003") + username);
                         allParametersNotOkFlag = Boolean.TRUE;
@@ -245,7 +247,14 @@ final public class ServletSignup extends HttpServlet {
                 if (r.returnStatus() != 0) {
                     throw r.returnError();
                 } else {
-                    SendMail.getSendMailLocal().sendAsSimpleText("ravindranathakila@gmail.com", "Signup Complete", "Hello, your account has been created. YOu can login at ilikeplaces.com now.");
+                    try {
+                        SendMail.getSendMailLocal().sendAsSimpleText(
+                                username,
+                                gUI.getString("SIGNUP_HEADER"),
+                                MessageFormat.format(gUI.getString("SIGNUP_BODY"), RBGet.config.getString("noti_mail")));
+                    } catch (final Throwable t) {
+                        Loggers.EXCEPTION.error("{}", t);
+                    }
                 }
             } catch (
                     @NOTE(note = "COINCIDENCE. ANOTHER USER SIGNED UP IN SAME NAME WHILE THIS USER WAS DOING IT.")

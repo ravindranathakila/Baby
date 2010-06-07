@@ -7,6 +7,7 @@ import ai.ilikeplaces.doc.TODO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -14,8 +15,6 @@ import java.util.Set;
 /**
  * @author Ravindranath Akila
  */
-
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @NOTE(note = "THIS PROVIDES DEFAULT RB ACCESS THROUGH VARIABLES. EXCEPTION IS MADE FOR GUI WHERE" +
         "CALLER IS THE ONE WHO KNOWS THE DIALECT." +
@@ -26,7 +25,7 @@ public class
 
     final static public ResourceBundle config = ResourceBundle.getBundle("ai.ilikeplaces.rbs.Config");
     @CONVENTION(convention = "THIS SHOULD BE AN IDENTICAL COPY OF Config.properties. IDEALLY GlobalConfig SHOULD BE IN THE SERVER PATH SO THAT IT CAN BE EDITED DURING RUNTIME.")
-    static private ResourceBundle globalConfig;
+    static public ResourceBundle globalConfig;
     final static public ResourceBundle logMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.LogMsgs");
     final static public ResourceBundle expMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.ExceptionMsgs");
     final static public ResourceBundle l33t = ResourceBundle.getBundle("ai.ilikeplaces.rbs.l33t");
@@ -119,5 +118,13 @@ public class
             result_.append(e.getMessage());
         }
         return result_.toString();
+    }
+
+    static public ResourceBundle gui() {
+        return ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
+    }
+
+    static public ResourceBundle gui(final Locale locale) {
+        return ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI", locale);
     }
 }

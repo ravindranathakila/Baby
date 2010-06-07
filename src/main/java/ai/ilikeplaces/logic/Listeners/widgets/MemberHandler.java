@@ -107,7 +107,19 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
                         }
                     }
                 }
+
+                @Override
+                public void finalize() throws Throwable {
+                    Loggers.finalized(this.getClass().getName());
+                    super.finalize();
+                }
             }, false);
         }
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        Loggers.finalized(this.getClass().getName());
+        super.finalize();
     }
 }

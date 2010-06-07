@@ -3,11 +3,13 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.crud.unit.*;
+import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.*;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt;
 import ai.ilikeplaces.security.face.SingletonHashingFace;
 import ai.ilikeplaces.util.*;
+import net.sf.oval.exception.ConstraintsViolatedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +40,9 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     private DHumanLocal dHumanLocal_;
 
     @EJB
+    private UHumansIdentityLocal uHumansIdentityLocal_;
+
+    @EJB
     private UHumansNetPeopleLocal uHumansNetPeopleLocal_;
 
     @EJB
@@ -51,6 +56,9 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
 
     @EJB
     private RHumansAuthenticationLocal rHumansAuthenticationLocal_;
+
+    @EJB
+    private UHumansAuthenticationLocal uHumansAuthenticationLocal;
 
     @EJB
     private RHumansPrivateLocationLocal rHumansPrivateLocation_;
@@ -78,6 +86,8 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     private static final String UPDATE_DISPLAY_NAME_FAILED = "Update Display Name FAILED!";
     private static final String ADD_USER_SUCCESSFUL = "Add User Successful!";
     private static final String ADD_USER_FAILED = "Add User FAILED!";
+    private static final String PASSWORD_UPDATE_SUCCESSFUL = "Password Update Successful!";
+    private static final String PASSWORD_UPDATE_FAILED = "Password Update FAILED!";
 
 
     public HumanCRUDHuman() {
@@ -217,14 +227,101 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     }
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public boolean doDirtyCheckHuman(final String humanId) {
-        return rHumanLocal_.doDirtyCheckHuman(humanId);
+    public Return<Boolean> doDirtyCheckHuman(final String humanId) {
+
+        Return<Boolean> r;
+        try {
+            r = new ReturnImpl<Boolean>(rHumanLocal_.doDirtyCheckHuman(humanId), "Check human Successful!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Boolean>(t, "Check human FAILED!", true);
+        }
+        return r;
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public boolean doDHuman(final RefObj<String> humanId) {
         dHumanLocal_.doDHuman(humanId.getObj());
         return true;
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<Boolean> doUHumanPassword(final RefObj<String> humanId, final Password currentPassword, final Password newPassword) {
+        Return<Boolean> r;
+        try {
+
+            if (humanId.validate() != 0) {
+                throw new ConstraintsViolatedException(humanId.getViolations());
+            } else if (newPassword.validate() != 0) {
+                throw new ConstraintsViolatedException(newPassword.getViolations());
+            } else {
+                final boolean changed = uHumansAuthenticationLocal.doUHumansAuthentication(humanId.getObj(), currentPassword.getObj(), newPassword.getObj());
+                if (changed) {
+                    SendMail.getSendMailLocal().sendAsSimpleText(humanId.getObj(),
+                            "Password Changed for I Like Places",
+                            "Hi,\n" +
+                                    "You changed your password at I Like Places right? Hmmmm, just checking.\n" +
+                                    "If it wasn't you, who was it?!! Well, you can always reset or change your password if you notice something suspicious.");
+                }
+
+                r = new ReturnImpl<Boolean>(changed, PASSWORD_UPDATE_SUCCESSFUL);
+            }
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Boolean>(t, PASSWORD_UPDATE_FAILED, true);
+        }
+        return r;
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<Boolean> doUHumanPassword(final RefObj<String> humanId, final Password newPassword) {
+        Return<Boolean> r;
+        try {
+
+            if (humanId.validate() != 0) {
+                throw new ConstraintsViolatedException(humanId.getViolations());
+            } else if (newPassword.validate() != 0) {
+                throw new ConstraintsViolatedException(newPassword.getViolations());
+            } else {
+                final boolean changed = uHumansAuthenticationLocal.doUHumansAuthentication(humanId.getObj(), newPassword.getObj());
+                if (changed) {
+                    SendMail.getSendMailLocal().sendAsSimpleText(humanId.getObj(),
+                            "Password Changed for I Like Places",
+                            "Hi,\n" +
+                                    "You changed your password at I Like Places right? Hmmmm, just checking.\n" +
+                                    "If it wasn't you, who was it?!! Well, you can always reset or change your password if you notice something suspicious.");
+                }
+
+                r = new ReturnImpl<Boolean>(changed, PASSWORD_UPDATE_SUCCESSFUL);
+            }
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Boolean>(t, PASSWORD_UPDATE_FAILED, true);
+        }
+        return r;
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<HumansIdentity> doUHumansProfilePhoto(final RefObj<String> humanId, final String url) {
+        Return<HumansIdentity> r;
+        try {
+            r = new ReturnImpl<HumansIdentity>(uHumansIdentityLocal_.doUHumansProfilePhoto(humanId.getObj(), url), "Profile Photo Update Successful.");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<HumansIdentity>(t, "Profile Photo Update FAILED!", true);
+        }
+        return r;
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<String> doDirtyRHumansProfilePhoto(final RefObj<String> humanId) {
+        Return<String> r;
+        try {
+            r = new ReturnImpl<String>(rHumansIdentityLocal_.doDirtyProfilePhoto(humanId.getObj()), "Profile Photo Read Successful.");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<String>(t, "Profile Photo Read FAILED!", true);
+        }
+        return r;
+
     }
 
     /*BEGINNING OF PREPERATOR METHODS*/
@@ -236,7 +333,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         Return<Boolean> r;
         try {
 
-            if (doDirtyCheckHuman(humanId.getObjectAsValid())) {
+            if (doDirtyCheckHuman(humanId.getObjectAsValid()).returnValue()) {
                 throw new IllegalAccessException(RBGet.logMsgs.getString("ai.ilikeplaces.logic.crud.HumanCRUDHuman.0001") + humanId);
             }
             final Human newUser = new Human();

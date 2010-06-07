@@ -4,7 +4,9 @@ import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.logic.Listeners.widgets.FindFriend;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
+import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractListener;
 import ai.ilikeplaces.util.Loggers;
@@ -22,6 +24,7 @@ import org.w3c.dom.html.HTMLDocument;
 import java.util.ResourceBundle;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
+import static ai.ilikeplaces.util.Loggers.EXCEPTION;
 
 /**
  * @author Ravindranath Akila
@@ -94,12 +97,30 @@ public class ListenerFriends implements ItsNatServletRequestListener {
                     {
                         try {
                             if (getUsername() != null) {
-                                $(Skeleton_othersidebar_profile_link).setAttribute("href", Controller.Page.PhotoCRUD.getURL());
+                                $(Skeleton_othersidebar_profile_link).setAttribute("href", Controller.Page.Profile.getURL());
                             } else {
                                 $(Skeleton_othersidebar_profile_link).setAttribute("href", Controller.Page.signup.getURL());
                             }
                         } catch (final Throwable t) {
                             Loggers.EXCEPTION.error("{}", t);
+
+                        }
+                    }
+                    setProfilePhotoLink:
+                    {
+                        try {
+                            if (getUsername() != null) {
+                                /**
+                                 * TODO check for db failure
+                                 */
+                                String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(getUsernameAsValid())).returnValueBadly();
+                                url = url == null ? null : RBGet.globalConfig.getString("PROFILE_PHOTOS") + url;
+                                if (url != null) {
+                                    $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(), url);
+                                }
+                            }
+                        } catch (final Throwable t) {
+                            EXCEPTION.error("{}", t);
 
                         }
                     }

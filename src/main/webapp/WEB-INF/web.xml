@@ -11,6 +11,10 @@
         <servlet-class>ai.ilikeplaces.servlets.ServletFileUploads</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>GenericFileGrabber</servlet-name>
+        <servlet-class>ai.ilikeplaces.servlets.GenericFileGrabber</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ServletLogin</servlet-name>
         <servlet-class>ai.ilikeplaces.servlets.ServletLogin</servlet-class>
     </servlet>
@@ -30,6 +34,10 @@
     <servlet-mapping>
         <servlet-name>FileUploads</servlet-name>
         <url-pattern>/fileuploads</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GenericFileGrabber</servlet-name>
+        <url-pattern>/gfg</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletLogin</servlet-name>
@@ -71,6 +79,119 @@
         <url-pattern>/page/*</url-pattern>
     </servlet-mapping>
 
+    <filter>
+        <description>Set HTTP headers for a mapping.</description>
+        <filter-name>HeaderFilter</filter-name>
+        <filter-class> ai.ilikeplaces.util.HeaderFilter</filter-class>
+        <init-param>
+            <description>Add an Expires Header</description>
+            <param-name>header</param-name>
+            <param-value>Expires: Thu, 15 Apr 2011 20:00:00 GMT</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>*.jpg</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>*.jpeg</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>*.css</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>*.png</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>*.gif</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>/js/util.js</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>/js/miniquarry/util.js</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>/js/Nifty.onload.js</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>/js/miniquarry/Nifty.onload.js</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>/nifty/niftycube.js</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>/nifty/miniquarry/niftycube.js</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>/js/ItsNatEventMonitor.js</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>/js/miniquarry/ItsNatEventMonitor.js</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>/js/jquery.yoxview/yoxview-init.js</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>/js/jquery.yoxview/jquery.yoxview-0.9.min.js</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>/js/jquery.yoxview/jquery.timers-1.2.min.js</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>/js/jquery.ready.yox.js</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>/js/miniquarry/jquery.ready.yox.js</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>/js/ajaxupload.3.5.js</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HeaderFilter</filter-name>
+        <url-pattern>/js/miniquarry/ajaxupload.3.5.js</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+
     <session-config>
         <session-timeout>
             30
@@ -88,8 +209,8 @@
         <error-code>404</error-code>
         <location>/</location>
     </error-page>
-    <error-page>
-        <exception-type>java.lang.Throwable</exception-type>
-        <location>/</location>
-    </error-page>
+    <!--<error-page>-->
+        <!--<exception-type>java.lang.Throwable</exception-type>-->
+        <!--<location>/</location>-->
+    <!--</error-page>-->
 </web-app>

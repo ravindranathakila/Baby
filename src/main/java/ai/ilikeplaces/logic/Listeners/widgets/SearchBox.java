@@ -3,13 +3,13 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
+import ai.ilikeplaces.util.Loggers;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
 
 /**
- *
  * @author Ravindranath Akila
  */
 
@@ -17,7 +17,6 @@ import org.w3c.dom.html.HTMLDocument;
 public class SearchBox extends AbstractWidgetListener {
 
     /**
-     *
      * @param itsNatDocument__
      * @param appendToElement__
      */
@@ -26,10 +25,16 @@ public class SearchBox extends AbstractWidgetListener {
     }
 
     @Override
-    protected void init(final Object ... initArgs) {
+    protected void init(final Object... initArgs) {
     }
 
     @Override
     protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        Loggers.finalized(this.getClass().getName());
+        super.finalize();
     }
 }

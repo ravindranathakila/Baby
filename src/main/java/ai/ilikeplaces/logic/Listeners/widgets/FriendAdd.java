@@ -6,6 +6,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.EventType;
+import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Return;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -35,6 +36,7 @@ abstract public class FriendAdd extends AbstractWidgetListener {
      * @param itsNatDocument__
      * @param appendToElement__
      * @param humanId
+     * @param caller
      */
     public FriendAdd(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final HumanId humanId, final HumanId caller) {
         super(itsNatDocument__, Controller.Page.FriendAdd, appendToElement__, humanId, caller);
@@ -71,10 +73,23 @@ abstract public class FriendAdd extends AbstractWidgetListener {
                     logger.debug("{}", r.toString());
                     $$(Controller.Page.friendAddAddButton).setTextContent("DONE");
                     remove(evt_.getTarget(), EventType.CLICK, this);
-                }else{
+                } else {
                     //DO something!
                 }
             }
+
+
+            @Override
+            public void finalize() throws Throwable {
+                Loggers.finalized(this.getClass().getName());
+                super.finalize();
+            }
         }, false);
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        Loggers.finalized(this.getClass().getName());
+        super.finalize();
     }
 }

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Any loggers used outside the context of the variable name, might result in losing log entries.
  * For example, do not use DEBUG.info("msg"). Use, DEBUG.debug("msg").
- *
+ * <p/>
  * Created by IntelliJ IDEA.
  * User: Ravindranath Akila
  * Date: Jan 30, 2010
@@ -19,6 +19,25 @@ final public class Loggers {
     private static final String NULL = "null";
     private static final UnsupportedOperationException UNSUPPORTED_OPERATION_EXCEPTION = new UnsupportedOperationException("Static usage only");
     private static final String CAUSED = " caused ";
+
+    final static public String EMBED = "{}";
+    final static public String DONE = "done. ";
+    final static public String FAILED = "FAILED! ";
+
+    final static public String CODE_GFG = "[GFG]";//Code for Generic File Grabber servlet
+    final static public String CODE_MEMC = "[MEMC]";//Code for Memc
+    final static public String CODE_MAIL = "[MAIL]";//Code to indicate mail delivery
+
+    public enum LEVEL {
+        DEBUG,
+        INFO,
+        WARN,
+        ERROR,
+        SERVER_STATUS,
+        USER,
+        USER_EXCEPTION,
+        NON_USER
+    }
 
     private Loggers() {
         throw UNSUPPORTED_OPERATION_EXCEPTION;
@@ -72,5 +91,55 @@ final public class Loggers {
 
     static public void userError(final String username, final String error) {
         USER_EXCEPTION.error(username + CAUSED + error);
+    }
+
+    /**
+     * Used to indicate that an object was finalized.
+     *
+     * @param msg
+     */
+    static public void finalized(final String msg) {
+        DEBUG.debug(msg);
+    }
+
+    /**
+     * Note that in the case of exception, the object will be/should be able to be,
+     * cast to {@link Throwable}
+     *
+     * @param level
+     * @param message
+     * @param obj
+     */
+    static public void log(final LEVEL level, final String message, final Object obj) {
+        switch (level) {
+            case DEBUG:
+                Loggers.DEBUG.debug(message, obj);
+                break;
+            case INFO:
+                Loggers.INFO.info(message, obj);
+                break;
+            case WARN:
+                Loggers.WARN.warn(message, obj);
+                break;
+            case ERROR:
+                Loggers.EXCEPTION.error(message, (Throwable) obj);
+                break;
+            case SERVER_STATUS:
+                Loggers.STATUS.info(message, obj);
+                break;
+            case USER:
+                Loggers.USER.info(message, obj);
+                break;
+            case USER_EXCEPTION:
+                Loggers.USER_EXCEPTION.error(message, obj);
+                break;
+            case NON_USER:
+                Loggers.NON_USER.info(message, obj);
+                break;
+            default:
+                Loggers.DEBUG.debug(
+                        message + "(WARNING:MSG DEFAULTED DUE TO INAPPROPRIATE USAGE OF THIS METHOD",
+                        obj);
+        }
     }
 }

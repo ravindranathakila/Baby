@@ -82,6 +82,12 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
                     $$(PrivateLocationCreateCNotice).setTextContent(name.getViolationAsString());
                 }
             }
+
+            @Override
+            public void finalize() throws Throwable {
+                Loggers.finalized(this.getClass().getName());
+                super.finalize();
+            }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateInfo), EventType.BLUR.toString(), new EventListener() {
@@ -102,6 +108,12 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
                     $$(PrivateLocationCreateCNotice).setTextContent(info.getViolationAsString());
                 }
             }
+
+            @Override
+            public void finalize() throws Throwable {
+                Loggers.finalized(this.getClass().getName());
+                super.finalize();
+            }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateSave), EventType.CLICK.toString(), new EventListener() {
@@ -113,20 +125,22 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
             @Override
             public void handleEvent(final Event evt_) {
-                logger.debug("{}", "HELLO! CLICKED SAVE.");
+                final SmartLogger sl;
 
 
                 if (myprivateLocationName.validate(v) == 0 && myprivateLocationInfo.validate(v) == 0) {
+                    sl = SmartLogger.start(Loggers.LEVEL.DEBUG, "Saving private location", 10000, null, true);
                     final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).cPrivateLocation(myhumanId.getString(), myprivateLocationName.getObj(), myprivateLocationInfo.getObj());
                     if (r.returnStatus() == 0) {
-                        logger.debug("{}", "HELLO! SAVED PRIVATE LOCATION.");
                         remove(evt_.getTarget(), EventType.CLICK, this);
                         $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationName.getObj() + " was created!");
                         $$(privateLocationCreateSave).setAttribute(MarkupTag.A.href(), Controller.Page.Organize.getURL() + "?"
                                 + Controller.Page.DocOrganizeCategory + "=" + 2 + "&"
                                 + Controller.Page.DocOrganizeLocation + "=" + r.returnValue().getPrivateLocationId());
+                        sl.complete(Loggers.DONE + r.returnMsg());
                     } else {
                         $$(PrivateLocationCreateCNotice).setTextContent(r.returnMsg());
+                        sl.complete(r.returnMsg());
                     }
                 } else {
                     if (myprivateLocationName.validate(v) != 0) {
@@ -136,6 +150,18 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
                     }
                 }
             }
+
+            @Override
+            public void finalize() throws Throwable {
+                Loggers.finalized(this.getClass().getName());
+                super.finalize();
+            }
         }, false);
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        Loggers.finalized(this.getClass().getName());
+        super.finalize();
     }
 }
