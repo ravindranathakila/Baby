@@ -7,6 +7,7 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractListener;
 import ai.ilikeplaces.util.EventType;
+import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MarkupTag;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
@@ -71,6 +72,12 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
                         DB.getHumanCRUDMapLocal(true).createEntry("fun", v.isLessThan1000(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value())).returnStatus() == 0 ? ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()) : "Entry too big");
 
                     }
+
+                    @Override
+                    public void finalize() throws Throwable {
+                        Loggers.finalized(this.getClass().getName());
+                        super.finalize();
+                    }
                 }, false, new NodePropertyTransport(MarkupTag.INPUT.value()));
 
                 itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.AarrrEmail), EventType.BLUR.toString(), new EventListener() {
@@ -83,6 +90,12 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
 
                         DB.getHumanCRUDMapLocal(true).createEntry("email", v.isLessThan1000(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value())).returnStatus() == 0 ? ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()) : "Entry too big");
 
+                    }
+
+                    @Override
+                    public void finalize() throws Throwable {
+                        Loggers.finalized(this.getClass().getName());
+                        super.finalize();
                     }
                 }, false, new NodePropertyTransport(MarkupTag.INPUT.value()));
             }

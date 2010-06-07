@@ -7,6 +7,8 @@ import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import ai.ilikeplaces.util.RefObj;
+import ai.ilikeplaces.util.Return;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +44,12 @@ public class RHumansIdentity extends AbstractSLBCallbacks implements RHumansIden
     public List<HumansIdentity> doDirtyRHumansIdentitiesByEmails(final List<String> emails) {
         return humansIdentityCrudServiceLocal_.findWithNamedQuery(HumansIdentity.FindPaginatedHumansByEmails,
                 QueryParameter.with(HumansIdentity.HumansIdentityEmails, emails).parameters());
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public String doDirtyProfilePhoto(final String humanId){
+        return humansIdentityCrudServiceLocal_.findBadly(HumansIdentity.class,humanId).getHumansIdentityProfilePhoto();
     }
 
     @Override

@@ -11,28 +11,33 @@
 <div class="span-14 last nty" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
     <div class="span-14 last black_fg">Paste a list of email addresses here and click search</div>
     <div class="span-14 last black_fg">You can copy them off an email you sent to your friends, or off a CSV file.</div>
-    <TEXTAREA id="friendFindSearchTextInput" class="span-14 last black_fg" value="Paste your list of email addresses here. If they are in humanly readable format, I can extract the list of emails from it. This means you can take the list of emails off an email you sent to your friends and paste it here."> </TEXTAREA>
-    <br/>
-
     <div class="span-14 last">
-        <!--input id="friendFindSearchButtonInput" type="button"/-->
-
-        <div id="friendFindSearchButtonInput" class="span-2 prepend-6 append-6 last height_15">
-            <a href="#"
-               class="btn bg_a9abf1"><i></i><span><span></span><i></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Search/Update&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
-        </div>
+         <!--style="list-style-type:none;"-->
+        <ul style="list-style-type:none;">
+            <li class="span-14 last">
+                <TEXTAREA tabindex="1"
+                  style="height:50px;"
+                  id="friendFindSearchTextInput" class="span-10 last black_fg"
+                  value="Paste your list of email addresses here. If they are in humanly readable format, I can extract the list of emails from it. This means you can take the list of emails off an email you sent to your friends and paste it here.">
+                </TEXTAREA>
+            </li>
+             <li class="span-14 last" id="friendFindSearchButtonInput">
+                    <a href="#"
+                       class="btn bg_a9abf1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Search/Update&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+             </li>
+            <li class="span-14 last">
+                <ul class="span-7" style="list-style-type:none;">
+                   <li id="friendFindSearchResults">
+                    </li>
+                </ul>
+                <ul class="span-7 last" style="list-style-type:none;">
+                    <li id="friendFindSearchInvites">
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
-    <div>&nbsp;</div>
-    <div class="span-14 last" id="friendFindSearchResults">
-        <div>&nbsp; &nbsp; &nbsp;</div>
-        <div>&nbsp; &nbsp; &nbsp;</div>
-    </div>
-    <div>
-         Don't see your friends here? Click here to:
-         <a href="mailto:Enter the emails of your friends?Subject=INVITE:Join me at i like places!&amp;body=Hey, try signing up at I LIKE PLACES by visiting http://www.ilikeplaces.com/signup . It's about socializing and having fun in places. Hope you like it. See you there. Cheers! p.s. forward this to your friends too." title="Click here">
-          Invite Friends</a>
-    </div>
-    <hr/>
+    <div class="span-14 last height_40">&nbsp;</div>
 </div>
 </body>
 </html>

@@ -64,7 +64,7 @@ public abstract class HumanEquals {
             "If the two classes of of different types, but instanceof same interface, then match humanid." +
             "This approach avoids necessity to extend a class.")
     static public boolean staticMatchHumanId(final HumanEquals main, final Object other) {
-        Loggers.DEBUG.debug(main.getClass().getSimpleName() + " " + other.getClass().getSimpleName());
+        //Loggers.DEBUG.debug(main.getClass().getSimpleName() + " " + other.getClass().getSimpleName());
         if (main.getClass() == other.getClass()) {
             throw UNSUPPORTED_OPERATION_EXCEPTION;
         }

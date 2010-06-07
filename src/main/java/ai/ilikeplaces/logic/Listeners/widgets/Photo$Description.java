@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
+import ai.ilikeplaces.util.Loggers;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
@@ -14,7 +15,6 @@ import org.w3c.dom.html.HTMLDocument;
 import static ai.ilikeplaces.servlets.Controller.Page.close;
 
 /**
- *
  * @author Ravindranath Akila
  */
 
@@ -22,7 +22,6 @@ import static ai.ilikeplaces.servlets.Controller.Page.close;
 abstract public class Photo$Description extends AbstractWidgetListener {
 
     /**
-     *
      * @param itsNatDocument__
      * @param appendToElement__
      */
@@ -34,7 +33,7 @@ abstract public class Photo$Description extends AbstractWidgetListener {
      *
      */
     @Override
-    protected void init(final Object ... initArgs) {
+    protected void init(final Object... initArgs) {
     }
 
     @Override
@@ -45,6 +44,18 @@ abstract public class Photo$Description extends AbstractWidgetListener {
             public void handleEvent(final Event evt_) {
                 displayNone($$(close));
             }
+
+            @Override
+            public void finalize() throws Throwable {
+                Loggers.finalized(this.getClass().getName());
+                super.finalize();
+            }
         }, false);
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        Loggers.finalized(this.getClass().getName());
+        super.finalize();
     }
 }

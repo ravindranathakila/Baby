@@ -6,6 +6,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.EventType;
+import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Return;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -73,7 +74,20 @@ public class FriendDelete extends AbstractWidgetListener {
                     //DO something!
                 }
             }
+
+
+            @Override
+            public void finalize() throws Throwable {
+                Loggers.finalized(this.getClass().getName());
+                super.finalize();
+            }
         }, false);
 
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        Loggers.finalized(this.getClass().getName());
+        super.finalize();
     }
 }

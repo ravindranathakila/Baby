@@ -23,7 +23,7 @@ public class Wall {
     public Long wallId = null;
     public String wallContent = null;
 
-    final static public int WALL_LENGTH = 255;
+    final static public int WALL_LENGTH = 10240;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

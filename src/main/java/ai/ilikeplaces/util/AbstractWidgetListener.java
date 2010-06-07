@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
@@ -251,5 +252,15 @@ public abstract class AbstractWidgetListener {
         return elementToBeSetTextOf;
     }
 
+    protected Element $$(final Event event) {
+        return (Element) event.getCurrentTarget();
+    }
+
     final static protected Logger logger = LoggerFactory.getLogger(AbstractWidgetListener.class);
+
+    @Override
+    public void finalize() throws Throwable {
+        Loggers.finalized(this.getClass().getName());
+        super.finalize();
+    }
 }

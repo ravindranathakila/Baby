@@ -109,4 +109,10 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
         //No events as this is just a view widget/ Edit button???
     }
+
+    @Override
+    public void finalize() throws Throwable {
+        Loggers.finalized(this.getClass().getName());
+        super.finalize();
+    }
 }

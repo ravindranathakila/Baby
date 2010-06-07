@@ -2,6 +2,8 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
+import ai.ilikeplaces.util.RefObj;
+import ai.ilikeplaces.util.Return;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -14,6 +16,8 @@ import java.util.List;
 public interface RHumansIdentityLocal {
 
     public List<HumansIdentity> doDirtyRHumansIdentitiesByEmails(final List<String> emails);
+
+    public String doDirtyProfilePhoto(final String humanId);
 
     public String test(final String emails);
 }

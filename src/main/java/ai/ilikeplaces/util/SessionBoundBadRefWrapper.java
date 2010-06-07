@@ -3,6 +3,7 @@ package ai.ilikeplaces.util;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.MethodPreamble;
+import ai.ilikeplaces.servlets.ServletLogin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +19,11 @@ import java.util.Observer;
 /**
  * Initially this class was designed to help the nosuchejb exception bein thrown when the session
  * bound variable is attempted to be removed, but has already been discarded by the container.
+ *
+ * Since the role of this class is confusing, and also hard to remember, they have been enlisted below.
+ *
+ * 1. Mainly, to maintain the EJB session with the client(http) session.
+ * 2. EJB can die or be disked out(passivated). HTTP session will be active due ot
  *
  * @author Ravindranath Akila
  */
@@ -40,23 +46,21 @@ final public class SessionBoundBadRefWrapper<T> implements HttpSessionBindingLis
     final static Logger logger = LoggerFactory.getLogger(SessionBoundBadRefWrapper.class.getName());
 
 
-    public SessionBoundBadRefWrapper(final T theObjectWhichShouldBeBound__, final HttpSession theObjectWhichIsBoundTo__, final boolean implementsObservable) {
-        this.boundInstance = theObjectWhichShouldBeBound__;
-        this.bindingInstance = theObjectWhichIsBoundTo__;
-        if (implementsObservable) {
-            registerAsLiveStatusObserver();
-            this.isAlive = true;
-        }
-    }
-
-    @FIXME(issue = "isAlive",
-            issues = {"As the caller did not register as an observer, he has no right to call isAlive so we return false anyway. But what happens then?",
-                    "Could an enum be used?"})
     public SessionBoundBadRefWrapper(final T theObjectWhichShouldBeBound__, final HttpSession theObjectWhichIsBoundTo__) {
         this.boundInstance = theObjectWhichShouldBeBound__;
         this.bindingInstance = theObjectWhichIsBoundTo__;
-        this.isAlive = false;
+        registerAsLiveStatusObserver();
+        this.isAlive = true;
     }
+
+//    @FIXME(issue = "isAlive",
+//            issues = {"As the caller did not register as an observer, he has no right to call isAlive so we return false anyway. But what happens then?",
+//                    "Could an enum be used?"})
+//    public SessionBoundBadRefWrapper(final T theObjectWhichShouldBeBound__, final HttpSession theObjectWhichIsBoundTo__) {
+//        this.boundInstance = theObjectWhichShouldBeBound__;
+//        this.bindingInstance = theObjectWhichIsBoundTo__;
+//        this.isAlive = false;
+//    }
 
     @MethodPreamble(description = "This return will be a new reference so no risk of caller modifying live state", authors = {"Ravindranth Akila"}, callBackModules = {})
     final public boolean isAlive() {
@@ -66,21 +70,25 @@ final public class SessionBoundBadRefWrapper<T> implements HttpSessionBindingLis
     @Override
     @FIXME(issue = "This class should be a pipeline between the two objects expecting notification. Split split!!!")
     public void update(Observable o, Object dying) {
+        final SmartLogger smartLogger = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, "Update received on observable", 60000, null, true);
         if (dying instanceof Boolean && (Boolean) dying) {
             this.isAlive = false;
             try {
+                bindingInstance.removeAttribute(ServletLogin.HumanUser);//To be safe since ItsNat session doesn't die;)
                 bindingInstance.invalidate();
+                smartLogger.complete(Loggers.LEVEL.USER, "Session Invalidated Successfully.");
             } catch (final IllegalStateException e_) {
+                smartLogger.complete("Session Invalidated FAILED!");
                 Loggers.EXCEPTION.debug("HELLO, I JUST RECEIVED AN INVALIDATION CALL ON A ALREADY INVALIDATED SESSION. I CAUGHT AND IGNORED EXCEPTION.");
                 //Already invalidated. So lets ignore this. This is the sole reason for this class.
             }
         } else {
-            Loggers.EXCEPTION.debug(dying.toString());
+            smartLogger.complete("Wrong Type");
         }
     }
 
     void registerAsLiveStatusObserver() {
-        Method m;
+        final Method m;
         try {
             m = boundInstance.getClass().getMethod("addObserver", new Class[]{Observer.class});
             try {
@@ -101,7 +109,7 @@ final public class SessionBoundBadRefWrapper<T> implements HttpSessionBindingLis
 
     @Override
     public void valueBound(HttpSessionBindingEvent event) {
-        Method m;
+        final Method m;
         try {
             m = boundInstance.getClass().getMethod("valueBound", new Class[]{HttpSessionBindingEvent.class});
             try {
@@ -126,7 +134,7 @@ final public class SessionBoundBadRefWrapper<T> implements HttpSessionBindingLis
 
     @Override
     public void valueUnbound(HttpSessionBindingEvent event) {
-        Method m;
+        final Method m;
         try {
             m = boundInstance.getClass().getMethod("valueUnbound", new Class[]{HttpSessionBindingEvent.class});
             try {

@@ -15,7 +15,7 @@ final public class PendingEqualsMethodException extends RuntimeException {
 
     final static public PendingEqualsMethodException SINGLETON = new PendingEqualsMethodException();
 
-    private PendingEqualsMethodException() {
+    public PendingEqualsMethodException() {
         super(MSG);
     }
 }

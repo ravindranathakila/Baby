@@ -9,6 +9,7 @@ import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.EventType;
+import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MarkupTag;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.event.NodePropertyTransport;
@@ -44,7 +45,6 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
     final String humanId;
 
     /**
-     * 
      * @param itsNatDocument__
      * @param appendToElement__
      * @param publicPhoto__
@@ -60,7 +60,7 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
      *
      */
     @Override
-    protected void init(final Object ... initArgs) {
+    protected void init(final Object... initArgs) {
     }
 
     @Override
@@ -71,6 +71,13 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
             @Override
             public void handleEvent(final Event evt_) {
                 toggleVisible(pc_close);
+            }
+
+
+            @Override
+            public void finalize() throws Throwable {
+                Loggers.finalized(this.getClass().getName());
+                super.finalize();
             }
         }, false);
 
@@ -84,6 +91,12 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
                 remove(evt_.getTarget(), EventType.CLICK, self);
                 toggleVisible(pc_close);
             }
+
+            @Override
+            public void finalize() throws Throwable {
+                Loggers.finalized(this.getClass().getName());
+                super.finalize();
+            }
         }, false);
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(pc_photo_description), EventType.BLUR.toString(), new EventListener() {
@@ -95,6 +108,19 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
                 logger.debug("{}", ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
                 DB.getHumanCRUDPublicPhotoLocal(true).uPublicPhotoDescription(humanId, publicPhoto.getPublicPhotoId(), ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
             }
+
+
+            @Override
+            public void finalize() throws Throwable {
+                Loggers.finalized(this.getClass().getName());
+                super.finalize();
+            }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        Loggers.finalized(this.getClass().getName());
+        super.finalize();
     }
 }

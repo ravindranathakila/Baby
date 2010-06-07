@@ -1,11 +1,11 @@
 package ai.ilikeplaces.logic.role;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.util.DelegatedObservable;
 
 import javax.ejb.Local;
 import javax.servlet.http.HttpSessionBindingListener;
 import java.io.Serializable;
-import java.util.Observer;
 
 
 /**
@@ -26,15 +26,6 @@ public interface HumanUserLocal extends HttpSessionBindingListener, Serializable
     /**
      * @param loggedOnUserId
      */
-    public void setHumanUserId(String loggedOnUserId);
+    public HumanUserLocal setHumanUserId(String loggedOnUserId);
 
-    /**
-     * @param o
-     */
-    public void addObserver(Observer o);
-
-    /**
-     * @param o
-     */
-    public void deleteObserver(Observer o);
 }

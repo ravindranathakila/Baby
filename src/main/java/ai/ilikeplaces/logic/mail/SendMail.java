@@ -2,7 +2,7 @@ package ai.ilikeplaces.logic.mail;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.crud.HumanCRUDPublicPhotoLocal;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +25,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Properties;
-import java.util.ResourceBundle;
+
+import static ai.ilikeplaces.util.Loggers.*;
 
 /**
  * @author Ravindranath Akila
@@ -39,9 +41,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
     final static private Properties P_ = new Properties();
     static private Context Context_ = null;
     static private boolean OK_ = false;
-    final static private ResourceBundle config = ResourceBundle.getBundle("ai.ilikeplaces.rbs.Config");
-    final static private String ICF = config.getString("oejb.LICF");
-    final static Logger logger = LoggerFactory.getLogger(DB.class);
+    final static private String ICF = RBGet.config.getString("oejb.LICF");
 
     static {
         try {
@@ -50,7 +50,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
             SendMail.OK_ = true;
         } catch (NamingException ex) {
             SendMail.OK_ = false;
-            Loggers.EXCEPTION.error("{}", ex);
+            EXCEPTION.error("{}", ex);
         }
     }
 
@@ -66,13 +66,13 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
         try {
             h = (SendMailLocal) Context_.lookup(SendMailLocal.NAME);
         } catch (NamingException ex) {
-            logger.error("{}", ex);
+            Loggers.EXCEPTION.error("{}", ex);
         }
         return h != null ? h : (SendMailLocal) LogNull.logThrow();
     }
 
-    private static final String U_S_E_R_N_A_M_E = "notifications@ilikeplaces.com";
-    private static final String P_A_S_S_W_O_R_D = "### MANUALLY REMOVED OFF CVS FOR SECURITY REASONS ###";
+    private static final String U_S_E_R_N_A_M_E = RBGet.config.getString("noti_mail");
+    private static final String P_A_S_S_W_O_R_D = RBGet.config.getString("noti_parsewerd");
 
     Properties props;
     Session mailSession;
@@ -90,10 +90,12 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
         mailSession = Session.getDefaultInstance(props, null);
         try {
             transport = mailSession.getTransport();
-            transport.connect(U_S_E_R_N_A_M_E, "### MANUALLY REMOVED OFF CVS FOR SECURITY REASONS ###");
+            transport.connect(U_S_E_R_N_A_M_E, P_A_S_S_W_O_R_D);
         } catch (final MessagingException e) {
-            Loggers.EXCEPTION.error("SORRY! MAIL SESSION BEAN INITIALIZATION FAILED!\n" +
-                    "This could happen if Gerenimo javamail is taken instead of Sun.", e);
+            EXCEPTION.error("SORRY! MAIL SESSION BEAN INITIALIZATION FAILED!\n" +
+                    "This could happen if \n" +
+                    "1. Gerenimo javamail is taken instead of Sun." +
+                    "2. Password is wrong.", e);
         }
     }
 
@@ -102,7 +104,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
         try {
             transport.close();
         } catch (MessagingException e) {
-            Loggers.EXCEPTION.error("SORRY! SESSION BEAN TRANSPORT CLOSE FAILED WHILE BEAN DESTROY!", e);
+            EXCEPTION.error("SORRY! SESSION BEAN TRANSPORT CLOSE FAILED WHILE BEAN DESTROY!", e);
         }
 
     }
@@ -116,17 +118,31 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
             if (!transport.isConnected()) {
                 transport.connect(U_S_E_R_N_A_M_E, P_A_S_S_W_O_R_D);
             }
-            transport.sendMessage(message, message.getAllRecipients());
+
+            sendMail:
+            {
+                final SmartLogger sl = new SmartLogger(
+                        LEVEL.INFO, Loggers.CODE_MAIL +
+                                "SENDING A MAIL TO THE FOLLOWING USERS:" + Arrays.toString(message.getAllRecipients()),
+                        3000,
+                        "HELLO, I AM ABOUT TO SEND A MAIL TO THE FOLLOWING USERS:" + Arrays.toString(message.getAllRecipients()),
+                        true);
+                transport.sendMessage(message, message.getAllRecipients());
+                sl.complete(LEVEL.INFO, "done.");
+            }
+
             returnVal = true;
         } catch (final Exception e) {
-            Loggers.EXCEPTION.error("SORRY! MAIL SEND FAILED!", e);
+            EXCEPTION.error("SORRY! MAIL SEND FAILED!", e);
             for (final Address address : message.getAllRecipients()) {
-                Loggers.USER.error(address + " was supposed to get the following mail notification, but did not.[" +
+                USER.error(address + " was supposed to get the following mail notification, but did not.[" +
                         "Subject:" + message.getSubject() +
                         "Body:" + message.getContent().toString() +
                         "]");
             }
+            throw new RuntimeException(e);
         }
+
         return returnVal;
     }
 
@@ -142,6 +158,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
             message.setSubject(simpleTextSubject);
             message.setContent(simpleTextBody, TEXT_PLAIN);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recepientEmail));
+            message.addRecipient(Message.RecipientType.CC, new InternetAddress(RBGet.config.getString("noti_app_mail")));
 
             r = new ReturnImpl<Boolean>(finalSend(message), "Mail sending to " + recepientEmail + " successful!");
 

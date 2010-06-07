@@ -20,6 +20,15 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSSerializer;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.StringWriter;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 
@@ -62,6 +71,31 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
         this.privateEventName = new SimpleName();
 
         this.privateEventInfo = new Info();
+
+
+        try {
+            DOMImplementationLS domImplLS = (DOMImplementationLS) itsNatDocument_.getDocument().getImplementation();
+            LSSerializer serializer = domImplLS.createLSSerializer();
+            String str = serializer.writeToString(itsNatDocument_.getDocument().getFirstChild());
+            Loggers.DEBUG.debug("DOM TO STRING 1:" + str);
+        } catch (final Exception e) {
+            Loggers.EXCEPTION.error(Loggers.EMBED, e);
+        }
+
+        try {
+            TransformerFactory transFactory = TransformerFactory.newInstance();
+            Transformer transformer = null;
+            transformer = transFactory.newTransformer();
+            StringWriter buffer = new StringWriter();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.transform(new DOMSource(itsNatDocument_.getDocument().getFirstChild()),
+                    new StreamResult(buffer));
+            String str = buffer.toString();
+            Loggers.DEBUG.debug("DOM TO STRING 2:" + str);
+        } catch (final Exception e) {
+            Loggers.EXCEPTION.error(Loggers.EMBED, e);
+        }
+
     }
 
     @Override
@@ -85,6 +119,12 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
                     $$(privateEventCreateNotice).setTextContent(name.getViolationAsString());
                 }
             }
+
+            @Override
+            public void finalize() throws Throwable {
+                Loggers.finalized(this.getClass().getName());
+                super.finalize();
+            }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventCreateInfo), EventType.BLUR.toString(), new EventListener() {
@@ -104,6 +144,12 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
                 } else {
                     $$(privateEventCreateNotice).setTextContent(info.getViolationAsString());
                 }
+            }
+
+            @Override
+            public void finalize() throws Throwable {
+                Loggers.finalized(this.getClass().getName());
+                super.finalize();
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
@@ -141,6 +187,18 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
                     //Validation message should've already been given to the users by above individual listeners
                 }
             }
+
+            @Override
+            public void finalize() throws Throwable {
+                Loggers.finalized(this.getClass().getName());
+                super.finalize();
+            }
         }, false);
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        Loggers.finalized(this.getClass().getName());
+        super.finalize();
     }
 }

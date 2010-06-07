@@ -68,6 +68,12 @@ abstract public class WallWidget extends AbstractWidgetListener {
                         wallAppend.setObj("");
                     }
                 }
+
+                @Override
+                public void finalize() throws Throwable {
+                    Loggers.finalized(this.getClass().getName());
+                    super.finalize();
+                }
             }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
         }
 
@@ -114,7 +120,20 @@ abstract public class WallWidget extends AbstractWidgetListener {
                         }
                     }
                 }
+
+
+                @Override
+                public void finalize() throws Throwable {
+                    Loggers.finalized(this.getClass().getName());
+                    super.finalize();
+                }
             }, false);
         }
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        Loggers.finalized(this.getClass().getName());
+        super.finalize();
     }
 }

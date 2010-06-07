@@ -174,4 +174,14 @@ public abstract class RefObj<T> {
     public String toString() {
         return obj != null ? obj.toString() : "null";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        throw ExceptionCache.NO_EQUALS_METHOD_EXCEPTION;
+    }
+
+    @Override
+    public int hashCode() {
+        return obj.hashCode();
+    }
 }

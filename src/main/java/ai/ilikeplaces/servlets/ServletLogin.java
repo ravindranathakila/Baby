@@ -9,11 +9,15 @@ import ai.ilikeplaces.exception.ConstructorInvokationException;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.rbs.RBGet;
+import ai.ilikeplaces.security.SingletonHashing;
 import ai.ilikeplaces.security.face.SingletonHashingFace;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.Return;
 import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
+import net.sf.oval.exception.ConstraintsViolatedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,15 +120,28 @@ final public class ServletLogin extends HttpServlet {
 
         response__.setContentType("text/html;charset=UTF-8");
 
-        /**
-         * Make user session anyway as he came to log in
-         */
-        final HttpSession userSession_ = request__.getSession();
+        final HttpSession userSession_;
+        handleHttpSession:
+        {
+            /**
+             * Remove any redundant session
+             */
+            if (request__.getSession(false) != null) {
+                request__.getSession(false).invalidate();
+            }
 
-        /**
-         * Set a timeout compatible with the stateful session bean handling user
-         */
-        userSession_.setMaxInactiveInterval(Integer.parseInt(RBGet.config.getString("UserSessionIdleInterval")));
+            /**
+             * Make user session anyway as he came to log in
+             */
+            userSession_ = request__.getSession();
+
+
+            /**
+             * Set a timeout compatible with the stateful session bean handling user
+             */
+            userSession_.setMaxInactiveInterval(Integer.parseInt(RBGet.config.getString("UserSessionIdleInterval")));
+        }
+
 
         final Enumeration enumerated = request__.getParameterNames();
         logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0006"));
@@ -143,25 +160,25 @@ final public class ServletLogin extends HttpServlet {
                 /*Ok the session does not have the bean, initialize it with the user with email id and password*/
                 if (request__.getParameter(Username) != null && request__.getParameter(Password) != null) {/*We need both these to sign in a user*/
                     try {
-                        final HumanUserLocal humanUserLocal = (HumanUserLocal) context.lookup(HumanUserLocal.NAME);
-
-                        Human loggedOnUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(request__.getParameter(Username));
-                        if (loggedOnUser != null) {/*Ok user name valid but now we check for password*/
+                        Human existingUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(request__.getParameter(Username));
+                        if (existingUser != null) {/*Ok user name valid but now we check for password*/
                             final HumansAuthentication humansAuthentications = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(request__.getParameter(Username))).returnValue();
 
-
                             if (humansAuthentications.getHumanAuthenticationHash().equals(singletonHashingFace.getHash(request__.getParameter(Password), humansAuthentications.getHumanAuthenticationSalt()))) {
-
+                                final HumanUserLocal humanUserLocal = (HumanUserLocal) context.lookup(HumanUserLocal.NAME);
                                 humanUserLocal.setHumanUserId(request__.getParameter(Username));
-                                userSession_.setAttribute(HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_, true)));
+                                userSession_.setAttribute(HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
+
                                 logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0001") + ((SessionBoundBadRefWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).boundInstance.getHumanUserId());
+
                                 final String referer = request__.getHeader(HEADER_REFERER);
                                 response__.sendRedirect(!referer.contains("signup") ? referer : home.getURL());
+
                                 break doLogin;/*This is unnecessary but lets not leave chance for introducing bugs*/
                             } else {/*Ok password wrong. What do we do with this guy? First lets make his session object null*/
                                 userSession_.invalidate();
                                 logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0002"));
-                                Loggers.USER.info(humanUserLocal.getHumanUserId() + " entered wrong password.");
+                                Loggers.USER.info(existingUser.getHumanId() + " entered wrong password.");
                                 response__.sendRedirect(request__.getHeader(HEADER_REFERER));
                                 break doLogin;
                             }
@@ -189,11 +206,68 @@ final public class ServletLogin extends HttpServlet {
         }
     }
 
-    final private boolean isSignOnPermitted() {
+    private boolean isSignOnPermitted() {
         return RBGet.getGlobalConfigKey("signOnEnabled") != null && RBGet.getGlobalConfigKey("signOnEnabled").equals("true");
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
+    static public boolean isCorrectPassword(final HumanId humanId, final String password) {
+        final boolean isCorrect;
+        if (humanId.validate() == 0) {
+            final HumansAuthentication humansAuthentications = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(humanId).returnValue();
+            isCorrect = humansAuthentications.getHumanAuthenticationHash().equals(SingletonHashing.getSingletonHashingLocal().getHash(password, humansAuthentications.getHumanAuthenticationSalt()));
+        } else {
+            throw new ConstraintsViolatedException(humanId.getViolations());
+        }
+        return isCorrect;
+    }
+
+
+    static public Return<Boolean> changePassword(final HttpSession httpSession, final HumanId humanId, final Password currentPass, final Password newPass) {
+        Return<Boolean> returnVal;
+        if (humanId.validate() != 0) {
+            throw new ConstraintsViolatedException(humanId.getViolations());
+        } else if (currentPass.validate() != 0) {
+            throw new ConstraintsViolatedException(currentPass.getViolations());
+        } else if (newPass.validate() != 0) {
+            throw new ConstraintsViolatedException(newPass.getViolations());
+        } else {
+            returnVal = DB.getHumanCRUDHumanLocal(true).doUHumanPassword(humanId, currentPass, newPass);
+            if (returnVal.returnStatus() == 0 && returnVal.returnValue()) {
+                Loggers.USER.info("Password changed for user " + humanId.getObj());
+                {
+                    Loggers.USER.info("Attempting to invalidating session due to password change for user " + humanId.getObj());
+                    if (httpSession != null) {
+                        try {
+                            httpSession.invalidate();
+                            Loggers.USER.info("Successfully to invalidated session due to password change for user " + humanId.getObj());
+                        } catch (final Exception e) {
+                            Loggers.USER.info("FAILED to invalidated session due to password change for user " + humanId.getObj());
+                            Loggers.EXCEPTION.error("", e);
+                        }
+                    }
+
+                }
+            }
+        }
+        return returnVal;
+    }
+
+    static public Return<Boolean> changePassword(final HumanId humanId, final Password newPass) {
+        Return<Boolean> returnVal;
+        if (humanId.validate() != 0) {
+            throw new ConstraintsViolatedException(humanId.getViolations());
+        } else if (newPass.validate() != 0) {
+            throw new ConstraintsViolatedException(newPass.getViolations());
+        } else {
+            returnVal = DB.getHumanCRUDHumanLocal(true).doUHumanPassword(humanId, newPass);
+            if (returnVal.returnStatus() == 0 && returnVal.returnValue()) {
+                Loggers.USER.info("Password changed for user " + humanId.getObj());
+            }
+        }
+        return returnVal;
+    }
+
 
     /**
      * Handles the HTTP <code>GET</code> method.

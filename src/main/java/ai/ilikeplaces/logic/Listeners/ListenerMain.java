@@ -15,8 +15,6 @@ import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.html.ItsNatHTMLDocument;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
 
@@ -37,8 +35,10 @@ import static ai.ilikeplaces.util.MarkupTag.*;
 public class ListenerMain implements ItsNatServletRequestListener {
 
 
-    final static private Logger logger = LoggerFactory.getLogger(ListenerMain.class);
     final static protected String LocationId = RBGet.config.getString("LOCATIONID");
+    private static final String RETURNING_LOCATION = "Returning location ";
+    private static final String TO_USER = " to user";
+    private static final String WRONG_WOEID_FORMAT = "SORRY! WRONG WOEID FORMAT";
 
     /**
      * @param request__
@@ -80,10 +80,18 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 WOEID = Long.parseLong(request__.getServletRequest().getParameter(Location.WOEID));
                             }
                         } catch (final NumberFormatException e) {
-                            Loggers.USER_EXCEPTION.error("SORRY! WRONG WOEID FORMAT", e);
+                            Loggers.USER_EXCEPTION.error(WRONG_WOEID_FORMAT, e);
                         }
                     }
                 }
+
+                final SmartLogger sl = SmartLogger.start(
+                        Loggers.LEVEL.SERVER_STATUS,
+                        RETURNING_LOCATION + location + TO_USER,
+                        60000,
+                        null,
+                        true
+                );
 
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor + JSCodeToSend.FnLocationId + JSCodeToSend.FnLocationName + JSCodeToSend.FnSetTitle);
                 final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
@@ -123,7 +131,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             }
                         }
                         catch (final Throwable t) {
-                            logger.debug(t.getMessage());
+                            Loggers.DEBUG.debug(t.getMessage());
                         }
                     }
                     signOnDisplayLink:
@@ -147,7 +155,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     {
                         try {
                             if (getUsername() != null) {
-                                $(Main_othersidebar_profile_link).setAttribute("href", Controller.Page.home.getURL());
+                                $(Main_othersidebar_profile_link).setAttribute("href", Controller.Page.Profile.getURL());
                             } else {
                                 $(Main_othersidebar_profile_link).setAttribute("href", Controller.Page.signup.getURL());
                             }
@@ -236,7 +244,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     getAndDisplayAllThePhotos:
                     {
                         List<PublicPhoto> listPublicPhoto = existingLocation_.getPublicPhotos();
-                        logger.info(RBGet.logMsgs.getString("NUMBER_OF_PHOTOS_FOR_LOCATION"), existingLocation_.getLocationName(), listPublicPhoto.size());
+                        Loggers.INFO.info(RBGet.logMsgs.getString("NUMBER_OF_PHOTOS_FOR_LOCATION"), existingLocation_.getLocationName(), listPublicPhoto.size());
 
                         int i = 0;
                         for (final Iterator<PublicPhoto> it = listPublicPhoto.iterator(); it.hasNext(); i++) {
@@ -285,7 +293,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         }
                     }
                 }
-
+                sl.complete(Loggers.LEVEL.SERVER_STATUS, Loggers.DONE);
             }
 
             /**
@@ -310,7 +318,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
             private List<Element> generateLocationLinks(final List<Location> locationList) {
 
-                final ElementComposer UList = ElementComposer.compose($(UL)).$ElementSetAttribute(MarkupTag.UL.id(),"place_list");
+                final ElementComposer UList = ElementComposer.compose($(UL)).$ElementSetAttribute(MarkupTag.UL.id(), "place_list");
 
                 for (Location location : locationList) {
                     final Element link = $(A);

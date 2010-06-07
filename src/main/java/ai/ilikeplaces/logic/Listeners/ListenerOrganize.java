@@ -5,7 +5,6 @@ import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
-import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventCreate;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete;
@@ -25,14 +24,10 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 import static ai.ilikeplaces.util.Loggers.*;
-import static ai.ilikeplaces.util.MarkupTag.A;
-import static ai.ilikeplaces.util.MarkupTag.IMG;
 
 /**
  * @author Ravindranath Akila
@@ -62,7 +57,9 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor);
 
-                final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
+                final ResourceBundle gUI = RBGet.gui();
+
+                final SmartLogger sl = SmartLogger.start(LEVEL.SERVER_STATUS, "Returning organize page", 60000, null, true);
 
                 layoutNeededForAllPages:
                 {
@@ -99,9 +96,27 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                     {
                         try {
                             if (getUsername() != null) {
-                                $(Skeleton_othersidebar_profile_link).setAttribute(MarkupTag.A.href(), Controller.Page.PhotoCRUD.getURL());
+                                $(Skeleton_othersidebar_profile_link).setAttribute(MarkupTag.A.href(), Controller.Page.Profile.getURL());
                             } else {
                                 $(Skeleton_othersidebar_profile_link).setAttribute(MarkupTag.A.href(), Controller.Page.signup.getURL());
+                            }
+                        } catch (final Throwable t) {
+                            EXCEPTION.error("{}", t);
+
+                        }
+                    }
+                    setProfilePhotoLink:
+                    {
+                        try {
+                            if (getUsername() != null) {
+                                /**
+                                 * TODO check for db failure
+                                 */
+                                String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(getUsernameAsValid())).returnValueBadly();
+                                url = url == null ? null : RBGet.globalConfig.getString("PROFILE_PHOTOS") + url;
+                                if(url != null){
+                                    $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(), url);
+                                }
                             }
                         } catch (final Throwable t) {
                             EXCEPTION.error("{}", t);
@@ -222,15 +237,18 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                                                             final boolean isViewer = r.returnValue().getPrivateLocationViewers().contains(new HumanIdEq(getUsernameAsValid()));
 
 
-                                                                            if ((isOwner || isViewer) && r.returnStatus() == 0) {USER.info(getUsernameAsValid()+" is granted access to view this private location.");
+                                                                            if ((isOwner || isViewer) && r.returnStatus() == 0) {
+                                                                                USER.info(getUsernameAsValid() + " is granted access to view this private location.");
                                                                                 final long validPrivateLocationId = r.returnValue().getPrivateLocationId();
-                                                                                                                                    
+
                                                                                 UseCaseIntroduction:
                                                                                 {
-                                                                                    if (!isOwner) {USER.info(getUsernameAsValid()+" is accepted as a owner of this location.");
+                                                                                    if (!isOwner) {
+                                                                                        USER.info(getUsernameAsValid() + " is accepted as a owner of this location.");
                                                                                         new PrivateLocationView(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), requestedPrivateLocation) {
                                                                                         };
-                                                                                    } else {USER.info(getUsernameAsValid()+" is accepted as a viewer of this location.");
+                                                                                    } else {
+                                                                                        USER.info(getUsernameAsValid() + " is accepted as a viewer of this location.");
                                                                                         new PrivateLocationDelete(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), requestedPrivateLocation) {
                                                                                         };
                                                                                         UseCaseCreatePrivateEvents:
@@ -278,8 +296,10 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                                                                         }
                                                                                     }
                                                                                 }*/
-                                                                            } else {USER.info(getUsernameAsValid()+" is denied rights to view this private location.");
-                                                                                $(Skeleton_notice).setTextContent(gUI.getString("NO_RIGHTS_TO_VIEW"));                                                                            }
+                                                                            } else {
+                                                                                USER.info(getUsernameAsValid() + " is denied rights to view this private location.");
+                                                                                $(Skeleton_notice).setTextContent(gUI.getString("NO_RIGHTS_TO_VIEW"));
+                                                                            }
                                                                         }
                                                                     } catch (
                                                                             final Throwable t) {
@@ -288,7 +308,8 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                                                 }
                                                     else
                                                         NonExistentLocation:
-                                                                {   USER.warn(getUsernameAsValid()+" fails to access this location");
+                                                                {
+                                                                    USER.warn(getUsernameAsValid() + " fails to access this location");
                                                                     $(Skeleton_notice).setTextContent(gUI.getString("NO_EXIST_OR_ERROR"));
                                                                 }
                                                 } catch (final Throwable t) {
@@ -349,6 +370,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                     USER_EXCEPTION.error("", e_);
                                 }
                             }
+                sl.complete(LEVEL.DEBUG, Loggers.DONE);//Request completed within timeout. If not, goes to LEVEL.SERVER_STATUS
             }
 
             /**

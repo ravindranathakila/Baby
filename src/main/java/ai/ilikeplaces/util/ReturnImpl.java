@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-final public class ReturnImpl<T> implements Return {
+final public class ReturnImpl<T> implements Return<T> {
 
     final static private Logger logger = LoggerFactory.getLogger(ReturnImpl.class);
 

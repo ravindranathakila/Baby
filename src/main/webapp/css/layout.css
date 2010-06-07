@@ -159,6 +159,22 @@
     height:100%;
 }
 
+.height_1{
+    height:1px;
+}
+
+.height_2{
+    height:2px;
+}
+
+.height_3{
+    height:3px;
+}
+
+.height_4{
+    height:4px;
+}
+
 .height_5{
     height:5px;
 }
@@ -169,6 +185,10 @@
 
 .height_15{
     height:15px;
+}
+
+.height_25{
+    height:25px;
 }
 
 .height_20{
@@ -254,4 +274,8 @@
     position:absolute;
     left: 0%;
     right: 100%;
+}
+
+.list_style_type_none{
+    list-style-type:none;
 }

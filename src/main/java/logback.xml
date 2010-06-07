@@ -7,7 +7,6 @@
     Created on : October 15, 2009, 12:15 PM
     Author     : Ravindranath Akila
     Description:
-        Purpose of the document follows.
         This should be in the classpath for logback to read configuration from
 -->
 <configuration debug="true">
@@ -22,14 +21,14 @@
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>../logs/ilp.log</file>
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%thread|%date|%logger:%line>%msg%n%n</Pattern>
+            <Pattern>%-4level|%thread|%date|%logger:%line>%msg%n%n</Pattern>
         </layout>
     </appender>
 
     <appender name="FILE_LOGIC" class="ch.qos.logback.core.FileAppender">
         <file>../logs/ilp_logic.log</file>
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%thread|%date|%logger:%line>%msg%n%n</Pattern>
+            <Pattern>%-4level|%thread|%date|%logger:%line>%msg%n%n</Pattern>
         </layout>
     </appender>
 
@@ -71,21 +70,21 @@
     <appender name="FILE_USER" class="ch.qos.logback.core.FileAppender">
         <file>../logs/ilp_user.log</file>
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%date>%msg%n</Pattern>
+            <Pattern>%-4level|%date>%msg%n</Pattern>
         </layout>
     </appender>
 
     <appender name="FILE_NON_USER" class="ch.qos.logback.core.FileAppender">
         <file>../logs/ilp_non_user.log</file>
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%thread|%date>%msg%n</Pattern>
+            <Pattern>%-4level|%thread|%date>%msg%n</Pattern>
         </layout>
     </appender>
 
     <appender name="FILE_SERVER_STATUS" class="ch.qos.logback.core.FileAppender">
         <file>../logs/ilp_server_status.log</file>
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%date>%msg%n</Pattern>
+            <Pattern>%-4level|%thread|%date>%msg%n</Pattern>
         </layout>
     </appender>
 

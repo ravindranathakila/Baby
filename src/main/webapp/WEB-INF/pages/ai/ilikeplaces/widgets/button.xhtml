@@ -12,9 +12,34 @@
     <head>
         <title>button</title>
     </head>
-    <body itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
-        <div class="just_link bg_e9eaff fg_a9abf1 ntyS center">
-            <a id="GenericButtonLink" href="#"><img  id="GenericButtonImage" src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/arrow-right.gif" alt="" style="vertical-align:middle;"><span class="height:100%; vertical-align:middle;" id="GenericButtonText">Click</span></img></a>
-        </div>
-    </body>
+<body itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
+    <!--do not set class span width here with the div of id GenericButtonWidth because it is set programmeticaly.-->
+    <!--Any other classes set here will also be conveniently overridden by the java code.-->
+    <!--If you need stype, put it inside this div.-->
+    <div class="" id="GenericButtonWidth">
+            <div style="height:1px;font-size:1px;">
+                &nbsp;
+            </div>
+            <div class="just_link bg_e9eaff fg_a9abf1 ntyB center ">
+                <div class="height_5">
+                    &nbsp;
+                </div>
+                <div>
+                    <!--<a id="GenericButtonLink" href="#"><img  id="GenericButtonImage" src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/arrow-right.gif" alt="" style="vertical-align:middle;"><span class="height:100%; vertical-align:middle;" id="GenericButtonText">Click</span></img></a>-->
+                    <a id="GenericButtonLink" href="#"><span class="height:100%; vertical-align:middle;" id="GenericButtonText">Link</span><img  id="GenericButtonImage" src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/arrow_sans_right_32.png" alt="Link" style="vertical-align:middle;"></img></a>
+                </div>
+                <div class="height_5">
+                    &nbsp;
+                </div>
+                <div class="height_5">
+                    &nbsp;
+                </div>
+                <div style="height:1px;font-size:1px;">
+                    &nbsp;
+                </div>
+            </div>
+         <br/>
+         <br/>
+    </div>
+</body>
 </html>

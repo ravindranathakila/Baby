@@ -1,8 +1,8 @@
 <!--?xml version="1.0" encoding="UTF-8"?-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">
-    <head  itsnat:nocache="true">
-        <meta id="mainMetaDesc" name="Description" content="Discover and Have Fun in Places!"/>
+    <head itsnat:nocache="true">
+        <meta id="mainMetaDesc" name="Description" content="Discover and Have Fun in Places!"></meta>
         <title id="mainTitle">
             Discover and Have Fun in Places!
         </title>
@@ -14,7 +14,7 @@
         <!-- Framework CSS -->
         <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection"/>
         <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"/>
-        <!--[if lt IE 8]><link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+        <!--[if lt IE 8]><link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection"/><![endif]-->
 
         <link rel="stylesheet" type="text/css" href="/css/theme/divine_msg.css"/>
 
@@ -23,7 +23,7 @@
 
         <link rel="stylesheet" type="text/css" href="/js/jquery.yoxview/yoxview.css"/>
 
-        <link rel="stylesheet" type="text/css" href="/css/getflickr.css"/>
+        <!--link rel="stylesheet" type="text/css" href="/css/getflickr.css"/-->
         <!--link rel="stylesheet" type="text/css" href="/cdn/js/niftyPrint.css" media="print"/-->
 
 
@@ -56,6 +56,10 @@
             }
         </script>
         <script type="text/javascript">
+            var disqus_developer = 1;
+            var disqus_category_id = 777;
+        </script>
+        <script type="text/javascript">
         
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', 'UA-13297277-1']);
@@ -68,98 +72,6 @@
           })();
 
         </script>
-
-         <!-- Panoramio -->
-        <style type="text/css">
-        .stack { position: fixed; bottom: 28px; right: 40px; font: 13px "Trebuchet MS", Verdana, Helvetica, sans-serif; color: #666; }
-        .stack * { margin: 0; padding: 0; }
-        .stack > img { position: relative; cursor: pointer; padding-top: 35px; z-index: 2; }
-        .stack ul { list-style: none; position: absolute; top: 5px; margin:0; cursor: pointer; z-index: 1; }
-        .stack ul li { position: absolute; }
-        .stack ul li img { border: 0; }
-        .stack ul li span { display: none; }
-        .stack .openStack li span {
-            display: block;
-            position: absolute;
-            top: 17px;
-            right: 60px;
-            height: 14px;
-            line-height: 14px;
-            background-color:#000;
-            border: 0;
-            padding: 3px 10px;
-            text-align: center;
-            text-shadow: #000 1px 1px 1px;
-            font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
-            font-size: 12px;
-            color: #fcfcfc;
-            border-radius: 10px;
-            opacity: .85;
-            filter: alpha(opacity = 85);
-            -webkit-border-radius: 10px;
-            -moz-border-radius: 10px;
-        }
-
-        /* IE Fixes */
-        .stack { _position: absolute; }
-        .stack ul { _z-index:-1; _top:-15px; }
-        .stack ul li {*right:5px;}
-        </style>
-        <!-- EO Panoramio -->
-
-        <!-- Google Blog Search -->
-        <style type="text/css">
-              #feedControl {
-                width : 400px;
-                font-size: 16px;
-                color: #9CADD0;
-               }
-
-              #main .gfc-title {
-                line-height : 1em;
-                overflow : hidden;
-                white-space : nowrap;
-                display : block;
-               }
-
-              .gfc-title,
-              .gfc-title * {
-                font-size: 16px;
-               }
-
-               .gfc-results {
-                margin-bottom: 15px;
-               }
-        </style> 
-        <!-- EO Google Blog Search -->
-
-<script language="javascript">
- RIGHT_CLICKS = 0;
- RIGHT_CLICK_MSG = "Geee! We are open-source. Shall I give u the sources?:P\n"+
-    "(Ur ryt-click menu will work, just ryt-click again ;)";
- function click(e) {
-  if(RIGHT_CLICKS == 0){
-      RIGHT_CLICKS++;
-      if (navigator.appName == 'Netscape'
-               && e.which == 3) {
-           if(confirm(RIGHT_CLICK_MSG)){
-            window.location = "http://tinyurl.com/ilikeplaces-sources";
-           }
-          return false;
-          }
-       else {
-          if (navigator.appName == 'Microsoft Internet Explorer'
-              && event.button==2)
-           if(confirm(RIGHT_CLICK_MSG)){
-             window.location = "http://tinyurl.com/ilikeplaces-sources";
-           }
-           return false;
-          }
-       return true;
-    }
- }
-document.onmousedown=click;
-</script>
         
     </head>
     <body style="background:white;" id="body" class="vtip" title="WWW.PANORAMIO.COM. Photos are copyrighted by their owners">
@@ -170,7 +82,7 @@ document.onmousedown=click;
                 </div>
                 <div class="span-24 last height_40 bg_a9abf1">
                     <div class="span-24 last inherit_height">
-                        <div class="span-10 inherit_height line_height_40">
+                        <div class="span-10 inherit_height line_height_40 vtip ilp_tagl">
                             <span class="ilp_title fg_cee7ef inherit_height inherit_line_height strong" style="color:white;font-size:13px;">&nbsp;Discover &amp; Have Fun in Places!</span>
                         </div>
                         <div id="Main_login_widget" class="span-14 last inherit_height">
@@ -282,18 +194,6 @@ document.onmousedown=click;
                                         <!--<img class="span-5 last" src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/ian_no_cancel_fee.gif" alt="Profile Picture"/>-->
                                     <!--</a>-->
                                 <!--</div>-->
-                                <div class="span-5 last" style="overflow:hidden;">
-                                    <!--<form class="search-box span-5 last" method="post" onsubmit="return onSubmit()">-->
-                                    <!--<input class="search-input span-5 last" id="input"-->
-                                       <!--type="text"-->
-                                       <!--value="Search Blogs"-->
-                                       <!--onchange="inputChange(this)"/>-->
-                                    <!--</form>-->
-                                     
-                                       <div id="feedControl" class="span-5 last" style="overflow:hidden;display:none;">
-                                         Loading...
-                                       </div>
-                                </div>
                                 <div class="span-5 last">                                     
                                        <div class="span-5 last" style="overflow:hidden;">
 									   
@@ -334,7 +234,7 @@ document.onmousedown=click;
                                 </div>
                             </div>
                             <div class="span-14 last" id="Main_center_main">
-                                <div class="span-14 last">
+                                <div class="span-14 last" style="overflow:hidden;">
                                     <div id="map" class="vtip" title="<i>Double-click to Zoom<br/>Links open in new tabs</i>" style="height:400px;"></div>
                                 </div>
 								
@@ -342,26 +242,53 @@ document.onmousedown=click;
                                 </div>
                                 <div class="span-14 last" style="display:block;">
                                     <div class="span-12 prepend-1 append-1 last bg_e9eaff fg_a9abf1 nty">
-                                        <br/>
-                                        <br/>
-                                        <p id="Main_location_backlink" class="span-12 last"></p>
-                                        <p class="span-12 last"></p>
-                                        <form method="get" autocomplete="off"  class="span-12 last">
-                                            <div>
-                                                <label id="Main_location_list_header" for="q" class="vtip" title="Enter a place name to filter the list below"></label>&nbsp;
-                                                <input type="text" class="span-4" value="" name="q" id="q" onfocus="javascript:this.value='';"/>
+                                        <div class="span-12 last">
+                                            <div class="span-9 last">
                                                 <br/>
+                                                <form method="get" autocomplete="off"  class="span-12 last">
+                                                    <div>
+
+                                                        <label for="q" class="vtip" title="Enter a place name to filter the list below">
+                                                        <span>
+                                                            <span id="Main_location_list_header"></span>
+                                                            <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_out_32.png" height="15px" alt="Back link" style="vertical-align:middle;"/>
+                                                        </span>
+                                                        </label>
+                                                        &nbsp;
+                                                        <input type="text" class="span-4" value="" name="q" id="q" onfocus="javascript:this.value='';"/>
+                                                        &nbsp;
+                                                        &nbsp;
+                                                        &nbsp;
+                                                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/controls_rewind_32.png" height="14px" alt="Back link" style="vertical-align:middle;"/>
+                                                        <span id="Main_location_backlink"></span>
+                                                    </div>
+                                                </form>
                                             </div>
-                                        </form>
-                                        <p id="Main_location_list" class="yellow_fg bold large"></p>
-                                        <p id="Main_notice" class="yellow_fg bold large"></p>
+                                            <!--<div class="span-3">-->
+                                                <!--<br/>-->
+                                                <!--<span>-->
+                                                  <!--<img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/controls_rewind_32.png" height="14px" alt="Back link"/>-->
+                                                  <!--<span id="Main_location_backlink"></span>-->
+                                                <!--</span>-->
+                                            <!--</div>                                            -->
+                                        </div>
+                                        <div class="span-12 last">
+                                          <p id="Main_location_list" class="yellow_fg bold large"></p>
+                                          <p id="Main_notice" class="yellow_fg bold large"></p>
+                                        </div>
                                     </div>
                                 </div>
-                               <div class="span-14 last">
+                                <!--<div class="span-14 last">-->
+                                    <!--<div class="span-14 last">-->
+                                        <!--<div id="fb-root" style="color:#ffffff">-->
+                                        <!--</div>-->
+									<!--</div>-->
+                                <!--</div>-->
+                                <div class="span-14 last">
                                     <div class="span-14 last">
-                                        <div id="fb-root" style="color:#ffffff">
-                                        </div>
-									</div>
+                                        <div id="disqus_thread"></div>
+                                        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=ilikeplaces">comments powered by Disqus.</a></noscript>
+                                    </div>
                                 </div>
                                 <br/>
                                 <br/>
@@ -401,7 +328,7 @@ document.onmousedown=click;
                                     </fieldset>
                                     </form -->
                                     <br/><br/>
-                                    <div class="span-2 last prepend-12">
+                                    <div class="span-2 last prepend-12" style="display:none;">
                                         <a id="Main_flickr" href="http://flickr.com/photos/tags/Sri+Lanka" class="getflickrphotos btn bg_a9abf1"><i></i><span><span></span><i></i>Try Flickr</span></a>
                                     </div>
                                 </div>
@@ -418,7 +345,7 @@ document.onmousedown=click;
                                 </div>
 
                                 <div class="span-14 last">
-                                    <span id="Main_center_main_location_title" />
+                                    <!--<span id="Main_center_main_location_title" />-->
                                 </div>
                             </div>
                             <div class="span-14 last" id="Main_center_content">
@@ -442,7 +369,7 @@ document.onmousedown=click;
                             <div class="span-5 last">
                                 <a href="http://travel.ilikeplaces.com/index.jsp?pageName=hotelSpecials&currencyCode=USD&additionalDataString=vrBookingSource|index&locale=en_US&cid=317285"
                                  target="_blank">
-                                <img class="span-5 last" src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/ian_low_price_guarantee.gif" />
+                                <img class="span-5 last" src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/ian_low_price_guarantee.gif"  alt="Lowest Price Guarantee Image"/>
                                 </a>
                                 <br/><br/>
                             </div>
@@ -504,7 +431,7 @@ document.onmousedown=click;
                                     <br/>
 
                                     <!-- search box -->
-                                    <form ACTION="http://travel.ilikeplaces.com/index.jsp" METHOD="POST" NAME="frm_Search" target="_blank" class="vtip"
+                                    <form action="http://travel.ilikeplaces.com/index.jsp" method="post" name="frm_Search" target="_blank" class="vtip"
                                           title="search results will open in new window<br/>e.g. 'paris', 'london'">
                                         <input type="hidden" name="cid" value="317285"/>
                                         <input type="hidden" name="pageName" value="hotSearch"/>
@@ -513,7 +440,7 @@ document.onmousedown=click;
                                         <div id="searchForm" class="center">
                                             <span class="bold fg_a9abf1 heading" style="font-size:20px;">City Bookings</span>
                                             <div class="clearFix center">
-                                                <input name="city" SIZE="20" class="bold"
+                                                <input name="city" size="20" class="bold"
                                                        onfocus="javascript:this.value=getLocationName().split(' of ')[0].replace('/',' ');"/><br/>
                                                 <input type="submit" value="Search" class="button"/>
                                             </div>
@@ -551,6 +478,47 @@ document.onmousedown=click;
                             <div class="span-5 last" style="float:right;">
                                 &nbsp;
                             </div>
+                            <div class="span-5 last">
+                                <div class="span-5 last just_link">
+                                      <a href="" onclick="javascript:$.prompt('Just');"
+                                         style="font-size:19px;">
+                                          <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/security_closed_32.png"
+                                                            style="vertical-align:middle;"
+                                                            height="19px"                       
+                                                            alt="Customer Care Image"/>&nbsp;Credit Card Safety
+                                      </a>
+                                 </div>
+                                  <div class="span-5 last just_link">
+                                      <a href="http://travel.ilikeplaces.com/index.jsp?pageName=hotelFaq&currencyCode=USD&additionalDataString=vrBookingSource%7Cindex&locale=en_US_US&cid=317285#5"
+                                         style="font-size:19px;">
+                                          <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/security_closed_32.png"
+                                                            style="vertical-align:middle;"
+                                                            height="19px"
+                                                            alt="Customer Care Image"/>&nbsp;Credit Card Safety
+                                      </a>
+                                 </div>
+                                  <div class="span-5 last just_link">
+                                      <a href="http://travel.ilikeplaces.com/index.jsp?pageName=hotelFaq&cid=317285"
+                                         style="font-size:18px;">
+                                          <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/questionmark_32.png"
+                                                            style="vertical-align:middle;"
+                                                            height="18px"
+                                                            alt="Customer Care Image"/>&nbsp;FAQ - Hotels
+                                      </a>
+                                 </div>
+                                  <div class="span-5 last just_link">
+                                      <a href="http://travel.ilikeplaces.com/index.jsp?pageName=airFaq&cid=317285"
+                                         style="font-size:18px;">
+                                          <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/questionmark_32.png"
+                                                            style="vertical-align:middle;"
+                                                            height="18px"
+                                                            alt="Customer Care Image"/>&nbsp;FAQ - Flights
+                                      </a>
+                                 </div>
+                            </div>
+                            <div class="span-5 last" style="float:right;">
+                                &nbsp;
+                            </div>
                             <br/><br/>
                             <div class="span-5 last" style="float:right;">
                                 <div class="span-5 last">
@@ -575,182 +543,46 @@ document.onmousedown=click;
                 </div>
             </div>
         </div>
-<!-- addthis bucket -->
-<div class="stack addthis_toolbox" style="display:none;"> 
-    <img src="http://www.addthis.com/cms-content/images/gallery/stack.png" alt="stack"/>
-    <ul id="stack" class="custom_images">
-        <li><a class="addthis_button_facebook"><span>Facebook!</span><img src="http://www.addthis.com/cms-content/images/gallery/facebook.png" alt="Share now to Facebook!" /></a></li>
-        <li><a class="addthis_button_twitter"><span>Twitter!</span><img src="http://www.addthis.com/cms-content/images/gallery/twitter.png" alt="Tweet It" /></a></li>
-        <li><a class="addthis_button_stumbleupon"><span>Stumble!</span><img src="http://www.addthis.com/cms-content/images/gallery/stumbleupon.png" alt="Stumbled Upon It" /></a></li>
-        <li><a class="addthis_button_reddit"><span>Reddit!</span><img src="http://www.addthis.com/cms-content/images/gallery/reddit.png" alt="Reddit" /></a></li>
-        <li><a class="addthis_button_digg"><span>Digg!</span><img src="http://www.addthis.com/cms-content/images/gallery/digg.png" alt="Digg'ed It!" /></a></li>
-        <li><a class="addthis_button_more"><span>More...</span><img src="http://www.addthis.com/cms-content/images/gallery/addthis.png" alt="More Shares->" /></a></li>
-    </ul>
-</div>
-<!-- EO addthis bucket -->
-<div id='wapiblock' style='display:none;' onclick='alert(panwidget.getPhoto().getPhotoUrl());'>
-    <a href="http://www.panoramio.com">Panoramio - Photos of the World</a
-</div>
 
-        <!--<script type="text/javascript" src="/js/jquery-1.3.2.js"></script>-->
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-        
-        <script type="text/javascript" src="/js/util.js"></script>
+        <!--script type="text/javascript" src="/js/jquery-1.3.2.js"></script>-->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 
-        <!--<script type="text/javascript" src="/js/vtip.js"></script>-->
-        <script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/vtip.js"></script>
+        <script type="text/javascript" src="/js/miniquarry/vtip.js"></script>
+        <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/vtip.js"></script>-->
 
-        <!--<script type="text/javascript" src="/js/jquery.livesearch.js"></script>-->
-        <script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/jquery.livesearch.js"></script>
+        <script type="text/javascript" src="/js/miniquarry/util.js"></script>
 
+        <script type="text/javascript" src="/js/jquery.livesearch.js"></script>
+        <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/jquery.livesearch.js"></script>-->
 
-        <script type="text/javascript" src="http://c0804152.cdn.cloudfiles.rackspacecloud.com/getflickr.js"></script>
-
-        <!--<script type="text/javascript" src="/js/jquery-impromptu.2.7.min.js"></script>-->
-        <script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/jquery-impromptu.2.7.min.js"></script>
-
-        <script type="text/javascript" src="/js/ajaxupload.3.5.js"></script>
-        <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/ajaxupload.3.5.j"></script>-->
-
-        <script src="/js/jquery.ready.yox.js" type="text/javascript"></script>
-        <script src="/js/ItsNatEventMonitor.js" type="text/javascript"></script>
-        <script type="text/javascript" language="javascript" src="/js/jquery.yoxview/yoxview-init.js"></script>
-        <script type="text/javascript" language="javascript" src="/js/jquery.yoxview/jquery.yoxview-0.9.min.js"></script>
-        <script type="text/javascript" language="javascript" src="/js/jquery.yoxview/jquery.timers-1.2.min.js"></script>
-        <script type="text/javascript" src="/js/Nifty.onload.js"></script>
+        <script type="text/javascript" src="/js/miniquarry/ItsNatEventMonitor.js"></script>
+        <script type="text/javascript" src="/js/jquery.yoxview/yoxview-init.js"></script>
+        <script type="text/javascript" src="/js/jquery.yoxview/jquery.yoxview-0.9.min.js"></script>
+        <script type="text/javascript" src="/js/jquery.yoxview/jquery.timers-1.2.min.js"></script>
+        <script type="text/javascript" src="/js/miniquarry/Nifty.onload.js"></script>
         <script type="text/javascript" src="/nifty/niftycube.js"></script>
 
-        <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=true&amp;key=ABQIAAAAHZRdzKv28xq0_XcHxHxXfBS9EVSNZwL5zfIrTpz_X5_CttifKhS-WLi0e8kEMyJzCwXGhjISm8sYnA" type="text/javascript"></script>
-        <!--<script type="text/javascript" src="/js/jquery.gmap-1.0.3.js"></script>-->
-        <script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/jquery.gmap-1.0.3.js"></script>
+        <script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAHZRdzKv28xq0_XcHxHxXfBS9EVSNZwL5zfIrTpz_X5_CttifKhS-WLi0e8kEMyJzCwXGhjISm8sYnA"></script>
+        <script type="text/javascript" src="/js/jquery.gmap-1.0.3.js"></script>
+        <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/jquery.gmap-1.1.0-min.js"></script>-->
 
-        <script type="text/javascript" src="http://www.panoramio.com/wapi/wapi.js?v=1"></script>        
+        <!-- script type="text/javascript" src="http://www.panoramio.com/wapi/wapi.js?v=1"></script -->        
 
         <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=ravindranathakila"></script>
 
-        <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAHZRdzKv28xq0_XcHxHxXfBS9EVSNZwL5zfIrTpz_X5_CttifKhS-WLi0e8kEMyJzCwXGhjISm8sYnA"></script>
-<!-- Panoramio -->
-<!--script type="text/javascript">
-$(function () {
-	// Stack initialize
-	var openspeed = 300;
-	var closespeed = 300;
-	$('.stack>img').toggle(function(){
-		var vertical = 0;
-		var horizontal = 0;
-		var $el=$(this);
-		$el.next().children().each(function(){
-			$(this).animate({top: '-' + vertical + 'px', left: horizontal + 'px'}, openspeed);
-			vertical = vertical + 55;
-			horizontal = (horizontal+.75)*2;
-		});
-		$el.next().animate({top: '-50px', left: '10px'}, openspeed).addClass('openStack')
-		   .find('li a>img').animate({width: '50px', marginLeft: '9px'}, openspeed);
-		$el.animate({paddingTop: '0'});
-	}, function(){
-		//reverse above
-		var $el=$(this);
-		$el.next().removeClass('openStack').children('li').animate({top: '55px', left: '-10px'}, closespeed);
-		$el.next().find('li a>img').animate({width: '79px', marginLeft: '0'}, closespeed);
-		$el.animate({paddingTop: '35px'});
-	});
+        <!-- script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAHZRdzKv28xq0_XcHxHxXfBS9EVSNZwL5zfIrTpz_X5_CttifKhS-WLi0e8kEMyJzCwXGhjISm8sYnA"></script -->
+ 
+		<script type="text/javascript" src="/js/miniquarry/jquery.ready.yox.js"></script>
 
-	// Stacks additional animation
-	$('.stack li a').hover(function(){
-		$("img",this).animate({width: '56px'}, 100);
-		$("span",this).animate({marginRight: '30px'});
-	},function(){
-		$("img",this).animate({width: '50px'}, 100);
-		$("span",this).animate({marginRight: '0'});
-	});
-});
-</script -->
-<script type="text/javascript">
-var beaches = {'tag': 'beaches'};
-var options = {'width': 350, 'height': 200};
-panwidget = new panoramio.PhotoWidget('wapiblock', beaches, options);
-</script>
-<!-- EO Panoramio -->
 
-<!-- Google Blog Search -->
-        <!-- ++Begin Dynamic Feed Wizard Generated Code++ -->
+        <!--script type="text/javascript" src="http://c0804152.cdn.cloudfiles.rackspacecloud.com/getflickr.js"></script-->
 
-        <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAHZRdzKv28xq0_XcHxHxXfBS9EVSNZwL5zfIrTpz_X5_CttifKhS-WLi0e8kEMyJzCwXGhjISm8sYnA"></script>
+        <script type="text/javascript" src="/js/jquery-impromptu.2.7.min.js"></script>
+        <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/jquery-impromptu.2.7.min.js"></script>-->
 
-        <script type="text/javascript">//<![CDATA[
+        <script type="text/javascript" src="/js/miniquarry/ajaxupload.3.5.js"></script>
+        <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/ajaxupload.3.5.j"></script>-->
 
-      var defaultQuery = document.title.split('?')[0]+'+inblogtitle:travel';//'Official Google Blogs';
 
-      // load the AJAX Feed API
-      google.load("feeds", "1");
-      google.setOnLoadCallback(function() {findFeeds(defaultQuery)});
-
-      function findFeeds(query) {
-        google.feeds.findFeeds(query, feedSearchDone);
-      }
-
-      function feedSearchDone(result) {
-        var el = document.getElementById("feedControl");
-
-        if (result.error || result.entries.length <= 0) {
-          el.innerHTML = 'No Blog Results Found';
-          return;
-        }
-
-        // create a feed control
-        var feedControl = new google.feeds.FeedControl();
-
-        // Grab top 2..
-        for (var i = 0; i < 2; i++) {
-          feedControl.addFeed(result.entries[i].url, result.entries[i].title);
-        }
-
-        feedControl.setLinkTarget(google.feeds.LINK_TARGET_BLANK);
-        feedControl.setNumEntries(2);
-        feedControl.draw(el);
-      }
-
-      function onSubmit() {
-        inputChange(document.getElementById("input"));
-        return false;
-      }
-
-      function inputChange(input) {
-        var query = input.value.toLowerCase();
-
-        var el = document.getElementById('feedControl');
-        el.innerHTML = 'Loading...';
-
-        if (!query) {
-          query = defaultQuery;
-          input.value = query;
-        }
-        findFeeds(query);
-      }
-
-    //]]>
-           </script>
-        <!-- ++End Dynamic Feed Control Wizard Generated Code++ -->
-        <!-- EO Google Blog Search -->
-
-<!-- FB COMMENTS-->
-    <script>
-      var fbc = document.createElement('fb:comments');
-      fbc.xid="366834296743";
-      fbc.numposts="100";
-      document.getElementById('fb-root').appendChild(fbc);
-
-      window.fbAsyncInit = function() {
-        FB.init({appId: '107600862617483', status: true, cookie: true,
-                 xfbml: true});
-      };
-      (function() {
-        var e = document.createElement('script'); e.async = true;
-        e.src = document.location.protocol +
-          '//connect.facebook.net/en_US/all.js';
-        document.getElementById('fb-root').appendChild(e);
-      }());
-    </script>
-<!-- EO FB COMMENTS-->
     </body>
 </html>

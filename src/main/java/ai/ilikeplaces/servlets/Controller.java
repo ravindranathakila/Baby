@@ -1,9 +1,6 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.doc.FIXME;
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.logic.Listeners.*;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.rbs.RBGet;
@@ -27,9 +24,9 @@ import java.util.*;
 
 /**
  * @author Ravindranath Akila
- * @TODO Code to disable url calls with itsnat_doc_name=### type urls if possible
  */
 
+@TODO(task = "Code to disable url calls with itsnat_doc_name=### type urls if possible")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class Controller extends HttpServletWrapper {
 
@@ -40,12 +37,46 @@ final public class Controller extends HttpServletWrapper {
 
     @NOTE(note = "Inner Enums are static. Therefore, the lists shall be populated only once.")
     public enum Page implements PageFace {
+        ForgotPasswordChange("ai/ilikeplaces/widgets/profile.xhtml",
+                Controller.Page.ProfileForgotPasswordWidget,
+                Controller.Page.ProfileForgotPasswordNotice,
+                Controller.Page.ProfileForgotPasswordEmailAddress,
+                Controller.Page.ProfileForgotPasswordCodeMail,
+                Controller.Page.ProfileForgotPasswordEmailedCode,
+                Controller.Page.ProfileForgotPasswordNew,
+                Controller.Page.ProfileForgotPasswordNewConfirm,
+                Controller.Page.ProfileForgotPasswordSave
+        ) {
+            @Override
+            public String toString() {
+                return DocForgotPasswordChange;
+            }
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }},
+        PasswordChange("ai/ilikeplaces/widgets/profile.xhtml",
+                Controller.Page.ProfilePasswordWidget,
+                Controller.Page.ProfilePasswordNotice,
+                Controller.Page.ProfilePasswordCurrent,
+                Controller.Page.ProfilePasswordNewConfirm,
+                Controller.Page.ProfilePasswordNew,
+                Controller.Page.ProfilePasswordSave
+        ) {
+            @Override
+            public String toString() {
+                return DocPasswordChange;
+            }
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }},
         WallHandler("ai/ilikeplaces/widgets/wall.xhtml",
                 Controller.Page.wallContent,
                 Controller.Page.wallAppend,
                 Controller.Page.wallSubmit,
                 Controller.Page.wallNotice
-                ) {
+        ) {
             @Override
             public String toString() {
                 return DocWall;
@@ -126,7 +157,8 @@ final public class Controller extends HttpServletWrapper {
         FindFriend("ai/ilikeplaces/widgets/friend/friend_find.xhtml",
                 Controller.Page.friendFindSearchTextInput,
                 Controller.Page.friendFindSearchButtonInput,
-                Controller.Page.friendFindSearchResults
+                Controller.Page.friendFindSearchResults,
+                Controller.Page.friendFindSearchInvites
         ) {
 
             @Override
@@ -195,7 +227,8 @@ final public class Controller extends HttpServletWrapper {
         GenericButton("ai/ilikeplaces/widgets/button.xhtml",
                 Controller.Page.GenericButtonLink,
                 Controller.Page.GenericButtonText,
-                Controller.Page.GenericButtonImage
+                Controller.Page.GenericButtonImage,
+                Controller.Page.GenericButtonWidth
 
         ) {
 
@@ -220,6 +253,19 @@ final public class Controller extends HttpServletWrapper {
             @Override
             public String toString() {
                 return DocOrganize;
+            }},
+
+        Profile(null
+        ) {
+
+            @Override
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "page/_profile";
+            }
+
+            @Override
+            public String toString() {
+                return DocProfile;
             }},
 
         Friends(null
@@ -261,6 +307,7 @@ final public class Controller extends HttpServletWrapper {
                 Controller.Page.Skeleton_notice,
                 Controller.Page.Skeleton_notice_sh,
                 Controller.Page.Skeleton_othersidebar,
+                Controller.Page.Skeleton_profile_photo,
                 Controller.Page.Skeleton_othersidebar_identity,
                 Controller.Page.Skeleton_othersidebar_organizer_link,
                 Controller.Page.Skeleton_othersidebar_photo_manager_link,
@@ -486,13 +533,36 @@ final public class Controller extends HttpServletWrapper {
             }
         };
 
+        /*Forgot Password Page*/
+        final static public String DocForgotPasswordChange = "DocPasswordChange";
+        /*Forgot Password IDs*/
+        final static public String ProfileForgotPasswordWidget = "ProfileForgotPasswordWidget";
+        final static public String ProfileForgotPasswordNotice = "ProfileForgotPasswordNotice";
+        final static public String ProfileForgotPasswordEmailAddress = "ProfileForgotPasswordEmailAddress";
+        final static public String ProfileForgotPasswordCodeMail = "ProfileForgotPasswordCodeMail";
+        final static public String ProfileForgotPasswordEmailedCode = "ProfileForgotPasswordEmailedCode";
+        final static public String ProfileForgotPasswordNew = "ProfileForgotPasswordNew";
+        final static public String ProfileForgotPasswordNewConfirm = "ProfileForgotPasswordNewConfirm";
+        final static public String ProfileForgotPasswordSave = "ProfileForgotPasswordSave";
+
+
+        /*Password Page*/
+        final static public String DocPasswordChange = "DocPasswordChange";
+        /*Password IDs*/
+        final static public String ProfilePasswordWidget = "ProfilePasswordWidget";
+        final static public String ProfilePasswordNotice = "ProfilePasswordNotice";
+        final static public String ProfilePasswordCurrent = "ProfilePasswordCurrent";
+        final static public String ProfilePasswordNewConfirm = "ProfilePasswordNewConfirm";
+        final static public String ProfilePasswordNew = "ProfilePasswordNew";
+        final static public String ProfilePasswordSave = "ProfilePasswordSave";
+
         /*WallHandler Page*/
         final static public String DocWall = "DocWall";
         /*WallHandler IDs*/
-        final static public String wallContent   = "wallContent";
-        final static public String wallAppend    = "wallAppend";
-        final static public String wallSubmit     = "wallSubmit";
-        final static public String wallNotice     = "wallNotice";
+        final static public String wallContent = "wallContent";
+        final static public String wallAppend = "wallAppend";
+        final static public String wallSubmit = "wallSubmit";
+        final static public String wallNotice = "wallNotice";
 
         /*DisplayName Page*/
         final static public String DocDisplayName = "DocDisplayName";
@@ -536,6 +606,7 @@ final public class Controller extends HttpServletWrapper {
         final static public String friendFindSearchTextInput = "friendFindSearchTextInput";
         final static public String friendFindSearchButtonInput = "friendFindSearchButtonInput";
         final static public String friendFindSearchResults = "friendFindSearchResults";
+        final static public String friendFindSearchInvites = "friendFindSearchInvites";
 
         /*AddFriend Page*/
         final static public String DocFriendAdd = "DocFriendAdd";
@@ -568,6 +639,10 @@ final public class Controller extends HttpServletWrapper {
         final static public String GenericButtonLink = "GenericButtonLink";
         final static public String GenericButtonText = "GenericButtonText";
         final static public String GenericButtonImage = "GenericButtonImage";
+        final static public String GenericButtonWidth = "GenericButtonWidth";
+
+        /*Profile Page*/
+        final static public String DocProfile = "DocProfile";
 
         /*Organize Page*/
         final static public String DocOrganize = "DocOrganize";
@@ -593,6 +668,7 @@ final public class Controller extends HttpServletWrapper {
         final static public String skeletonTitle = "skeletonTitle";
         final static public String Skeleton_login_widget = "Skeleton_login_widget";
         final static public String Skeleton_othersidebar = "Skeleton_othersidebar";
+        final static public String Skeleton_profile_photo = "Skeleton_profile_photo";
         final static public String Skeleton_othersidebar_identity = "Skeleton_othersidebar_identity";
         final static public String Skeleton_othersidebar_places_link = "Skeleton_othersidebar_places_link";
         final static public String Skeleton_othersidebar_profile_link = "Skeleton_othersidebar_profile_link";
@@ -757,6 +833,7 @@ final public class Controller extends HttpServletWrapper {
     final PageFace organize = Page.Organize;
     final PageFace findFriend = Page.Friends;
     final PageFace book = Page.Bookings;
+    final PageFace profile = Page.Profile;
 
     final PageFace findFriendWidget = Page.FindFriend;
     final PageFace friendAdd = Page.FriendAdd;
@@ -768,6 +845,9 @@ final public class Controller extends HttpServletWrapper {
     final PageFace displayName = Page.DisplayName;
 
     final PageFace wallHanlder = Page.WallHandler;
+
+    final PageFace passwordChange = Page.PasswordChange;
+    final PageFace forgotPasswordChange = Page.ForgotPasswordChange;
 
     /**
      * @param serveletConfig__
@@ -792,12 +872,12 @@ final public class Controller extends HttpServletWrapper {
 
         setDefaultLocale:
         {
-            staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0001"));
+            Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0001"));
             Locale.setDefault(new Locale("en", "US"));
-            staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0002"), Locale.getDefault().toString());
+            Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0002"), Locale.getDefault().toString());
         }
 
-        staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0003"), Locale.getDefault().toString());
+        Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0003"), Locale.getDefault().toString());
 
 
         /*Add a listner to convert pretty urls to proper urls*/
@@ -805,6 +885,13 @@ final public class Controller extends HttpServletWrapper {
 
             @Override
             public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
+
+                setHeaders:
+                {
+                    ((HttpServletResponse) response__.getServletResponse()).setDateHeader("Expires",
+                            System.currentTimeMillis() + 24 * 60 * 60 * 1000);
+                }
+
                 final ItsNatDocument itsNatDocument__ = request__.getItsNatDocument();
                 /*if(itsNatDocument != null && ((HttpServletRequest) request__.getServletRequest()).getPathInfo().contains("itsnat_doc_name")){
                 throw new java.lang.RuntimeException("INVALID URL");//This code does not seem to work, please verify.
@@ -837,6 +924,8 @@ final public class Controller extends HttpServletWrapper {
             inhs__.registerItsNatDocumentTemplate(findFriend.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerFriends());
 
             inhs__.registerItsNatDocumentTemplate(book.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerBookings());
+
+            inhs__.registerItsNatDocumentTemplate(profile.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerProfile());
         }
 
         registerDocumentFragmentTemplatesAKAWidgets:
@@ -872,6 +961,10 @@ final public class Controller extends HttpServletWrapper {
             inhs__.registerItsNatDocFragmentTemplate(displayName.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(displayName));
 
             inhs__.registerItsNatDocFragmentTemplate(wallHanlder.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(wallHanlder));
+
+            inhs__.registerItsNatDocFragmentTemplate(passwordChange.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(passwordChange));
+
+            inhs__.registerItsNatDocFragmentTemplate(forgotPasswordChange.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(forgotPasswordChange));
         }
     }
 
@@ -887,8 +980,8 @@ final public class Controller extends HttpServletWrapper {
         final String pathInfo = ((HttpServletRequest) request__.getServletRequest()).getPathInfo();
         final String URL__ = pathInfo == null ? "" : ((HttpServletRequest) request__.getServletRequest()).getPathInfo().substring(1);//Removes preceding slash
         if (isHomePage(URL__)) {
-            staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
-            staticLogger.info(((HttpServletRequest) request__.getServletRequest()).getRequestURL().toString()
+            Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
+            Loggers.INFO.info(((HttpServletRequest) request__.getServletRequest()).getRequestURL().toString()
                     + (((HttpServletRequest) request__.getServletRequest()).getQueryString() != null
                     ? ((HttpServletRequest) request__.getServletRequest()).getQueryString()
                     : ""));
@@ -926,35 +1019,38 @@ final public class Controller extends HttpServletWrapper {
                     request__.getServletRequest().setAttribute(RBGet.config.getString("HttpSessionAttr.location"), getPhotoLocation(URL__));
                     request__.getServletRequest().setAttribute("photoURL", getPhotoURL(URL__));
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, "photo");/*Framework specific*/
-                    staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0005") + getPhotoLocation(URL__));
-                    staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0006") + getPhotoURL(URL__));
+                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0005") + getPhotoLocation(URL__));
+                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0006") + getPhotoURL(URL__));
                 } else if (isHumanPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, "me");/*Framework specific*/
-                    staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0007"));
+                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0007"));
                 } else if (isOrganizePage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocOrganize);/*Framework specific*/
                     request__.getServletRequest().setAttribute(Page.DocOrganizeCategory, request__.getServletRequest().getParameter(Page.DocOrganizeCategory));
                     request__.getServletRequest().setAttribute(Page.DocOrganizeLocation, request__.getServletRequest().getParameter(Page.DocOrganizeLocation));
                     request__.getServletRequest().setAttribute(Page.DocOrganizeEvent, request__.getServletRequest().getParameter(Page.DocOrganizeEvent));
                     request__.getServletRequest().setAttribute(Page.DocOrganizeAlbum, request__.getServletRequest().getParameter(Page.DocOrganizeAlbum));
-                    staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0013"));
+                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0013"));
                 } else if (isFriendsPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocFriends);/*Framework specific*/
-                    staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0014"));
+                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0014"));
                 } else if (isBookingsPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocBook);/*Framework specific*/
-                    staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0015"));
+                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0015"));
+                } else if (isProfilePage(URL__)) {
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocProfile);/*Framework specific*/
+                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0016"));
                 } else {/*Divert to home page*/
-                    staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
+                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
                     request__.getServletRequest().setAttribute("location", "");
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
                 }
             } else if (isCorrectLocationFormat(URL__)) {
                 request__.getServletRequest().setAttribute("location", URL__);
                 request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocLocation);/*Framework specific*/
-                staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0009") + URL__);
+                Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0009") + URL__);
             } else {/*Divert to home page*/
-                staticLogger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
+                Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
                 request__.getServletRequest().setAttribute("location", "");
                 request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
             }
@@ -1016,6 +1112,10 @@ final public class Controller extends HttpServletWrapper {
 
     static private boolean isBookingsPage(final String URL_) {
         return (URL_.startsWith("_book"));
+    }
+
+    static private boolean isProfilePage(final String URL_) {
+        return (URL_.startsWith("_profile"));
     }
 
     static private boolean isSignOut(final String URL_) {

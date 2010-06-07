@@ -1,9 +1,12 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.logic.Listeners.widgets.DisplayName;
+import ai.ilikeplaces.logic.Listeners.widgets.ForgotPasswordManager;
+import ai.ilikeplaces.logic.Listeners.widgets.PasswordManager;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
+import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractListener;
 import ai.ilikeplaces.util.Loggers;
@@ -13,23 +16,22 @@ import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.html.ItsNatHTMLDocument;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.itsnat.core.http.ItsNatHttpSession;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
 
 import java.util.ResourceBundle;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
+import static ai.ilikeplaces.util.Loggers.EXCEPTION;
 
 /**
  * @author Ravindranath Akila
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public class ListenerBookings implements ItsNatServletRequestListener {
+public class ListenerProfile implements ItsNatServletRequestListener {
 
-    final private Logger logger = LoggerFactory.getLogger(ListenerBookings.class.getName());
 
     /**
      * @param request__
@@ -68,9 +70,7 @@ public class ListenerBookings implements ItsNatServletRequestListener {
                             if (getUsername() != null) {
                                 final Element usersName = $(MarkupTag.P);
                                 usersName.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0004") + getUsername());
-                                //$(Skeleton_othersidebar_identity).appendChild(usersName);
-                                new DisplayName(itsNatDocument__, $(Skeleton_othersidebar_identity), new HumanId(getUsernameAsValid()), request__.getServletRequest()) {
-                                };
+                                $(Skeleton_othersidebar_identity).appendChild(usersName);
                             } else {
                                 final Element locationElem = $(MarkupTag.P);
                                 locationElem.setTextContent(gUI.getString("NoLogin"));
@@ -85,7 +85,7 @@ public class ListenerBookings implements ItsNatServletRequestListener {
                     {
                         try {
                             if (getUsername() != null) {
-                                $(Skeleton_othersidebar_profile_link).setAttribute("href", Controller.Page.PhotoCRUD.getURL());
+                                $(Skeleton_othersidebar_profile_link).setAttribute("href", Controller.Page.Profile.getURL());
                             } else {
                                 $(Skeleton_othersidebar_profile_link).setAttribute("href", Controller.Page.signup.getURL());
                             }
@@ -94,10 +94,45 @@ public class ListenerBookings implements ItsNatServletRequestListener {
 
                         }
                     }
+                    setProfilePhotoLink:
+                    {
+                        try {
+                            if (getUsername() != null) {
+                                /**
+                                 * TODO check for db failure
+                                 */
+                                String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(getUsernameAsValid())).returnValueBadly();
+                                url = url == null ? null : RBGet.globalConfig.getString("PROFILE_PHOTOS") + url;
+                                if (url != null) {
+                                    $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(), url);
+                                }
+                            }
+                        } catch (final Throwable t) {
+                            EXCEPTION.error("{}", t);
+
+                        }
+                    }
                 }
                 if (getUsername() != null) {
                     try {
-                        //Page content
+                        {
+                            Loggers.DEBUG.debug("Attaching Password Manager.");
+
+                            new PasswordManager(itsNatDocument__, $(Skeleton_center_content), new HumanId(getUsernameAsValid()), ((ItsNatHttpSession) request__.getItsNatSession()).getHttpSession()) {
+                            };
+
+                            Loggers.DEBUG.debug("Finished Attaching Password Manager.");
+                        }
+
+                    } catch (final Throwable t) {
+                        Loggers.EXCEPTION.error("{}", t);
+                    }
+                } else {
+                    try {
+                        {
+                            new ForgotPasswordManager(itsNatDocument__, $(Skeleton_center_content), ((ItsNatHttpSession) request__.getItsNatSession()).getHttpSession()) {
+                            };
+                        }
 
                     } catch (final Throwable t) {
                         Loggers.EXCEPTION.error("{}", t);

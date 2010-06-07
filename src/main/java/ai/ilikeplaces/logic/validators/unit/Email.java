@@ -49,6 +49,16 @@ public class Email extends RefObj<String> {
         }
         return emails;
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RefObj)) return false;
+
+        final RefObj refObj = (RefObj) o;
+
+        return obj.equals(refObj.getObj());
+    }
 }
 
 
