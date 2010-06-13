@@ -33,10 +33,39 @@ final public class Controller extends HttpServletWrapper {
     private final static Map<PageFace, String> PrettyURLMap_ = new IdentityHashMap<PageFace, String>();//Please read javadoc before making any changes to this implementation
     final static private Logger staticLogger = LoggerFactory.getLogger(Controller.class.getName());
     private static final String ITSNAT_DOC_NAME = "itsnat_doc_name";
-    private static final String LOCATION_HUB = "/page/Earth_of_Earth?WOEID=1";
+    public static final String LOCATION_HUB = "/page/Earth_of_Earth?WOEID=1";
 
     @NOTE(note = "Inner Enums are static. Therefore, the lists shall be populated only once.")
     public enum Page implements PageFace {
+        UserProperty("ai/ilikeplaces/widgets/UserProperty.xhtml",
+                Controller.Page.user_property_profile_photo,
+                Controller.Page.user_property_name,
+                Controller.Page.user_property_content
+        ) {
+            @Override
+            public String toString() {
+                return DocUserProperty;
+            }
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }},
+
+
+        ProfileWidget("ai/ilikeplaces/widgets/profile.xhtml",
+                Controller.Page.ProfileNotice,
+                Controller.Page.ProfileURLChange,
+                Controller.Page.ProfileURL,
+                Controller.Page.ProfileURLUpdate
+        ) {
+            @Override
+            public String toString() {
+                return DocProfileWidget;
+            }
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }},
         ForgotPasswordChange("ai/ilikeplaces/widgets/profile.xhtml",
                 Controller.Page.ProfileForgotPasswordWidget,
                 Controller.Page.ProfileForgotPasswordNotice,
@@ -255,7 +284,8 @@ final public class Controller extends HttpServletWrapper {
                 return DocOrganize;
             }},
 
-        Profile(null
+        Profile(null,
+                Controller.Page.ProfilePhotoChange
         ) {
 
             @Override
@@ -266,6 +296,18 @@ final public class Controller extends HttpServletWrapper {
             @Override
             public String toString() {
                 return DocProfile;
+            }},
+
+        I(null) {
+
+            @Override
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "page/_i";
+            }
+
+            @Override
+            public String toString() {
+                return DocI;
             }},
 
         Friends(null
@@ -403,6 +445,8 @@ final public class Controller extends HttpServletWrapper {
                 Controller.Page.mainTitle,
                 Controller.Page.mainMetaDesc,
                 Controller.Page.Main_othersidebar_identity,
+                Controller.Page.Main_location_photo,
+                Controller.Page.Main_profile_photo,
                 Controller.Page.Main_othersidebar_profile_link,
                 Controller.Page.Main_othersidebar_upload_file_sh,
                 Controller.Page.Main_notice_sh,
@@ -533,6 +577,22 @@ final public class Controller extends HttpServletWrapper {
             }
         };
 
+        /*ProfileWidget Page*/
+        final static public String DocUserProperty = "DocUserProperty";
+        /*ProfileWidget IDs*/
+        final static public String user_property_profile_photo = "user_property_profile_photo";
+        final static public String user_property_name = "user_property_name";
+        final static public String user_property_content = "user_property_content";
+
+
+        /*ProfileWidget Page*/
+        final static public String DocProfileWidget = "DocProfileWidget";
+        /*ProfileWidget IDs*/
+        final static public String ProfileNotice = "ProfileNotice";
+        final static public String ProfileURLChange = "ProfileURLChange";
+        final static public String ProfileURL = "ProfileURL";
+        final static public String ProfileURLUpdate = "ProfileURLUpdate";
+
         /*Forgot Password Page*/
         final static public String DocForgotPasswordChange = "DocPasswordChange";
         /*Forgot Password IDs*/
@@ -643,6 +703,11 @@ final public class Controller extends HttpServletWrapper {
 
         /*Profile Page*/
         final static public String DocProfile = "DocProfile";
+        /*Profile IDs*/
+        final static public String ProfilePhotoChange = "ProfilePhotoChange";
+
+        /*I Page*/
+        final static public String DocI = "DocI";
 
         /*Organize Page*/
         final static public String DocOrganize = "DocOrganize";
@@ -736,6 +801,8 @@ final public class Controller extends HttpServletWrapper {
         final static public String mainTitle = "mainTitle";
         final static public String mainMetaDesc = "mainMetaDesc";
         final static public String Main_othersidebar_identity = "Main_othersidebar_identity";
+        final static public String Main_location_photo = "Main_location_photo";
+        final static public String Main_profile_photo = "Main_profile_photo";
         final static public String Main_othersidebar_profile_link = "Main_othersidebar_profile_link";
         final static public String Main_othersidebar_upload_file_sh = "Main_othersidebar_upload_file_sh";
         final static public String Main_center_main = "Main_center_main";
@@ -834,6 +901,7 @@ final public class Controller extends HttpServletWrapper {
     final PageFace findFriend = Page.Friends;
     final PageFace book = Page.Bookings;
     final PageFace profile = Page.Profile;
+    final PageFace i = Page.I;
 
     final PageFace findFriendWidget = Page.FindFriend;
     final PageFace friendAdd = Page.FriendAdd;
@@ -848,6 +916,9 @@ final public class Controller extends HttpServletWrapper {
 
     final PageFace passwordChange = Page.PasswordChange;
     final PageFace forgotPasswordChange = Page.ForgotPasswordChange;
+    final PageFace profileWidget = Page.ProfileWidget;
+
+    final PageFace userProperty = Page.UserProperty;
 
     /**
      * @param serveletConfig__
@@ -926,6 +997,8 @@ final public class Controller extends HttpServletWrapper {
             inhs__.registerItsNatDocumentTemplate(book.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerBookings());
 
             inhs__.registerItsNatDocumentTemplate(profile.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerProfile());
+
+            inhs__.registerItsNatDocumentTemplate(i.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerI());
         }
 
         registerDocumentFragmentTemplatesAKAWidgets:
@@ -965,12 +1038,17 @@ final public class Controller extends HttpServletWrapper {
             inhs__.registerItsNatDocFragmentTemplate(passwordChange.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(passwordChange));
 
             inhs__.registerItsNatDocFragmentTemplate(forgotPasswordChange.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(forgotPasswordChange));
+
+            inhs__.registerItsNatDocFragmentTemplate(profileWidget.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(profileWidget));
+            
+            inhs__.registerItsNatDocFragmentTemplate(userProperty.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(userProperty));
         }
     }
 
     /**
      * We have a URL of type say www.ilikeplaces.com/page/Egypt
-     * where we are supposed to recieve the /Egypt part. Most requests WILL be
+     * where we are supposed to receive the /Egypt part. Most requests WILL be
+     * <p/>
      * location requests so we go optimistic on that first.
      *
      * @param request__
@@ -1001,7 +1079,7 @@ final public class Controller extends HttpServletWrapper {
         } else {
             if (isNonLocationPage(URL__)) {/*i.e. starts with underscore*/
                 final HttpSession httpSession = ((HttpServletRequest) request__.getServletRequest()).getSession(false);
-                if (isSignOut(URL__)) {
+                if (isSignOut(URL__)) {//This can never happen, as there is a filter in place for this
                     if (httpSession != null) {
                         try {
                             ((HttpServletRequest) request__.getServletRequest()).getSession(false).invalidate();
@@ -1011,7 +1089,7 @@ final public class Controller extends HttpServletWrapper {
                             try {
                                 ((HttpServletResponse) response__.getServletResponse()).sendRedirect(LOCATION_HUB);
                             } catch (final IOException e) {
-                                Loggers.EXCEPTION.error("", e);
+                                Loggers.EXCEPTION.error(Loggers.EMBED, e);
                             }
                         }
                     }
@@ -1040,6 +1118,9 @@ final public class Controller extends HttpServletWrapper {
                 } else if (isProfilePage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocProfile);/*Framework specific*/
                     Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0016"));
+                } else if (isIPage(URL__)) {
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocI);/*Framework specific*/
+                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0017"));
                 } else {/*Divert to home page*/
                     Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
                     request__.getServletRequest().setAttribute("location", "");
@@ -1116,6 +1197,10 @@ final public class Controller extends HttpServletWrapper {
 
     static private boolean isProfilePage(final String URL_) {
         return (URL_.startsWith("_profile"));
+    }
+
+    static private boolean isIPage(final String URL_) {
+        return (URL_.startsWith("_i"));
     }
 
     static private boolean isSignOut(final String URL_) {

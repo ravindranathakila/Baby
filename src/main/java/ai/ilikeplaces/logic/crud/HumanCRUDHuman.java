@@ -175,10 +175,10 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Return<Boolean> doNTxIsHumansNetPeople(final RefObj<String> adderHumanId, final RefObj<String> addeeHumanId) {
+    public Return<Boolean> doNTxIsHumansNetPeople(final RefObj<String> checkerHumanId , final RefObj<String> checkeeeHumanId) {
         Return<Boolean> r;
         try {
-            r = new ReturnImpl<Boolean>(uHumansNetPeopleLocal_.doNTxIsHumansNetPeople(adderHumanId.getObj(), addeeHumanId.getObj()), CHECK_FRIEND_SUCCESSFUL);
+            r = new ReturnImpl<Boolean>(uHumansNetPeopleLocal_.doNTxIsHumansNetPeople(checkerHumanId .getObj(), checkeeeHumanId.getObj()), CHECK_FRIEND_SUCCESSFUL);
         } catch (final Throwable t) {
             r = new ReturnImpl<Boolean>(t, CHECK_FRIEND_FAILED, true);
         }
@@ -324,6 +324,55 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
 
     }
 
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<HumansIdentity> doUHumansPublicURL(final RefObj<String> humanId, final String url) {
+        Return<HumansIdentity> r;
+        try {
+            r = new ReturnImpl<HumansIdentity>(uHumansIdentityLocal_.doUHumansPublicURL(humanId.getObj(), url), "Profile URL Update Successful.");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<HumansIdentity>(t, "Profile URL Update FAILED!", true);
+        }
+        return r;
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<String> doDirtyRHumansPublicURL(final RefObj<String> humanId) {
+        Return<String> r;
+        try {
+            r = new ReturnImpl<String>(rHumansIdentityLocal_.doDirtyPublicURL(humanId.getObj()), "Profile URL Read Successful.");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<String>(t, "Profile URL Read FAILED!", true);
+        }
+        return r;
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<HumansIdentity> doDirtyRHumansIdentity(final RefObj<String> humanId){
+        Return<HumansIdentity> r;
+        try {
+            r = new ReturnImpl<HumansIdentity>(rHumansIdentityLocal_.doDirtyRHumansIdentity(humanId.getObj()), "Identity Read Successful.");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<HumansIdentity>(t, "Identity Read FAILED!", true);
+        }
+        return r;
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<String> doDirtyProfileFromURL(final String url){
+        Return<String> r;
+        try {
+            r = new ReturnImpl<String>(rHumansIdentityLocal_.doDirtyProfileFromURL(url), "Profile Read from URL Successful.");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<String>(t, "Profile Read from URL FAILED!", true);
+        }
+        return r;
+
+    }
+
     /*BEGINNING OF PREPERATOR METHODS*/
 
     @TODO(task = "ADD HUMANSIDENTITY VALUES TAKE FROM THE SERVLETSIGNUP. CHANGE ALL NON_CRUDSERVICE CLASSES TO USE NON_TRANSACTIONAL AS REQUIRED")
@@ -350,6 +399,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
                 final HumansIdentity hid = new HumansIdentity();
                 hid.setHumanId(newUser.getHumanId());
                 hid.setHumansIdentityEmail(email.getObj());
+                hid.setUrl(new Url().setUrlR(humanId.getObj()).setMetadataR(humanId.getObj()));//Yes, the default url is his/her email
 
                 newUser.setHumansIdentity(hid);
             }

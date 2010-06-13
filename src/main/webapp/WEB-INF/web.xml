@@ -79,6 +79,17 @@
         <url-pattern>/page/*</url-pattern>
     </servlet-mapping>
 
+    <!--###################### FILTERS ####################################-->
+    <filter>
+        <description>Profile Redirect Filter.</description>
+        <filter-name>ProfileFilter</filter-name>
+        <filter-class>ai.ilikeplaces.servlets.filters.ProfileRedirect</filter-class>
+    </filter>
+        <filter>
+        <description>Logout And Redirect Filter.</description>
+        <filter-name>LogoutNRedirect</filter-name>
+        <filter-class>ai.ilikeplaces.servlets.filters.LogoutNRedirect</filter-class>
+    </filter>
     <filter>
         <description>Set HTTP headers for a mapping.</description>
         <filter-name>HeaderFilter</filter-name>
@@ -89,6 +100,11 @@
             <param-value>Expires: Thu, 15 Apr 2011 20:00:00 GMT</param-value>
         </init-param>
     </filter>
+    <!--###################### ENF OF FILTERS ####################################-->
+
+
+    <!--###################### FILTER MAPPINGS ####################################-->
+
     <filter-mapping>
         <filter-name>HeaderFilter</filter-name>
         <url-pattern>*.jpg</url-pattern>
@@ -191,6 +207,19 @@
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
 
+
+    <filter-mapping>
+        <filter-name>ProfileFilter</filter-name>
+        <url-pattern>/i/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LogoutNRedirect</filter-name>
+        <url-pattern>/page/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+    <!--###################### END OF FILTER MAPPINGS ####################################-->
 
     <session-config>
         <session-timeout>

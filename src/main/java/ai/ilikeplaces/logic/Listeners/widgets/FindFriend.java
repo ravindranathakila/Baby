@@ -170,11 +170,23 @@ abstract public class FindFriend extends AbstractWidgetListener {
                     for (final HumansIdentity humansIdentity : mymatches.getObj()) {
                         matchedEmailList.add(new Email(humansIdentity.getHumanId()));
                         if (!humansNetPeoples.contains(humansIdentity.getHumanId())) {
-                            new FriendAdd(itsNatDocument_, $$(Controller.Page.friendFindSearchResults), new HumanId(humansIdentity.getHumanId()), myhumanId) {
+
+                            new UserProperty(itsNatDocument_, $$(Controller.Page.friendFindSearchResults), new HumanId(humansIdentity.getHumanId())) {
+                                protected void init(final Object... initArgs) {
+                                    new FriendAdd(itsNatDocument_, $$(Controller.Page.user_property_content), (HumanId) initArgs[0], myhumanId) {
+                                    };
+                                }
                             };
+
                         } else {
-                            new FriendDelete(itsNatDocument_, $$(Controller.Page.friendFindSearchResults), new HumanId(humansIdentity.getHumanId()), myhumanId) {
+
+                            new UserProperty(itsNatDocument_, $$(Controller.Page.friendFindSearchResults), new HumanId(humansIdentity.getHumanId())) {
+                                protected void init(final Object... initArgs) {
+                                    new FriendDelete(itsNatDocument_, $$(Controller.Page.user_property_content), (HumanId) initArgs[0], myhumanId) {
+                                    };
+                                }
                             };
+
                         }
                     }
 

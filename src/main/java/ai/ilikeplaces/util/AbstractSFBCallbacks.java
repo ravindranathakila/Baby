@@ -23,7 +23,7 @@ public class AbstractSFBCallbacks extends AbstractSBCallbacks {
      */
     @PrePassivate
     public void prePassivate() {
-        logger.info(MsgPassivate + className + this.hashCode());
+        INFO.info(MsgPassivate + className + this.hashCode());
     }
 
     /**
@@ -31,7 +31,7 @@ public class AbstractSFBCallbacks extends AbstractSBCallbacks {
      */
     @PostActivate
     public void postActivate() {
-        logger.info(MsgActivate + className + this.hashCode());
+        INFO.info(MsgActivate + className + this.hashCode());
     }
 
     /**
@@ -39,6 +39,6 @@ public class AbstractSFBCallbacks extends AbstractSBCallbacks {
      */
     @Remove
     public void remove() {
-        logger.info(MsgRemove + className + this.hashCode());
+        INFO.info(MsgRemove + className + this.hashCode());
     }
 }

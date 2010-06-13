@@ -62,9 +62,9 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         MethodTimer.DO_LOG.setObj(false);
         MethodParams.DO_LOG.setObj(false);*/
         System.out.println("");
-        logger.debug(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0004"), System.getProperty("java.class.path"));
-        System.out.println("STARTING TO VERIFY CLASSES");
-        System.out.println("");
+//        logger.debug(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0004"), System.getProperty("java.class.path"));
+//        System.out.println("STARTING TO VERIFY CLASSES");
+//        System.out.println("");
 
 //        try {
 //            try {
@@ -123,7 +123,6 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
 //            }
 //        }
 
-        System.out.println("Check title, Check ads, Check location Search Auto Suggest or Suggest on feed.");
         System.out.println("");
 
         System.out.println(RBGet.config.getString("bn"));

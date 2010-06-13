@@ -13,6 +13,7 @@ import com.rackspacecloud.client.cloudfiles.FilesClient;
 import com.rackspacecloud.client.cloudfiles.FilesConstants;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Remove;
 import javax.ejb.Stateless;
 import javax.imageio.ImageIO;
 import javax.interceptor.Interceptors;
@@ -88,12 +89,18 @@ public class CDNProfilePhoto extends AbstractSLBCallbacks implements CDNProfileP
         final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, "Login to rackspace cloud", 60000, null, true);
         final boolean status = doLogin();
         if (status) {
-            sl.appendToLogMSG("login status:" + client.isLoggedin());
+            sl.complete(Loggers.DONE);
 
+        }else{
+            sl.appendToLogMSG("Login Failed. Destroying Session Bean!");
+            sl.complete(Loggers.FAILED);
+            this.remove();
         }
-        sl.complete(client.isLoggedin() ? Loggers.DONE : Loggers.FAILED);
     }
 
+    @Remove
+    public void remove(){
+    }
 
     private boolean doLogin() {
 
@@ -116,6 +123,7 @@ public class CDNProfilePhoto extends AbstractSLBCallbacks implements CDNProfileP
 
     @Override
     public Return<File> run(File file, final Map parameterMap, final String userFileExtension, final HttpSession session) {
+        final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, "Uploading Profile Photo", 120000, null, true);
         Return<File> r;
         /**
          * Renaming the file to contain extension for image manipulation flexibility
@@ -125,6 +133,7 @@ public class CDNProfilePhoto extends AbstractSLBCallbacks implements CDNProfileP
             final boolean rename = file.renameTo(newFile);
 
             if (!rename) {
+                sl.complete("Rename Error!");
                 return new ReturnImpl<File>(new RuntimeException("Rename Error"), "Rename Error!", true);
             }
 
@@ -132,20 +141,31 @@ public class CDNProfilePhoto extends AbstractSLBCallbacks implements CDNProfileP
             final SessionBoundBadRefWrapper<HumanUserLocal> s = (SessionBoundBadRefWrapper<HumanUserLocal>) session.getAttribute(ServletLogin.HumanUser);
 
             if (!s.isAlive()) {
+                sl.complete("No Login!");
                 r = new ReturnImpl<File>(ExceptionCache.NO_LOGIN, "Please login!", true);
             } else {
                 final HumanId humanId = new HumanId(s.boundInstance.getHumanUserId());
 
                 try {
-                    /**
-                     * Reducing size of image to blueprintcss span-5 just to save bandwidth for the user.
-                     *
-                     */
-                    saveImage(scaleImage(loadImage(newFile), 190), newFile);
+                    sl.appendToLogMSG("Loading Image As Buffered Image");
+                    BufferedImage bi = loadImage(newFile);
+
+                    sl.appendToLogMSG("Scaling Image");
+                    bi = scaleImage(bi, 190); //Reducing size of image to blueprintcss span-5 just to save bandwidth for the user.
+
+                    sl.appendToLogMSG("Saving Scaled Image");
+                    saveImage(bi, newFile);
+
                     try {
                         final String cdnFileName = newFile.getName();
+                        sl.appendToLogMSG("Uploading Image");
                         final boolean uploaded = client.storeObjectAs(CONTAINER, newFile, FilesConstants.getMimetype(userFileExtension), cdnFileName);
-                        client.deleteObject(CONTAINER, DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(humanId).returnValueBadly());
+                        sl.appendToLogMSG("Deleting Old Profile Image");
+                        try {
+                            client.deleteObject(CONTAINER, DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(humanId).returnValueBadly());
+                        } catch (final Exception e) {
+                            sl.appendToLogMSG("Deleting Old Profile Image Failed, But Proceeding. Reason for Failure:" + e.getMessage());
+                        }
                         if (uploaded) {
                             final boolean deleted = newFile.delete();
                             if (!deleted) {
@@ -160,7 +180,7 @@ public class CDNProfilePhoto extends AbstractSLBCallbacks implements CDNProfileP
                             r = new ReturnImpl<File>(ExceptionCache.CDN_FILE_UPLOAD_FAILED, "Profile Photo Upload Failed Due To I/O Issues!", true);
                         }
                     } catch (final IOException e) {
-                        r = new ReturnImpl<File>(ExceptionCache.CDN_FILE_UPLOAD_FAILED, "Profile Photo Upload Failed Due To I/O Issues!", true);
+                        r = new ReturnImpl<File>(e, "Profile Photo Upload Failed Due To I/O Issues!", true);
                     }
                 } catch (final RuntimeException e) {//This is for the deleteObject's returnBadly from DB return
                     r = new ReturnImpl<File>(e, "Profile Photo Upload Failed Due Failure In Deletion Of Old Profile Image!", true);

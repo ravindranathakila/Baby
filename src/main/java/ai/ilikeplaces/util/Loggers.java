@@ -8,6 +8,27 @@ import org.slf4j.LoggerFactory;
  * Any loggers used outside the context of the variable name, might result in losing log entries.
  * For example, do not use DEBUG.info("msg"). Use, DEBUG.debug("msg").
  * <p/>
+ *
+ * Okay, this next part, is admittedly written because I messed up with the my "OWN" logging convention.
+ *
+ * Why the hell did I use capitals? Well, the intention is the ease of noticing text within a exception stack trace,
+ * This leads to rule #1.
+ *
+ * Then again, warnings and errors should be clearly shown among debug messages. Hence #2.
+ *
+ * Hello and sorry was used to give a personal touch. Always helps when you are in QA or support staring at logs all day. Therefore
+ * do bring in the application as "I". In fact, it IS a bot. Hence #3 and #4.
+ *
+ * #1. Use all caps for an exception message
+ *
+ * #2. Use all caps for warnings and errors. Better append a couple or 3 exclamation marks if immediate attention is needed.
+ *
+ * #3. "Hello," for +ve messages and "SORRY!" for -ve messages. Simple.
+ *
+ * #4. Treat the application in first person("I") sense.
+ *
+ *
+ *
  * Created by IntelliJ IDEA.
  * User: Ravindranath Akila
  * Date: Jan 30, 2010
@@ -24,9 +45,13 @@ final public class Loggers {
     final static public String DONE = "done. ";
     final static public String FAILED = "FAILED! ";
 
+    /**
+     * Try to make the codes real 'codes' in the sense that, if you use ordinary words like "mail", a grep might
+     * bring in unwanted lines. Here for mail, I used mds to imply mail delivery system
+     */
     final static public String CODE_GFG = "[GFG]";//Code for Generic File Grabber servlet
     final static public String CODE_MEMC = "[MEMC]";//Code for Memc
-    final static public String CODE_MAIL = "[MAIL]";//Code to indicate mail delivery
+    final static public String CODE_MAIL = "[MDS]";//Code to indicate mail delivery system
 
     public enum LEVEL {
         DEBUG,

@@ -71,31 +71,6 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
         this.privateEventName = new SimpleName();
 
         this.privateEventInfo = new Info();
-
-
-        try {
-            DOMImplementationLS domImplLS = (DOMImplementationLS) itsNatDocument_.getDocument().getImplementation();
-            LSSerializer serializer = domImplLS.createLSSerializer();
-            String str = serializer.writeToString(itsNatDocument_.getDocument().getFirstChild());
-            Loggers.DEBUG.debug("DOM TO STRING 1:" + str);
-        } catch (final Exception e) {
-            Loggers.EXCEPTION.error(Loggers.EMBED, e);
-        }
-
-        try {
-            TransformerFactory transFactory = TransformerFactory.newInstance();
-            Transformer transformer = null;
-            transformer = transFactory.newTransformer();
-            StringWriter buffer = new StringWriter();
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-            transformer.transform(new DOMSource(itsNatDocument_.getDocument().getFirstChild()),
-                    new StreamResult(buffer));
-            String str = buffer.toString();
-            Loggers.DEBUG.debug("DOM TO STRING 2:" + str);
-        } catch (final Exception e) {
-            Loggers.EXCEPTION.error(Loggers.EMBED, e);
-        }
-
     }
 
     @Override

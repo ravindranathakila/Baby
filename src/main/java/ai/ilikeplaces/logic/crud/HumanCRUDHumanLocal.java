@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.validators.unit.DisplayNameString;
 import ai.ilikeplaces.logic.validators.unit.Email;
@@ -39,7 +40,8 @@ public interface HumanCRUDHumanLocal extends Verify {
 
     public Return<Boolean> doNTxRemoveHumansNetPeople(final RefObj<String> adderHumanId, final RefObj<String> addeeHumanId);
 
-    public Return<Boolean> doNTxIsHumansNetPeople(final RefObj<String> adderHumanId, final RefObj<String> addeeHumanId);
+    @NOTE(note = "Triple e's were intentional. Two e's confuses er with ee.")
+    public Return<Boolean> doNTxIsHumansNetPeople(final RefObj<String> checkerHumanId, final RefObj<String> checkeeeHumanId);
 
     public Return<Boolean> doNTxUDisplayName(final HumanId humanId, DisplayNameString displayName);
 
@@ -65,6 +67,24 @@ public interface HumanCRUDHumanLocal extends Verify {
 
     public Return<HumansIdentity> doUHumansProfilePhoto(final RefObj<String> humanId, final String url);
 
-    public  Return<String> doDirtyRHumansProfilePhoto(final RefObj<String> humanId);
+    public Return<String> doDirtyRHumansProfilePhoto(final RefObj<String> humanId);
+
+    public Return<HumansIdentity> doUHumansPublicURL(final RefObj<String> humanId, final String url);
+
+    /**
+     * Just a critical note. The humanId sent here does not imply signed on status of this user by any means. This is
+     * actually a profile URL lookup that would be done by any user on another users profile. Hence the information
+     * shown by the result of this call, which is the URL is privacy sensitive. Of course this will be handled, but
+     * a warning will just make usage more prudent.
+     *
+     * @param humanId
+     * @return
+     */
+    public Return<String> doDirtyRHumansPublicURL(final RefObj<String> humanId);
+
+    public Return<HumansIdentity> doDirtyRHumansIdentity(final RefObj<String> humanId);
+
+    public Return<String> doDirtyProfileFromURL(final String url);
+
 }
 

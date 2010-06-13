@@ -15,4 +15,6 @@ import javax.ejb.Local;
 @Local
 public interface UHumansIdentityLocal {
     public HumansIdentity doUHumansProfilePhoto(final String humanId, final String url);
+
+    public HumansIdentity doUHumansPublicURL(final String humanId, final String url);
 }

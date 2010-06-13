@@ -36,7 +36,7 @@ public class HumanCRUDMap extends AbstractSLBCallbacks implements HumanCRUDMapLo
             map.setEntry(entry);
             r = new ReturnImpl<Map>(mapCrudServiceLocal.create(map), "Map entry save successful!");
         } catch (final Exception e) {
-            logger.error("DB ERROR! {}", e);
+            INFO.error("DB ERROR! {}", e);
             r = new ReturnImpl<Map>(e, "Map entry save FAILED!", true);
         }
 

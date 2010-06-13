@@ -71,7 +71,7 @@ abstract public class FriendAdd extends AbstractWidgetListener {
                 Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doNTxAddHumansNetPeople(mycaller, myhumanId);
                 if (r.returnStatus() == 0) {
                     logger.debug("{}", r.toString());
-                    $$(Controller.Page.friendAddAddButton).setTextContent("DONE");
+                    $$(Controller.Page.friendAddAddButton).setTextContent("Added!");
                     remove(evt_.getTarget(), EventType.CLICK, this);
                 } else {
                     //DO something!

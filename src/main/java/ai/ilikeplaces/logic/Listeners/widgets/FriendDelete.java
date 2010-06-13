@@ -68,7 +68,7 @@ public class FriendDelete extends AbstractWidgetListener {
                 Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doNTxRemoveHumansNetPeople(mycaller, myhumanId);
                 if (r.returnStatus() == 0) {
                     logger.debug("{}", r.toString());
-                    $$(Controller.Page.friendDeleteAddButton).setTextContent("DONE");
+                    $$(Controller.Page.friendDeleteAddButton).setTextContent("DELETED!");
                     remove(evt_.getTarget(), EventType.CLICK, this);
                 } else {
                     //DO something!
