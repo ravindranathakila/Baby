@@ -107,7 +107,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
             @Override
             public void handleEvent(final Event evt_) {
-                Loggers.USER.info(humanId.getObj() + " clicked delete for private event " + myprivateEventId);
+                Loggers.USER.info(myhumanId.getObj() + " clicked delete for private event " + myprivateEventId);
 
                 final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dPrivateEvent(myhumanId.getObj(), myprivateEventId);
                 if (r.returnStatus() == 0) {
