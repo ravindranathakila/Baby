@@ -19,5 +19,11 @@ public interface RHumansIdentityLocal {
 
     public String doDirtyProfilePhoto(final String humanId);
 
+    public String doDirtyPublicURL(final String humanId);
+
+    public HumansIdentity doDirtyRHumansIdentity(final String humanId);
+
+    public String doDirtyProfileFromURL(final String url);    
+
     public String test(final String emails);
 }

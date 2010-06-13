@@ -4,7 +4,7 @@
     <groupId>adimpression</groupId>
     <artifactId>ilikeplaces</artifactId>
     <packaging>war</packaging>
-    <version>1.6-SNAPSHOT</version>
+    <version>1.61-SNAPSHOT</version>
     <name>ilikeplaces JEE6 Webapp</name>
     <url>http://maven.apache.org</url>
     <dependencies>
@@ -268,12 +268,12 @@
                     <include>**/*.xml</include>
                 </includes>
             </resource>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.java</include>
-                </includes>
-            </resource>
+            <!--<resource>-->
+                <!--<directory>src/main/java</directory>-->
+                <!--<includes>-->
+                    <!--<include>**/*.java</include>-->
+                <!--</includes>-->
+            <!--</resource>-->
         </resources>
         <plugins>
             

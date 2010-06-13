@@ -2,8 +2,6 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -37,6 +35,7 @@ public class HumansIdentity implements HumanPkJoinFace, Serializable {
     public String humansIdentityLastName;
     public String humansIdentityGUIPreferences;
     public String humansIdentityProfilePhoto;
+    public Url url;
 
     public static enum GENDER {
         Neutral,
@@ -92,6 +91,7 @@ public class HumansIdentity implements HumanPkJoinFace, Serializable {
         this.humansIdentityLastName = humansIdentityLastName;
     }
 
+    @Column(unique = true)
     public String getHumansIdentityEmail() {
         return humansIdentityEmail;
     }
@@ -125,12 +125,22 @@ public class HumansIdentity implements HumanPkJoinFace, Serializable {
         this.humansIdentityGUIPreferences = humansIdentityGUIPreferences;
     }
 
+    @Column(unique = true)
     public String getHumansIdentityProfilePhoto() {
         return humansIdentityProfilePhoto;
     }
 
     public void setHumansIdentityProfilePhoto(final String humansIdentityProfilePhoto) {
         this.humansIdentityProfilePhoto = humansIdentityProfilePhoto;
+    }
+
+    @OneToOne
+    public Url getUrl() {
+        return url;
+    }
+
+    public void setUrl(final Url url) {
+        this.url = url;
     }
 
     @Override

@@ -10,4 +10,5 @@
 
  # Compare local(non cdn) and Header Expires Filter in WEB.XML
 
- 
+
+ # Add cloudfiles.properties and log4j.properties to tomcat lib

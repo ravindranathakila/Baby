@@ -18,6 +18,7 @@ import java.util.Map;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Deprecated
 public class ProfilePhotoUpload implements FileUploadListenerFace<File> {
     @Override
     public Return<File> run(final File file, final Map parameterMap, final String userFileExtension, final HttpSession session) {

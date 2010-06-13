@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.HumansFriend;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
@@ -82,10 +83,21 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
         for (final HumansFriend possibility : poss) {
 
-            final Element li = $$(MarkupTag.LI);
+//            final Element li = $$(MarkupTag.LI);
+//            li.setTextContent(possibility.getHuman().getDisplayName() + (existAll.contains(possibility.getHumanId()) ? Added : Removed));
+//
+//            $$(Controller.Page.FriendListList).appendChild(li);
+
+            final Element li = $$(MarkupTag.DIV);
             li.setTextContent(possibility.getHuman().getDisplayName() + (existAll.contains(possibility.getHumanId()) ? Added : Removed));
 
             $$(Controller.Page.FriendListList).appendChild(li);
+
+            new UserProperty(itsNatDocument_, $$(Controller.Page.FriendListList), new HumanId(possibility.getHumanId())) {
+                protected void init(final Object... initArgs) {
+                    $$(Controller.Page.user_property_content).appendChild(li);
+                }
+            };
 
             itsNatHTMLDocument__.addEventListener((EventTarget) li, EventType.CLICK.toString(), new EventListener() {
                 Boolean positive = existAll.contains(possibility.getHumanId());

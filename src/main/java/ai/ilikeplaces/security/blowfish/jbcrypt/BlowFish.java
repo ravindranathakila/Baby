@@ -84,8 +84,8 @@ public class BlowFish extends AbstractSNGLTNBCallbacks implements BlowFishLocal 
         if(!BCrypt.checkpw(new String(passWord), new String(hash))){
             throw new java.lang.RuntimeException("SORRY! I AM ENCOUNTERING A HASHING ERROR!");
         } else {
-            logger.info("HASH:"+hash);
-            logger.info("SALT:"+salt);
+            INFO.info("HASH:"+hash);
+            INFO.info("SALT:"+salt);
         }
         return hash;
     }

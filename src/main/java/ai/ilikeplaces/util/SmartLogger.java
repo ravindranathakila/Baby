@@ -137,7 +137,7 @@ final public class SmartLogger extends Thread {
     }
 
     public void appendToLogMSG(final String stringToBeAppended) {
-        logmsg += PIPE + stringToBeAppended + PIPE;
+        logmsg += PIPE + stringToBeAppended;
     }
 
     static public void complete(final SmartLogger smartLogger, final LEVEL completeLevel, final String completeStatus) {
@@ -148,6 +148,10 @@ final public class SmartLogger extends Thread {
         smartLogger.complete(completeStatus);
     }
 
+    /**
+     * @param completeLevel  Log Level
+     * @param completeStatus Throwable type needed in case of ERROR
+     */
     public void complete(final LEVEL completeLevel, final Object completeStatus) {
         if (!status()) {
             Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);

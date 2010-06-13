@@ -18,7 +18,7 @@ public class AbstractSBCallbacks {
     /**
      *
      */
-    final protected Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+    final static protected Logger INFO = Loggers.INFO;
     /**
      *
      */
@@ -31,7 +31,7 @@ public class AbstractSBCallbacks {
      */
     @PostConstruct
     public void postConstruct() {
-        logger.info(MsgConstruct + className + this.hashCode());
+        INFO.info(MsgConstruct + className + this.hashCode());
     }
 
     /**
@@ -39,6 +39,6 @@ public class AbstractSBCallbacks {
      */
     @PreDestroy
     public void preDestroy() {
-        logger.info(MsgDestroy + className + this.hashCode());
+        INFO.info(MsgDestroy + className + this.hashCode());
     }
 }

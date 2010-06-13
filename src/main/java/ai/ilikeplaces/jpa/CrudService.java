@@ -196,15 +196,15 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
                 try {
                     toString_ += "\n{" + field.getName() + "," + field.get(this) + "}";
                 } catch (IllegalArgumentException ex) {
-                    logger.info(null, ex);
+                    INFO.info(null, ex);
                 } catch (IllegalAccessException ex) {
-                    logger.info(null, ex);
+                    INFO.info(null, ex);
                 }
             }
         } catch (NoSuchFieldException ex) {
-            logger.info(null, ex);
+            INFO.info(null, ex);
         } catch (SecurityException ex) {
-            logger.info(null, ex);
+            INFO.info(null, ex);
         }
 
         return toString_;

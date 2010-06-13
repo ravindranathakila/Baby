@@ -118,7 +118,7 @@ final public class GenericFileGrabber extends HttpServlet {
                                 if (!persisted) {
                                     sl.appendToLogMSG(r.returnMsg());
                                     sl.complete(Loggers.FAILED);
-                                    errorSomethingWentWrong(out);
+                                    errorReorderedSomethingWentWrong(out, r.returnMsg());
                                     break processRequest;
                                 } else {
                                     sl.appendToLogMSG(r.returnMsg());
@@ -171,6 +171,17 @@ final public class GenericFileGrabber extends HttpServlet {
     private void errorSomethingWentWrong(final PrintWriter out) {
         try {
             flush(out).print(formatTuple(Error, "something_went_wrong"));
+        } finally {
+            out.close();
+        }
+
+    }
+
+
+    @FIXME(issues = {"Handle exception","Tuple ordering changed with respect to profile photo upload."})
+    private void errorReorderedSomethingWentWrong(final PrintWriter out, final String msg) {
+        try {
+            flush(out).print(formatTuple(Error, msg, "something_went_wrong"));
         } finally {
             out.close();
         }
@@ -242,9 +253,9 @@ final public class GenericFileGrabber extends HttpServlet {
     }
 
     @FIXME(issue = "Handle exception")
-    private void errorMissingParameters(final PrintWriter out) {
+    private void errorMissingParameters(final PrintWriter out, final String msg) {
         try {
-            flush(out).print(formatTuple(Error, "missing_parameters"));
+            flush(out).print(formatTuple(Error, "missing_parameters", msg));
         } finally {
             out.close();
         }
@@ -346,10 +357,13 @@ final public class GenericFileGrabber extends HttpServlet {
          */
         switch (Integer.parseInt(parameterMap.get("type"))) {
             case 1:
-                fulf = (FileUploadListenerFace<File>) CDNProfilePhoto.getProfilePhotoCDNLocal();
+                fulf = CDNProfilePhoto.getProfilePhotoCDNLocal();
                 break;
             default:
                 return new ReturnImpl<File>(ExceptionCache.UNSUPPORTED_SWITCH, "Unsupported Case", true);
+        }
+        if (tempFile == null) {
+            return new ReturnImpl<File>(ExceptionCache.UNSUPPORTED_OPERATION_EXCEPTION, "No File!", true);
         }
 
         return fulf.run(tempFile, parameterMap, userFileExtension, session);

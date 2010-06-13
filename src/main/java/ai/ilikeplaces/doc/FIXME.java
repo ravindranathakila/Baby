@@ -15,7 +15,7 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.SOURCE)
 public @interface FIXME {
 
-    String issue();
+    String issue() default "";
 
     String[] issues() default {};
 }

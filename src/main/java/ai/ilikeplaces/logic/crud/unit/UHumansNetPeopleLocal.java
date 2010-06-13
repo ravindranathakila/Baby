@@ -17,7 +17,7 @@ public interface UHumansNetPeopleLocal {
 
     public boolean doNTxRemoveHumansNetPeople(final String adderHumanId, final String addeeHumanId);
 
-    public boolean doNTxIsHumansNetPeople(final String adderHumanId, final String addeeHumanId);
+    public boolean doNTxIsHumansNetPeople(final String checker, final String checkeee);
 
     public boolean doDirtyIsHumansNetPeople(final String adderHumanId, final String addeeHumanId);
 }

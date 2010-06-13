@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
+import static ai.ilikeplaces.util.Loggers.EXCEPTION;
 import static ai.ilikeplaces.util.MarkupTag.*;
 
 /**
@@ -161,6 +162,32 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             }
                         } catch (final Throwable t) {
                             Loggers.EXCEPTION.error("", t);
+                        }
+                    }
+                    setProfilePhotoLink:
+                    {
+                        try {
+                            if (getUsername() != null) {
+                                /**
+                                 * TODO check for db failure
+                                 */
+                                String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(getUsernameAsValid())).returnValueBadly();
+                                url = url == null ? null : RBGet.globalConfig.getString("PROFILE_PHOTOS") + url;
+                                if(url != null){
+                                    $(Main_profile_photo).setAttribute(MarkupTag.IMG.src(), url);
+                                    displayBlock($(Main_profile_photo));
+                                    displayNone($(Main_location_photo));
+                                }else{
+                                    displayNone($(Main_profile_photo));
+                                    displayBlock($(Main_location_photo));
+                                }
+                            }else{
+                                displayNone($(Main_profile_photo));
+                                displayBlock($(Main_location_photo));
+                            }
+                        } catch (final Throwable t) {
+                            EXCEPTION.error("{}", t);
+
                         }
                     }
                 }

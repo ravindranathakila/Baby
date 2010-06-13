@@ -47,7 +47,7 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
     public HumanUserLocal setHumanUserId(final String humanUserId__) throws IllegalStateException {
         if (humanUserId_ == null) {
             humanUserId_ = humanUserId__;
-            logger.debug(RBGet.logMsgs.getString("ai.ilikeplaces.logic.role.HumanUser.0001"), humanUserId__);
+            INFO.debug(RBGet.logMsgs.getString("ai.ilikeplaces.logic.role.HumanUser.0001"), humanUserId__);
             Loggers.USER.info(humanUserId_ + " logged in");
         } else {
             remove();
@@ -76,7 +76,7 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
     @Override
     public void remove() {
         Loggers.USER.info(humanUserId_ + " logged out");
-        logger.info(RBGet.logMsgs.getString("javax.ejb.Remove"));
+        INFO.info(RBGet.logMsgs.getString("javax.ejb.Remove"));
     }
 
     /**

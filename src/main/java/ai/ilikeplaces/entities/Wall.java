@@ -29,7 +29,7 @@ public class Wall {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getWallId() {
         return wallId;
-    }
+    }                                                                                      
 
     public void setWallId(Long wallId) {
         this.wallId = wallId;

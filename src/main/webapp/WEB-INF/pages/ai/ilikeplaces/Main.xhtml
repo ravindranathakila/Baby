@@ -74,7 +74,7 @@
         </script>
         
     </head>
-    <body style="background:white;" id="body" class="vtip" title="WWW.PANORAMIO.COM. Photos are copyrighted by their owners">
+    <body style="background:white;" id="body" class="vtip" title="Next photo: Ctrl + ]<br/>Previous photo: Ctrl + [<br/>Vanish(7 secs): Ctrl + \\<br/>Photo Page: Ctrl + ;<br/>Owner Page: Ctrl + '<br/>Panoramio photos are copyrighted by their owners">
         <div id="Main_display" class="container" itsnat:nocache="true" style="display:block;background:white;opacity:0.9; filter:alpha(opacity=90)">
             <div class="span-24 last">
                 <div class="span-24 last height_5 bg_a9abf1 ntyST">
@@ -101,17 +101,22 @@
                     <div class="span-24 last">
                         <div class="span-5" id="Main_othersidebar">
                             <div class="span-5 last">
-                                <!--<div class="span-5 last bg_a9abf1">-->
-                                    <!--<img class="span-5 last" src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/profile_alt.JPG" alt="Profile Picture"/>-->
-                                <!--</div>-->
-                                <div class="span-5 last bg_a9abf1 vtip" title="Photos here are expected but not guaraneed to be relevant.">
-                                    <iframe
-                                       class="span-5 last"
-                                       name="panoramio_frame"
-                                       id="panoramio_frame"
-                                       src="about:blank"
-                                       frameborder="0" width="100%" height="150px" scrolling="no" marginwidth="0" marginheight="0"> </iframe>
+                                <div class="span-5 last" style="display:block;">
+                                    <img class="span-5 last" id="Main_location_photo"
+                                         style="display:none;"
+                                         src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/profile_alt.JPG" alt="Location Picture"/>
+                                    <img class="span-5 last" id="Main_profile_photo"
+                                         style="display:none;"
+                                         src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/profile_alt.JPG" alt="Location Picture"/>
                                 </div>
+                                <!--<div class="span-5 last bg_a9abf1 vtip" title="Photos here are expected but not guaraneed to be relevant.">-->
+                                    <!--<iframe-->
+                                       <!--class="span-5 last"-->
+                                       <!--name="panoramio_frame"-->
+                                       <!--id="panoramio_frame"-->
+                                       <!--src="about:blank"-->
+                                       <!--frameborder="0" width="100%" height="150px" scrolling="no" marginwidth="0" marginheight="0"> </iframe>-->
+                                <!--</div>-->
                                 <div class="span-5 last center ntyBot bg_a9abf1 title_blend bold">
                                     <span><img src="http://www.panoramio.com/img/logo-tos.png" alt=""/> Photos are copyrighted by their owners</span>
                                     <span id="Main_othersidebar_identity"></span>

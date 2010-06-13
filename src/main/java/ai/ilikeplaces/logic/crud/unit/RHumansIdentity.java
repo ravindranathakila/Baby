@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.HumansIdentity;
+import ai.ilikeplaces.entities.Url;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.rbs.RBGet;
@@ -30,6 +31,8 @@ public class RHumansIdentity extends AbstractSLBCallbacks implements RHumansIden
 
     @EJB
     private CrudServiceLocal<HumansIdentity> humansIdentityCrudServiceLocal_;
+    @EJB
+    private CrudServiceLocal<Url> urlCrudServiceLocal;
 
     public RHumansIdentity() {
         logger.debug(RBGet.logMsgs.getString("common.Constructor.Init"), RHumansIdentity.class, this.hashCode());
@@ -48,14 +51,32 @@ public class RHumansIdentity extends AbstractSLBCallbacks implements RHumansIden
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public String doDirtyProfilePhoto(final String humanId){
-        return humansIdentityCrudServiceLocal_.findBadly(HumansIdentity.class,humanId).getHumansIdentityProfilePhoto();
+    public String doDirtyProfilePhoto(final String humanId) {
+        return humansIdentityCrudServiceLocal_.findBadly(HumansIdentity.class, humanId).getHumansIdentityProfilePhoto();
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW/*Since lazy loading*/)
+    public String doDirtyPublicURL(final String humanId) {
+        return humansIdentityCrudServiceLocal_.findBadly(HumansIdentity.class, humanId).getUrl().getUrl();
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW/*Since lazy loading*/)
+    public HumansIdentity doDirtyRHumansIdentity(final String humanId){
+        return humansIdentityCrudServiceLocal_.findBadly(HumansIdentity.class, humanId);
+    }
+
+    @Override
+    public String doDirtyProfileFromURL(final String url) {
+        final Url loadedUrl = urlCrudServiceLocal.find(Url.class, url);
+        return loadedUrl == null ? null : loadedUrl.getMetadata();
     }
 
     @Override
     public String test(final String emails) {
-        String[] emailarr = emails.replace(" ", "").split(",");
-        logger.debug("Emails:"+Arrays.toString(emailarr));
+        final String[] emailarr = emails.replace(" ", "").split(",");
+        logger.debug("Emails:" + Arrays.toString(emailarr));
         String str = "";
         for (HumansIdentity hi : doDirtyRHumansIdentitiesByEmails(Arrays.asList(emailarr))) {
             str += hi.getHumanId();

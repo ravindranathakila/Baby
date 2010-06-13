@@ -77,7 +77,7 @@ public class Memc extends AbstractSLBCallbacks implements MemcLocal {
                         if (r.returnStatus() == 0 && r.returnValue()) {
                             sl.complete(Loggers.LEVEL.INFO, "done.");
                         } else {
-                            sl.complete(Loggers.LEVEL.ERROR, "FAILED!");
+                            sl.complete(Loggers.LEVEL.ERROR, r.returnError());
                         }
                     }
 
