@@ -1,9 +1,6 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.BIDIRECTIONAL;
-import ai.ilikeplaces.doc.CREATED_BY;
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
@@ -240,7 +237,7 @@ public class PrivateEvent {
         this.privateEventRejects = privateEventRejects;
     }
 
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
+    @UNIDIRECTIONAL
     @OneToOne(cascade = CascadeType.ALL)
     public Wall getPrivateEventWall() {
         return privateEventWall;
