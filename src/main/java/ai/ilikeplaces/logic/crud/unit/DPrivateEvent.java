@@ -38,7 +38,7 @@ public class DPrivateEvent extends AbstractSLBCallbacks implements DPrivateEvent
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
-    public boolean doNTxDPrivateEvent(final String humanId, final long privateEventId) {
+    public boolean doNTxDPrivateEvent(final String humanId, final long privateEventId) throws NoPrivilegesException {
 
         boolean returnVal = false;
 

@@ -101,7 +101,8 @@
 if(data.count > 0){
  $('body').css('background-image','url('+data.photos[0].photo_file_url+')');
  $('#Main_location_photo').attr("src",data.photos[0].photo_file_url);
- $('body').attr("title","Next photo: Ctrl + ]<br/>Previous photo: Ctrl + [<br/>Vanish(7 secs): Ctrl + \\<br/>Photo Page: Ctrl + ;<br/>Owner Page: Ctrl + '<br/>Panoramio photos are copyrighted by their owners");
+ $('#Main_othersidebar_identity').text(data.photos[0].photo_title);
+ //$('body').attr("title","Next photo: Ctrl + ]<br/>Previous photo: Ctrl + [<br/>Vanish(7 secs): Ctrl + \\<br/>Photo Page: Ctrl + ;<br/>Owner Page: Ctrl + '<br/>Panoramio photos are copyrighted by their owners");
  $('body').css('background-attachment','fixed');
  $('body').css('background-repeat','repeat');
  $('body').css('background-size','100%');
@@ -121,8 +122,8 @@ if(ckdp == 17) isCtrl=true;
 if(ckdp == 221 && isCtrl == true) {
 var indexi = i > data.count - 1 ?  data.count - 1 : ++i;
     $('body').css('background-image','url('+data.photos[indexi].photo_file_url+')');
-    $('#Main_location_photo').attr("src",data.photos[indexi].photo_file_url)
-
+    $('#Main_location_photo').attr("src",data.photos[indexi].photo_file_url);
+    $('#Main_othersidebar_identity').text(data.photos[indexi].photo_title);
 return false;
 }
 });
@@ -136,8 +137,8 @@ if(ckdn == 17) isCtrl=true;
 if(ckdn == 219 && isCtrl == true) {
 var indexj = i < 1 ? 0 : --i;
     $('body').css('background-image','url('+data.photos[indexj].photo_file_url+')');
-    $('#Main_location_photo').attr("src",data.photos[indexj].photo_file_url)
-
+    $('#Main_location_photo').attr("src",data.photos[indexj].photo_file_url);
+    $('#Main_othersidebar_identity').text(data.photos[indexj].photo_title);
 return false;
 }
 });

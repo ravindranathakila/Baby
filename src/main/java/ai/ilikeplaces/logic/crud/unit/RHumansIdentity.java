@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.Url;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.rbs.RBGet;
@@ -51,19 +52,19 @@ public class RHumansIdentity extends AbstractSLBCallbacks implements RHumansIden
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public String doDirtyProfilePhoto(final String humanId) {
+    public String doDirtyProfilePhoto(final String humanId) throws DBDishonourCheckedException {
         return humansIdentityCrudServiceLocal_.findBadly(HumansIdentity.class, humanId).getHumansIdentityProfilePhoto();
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW/*Since lazy loading*/)
-    public String doDirtyPublicURL(final String humanId) {
+    public String doDirtyPublicURL(final String humanId) throws DBDishonourCheckedException {
         return humansIdentityCrudServiceLocal_.findBadly(HumansIdentity.class, humanId).getUrl().getUrl();
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW/*Since lazy loading*/)
-    public HumansIdentity doDirtyRHumansIdentity(final String humanId){
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public HumansIdentity doDirtyRHumansIdentity(final String humanId) throws DBDishonourCheckedException {
         return humansIdentityCrudServiceLocal_.findBadly(HumansIdentity.class, humanId);
     }
 

@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.Url;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 
@@ -19,10 +20,14 @@ import javax.ejb.TransactionAttributeType;
 public class UHumansIdentity extends AbstractSLBCallbacks implements UHumansIdentityLocal {
 
     @EJB
-    private CrudServiceLocal<HumansIdentity> crudServiceLocal_;
+    private CrudServiceLocal<HumansIdentity> hiCrudServiceLocal_;
+
+    @EJB
+    private RHumansIdentityLocal rHumansIdentityLocal_;
 
     @EJB
     private CrudServiceLocal<Url> urlCrudServiceLocal_;
+    public static final DBDishonourCheckedException DB_DISHONOUR_CHECKED_EXCEPTION = new DBDishonourCheckedException("Updating to same value is absurd");
 
     public UHumansIdentity() {
         INFO.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", UHumansIdentity.class, this.hashCode());
@@ -31,29 +36,33 @@ public class UHumansIdentity extends AbstractSLBCallbacks implements UHumansIden
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     @Override
-    public HumansIdentity doUHumansProfilePhoto(final String humanId, final String url) {
-        final HumansIdentity humansIdentity = crudServiceLocal_.findBadly(HumansIdentity.class, humanId);
+    public HumansIdentity doUHumansProfilePhoto(final String humanId, final String url) throws DBDishonourCheckedException {
+        final HumansIdentity humansIdentity = hiCrudServiceLocal_.findBadly(HumansIdentity.class, humanId);
         humansIdentity.setHumansIdentityProfilePhoto(url);
         return humansIdentity;
     }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     @Override
-    public HumansIdentity doUHumansPublicURL(final String humanId, final String url) {
-        final HumansIdentity humansIdentity = crudServiceLocal_.findBadly(HumansIdentity.class, humanId);
-        if (!humansIdentity.getUrl().getUrl().equals(url)) {//url is the primary key. deleting similars and ad doesn't work and is not needed anyway
-            deleteOld:
-            {
-                urlCrudServiceLocal_.delete(Url.class, humansIdentity.getUrl());
-            }
+    public HumansIdentity doUHumansPublicURL(final String humanId, final String url) throws DBDishonourCheckedException {
 
-            createNew:
-            {
-                final Url newUrl = urlCrudServiceLocal_.create((new Url()).setUrlR(url).setTypeR(1).setMetadataR(humanId));
-                humansIdentity.setUrl(newUrl);
-            }
-        }
+        doUHumansPublicURLDelete(humanId);
+        doUHumansPublicURLAdd(humanId,url);
 
-        return humansIdentity;
+       return hiCrudServiceLocal_.findBadly(HumansIdentity.class, humanId);
+    }
+
+    @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
+    @Override
+    public void doUHumansPublicURLDelete(final String humanId) throws DBDishonourCheckedException {
+        final String oldUrl =  rHumansIdentityLocal_.doDirtyRHumansIdentity(humanId).getUrl().getUrl();
+        urlCrudServiceLocal_.delete(Url.class,oldUrl);
+    }
+
+
+    @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
+    @Override
+    public void doUHumansPublicURLAdd(final String humanId, final String url) throws DBDishonourCheckedException {
+        hiCrudServiceLocal_.findBadly(HumansIdentity.class, humanId).setUrl(new Url().setUrlR(url).setMetadataR(humanId).setTypeR(Url.typeHUMAN));
     }
 }

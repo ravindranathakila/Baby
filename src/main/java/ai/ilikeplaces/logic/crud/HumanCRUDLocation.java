@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Location;
+import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.logic.crud.unit.RLocationLocal;
 import ai.ilikeplaces.util.*;
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class})
+@Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUDLocationLocal {
 
     @EJB
@@ -35,11 +36,7 @@ public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUD
     public Return<Location> dirtyRLocation(final String locationName, final String superLocationName) {
 
         Return<Location> r;
-        try {
-            r = new ReturnImpl<Location>(rLocationLocal_.doDirtyRLocation(locationName, superLocationName), "Find location by location and super location names Successful!");
-        } catch (final Throwable t) {
-            r = new ReturnImpl<Location>(t, "Find location by location and super location names FAILED!", true);
-        }
+        r = new ReturnImpl<Location>(rLocationLocal_.doDirtyRLocation(locationName, superLocationName), "Find location by location and super location names Successful!");
         return r;
     }
 
@@ -47,11 +44,7 @@ public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUD
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Return<Location> dirtyRLocation(final long locationId) {
         Return<Location> r;
-        try {
-            r = new ReturnImpl<Location>(rLocationLocal_.doDirtyRLocation(locationId), "Find location by location id Successful!");
-        } catch (final Throwable t) {
-            r = new ReturnImpl<Location>(t, "Find location by location id FAILED!", true);
-        }
+        r = new ReturnImpl<Location>(rLocationLocal_.doDirtyRLocation(locationId), "Find location by location id Successful!");
         return r;
     }
 

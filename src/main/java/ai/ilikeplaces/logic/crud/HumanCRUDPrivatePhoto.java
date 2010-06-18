@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.PrivatePhoto;
+import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.logic.crud.unit.CPrivatePhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.UPrivatePhotoLocal;
 import ai.ilikeplaces.util.*;
@@ -27,7 +28,7 @@ import java.util.List;
 @CONVENTION(convention = "do all the possible needful9setters etc) before going into the transaction, via an intermediate method. saves resources. " +
         "why not let the caller do this? lets do the hard work. give the guy a break! besides, we can enforce him to give us required fields. this also " +
         "facilitates setting granular role permissions.")
-@Interceptors({DBOffilne.class, ParamValidator.class, MethodTimer.class, MethodParams.class})
+@Interceptors({DBOffilne.class, ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements HumanCRUDPrivatePhotoLocal {
 
     @EJB
@@ -51,17 +52,13 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
     @Override
     public Return<PrivatePhoto> cPrivatePhoto(final String humanId, final String fileName, final String privatePhotoName, final String privatePhotoDescription, final String privatePhotoURLPath) {
         Return<PrivatePhoto> r;
-        try {
 
-            r = new ReturnImpl<PrivatePhoto>(cPrivatePhotoLocal_.doNTxCPrivatePhotoLocal(humanId,
-                    new PrivatePhoto().
-                            setPrivatePhotoNameR(privatePhotoName)
-                            .setPrivatePhotoFilePathR(fileName)
-                            .setPrivatePhotoDescriptionR(privatePhotoDescription)
-                            .setPrivatePhotoURLPathR(privatePhotoURLPath)), "Create PrivatePhoto by human Successful!");
-        } catch (final Throwable t) {
-            r = new ReturnImpl<PrivatePhoto>(t, "Create photo by human FAILED!", true);
-        }
+        r = new ReturnImpl<PrivatePhoto>(cPrivatePhotoLocal_.doNTxCPrivatePhotoLocal(humanId,
+                new PrivatePhoto().
+                        setPrivatePhotoNameR(privatePhotoName)
+                        .setPrivatePhotoFilePathR(fileName)
+                        .setPrivatePhotoDescriptionR(privatePhotoDescription)
+                        .setPrivatePhotoURLPathR(privatePhotoURLPath)), "Create PrivatePhoto by human Successful!");
         return r;
     }
 
@@ -69,12 +66,8 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
     @Override
     public Return<PrivatePhoto> addPrivatePhotoAlbum(final long publicPhotoId, final long albumId){
         Return<PrivatePhoto> r;
-        try {
-            r = new ReturnImpl<PrivatePhoto>(null,"Add photo to album Successful!");
+        r = new ReturnImpl<PrivatePhoto>(null,"Add photo to album Successful!");
 
-        } catch (final Throwable t) {
-            r = new ReturnImpl<PrivatePhoto>(t, "Update photo by human FAILED!", true);
-        }
         return r;
     }
 
@@ -82,13 +75,8 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Return<List<PrivatePhoto>> rPrivatePhoto(final String humanId) {
         Return<List<PrivatePhoto>> r;
-        try {
-            throw ExceptionCache.UNSUPPORTED_OPERATION_EXCEPTION;
-            //r = new ReturnImpl<List<PrivatePhoto>>(rPrivatePhotoLocal_.doRAllPrivatePhotos(humanId), "Find all photos by human Successful!");
-        } catch (final Throwable t) {
-            r = new ReturnImpl<List<PrivatePhoto>>(t, "Find all photos by human FAILED!", true);
-        }
-        return r;
+        throw ExceptionCache.UNSUPPORTED_OPERATION_EXCEPTION;
+        //r = new ReturnImpl<List<PrivatePhoto>>(rPrivatePhotoLocal_.doRAllPrivatePhotos(humanId), "Find all photos by human Successful!");
     }
 
 

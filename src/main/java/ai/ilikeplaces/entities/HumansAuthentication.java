@@ -1,5 +1,7 @@
 package ai.ilikeplaces.entities;
 
+import ai.ilikeplaces.doc.License;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -9,7 +11,7 @@ import java.io.Serializable;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 public class HumansAuthentication implements HumanPkJoinFace, Serializable {
 

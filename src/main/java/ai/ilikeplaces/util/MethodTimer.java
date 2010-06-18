@@ -45,7 +45,7 @@ public class MethodTimer {
             try {
                 return invocation.proceed();
             } finally {
-                smartLogger.complete(Loggers.LEVEL.SERVER_STATUS, Loggers.DONE);
+                smartLogger.multiComplete(new Loggers.LEVEL[]{Loggers.LEVEL.DEBUG,Loggers.LEVEL.SERVER_STATUS}, Loggers.DONE);
 //                final long endTime = System.currentTimeMillis() - startTime;
 //                Loggers.STATUS.info("INVOKING:\n" + invocation.getMethod() + "\nTOOK:\n " + endTime + "(millis)");
             }

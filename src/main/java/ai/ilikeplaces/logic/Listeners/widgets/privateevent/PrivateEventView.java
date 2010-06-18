@@ -32,6 +32,8 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
     /**
      * @param itsNatDocument__
      * @param appendToElement__
+     * @param humanId__
+     * @param privateEventId__
      */
     public PrivateEventView(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final String humanId__, final long privateEventId__) {
         super(itsNatDocument__, Page.PrivateEventView, appendToElement__, humanId__, privateEventId__);

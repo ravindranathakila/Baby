@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivatePhoto;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 
 import javax.ejb.Local;
 
@@ -12,5 +13,5 @@ import javax.ejb.Local;
 @Local
 public interface UPrivatePhotoLocal {
 
-    public PrivatePhoto doNAAddToAlbum(final long privatePhotoId, final long albumId);
+    public PrivatePhoto doNAAddToAlbum(final long privatePhotoId, final long albumId) throws DBDishonourCheckedException;
 }

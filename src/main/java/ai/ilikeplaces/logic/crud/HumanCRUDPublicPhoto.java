@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.PublicPhoto;
+import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.logic.crud.unit.CPublicPhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.DPublicPhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.RPublicPhotoLocal;
@@ -26,7 +27,7 @@ import java.util.List;
 @CONVENTION(convention = "do all the possible needful9setters etc) before going into the transaction, via an intermediate method. saves resources. " +
         "why not let the caller do this? lets do the hard work. give the guy a break! besides, we can enforce him to give us required fields. this also " +
         "facilitates setting granular role permissions.")
-@Interceptors({DBOffilne.class,ParamValidator.class, MethodTimer.class, MethodParams.class})
+@Interceptors({DBOffilne.class,ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements HumanCRUDPublicPhotoLocal {
 
     @EJB
@@ -63,17 +64,13 @@ final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements 
     @Override
     public Return<PublicPhoto> cPublicPhoto(final String humanId, final long locationId, final String fileName, final String publicPhotoName, final String publicPhotoDescription, final String publicPhotoURLPath, final int retries) {
         Return<PublicPhoto> r;
-        try {
-            final PublicPhoto publicPhoto = new PublicPhoto();
+        final PublicPhoto publicPhoto = new PublicPhoto();
 
-            publicPhoto.setPublicPhotoName(publicPhotoName);
-            publicPhoto.setPublicPhotoFilePath(fileName);
-            publicPhoto.setPublicPhotoDescription(publicPhotoDescription);
-            publicPhoto.setPublicPhotoURLPath(publicPhotoURLPath);
-            r = new ReturnImpl<PublicPhoto>(cPublicPhotoLocal_.doNTxCPublicPhotoLocal(humanId, locationId, publicPhoto), "Create photo by human with location Successful!");
-        } catch (final Throwable t) {
-            r = new ReturnImpl<PublicPhoto>(t, "Create photo by human with location FAILED!", true);
-        }
+        publicPhoto.setPublicPhotoName(publicPhotoName);
+        publicPhoto.setPublicPhotoFilePath(fileName);
+        publicPhoto.setPublicPhotoDescription(publicPhotoDescription);
+        publicPhoto.setPublicPhotoURLPath(publicPhotoURLPath);
+        r = new ReturnImpl<PublicPhoto>(cPublicPhotoLocal_.doNTxCPublicPhotoLocal(humanId, locationId, publicPhoto), "Create photo by human with location Successful!");
         return r;
     }
 
@@ -81,11 +78,7 @@ final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Return<List<PublicPhoto>> rPublicPhoto(final String humanId) {
         Return<List<PublicPhoto>> r;
-        try {
-            r = new ReturnImpl<List<PublicPhoto>>(rPublicPhotoLocal_.doRAllPublicPhotos(humanId), "Find all photos by human Successful!");
-        } catch (final Throwable t) {
-            r = new ReturnImpl<List<PublicPhoto>>(t, "Find all photos by human FAILED!", true);
-        }
+        r = new ReturnImpl<List<PublicPhoto>>(rPublicPhotoLocal_.doRAllPublicPhotos(humanId), "Find all photos by human Successful!");
         return r;
     }
 

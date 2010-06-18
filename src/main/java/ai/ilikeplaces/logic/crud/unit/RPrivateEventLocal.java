@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.util.Return;
 
 import javax.ejb.Local;
@@ -17,13 +18,13 @@ import javax.ejb.Local;
 @Local
 public interface RPrivateEventLocal {
 
-    public PrivateEvent doDirtyRPrivateEvent(final String humanId, final long privateEventId);
+    public PrivateEvent doDirtyRPrivateEvent(final String humanId, final long privateEventId) throws DBDishonourCheckedException;
 
-    public boolean doDirtyRPrivateEventIsOwner(final String humanId, final Long privateEventId);
+    public boolean doDirtyRPrivateEventIsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException;
 
-    public boolean doDirtyRPrivateEventIsViewer(final String humanId, final Long privateEventId);
+    public boolean doDirtyRPrivateEventIsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException;
 
-    public PrivateEvent doRPrivateEventAsViewer(final String humanId, final Long privateEventId);
+    public PrivateEvent doRPrivateEventAsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException;
 
-    public PrivateEvent doRPrivateEventAsOwner(final String humanId, final Long privateEventId);
+    public PrivateEvent doRPrivateEventAsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException;
 }

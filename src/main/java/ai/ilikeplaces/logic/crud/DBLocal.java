@@ -27,4 +27,7 @@ public interface DBLocal {
     public HumanCRUDPrivateEventLocal getHumanCrudPrivateEventLocal();
 
     public HumanCRUDPrivateLocationLocal getHumanCrudPrivateLocationLocal();
+
+    public HumanCRUDWallLocal getHumanCrudWallLocal();
+
 }

@@ -8,7 +8,7 @@ import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.Button;
 import ai.ilikeplaces.logic.Listeners.widgets.MemberHandler;
-import ai.ilikeplaces.logic.Listeners.widgets.WallWidget;
+import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
@@ -90,8 +90,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                     }
                 }
             };
-            new WallWidget(itsNatDocument_, $$(Page.privateEventWall), humanId, r.returnValue().getPrivateEventId()) {
-            };
+            new WallWidgetPrivateEvent(itsNatDocument_, $$(Page.privateEventWall), humanId, r.returnValue().getPrivateEventId());
         } else {
             $$(privateEventDeleteNotice).setTextContent(r.returnMsg());
         }
@@ -104,10 +103,26 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
             final HumanId myhumanId = humanId;
             final Long myprivateEventId = privateEventId;
+            boolean confirm = false;
 
             @Override
             public void handleEvent(final Event evt_) {
                 Loggers.USER.info(myhumanId.getObj() + " clicked delete for private event " + myprivateEventId);
+//                if (!confirm) {//First visit
+//                    $$(evt_).setTextContent("Delete? Sure?");
+//                    confirm = true;
+//                    new Thread(
+//                            new Runnable(){
+//                                @Override
+//                                public void run() {
+//                                    ThreadSleep.sleep(10000);
+//                                    confirm = false;
+//                                    $$(privateEventDelete).setTextContent("Delete");
+//                                }
+//                            }
+//                    ).run();
+//                    return;
+//                }
 
                 final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dPrivateEvent(myhumanId.getObj(), myprivateEventId);
                 if (r.returnStatus() == 0) {

@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.entities.Map;
+import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.*;
 
@@ -20,7 +21,7 @@ import javax.interceptor.Interceptors;
 // @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-@Interceptors({MethodTimer.class, MethodParams.class})
+@Interceptors({MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 public class HumanCRUDMap extends AbstractSLBCallbacks implements HumanCRUDMapLocal {
 
     @EJB
@@ -30,15 +31,10 @@ public class HumanCRUDMap extends AbstractSLBCallbacks implements HumanCRUDMapLo
     @Override
     public Return createEntry(final String label, final String entry) {
         Return r;
-        try {
-            final Map map = new Map();
-            map.setLabel(label);
-            map.setEntry(entry);
-            r = new ReturnImpl<Map>(mapCrudServiceLocal.create(map), "Map entry save successful!");
-        } catch (final Exception e) {
-            INFO.error("DB ERROR! {}", e);
-            r = new ReturnImpl<Map>(e, "Map entry save FAILED!", true);
-        }
+        final Map map = new Map();
+        map.setLabel(label);
+        map.setEntry(entry);
+        r = new ReturnImpl<Map>(mapCrudServiceLocal.create(map), "Map entry save successful!");
 
         return r;
     }

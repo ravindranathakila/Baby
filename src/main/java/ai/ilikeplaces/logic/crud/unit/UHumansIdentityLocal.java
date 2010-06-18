@@ -1,10 +1,8 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansIdentity;
-import ai.ilikeplaces.util.RefObj;
-import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 
 import javax.ejb.Local;
 
@@ -14,7 +12,11 @@ import javax.ejb.Local;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Local
 public interface UHumansIdentityLocal {
-    public HumansIdentity doUHumansProfilePhoto(final String humanId, final String url);
+    public HumansIdentity doUHumansProfilePhoto(final String humanId, final String url) throws DBDishonourCheckedException;
 
-    public HumansIdentity doUHumansPublicURL(final String humanId, final String url);
+    public HumansIdentity doUHumansPublicURL(final String humanId, final String url) throws DBDishonourCheckedException;
+
+    public void doUHumansPublicURLDelete(final String humanId) throws DBDishonourCheckedException;
+
+    public void doUHumansPublicURLAdd(final String humanId, final String url) throws DBDishonourCheckedException;
 }

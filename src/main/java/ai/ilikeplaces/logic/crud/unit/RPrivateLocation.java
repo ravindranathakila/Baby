@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.NoPrivilegesException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
@@ -38,7 +39,7 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
 
     @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
     @Override
-    public PrivateLocation doDirtyRPrivateLocation(final String humanId, final Long privateLocationId) {
+    public PrivateLocation doDirtyRPrivateLocation(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException {
         final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId);
         //final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId);
         final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
@@ -61,7 +62,7 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
 
     @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
     @Override
-    public boolean doDirtyRPrivateLocationIsOwner(final String humanId, final Long privateLocationId) {
+    public boolean doDirtyRPrivateLocationIsOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException {
 //        return privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).getPrivateLocationOwners()
 //                .contains(humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId));
         return privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).getPrivateLocationOwners()
@@ -70,7 +71,7 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
 
     @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
     @Override
-    public boolean doDirtyRPrivateLocationIsViewer(final String humanId, final Long privateLocationId) {
+    public boolean doDirtyRPrivateLocationIsViewer(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException {
 //        return privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).getPrivateLocationViewers()
 //                .contains(humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId));
         return privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).getPrivateLocationViewers()
@@ -79,7 +80,7 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public PrivateLocation doRPrivateLocationAsViewer(final String humanId, final Long privateLocationId) {
+    public PrivateLocation doRPrivateLocationAsViewer(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException {
         final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId);
         // final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId);
         final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
@@ -99,7 +100,7 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public PrivateLocation doRPrivateLocationAsOwner(final String humanId, final Long privateLocationId) {
+    public PrivateLocation doRPrivateLocationAsOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException {
         final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId);
 //        final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId);
         final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);

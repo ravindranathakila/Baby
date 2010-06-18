@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.*;
@@ -27,7 +28,7 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class})
+@Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHumanLocal {
 
     @EJB
@@ -111,11 +112,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Return<HumansAuthentication> doDirtyRHumansAuthentication(final RefObj<String> humanId) {
         Return<HumansAuthentication> r;
-        try {
-            r = new ReturnImpl<HumansAuthentication>(rHumansAuthenticationLocal_.doDirtyRHumansAuthentication(humanId.getObj()), READ_HUMANS_AUTHENTICATIONS_SUCCESSFUL);
-        } catch (final Throwable t) {
-            r = new ReturnImpl<HumansAuthentication>(t, READ_HUMANS_AUTHENTICATIONS_FAILED, true);
-        }
+        r = new ReturnImpl<HumansAuthentication>(rHumansAuthenticationLocal_.doDirtyRHumansAuthentication(humanId.getObj()), READ_HUMANS_AUTHENTICATIONS_SUCCESSFUL);
         return r;
     }
 
@@ -131,7 +128,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         Return<HumansPrivateLocation> r;
         try {
             r = new ReturnImpl<HumansPrivateLocation>(rHumansPrivateLocation_.doNTxRHumansPrivateLocation(humanId.getObj()), READ_HUMANS_PRIVATE_LOCATION_SUCCESSFUL);
-        } catch (final Throwable t) {
+        } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<HumansPrivateLocation>(t, READ_HUMANS_PRIVATE_LOCATION_FAILED, true);
         }
         return r;
@@ -143,7 +140,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         Return<HumansPrivateEvent> r;
         try {
             r = new ReturnImpl<HumansPrivateEvent>(rHumansPrivateEvent_.doNTxRHumansPrivateEvent(humanId.getObj()), READ_HUMANS_PRIVATE_EVENT_SUCCESSFUL);
-        } catch (final Throwable t) {
+        } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<HumansPrivateEvent>(t, READ_HUMANS_PRIVATE_EVENT_FAILED, true);
         }
         return r;
@@ -155,7 +152,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         Return<Boolean> r;
         try {
             r = new ReturnImpl<Boolean>(uHumansNetPeopleLocal_.doNTxAddHumansNetPeople(adderHumanId.getObj(), addeeHumanId.getObj()), ADD_FRIEND_SUCCESSFUL);
-        } catch (final Throwable t) {
+        } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Boolean>(t, ADD_FRIEND_FAILED, true);
         }
         return r;
@@ -167,7 +164,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         Return<Boolean> r;
         try {
             r = new ReturnImpl<Boolean>(uHumansNetPeopleLocal_.doNTxRemoveHumansNetPeople(adderHumanId.getObj(), addeeHumanId.getObj()), REMOVE_FRIEND_SUCCESSFUL);
-        } catch (final Throwable t) {
+        } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Boolean>(t, REMOVE_FRIEND_FAILED, true);
         }
         return r;
@@ -175,13 +172,9 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Return<Boolean> doNTxIsHumansNetPeople(final RefObj<String> checkerHumanId , final RefObj<String> checkeeeHumanId) {
+    public Return<Boolean> doNTxIsHumansNetPeople(final RefObj<String> checkerHumanId, final RefObj<String> checkeeeHumanId) {
         Return<Boolean> r;
-        try {
-            r = new ReturnImpl<Boolean>(uHumansNetPeopleLocal_.doNTxIsHumansNetPeople(checkerHumanId .getObj(), checkeeeHumanId.getObj()), CHECK_FRIEND_SUCCESSFUL);
-        } catch (final Throwable t) {
-            r = new ReturnImpl<Boolean>(t, CHECK_FRIEND_FAILED, true);
-        }
+        r = new ReturnImpl<Boolean>(uHumansNetPeopleLocal_.doNTxIsHumansNetPeople(checkerHumanId.getObj(), checkeeeHumanId.getObj()), CHECK_FRIEND_SUCCESSFUL);
         return r;
     }
 
@@ -189,12 +182,8 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Return<Boolean> doNTxUDisplayName(final HumanId humanId, DisplayNameString displayName) {
         Return<Boolean> r;
-        try {
-            uHumansNetLocal.doNTxUDisplayName(humanId, displayName.getObj());
-            r = new ReturnImpl<Boolean>(true, UPDATE_DISPLAY_NAME_SUCCESSFUL);
-        } catch (final Throwable t) {
-            r = new ReturnImpl<Boolean>(t, UPDATE_DISPLAY_NAME_FAILED, true);
-        }
+        uHumansNetLocal.doNTxUDisplayName(humanId, displayName.getObj());
+        r = new ReturnImpl<Boolean>(true, UPDATE_DISPLAY_NAME_SUCCESSFUL);
         return r;
     }
 
@@ -202,11 +191,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Return<Boolean> doDirtyIsHumansNetPeople(final RefObj<String> adderHumanId, final RefObj<String> addeeHumanId) {
         Return<Boolean> r;
-        try {
-            r = new ReturnImpl<Boolean>(uHumansNetPeopleLocal_.doDirtyIsHumansNetPeople(adderHumanId.getObj(), addeeHumanId.getObj()), CHECK_FRIEND_SUCCESSFUL);
-        } catch (final Throwable t) {
-            r = new ReturnImpl<Boolean>(t, CHECK_FRIEND_FAILED, true);
-        }
+        r = new ReturnImpl<Boolean>(uHumansNetPeopleLocal_.doDirtyIsHumansNetPeople(adderHumanId.getObj(), addeeHumanId.getObj()), CHECK_FRIEND_SUCCESSFUL);
         return r;
     }
 
@@ -230,11 +215,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     public Return<Boolean> doDirtyCheckHuman(final String humanId) {
 
         Return<Boolean> r;
-        try {
-            r = new ReturnImpl<Boolean>(rHumanLocal_.doDirtyCheckHuman(humanId), "Check human Successful!");
-        } catch (final Throwable t) {
-            r = new ReturnImpl<Boolean>(t, "Check human FAILED!", true);
-        }
+        r = new ReturnImpl<Boolean>(rHumanLocal_.doDirtyCheckHuman(humanId), "Check human Successful!");
         return r;
     }
 
@@ -247,26 +228,22 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Return<Boolean> doUHumanPassword(final RefObj<String> humanId, final Password currentPassword, final Password newPassword) {
         Return<Boolean> r;
-        try {
 
-            if (humanId.validate() != 0) {
-                throw new ConstraintsViolatedException(humanId.getViolations());
-            } else if (newPassword.validate() != 0) {
-                throw new ConstraintsViolatedException(newPassword.getViolations());
-            } else {
-                final boolean changed = uHumansAuthenticationLocal.doUHumansAuthentication(humanId.getObj(), currentPassword.getObj(), newPassword.getObj());
-                if (changed) {
-                    SendMail.getSendMailLocal().sendAsSimpleText(humanId.getObj(),
-                            "Password Changed for I Like Places",
-                            "Hi,\n" +
-                                    "You changed your password at I Like Places right? Hmmmm, just checking.\n" +
-                                    "If it wasn't you, who was it?!! Well, you can always reset or change your password if you notice something suspicious.");
-                }
-
-                r = new ReturnImpl<Boolean>(changed, PASSWORD_UPDATE_SUCCESSFUL);
+        if (humanId.validate() != 0) {
+            throw new ConstraintsViolatedException(humanId.getViolations());
+        } else if (newPassword.validate() != 0) {
+            throw new ConstraintsViolatedException(newPassword.getViolations());
+        } else {
+            final boolean changed = uHumansAuthenticationLocal.doUHumansAuthentication(humanId.getObj(), currentPassword.getObj(), newPassword.getObj());
+            if (changed) {
+                SendMail.getSendMailLocal().sendAsSimpleText(humanId.getObj(),
+                        "Password Changed for I Like Places",
+                        "Hi,\n" +
+                                "You changed your password at I Like Places right? Hmmmm, just checking.\n" +
+                                "If it wasn't you, who was it?!! Well, you can always reset or change your password if you notice something suspicious.");
             }
-        } catch (final Throwable t) {
-            r = new ReturnImpl<Boolean>(t, PASSWORD_UPDATE_FAILED, true);
+
+            r = new ReturnImpl<Boolean>(changed, PASSWORD_UPDATE_SUCCESSFUL);
         }
         return r;
 
@@ -275,26 +252,22 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Return<Boolean> doUHumanPassword(final RefObj<String> humanId, final Password newPassword) {
         Return<Boolean> r;
-        try {
 
-            if (humanId.validate() != 0) {
-                throw new ConstraintsViolatedException(humanId.getViolations());
-            } else if (newPassword.validate() != 0) {
-                throw new ConstraintsViolatedException(newPassword.getViolations());
-            } else {
-                final boolean changed = uHumansAuthenticationLocal.doUHumansAuthentication(humanId.getObj(), newPassword.getObj());
-                if (changed) {
-                    SendMail.getSendMailLocal().sendAsSimpleText(humanId.getObj(),
-                            "Password Changed for I Like Places",
-                            "Hi,\n" +
-                                    "You changed your password at I Like Places right? Hmmmm, just checking.\n" +
-                                    "If it wasn't you, who was it?!! Well, you can always reset or change your password if you notice something suspicious.");
-                }
-
-                r = new ReturnImpl<Boolean>(changed, PASSWORD_UPDATE_SUCCESSFUL);
+        if (humanId.validate() != 0) {
+            throw new ConstraintsViolatedException(humanId.getViolations());
+        } else if (newPassword.validate() != 0) {
+            throw new ConstraintsViolatedException(newPassword.getViolations());
+        } else {
+            final boolean changed = uHumansAuthenticationLocal.doUHumansAuthentication(humanId.getObj(), newPassword.getObj());
+            if (changed) {
+                SendMail.getSendMailLocal().sendAsSimpleText(humanId.getObj(),
+                        "Password Changed for I Like Places",
+                        "Hi,\n" +
+                                "You changed your password at I Like Places right? Hmmmm, just checking.\n" +
+                                "If it wasn't you, who was it?!! Well, you can always reset or change your password if you notice something suspicious.");
             }
-        } catch (final Throwable t) {
-            r = new ReturnImpl<Boolean>(t, PASSWORD_UPDATE_FAILED, true);
+
+            r = new ReturnImpl<Boolean>(changed, PASSWORD_UPDATE_SUCCESSFUL);
         }
         return r;
 
@@ -305,7 +278,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         Return<HumansIdentity> r;
         try {
             r = new ReturnImpl<HumansIdentity>(uHumansIdentityLocal_.doUHumansProfilePhoto(humanId.getObj(), url), "Profile Photo Update Successful.");
-        } catch (final Throwable t) {
+        } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<HumansIdentity>(t, "Profile Photo Update FAILED!", true);
         }
         return r;
@@ -317,7 +290,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         Return<String> r;
         try {
             r = new ReturnImpl<String>(rHumansIdentityLocal_.doDirtyProfilePhoto(humanId.getObj()), "Profile Photo Read Successful.");
-        } catch (final Throwable t) {
+        } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<String>(t, "Profile Photo Read FAILED!", true);
         }
         return r;
@@ -330,7 +303,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         Return<HumansIdentity> r;
         try {
             r = new ReturnImpl<HumansIdentity>(uHumansIdentityLocal_.doUHumansPublicURL(humanId.getObj(), url), "Profile URL Update Successful.");
-        } catch (final Throwable t) {
+        } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<HumansIdentity>(t, "Profile URL Update FAILED!", true);
         }
         return r;
@@ -342,7 +315,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         Return<String> r;
         try {
             r = new ReturnImpl<String>(rHumansIdentityLocal_.doDirtyPublicURL(humanId.getObj()), "Profile URL Read Successful.");
-        } catch (final Throwable t) {
+        } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<String>(t, "Profile URL Read FAILED!", true);
         }
         return r;
@@ -350,11 +323,11 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     }
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Return<HumansIdentity> doDirtyRHumansIdentity(final RefObj<String> humanId){
+    public Return<HumansIdentity> doDirtyRHumansIdentity(final RefObj<String> humanId) {
         Return<HumansIdentity> r;
         try {
             r = new ReturnImpl<HumansIdentity>(rHumansIdentityLocal_.doDirtyRHumansIdentity(humanId.getObj()), "Identity Read Successful.");
-        } catch (final Throwable t) {
+        } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<HumansIdentity>(t, "Identity Read FAILED!", true);
         }
         return r;
@@ -362,13 +335,9 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     }
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Return<String> doDirtyProfileFromURL(final String url){
+    public Return<String> doDirtyProfileFromURL(final String url) {
         Return<String> r;
-        try {
-            r = new ReturnImpl<String>(rHumansIdentityLocal_.doDirtyProfileFromURL(url), "Profile Read from URL Successful.");
-        } catch (final Throwable t) {
-            r = new ReturnImpl<String>(t, "Profile Read from URL FAILED!", true);
-        }
+        r = new ReturnImpl<String>(rHumansIdentityLocal_.doDirtyProfileFromURL(url), "Profile Read from URL Successful.");
         return r;
 
     }
@@ -380,70 +349,74 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Return<Boolean> doCHuman(final HumanId humanId, final Password password, final Email email) throws IllegalAccessException {
         Return<Boolean> r;
-        try {
 
-            if (doDirtyCheckHuman(humanId.getObjectAsValid()).returnValue()) {
-                throw new IllegalAccessException(RBGet.logMsgs.getString("ai.ilikeplaces.logic.crud.HumanCRUDHuman.0001") + humanId);
-            }
-            final Human newUser = new Human();
-            newUser.setHumanId(humanId.getObjectAsValid());
-            final HumansAuthentication ha = new HumansAuthentication();
-            ha.setHumanId(newUser.getHumanId());
-            ha.setHumanAuthenticationSalt(BCrypt.gensalt());
-            ha.setHumanAuthenticationHash(singletonHashingFace.getHash(password.getObjectAsValid(), ha.getHumanAuthenticationSalt()));
-            newUser.setHumansAuthentications(ha);
-            newUser.setHumanAlive(true);
-
-            setHumansIdentityInfo:
-            {
-                final HumansIdentity hid = new HumansIdentity();
-                hid.setHumanId(newUser.getHumanId());
-                hid.setHumansIdentityEmail(email.getObj());
-                hid.setUrl(new Url().setUrlR(humanId.getObj()).setMetadataR(humanId.getObj()));//Yes, the default url is his/her email
-
-                newUser.setHumansIdentity(hid);
-            }
-
-            //HumansNet has as many internal primarykeyjoin entities
-            tricky:
-            {
-                final HumansNetPeople hnp = new HumansNetPeople();
-                hnp.setHumanId(newUser.getHumanId());
-
-                final HumansNet hn = new HumansNet();
-                hn.setDisplayName(newUser.getHumanId().split(SYMBOL_AT)[0]);
-                hn.setHumanId(newUser.getHumanId());
-
-                hn.setHumansNetPeople(hnp);
-
-                newUser.setHumansNet(hn);
-            }
-
-
-            final HumansPrivateLocation hpl = new HumansPrivateLocation();
-            hpl.setHumanId(newUser.getHumanId());
-            newUser.setHumansPrivateLocation(hpl);
-
-            final HumansPrivateEvent hpe = new HumansPrivateEvent();
-            hpe.setHumanId(newUser.getHumanId());
-            newUser.setHumansPrivateEvent(hpe);
-
-            final HumansAlbum hal = new HumansAlbum();
-            hal.setHumanId(newUser.getHumanId());
-            newUser.setHumansAlbum(hal);
-
-            final HumansPrivatePhoto hprp = new HumansPrivatePhoto();
-            hprp.setHumanId(newUser.getHumanId());
-            newUser.setHumansPrivatePhoto(hprp);
-
-            final HumansPublicPhoto hpup = new HumansPublicPhoto();
-            hpup.setHumanId(newUser.getHumanId());
-            newUser.setHumansPublicPhoto(hpup);
-            doNTxCHuman(newUser);
-            r = new ReturnImpl<Boolean>(true, ADD_USER_SUCCESSFUL);
-        } catch (final Throwable t) {
-            r = new ReturnImpl<Boolean>(t, ADD_USER_FAILED, true);
+        if (doDirtyCheckHuman(humanId.getObjectAsValid()).returnValue()) {
+            throw new IllegalAccessException(RBGet.logMsgs.getString("ai.ilikeplaces.logic.crud.HumanCRUDHuman.0001") + humanId);
         }
+        final Human newUser = new Human();
+        newUser.setHumanId(humanId.getObjectAsValid());
+        final HumansAuthentication ha = new HumansAuthentication();
+        ha.setHumanId(newUser.getHumanId());
+        ha.setHumanAuthenticationSalt(BCrypt.gensalt());
+        ha.setHumanAuthenticationHash(singletonHashingFace.getHash(password.getObjectAsValid(), ha.getHumanAuthenticationSalt()));
+        newUser.setHumansAuthentications(ha);
+        newUser.setHumanAlive(true);
+
+        setHumansIdentityInfo:
+        {
+            final HumansIdentity hid = new HumansIdentity();
+            hid.setHumanId(newUser.getHumanId());
+            hid.setHumansIdentityEmail(email.getObj());
+            hid.setUrl(new Url().setUrlR(humanId.getObj()).setMetadataR(humanId.getObj()));//Yes, the default url is his/her email
+
+            newUser.setHumansIdentity(hid);
+        }
+
+        //HumansNet has as many internal primarykeyjoin entities
+        tricky:
+        {
+            final HumansNetPeople hnp = new HumansNetPeople();
+            hnp.setHumanId(newUser.getHumanId());
+
+            final HumansNet hn = new HumansNet();
+            hn.setDisplayName(newUser.getHumanId().split(SYMBOL_AT)[0]);
+            hn.setHumanId(newUser.getHumanId());
+
+            hn.setHumansNetPeople(hnp);
+
+            newUser.setHumansNet(hn);
+        }
+
+
+        final HumansPrivateLocation hpl = new HumansPrivateLocation();
+        hpl.setHumanId(newUser.getHumanId());
+        newUser.setHumansPrivateLocation(hpl);
+
+        final HumansPrivateEvent hpe = new HumansPrivateEvent();
+        hpe.setHumanId(newUser.getHumanId());
+        newUser.setHumansPrivateEvent(hpe);
+
+        final HumansAlbum hal = new HumansAlbum();
+        hal.setHumanId(newUser.getHumanId());
+        newUser.setHumansAlbum(hal);
+
+        final HumansPrivatePhoto hprp = new HumansPrivatePhoto();
+        hprp.setHumanId(newUser.getHumanId());
+        newUser.setHumansPrivatePhoto(hprp);
+
+        final HumansPublicPhoto hpup = new HumansPublicPhoto();
+        hpup.setHumanId(newUser.getHumanId());
+        newUser.setHumansPublicPhoto(hpup);
+
+        final HumansWall hw = new HumansWall();
+        hw.setHumanId(newUser.getHumanId());
+        hw.setWall(new Wall().setWallTypeR(Wall.wallTypeHuman));
+        newUser.setHumansWall(hw);
+
+        doNTxCHuman(newUser);
+
+
+        r = new ReturnImpl<Boolean>(true, ADD_USER_SUCCESSFUL);
         return r;
     }
 

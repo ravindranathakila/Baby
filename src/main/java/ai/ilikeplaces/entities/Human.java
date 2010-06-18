@@ -2,6 +2,7 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
@@ -40,6 +41,7 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
     public HumansPrivateLocation humansPrivateLocation;
     public HumansPrivateEvent humansPrivateEvent;
     public HumansAlbum humansAlbum;
+    public HumansWall humansWall;
 
     @Id
     public String getHumanId() {
@@ -171,6 +173,17 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
 
     public void setHumansAlbum(HumansAlbum humansAlbum) {
         this.humansAlbum = humansAlbum;
+    }
+
+    @WARNING(warning = "DO NOT fetch eager. Wall will pull all the damn messages eager.")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
+    public HumansWall getHumansWall() {
+        return humansWall;
+    }
+
+    public void setHumansWall(final HumansWall humansWall) {
+        this.humansWall = humansWall;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.exception.NoPrivilegesException;
 
 import javax.ejb.Local;
 
@@ -15,6 +16,6 @@ import javax.ejb.Local;
 @Local
 public interface DPrivateEventLocal {
 
-    public boolean doNTxDPrivateEvent(final String humanId, final long privateEventId);
+    public boolean doNTxDPrivateEvent(final String humanId, final long privateEventId) throws NoPrivilegesException;
 
 }

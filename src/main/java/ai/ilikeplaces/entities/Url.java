@@ -23,6 +23,9 @@ public class Url implements Serializable {
 
     public String metadata;
 
+    public static final int typeMISC= 0;
+    public static final int typeHUMAN= 1;
+
     @Id
     public String getUrl() {
         return url;

@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.HumansPrivateEvent;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
@@ -35,7 +36,7 @@ public class RHumansPrivateEvent extends AbstractSLBCallbacks implements RHumans
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public HumansPrivateEvent doNTxRHumansPrivateEvent(String humanId) {
+    public HumansPrivateEvent doNTxRHumansPrivateEvent(String humanId) throws DBDishonourCheckedException {
         final HumansPrivateEvent hpe = humansPrivateEventCrudServiceLocal_.findBadly(HumansPrivateEvent.class, humanId);
         hpe.getPrivateEventsViewed().size();
         hpe.getPrivateEventsOwned().size();

@@ -1,7 +1,9 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.ilikeplaces.util.Loggers;
@@ -38,13 +40,13 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Wall doDirtyRWall(long wallId) {
+    public Wall doDirtyRWall(long wallId) throws DBDishonourCheckedException {
         return crudServiceLocal_.findBadly(Wall.class, wallId);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Wall doNTxUAppendToWall(long wallId, String contentToBeAppended) {
+    public Wall doNTxUAppendToWall(long wallId, String contentToBeAppended) throws DBDishonourCheckedException {
         final Wall returnVal = crudServiceLocal_.findBadly(Wall.class, wallId);
         final int wallLength = returnVal.getWallContent().length();
         if ( wallLength > (Wall.WALL_LENGTH - 1) - contentToBeAppended.length()) {
@@ -58,7 +60,22 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
     }
 
     @Override
-    public Wall doNTxUClearWall(long wallId) {
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public Wall doNTxUAddEntry(long wallId, final String humanId, String contentToBeAppended) throws DBDishonourCheckedException {
+        final Wall returnVal = crudServiceLocal_.findBadly(Wall.class, wallId);
+        final Msg msg = new Msg();
+
+        msg
+                .setMsgContentR(contentToBeAppended)
+                .setMsgTypeR(Msg.msgTypeHUMAN)
+                .setMsgMetadata(humanId);
+
+        returnVal.getWallMsgs().add(msg);
+        return returnVal;
+    }
+
+    @Override
+    public Wall doNTxUClearWall(long wallId) throws DBDishonourCheckedException {
         final Wall returnVal = crudServiceLocal_.findBadly(Wall.class, wallId);
         returnVal.setWallContent("");
         return returnVal;
