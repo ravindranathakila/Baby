@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 
 import javax.ejb.Local;
 import java.util.Date;
@@ -22,6 +23,6 @@ public interface CPrivateEventLocal {
                                            final String eventName,
                                            final String eventInfo,
                                            final String startDate,
-                                           final String endDate);
+                                           final String endDate) throws DBDishonourCheckedException;
 
 }

@@ -70,10 +70,10 @@ this.vtip = function() {
 
     $(".vtip").unbind().hover(
         function(e) {
-            this.t = (this.title == undefined || this.title == '') ? ilp_getRandomTagLine() : this.title;
+            this.t = (this.title == undefined || this.title == 'undefined' || this.title == '') ? ilp_getRandomTagLine() : this.title;
             this.title = '';
 
-	    this.top = (e.pageY + yOffset); this.left = (e.pageX + xOffset);
+	        this.top = (e.pageY + yOffset); this.left = (e.pageX + xOffset);
 
             $('body').append( '<p id="vtip"><img id="vtipArrow" />' + this.t + '</p>' );
 

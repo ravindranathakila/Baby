@@ -2,6 +2,7 @@ package ai.ilikeplaces.jpa;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 
 import javax.ejb.Local;
 import java.util.List;

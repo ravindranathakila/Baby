@@ -4,15 +4,14 @@ import ai.ilikeplaces.doc.CONVENTION;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.exception.DBDishonourException;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +37,6 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
             "resolved! check out the hibernate site article on this. apparently, container does this. amazing!")
     @PersistenceContext(unitName = "adimpression_ilikeplaces_war_1.6-SNAPSHOTPU", type = PersistenceContextType.TRANSACTION)
     public EntityManager entityManager;
-
-    final static private NullPointerException ENTITY_NOT_FOUND_EXCEPTION = new NullPointerException("SORRY! NO SUCH ENTITY IN DATABASE.");
 
     /**
      * @param t
@@ -92,7 +89,7 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
         if (object != null) {
             return (T) object;
         } else {
-            throw ENTITY_NOT_FOUND_EXCEPTION;
+            throw DBDishonourException.QUERYING_AFFIRMATIVELY_A_NON_EXISTING_ENTITY;
         }
     }
 

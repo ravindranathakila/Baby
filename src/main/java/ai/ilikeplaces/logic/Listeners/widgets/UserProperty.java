@@ -37,7 +37,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
             final HumansIdentity hi = r.returnValue();
             $$(Controller.Page.user_property_name).setTextContent(hi.getHuman().getDisplayName());
             $$(Controller.Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-            $$(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString("PROFILE_PHOTOS") + hi.getHumansIdentityProfilePhoto());
+            $$(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfileUrl(hi.getHumansIdentityProfilePhoto()));
         } else {
             final String error = RBGet.gui().getString("YIKES_SOMETHING_WENT_WRONG");
             $$(Controller.Page.user_property_name).setTextContent(error);
@@ -60,5 +60,18 @@ abstract public class UserProperty extends AbstractWidgetListener {
     public void finalize() throws Throwable {
         Loggers.finalized(this.getClass().getName());
         super.finalize();
+    }
+
+    /**
+     * User profile photo URL from DB. Can be null, in which case the default photo URL is returned. This value is
+     * define in the properties files
+     *
+     * @param rawURLFromDB
+     * @return
+     */
+    static public String formatProfileUrl(final String rawURLFromDB) {
+        return rawURLFromDB == null || rawURLFromDB.isEmpty() ?
+                RBGet.globalConfig.getString("PROFILE_PHOTO_DEFAULT") :
+                RBGet.globalConfig.getString("PROFILE_PHOTOS") + rawURLFromDB;
     }
 }

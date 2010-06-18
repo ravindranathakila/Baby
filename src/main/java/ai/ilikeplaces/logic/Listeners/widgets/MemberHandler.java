@@ -89,7 +89,9 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
 //            $$(Controller.Page.FriendListList).appendChild(li);
 
             final Element li = $$(MarkupTag.DIV);
-            li.setAttribute(MarkupTag.DIV.classs(),"btn");
+            li.setAttribute(MarkupTag.DIV.classs(),"vtip");
+            li.setAttribute(MarkupTag.DIV.style(),"cursor:pointer;");
+            li.setAttribute(MarkupTag.DIV.title(),"Click to Toggle Subscription");
             li.setTextContent(possibility.getHuman().getDisplayName() + (existAll.contains(possibility.getHumanId()) ? Added : Removed));
 
             $$(Controller.Page.FriendListList).appendChild(li);

@@ -28,7 +28,8 @@ import java.util.*;
 
 @TODO(task = "Code to disable url calls with itsnat_doc_name=### type urls if possible")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-final public class Controller extends HttpServletWrapper {
+final public class
+        Controller extends HttpServletWrapper {
 
     private final static Map<PageFace, String> PrettyURLMap_ = new IdentityHashMap<PageFace, String>();//Please read javadoc before making any changes to this implementation
     final static private Logger staticLogger = LoggerFactory.getLogger(Controller.class.getName());
@@ -66,7 +67,7 @@ final public class Controller extends HttpServletWrapper {
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
             }},
-        ForgotPasswordChange("ai/ilikeplaces/widgets/profile.xhtml",
+        ForgotPasswordChange("ai/ilikeplaces/widgets/password.xhtml",
                 Controller.Page.ProfileForgotPasswordWidget,
                 Controller.Page.ProfileForgotPasswordNotice,
                 Controller.Page.ProfileForgotPasswordEmailAddress,
@@ -84,7 +85,7 @@ final public class Controller extends HttpServletWrapper {
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
             }},
-        PasswordChange("ai/ilikeplaces/widgets/profile.xhtml",
+        PasswordChange("ai/ilikeplaces/widgets/password.xhtml",
                 Controller.Page.ProfilePasswordWidget,
                 Controller.Page.ProfilePasswordNotice,
                 Controller.Page.ProfilePasswordCurrent,

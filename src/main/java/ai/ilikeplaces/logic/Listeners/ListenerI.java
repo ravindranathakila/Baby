@@ -3,9 +3,9 @@ package ai.ilikeplaces.logic.Listeners;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
+import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractListener;
 import ai.ilikeplaces.util.Loggers;
@@ -60,7 +60,7 @@ public class ListenerI implements ItsNatServletRequestListener {
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor);
 
-                final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS,"Returning I Page",60000,null,true);
+                final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, "Returning I Page", 60000, null, true);
 
 
                 final String requestedProfile = DB.getHumanCRUDHumanLocal(true).doDirtyProfileFromURL(request__.getServletRequest().getParameter(USER_PROFILE)).returnValueBadly();
@@ -69,15 +69,16 @@ public class ListenerI implements ItsNatServletRequestListener {
                 sl.appendToLogMSG("Requested Profile:" + requestedProfile);
 
                 if (getUsername() == null) {
-                    sl.complete(Loggers.LEVEL.DEBUG,"No Login."+Loggers.DONE);
+                    sl.complete(Loggers.LEVEL.DEBUG, "No Login." + Loggers.DONE);
                     redirectToSomeOtherPage(response__);
                 } else {//User is logged on, now other things
                     if (requestedProfile == null) {//This user isn't alive
-                        sl.complete(Loggers.LEVEL.DEBUG,"No Such Live User."+Loggers.DONE);
+                        sl.complete(Loggers.LEVEL.DEBUG, "No Such Live User." + Loggers.DONE);
                         redirectToSomeOtherPage(response__);
                     } else {//This user should be a friend
                         //Be careful who checks who here. this user should have been added by the profile we are visiting as friend.(asymetric friend addition)
-                        if (DB.getHumanCRUDHumanLocal(true).doNTxIsHumansNetPeople(new HumanId(requestedProfile), new HumanId(getUsernameAsValid())).returnValue()) {
+                        if (DB.getHumanCRUDHumanLocal(true).doNTxIsHumansNetPeople(new HumanId(requestedProfile), new HumanId(getUsernameAsValid())).returnValue()
+                                || getUsernameAsValid().equals(requestedProfile)) {
 
                             layoutNeededForAllPages:
                             {
@@ -115,11 +116,9 @@ public class ListenerI implements ItsNatServletRequestListener {
                                             /**
                                              * TODO check for db failure
                                              */
-                                            String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(requestedProfile)).returnValueBadly();
-                                            url = url == null ? null : RBGet.globalConfig.getString("PROFILE_PHOTOS") + url;
-                                            if (url != null) {
-                                                $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(), url);
-                                            }
+                                            final String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(requestedProfile)).returnValueBadly();
+                                            $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(),
+                                                    ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfileUrl(url));
                                         }
                                     } catch (final Throwable t) {
                                         EXCEPTION.error("{}", t);
@@ -129,12 +128,12 @@ public class ListenerI implements ItsNatServletRequestListener {
 
                                 setWall:
                                 {
-                                    //@TODO
+                                    new WallWidgetHumansWall(itsNatDocument__, $(Skeleton_center_content), new HumanId(requestedProfile), new HumanId(getUsernameAsValid()));
                                 }
                             }
-                            sl.complete(Loggers.LEVEL.DEBUG,"View Friend Successful."+Loggers.DONE);
+                            sl.complete(Loggers.LEVEL.DEBUG, "View Friend Successful." + Loggers.DONE);
                         } else {
-                            sl.complete(Loggers.LEVEL.DEBUG,"Not Friend."+Loggers.DONE);
+                            sl.complete(Loggers.LEVEL.DEBUG, "Not Friend." + Loggers.DONE);
                             redirectToSomeOtherPage(response__);
                         }
                     }

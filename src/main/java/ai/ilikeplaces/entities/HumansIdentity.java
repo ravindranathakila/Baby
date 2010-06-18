@@ -134,7 +134,7 @@ public class HumansIdentity implements HumanPkJoinFace, Serializable {
         this.humansIdentityProfilePhoto = humansIdentityProfilePhoto;
     }
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     public Url getUrl() {
         return url;
     }

@@ -2,6 +2,7 @@ package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc.TODO;
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
 import net.sf.oval.exception.ConstraintsViolatedException;
@@ -22,6 +23,7 @@ import java.util.*;
  * Time: 1:14:18 AM
  */
 
+@TODO(task = "IMPLEMENT RECURRSSIVE VALIDATOR. NOW ITS COMMENTED.")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class ParamValidator {
 
@@ -30,25 +32,20 @@ public class ParamValidator {
 
     @AroundInvoke
     public Object validate(InvocationContext invocation) throws Exception {
-        try {
-            final Object[] args = invocation.getParameters();
-            final List<ConstraintViolation> violations = new ArrayList<ConstraintViolation>();
-            final Validator v = new Validator();
+        final Object[] args = invocation.getParameters();
+        final List<ConstraintViolation> violations = new ArrayList<ConstraintViolation>();
+        final Validator v = new Validator();
 
-            for (final Object param : args) {
-                //violations.addAll(recursiveCollectionValidator(param, v));
-                violations.addAll(v.validate(param));
-            }
+        for (final Object param : args) {
+            //violations.addAll(recursiveCollectionValidator(param, v));
+            violations.addAll(v.validate(param));
+        }
 
-            if (violations.size() != 0) {
-                Loggers.EXCEPTION.error(RefObj.validationMessages(violations));
-                throw new ConstraintsViolatedException(violations);
-            }
-        } catch (final Throwable t) {
-            throw new RuntimeException(t);
+        if (violations.size() != 0) {
+            Loggers.EXCEPTION.error("SORRY! I ENCOUNTERED AN EXCEPTION WITHIN THE PARAMETER VALIDATION INTERCEPTOR. DETAILS ARE AS FOLLOWS." + RefObj.validationMessages(violations));
+            throw new ConstraintsViolatedException(violations);
         }
         return invocation.proceed();
-
     }
 
     @NOTE(note = "This could be possibly simplified")

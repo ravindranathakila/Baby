@@ -40,6 +40,8 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String RETURNING_LOCATION = "Returning location ";
     private static final String TO_USER = " to user";
     private static final String WRONG_WOEID_FORMAT = "SORRY! WRONG WOEID FORMAT";
+    public static final String NUMBER_OF_PHOTOS_FOR = "Number of photos for ";
+    public static final String COLON = ":";
 
     /**
      * @param request__
@@ -139,13 +141,9 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     {
                         try {
                             if (getUsername() != null) {
-                                final Element usersName = $(P);
-                                usersName.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0004") + getUsernameAsValid());
-                                $(Main_othersidebar_identity).appendChild(usersName);
+                                $(Main_othersidebar_identity).setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0004") + getUsernameAsValid());
                             } else {
-                                final Element locationElem = $(P);
-                                locationElem.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0005") + location);
-                                $(Main_othersidebar_identity).appendChild(locationElem);
+                                $(Main_othersidebar_identity).setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0005") + location);
                             }
                         } catch (final Throwable t) {
                             Loggers.EXCEPTION.error("", t);
@@ -173,17 +171,17 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                  */
                                 String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(getUsernameAsValid())).returnValueBadly();
                                 url = url == null ? null : RBGet.globalConfig.getString("PROFILE_PHOTOS") + url;
-                                if(url != null){
+                                if (url != null) {
                                     $(Main_profile_photo).setAttribute(MarkupTag.IMG.src(), url);
-                                    displayBlock($(Main_profile_photo));
-                                    displayNone($(Main_location_photo));
-                                }else{
-                                    displayNone($(Main_profile_photo));
-                                    displayBlock($(Main_location_photo));
+//                                    displayBlock($(Main_profile_photo));
+//                                    displayNone($(Main_location_photo));
+                                } else {
+//                                    displayNone($(Main_profile_photo));
+//                                    displayBlock($(Main_location_photo));
                                 }
-                            }else{
-                                displayNone($(Main_profile_photo));
-                                displayBlock($(Main_location_photo));
+                            } else {
+//                                displayNone($(Main_profile_photo));
+//                                displayBlock($(Main_location_photo));
                             }
                         } catch (final Throwable t) {
                             EXCEPTION.error("{}", t);
@@ -247,10 +245,10 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         try {
                             $(Main_center_main_location_title).setTextContent("This is " + existingLocation_.getLocationName() + " of " + existingLocation_.getLocationSuperSet());
 
-                            $(Main_location_backlink).appendChild($(P).appendChild(hTMLDocument__.createTextNode("Back to: ")));
+                            $(Main_location_backlink).appendChild($(P).appendChild(hTMLDocument__.createTextNode("Back to" + COLON + " ")));
                             $(Main_location_backlink).appendChild(generateSimpleLocationLink(existingLocation_.getLocationSuperSet()));
 
-                            $(Main_location_list_header).appendChild(($(P).appendChild(hTMLDocument__.createTextNode("At " + existingLocation_.getLocationName() + " you can visit: "))));
+                            $(Main_location_list_header).appendChild(($(P).appendChild(hTMLDocument__.createTextNode("At " + existingLocation_.getLocationName() + " you can visit" + COLON + " "))));
 
                             for (final Element element : generateLocationLinks(DB.getHumanCRUDLocationLocal(true).doDirtyRLocationsBySuperLocation(existingLocation_))) {
                                 $(Main_location_list).appendChild(element);
@@ -265,13 +263,13 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                     setFlickrLink:
                     {
-                        $(Main_flickr).setAttribute(MarkupTag.A.href(), RBGet.config.getString("flickr.json") + location.toLowerCase().replace(" ", "+").replace("/", "+"));
+//                        $(Main_flickr).setAttribute(MarkupTag.A.href(), RBGet.config.getString("flickr.json") + location.toLowerCase().replace(" ", "+").replace("/", "+"));
                     }
 
                     getAndDisplayAllThePhotos:
                     {
                         List<PublicPhoto> listPublicPhoto = existingLocation_.getPublicPhotos();
-                        Loggers.INFO.info(RBGet.logMsgs.getString("NUMBER_OF_PHOTOS_FOR_LOCATION"), existingLocation_.getLocationName(), listPublicPhoto.size());
+                        sl.appendToLogMSG(NUMBER_OF_PHOTOS_FOR + existingLocation_.getLocationName() + COLON + listPublicPhoto.size());
 
                         int i = 0;
                         for (final Iterator<PublicPhoto> it = listPublicPhoto.iterator(); it.hasNext(); i++) {
@@ -284,7 +282,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                     final Element image = $(IMG);
                                     image.setAttribute(IMG.src(), publicPhoto.getPublicPhotoURLPath());
                                     image.setAttribute(IMG.alt(), publicPhoto.getPublicPhotoDescription());
-                                    image.setAttribute(IMG.style(), "width:110px;");
+                                    image.setAttribute(IMG.style(), "width" + COLON + "110px;");
 
                                     final Element link = $(A);
                                     link.setAttribute(A.href(), publicPhoto.getPublicPhotoURLPath());

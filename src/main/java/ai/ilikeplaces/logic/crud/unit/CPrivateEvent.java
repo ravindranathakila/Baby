@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 
@@ -41,7 +42,7 @@ public class CPrivateEvent extends AbstractSLBCallbacks implements CPrivateEvent
 
 
     @Override
-    public PrivateEvent doNTxCPrivateEvent(final String humanId, final long privateLocationId, final String locationName, final String locationInfo, final String startDate, final String endDate) {
+    public PrivateEvent doNTxCPrivateEvent(final String humanId, final long privateLocationId, final String locationName, final String locationInfo, final String startDate, final String endDate) throws DBDishonourCheckedException {
         final HumansPrivateEvent managedOwner = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, humanId);
 
 

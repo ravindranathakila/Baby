@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
 
@@ -17,11 +18,11 @@ public interface RHumansIdentityLocal {
 
     public List<HumansIdentity> doDirtyRHumansIdentitiesByEmails(final List<String> emails);
 
-    public String doDirtyProfilePhoto(final String humanId);
+    public String doDirtyProfilePhoto(final String humanId) throws DBDishonourCheckedException;
 
-    public String doDirtyPublicURL(final String humanId);
+    public String doDirtyPublicURL(final String humanId) throws DBDishonourCheckedException;
 
-    public HumansIdentity doDirtyRHumansIdentity(final String humanId);
+    public HumansIdentity doDirtyRHumansIdentity(final String humanId) throws DBDishonourCheckedException;
 
     public String doDirtyProfileFromURL(final String url);    
 

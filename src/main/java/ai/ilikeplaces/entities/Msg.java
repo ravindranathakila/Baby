@@ -24,13 +24,17 @@ import javax.persistence.*;
 public class Msg {
 
     public Long msgId;
+    public static final String msgIdCOL = "msgId";
 
-    public Long msgType;//Wall, Personal
+    public Integer msgType;//Wall, Personal
 
     public String msgContent;
 
     public String msgMetadata;//Anybody can store relavant metadata here
 
+
+    final static public int msgTypeHUMAN = 1;
+    final static public int msgTypeMISC = 0;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,15 +51,15 @@ public class Msg {
 
     }
 
-    public Long getMsgType() {
+    public Integer getMsgType() {
         return msgType;
     }
 
-    public void setMsgType(final Long msgType) {
+    public void setMsgType(final Integer msgType) {
         this.msgType = msgType;
     }
 
-    public Msg setMsgTypeR(final Long msgType) {
+    public Msg setMsgTypeR(final Integer msgType) {
         this.msgType = msgType;
         return this;
     }

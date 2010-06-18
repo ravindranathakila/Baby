@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.PrivatePhoto;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class UPrivatePhoto implements UPrivatePhotoLocal {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivatePhoto doNAAddToAlbum(final long privatePhotoId, final long albumId) {
+    public PrivatePhoto doNAAddToAlbum(final long privatePhotoId, final long albumId) throws DBDishonourCheckedException {
 
         final PrivatePhoto privatePhoto = privatePhotoCrudServiceLocal_.findBadly(PrivatePhoto.class, privatePhotoId);
 

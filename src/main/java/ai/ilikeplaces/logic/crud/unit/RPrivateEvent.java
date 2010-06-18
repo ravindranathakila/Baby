@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.NoPrivilegesException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
@@ -39,7 +40,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     @Override
-    public PrivateEvent doDirtyRPrivateEvent(final String humanId, final long privateEventId) {
+    public PrivateEvent doDirtyRPrivateEvent(final String humanId, final long privateEventId) throws DBDishonourCheckedException {
         final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId);
 
 //        final HumansPrivateEvent humansPrivateEvent_ = humansPrivateEventCrudServiceLocal_.findBadly(HumansPrivateEvent.class, humanId);
@@ -60,7 +61,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     @Override
-    public boolean doDirtyRPrivateEventIsOwner(final String humanId, final Long privateEventId) {
+    public boolean doDirtyRPrivateEventIsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException {
 //        return privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).getPrivateEventOwners()
 //                .contains(humansPrivateEventCrudServiceLocal_.findBadly(HumansPrivateEvent.class, humanId));
         return privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).getPrivateEventOwners()
@@ -69,7 +70,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     @Override
-    public boolean doDirtyRPrivateEventIsViewer(final String humanId, final Long privateEventId) {
+    public boolean doDirtyRPrivateEventIsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException {
 //        return privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).getPrivateEventViewers()
 //                .contains(humansPrivateEventCrudServiceLocal_.findBadly(HumansPrivateEvent.class, humanId));
         return privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).getPrivateEventViewers()
@@ -78,7 +79,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public PrivateEvent doRPrivateEventAsViewer(final String humanId, final Long privateEventId) {
+    public PrivateEvent doRPrivateEventAsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException {
         final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.find(PrivateEvent.class, privateEventId);
 //        final HumansPrivateEvent humansPrivateEvent_ = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, humanId);
         final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
@@ -98,7 +99,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public PrivateEvent doRPrivateEventAsOwner(final String humanId, final Long privateEventId) {
+    public PrivateEvent doRPrivateEventAsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException {
         final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.find(PrivateEvent.class, privateEventId);
 //        final HumansPrivateEvent humansPrivateEvent_ = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, humanId);
         final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);

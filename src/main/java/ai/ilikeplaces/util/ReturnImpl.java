@@ -1,8 +1,6 @@
 package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.License;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,9 +12,9 @@ import org.slf4j.LoggerFactory;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class ReturnImpl<T> implements Return<T> {
 
-    final static private Logger logger = LoggerFactory.getLogger(ReturnImpl.class);
-
     final static private String logMsgBeginning = "SORRY! I ENCOUNTERED AN EXCEPTION! HOWEVER, THE APPLICATION SHOULD REMAIN INTACT. SEE BELOW FOR MORE DETAILS.\n\n";
+
+    static private long ERROR_SEQ_NUMBER = 1;
 
     private int returnStatus = 1;
 
@@ -48,9 +46,30 @@ final public class ReturnImpl<T> implements Return<T> {
         this.returnMsg = returnMsg;
     }
 
+    /**
+     * Returns 0 if no error occurred, or a unique error code specific only to this error. This code can be given to
+     * the user and can be grepped or resolved in any manner you require, later.
+     *
+     * The current return implementation had to go by int and expects the system will not exeed integer range. To get
+     * the exact error code, check if the return status is greater than zero and if so, get the code separately.
+     *
+     * @return
+     */
     @Override
     final public int returnStatus() {
-        return returnStatus;
+        return returnStatus == 0 ? returnStatus : (int) ERROR_SEQ_NUMBER++;
+    }
+
+    /**
+     * Returns a unique error code for this error, if any, or throws IllegalAccessError if otherwise.
+     * @return Unique ERROR_SEQ_NUMBER
+     */
+    @Override
+    final public long returnErrorSeqCode(){
+        if(returnStatus == 0){
+            throw new IllegalAccessError("SORRY! YOU CANNOT OBTAIN AN ERROR CODE WHEN THERE IS NO ERROR. PLEASE AVOID CALLING THIS METHOD IF NO ERROR IS FOUND.");
+        }
+        return ERROR_SEQ_NUMBER;
     }
 
     @Override

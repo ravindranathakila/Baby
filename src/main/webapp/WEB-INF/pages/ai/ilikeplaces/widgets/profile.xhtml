@@ -9,19 +9,20 @@
     <title>profile</title>
 </head>
 <body>
-<div class="span-14 last dbg" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
-      <ul class="span-14 last center list_style_type_none" style="display:none;">
-        <li class="span-14 last black_fg">
-            <span id="ProfileNotice" class="span-14 last black_fg"></span>
+<div class="span-14 last" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
+    <hr class="space"/>
+      <div class="span-14 last center list_style_type_none">
+        <div class="span-14 last black_fg">
+            <span id="ProfileNotice" class="span-14 last black_fg">TO BE OR NOT TO BE THAT IS THE QUESTION!</span>
             <div class="span-14 last">&nbsp;</div>
-        </li>
-      </ul>
-      <ul class="span-14 last center list_style_type_none" id="ProfilePhotoChange" style="display:block;">
-        <li class="span-14 last black_fg">
+        </div>
+      </div>
+      <div class="span-14 last center list_style_type_none" id="ProfilePhotoChange" style="display:block;">
+        <div class="span-14 last black_fg">
             <h2><span class="span-14 last fg_orange bold vtip">My Profile Photo</span></h2>
             <div class="span-14 last">&nbsp;</div>
-        </li>
-        <li class="span-14 last black_fg">
+        </div>
+        <div class="span-14 last black_fg">
             <!--<script type="text/javascript">-->
                 <!--function profilePhotoUpload(){-->
                     <!--$("#file_upload_form").onsubmit=function() {-->
@@ -56,112 +57,29 @@
                   }
                   ">
             </iframe>
-        </li>
-      </ul>
-      <hr/>
-      <ul class="span-14 last center list_style_type_none" id="ProfileURLChange" style="display:block;">
-        <li class="span-14 last black_fg">
+        </div>
+      </div>
+      <hr class="space"/>
+      <hr class="space"/>
+      <div class="span-14 last center list_style_type_none" id="ProfileURLChange" style="display:block;">
+        <div class="span-14 last black_fg">
             <h2><span class="span-14 last fg_orange bold vtip">My Profile Web Address</span></h2>
             <div class="span-14 last">&nbsp;</div>
-        </li>
-        <li class="span-14 last black_fg">
+        </div>
+        <div class="span-14 last black_fg">
             <div class="span-14 last"><h3>Your Profile URL:</h3></div>
-            http://www.ilikeplaces.com/i/<input class="span-6 prepend-4 append-4 last bold" id="ProfileURL"/><a href="#" id="ProfileURLUpdate" class="btn">Update</a>
-            <div class="span-14 last">&nbsp;</div>
-        </li>
-      </ul>
-      <hr/>
-      <ul class="span-14 last center list_style_type_none" id="ProfileForgotPasswordWidget" style="display:none;">
-        <li class="span-14 last black_fg">
-            <h2><span class="span-14 last fg_orange bold vtip">Password</span></h2>
-            <div class="span-14 last">&nbsp;</div>
-        </li>
-        <li class="span-14 last black_fg">
-            <h3><span class="span-14 last fg_orange vtip">Recover Your Password</span></h3>
-            <div class="span-14 last">&nbsp;</div>
-        </li>
-        <li class="span-14 last black_fg">
-            <span id="ProfileForgotPasswordNotice" class="span-14 last black_fg"></span>
-            <div class="span-14 last">&nbsp;</div>
-        </li>
-        <li class="span-14 last black_fg">
-            <div class="span-14 last"><h3>Your Email Address:</h3></div>
-            <input class="span-6 prepend-4 append-4 last bold" id="ProfileForgotPasswordEmailAddress"/>
-            <div class="span-14 last">&nbsp;</div>
-        </li>
-        <li class="span-14 last black_fg">
-            <div class="span-4 prepend-5 append-5 last">
-            <a href="#" id="ProfileForgotPasswordCodeMail" class="btn center">Email me a recovery code</a>
+            <div class="span-14 last vtip" title="Changing this value regularly<br/> might cause confusion<br/> among your friends.">
+                <div class="span-12">
+                    <span class="bold">http://www.ilikeplaces.com/i/</span>&nbsp;<input class="bold" id="ProfileURL"/>
+                </div>
+                <div class="span-2 last">
+                    <a href="#" id="ProfileURLUpdate" class="btn">Update</a>
+                </div>
             </div>
             <div class="span-14 last">&nbsp;</div>
-        </li>
-        <li class="span-14 last black_fg">
-            <div class="span-14 last"><h3>Emailed Code:</h3></div>
-            <input class="span-6 prepend-4 append-4 last bold" id="ProfileForgotPasswordEmailedCode"/>
-            <div class="span-14 last">&nbsp;</div>
-        </li>
-        <li class="span-14 last black_fg">
-            <div class="span-14 last"><h3>New Password:</h3></div>
-            <input class="span-6 prepend-4 append-4 last bold vtip" title="enter a password with 8 or more characters. e.g. Honest_Abe"
-                   id="ProfileForgotPasswordNew"
-                    type="password"/>
-            <div class="span-14 last">&nbsp;</div>
-        </li>
-        <li class="span-14 last black_fg">
-            <div class="span-14 last"><h3>New Password Confirm:</h3></div>
-            <input class="span-6 prepend-4 append-4 last bold vtip" title="enter a password with 8 or more characters. e.g. Honest_Abe"
-                   id="ProfileForgotPasswordNewConfirm"
-                    type="password"/>
-            <div class="span-14 last">&nbsp;</div>
-        </li>
-        <li class="span-14 last black_fg">
-            <div class="span-4 prepend-5 append-5 last">
-            <a href="#" id="ProfileForgotPasswordSave" class="btn center">&nbsp;&nbsp;Save New Password&nbsp;&nbsp;</a>
-            </div>
-        </li>
-    </ul>
-    <hr/>
-    <ul class="span-14 last center list_style_type_none" id="ProfilePasswordWidget" style="display:none;">
-        <li class="span-14 last black_fg">
-            <h2><span class="span-14 last fg_orange bold vtip">Password</span></h2>
-            <div class="span-14 last">&nbsp;</div>
-        </li>
-        <li class="span-14 last black_fg">
-            <h3><span class="span-14 last fg_orange vtip">Edit Your Password</span></h3>
-            <div class="span-14 last">&nbsp;</div>
-        </li>
-        <li class="span-14 last black_fg">
-            <span id="ProfilePasswordNotice" class="span-14 last black_fg"></span>
-            <div class="span-14 last">&nbsp;</div>
-        </li>
-        <li class="span-14 last black_fg">
-            <div class="span-14 last"><h3>Current Password(one that you use now):</h3></div>
-            <div class="span-14 last">&nbsp;</div>
-            <input class="span-6 prepend-4 append-4 last bold" id="ProfilePasswordCurrent" type="password"/>
-            <div class="span-14 last">&nbsp;</div>
-        </li>
-        <li class="span-14 last black_fg">
-            <div class="span-14 last"><h3>New Password:</h3></div>
-            <div class="span-14 last">&nbsp;</div>
-            <input class="span-6 prepend-4 append-4 last bold vtip" title="enter a password with 8 or more characters. e.g. Honest_Abe"
-                   id="ProfilePasswordNew"
-                    type="password"/>
-            <div class="span-14 last">&nbsp;</div>
-        </li>
-        <li class="span-14 last black_fg">
-            <div class="span-14 last"><h3>New Password Confirm:</h3></div>
-            <div class="span-14 last">&nbsp;</div>
-            <input class="span-6 prepend-4 append-4 last bold vtip" title="enter a password with 8 or more characters. e.g. Honest_Abe"
-                   id="ProfilePasswordNewConfirm"
-                    type="password"/>
-            <div class="span-14 last">&nbsp;</div>
-        </li>
-        <li class="span-14 last black_fg">
-            <div class="span-4 prepend-5 append-5 last">
-            <a href="#" id="ProfilePasswordSave" class="btn center">&nbsp;&nbsp;Save New Password&nbsp;&nbsp;</a>
-            </div>
-        </li>
-    </ul>
+        </div>
+      </div>
+    <hr class="space"/>
 </div>
 </body>
 </html>

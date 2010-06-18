@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.Return;
 
 import javax.ejb.Local;
@@ -30,27 +31,29 @@ public interface HumanCRUDPrivateEventLocal {
 
     public Return<Boolean> dirtyRPrivateEventIsViewer(final String humanId, final Long privateEventId);
 
-    public Return<PrivateEvent> uPrivateEventAddOwner(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__, final HumansFriend owner);
+    public Return<PrivateEvent> uPrivateEventAddOwner(final HumanId humanId__, final long privateEventId__, final HumansFriend owner);
 
-    public Return<PrivateEvent> uPrivateEventAddVisitor(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__, final HumansFriend owner);
+    public Return<PrivateEvent> uPrivateEventAddVisitor(final HumanId humanId__, final long privateEventId__, final HumansFriend owner);
 
-    public Return<PrivateEvent> uPrivateEventRemoveOwner(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__, final HumansFriend owner);
+    public Return<PrivateEvent> uPrivateEventRemoveOwner(final HumanId humanId__, final long privateEventId__, final HumansFriend owner);
 
-    public Return<PrivateEvent> uPrivateEventRemoveVisitor(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__, final HumansFriend owner);
+    public Return<PrivateEvent> uPrivateEventRemoveVisitor(final HumanId humanId__, final long privateEventId__, final HumansFriend owner);
 
-    public Return<PrivateEvent> uPrivateEventAddInvite(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__, final HumansFriend owner);
+    public Return<PrivateEvent> uPrivateEventAddInvite(final HumanId humanId__, final long privateEventId__, final HumansFriend owner);
 
-    public Return<PrivateEvent> uPrivateEventAddReject(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__, final HumansFriend owner);
+    public Return<PrivateEvent> uPrivateEventAddReject(final HumanId humanId__, final long privateEventId__, final HumansFriend owner);
 
-    public Return<PrivateEvent> uPrivateEventRemoveInvite(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__, final HumansFriend owner);
+    public Return<PrivateEvent> uPrivateEventRemoveInvite(final HumanId humanId__, final long privateEventId__, final HumansFriend owner);
 
-    public Return<PrivateEvent> uPrivateEventRemoveReject(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__, final HumansFriend owner);
+    public Return<PrivateEvent> uPrivateEventRemoveReject(final HumanId humanId__, final long privateEventId__, final HumansFriend owner);
 
-    public Return<Wall> uPrivateEventAddToWall(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__, final String contentToBeAppended);
+    public Return<Wall> uPrivateEventAddToWall(final HumanId humanId__, final long privateEventId__, final String contentToBeAppended);
 
-    public Return<Wall> uPrivateEventClearWall(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__);
+    public Return<Wall> uPrivateEventAddEntryToWall(final HumanId humanId__, final HumanId msgOwner__,  final long privateEventId__, final String contentToBeAppended);
 
-    public Return<Wall> rPrivateEventReadWall(final ai.ilikeplaces.logic.validators.unit.HumanId humanId__, final long privateEventId__);
+    public Return<Wall> uPrivateEventClearWall(final HumanId humanId__, final long privateEventId__);
+
+    public Return<Wall> rPrivateEventReadWall(final HumanId humanId__, final long privateEventId__);
 
     public Return<Boolean> dPrivateEvent(final String humanId, final long privateEventId);
 }

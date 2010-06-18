@@ -8,6 +8,7 @@ import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.HumansPrivateEvent;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBDishonourException;
 import ai.ilikeplaces.exception.NoPrivilegesException;
 import ai.ilikeplaces.exception.NotFriendsException;
@@ -49,7 +50,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     @OK
     @Override
-    public PrivateEvent doUPrivateEventData(final String humanId__, final long privateEventId__, final String privateEventName__, final String privateEventInfo__, final String privateEventStartDate__, final String privateEventEndDate__) {
+    public PrivateEvent doUPrivateEventData(final String humanId__, final long privateEventId__, final String privateEventName__, final String privateEventInfo__, final String privateEventStartDate__, final String privateEventEndDate__) throws DBDishonourCheckedException {
         final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.find(PrivateEvent.class, privateEventId__);
         if (rPrivateEventLocal_.doDirtyRPrivateEventIsOwner(humanId__, privateEventId__)) {
             throw new NoPrivilegesException(humanId__, UPDATE_EVENT_DATA_OF + privateEvent_.toString());
@@ -74,7 +75,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
     @OK
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateEvent doUPrivateEventAddOwner(final String adder, final long privateEventId__, final HumansFriend addee) {
+    public PrivateEvent doUPrivateEventAddOwner(final String adder, final long privateEventId__, final HumansFriend addee) throws DBDishonourCheckedException {
 
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addee.getHumanId())) {
             throw new NotFriendsException(adder, addee.getHumanId());
@@ -104,12 +105,12 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
             if (!privateEvent_.getPrivateEventOwners().contains(adeehumansPrivateEvent)) {//Concurrent update safe
                 privateEvent_.getPrivateEventOwners().add(adeehumansPrivateEvent);
             } else {
-                throw DBDishonourException.ADDING_AN_EXISTING_VALUE;
+                throw DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE;
             }
             if (!adeehumansPrivateEvent.getPrivateEventsOwned().contains(privateEvent_)) {//Concurrent update safe
                 adeehumansPrivateEvent.getPrivateEventsOwned().add(privateEvent_);
             } else {
-                throw DBDishonourException.ADDING_AN_EXISTING_VALUE;
+                throw DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE;
             }
         }
 
@@ -120,7 +121,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateEvent doUPrivateEventRemoveOwner(final String remover, final long privateEventId__, final HumansFriend removee) {
+    public PrivateEvent doUPrivateEventRemoveOwner(final String remover, final long privateEventId__, final HumansFriend removee) throws DBDishonourCheckedException {
 
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removee.getHumanId())) {
             throw new NotFriendsException(remover, removee.getHumanId());
@@ -148,12 +149,12 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
             if (privateEvent_.getPrivateEventOwners().contains(removeehumansPrivateEvent)) {//Concurrent update safe
                 privateEvent_.getPrivateEventOwners().remove(removeehumansPrivateEvent);
             } else {
-                throw DBDishonourException.REMOVING_A_NON_EXISTING_VALUE;
+                throw DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
             }
             if (removeehumansPrivateEvent.getPrivateEventsOwned().contains(privateEvent_)) {//Concurrent update safe
                 removeehumansPrivateEvent.getPrivateEventsOwned().remove(privateEvent_);
             } else {
-                throw DBDishonourException.REMOVING_A_NON_EXISTING_VALUE;
+                throw DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
             }
         }
 
@@ -164,7 +165,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateEvent doUPrivateEventAddViewer(final String adder, final long privateEventId__, final HumansFriend addee) {
+    public PrivateEvent doUPrivateEventAddViewer(final String adder, final long privateEventId__, final HumansFriend addee) throws DBDishonourCheckedException {
 
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addee.getHumanId())) {
             throw new NotFriendsException(adder, addee.getHumanId());
@@ -194,12 +195,12 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
             if (!privateEvent_.getPrivateEventViewers().contains(adeehumansPrivateEvent)) {//Concurrent update safe
                 privateEvent_.getPrivateEventViewers().add(adeehumansPrivateEvent);
             } else {
-                throw DBDishonourException.ADDING_AN_EXISTING_VALUE;
+                throw DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE;
             }
             if (!adeehumansPrivateEvent.getPrivateEventsViewed().contains(privateEvent_)) {//Concurrent update safe
                 adeehumansPrivateEvent.getPrivateEventsViewed().add(privateEvent_);
             } else {
-                throw DBDishonourException.ADDING_AN_EXISTING_VALUE;
+                throw DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE;
             }
         }
 
@@ -210,7 +211,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateEvent doUPrivateEventRemoveViewer(final String remover, final long privateEventId__, final HumansFriend removee) {
+    public PrivateEvent doUPrivateEventRemoveViewer(final String remover, final long privateEventId__, final HumansFriend removee) throws DBDishonourCheckedException {
 
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removee.getHumanId())) {
             throw new NotFriendsException(remover, removee.getHumanId());
@@ -238,12 +239,12 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
             if (privateEvent_.getPrivateEventViewers().contains(removerhumansPrivateEvent)) {//Concurrent update safe
                 privateEvent_.getPrivateEventViewers().remove(removerhumansPrivateEvent);
             } else {
-                throw DBDishonourException.REMOVING_A_NON_EXISTING_VALUE;
+                throw DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
             }
             if (removerhumansPrivateEvent.getPrivateEventsViewed().contains(privateEvent_)) {//Concurrent update safe
                 removerhumansPrivateEvent.getPrivateEventsViewed().remove(privateEvent_);
             } else {
-                throw DBDishonourException.REMOVING_A_NON_EXISTING_VALUE;
+                throw DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
             }
         }
 
@@ -254,7 +255,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateEvent doUPrivateEventAddInvite(final String adder, final long privateEventId__, final HumansFriend addee) {
+    public PrivateEvent doUPrivateEventAddInvite(final String adder, final long privateEventId__, final HumansFriend addee) throws NoPrivilegesException {
 
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addee.getHumanId())) {
             throw new NotFriendsException(adder, addee.getHumanId());
@@ -300,7 +301,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateEvent doUPrivateEventRemoveInvite(final String remover, final long privateEventId__, final HumansFriend removee) {
+    public PrivateEvent doUPrivateEventRemoveInvite(final String remover, final long privateEventId__, final HumansFriend removee) throws DBDishonourCheckedException {
 
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removee.getHumanId())) {
             throw new NotFriendsException(remover, removee.getHumanId());
@@ -328,12 +329,12 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
             if (privateEvent_.getPrivateEventInvites().contains(removerhumansPrivateEvent)) {//Concurrent update safe
                 privateEvent_.getPrivateEventInvites().remove(removerhumansPrivateEvent);
             } else {
-                throw DBDishonourException.REMOVING_A_NON_EXISTING_VALUE;
+                throw DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
             }
             if (removerhumansPrivateEvent.getPrivateEventsInvited().contains(privateEvent_)) {//Concurrent update safe
                 removerhumansPrivateEvent.getPrivateEventsInvited().remove(privateEvent_);
             } else {
-                throw DBDishonourException.REMOVING_A_NON_EXISTING_VALUE;
+                throw DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
             }
         }
 
@@ -344,7 +345,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateEvent doUPrivateEventAddReject(final String adder, final long privateEventId__, final HumansFriend addee) {
+    public PrivateEvent doUPrivateEventAddReject(final String adder, final long privateEventId__, final HumansFriend addee) throws DBDishonourCheckedException {
 
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addee.getHumanId())) {
             throw new NotFriendsException(adder, addee.getHumanId());
@@ -374,12 +375,12 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
             if (!privateEvent_.getPrivateEventRejects().contains(adeehumansPrivateEvent)) {//Concurrent update safe
                 privateEvent_.getPrivateEventRejects().add(adeehumansPrivateEvent);
             } else {
-                throw DBDishonourException.ADDING_AN_EXISTING_VALUE;
+                throw DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE;
             }
             if (!adeehumansPrivateEvent.getPrivateEventsRejected().contains(privateEvent_)) {//Concurrent update safe
                 adeehumansPrivateEvent.getPrivateEventsRejected().add(privateEvent_);
             } else {
-                throw DBDishonourException.ADDING_AN_EXISTING_VALUE;
+                throw DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE;
             }
         }
 
@@ -390,7 +391,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateEvent doUPrivateEventRemoveReject(final String remover, final long privateEventId__, final HumansFriend removee) {
+    public PrivateEvent doUPrivateEventRemoveReject(final String remover, final long privateEventId__, final HumansFriend removee) throws DBDishonourCheckedException {
 
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removee.getHumanId())) {
             throw new NotFriendsException(remover, removee.getHumanId());
@@ -418,12 +419,12 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
             if (privateEvent_.getPrivateEventRejects().contains(removerhumansPrivateEvent)) {//Concurrent update safe
                 privateEvent_.getPrivateEventRejects().remove(removerhumansPrivateEvent);
             } else {
-                throw DBDishonourException.REMOVING_A_NON_EXISTING_VALUE;
+                throw DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
             }
             if (removerhumansPrivateEvent.getPrivateEventsRejected().contains(privateEvent_)) {//Concurrent update safe
                 removerhumansPrivateEvent.getPrivateEventsRejected().remove(privateEvent_);
             } else {
-                throw DBDishonourException.REMOVING_A_NON_EXISTING_VALUE;
+                throw DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
             }
         }
 

@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.logic.crud.unit.CPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.DPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.RPrivateLocationLocal;
@@ -24,7 +25,7 @@ import javax.interceptor.Interceptors;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class})
+@Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements HumanCRUDPrivateLocationLocal {
 
     @EJB
@@ -55,11 +56,7 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
     @Override
     public Return<PrivateLocation> cPrivateLocation(final String humanId, final String privateLocationName, final String privateLocationInfo) {
         Return<PrivateLocation> r;
-        try {
-            r = new ReturnImpl<PrivateLocation>(cPrivateLocationLocal.doNTxCPrivateLocation(humanId, privateLocationName, privateLocationInfo), SAVE_PRIVATE_LOCATION_SUCCESSFUL);
-        } catch (final Throwable t) {
-            r = new ReturnImpl<PrivateLocation>(t, SAVE_PRIVATE_LOCATION_FAILED, true);
-        }
+        r = new ReturnImpl<PrivateLocation>(cPrivateLocationLocal.doNTxCPrivateLocation(humanId, privateLocationName, privateLocationInfo), SAVE_PRIVATE_LOCATION_SUCCESSFUL);
         return r;
 
     }
@@ -71,7 +68,7 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
         Return<PrivateLocation> r;
         try {
             r = new ReturnImpl<PrivateLocation>(uPrivateLocationLocal.doUPrivateLocationAddOwner(humanId__.getObj(), privateLocationId__, owner), UPDATE_PRIVATE_LOCATION_SUCCESSFUL);
-        } catch (final Throwable t) {
+        } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateLocation>(t, UPDATE_PRIVATE_LOCATION_FAILED, true);
         }
         return r;
@@ -82,7 +79,7 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
         Return<PrivateLocation> r;
         try {
             r = new ReturnImpl<PrivateLocation>(uPrivateLocationLocal.doUPrivateLocationRemoveOwner(humanId__.getObj(), privateLocationId__, owner), UPDATE_PRIVATE_LOCATION_SUCCESSFUL);
-        } catch (final Throwable t) {
+        } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateLocation>(t, UPDATE_PRIVATE_LOCATION_FAILED, true);
         }
         return r;
@@ -93,7 +90,7 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
         Return<PrivateLocation> r;
         try {
             r = new ReturnImpl<PrivateLocation>(uPrivateLocationLocal.doUPrivateLocationAddViewer(humanId__.getObj(), privateLocationId__, owner), UPDATE_PRIVATE_LOCATION_SUCCESSFUL);
-        } catch (final Throwable t) {
+        } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateLocation>(t, UPDATE_PRIVATE_LOCATION_FAILED, true);
         }
         return r;
@@ -104,7 +101,7 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
         Return<PrivateLocation> r;
         try {
             r = new ReturnImpl<PrivateLocation>(uPrivateLocationLocal.doUPrivateLocationRemoveViewer(humanId__.getObj(), privateLocationId__, owner), UPDATE_PRIVATE_LOCATION_SUCCESSFUL);
-        } catch (final Throwable t) {
+        } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateLocation>(t, UPDATE_PRIVATE_LOCATION_FAILED, true);
         }
         return r;
@@ -116,7 +113,7 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
         Return<PrivateLocation> r;
         try {
             r = new ReturnImpl<PrivateLocation>(rPrivateLocationLocal.doDirtyRPrivateLocation(humanId, privateLocationId), READ_PRIVATE_LOCATION_SUCCESSFUL);
-        } catch (final Throwable t) {
+        } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateLocation>(t, READ_PRIVATE_LOCATION_FAILED, true);
         }
         return r;
@@ -129,7 +126,7 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
         Return<Boolean> r;
         try {
             r = new ReturnImpl<Boolean>(rPrivateLocationLocal.doDirtyRPrivateLocationIsOwner(humanId, privateLocationId), CHECK_OWNERSHIP_OF_PRIVATE_LOCATION_SUCCESSFUL);
-        } catch (final Throwable t) {
+        } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Boolean>(t, CHECK_OWNERSHIP_OF_PRIVATE_LOCATION_FAILED, true);
         }
         return r;
@@ -141,7 +138,7 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
         Return<Boolean> r;
         try {
             r = new ReturnImpl<Boolean>(rPrivateLocationLocal.doDirtyRPrivateLocationIsViewer(humanId, privateLocationId), CHECK_VIEWERSHIP_OF_PRIVATE_LOCATION_SUCCESSFUL);
-        } catch (final Throwable t) {
+        } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Boolean>(t, CHECK_VIEWERSHIP_OF_PRIVATE_LOCATION_FAILED, true);
         }
         return r;
@@ -150,11 +147,7 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
     @Override
     public Return<Boolean> dPrivateLocation(final String humanId, final long privateLocationId) {
         Return<Boolean> r;
-        try {
-            r = new ReturnImpl<Boolean>(dPrivateLocationLocal.doNTxDPrivateLocation(humanId, privateLocationId), DELETE_PRIVATE_LOCATION_SUCCESSFUL);
-        } catch (final Throwable t) {
-            r = new ReturnImpl<Boolean>(t, DELETE_PRIVATE_LOCATION_FAILED, true);
-        }
+        r = new ReturnImpl<Boolean>(dPrivateLocationLocal.doNTxDPrivateLocation(humanId, privateLocationId), DELETE_PRIVATE_LOCATION_SUCCESSFUL);
         return r;
 
     }

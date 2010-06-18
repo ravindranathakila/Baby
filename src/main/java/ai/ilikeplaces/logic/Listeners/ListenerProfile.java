@@ -1,27 +1,21 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.logic.Listeners.widgets.DisplayName;
-import ai.ilikeplaces.logic.Listeners.widgets.ForgotPasswordManager;
-import ai.ilikeplaces.logic.Listeners.widgets.PasswordManager;
-import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
+import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.AbstractListener;
+import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.MarkupTag;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
-import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.itsnat.core.http.ItsNatHttpSession;
 import org.w3c.dom.Element;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
 import java.util.ResourceBundle;
@@ -124,26 +118,8 @@ public class ListenerProfile implements ItsNatServletRequestListener {
                         {
                             new PasswordManager(itsNatDocument__, $(Skeleton_center_content), new HumanId(getUsernameAsValid()), ((ItsNatHttpSession) request__.getItsNatSession()).getHttpSession()) {
                             };
-                            displayBlock($(ProfilePhotoChange));
 
-                            final Element e = ElementComposer.compose($(MarkupTag.TEXTAREA)).get();
-                            $(Skeleton_center_content).appendChild(e);
-
-                            itsNatHTMLDocument__.addEventListener((EventTarget) e, EventType.BLUR.toString(), new EventListener() {
-
-                                @Override
-                                @FIXME
-                                public void handleEvent(final Event evt_) {
-                                    final String url = ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value());
-                                    DB.getHumanCRUDHumanLocal(true).doUHumansPublicURL(new HumanId(getUsernameAsValid()), url);
-                                }
-
-                                @Override
-                                public void finalize() throws Throwable {
-                                    Loggers.finalized(this.getClass().getName());
-                                    super.finalize();
-                                }
-                            }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+                            new Profile(itsNatDocument__, $(Skeleton_center_content), new HumanId(getUsernameAsValid()));
                         }
 
                     } catch (final Throwable t) {
@@ -154,7 +130,6 @@ public class ListenerProfile implements ItsNatServletRequestListener {
                         {
                             new ForgotPasswordManager(itsNatDocument__, $(Skeleton_center_content), ((ItsNatHttpSession) request__.getItsNatSession()).getHttpSession()) {
                             };
-                            displayNone($(ProfilePhotoChange));
                         }
 
                     } catch (final Throwable t) {

@@ -15,6 +15,7 @@
             <property name="openjpa.ConnectionUserName" value="ilp"/>
             <property name="openjpa.ConnectionPassword" value="ilp"/>
             <property name="openjpa.ConnectionURL" value="jdbc:derby://localhost:1527/ilp"/-->
+      <!--<property name="openjpa.jdbc.UpdateManager" value="operation-order"/>-->
       <property name="openjpa.Log" value="DefaultLevel=WARN,Runtime=INFO"/>
     </properties>
   </persistence-unit>

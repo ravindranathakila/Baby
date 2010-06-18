@@ -17,6 +17,8 @@ public interface Return<T> {
 
     public int returnStatus();
 
+    public long returnErrorSeqCode();
+
     public T returnValue();
 
     public T returnValueBadly();

@@ -45,7 +45,7 @@ var ilp_tagLines = ["it's social, it's real!",
                     "go to hell! that's a place! even hell is fun at i like places!",
                     "if u keep messing with me, i'll take u places!",
                     "get lost.. in some place!",
-                    "whenever u say home, we say places. is that ok?!",
+                    "whenever u say home, we say places!",
                     "i'm done with you, go somewhere!",
                     "is this some kind of joke? go some other place!",
                     "i can't quite place u, where r u from?!",
@@ -70,10 +70,10 @@ this.vtip = function() {
 
     $(".vtip").unbind().hover(
         function(e) {
-            this.t = (this.title == undefined || this.title == '') ? ilp_getRandomTagLine() : this.title;
+            this.t = (this.title == undefined || this.title == 'undefined' || this.title == '') ? ilp_getRandomTagLine() : this.title;
             this.title = '';
 
-	    this.top = (e.pageY + yOffset); this.left = (e.pageX + xOffset);
+	        this.top = (e.pageY + yOffset); this.left = (e.pageX + xOffset);
 
             $('body').append( '<p id="vtip"><img id="vtipArrow" />' + this.t + '</p>' );
 
