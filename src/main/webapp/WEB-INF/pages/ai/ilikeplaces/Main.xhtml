@@ -6,10 +6,10 @@
         <title id="mainTitle">
             Discover and Have Fun in Places!
         </title>
-        <link rel="icon" type="image/ico" href="/favicon.ico"/>        
+        <link rel="icon" type="image/ico" href="/favicon.ico"/>
         <!-- START STATIC IMPORTS -->
-        <link href='http://fonts.googleapis.com/css?family=Tangerine' rel='stylesheet' type='text/css'/>
-        <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'/>
+        <!--<link href='http://fonts.googleapis.com/css?family=Tangerine' rel='stylesheet' type='text/css'/>-->
+        <!--<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'/>-->
 
         <!-- Framework CSS -->
         <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection"/>
@@ -50,6 +50,74 @@
             .just_link A:active {text-decoration: none}
             .just_link A:hover {text-decoration: none}
         </style>
+        <style type="text/css">
+			#progress-bar {
+			   background: url(/images/percentage-bg.png) no-repeat left center;
+			   width: 316px;
+			   height: 39px;
+			   margin: 0 auto;
+				}
+			#ilp_current_operation_ {
+			   width: 250px;
+			   height: 39px;
+			   margin: 0 auto;
+				}
+			#progress-level {
+			   background: url(/images/progress.png) no-repeat left center;
+			   width: 0%;
+			   height: 39px;
+			}
+        </style>
+		        
+        <script type="text/javascript">
+			ilp_progressing = false;
+			ilp_progressing_gm = "";
+			ilp_current_percent = 0;
+            function ilp_progress(percent,msg){
+			ilp_progressing_gm = msg;
+				if(ilp_progressing){
+					clearTimeout(to1);
+					clearTimeout(to2);
+					clearTimeout(to3);
+					clearTimeout(to4);
+				}
+				
+				if(percent == 100){
+				percent = percent - 5;
+					setTimeout("ilp_progress_finalize()",14000);
+				}
+				
+				ilp_progress_incr(percent);			
+
+				if(percent){
+					var to1 = setTimeout( "ilp_progress_incr("+(percent+1)+")", 4000);
+					var to2 = setTimeout( "ilp_progress_incr("+(percent+2)+")", 8000);
+					var to3 = setTimeout( "ilp_progress_incr("+(percent+3)+")", 8400);
+					var to4 = setTimeout( "ilp_progress_incr("+(percent+4)+")", 12000);
+					ilp_progressing = true;
+				}else{
+					ilp_progressing = false;
+				}
+			}
+			
+			function ilp_progress_finalize(){
+				document.getElementById('ilp_progress_block').setAttribute('style','display:none;');
+				document.getElementById('ilp_main_content').setAttribute('style','display:block;');
+				ilp_load_map();
+			}
+			
+			function ilp_progress_incr(percent){
+				percent = percent > 100 ? 100 : percent;
+				if(percent > ilp_current_percent){
+					ilp_current_percent = percent;
+					document.getElementById('ilp_current_operation').innerHTML = ilp_progressing_gm + ".. " + percent+"%";				
+					document.getElementById('progress-level').setAttribute(
+					"style",
+					'background: url(/images/progress.png) no-repeat left center;height: 39px;width:'+percent+'%;');	
+				}				
+			}
+        </script>
+		        
         <script type="text/javascript">
             addthis_config = {
                 data_track_clickback: true
@@ -72,11 +140,28 @@
           })();
 
         </script>
-        
     </head>
     <body style="background:white;" id="body" class="vtip" title="Next photo: Ctrl + ]<br/>Previous photo: Ctrl + [<br/>Vanish(7 secs): Ctrl + \\<br/>Photo Page: Ctrl + ;<br/>Owner Page: Ctrl + '<br/>Panoramio photos are copyrighted by their owners">
-        <div id="Main_display" class="container" itsnat:nocache="true" style="display:block;background:white;opacity:0.9; filter:alpha(opacity=90)">
-            <div class="span-24 last">
+		<div id="Main_display" class="container" itsnat:nocache="true" style="display:block;background:white;opacity:0.9; filter:alpha(opacity=90)">
+			<div class="span-24 last" id="ilp_progress_block" style="display:block">
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<div id="progress-bar">
+					<div id="progress-level"></div>
+				</div>
+				<div class="span-24 last" >
+					<div class="span-2 prepend-8 last center">
+						<img class="center" src="/images/circle.gif" height="18px"/>
+					</div>
+					<div class="span-6 append-8 last left bold" id="ilp_current_operation">Loading...</div>
+					<hr class="space"/>
+					<div class="span-4 prepend-10 append-10 last left bold"><a href="#" style="font-size:10px;" onclick="ilp_progress_finalize();">i'm in a hurry! show anyway...</a></div>
+				</div>
+			</div>
+            <div class="span-24 last" id="ilp_main_content" style="display:none;">
                 <div class="span-24 last height_5 bg_a9abf1 ntyST">
                     &nbsp;
                 </div>
@@ -139,7 +224,7 @@
                                 <div class="span-5 last height_10">
                                     &nbsp;
                                 </div>
-                                <div class="span-5 last">
+                                <div class="span-5 last" >
                                     <div class="span-5 last height_30" itemprop="rating" property="v:rating" content="2.5">
                                         <div class="span-1 inherit_height">
                                             <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/star_32.png" class="inherit_height nav_link_img" alt="Attributed to http://www.picol.org" />
@@ -237,16 +322,10 @@
                                 <div class="span-5 last">                                     
                                        <div class="span-5 last" style="overflow:hidden;">
 									   
-<iframe src="http://www.facebook.com/plugins/likebox.php?id=366834296743&amp;width=190&amp;connections=6&amp;stream=false&amp;header=false&amp;height=255" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:190px; height:255px;" allowTransparency="true"></iframe>
+<!--<iframe src="http://www.facebook.com/plugins/likebox.php?id=366834296743&amp;width=190&amp;connections=6&amp;stream=false&amp;header=false&amp;height=255" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:190px; height:255px;" allowTransparency="true"></iframe>-->
 <!-- The one below gives the wall feed -->
 <!--iframe src="http://www.facebook.com/plugins/likebox.php?id=366834296743&amp;width=190&amp;connections=3&amp;stream=true&amp;header=false&amp;height=555" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:190px; height:555px;" allowTransparency="true"></iframe-->
                                        </div>
-                                </div>
-                                <div class="span-5 last">
-                                    <div class="span-5 last">
-
-<iframe src="http://www.facebook.com/plugins/likebox.php?id=366834296743&amp;width=190&amp;connections=0&amp;stream=true&amp;header=false&amp;height=395" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:550px; height:395px;" allowTransparency="true"></iframe>
-									</div>
                                 </div>
                             </div>
                         </div>
@@ -275,7 +354,7 @@
                             </div>
                             <div class="span-14 last" id="Main_center_main">
                                 <div class="span-14 last" style="overflow:hidden;">
-                                    <div id="map" class="vtip" title="<i>Double-click to Zoom<br/>Links open in new tabs</i>" style="height:400px;"></div>
+                                    <div id="map" class="vtip" title="<i>Double-click to Zoom<br/>Links open in new tabs</i>" style="height:410px;"></div>
                                 </div>
 								
                                 <div id="Main_notice_sh" class="span-14 last" style="display:block;">
@@ -516,7 +595,7 @@
                                 &nbsp;
                             </div>
                             <div class="span-5 last">
-                                <div class="span-5 last just_link">
+                                <!--div class="span-5 last just_link">
                                       <a href="" onclick="javascript:$.prompt('Just');"
                                          style="font-size:19px;">
                                           <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/security_closed_32.png"
@@ -524,7 +603,7 @@
                                                             height="19px"                       
                                                             alt="Customer Care Image"/>&nbsp;Credit Card Safety
                                       </a>
-                                 </div>
+                                 </div-->
                                   <div class="span-5 last just_link">
                                       <a href="http://travel.ilikeplaces.com/index.jsp?pageName=hotelFaq&currencyCode=USD&additionalDataString=vrBookingSource%7Cindex&locale=en_US_US&cid=317285#5"
                                          style="font-size:19px;">
@@ -580,36 +659,46 @@
                 </div>
             </div>
         </div>
+        <!--Expected to be cached in use since wide usage-->
+	    <script type="text/javascript">ilp_progress(10,document.title.split('?')[0]);</script>
+        <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
 
-        <!--script type="text/javascript" src="/js/jquery-1.3.2.js"></script>-->
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-
-        <script type="text/javascript" src="/js/miniquarry/vtip.js"></script>
-        <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/vtip.js"></script>-->
-
+            <script type="text/javascript">ilp_progress(35,'Loading utilities...');</script>
         <script type="text/javascript" src="/js/miniquarry/util.js"></script>
 
+	    <script type="text/javascript">ilp_progress(40,'Loading search filters...');</script>
         <script type="text/javascript" src="/js/jquery.livesearch.js"></script>
         <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/jquery.livesearch.js"></script>-->
 
+	    <script type="text/javascript">ilp_progress(45,'Loading event monitors...');</script>
         <script type="text/javascript" src="/js/miniquarry/ItsNatEventMonitor.js"></script>
-        <script type="text/javascript" src="/js/jquery.yoxview/yoxview-init.js"></script>
-        <script type="text/javascript" src="/js/jquery.yoxview/jquery.yoxview-0.9.min.js"></script>
-        <script type="text/javascript" src="/js/jquery.yoxview/jquery.timers-1.2.min.js"></script>
+		
+	    <script type="text/javascript">ilp_progress(50,'Loading  special effects...');</script>
         <script type="text/javascript" src="/js/miniquarry/Nifty.onload.js"></script>
-        <script type="text/javascript" src="/nifty/niftycube.js"></script>
 
-        <script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAHZRdzKv28xq0_XcHxHxXfBS9EVSNZwL5zfIrTpz_X5_CttifKhS-WLi0e8kEMyJzCwXGhjISm8sYnA"></script>
-        <script type="text/javascript" src="/js/jquery.gmap-1.0.3.js"></script>
         <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/jquery.gmap-1.1.0-min.js"></script>-->
 
         <!-- script type="text/javascript" src="http://www.panoramio.com/wapi/wapi.js?v=1"></script -->        
 
-        <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=ravindranathakila"></script>
 
-        <!-- script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAHZRdzKv28xq0_XcHxHxXfBS9EVSNZwL5zfIrTpz_X5_CttifKhS-WLi0e8kEMyJzCwXGhjISm8sYnA"></script -->
- 
-		<script type="text/javascript" src="/js/miniquarry/jquery.ready.yox.js"></script>
+        <script type="text/javascript" src="/js/miniquarry/vtip.js"></script>
+        <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/vtip.js"></script>-->
+
+        <script type="text/javascript">ilp_progress(50,'Loading location map...');</script>
+        <script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAHZRdzKv28xq0_XcHxHxXfBS9EVSNZwL5zfIrTpz_X5_CttifKhS-WLi0e8kEMyJzCwXGhjISm8sYnA"></script>
+        <script type="text/javascript" src="/js/jquery.gmap-1.0.3.js"></script>
+
+        <script type="text/javascript" src="/js/miniquarry/jquery.ready.yox.js"></script>
+
+        <script type="text/javascript" src="/nifty/niftycube.js"></script>
+        
+        <!--AddThis runs only after page load so is in the end-->
+	    <script type="text/javascript">ilp_progress(55,'Loading social network data...');</script>
+        <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=ravindranathakila"></script>
+        
+        <script type="text/javascript" src="/js/jquery.yoxview/yoxview-init.js"></script>
+        <script type="text/javascript" src="/js/jquery.yoxview/jquery.yoxview-0.9.min.js"></script>
+        <script type="text/javascript" src="/js/jquery.yoxview/jquery.timers-1.2.min.js"></script>
 
 
         <!--script type="text/javascript" src="http://c0804152.cdn.cloudfiles.rackspacecloud.com/getflickr.js"></script-->
@@ -619,7 +708,5 @@
 
         <script type="text/javascript" src="/js/miniquarry/ajaxupload.3.5.js"></script>
         <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/ajaxupload.3.5.j"></script>-->
-
-
     </body>
 </html>
