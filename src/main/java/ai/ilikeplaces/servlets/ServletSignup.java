@@ -1,9 +1,6 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.doc.FIXME;
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.Email;
@@ -31,7 +28,7 @@ import java.util.ResourceBundle;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@FIXME(issue = "XSS")
+@OK(details = "Reviewed:20100620")
 final public class ServletSignup extends HttpServlet {
 
     final Logger logger = LoggerFactory.getLogger(ServletSignup.class.getName());
@@ -92,9 +89,6 @@ final public class ServletSignup extends HttpServlet {
         }
         final String username = request__.getParameter(Username);/*DO NOT ASSIGN TO NEW STRING. NULL REPRESENTS FIRST ENTRANCE*/
         final String password = request__.getParameter(Password);/*DO NOT ASSIGN TO NEW STRING. NULL REPRESENTS FIRST ENTRANCE*/
-//        final String email = request__.getParameter(Email);/*DO NOT ASSIGN TO NEW STRING. NULL REPRESENTS FIRST ENTRANCE*/
-//        final String gender = request__.getParameter(Gender);/*DO NOT ASSIGN TO NEW STRING. NULL REPRESENTS FIRST ENTRANCE*/
-//        final String dateOfBirth = request__.getParameter(DateOfBirth);/*DO NOT ASSIGN TO NEW STRING. NULL REPRESENTS FIRST ENTRANCE*/
 
         processSignup:
         {
@@ -146,9 +140,6 @@ final public class ServletSignup extends HttpServlet {
             Remember though, we will never be using these values for persisting, as a conventioin.*/
             userSession_.setAttribute(Username, username);
             userSession_.setAttribute(Password, EMPTY);
-//            userSession_.setAttribute(Email, email);
-//            userSession_.setAttribute(Gender, gender);
-//            userSession_.setAttribute(DateOfBirth, dateOfBirth);
 
             Boolean allParametersNotOkFlag = Boolean.FALSE;
             /**
@@ -191,49 +182,6 @@ final public class ServletSignup extends HttpServlet {
                         logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0007"));
                     }
                 }
-
-//                validate_email:
-//                {
-//                    if (email == null || email.equals("") || email.equals("null")) {/*email*/
-//                        userSession_.setAttribute(EmailError, ErrorStatusTrue);
-//                        userSession_.setAttribute(EmailErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0002"));
-//                        allParametersNotOkFlag = Boolean.TRUE;
-//                    } else {
-//                        logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0008"));
-//                    }
-//                }
-//
-//                validate_gender:
-//                {
-//                    if (gender == null || gender.equals("") || gender.equals("null")) {/*gender*/
-//                        userSession_.setAttribute(GenderError, ErrorStatusTrue);
-//                        userSession_.setAttribute(GenderErrorMsg, gender);
-//                        allParametersNotOkFlag = Boolean.TRUE;
-//                    }   else {
-//                        logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0009"));
-//                    }
-//                }
-//
-//                validate_dateOfBirth:
-//                {
-//                    if (dateOfBirth == null || dateOfBirth.equals("") || dateOfBirth.equals("null")) {/*dateofbirth*/
-//                        userSession_.setAttribute(DateOfBirthError, ErrorStatusTrue);
-//                        userSession_.setAttribute(DateOfBirthErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0002"));
-//                        allParametersNotOkFlag = Boolean.TRUE;
-//                    } else {
-//                        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD");
-//                        try {
-//                            sdf.parse(dateOfBirth);
-//                            logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0010"));
-//                            logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletSignup.0010"));
-//                        } catch (final ParseException e) {
-//                            //logger.error("{}", e);
-//                            userSession_.setAttribute(DateOfBirthError, ErrorStatusTrue);
-//                            userSession_.setAttribute(DateOfBirthErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0005"));
-//                            allParametersNotOkFlag = Boolean.TRUE;
-//                        }
-//                    }
-//                }
             }
 
 
@@ -243,7 +191,11 @@ final public class ServletSignup extends HttpServlet {
             }
 
             try {
-                final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doCHuman(new HumanId(username), new Password(password), new Email(username));
+                final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                        new HumanId().setObjAsValid(username),
+                        new Password().setObjAsValid(password),
+                        new Email().setObjAsValid(username));
+                
                 if (r.returnStatus() != 0) {
                     throw r.returnError();
                 } else {
@@ -251,7 +203,7 @@ final public class ServletSignup extends HttpServlet {
                         SendMail.getSendMailLocal().sendAsSimpleText(
                                 username,
                                 gUI.getString("SIGNUP_HEADER"),
-                                MessageFormat.format(gUI.getString("SIGNUP_BODY"), RBGet.config.getString("noti_mail")));
+                                MessageFormat.format(gUI.getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail")));
                     } catch (final Throwable t) {
                         Loggers.EXCEPTION.error("{}", t);
                     }
@@ -278,7 +230,6 @@ final public class ServletSignup extends HttpServlet {
     final private int signUpSleep() {
         return RBGet.getGlobalConfigKey("signUpSleep") != null ? Integer.parseInt(RBGet.getGlobalConfigKey("signUpSleep")) : 1;
     }
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
     /**
      * Handles the HTTP <code>GET</code> method.

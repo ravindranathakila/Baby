@@ -64,7 +64,7 @@
 				}
 			#progress-level {
 			   background: url(/images/progress.png) no-repeat left center;
-			   width: 0%;
+			   width: 100%;
 			   height: 39px;
 			}
         </style>
@@ -100,10 +100,18 @@
 				}
 			}
 			
+			function ilp_load_map(){
+			}			
+			
 			function ilp_progress_finalize(){
-				document.getElementById('ilp_progress_block').setAttribute('style','display:none;');
-				document.getElementById('ilp_main_content').setAttribute('style','display:block;');
+				document.getElementById('ilp_progress_block').style.display = 'none';
+				document.getElementById('ilp_main_content').style.display = 'block';
 				ilp_load_map();
+			}
+			
+			function ilp_progress_initialize(){
+				document.getElementById('ilp_main_content').style.display = 'none';
+				document.getElementById('ilp_progress_block').style.display = 'block';
 			}
 			
 			function ilp_progress_incr(percent){
@@ -114,6 +122,9 @@
 					document.getElementById('progress-level').setAttribute(
 					"style",
 					'background: url(/images/progress.png) no-repeat left center;height: 39px;width:'+percent+'%;');	
+					
+					//document.getElementById('progress-level').style.background = 'url(/images/progress.png) no-repeat left center;height: 39px;width:'+percent+'%;';	
+					
 				}				
 			}
         </script>
@@ -141,9 +152,11 @@
 
         </script>
     </head>
-    <body style="background:white;" id="body" class="vtip" title="Next photo: Ctrl + ]<br/>Previous photo: Ctrl + [<br/>Vanish(7 secs): Ctrl + \\<br/>Photo Page: Ctrl + ;<br/>Owner Page: Ctrl + '<br/>Panoramio photos are copyrighted by their owners">
+    <body style="background:white;" id="body"
+    	class="vtip" title="Next photo: Ctrl + ]<br/>Previous photo: Ctrl + [<br/>Vanish(7 secs): Ctrl + \\<br/>Photo Page: Ctrl + ;<br/>Owner Page: Ctrl + '<br/>Panoramio photos are copyrighted by their owners"
+        >
 		<div id="Main_display" class="container" itsnat:nocache="true" style="display:block;background:white;opacity:0.9; filter:alpha(opacity=90)">
-			<div class="span-24 last" id="ilp_progress_block" style="display:block">
+			<div class="span-24 last" id="ilp_progress_block" style="display:none">
 				<br/>
 				<br/>
 				<br/>
@@ -161,7 +174,7 @@
 					<div class="span-4 prepend-10 append-10 last left bold"><a href="#" style="font-size:10px;" onclick="ilp_progress_finalize();">i'm in a hurry! show anyway...</a></div>
 				</div>
 			</div>
-            <div class="span-24 last" id="ilp_main_content" style="display:none;">
+            <div class="span-24 last" id="ilp_main_content" style="display:block;">
                 <div class="span-24 last height_5 bg_a9abf1 ntyST">
                     &nbsp;
                 </div>
@@ -225,7 +238,8 @@
                                     &nbsp;
                                 </div>
                                 <div class="span-5 last" >
-                                    <div class="span-5 last height_30" itemprop="rating" property="v:rating" content="2.5">
+                                    <div class="span-5 last height_30" itemprop="rating" property="v:rating" content="2.5"
+                                         onclick='javascript:ILP_REFERER();'>
                                         <div class="span-1 inherit_height">
                                             <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/star_32.png" class="inherit_height nav_link_img" alt="Attributed to http://www.picol.org" />
                                         </div>
@@ -360,7 +374,7 @@
                                 <div id="Main_notice_sh" class="span-14 last" style="display:block;">
                                 </div>
                                 <div class="span-14 last" style="display:block;">
-                                    <div class="span-14 last bg_e9eaff fg_a9abf1 nty">
+                                    <div class="span-14 last fg_a9abf1">
                                         <div class="span-14 last">
                                             <div class="span-14 last">
                                                 <br/>
@@ -659,8 +673,12 @@
                 </div>
             </div>
         </div>
+        <!--Initializing Progress Check-->
+	    <script type="text/javascript">ilp_progress_initialize();</script>
+
+        
         <!--Expected to be cached in use since wide usage-->
-	    <script type="text/javascript">ilp_progress(10,document.title.split('?')[0]);</script>
+	    <script type="text/javascript">ilp_progress(20,document.title.split('?')[0]);</script>
         <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
 
             <script type="text/javascript">ilp_progress(35,'Loading utilities...');</script>
@@ -708,5 +726,29 @@
 
         <script type="text/javascript" src="/js/miniquarry/ajaxupload.3.5.js"></script>
         <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/ajaxupload.3.5.j"></script>-->
+		
+		<!--script type="text/javascript" src="http://ilikeplaces.disqus.com/embed.js"></script-->
+
+        <script type="text/javascript">
+            var ILP_REFERER = function(){
+            $.prompt("Rating is based on number and quality of referals to this page. Click here to " +
+                     "<a href='http://www.addthis.com/bookmark.php' target='_blank'>SHARE</a>",
+                        {
+                                buttons:
+                                 {
+                                    Share:true,
+                                    Later:false
+                                 },
+                                submit:function(v,m,f)
+                                 {
+                                   if(v){
+                                     window.open("http://www.addthis.com/bookmark.php","Share This Place!","width=500,menubar=no");
+                                   }
+                                 }
+                                
+                        }
+            );
+            }
+        </script>
     </body>
 </html>

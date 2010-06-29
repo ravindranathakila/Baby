@@ -38,6 +38,18 @@ final public class
 
     @NOTE(note = "Inner Enums are static. Therefore, the lists shall be populated only once.")
     public enum Page implements PageFace {
+        Album("ai/ilikeplaces/widgets/Album.xhtml",
+               Controller.Page.AlbumNotice
+        ) {
+            @Override
+            public String toString() {
+                return DocAlbum;
+            }
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
         UserProperty("ai/ilikeplaces/widgets/UserProperty.xhtml",
                 Controller.Page.user_property_profile_photo,
                 Controller.Page.user_property_name,
@@ -50,7 +62,8 @@ final public class
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }},
+            }
+        },
 
 
         ProfileWidget("ai/ilikeplaces/widgets/profile.xhtml",
@@ -148,7 +161,8 @@ final public class
                 Controller.Page.privateEventViewInfo,
                 Controller.Page.privateEventViewOwners,
                 Controller.Page.privateEventViewVisitors,
-                Controller.Page.privateEventViewLink
+                Controller.Page.privateEventViewLink,
+                Controller.Page.privateEventViewWall
         ) {
 
             @Override
@@ -171,7 +185,7 @@ final public class
                 Controller.Page.privateEventDeleteOwners,
                 Controller.Page.privateEventDeleteVisitors,
                 Controller.Page.privateEventDeleteInvitees,
-                Controller.Page.privateEventWall
+                Controller.Page.privateEventDeleteWall
         ) {
 
             @Override
@@ -443,6 +457,7 @@ final public class
         },
         LocationMain(
                 "ai/ilikeplaces/Main.xhtml",
+                Controller.Page.body,
                 Controller.Page.mainTitle,
                 Controller.Page.mainMetaDesc,
                 Controller.Page.Main_othersidebar_identity,
@@ -578,6 +593,11 @@ final public class
             }
         };
 
+        /*Album Page*/
+        final static public String DocAlbum = "DocAlbum";
+        /*Album IDs*/
+        final static public String AlbumNotice = "AlbumNotice";
+
         /*ProfileWidget Page*/
         final static public String DocUserProperty = "DocUserProperty";
         /*ProfileWidget IDs*/
@@ -639,6 +659,7 @@ final public class
         final static public String privateEventViewOwners = "privateEventViewOwners";
         final static public String privateEventViewVisitors = "privateEventViewVisitor";
         final static public String privateEventViewLink = "privateEventViewLink";
+        final static public String privateEventViewWall = "privateEventViewWall";
 
         /*Private Event Page*/
         final static public String DocPrivateEventCreate = "PrivateEventCreate";
@@ -659,7 +680,7 @@ final public class
         final static public String privateEventDeleteOwners = "privateEventDeleteOwners";
         final static public String privateEventDeleteVisitors = "privateEventDeleteVisitors";
         final static public String privateEventDeleteInvitees = "privateEventDeleteInvitees";
-        final static public String privateEventWall = "privateEventWall";
+        final static public String privateEventDeleteWall = "privateEventDeleteWall";
 
         /*FindFriend Page*/
         final static public String DocFindFriend = "DocFindFriend";
@@ -799,6 +820,7 @@ final public class
         final static public String DocLocation = "DocLocation";
 
         /*Main Specific IDs*/
+        final static public String body = "body";
         final static public String mainTitle = "mainTitle";
         final static public String mainMetaDesc = "mainMetaDesc";
         final static public String Main_othersidebar_identity = "Main_othersidebar_identity";
@@ -941,6 +963,7 @@ final public class
         itsNatServletConfig.setDefaultSyncMode(SyncMode.SYNC);
         itsNatServletConfig.setAutoCleanEventListeners(true);
         itsNatServletConfig.setDefaultEncoding("UTF-8");
+        itsNatServletConfig.setReferrerEnabled(true);
 
         setDefaultLocale:
         {
@@ -1095,7 +1118,7 @@ final public class
                         }
                     }
                 } else if (isPhotoPage(URL__)) {
-                    request__.getServletRequest().setAttribute(RBGet.config.getString("HttpSessionAttr.location"), getPhotoLocation(URL__));
+                    request__.getServletRequest().setAttribute(RBGet.globalConfig.getString("HttpSessionAttr.location"), getPhotoLocation(URL__));
                     request__.getServletRequest().setAttribute("photoURL", getPhotoURL(URL__));
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, "photo");/*Framework specific*/
                     Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0005") + getPhotoLocation(URL__));

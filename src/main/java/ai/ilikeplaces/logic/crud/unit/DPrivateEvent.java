@@ -22,7 +22,6 @@ import javax.ejb.TransactionAttributeType;
  * Date: Jan 14, 2010
  * Time: 11:53:11 PM
  */
-
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
 public class DPrivateEvent extends AbstractSLBCallbacks implements DPrivateEventLocal {

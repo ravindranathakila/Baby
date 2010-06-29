@@ -1,0 +1,50 @@
+<!--
+  ~ @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+  -->
+
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ai\ilikeplaces\widgets\Album.xhtml</title>
+</head>
+<body>
+<div class="span-14 last" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
+    <hr class="space"/>
+      <div class="span-14 last center list_style_type_none">
+        <div class="span-14 last black_fg">
+            <span id="AlbumNotice" class="span-14 last black_fg"></span>
+            <div class="span-14 last">&nbsp;</div>
+        </div>
+      </div>
+      <div class="span-14 last center list_style_type_none" id="AlbumUpload" style="display:block;">
+        <div class="span-14 last black_fg">
+            <form id="file_upload_form" method="post" target="upload_target" enctype="multipart/form-data" action="/gfg?type=2">
+                <input name="file" id="file" size="27" type="file"/><br/><br/>
+                <input type="submit" name="action" value="Upload Photo To Album" class="bg_a9abf1"/><br/>
+                <input type="hidden" name="type" value="2"/>
+            </form>
+            <!--<iframe id="upload_target" name="upload_target" src="" target="_blank" style="width:0;height:0;border:0px solid #fff;display:none;">-->
+            <iframe id="upload_target" name="upload_target" src="" target="_blank" style="width:0;height:0;border:0px solid #fff;display:none;"
+                    onload="javascript:
+                  var reply = frames['upload_target'].document.getElementsByTagName('body')[0].innerHTML.toString().replace('{','').replace('}','');
+                  if( reply != '' && reply != undefined){
+                    if(reply.split(',',3)[0] == 'ok'){
+                        if(confirm('Done! '+reply.split(',',3)[1]+'\nRefresh page to update?')){
+                            window.location = window.location;
+                        }
+                    }else{
+                        alert('Failed! '+reply.split(',',3)[1]);
+                    }
+                  }else{
+                    //alert('initial load');
+                    //This is the intial page load
+                  }
+                  ">
+            </iframe>
+        </div>
+      </div>
+    <hr class="space"/>
+</div>
+</body>
+</html>

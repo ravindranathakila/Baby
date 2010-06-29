@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud;
 
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Map;
-import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.*;
 
@@ -17,8 +17,7 @@ import javax.interceptor.Interceptors;
  * Date: Dec 19, 2009
  * Time: 4:19:09 PM
  */
-
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @Interceptors({MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})

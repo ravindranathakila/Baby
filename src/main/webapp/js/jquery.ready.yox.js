@@ -38,7 +38,7 @@ $(document).ready(function(){
 
     ilp_progress(65,'Focusing '+getLocationName()+' search ...');
     $('#q').liveUpdate('#place_list').focus();
-	
+
     ilp_progress(80,'Loading social networks and comments..');
 
     disqus_identifier="WOEID="+getLocationId();
@@ -59,7 +59,7 @@ $(document).ready(function(){
             var ylocdata=y;
             try{
 				ilp_progress(90,'Checking photos for '+getLocationName()+' ..');//Have to do this due to a bug in gmap
-			
+
                 $.getJSON(
                     "http://www.panoramio.com/map/get_panoramas.php?order=popularity&set=public&from=0&to=20"+
                     "&minx="+(ylocdata.place.boundingBox.southWest.longitude)+
@@ -70,7 +70,7 @@ $(document).ready(function(){
                     function(data){
                         if(data.count>0){
                             runontime = function(){
-                                $('body').css('background-image','url('+data.photos[0].photo_file_url+')');
+                                $('body').css('background','url('+data.photos[0].photo_file_url+')');
                                 $('#Main_location_photo').attr("src",data.photos[0].photo_file_url);
                                 $('#Main_othersidebar_identity').text(data.photos[0].photo_title);
                             }
@@ -145,10 +145,11 @@ $(document).ready(function(){
                             });
                         }
                     });
-					
-					
+
+
 				ilp_progress(100,'Finalizing '+getLocationName()+' ..');//Have to do this due to a bug in gmap
 				//setTimeout("ilp_load_map()",30000);
+				ilp_load_map = function(){}//The definition of the following function will take time to initialize
                 ilp_load_map = function(){
 					$("#map").gMap(
 					{
@@ -166,10 +167,12 @@ $(document).ready(function(){
 							+"<br/>US and Canada: 1-800-780-5733"
 							+"<br/>Europe: 00-800-11-20-11-40"
 							+"</sub></div>",
-							popup:false	
+							popup:false
 						}]
 					}
 					);
+					$("#ilp_progress_block").hide();
+					$("#ilp_main_content").show();
 				}
             }catch(err){
                 $("#map").hide();
@@ -314,7 +317,7 @@ $(document).ready(function(){
             $('<li></li>').appendTo('#Main_file_list .files').text(file);
         }
     });
-	
-	ilp_progress(100,'Done ..');//In case errors occured
-				
+
+	ilp_progress(100,'Painting Backdrops ..');//Nifty will work at this moment and  also in case errors occurred
+
 });

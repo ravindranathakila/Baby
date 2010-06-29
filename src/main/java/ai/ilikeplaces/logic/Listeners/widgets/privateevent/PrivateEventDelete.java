@@ -85,12 +85,12 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                         }
                         setImage:
                         {
-                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.config.getString(RBGet.url_CDN_STATIC) + "arrow-right.gif");
+                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + "arrow-right.gif");
                         }
                     }
                 }
             };
-            new WallWidgetPrivateEvent(itsNatDocument_, $$(Page.privateEventWall), humanId, r.returnValue().getPrivateEventId());
+            new WallWidgetPrivateEvent(itsNatDocument_, $$(Page.privateEventDeleteWall), humanId, r.returnValue().getPrivateEventId());
         } else {
             $$(privateEventDeleteNotice).setTextContent(r.returnMsg());
         }
@@ -124,7 +124,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 //                    return;
 //                }
 
-                final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dPrivateEvent(myhumanId.getObj(), myprivateEventId);
+                final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dPrivateEvent(myhumanId, myprivateEventId);
                 if (r.returnStatus() == 0) {
                     Loggers.USER.info(humanId.getObj() + " clicked deleted private event " + r.returnValue());
                     remove(evt_.getTarget(), EventType.CLICK, this);

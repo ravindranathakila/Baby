@@ -9,7 +9,6 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
-import com.rackspacecloud.client.cloudfiles.FilesClient;
 import com.rackspacecloud.client.cloudfiles.FilesConstants;
 
 import javax.annotation.PostConstruct;
@@ -46,30 +45,9 @@ import static ai.ilikeplaces.util.Loggers.EXCEPTION;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
 @Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class})
-public class CDNProfilePhoto extends AbstractSLBCallbacks implements CDNProfilePhotoLocal {
+public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
 
-    final static private Properties P_ = new Properties();
-    static private Context Context_ = null;
-    static private boolean OK_ = false;
-    final static private String ICF = RBGet.config.getString("oejb.LICF");
     public static final String CONTAINER = "PROFILE_PHOTOS";
-
-    static {
-        try {
-            CDNProfilePhoto.P_.put(Context.INITIAL_CONTEXT_FACTORY, CDNProfilePhoto.ICF);
-            CDNProfilePhoto.Context_ = new InitialContext(P_);
-            CDNProfilePhoto.OK_ = true;
-        } catch (NamingException ex) {
-            CDNProfilePhoto.OK_ = false;
-            EXCEPTION.error("{}", ex);
-        }
-    }
-
-    static public void isOK() {
-        if (!OK_) {
-            throw new IllegalStateException("SORRY! MAIL SESSION BEAN INITIALIZATION FAILED!");
-        }
-    }
 
     public static CDNProfilePhotoLocal getProfilePhotoCDNLocal() {
         isOK();
@@ -77,12 +55,10 @@ public class CDNProfilePhoto extends AbstractSLBCallbacks implements CDNProfileP
         try {
             h = (CDNProfilePhotoLocal) Context_.lookup(CDNProfilePhotoLocal.NAME);
         } catch (NamingException ex) {
-            Loggers.EXCEPTION.error("{}", ex);
+            Loggers.EXCEPTION.error("Naming Exception", ex);
         }
         return h != null ? h : (CDNProfilePhotoLocal) LogNull.logThrow();
     }
-
-    FilesClient client = null;
 
     @PostConstruct
     public void postConstruct() {
@@ -100,25 +76,6 @@ public class CDNProfilePhoto extends AbstractSLBCallbacks implements CDNProfileP
 
     @Remove
     public void remove(){
-    }
-
-    private boolean doLogin() {
-
-        try {
-            client = new FilesClient("rakila", "148a8e52bf1beeef492f2f225a4c8b5c", null);
-            boolean result = client.login();
-
-            if (result) {
-                Loggers.log(Loggers.LEVEL.SERVER_STATUS, Loggers.EMBED, "Logged into Rackspace!");
-            } else {
-                Loggers.log(Loggers.LEVEL.SERVER_STATUS, Loggers.EMBED, "Login into Rackspace FAILED!");
-            }
-
-            return result;
-        } catch (final IOException e) {
-            Loggers.log(Loggers.LEVEL.ERROR, Loggers.EMBED, e);
-            return false;
-        }
     }
 
     @Override

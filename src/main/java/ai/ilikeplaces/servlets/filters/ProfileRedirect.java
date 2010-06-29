@@ -36,6 +36,8 @@ public class ProfileRedirect implements Filter {
     private static final String SLASH = "/";
     private static final String PROFILE_PAGE_FORMAT = "/page/_i?" + ListenerI.USER_PROFILE + "=";
     public static final String PROFILE_URL = "/i/";
+    private static final String REDIRECTING_USER_TO = "Redirecting User To:";
+    private static final String REQUESTED_PATH = "Requested Path:";
 
     @Override
     public void init(final FilterConfig filterConfig) throws ServletException {
@@ -48,7 +50,7 @@ public class ProfileRedirect implements Filter {
         try {
 
             final String unformattedurl = ((HttpServletRequest) request).getRequestURL().toString();
-            sl.appendToLogMSG("Requested Path:" + unformattedurl);
+            sl.appendToLogMSG(REQUESTED_PATH + unformattedurl);
 
             final int index = unformattedurl.lastIndexOf(SLASH);
 
@@ -56,7 +58,7 @@ public class ProfileRedirect implements Filter {
 
             //final String userURL = url.substring(3);// that is, "/i/username" becomes "username"
 
-            sl.appendToLogMSG("Redirecting User To:" + url);
+            sl.appendToLogMSG(REDIRECTING_USER_TO + url);
 
             /**
              * Check if moving the DB.getHumanCRUDHumanLocal to a class variable during init is sensible. The only concern is

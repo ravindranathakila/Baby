@@ -37,6 +37,9 @@ public class LogoutNRedirect implements Filter {
     private static final String SLASH = "/";
     private static final String LOG_OUT_REQUEST_FORMAT = "/page/_so";
     private static final String HEADER_REFERER = "Referer";
+    private static final String LOG_OUT_REQUEST_RECEIVED = "Log-out Request Received.";
+    private static final String SESSION_REMOVED = "Session Removed.";
+    private static final String REDIRECTING_USER_TO_WHERE_REFERRER_PAGE = "Redirecting User To Where Referrer Page";
 
     @Override
     public void init(final FilterConfig filterConfig) throws ServletException {
@@ -47,19 +50,19 @@ public class LogoutNRedirect implements Filter {
     public void doFilter(final ServletRequest request, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
         try {
             if (((HttpServletRequest) request).getRequestURL().toString().endsWith(LOG_OUT_REQUEST_FORMAT)) {
-                final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.DEBUG, "Log-out Request Received.", 100, null, true);
+                final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.DEBUG, LOG_OUT_REQUEST_RECEIVED, 100, null, true);
 
                 final HttpServletRequest httpServletRequest = ((HttpServletRequest) request);
 
                 final HttpSession httpSession = httpServletRequest.getSession(false);
                 if (httpSession != null) {
                     httpSession.invalidate();
-                    sl.appendToLogMSG("Session Removed.");
+                    sl.appendToLogMSG(SESSION_REMOVED);
                 } else {
                     sl.appendToLogMSG("No Session To Be Removed.");
                 }
 
-                sl.appendToLogMSG("Redirecting User To Where Referrer Page" + Controller.LOCATION_HUB);
+                sl.appendToLogMSG(REDIRECTING_USER_TO_WHERE_REFERRER_PAGE + Controller.LOCATION_HUB);
 
                 ((HttpServletResponse) servletResponse).sendRedirect(httpServletRequest.getHeader(HEADER_REFERER));
 

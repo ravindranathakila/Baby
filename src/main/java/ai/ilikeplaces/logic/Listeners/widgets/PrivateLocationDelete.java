@@ -52,7 +52,7 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
         this.humanId = new HumanId((String) initArgs[0]);
         this.privateLocationId = (Long) initArgs[1];
 
-        r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocation(humanId.getObj(), privateLocationId);
+        r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationAsOwner(humanId.getObj(), privateLocationId);
         if (r.returnStatus() == 0) {
             $$(privateLocationDeleteName).setTextContent(r.returnValue().getPrivateLocationName());
             $$(privateLocationDeleteInfo).setTextContent(r.returnValue().getPrivateLocationInfo());

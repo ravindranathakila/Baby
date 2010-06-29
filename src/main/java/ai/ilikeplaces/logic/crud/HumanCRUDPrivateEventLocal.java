@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.Wall;
@@ -47,13 +48,21 @@ public interface HumanCRUDPrivateEventLocal {
 
     public Return<PrivateEvent> uPrivateEventRemoveReject(final HumanId humanId__, final long privateEventId__, final HumansFriend owner);
 
-    public Return<Wall> uPrivateEventAddToWall(final HumanId humanId__, final long privateEventId__, final String contentToBeAppended);
+    public Return<Wall> uPrivateEventAddToWall(final HumanId operator, final long privateEventId__, final String contentToBeAppended);
 
-    public Return<Wall> uPrivateEventAddEntryToWall(final HumanId humanId__, final HumanId msgOwner__,  final long privateEventId__, final String contentToBeAppended);
+    public Return<Wall> uPrivateEventAddEntryToWall(final HumanId operator, final HumanId msgOwner__,  final long privateEventId__, final String contentToBeAppended);
 
-    public Return<Wall> uPrivateEventClearWall(final HumanId humanId__, final long privateEventId__);
+    public Return<Wall> uPrivateEventClearWall(final HumanId operator__, final long privateEventId__);
 
-    public Return<Wall> rPrivateEventReadWall(final HumanId humanId__, final long privateEventId__);
+    public Return<Wall> rPrivateEventReadWall(final HumanId operator__, final long privateEventId__);
 
-    public Return<Boolean> dPrivateEvent(final String humanId, final long privateEventId);
+    public Return<Boolean> dPrivateEvent(final HumanId operator__, final long privateEventId__);
+
+    public Return<Album> rPrivateEventReadAlbum(final HumanId operator__, final long privateEventId__);
+
+    public Return<Album> uPrivateEventAddEntryToAlbum(final HumanId operator__, final long privateEventId__);
+
+    public Return<Album> uPrivateEventRemoveEntryFromAlbum(final HumanId operator__, final long privateEventId__);
+
+
 }

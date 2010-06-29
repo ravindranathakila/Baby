@@ -26,7 +26,7 @@
       <fontname>Tahoma</fontname>
       <fontsize>11</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Version 3</activediagram>
+      <activediagram>Version 1</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -57,13 +57,13 @@
 			Java
 		</plugin>
 		<plugin>
-			CodeGeneration
-		</plugin>
-		<plugin>
 			GoodPractices
 		</plugin>
+		<plugin>
+			CodeGeneration
+		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Mar 15 21:26:50 EDT 2010'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sat Jun 19 12:17:07 IST 2010'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.28.1(6) revised on $Date: 2007-05-12 08:08:08 +0200 (Sat, 12 May 2007) $ </XMI.exporterVersion>
@@ -1335,6 +1335,8 @@ Wonders
         <UML:UseCase xmi.id = '10--41-20--50--48fecb97:12763067ddc:-8000:0000000000000F9F'
           name = 'sees:go on an outing' isSpecification = 'false' isRoot = 'false'
           isLeaf = 'false' isAbstract = 'false'/>
+        <UML:Comment xmi.id = '10--41--62--33--73fa5cb5:1294b831443:-8000:0000000000000FA0'
+          isSpecification = 'false' body = 'sees=no effort&#10;notices=searching eyes'/>
       </UML:Namespace.ownedElement>
     </UML:Model>
   </XMI.content>
@@ -7724,7 +7726,7 @@ start on it</text>
     </path>
   </group>
   <group name="Fig15"
-       description="org.argouml.uml.diagram.static_structure.ui.FigComment[24, 256, 131, 328]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigComment[24, 360, 131, 328]pathVisible=false;stereotypeView=0;"
        href="10--41-2--127--29ed2411:1274a0710ee:-8000:0000000000000F63"
        fill="1"
        fillcolor="white"
@@ -7736,7 +7738,7 @@ start on it</text>
     
     <rectangle name="Fig15.0"
       x="24"
-      y="256"
+      y="360"
       width="131"
       height="328"
       fill="0"
@@ -7752,17 +7754,17 @@ start on it</text>
       strokecolor="black"
     >
       <moveto x="24"
-              y="256" />
+              y="360" />
       <lineto x="144"
-              y="256" />
+              y="360" />
       <lineto x="154"
-              y="266" />
+              y="370" />
       <lineto x="154"
-              y="583" />
+              y="687" />
       <lineto x="24"
-              y="583" />
+              y="687" />
       <lineto x="24"
-              y="256" />
+              y="360" />
     </path>
     <path name="Fig15.2"
       description="org.tigris.gef.presentation.FigPoly"
@@ -7772,16 +7774,16 @@ start on it</text>
       strokecolor="black"
     >
       <moveto x="144"
-              y="256" />
+              y="360" />
       <lineto x="154"
-              y="266" />
+              y="370" />
       <lineto x="144"
-              y="266" />
+              y="370" />
       <lineto x="144"
-              y="256" />
+              y="360" />
     </path>
     <group name="Fig15.3"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[26, 258, 117, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[26, 362, 117, 0]"
          href="10--41-2--127--29ed2411:1274a0710ee:-8000:0000000000000F63"
          fill="0"
          fillcolor="white"
@@ -7794,7 +7796,7 @@ start on it</text>
       
       <rectangle name="Fig15.3.0"
         x="26"
-        y="258"
+        y="362"
         width="117"
         height="0"
         fill="0"
@@ -7805,7 +7807,7 @@ start on it</text>
     </group>
     <text name="Fig15.4"
       x="26"
-      y="258"
+      y="362"
       width="117"
       height="324"
       fill="0"
@@ -10320,6 +10322,103 @@ case, and ideally, a green one.</text>
         visibility="0"
       />
     </group>
+  </group>
+  <group name="Fig48"
+       description="org.argouml.uml.diagram.static_structure.ui.FigComment[40, 248, 128, 48]pathVisible=false;stereotypeView=0;"
+       href="10--41--62--33--73fa5cb5:1294b831443:-8000:0000000000000FA0"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig48.0"
+      x="40"
+      y="248"
+      width="128"
+      height="48"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    />
+    <path name="Fig48.1"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="40"
+              y="248" />
+      <lineto x="157"
+              y="248" />
+      <lineto x="167"
+              y="258" />
+      <lineto x="167"
+              y="295" />
+      <lineto x="40"
+              y="295" />
+      <lineto x="40"
+              y="248" />
+    </path>
+    <path name="Fig48.2"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="1"
+      fillcolor="178 178 178"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="157"
+              y="248" />
+      <lineto x="167"
+              y="258" />
+      <lineto x="157"
+              y="258" />
+      <lineto x="157"
+              y="248" />
+    </path>
+    <group name="Fig48.3"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[42, 250, 114, 0]"
+         href="10--41--62--33--73fa5cb5:1294b831443:-8000:0000000000000FA0"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig48.3.0"
+        x="42"
+        y="250"
+        width="114"
+        height="0"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+    </group>
+    <text name="Fig48.4"
+      x="42"
+      y="250"
+      width="114"
+      height="44"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Tahoma"
+      italic="false"
+      bold="false"
+      textsize="11"
+      justification="Left"
+    >sees=no effort
+notices=searching eyes</text>
   </group>
 </pgml>
 </uml>

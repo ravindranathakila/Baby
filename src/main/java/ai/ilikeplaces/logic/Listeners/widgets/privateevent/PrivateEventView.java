@@ -4,7 +4,9 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.logic.Listeners.widgets.Button;
+import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
@@ -76,12 +78,12 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
                         }
                         setImage:
                         {
-                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.config.getString(RBGet.url_CDN_STATIC) + "arrow-right.gif");
+                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + "arrow-right.gif");
                         }
                     }
                 }
             };
-
+            new WallWidgetPrivateEvent(itsNatDocument_, $$(Page.privateEventViewWall), new HumanId(humanId), r.returnValue().getPrivateEventId());
         } else {
             $$(privateEventViewNotice).setTextContent(r.returnMsg());
         }

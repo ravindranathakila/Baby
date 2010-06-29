@@ -45,7 +45,7 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
         final String humanId = (String) initArgs[0];
         final long privateLocationId = (Long) initArgs[1];
 
-        final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocation(humanId, privateLocationId);
+        final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationAsViewer(humanId, privateLocationId);
 
 
         LoggerFactory.getLogger(PrivateLocationView.class.getName()).debug(r.toString());
@@ -72,7 +72,7 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
                         }
                         setImage:
                         {
-                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.config.getString(RBGet.url_CDN_STATIC) + "arrow-right.gif");
+                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + "arrow-right.gif");
                         }
                     }
                 }

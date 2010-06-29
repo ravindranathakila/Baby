@@ -1,0 +1,14 @@
+Referer Algorithm
+
+There is a webpage
+1. It turns up on Google search results
+2. It turns up on Delicious hotlist
+3. It is linked by a blog
+4. It is on stumble upon
+
+
+Site Grading
+
+
+Referer Popularity
+Referer Quality - Context + Span

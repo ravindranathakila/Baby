@@ -23,6 +23,12 @@ public enum EventType {
         public String toString() {
             return "blur";
         }
+    },
+    UNLOAD(){
+        @Override
+        public String toString() {
+            return "onunload";
+        }
     };
 
     public String toString(){

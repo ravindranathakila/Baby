@@ -39,7 +39,7 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
 
     @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
     @Override
-    public PrivateLocation doDirtyRPrivateLocation(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException {
+    public PrivateLocation doDirtyRPrivateLocationAsAny(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException {
         final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId);
         //final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId);
         final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
@@ -53,7 +53,10 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
 //                    || humansPrivateLocation_.getPrivateLocationsViewed().contains(privateLocation_))) {
 //                throw new NoPrivilegesException(humanId, VIEW_PRIVATE_LOCATION + privateLocation_.toString());
 //            }
-            if (!privateLocation_.getPrivateLocationOwners().contains(human)) {
+            /**
+             * Should be either an owner of visitor
+             */
+            if (!(privateLocation_.getPrivateLocationOwners().contains(human) || privateLocation_.getPrivateLocationViewers().contains(human))) {
                 throw new NoPrivilegesException(humanId, VIEW_PRIVATE_LOCATION + privateLocation_.toString());
             }
         }

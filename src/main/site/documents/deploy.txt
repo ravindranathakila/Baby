@@ -12,3 +12,11 @@
 
 
  # Add cloudfiles.properties and log4j.properties to tomcat lib
+
+ # adjust properties file prop file paths
+
+ # check whether globalconfig should be put in tomcat lib
+
+ # disable disqus developer mood
+
+ # upload sources

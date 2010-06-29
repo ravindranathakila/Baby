@@ -45,9 +45,9 @@ public class Memc extends AbstractSLBCallbacks implements MemcLocal {
 
     @FIXME(issue = "SimpleDateFormat is concurrent safe?")
     private final static SimpleDateFormat sdf = new SimpleDateFormat("G-yyyy-MM-dd-HH:mm(ss)");
-    private static final int MINUTES_10 = Integer.parseInt(RBGet.config.getString("SERVER_MEMORY_MAIL"));
-    private static final int HOURS_3 = Integer.parseInt(RBGet.config.getString("SERVER_LOW_MEMORY_MAIL"));
-    private static final int LOW_MEMORY_LIMIT = Integer.parseInt(RBGet.config.getString("LOW_MEMORY_THRESHOLD"));
+    private static final int MINUTES_10 = Integer.parseInt(RBGet.globalConfig.getString("SERVER_MEMORY_MAIL"));
+    private static final int HOURS_3 = Integer.parseInt(RBGet.globalConfig.getString("SERVER_LOW_MEMORY_MAIL"));
+    private static final int LOW_MEMORY_LIMIT = Integer.parseInt(RBGet.globalConfig.getString("LOW_MEMORY_THRESHOLD"));
     private static final String STRING_PERCENTAGE = "%";
 
     /**
@@ -119,11 +119,11 @@ public class Memc extends AbstractSLBCallbacks implements MemcLocal {
                     sendAlertMail("ILPREPORT - LOW MEMORY AT I LIKE PLACES");
                 }
             }
-            Loggers.STATUS.warn(MEMC_MILLIS_FREE + STRING_OPEN_BRACE + now + STRING_COMMA
+            Loggers.STATUS.warn(MEMC_MILLIS_FREE + STRING_OPEN_BRACE
                     + (double) free / MemorySafe.MB + STRING_OPEN_BRACE + ((double) free / (double) total) * 100 + STRING_PERCENTAGE + STRING_CLOSE_BRACE + STRING_COMMA
                     + (double) total / MemorySafe.MB + STRING_CLOSE_BRACE);
         } else {
-            Loggers.STATUS.info(MEMC_MILLIS_FREE + STRING_OPEN_BRACE + now + STRING_COMMA
+            Loggers.STATUS.info(MEMC_MILLIS_FREE + STRING_OPEN_BRACE
                     + (double) free / MemorySafe.MB + STRING_OPEN_BRACE + ((double) free / (double) total) * 100 + STRING_PERCENTAGE + STRING_CLOSE_BRACE + STRING_COMMA
                     + (double) total / MemorySafe.MB + STRING_CLOSE_BRACE);
 

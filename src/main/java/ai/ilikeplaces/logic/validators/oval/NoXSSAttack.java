@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.validators.oval;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.logic.validators.ERRORCODE;
 import net.sf.oval.configuration.annotation.Constraint;
 
 import java.lang.annotation.ElementType;
@@ -23,10 +24,13 @@ import ai.ilikeplaces.logic.validators.oval.internal.NoXSSAttackCheck;
 @Constraint(checkWith = NoXSSAttackCheck.class)
 @NOTE(note = "COPIED FROM OVAL DOCUMENTATION AND FIXED")
 public @interface NoXSSAttack {
+    final static public String XSS_ATTACK_DETECTED = "XSS attack detected";
+
     /**
      * message to be used for the ConstraintsViolatedException
      *
      * @see net.sf.oval.exception.ConstraintsViolatedException
      */
-    public abstract String message() default "XSS attack detected";
+    public abstract String message() default XSS_ATTACK_DETECTED;
+
 }
