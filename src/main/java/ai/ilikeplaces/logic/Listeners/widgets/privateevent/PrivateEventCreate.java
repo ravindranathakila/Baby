@@ -20,15 +20,6 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
-import org.w3c.dom.ls.DOMImplementationLS;
-import org.w3c.dom.ls.LSSerializer;
-
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.StringWriter;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 
@@ -55,6 +46,7 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
      * @param itsNatDocument__
      * @param appendToElement__
      * @param humanId__
+     * @param privateLocationId
      */
     public PrivateEventCreate(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final String humanId__, final long privateLocationId) {
         super(itsNatDocument__, Page.PrivateEventCreate, appendToElement__, humanId__, privateLocationId);
@@ -138,15 +130,12 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
 
             @Override
             public void handleEvent(final Event evt_) {
-                logger.debug("{}", "HELLO! CLICKED SAVE.");
 
                 if (myprivateEventName.validate(v) == 0 && myprivateEventInfo.validate(v) == 0) {
 
                     final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).cPrivateEvent(myhumanId.getObj(), myprivateLocationId, myprivateEventName.getObjectAsValid(), myprivateEventInfo.getObjectAsValid(), "TODO DATE", "TODO DATE");
                     if (r.returnStatus() == 0) {
-                        logger.debug("{}", "HELLO! SAVED.");
                         remove(evt_.getTarget(), EventType.CLICK, this);
-                        logger.debug("{}", "HELLO! REMOVED CLICK.");
                         $$(privateEventCreateNotice).setTextContent(myprivateEventName.getObj() + " was created!");
                         $$(privateEventCreateSave).setAttribute(MarkupTag.A.href(),
                                 new Parameter(Organize.getURL())

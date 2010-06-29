@@ -3,7 +3,6 @@ package ai.ilikeplaces.security;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.mail.SendMailLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.blowfish.BlowFishLocal;
 import ai.ilikeplaces.security.face.SingletonHashingFace;
@@ -32,7 +31,7 @@ public class SingletonHashing extends AbstractSNGLTNBCallbacks implements Single
     final static private Properties P_ = new Properties();
     static private Context Context_ = null;
     static private boolean OK_ = false;
-    final static private String ICF = RBGet.config.getString("oejb.LICF");
+    final static private String ICF = RBGet.globalConfig.getString("oejb.LICF");
     final static Logger logger = LoggerFactory.getLogger(DB.class);
 
     static {

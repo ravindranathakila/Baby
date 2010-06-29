@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.validators.unit.DisplayNameString;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -49,7 +50,7 @@ public interface HumanCRUDHumanLocal extends Verify {
 
     public List<HumansIdentity> doDirtyRHumansIdentitiesByEmails(final List<Email> emails);
 
-    public Return<Boolean> doCHuman(final HumanId username, final Password password, Email email) throws IllegalAccessException;
+    public Return<Boolean> doCHuman(final RefObj<String> username, final RefObj<String> password, final RefObj<String> email) throws DBDishonourCheckedException;
 
     /**
      * Checks if a human is in the database

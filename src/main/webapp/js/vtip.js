@@ -49,9 +49,12 @@ var ilp_tagLines = ["it's social, it's real!",
                     "i'm done with you, go somewhere!",
                     "is this some kind of joke? go some other place!",
                     "i can't quite place u, where r u from?!",
-                    "oops we did again, thing r never gonna be the same... place!",
+                    "oops we did again, things r never gonna be the same... place!",
                     "i'm fed up with you. have u no other place to go?!",
                     "just fooling around eh? y not go some place fun?!",
+                    "there's a place... in your heart...!",//song
+                    "places at best... when you say nothing at all...!",//song
+                    "waka waka eh eh... this time for africa!",//song
                     "hw do u differentiate good tips 4m these? Rant! these R good tips!",//duet
                     "hw do u differentiate good tips 4m these? simple letters & ends with !",//coduet
                     "do u knw y we wrote this stuff? too fool u! kidding!",//duet

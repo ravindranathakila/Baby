@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.*;
@@ -347,11 +348,11 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     @TODO(task = "ADD HUMANSIDENTITY VALUES TAKE FROM THE SERVLETSIGNUP. CHANGE ALL NON_CRUDSERVICE CLASSES TO USE NON_TRANSACTIONAL AS REQUIRED")
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public Return<Boolean> doCHuman(final HumanId humanId, final Password password, final Email email) throws IllegalAccessException {
+    public Return<Boolean> doCHuman(final RefObj<String> humanId, final RefObj<String> password, final RefObj<String> email) throws DBDishonourCheckedException {
         Return<Boolean> r;
 
         if (doDirtyCheckHuman(humanId.getObjectAsValid()).returnValue()) {
-            throw new IllegalAccessException(RBGet.logMsgs.getString("ai.ilikeplaces.logic.crud.HumanCRUDHuman.0001") + humanId);
+            throw new DBDishonourCheckedException(RBGet.logMsgs.getString("ai.ilikeplaces.logic.crud.HumanCRUDHuman.0001") + humanId);
         }
         final Human newUser = new Human();
         newUser.setHumanId(humanId.getObjectAsValid());
@@ -412,6 +413,10 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         hw.setHumanId(newUser.getHumanId());
         hw.setWall(new Wall().setWallTypeR(Wall.wallTypeHuman));
         newUser.setHumansWall(hw);
+
+        final HumansAlbum halbum = new HumansAlbum();
+        halbum.setHumanId(newUser.getHumanId());
+        newUser.setHumansAlbum(halbum);
 
         doNTxCHuman(newUser);
 
@@ -477,7 +482,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
                     DB.getHumanCRUDHumanLocal(true).doDHuman(new SimpleString(random + "3"));
                 }
 
-            } catch (IllegalAccessException e) {
+            } catch (DBDishonourCheckedException e) {
                 logger.error("{}", e);
             }
         }
@@ -512,7 +517,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
                     DB.getHumanCRUDHumanLocal(true).doDHuman(new SimpleString(random + "3"));
                 }
 
-            } catch (IllegalAccessException e) {
+            } catch (DBDishonourCheckedException e) {
                 logger.error("{}", e);
             }
         }

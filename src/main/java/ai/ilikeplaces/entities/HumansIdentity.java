@@ -125,7 +125,6 @@ public class HumansIdentity implements HumanPkJoinFace, Serializable {
         this.humansIdentityGUIPreferences = humansIdentityGUIPreferences;
     }
 
-    @Column(unique = true)
     public String getHumansIdentityProfilePhoto() {
         return humansIdentityProfilePhoto;
     }
@@ -133,6 +132,7 @@ public class HumansIdentity implements HumanPkJoinFace, Serializable {
     public void setHumansIdentityProfilePhoto(final String humansIdentityProfilePhoto) {
         this.humansIdentityProfilePhoto = humansIdentityProfilePhoto;
     }
+    
 
     @OneToOne(cascade = {CascadeType.ALL})
     public Url getUrl() {

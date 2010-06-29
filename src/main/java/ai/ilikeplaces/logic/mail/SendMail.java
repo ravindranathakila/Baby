@@ -1,11 +1,8 @@
 package ai.ilikeplaces.logic.mail;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -41,7 +38,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
     final static private Properties P_ = new Properties();
     static private Context Context_ = null;
     static private boolean OK_ = false;
-    final static private String ICF = RBGet.config.getString("oejb.LICF");
+    final static private String ICF = RBGet.globalConfig.getString("oejb.LICF");
 
     static {
         try {
@@ -71,8 +68,8 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
         return h != null ? h : (SendMailLocal) LogNull.logThrow();
     }
 
-    private static final String U_S_E_R_N_A_M_E = RBGet.config.getString("noti_mail");
-    private static final String P_A_S_S_W_O_R_D = RBGet.config.getString("noti_parsewerd");
+    private static final String U_S_E_R_N_A_M_E = RBGet.globalConfig.getString("noti_mail");
+    private static final String P_A_S_S_W_O_R_D = RBGet.globalConfig.getString("noti_parsewerd");
 
     Properties props;
     Session mailSession;
@@ -158,7 +155,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
             message.setSubject(simpleTextSubject);
             message.setContent(simpleTextBody, TEXT_PLAIN);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recepientEmail));
-            message.addRecipient(Message.RecipientType.CC, new InternetAddress(RBGet.config.getString("noti_app_mail")));
+            message.addRecipient(Message.RecipientType.CC, new InternetAddress(RBGet.globalConfig.getString("noti_app_mail")));
 
             r = new ReturnImpl<Boolean>(finalSend(message), "Mail sending to " + recepientEmail + " successful!");
 

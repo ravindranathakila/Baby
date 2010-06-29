@@ -186,7 +186,7 @@ public class Location implements Serializable, Clearance, Comparable<Location> {
     @Override
     @WARNING(warning = "The first location i.e. The Planet Earth, will have itself as its super. Hence will induce a stack overflow if superset.tostring is called.")
     public String toString() {
-        return locationName + ((locationSuperSet == null || this.getLocationId() == locationSuperSet.getLocationId() || this.getLocationId() == 1) ? "" : OF_SPACE + locationSuperSet.toString());
+        return locationName + ((locationSuperSet == null || this.getLocationId().equals(locationSuperSet.getLocationId()) || this.getLocationId() == 1) ? "" : OF_SPACE + locationSuperSet.toString());
     }
 
     @Override

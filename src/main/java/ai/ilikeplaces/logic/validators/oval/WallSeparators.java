@@ -30,4 +30,5 @@ public @interface WallSeparators {
      * @see net.sf.oval.exception.ConstraintsViolatedException
      */
     public abstract String message() default "Wall Separators detected";
+    
 }

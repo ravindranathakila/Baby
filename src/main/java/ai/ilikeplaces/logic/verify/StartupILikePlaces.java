@@ -2,22 +2,13 @@ package ai.ilikeplaces.logic.verify;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.doc.TODO;
-import ai.ilikeplaces.logic.crud.HumanCRUDHumanLocal;
-import ai.ilikeplaces.logic.verify.util.Verify;
 import ai.ilikeplaces.rbs.RBGet;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
-import ai.ilikeplaces.util.MethodParams;
-import ai.ilikeplaces.util.MethodTimer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 /**
  * @author Ravindranath Akila
@@ -44,8 +35,8 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         System.out.println("********* (logging startup-only via S.O.P)");
         System.out.println("********* ********* ********* ********* *********");
         System.out.println("");
-        System.out.println(RBGet.config.getString("bn"));
-        System.out.println(RBGet.config.getString("codename"));
+        System.out.println(RBGet.globalConfig.getString("bn"));
+        System.out.println(RBGet.globalConfig.getString("codename"));
         System.out.println("");
         System.out.println("PLEASE NOTE GENERAL SETUP");
         System.out.println("1. Make sure openejb.log in shows no issues.");
@@ -125,8 +116,8 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
 
         System.out.println("");
 
-        System.out.println(RBGet.config.getString("bn"));
-        System.out.println(RBGet.config.getString("codename"));
+        System.out.println(RBGet.globalConfig.getString("bn"));
+        System.out.println(RBGet.globalConfig.getString("codename"));
 
         System.out.println("********* ********* ********* ********* *********");
         System.out.println("********* START UP CHECK DONE ILIKEPLACES");

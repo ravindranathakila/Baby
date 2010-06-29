@@ -109,10 +109,36 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     @Override
-    public Return<PrivateLocation> dirtyRPrivateLocation(final String humanId, final long privateLocationId) {
+    public Return<PrivateLocation> dirtyRPrivateLocationAsAny(final String humanId, final long privateLocationId){
         Return<PrivateLocation> r;
         try {
-            r = new ReturnImpl<PrivateLocation>(rPrivateLocationLocal.doDirtyRPrivateLocation(humanId, privateLocationId), READ_PRIVATE_LOCATION_SUCCESSFUL);
+            r = new ReturnImpl<PrivateLocation>(rPrivateLocationLocal.doDirtyRPrivateLocationAsAny(humanId, privateLocationId), READ_PRIVATE_LOCATION_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<PrivateLocation>(t, READ_PRIVATE_LOCATION_FAILED, true);
+        }
+        return r;
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    @Override
+    public Return<PrivateLocation> dirtyRPrivateLocationAsOwner(final String humanId, final long privateLocationId) {
+        Return<PrivateLocation> r;
+        try {
+            r = new ReturnImpl<PrivateLocation>(rPrivateLocationLocal.doRPrivateLocationAsOwner(humanId, privateLocationId), READ_PRIVATE_LOCATION_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<PrivateLocation>(t, READ_PRIVATE_LOCATION_FAILED, true);
+        }
+        return r;
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    @Override
+    public Return<PrivateLocation> dirtyRPrivateLocationAsViewer(final String humanId, final long privateLocationId) {
+        Return<PrivateLocation> r;
+        try {
+            r = new ReturnImpl<PrivateLocation>(rPrivateLocationLocal.doRPrivateLocationAsViewer(humanId, privateLocationId), READ_PRIVATE_LOCATION_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateLocation>(t, READ_PRIVATE_LOCATION_FAILED, true);
         }

@@ -25,6 +25,8 @@ public abstract class RefObj<T> {
     protected T obj = null;
 
     private List<ConstraintViolation> constraintViolations = null;
+    public static final String CODE = "[code:";
+    public static final String CLOSE_SQUARE_BRACKET = "]";
 
     abstract public T getObj();
 
@@ -46,16 +48,29 @@ public abstract class RefObj<T> {
     /**
      * Use this method to obtain an object that is expected to be valid.
      *
-     * @param validator
+     * Use conjunction with a setter which checks for validation, or validate before calling this method.
+     *
      * @return valid object
+     *
+     * @throws ConstraintsViolatedException if found validation errors
+     * @throws IllegalAccessError if called without validating
      */
-    public T getObjectAsValid(final Validator... validator) {
-        final Validator v = validator.length == 0 ? new Validator() : validator[0];
-        constraintViolations = v.validate(this);
-        if (constraintViolations.size() != 0) {
-            throw new ConstraintsViolatedException(constraintViolations);
+    public T getObjectAsValid() {
+//        final Validator v = validator.length == 0 ? new Validator() : validator[0];
+//        constraintViolations = v.validate(this);
+//        if (constraintViolations.size() != 0) {
+//            throw new ConstraintsViolatedException(constraintViolations);
+//        }
+//        return obj;
+        if (constraintViolations != null) {
+            if (constraintViolations.size() == 0) {
+                return getObj();
+            } else {
+                throw new ConstraintsViolatedException(constraintViolations);
+            }
+        } else {
+            throw new IllegalAccessError("SORRY! YOU HAVE NOT VALIDATED THIS OBJECT.");
         }
-        return obj;
     }
 
     /**
@@ -71,13 +86,14 @@ public abstract class RefObj<T> {
 
     @NOTE(note = "This approach is specially used when internally creating objects that should be valid as opposed to a web user." +
             "This approach will prevent the code from setting null values and other violated states.")
-    public void setObjAsValid(final T obj) {
+    public RefObj<T> setObjAsValid(final T obj) {
         constraintViolations = null;//So that validation is consistent
         this.obj = obj;
         if (this.validate() != 0) {
             this.obj = null;
             throw new ConstraintsViolatedException(this.getViolations());
         }
+        return this;
     }
 
     /**
@@ -89,7 +105,9 @@ public abstract class RefObj<T> {
     static public String validationMessages(final List<ConstraintViolation> e) {
         String returnVal = "";
         for (final ConstraintViolation v : e) {
-            returnVal += v.getMessage() + "\n";
+            returnVal += v.getMessage()
+                    + (v.getErrorCode() != null ? CODE + v.getErrorCode() + CLOSE_SQUARE_BRACKET : "")
+                    + "\n";
         }
         return returnVal;
     }
@@ -103,7 +121,8 @@ public abstract class RefObj<T> {
     static public List<String> validationMessagesAsList(final List<ConstraintViolation> e) {
         final List<String> returnVal = new ArrayList<String>();
         for (final ConstraintViolation v : e) {
-            returnVal.add(v.getMessage());
+            returnVal.add(v.getMessage()
+                    + (v.getErrorCode() != null ? CODE + v.getErrorCode() + CLOSE_SQUARE_BRACKET : ""));
         }
         return returnVal;
     }

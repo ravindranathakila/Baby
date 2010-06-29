@@ -16,6 +16,9 @@ import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
 import java.util.ArrayList;
@@ -36,7 +39,7 @@ import static ai.ilikeplaces.util.MarkupTag.*;
 public class ListenerMain implements ItsNatServletRequestListener {
 
 
-    final static protected String LocationId = RBGet.config.getString("LOCATIONID");
+    final static protected String LocationId = RBGet.globalConfig.getString("LOCATIONID");
     private static final String RETURNING_LOCATION = "Returning location ";
     private static final String TO_USER = " to user";
     private static final String WRONG_WOEID_FORMAT = "SORRY! WRONG WOEID FORMAT";
@@ -65,10 +68,41 @@ public class ListenerMain implements ItsNatServletRequestListener {
             @SuppressWarnings("unchecked")
             @TODO(task = "If location is not available, it should be added through a widget(or fragment maybe?)")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
+
+                itsNatHTMLDocument__.addReferrerItsNatServletRequestListener(new ItsNatServletRequestListener(){
+
+                    Obj<Long> timeSpent = new Obj<Long>(System.currentTimeMillis());
+
+                    @Override
+                    public void processRequest(final ItsNatServletRequest itsNatServletRequest, final ItsNatServletResponse response) {
+                        Loggers.DEBUG.debug("Unloading DOCUMENT. Time spent:" + (System.currentTimeMillis() - timeSpent.getObj()));
+                    }
+                });
+                checkUserSpentTime:
+                {
+                    itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.body), EventType.UNLOAD.toString(), new EventListener() {
+
+                        Obj<Long> timeSpent = new Obj<Long>(System.currentTimeMillis());
+
+                        @Override
+                        public void handleEvent(final Event evt_) {
+                            Loggers.DEBUG.debug("Unloading body. Time spent:" + (System.currentTimeMillis() - timeSpent.getObj()));
+                        }
+
+                        @Override
+                        public void finalize() throws Throwable {
+                            Loggers.finalized(this.getClass().getName());
+                            super.finalize();
+                        }
+                    }, false);
+
+                }
+
+
                 //this.location = (String) request_.getServletRequest().getAttribute(RBGet.config.getString("HttpSessionAttr.location"));
                 getLocationSuperLocation:
                 {
-                    final String[] attr = ((String) request__.getServletRequest().getAttribute(RBGet.config.getString("HttpSessionAttr.location"))).split("_");
+                    final String[] attr = ((String) request__.getServletRequest().getAttribute(RBGet.globalConfig.getString("HttpSessionAttr.location"))).split("_");
                     location = attr[0];
                     if (attr.length == 3) {
                         superLocation = attr[2];
@@ -103,8 +137,10 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 {
                     if (getUsername() != null) {
                         Loggers.USER.info(getUsernameAsValid() + " queries for location " + location + " of " + superLocation);
+                        sl.appendToLogMSG(getUsernameAsValid());
                     } else {
                         Loggers.NON_USER.info(request__.getServletRequest().getRemoteHost() + " queries for location " + location + " of " + superLocation);
+                        sl.appendToLogMSG(request__.getServletRequest().getRemoteHost());
                     }
                 }
 

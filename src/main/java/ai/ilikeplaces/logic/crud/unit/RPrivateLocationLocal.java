@@ -17,7 +17,7 @@ import javax.ejb.Local;
 @Local
 public interface RPrivateLocationLocal {
 
-    public PrivateLocation doDirtyRPrivateLocation(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException;
+    public PrivateLocation doDirtyRPrivateLocationAsAny(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException;
 
     public boolean doDirtyRPrivateLocationIsOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException;
 

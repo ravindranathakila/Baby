@@ -139,7 +139,7 @@ final public class ServletLogin extends HttpServlet {
             /**
              * Set a timeout compatible with the stateful session bean handling user
              */
-            userSession_.setMaxInactiveInterval(Integer.parseInt(RBGet.config.getString("UserSessionIdleInterval")));
+            userSession_.setMaxInactiveInterval(Integer.parseInt(RBGet.globalConfig.getString("UserSessionIdleInterval")));
         }
 
 

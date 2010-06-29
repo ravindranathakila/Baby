@@ -93,12 +93,12 @@
     <filter>
         <description>Set HTTP headers for a mapping.</description>
         <filter-name>HeaderFilter</filter-name>
-        <filter-class> ai.ilikeplaces.util.HeaderFilter</filter-class>
-        <init-param>
-            <description>Add an Expires Header</description>
-            <param-name>header</param-name>
-            <param-value>Expires: Thu, 15 Apr 2011 20:00:00 GMT</param-value>
-        </init-param>
+        <filter-class>ai.ilikeplaces.servlets.filters.FilterHeader</filter-class>
+        <!--<init-param>-->
+            <!--<description>Add an Expires Header</description>-->
+            <!--<param-name>header</param-name>-->
+            <!--<param-value>Expires: Thu, 15 Apr 2011 20:00:00 GMT</param-value>-->
+        <!--</init-param>-->
     </filter>
     <!--###################### ENF OF FILTERS ####################################-->
 

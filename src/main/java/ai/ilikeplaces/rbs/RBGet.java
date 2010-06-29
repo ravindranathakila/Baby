@@ -20,10 +20,8 @@ import java.util.Set;
         "CALLER IS THE ONE WHO KNOWS THE DIALECT." +
         "IN THE CASE OF logMsgs THE DEVELOPER CAN SET THE APPLICATION SPECIFIC LOCALIZAION IN THE" +
         "STARTUP SERVLET. config WILL ALWAYS HAVE NO DIALECT.")
-public class
-        RBGet {
+public class RBGet {
 
-    final static public ResourceBundle config = ResourceBundle.getBundle("ai.ilikeplaces.rbs.Config");
     @CONVENTION(convention = "THIS SHOULD BE AN IDENTICAL COPY OF Config.properties. IDEALLY GlobalConfig SHOULD BE IN THE SERVER PATH SO THAT IT CAN BE EDITED DURING RUNTIME.")
     static public ResourceBundle globalConfig;
     final static public ResourceBundle logMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.LogMsgs");
@@ -36,7 +34,7 @@ public class
 
     static {
         try {
-            globalConfig = ResourceBundle.getBundle("GlobalConfig");
+            globalConfig = ResourceBundle.getBundle("GlobalConfig");//This should be a copy of config.properties put in the classpath in name GlobalConfig.properties
         } catch (@NOTE(note = "WE DON'T NEED THE STACK TRACE")
         final MissingResourceException e_) {
             logger.error("PLEASE INCLUDE GLOBALCONFIG.PROPERTIES IN WEB SERVER CLASSPATH. FALLING BACK TO USING INTERNAL CONFIG.", e_);
@@ -71,11 +69,11 @@ public class
             config:
             {
                 result_.append("\n");
-                result_.append(config.getString("verify"));
-                final Set<String> keySet = config.keySet();
+                result_.append(RBGet.globalConfig.getString("verify"));
+                final Set<String> keySet = RBGet.globalConfig.keySet();
                 for (String key : keySet) {
                     result_.append("\n");
-                    result_.append("{" + key + "," + config.getString(key) + "}");
+                    result_.append("{" + key + "," + RBGet.globalConfig.getString(key) + "}");
                 }
                 result_.append("\n");
             }

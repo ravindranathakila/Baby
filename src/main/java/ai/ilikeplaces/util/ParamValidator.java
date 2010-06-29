@@ -27,9 +27,6 @@ import java.util.*;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class ParamValidator {
 
-    final static private Logger logger = LoggerFactory.getLogger(ParamValidator.class);
-
-
     @AroundInvoke
     public Object validate(InvocationContext invocation) throws Exception {
         final Object[] args = invocation.getParameters();

@@ -35,7 +35,7 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
 
 
     final static private Logger logger = LoggerFactory.getLogger(ListenerAarrr.class);
-    final static protected String LocationId = RBGet.config.getString("LOCATIONID");
+    final static protected String LocationId = RBGet.globalConfig.getString("LOCATIONID");
 
     /**
      * @param request__

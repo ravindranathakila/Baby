@@ -87,7 +87,7 @@ abstract public class PasswordManager extends AbstractWidgetListener {
                 } else {
                     if (ServletLogin.isCorrectPassword(myhumanId, profilePasswordCurrentString.getObj())) {
                         mycurrent.setObj(true);
-                        currentPass.setObj(profilePasswordCurrentString.getObj());
+                        currentPass.setObjAsValid(profilePasswordCurrentString.getObj());
                         $$(ProfilePasswordNotice).setTextContent("Correct!");
                     } else {
                         mycurrent.setObj(false);
@@ -119,7 +119,7 @@ abstract public class PasswordManager extends AbstractWidgetListener {
                 } else {
                     mynewSet.setObj(true);
                     if (mycurrent.getObj()) {
-                        newPass.setObj(profilePasswordNew.getObj());
+                        newPass.setObjAsValid(profilePasswordNew.getObj());
                         $$(ProfilePasswordNotice).setTextContent("New Password Valid!");
                     } else {
                         $$(ProfilePasswordNotice).setTextContent("Sorry! You have to provide the current password first.");
@@ -155,7 +155,7 @@ abstract public class PasswordManager extends AbstractWidgetListener {
                     mynewConfirmSet.setObj(true);
                     if (mycurrent.getObj()) {
                         if (mynewSet.getObj() && mynewPass.getObj().equals(profilePasswordNewConfirm.getObj())) {
-                            mynewConfirmPass.setObj(profilePasswordNewConfirm.getObj());
+                            mynewConfirmPass.setObjAsValid(profilePasswordNewConfirm.getObj());
                             $$(ProfilePasswordNotice).setTextContent("Confirmation Correct!");
                         } else {
                             mynewConfirmSet.setObj(false);
@@ -196,7 +196,7 @@ abstract public class PasswordManager extends AbstractWidgetListener {
                 } else if (!mynewConfirmSet.getObj()) {
                     $$(ProfilePasswordNotice).setTextContent("Sorry! You have to re-enter the confirmation.");
                 } else {
-                    if (!mynewPass.getObj().equals(mynewConfirmPass.getObj())) {
+                    if (!mynewPass.getObjectAsValid().equals(mynewConfirmPass.getObjectAsValid())) {
                         $$(ProfilePasswordNotice).setTextContent("Sorry! Your new password and its' confirmation do not match.");
                     } else {
                         final Return<Boolean> r = ServletLogin.changePassword(myhttpSession, myhumanId, mycurrentPass, mynewPass);
