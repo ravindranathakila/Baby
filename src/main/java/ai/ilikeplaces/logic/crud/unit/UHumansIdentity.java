@@ -55,9 +55,8 @@ public class UHumansIdentity extends AbstractSLBCallbacks implements UHumansIden
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     @Override
     public void doUHumansPublicURLDelete(final String humanId) throws DBDishonourCheckedException {
-        throw new RuntimeException("NOW WHERE IS THAT BUG?!!&*()_");
-//        final String oldUrl =  rHumansIdentityLocal_.doDirtyRHumansIdentity(humanId).getUrl().getUrl();
-//        urlCrudServiceLocal_.delete(Url.class,oldUrl);
+        final String oldUrl =  rHumansIdentityLocal_.doDirtyRHumansIdentity(humanId).getUrl().getUrl();
+        urlCrudServiceLocal_.delete(Url.class,oldUrl);
     }
 
 
