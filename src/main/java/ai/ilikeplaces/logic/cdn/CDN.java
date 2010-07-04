@@ -26,6 +26,8 @@ abstract public class CDN extends AbstractSLBCallbacks {//This classes is design
     protected static Context Context_ = null;
     protected static boolean OK_ = false;
     protected final static String ICF = RBGet.globalConfig.getString("oejb.LICF");
+    private static final String LOGIN_FAILED = "LOGIN TO RACKSPACE FOR FILE UPLOAD FAILED. THIS EXCEPTION WILL DESTROY THIS INSTANCE";
+    protected static final RuntimeException LOGIN_EXCEPTION = new RuntimeException(LOGIN_FAILED);
 
     static {
         try {

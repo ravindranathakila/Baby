@@ -2,6 +2,7 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.BIDIRECTIONAL;
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 
@@ -105,6 +106,7 @@ public class Album {
 
     @WARNING(warning = "Not owner because when a photo is deleted, the albums will automatically reflect it." +
             "The other way round is not feasible because a user will own photos, not albums.")
+    @NOTE(note = "ManyToMany because photos can be moved to a different album when deleting events.")
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
     @ManyToMany(mappedBy = PrivatePhoto.albumsCol, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     public List<PrivatePhoto> getAlbumPhotos() {

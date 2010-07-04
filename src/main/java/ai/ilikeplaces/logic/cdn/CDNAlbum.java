@@ -2,7 +2,6 @@ package ai.ilikeplaces.logic.cdn;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Album;
-import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.exception.DBOperationException;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
@@ -13,13 +12,10 @@ import com.rackspacecloud.client.cloudfiles.FilesConstants;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.ejb.Remove;
 import javax.ejb.Stateless;
-import javax.imageio.ImageIO;
 import javax.interceptor.Interceptors;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpSession;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +40,7 @@ import java.util.Map;
 @Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class})
 public class CDNAlbum extends CDN implements CDNAlbumLocal {
 
-    public static final String CONTAINER = null;
+    public static final String CONTAINER = "ALBUM_PHOTOS";
 
     public static CDNAlbumLocal getAlbumPhotoCDNLocal() {
         isOK();
@@ -64,20 +60,20 @@ public class CDNAlbum extends CDN implements CDNAlbumLocal {
         if (status) {
             sl.complete(Loggers.DONE);
 
-        }else{
+        } else {
             sl.appendToLogMSG("Login Failed. Destroying Session Bean!");
             sl.complete(Loggers.FAILED);
-            this.preDestroy();
+            throw LOGIN_EXCEPTION;
         }
     }
 
     @PreDestroy
-    public void preDestroy(){
+    public void preDestroy() {
     }
 
     @Override
     public Return<File> run(File file, final Map parameterMap, final String userFileExtension, final HttpSession session) {
-        final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, "Uploading Album Photo", 120000, null, true);
+        final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, "Uploading Album Photo", 60000, null, true);
         Return<File> r;
         /**
          * Renaming the file to contain extension for image manipulation flexibility
@@ -118,9 +114,12 @@ public class CDNAlbum extends CDN implements CDNAlbumLocal {
                             final boolean deleted = newFile.delete();
                             if (deleted) {
                                 final Return<Album> dbr = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddEntryToAlbum(humanId, -1);
-                                r = dbr.returnStatus() == 0 ?
-                                        new ReturnImpl<File>(newFile, "Album Photo Upload Successful.")
-                                        : new ReturnImpl<File>(new DBOperationException(dbr.returnError()), "Album Photo Upload Failed Due To I/O Issues!", true);
+                                if (dbr.returnStatus() == 0) {
+                                    sl.complete(Loggers.DONE);
+                                    r = new ReturnImpl<File>(newFile, "Album Photo Upload Successful.");
+                                } else {
+                                    r = new ReturnImpl<File>(new DBOperationException(dbr.returnError()), "Album Photo Upload Failed Due To I/O Issues!", true);
+                                }
                             } else {
                                 r = new ReturnImpl<File>(ExceptionCache.FILE_DELETE_FAILED, "Album Photo Upload Failed Due To Caching Issues!", true);
                             }

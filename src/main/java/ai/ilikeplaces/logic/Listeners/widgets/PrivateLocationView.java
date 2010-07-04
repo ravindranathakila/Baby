@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
@@ -42,7 +43,7 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
      */
     @Override
     protected void init(final Object... initArgs) {
-        final String humanId = (String) initArgs[0];
+        final HumanId humanId = new HumanId((String) initArgs[0]).getSelfAsValid();
         final long privateLocationId = (Long) initArgs[1];
 
         final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationAsViewer(humanId, privateLocationId);

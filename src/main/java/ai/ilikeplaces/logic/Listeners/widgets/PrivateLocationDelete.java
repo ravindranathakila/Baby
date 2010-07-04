@@ -49,10 +49,12 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
      */
     @Override
     protected void init(final Object... initArgs) {
-        this.humanId = new HumanId((String) initArgs[0]);
+        this.humanId = new HumanId();
+        humanId.setObjAsValid((String) initArgs[0]);
+
         this.privateLocationId = (Long) initArgs[1];
 
-        r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationAsOwner(humanId.getObj(), privateLocationId);
+        r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationAsOwner(humanId, privateLocationId);
         if (r.returnStatus() == 0) {
             $$(privateLocationDeleteName).setTextContent(r.returnValue().getPrivateLocationName());
             $$(privateLocationDeleteInfo).setTextContent(r.returnValue().getPrivateLocationInfo());
@@ -73,7 +75,7 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
             public void handleEvent(final Event evt_) {
                 logger.debug("{}", "HELLO! CLICKED DELETE.");
 
-                final Return<Boolean> r = DB.getHumanCrudPrivateLocationLocal(true).dPrivateLocation(myhumanId.getObj(), myprivateLocationId);
+                final Return<Boolean> r = DB.getHumanCrudPrivateLocationLocal(true).dPrivateLocation(myhumanId, myprivateLocationId);
                 if (r.returnStatus() == 0) {
                     logger.debug("{}", "HELLO! DELETED. DB REPLY:" + r.returnValue());
                     remove(evt_.getTarget(), EventType.CLICK, this);

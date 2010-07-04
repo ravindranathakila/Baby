@@ -61,6 +61,7 @@ public abstract class AbstractListener {
     @SuppressWarnings("unchecked")
     public AbstractListener(final ItsNatServletRequest request_) {
         this.itsNatDocument = request_.getItsNatDocument();
+        
         this.itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument;
         this.hTMLDocument_ = itsNatHTMLDocument_.getHTMLDocument();
         this.itsNatServlet_ = itsNatDocument.getItsNatDocumentTemplate().getItsNatServlet();

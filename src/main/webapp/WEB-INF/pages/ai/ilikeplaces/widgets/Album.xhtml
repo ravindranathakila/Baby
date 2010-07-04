@@ -17,12 +17,13 @@
             <div class="span-14 last">&nbsp;</div>
         </div>
       </div>
-      <div class="span-14 last center list_style_type_none" id="AlbumUpload" style="display:block;">
+      <div class="span-14 last center list_style_type_none" style="display:block;">
         <div class="span-14 last black_fg">
             <form id="file_upload_form" method="post" target="upload_target" enctype="multipart/form-data" action="/gfg?type=2">
                 <input name="file" id="file" size="27" type="file"/><br/><br/>
                 <input type="submit" name="action" value="Upload Photo To Album" class="bg_a9abf1"/><br/>
                 <input type="hidden" name="type" value="2"/>
+                <input type="hidden" name="AlbumPivateEventId" id="AlbumPivateEventId"/>
             </form>
             <!--<iframe id="upload_target" name="upload_target" src="" target="_blank" style="width:0;height:0;border:0px solid #fff;display:none;">-->
             <iframe id="upload_target" name="upload_target" src="" target="_blank" style="width:0;height:0;border:0px solid #fff;display:none;"

@@ -32,6 +32,11 @@ public abstract class RefObj<T> {
 
     /**
      * Use this method to return this same object after validation.
+     * <p/>
+     * <p/>
+     * If you are using a derived class, override this method with body and signature with return type DerivedClass
+     * <p/>
+     * <b>return (DerivedClass) super.getSelfAsValid(validator)</b>
      *
      * @param validator
      * @return valid object
@@ -47,13 +52,12 @@ public abstract class RefObj<T> {
 
     /**
      * Use this method to obtain an object that is expected to be valid.
-     *
+     * <p/>
      * Use conjunction with a setter which checks for validation, or validate before calling this method.
      *
      * @return valid object
-     *
      * @throws ConstraintsViolatedException if found validation errors
-     * @throws IllegalAccessError if called without validating
+     * @throws IllegalAccessError           if called without validating
      */
     public T getObjectAsValid() {
 //        final Validator v = validator.length == 0 ? new Validator() : validator[0];
