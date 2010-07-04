@@ -2,9 +2,11 @@ package ai.ilikeplaces.logic.validators.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.util.RefObj;
+import net.sf.oval.Validator;
 import net.sf.oval.configuration.annotation.IsInvariant;
 import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.NotNull;
+import net.sf.oval.exception.ConstraintsViolatedException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -31,6 +33,11 @@ public class HumanId extends RefObj<String> {
             obj = humanId;
         }
     }
+
+    public HumanId getSelfAsValid(final Validator... validator) {
+        return (HumanId) super.getSelfAsValid(validator);
+    }
+
 
     @IsInvariant
     @NotNull

@@ -223,10 +223,10 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
 
     @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
     @Override
-    public Return<Boolean> dirtyRPrivateEventIsOwner(final String humanId, final Long privateEventId) {
+    public Return<Boolean> dirtyRPrivateEventIsOwner(final HumanId humanId, final Long privateEventId) {
         Return<Boolean> r;
         try {
-            r = new ReturnImpl<Boolean>(rPrivateEventLocal.doDirtyRPrivateEventIsOwner(humanId, privateEventId), CHECK_OWNERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL);
+            r = new ReturnImpl<Boolean>(rPrivateEventLocal.doDirtyRPrivateEventIsOwner(humanId.getObjectAsValid(), privateEventId), CHECK_OWNERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Boolean>(t, CHECK_OWNERSHIP_OF_PRIVATE_EVENT_FAILED, true);
         }
@@ -235,10 +235,10 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
 
     @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
     @Override
-    public Return<Boolean> dirtyRPrivateEventIsViewer(final String humanId, final Long privateEventId) {
+    public Return<Boolean> dirtyRPrivateEventIsViewer(final HumanId humanId, final Long privateEventId) {
         Return<Boolean> r;
         try {
-            r = new ReturnImpl<Boolean>(rPrivateEventLocal.doDirtyRPrivateEventIsViewer(humanId, privateEventId), CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL);
+            r = new ReturnImpl<Boolean>(rPrivateEventLocal.doDirtyRPrivateEventIsViewer(humanId.getObjectAsValid(), privateEventId), CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Boolean>(t, CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_FAILED, true);
         }

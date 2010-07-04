@@ -39,7 +39,8 @@ final public class
     @NOTE(note = "Inner Enums are static. Therefore, the lists shall be populated only once.")
     public enum Page implements PageFace {
         Album("ai/ilikeplaces/widgets/Album.xhtml",
-               Controller.Page.AlbumNotice
+               Controller.Page.AlbumNotice,
+               Controller.Page.AlbumPivateEventId
         ) {
             @Override
             public String toString() {
@@ -185,7 +186,8 @@ final public class
                 Controller.Page.privateEventDeleteOwners,
                 Controller.Page.privateEventDeleteVisitors,
                 Controller.Page.privateEventDeleteInvitees,
-                Controller.Page.privateEventDeleteWall
+                Controller.Page.privateEventDeleteWall,
+                Controller.Page.privateEventDeleteAlbum
         ) {
 
             @Override
@@ -597,6 +599,7 @@ final public class
         final static public String DocAlbum = "DocAlbum";
         /*Album IDs*/
         final static public String AlbumNotice = "AlbumNotice";
+        final static public String AlbumPivateEventId = "AlbumPivateEventId";
 
         /*ProfileWidget Page*/
         final static public String DocUserProperty = "DocUserProperty";
@@ -681,6 +684,7 @@ final public class
         final static public String privateEventDeleteVisitors = "privateEventDeleteVisitors";
         final static public String privateEventDeleteInvitees = "privateEventDeleteInvitees";
         final static public String privateEventDeleteWall = "privateEventDeleteWall";
+        final static public String privateEventDeleteAlbum = "privateEventDeleteAlbum";
 
         /*FindFriend Page*/
         final static public String DocFindFriend = "DocFindFriend";
@@ -941,6 +945,8 @@ final public class
     final PageFace forgotPasswordChange = Page.ForgotPasswordChange;
     final PageFace profileWidget = Page.ProfileWidget;
 
+    final PageFace album = Page.Album;
+
     final PageFace userProperty = Page.UserProperty;
 
     /**
@@ -959,7 +965,7 @@ final public class
         itsNatServletConfig.setDebugMode(true);
         itsNatServletConfig.setClientErrorMode(ClientErrorMode.SHOW_SERVER_AND_CLIENT_ERRORS);
         itsNatServletConfig.setLoadScriptInline(true);
-        itsNatServletConfig.setUseGZip(UseGZip.SCRIPT);
+        itsNatServletConfig.setUseGZip(UseGZip.MARKUP);
         itsNatServletConfig.setDefaultSyncMode(SyncMode.SYNC);
         itsNatServletConfig.setAutoCleanEventListeners(true);
         itsNatServletConfig.setDefaultEncoding("UTF-8");
@@ -1064,7 +1070,9 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(forgotPasswordChange.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(forgotPasswordChange));
 
             inhs__.registerItsNatDocFragmentTemplate(profileWidget.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(profileWidget));
-            
+
+            inhs__.registerItsNatDocFragmentTemplate(album.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(album));
+
             inhs__.registerItsNatDocFragmentTemplate(userProperty.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(userProperty));
         }
     }

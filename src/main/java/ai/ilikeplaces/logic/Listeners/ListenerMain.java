@@ -69,15 +69,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
             @TODO(task = "If location is not available, it should be added through a widget(or fragment maybe?)")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
 
-                itsNatHTMLDocument__.addReferrerItsNatServletRequestListener(new ItsNatServletRequestListener(){
-
-                    Obj<Long> timeSpent = new Obj<Long>(System.currentTimeMillis());
-
-                    @Override
-                    public void processRequest(final ItsNatServletRequest itsNatServletRequest, final ItsNatServletResponse response) {
-                        Loggers.DEBUG.debug("Unloading DOCUMENT. Time spent:" + (System.currentTimeMillis() - timeSpent.getObj()));
-                    }
-                });
                 checkUserSpentTime:
                 {
                     itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.body), EventType.UNLOAD.toString(), new EventListener() {
@@ -166,7 +157,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             }
                             setMetaDescription:
                             {
-                                $(mainMetaDesc).setAttribute(MarkupTag.META.namee(), "Do a flight booking to " + location + " and find a hotel to stay. Hire a car to travel around. Click here to check for offers.");
+                                $(mainMetaDesc).setAttribute(MarkupTag.META.content(), "Do a flight booking to " + location + " and find a hotel to stay. Hire a car to travel around. Click here to check for offers.");
                             }
                         }
                         catch (final Throwable t) {

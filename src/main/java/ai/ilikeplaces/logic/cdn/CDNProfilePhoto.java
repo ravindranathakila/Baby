@@ -70,13 +70,10 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
         }else{
             sl.appendToLogMSG("Login Failed. Destroying Session Bean!");
             sl.complete(Loggers.FAILED);
-            this.remove();
+            throw LOGIN_EXCEPTION;
         }
     }
 
-    @Remove
-    public void remove(){
-    }
 
     @Override
     public Return<File> run(File file, final Map parameterMap, final String userFileExtension, final HttpSession session) {
@@ -216,22 +213,22 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
         return dimg;
     }
 
-    /**
-     * http://www.javalobby.org/articles/ultimate-image/
-     *
-     * @param ref
-     * @return null or buffered image
-     * @throws Exception
-     */
-    public static BufferedImage loadImage(final File ref) throws Exception {
-        try {
-            Loggers.DEBUG.debug("Loading Image From:" + ref.getCanonicalPath());
-            return ImageIO.read(ref);
-        } catch (final Exception e) {
-            Loggers.EXCEPTION.error(Loggers.EMBED, e);
-            throw e;
-        }
-    }
+//    /**
+//     * http://www.javalobby.org/articles/ultimate-image/
+//     *
+//     * @param ref
+//     * @return null or buffered image
+//     * @throws Exception
+//     */
+//    public static BufferedImage loadImage(final File ref) throws Exception {
+//        try {
+//            Loggers.DEBUG.debug("Loading Image From:" + ref.getCanonicalPath());
+//            return ImageIO.read(ref);
+//        } catch (final Exception e) {
+//            Loggers.EXCEPTION.error(Loggers.EMBED, e);
+//            throw e;
+//        }
+//    }
 
 
 //    /**

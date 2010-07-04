@@ -234,7 +234,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                                 try {
                                                     @NOTE(note = "Outside try as this is caught by the outermost common Number format exception.")
                                                     final long requestedPrivateLocation = Long.parseLong(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeLocation));
-                                                    final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationAsAny(getUsername(), requestedPrivateLocation);
+                                                    final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationAsAny(new HumanId().setObjAsValid(getUsername()), requestedPrivateLocation);
                                                     if (r.returnStatus() == 0)
                                                         UCPrivateLocationIsExistent:
                                                                 {

@@ -173,7 +173,7 @@ public class PrivateEvent {
         return this;
     }
 
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
+    @UNIDIRECTIONAL
     @OneToOne(cascade = CascadeType.ALL)
     public Album getPrivateEventAlbum() {
         return privateEventAlbum;

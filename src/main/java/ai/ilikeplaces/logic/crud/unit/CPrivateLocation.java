@@ -36,7 +36,7 @@ public class CPrivateLocation extends AbstractSLBCallbacks implements CPrivateLo
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public PrivateLocation doNTxCPrivateLocation(final String humanId, final String locationName, final String locationInfo) {
-        final Human owner = humanCrudServiceLocal_.find(Human.class, humanId);
+        final Human owner = humanCrudServiceLocal_.findBadly(Human.class, humanId);
 
         final PrivateLocation privateLocation = new PrivateLocation();
 

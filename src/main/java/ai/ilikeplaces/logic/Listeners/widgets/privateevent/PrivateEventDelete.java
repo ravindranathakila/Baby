@@ -6,6 +6,7 @@ import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
+import ai.ilikeplaces.logic.Listeners.widgets.AlbumManager;
 import ai.ilikeplaces.logic.Listeners.widgets.Button;
 import ai.ilikeplaces.logic.Listeners.widgets.MemberHandler;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent;
@@ -91,6 +92,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                 }
             };
             new WallWidgetPrivateEvent(itsNatDocument_, $$(Page.privateEventDeleteWall), humanId, r.returnValue().getPrivateEventId());
+            new AlbumManager(itsNatDocument_, $$(Page.privateEventDeleteAlbum),humanId,r.returnValue().getPrivateEventId());
         } else {
             $$(privateEventDeleteNotice).setTextContent(r.returnMsg());
         }

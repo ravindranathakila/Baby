@@ -28,9 +28,9 @@ public interface HumanCRUDPrivateEventLocal {
 
     public Return<PrivateEvent> dirtyRPrivateEvent(final String humanId, final long privateEventId);
 
-    public Return<Boolean> dirtyRPrivateEventIsOwner(final String humanId, final Long privateEventId);
+    public Return<Boolean> dirtyRPrivateEventIsOwner(final HumanId humanId, final Long privateEventId);
 
-    public Return<Boolean> dirtyRPrivateEventIsViewer(final String humanId, final Long privateEventId);
+    public Return<Boolean> dirtyRPrivateEventIsViewer(final HumanId humanId, final Long privateEventId);
 
     public Return<PrivateEvent> uPrivateEventAddOwner(final HumanId humanId__, final long privateEventId__, final HumansFriend owner);
 

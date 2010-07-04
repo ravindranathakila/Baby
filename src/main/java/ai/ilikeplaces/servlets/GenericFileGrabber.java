@@ -3,6 +3,7 @@ package ai.ilikeplaces.servlets;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.logic.cdn.CDNAlbum;
 import ai.ilikeplaces.logic.cdn.CDNProfilePhoto;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.rbs.RBGet;
@@ -358,6 +359,9 @@ final public class GenericFileGrabber extends HttpServlet {
         switch (Integer.parseInt(parameterMap.get("type"))) {
             case 1:
                 fulf = CDNProfilePhoto.getProfilePhotoCDNLocal();
+                break;
+            case 2:
+                fulf = CDNAlbum.getAlbumPhotoCDNLocal();
                 break;
             default:
                 return new ReturnImpl<File>(ExceptionCache.UNSUPPORTED_SWITCH, "Unsupported Case", true);

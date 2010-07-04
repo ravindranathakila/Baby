@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Info;
 import ai.ilikeplaces.logic.validators.unit.SimpleName;
 import ai.ilikeplaces.servlets.Controller;
@@ -36,7 +37,7 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
     RefObj<String> privateLocationInfo = null;
 
-    RefString humanId = null;
+    HumanId humanId = null;
 
     final private Logger logger = LoggerFactory.getLogger(PrivateLocationCreate.class.getName());
 
@@ -54,7 +55,8 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
      */
     @Override
     protected void init(final Object... initArgs) {
-        this.humanId = new RefString((String) initArgs[0]);
+        this.humanId = new HumanId();
+        humanId.setObjAsValid((String) initArgs[0]);
 
         this.privateLocationName = new SimpleName();
 
@@ -118,7 +120,7 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateSave), EventType.CLICK.toString(), new EventListener() {
 
-            final RefString myhumanId = humanId;
+            final HumanId myhumanId = humanId;
             final RefObj<String> myprivateLocationName = privateLocationName;
             final RefObj<String> myprivateLocationInfo = privateLocationInfo;
             final Validator v = new Validator();
@@ -130,7 +132,7 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
                 if (myprivateLocationName.validate(v) == 0 && myprivateLocationInfo.validate(v) == 0) {
                     sl = SmartLogger.start(Loggers.LEVEL.DEBUG, "Saving private location", 10000, null, true);
-                    final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).cPrivateLocation(myhumanId.getString(), myprivateLocationName.getObj(), myprivateLocationInfo.getObj());
+                    final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).cPrivateLocation(myhumanId, myprivateLocationName.getObj(), myprivateLocationInfo.getObj());
                     if (r.returnStatus() == 0) {
                         remove(evt_.getTarget(), EventType.CLICK, this);
                         $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationName.getObj() + " was created!");

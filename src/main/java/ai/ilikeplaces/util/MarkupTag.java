@@ -159,7 +159,7 @@ public enum MarkupTag implements MarkupTagFace {
 
         @Override
         public String content() {
-            throw new UnsupportedOperationException(ExceptionMsg);
+            return CONTENT;
         }
     },
 
@@ -211,6 +211,7 @@ public enum MarkupTag implements MarkupTagFace {
         public String classs() {
             return CLASS;
         }};
+    private static final String CONTENT = "content";
     private static final String NAME = "name";
     private static final String UL_TAG = "UL";
 
