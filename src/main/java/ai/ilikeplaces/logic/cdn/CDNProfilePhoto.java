@@ -48,6 +48,18 @@ import static ai.ilikeplaces.util.Loggers.EXCEPTION;
 public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
 
     public static final String CONTAINER = "PROFILE_PHOTOS";
+    private static final String LOADING_IMAGE_AS_BUFFERED_IMAGE = "Loading Image As Buffered Image";
+    private static final String SCALING_IMAGE = "Scaling Image";
+    private static final String SAVING_SCALED_IMAGE = "Saving Scaled Image";
+    private static final String UPLOADING_IMAGE = "Uploading Image";
+    private static final String DELETING_OLD_PROFILE_IMAGE = "Deleting Old Profile Image";
+    private static final String DELETING_OLD_PROFILE_IMAGE_FAILED_BUT_PROCEEDING_REASON_FOR_FAILURE = "Deleting Old Profile Image Failed, But Proceeding. Reason for Failure:";
+    private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_CACHING_ISSUES = "Profile Photo Upload Failed Due To Caching Issues!";
+    private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES = "Profile Photo Upload Failed Due To I/O Issues!";
+    private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_FAILURE_IN_DELETION_OF_OLD_PROFILE_IMAGE = "Profile Photo Upload Failed Due Failure In Deletion Of Old Profile Image!";
+    private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_IMAGE_MANIPULATION_ISSUES = "Profile Photo Upload Failed Due To Image Manipulation Issues!";
+    private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_RENAMING_ISSUES = "Profile Photo Upload Failed Due To Renaming Issues!";
+    private static final String PROFILE_PHOTO_UPLOAD_SUCCESSFUL = "Profile Photo Upload Successful.";
 
     public static CDNProfilePhotoLocal getProfilePhotoCDNLocal() {
         isOK();
@@ -101,50 +113,50 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
                 final HumanId humanId = new HumanId(s.boundInstance.getHumanUserId());
 
                 try {
-                    sl.appendToLogMSG("Loading Image As Buffered Image");
+                    sl.appendToLogMSG(LOADING_IMAGE_AS_BUFFERED_IMAGE);
                     BufferedImage bi = loadImage(newFile);
 
-                    sl.appendToLogMSG("Scaling Image");
+                    sl.appendToLogMSG(SCALING_IMAGE);
                     bi = scaleImage(bi, 190); //Reducing size of image to blueprintcss span-5 just to save bandwidth for the user.
 
-                    sl.appendToLogMSG("Saving Scaled Image");
+                    sl.appendToLogMSG(SAVING_SCALED_IMAGE);
                     saveImage(bi, newFile);
 
                     try {
                         final String cdnFileName = newFile.getName();
-                        sl.appendToLogMSG("Uploading Image");
+                        sl.appendToLogMSG(UPLOADING_IMAGE);
                         final boolean uploaded = client.storeObjectAs(CONTAINER, newFile, FilesConstants.getMimetype(userFileExtension), cdnFileName);
-                        sl.appendToLogMSG("Deleting Old Profile Image");
+                        sl.appendToLogMSG(DELETING_OLD_PROFILE_IMAGE);
                         try {
                             client.deleteObject(CONTAINER, DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(humanId).returnValueBadly());
                         } catch (final Exception e) {
-                            sl.appendToLogMSG("Deleting Old Profile Image Failed, But Proceeding. Reason for Failure:" + e.getMessage());
+                            sl.appendToLogMSG(DELETING_OLD_PROFILE_IMAGE_FAILED_BUT_PROCEEDING_REASON_FOR_FAILURE + e.getMessage());
                         }
                         if (uploaded) {
                             final boolean deleted = newFile.delete();
                             if (!deleted) {
-                                r = new ReturnImpl<File>(ExceptionCache.FILE_DELETE_FAILED, "Profile Photo Upload Failed Due To Caching Issues!", true);
+                                r = new ReturnImpl<File>(ExceptionCache.FILE_DELETE_FAILED, PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_CACHING_ISSUES, true);
                             } else {
                                 final Return<HumansIdentity> dbr = DB.getHumanCRUDHumanLocal(true).doUHumansProfilePhoto(humanId, cdnFileName);
                                 r = dbr.returnStatus() == 0 ?
-                                        new ReturnImpl<File>(newFile, "Profile Photo Upload Successful.")
-                                        : new ReturnImpl<File>(new DBOperationException(dbr.returnError()), "Profile Photo Upload Failed Due To I/O Issues!", true);
+                                        new ReturnImpl<File>(newFile, PROFILE_PHOTO_UPLOAD_SUCCESSFUL)
+                                        : new ReturnImpl<File>(new DBOperationException(dbr.returnError()), PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES, true);
                             }
                         } else {
-                            r = new ReturnImpl<File>(ExceptionCache.CDN_FILE_UPLOAD_FAILED, "Profile Photo Upload Failed Due To I/O Issues!", true);
+                            r = new ReturnImpl<File>(ExceptionCache.CDN_FILE_UPLOAD_FAILED, PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES, true);
                         }
                     } catch (final IOException e) {
-                        r = new ReturnImpl<File>(e, "Profile Photo Upload Failed Due To I/O Issues!", true);
+                        r = new ReturnImpl<File>(e, PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES, true);
                     }
                 } catch (final RuntimeException e) {//This is for the deleteObject's returnBadly from DB return
-                    r = new ReturnImpl<File>(e, "Profile Photo Upload Failed Due Failure In Deletion Of Old Profile Image!", true);
+                    r = new ReturnImpl<File>(e, PROFILE_PHOTO_UPLOAD_FAILED_DUE_FAILURE_IN_DELETION_OF_OLD_PROFILE_IMAGE, true);
                 } catch (final Exception e) {
-                    r = new ReturnImpl<File>(e, "Profile Photo Upload Failed Due To Image Manipulation Issues!", true);
+                    r = new ReturnImpl<File>(e, PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_IMAGE_MANIPULATION_ISSUES, true);
                 }
 
             }
         } catch (final IOException e) {
-            r = new ReturnImpl<File>(e, "Profile Photo Upload Failed Due To Renaming Issues!", true);
+            r = new ReturnImpl<File>(e, PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_RENAMING_ISSUES, true);
         }
         return r;
     }

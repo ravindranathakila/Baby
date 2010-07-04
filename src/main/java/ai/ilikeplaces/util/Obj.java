@@ -1,6 +1,7 @@
 package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.License;
+import net.sf.oval.Validator;
 import net.sf.oval.configuration.annotation.IsInvariant;
 import net.sf.oval.constraint.NotNull;
 
@@ -25,5 +26,9 @@ public class Obj<T> extends RefObj<T> {
     @Override
     public T getObj() {
         return obj;
+    }
+
+    public RefObj<T> getSelfAsValid(final Validator... validator) {
+        return  super.getSelfAsValid(validator);
     }
 }

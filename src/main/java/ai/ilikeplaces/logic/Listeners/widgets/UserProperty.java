@@ -25,6 +25,8 @@ import org.w3c.dom.html.HTMLDocument;
 abstract public class UserProperty extends AbstractWidgetListener {
 
     /**
+     * Shows the profile belonging to humanId
+     *
      * @param itsNatDocument__
      * @param appendToElement__
      * @param humanId

@@ -1,7 +1,9 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;
@@ -29,25 +31,27 @@ import org.w3c.dom.html.HTMLDocument;
 abstract public class FriendAdd extends AbstractWidgetListener {
     final private Logger logger = LoggerFactory.getLogger(FriendAdd.class.getName());
 
-    HumanId humanId = null;
+    HumanId addee = null;
     HumanId caller = null;
 
     /**
+     * caller is the human who adds addee as a friend
+     *
      * @param itsNatDocument__
      * @param appendToElement__
-     * @param humanId
+     * @param addee
      * @param caller
      */
-    public FriendAdd(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final HumanId humanId, final HumanId caller) {
-        super(itsNatDocument__, Controller.Page.FriendAdd, appendToElement__, humanId, caller);
+    public FriendAdd(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final HumanId addee, final HumanId caller) {
+        super(itsNatDocument__, Controller.Page.FriendAdd, appendToElement__, addee, caller);
     }
 
     @Override
     protected void init(final Object... initArgs) {
-        this.humanId = (HumanId) initArgs[0];
+        this.addee = (HumanId) initArgs[0];
         this.caller = (HumanId) initArgs[1];
 
-        $$(Controller.Page.friendAddDisplayNameLabel).setTextContent(DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(humanId).getDisplayName());
+        $$(Controller.Page.friendAddDisplayNameLabel).setTextContent(DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(addee).getDisplayName());
     }
 
     /**
@@ -62,16 +66,24 @@ abstract public class FriendAdd extends AbstractWidgetListener {
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.friendAddAddButton), EventType.CLICK.toString(), new EventListener() {
 
-            private HumanId myhumanId = humanId;
+            private HumanId myaddee = addee;
             private HumanId mycaller = caller;
 
             @Override
             public void handleEvent(final Event evt_) {
                 logger.debug("{}", "Clicked Find");
-                Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doNTxAddHumansNetPeople(mycaller, myhumanId);
+                Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doNTxAddHumansNetPeople(mycaller, myaddee);
                 if (r.returnStatus() == 0) {
                     logger.debug("{}", r.toString());
                     $$(Controller.Page.friendAddAddButton).setTextContent("Added!");
+                    final Human adder = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(mycaller.getObj());
+                    final Human addee = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(mycaller.getObj());
+                    if (!addee.isFriend(adder.getHumanId())) {
+                        SendMail.getSendMailLocal().sendAsSimpleText(myaddee.getObj(),
+                                adder.getDisplayName(),
+                                adder.getDisplayName() + " has added you as a friend. You can add " + adder.getDisplayName() + " back as your friend at "
+                                        + "httP://www.ilikeplaces.com/i/" + DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPublicURL(mycaller).returnValue());
+                    }
                     remove(evt_.getTarget(), EventType.CLICK, this);
                 } else {
                     //DO something!

@@ -89,7 +89,7 @@ public class PrivatePhoto implements Serializable {
         return this;
     }
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     public HumansPrivatePhoto getHumansPrivatePhoto() {
         return humansPrivatePhoto;
     }

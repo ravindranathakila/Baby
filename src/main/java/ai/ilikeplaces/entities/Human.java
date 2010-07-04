@@ -64,6 +64,12 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
         return getHumansNet().getDisplayName();
     }
 
+    /**
+     * Checks friendsHumanId is a friend of this human
+     *
+     * @param friendsHumanId
+     * @return if friendsHumanId is a friend of this human
+     */
     @Override
     @Transient
     public boolean isFriend(final String friendsHumanId) {

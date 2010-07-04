@@ -6,6 +6,7 @@ import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
 
 import javax.ejb.Local;
@@ -60,7 +61,7 @@ public interface HumanCRUDPrivateEventLocal {
 
     public Return<Album> rPrivateEventReadAlbum(final HumanId operator__, final long privateEventId__);
 
-    public Return<Album> uPrivateEventAddEntryToAlbum(final HumanId operator__, final long privateEventId__);
+    public Return<Album> uPrivateEventAddEntryToAlbum(final HumanId operator__, final long privateEventId__, final RefObj<String> cdnFileName);
 
     public Return<Album> uPrivateEventRemoveEntryFromAlbum(final HumanId operator__, final long privateEventId__);
 
