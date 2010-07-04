@@ -2,15 +2,14 @@ package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.logic.Listeners.widgets.FriendAdd;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
+import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.util.AbstractListener;
-import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.MarkupTag;
-import ai.ilikeplaces.util.SmartLogger;
+import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -128,6 +127,16 @@ public class ListenerI implements ItsNatServletRequestListener {
 
                                 setWall:
                                 {
+                                    new UserProperty(itsNatDocument__, $(Skeleton_center_content), new HumanId(requestedProfile)) {
+                                        protected void init(final Object... initArgs) {
+                                            $$(Controller.Page.user_property_content).appendChild(
+                                                    ElementComposer.compose($$(MarkupTag.DIV))
+                                                            .$ElementSetText("Add as friend").get());
+                                            new FriendAdd(itsNatDocument_, $$(Controller.Page.user_property_content), new HumanId(requestedProfile).getSelfAsValid(), new HumanId(getUsernameAsValid()).getSelfAsValid()) {
+                                            };
+                                        }
+                                    };
+
                                     new WallWidgetHumansWall(itsNatDocument__, $(Skeleton_center_content), new HumanId(requestedProfile), new HumanId(getUsernameAsValid()));
                                 }
                             }
