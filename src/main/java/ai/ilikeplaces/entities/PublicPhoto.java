@@ -91,7 +91,7 @@ public class PublicPhoto implements Serializable {
     }
 
     @WARNING(warning = "The cascade types of HumansPublicPhoto, Location and this method, are very CascadeType sensitive. Any mistake will trigger rollbacks.")
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     public HumansPublicPhoto getHumansPublicPhoto() {
         return humansPublicPhoto;
     }
