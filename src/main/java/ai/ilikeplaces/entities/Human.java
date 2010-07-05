@@ -80,6 +80,18 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
         return r.returnValue();
     }
 
+    /**
+     * Checks friendsHumanId is NOT a friend of this human
+     *
+     * @param friendsHumanId
+     * @return if friendsHumanId is NOT a friend of this human
+     */
+    @Override
+    @Transient
+    public boolean notFriend(final String friendsHumanId) {
+        return !isFriend(friendsHumanId);
+    }
+
 
     public Boolean getHumanAlive() {
         return humanAlive;
