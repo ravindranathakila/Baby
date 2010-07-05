@@ -23,4 +23,8 @@ public interface HumansFriend extends HumanIdFace {
 
     @Transient
     public boolean isFriend(final String friendsHumanId);
+
+    @Transient
+    public boolean notFriend(final String friendsHumanId);
+
 }
