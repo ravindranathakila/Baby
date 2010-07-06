@@ -7,6 +7,19 @@
 			   compressionMinSize="1024"
                compressableMimeType="text/html,text/javascript,text/css,text/xhtml"/>
 
+# Set tomcat character encoding
+
+    <Connector port="8080" maxHttpHeaderSize="8192"
+     maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
+     enableLookups="false" redirectPort="8443" acceptCount="100"
+     connectionTimeout="20000" disableUploadTimeout="true"
+     compression="on"
+     compressionMinSize="128"
+     noCompressionUserAgents="gozilla, traviata" 
+     compressableMimeType="text/html,text/xml,text/plain,text/css,text/ javascript,application/x-javascript,application/javascript"
+     URIEncoding="UTF-8"
+    />
+
 
  # Compare local(non cdn) and Header Expires Filter in WEB.XML
 
@@ -20,3 +33,20 @@
  # disable disqus developer mood
 
  # upload sources
+
+ # importing geo data to derby. Tab character, should be copied off something like notepad and pasted   
+
+ To import data from a file to a table, use the SYSCS_UTIL.SYSCS_IMPORT_TABLE procedure. The procedure definition is:
+SYSCS_UTIL.SYSCS_IMPORT_TABLE (IN schemaName VARCHAR(128),
+IN tableName VARCHAR(128), IN fileName VARCHAR(32672),
+IN columnDelimiter CHAR(1), IN characterDelimiter  CHAR(1),
+IN codeset VARCHAR(128), IN replace SMALLINT)
+
+No Result is returned from the procedure.
+To import data from a file to a subset of columns in a table, use the SYSCS_UTIL.SYSCS_IMPORT_DATA procedure. To import data to subset of columns in a table, you specify insertColumns on the table into which data will be imported and/or specify columnIndexes to import data fields from a file to columns in a table. The procedure definition is:
+SYSCS_UTIL.SYSCS_IMPORT_DATA (IN schemaName VARCHAR(128),
+IN tableName VARCHAR(128), IN insertColumns VARCHAR(32672),
+IN columnIndexes VARCHAR(32672), IN fileName VARCHAR(32672),
+IN columnDelimiter CHAR(1), IN characterDelimiter  CHAR(1),
+IN codeset VARCHAR(128), IN replace SMALLINT)
+

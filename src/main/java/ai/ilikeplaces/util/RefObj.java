@@ -110,7 +110,7 @@ public abstract class RefObj<T> {
         String returnVal = "";
         for (final ConstraintViolation v : e) {
             returnVal += v.getMessage()
-                    + (v.getErrorCode() != null ? CODE + v.getErrorCode() + CLOSE_SQUARE_BRACKET : "")
+                    //+ (v.getErrorCode() != null ? CODE + v.getErrorCode() + CLOSE_SQUARE_BRACKET : "")
                     + "\n";
         }
         return returnVal;
@@ -125,8 +125,8 @@ public abstract class RefObj<T> {
     static public List<String> validationMessagesAsList(final List<ConstraintViolation> e) {
         final List<String> returnVal = new ArrayList<String>();
         for (final ConstraintViolation v : e) {
-            returnVal.add(v.getMessage()
-                    + (v.getErrorCode() != null ? CODE + v.getErrorCode() + CLOSE_SQUARE_BRACKET : ""));
+            returnVal.add(v.getMessage());
+                    //+ (v.getErrorCode() != null ? CODE + v.getErrorCode() + CLOSE_SQUARE_BRACKET : ""));
         }
         return returnVal;
     }

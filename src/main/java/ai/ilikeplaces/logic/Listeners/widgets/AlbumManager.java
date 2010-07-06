@@ -2,8 +2,11 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.entities.Album;
+import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
@@ -16,6 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
+
+import static ai.ilikeplaces.servlets.Controller.Page.pd_photo;
+import static ai.ilikeplaces.servlets.Controller.Page.pd_photo_permalink;
 
 
 /**
@@ -39,12 +45,45 @@ public class AlbumManager extends AbstractWidgetListener {
     protected void init(final Object... initArgs) {
         final HumanId humanId = ((HumanId) initArgs[0]).getSelfAsValid();
         final Long privateEventId = (Long) initArgs[1];
-        final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventIsOwner(humanId, privateEventId);
-        if (r.returnStatus() == 0 && r.returnValue()) {
-            $$(Controller.Page.AlbumPivateEventId).setAttribute(MarkupTag.INPUT.value(), privateEventId.toString());
-        } else {
-            $$(Controller.Page.AlbumNotice).setTextContent(r.returnMsg());
+
+
+        setAlbumPhotos:
+        {
+            final Return<Album> ra = DB.getHumanCrudPrivateEventLocal(true).rPrivateEventReadAlbum(humanId, privateEventId);
+            if (ra.returnStatus() == 0) {
+                final Album album = ra.returnValue();
+
+                for (final PrivatePhoto privatePhoto__ : album.getAlbumPhotos())
+                    new Photo$Description(itsNatDocument_, $$(Controller.Page.AlbumPhotos)) {
+
+                        @Override
+                        protected void init(final Object... initArgs) {
+                            final String imageURL = RBGet.globalConfig.getString("ALBUM_PHOTOS") + privatePhoto__.getPrivatePhotoURLPath();
+                            $$(pd_photo_permalink).setAttribute("href", imageURL);
+                            $$(pd_photo).setAttribute("src", imageURL);
+                        }
+                    };
+            } else {
+                $$(Controller.Page.AlbumNotice).setTextContent(ra.returnMsg());
+            }
         }
+
+
+        setAlbumOwnerMode:
+        {
+            final Return<Boolean> ro = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventIsOwner(humanId, privateEventId);
+            if (ro.returnStatus() == 0) {
+                if (ro.returnValue()) {//owner
+                    $$(Controller.Page.AlbumPivateEventId).setAttribute(MarkupTag.INPUT.value(), privateEventId.toString());
+                    displayBlock($$(Controller.Page.AlbumOwner));
+                    //show hide operations
+                }
+            } else {
+                $$(Controller.Page.AlbumNotice).setTextContent(ro.returnMsg());
+            }
+        }
+
+
     }
 
     @Override

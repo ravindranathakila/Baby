@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.BIDIRECTIONAL;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ import java.util.List;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
-public class Album {
+public class Album implements RefreshData<Album>{
 
     public Long albumId;
 
@@ -95,7 +96,7 @@ public class Album {
     }
 
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<HumansAlbum> getAlbumOwners() {
         return albumOwners;
     }
@@ -108,7 +109,7 @@ public class Album {
             "The other way round is not feasible because a user will own photos, not albums.")
     @NOTE(note = "ManyToMany because photos can be moved to a different album when deleting events.")
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
-    @ManyToMany(mappedBy = PrivatePhoto.albumsCol, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = PrivatePhoto.albumsCol, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<PrivatePhoto> getAlbumPhotos() {
         return albumPhotos;
     }
@@ -126,5 +127,19 @@ public class Album {
 
     public void setAlbumVisitors(final List<HumansAlbum> albumVisitors) {
         this.albumVisitors = albumVisitors;
+    }
+
+    /**
+     * Calling this method will refresh any lazily fetched lists in this entity making them availabe for use.
+     *
+     * @throws ai.ilikeplaces.exception.DBFetchDataException
+     *
+     */
+    @Override
+    public Album refresh() throws DBFetchDataException {
+        this.getAlbumPhotos().size();
+        this.getAlbumOwners().size();
+        this.getAlbumVisitors().size();
+        return this;
     }
 }

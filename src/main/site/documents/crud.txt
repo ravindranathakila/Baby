@@ -1,0 +1,11 @@
+This explains the method of handling CRUD operations on DB.
+
+For each enttiy, it is better to have a CRUD unit class.
+
+This class should load the entity depending on the caller.
+
+If the caller needs lists fetched, it should size() those lists and return.
+
+This means, in all cases, lists shall be lazy unless specified otherwise.
+
+Implement RefreshData interface when appropriate

@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.logic.Listeners.widgets.FriendAdd;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
@@ -125,19 +126,34 @@ public class ListenerI implements ItsNatServletRequestListener {
                                     }
                                 }
 
-                                setWall:
+                                setAddAsFrindIfNotFriend:
                                 {
-                                    new UserProperty(itsNatDocument__, $(Skeleton_center_content), new HumanId(requestedProfile)) {
-                                        protected void init(final Object... initArgs) {
-                                            $$(Controller.Page.user_property_content).appendChild(
-                                                    ElementComposer.compose($$(MarkupTag.DIV))
-                                                            .$ElementSetText("Add as friend").get());
-                                            new FriendAdd(itsNatDocument_, $$(Controller.Page.user_property_content), new HumanId(requestedProfile).getSelfAsValid(), new HumanId(getUsernameAsValid()).getSelfAsValid()) {
+                                    try {
+                                        final Human me = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(getUsernameAsValid());
+                                        if (me.notFriend(requestedProfile)) {
+                                            new UserProperty(itsNatDocument__, $(Skeleton_center_content), new HumanId(requestedProfile)) {
+                                                protected void init(final Object... initArgs) {
+                                                    $$(Controller.Page.user_property_content).appendChild(
+                                                            ElementComposer.compose($$(MarkupTag.DIV))
+                                                                    .$ElementSetText("Not yet your friend").get());
+                                                    new FriendAdd(itsNatDocument_, $$(Controller.Page.user_property_content), new HumanId(requestedProfile).getSelfAsValid(), new HumanId(getUsernameAsValid()).getSelfAsValid()) {
+                                                    };
+                                                }
                                             };
                                         }
-                                    };
+                                    } catch (final Throwable t) {
+                                        EXCEPTION.error("{}", t);
 
-                                    new WallWidgetHumansWall(itsNatDocument__, $(Skeleton_center_content), new HumanId(requestedProfile), new HumanId(getUsernameAsValid()));
+                                    }
+                                }
+                                setWall:
+                                {
+                                    try {
+                                        new WallWidgetHumansWall(itsNatDocument__, $(Skeleton_center_content), new HumanId(requestedProfile), new HumanId(getUsernameAsValid()));
+                                    } catch (final Throwable t) {
+                                        EXCEPTION.error("{}", t);
+
+                                    }
                                 }
                             }
                             sl.complete(Loggers.LEVEL.DEBUG, "View Friend Successful." + Loggers.DONE);

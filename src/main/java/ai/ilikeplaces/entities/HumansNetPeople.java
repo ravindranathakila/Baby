@@ -68,6 +68,11 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend {
         return r.returnValue();
     }
 
+    @Override
+    public boolean notFriend(final String friendsHumanId) {
+        return !isFriend(friendsHumanId);        
+    }
+
     @NOTE(note = "MANY IS THE OWNING SIDE, HENCE REFRESH. SINCE THIS IS SELF REFERENTIAL, A REFRESH WITH SELF SHOULD NOT HAPPEN.")
     @UNIDIRECTIONAL(note = "Asymmetric Relationship")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)

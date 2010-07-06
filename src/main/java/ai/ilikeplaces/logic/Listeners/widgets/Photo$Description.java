@@ -25,8 +25,8 @@ abstract public class Photo$Description extends AbstractWidgetListener {
      * @param itsNatDocument__
      * @param appendToElement__
      */
-    public Photo$Description(final ItsNatDocument itsNatDocument__, final Element appendToElement__) {
-        super(itsNatDocument__, Page.Photo$Description, appendToElement__);
+    public Photo$Description(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final Object... initArgs) {
+        super(itsNatDocument__, Page.Photo$Description, appendToElement__, initArgs);
     }
 
     /**
