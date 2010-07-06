@@ -108,14 +108,14 @@ public class CDNAlbum extends CDN implements CDNAlbumLocal {
                 final HumanId humanId = new HumanId(s.boundInstance.getHumanUserId()).getSelfAsValid();
 
                 try {
-                    sl.appendToLogMSG(LOADING_IMAGE_AS_BUFFERED_IMAGE);
-                    BufferedImage bi = loadImage(newFile);
+                    //sl.appendToLogMSG(LOADING_IMAGE_AS_BUFFERED_IMAGE);
+                    //BufferedImage bi = loadImage(newFile);
 
-                    sl.appendToLogMSG(SCALING_IMAGE);
-                    bi = scaleImage(bi, 190); //Reducing size of image to blueprintcss span-5 just to save bandwidth for the user.
+                    //sl.appendToLogMSG(SCALING_IMAGE);
+                    //bi = scaleImage(bi, 190); //Reducing size of image to blueprintcss span-5 just to save bandwidth for the user.
 
-                    sl.appendToLogMSG(SAVING_SCALED_IMAGE);
-                    saveImage(bi, newFile);
+                    //sl.appendToLogMSG(SAVING_SCALED_IMAGE);
+                    //saveImage(bi, newFile);
 
                     try {
                         final String cdnFileName = newFile.getName();

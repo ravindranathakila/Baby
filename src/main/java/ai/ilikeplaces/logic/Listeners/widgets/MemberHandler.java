@@ -110,13 +110,13 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
                     positive = !positive;
                     if (positive) {
                         @WARNING(warning = "Assuming return type to be Return. Check Save as it is generic.")
-                        final Return r = (Return) saveAdd.save(new ai.ilikeplaces.logic.validators.unit.HumanId(m.getHumanId()), possibility);
+                        final Return r = (Return) saveAdd.save(new HumanId(m.getHumanId()).getSelfAsValid(), possibility);
                         if (r.returnStatus() == 0) {
                             ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getHuman().getDisplayName() + Added);
                         }
                     } else {
                         @WARNING(warning = "Assuming return type to be Return. Check Save as it is generic.")
-                        final Return r = (Return) saveRemove.save(new ai.ilikeplaces.logic.validators.unit.HumanId(m.getHumanId()), possibility);
+                        final Return r = (Return) saveRemove.save(new HumanId(m.getHumanId()).getSelfAsValid(), possibility);
                         if (r.returnStatus() == 0) {
                             ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getHuman().getDisplayName() + Removed);
                         }

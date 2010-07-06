@@ -71,6 +71,11 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
         return r.returnValue();
     }
 
+    @Override
+    public boolean notFriend(final String friendsHumanId) {
+        return !isFriend(friendsHumanId);
+    }
+
     @BIDIRECTIONAL
     @WARNING(warning = "Many",
             warnings = {"Not owner as deleting a location should automatically reflect in here, not vice versa.",

@@ -1,11 +1,11 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.TRANSACTION;
 import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.HumansPrivatePhoto;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import org.slf4j.Logger;
@@ -72,7 +72,7 @@ public class CRUDAlbum extends AbstractSLBCallbacks implements CRUDAlbumLocal {
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
-    public Album doUAlbumAddEntry(final long privateEventId, final String humanId, final String photoUrl) throws DBDishonourCheckedException {
+    public Album doUAlbumAddEntry(final long privateEventId, final String humanId, final String photoUrl) throws DBDishonourCheckedException, DBFetchDataException {
 
 
         /**
@@ -81,7 +81,7 @@ public class CRUDAlbum extends AbstractSLBCallbacks implements CRUDAlbumLocal {
         final PrivatePhoto MprivatePhoto__ = privatePhotoCrudServiceLocal_.create(new PrivatePhoto().setPrivatePhotoURLPathR(photoUrl));
         final HumansPrivatePhoto MhumansPrivatePhoto__ = rHumanLocal_.doRHuman(humanId).getHumansPrivatePhoto();
         final List<PrivatePhoto> MprivatePhotos__ = MhumansPrivatePhoto__.getPrivatePhotos();//Eager
-        
+
         WiringBothSides:
         {
             MprivatePhotos__.add(MprivatePhoto__);
@@ -99,5 +99,21 @@ public class CRUDAlbum extends AbstractSLBCallbacks implements CRUDAlbumLocal {
         }
         return Malbum__;
 
+    }
+
+
+    /**
+     * @param humanId
+     * @param privateEventId by which to fetch the album
+     * @param eager
+     * @return
+     * @throws DBDishonourCheckedException
+     */
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Album doRAlbumByPrivateEvent(final String humanId, final long privateEventId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException {
+        return eager ?
+                rPrivateEventLocal_.doRPrivateEventAsSystem(privateEventId, false).getPrivateEventAlbum().refresh() :
+                rPrivateEventLocal_.doRPrivateEventAsSystem(privateEventId, false).getPrivateEventAlbum();
     }
 }

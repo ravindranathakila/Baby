@@ -1,6 +1,7 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ import java.util.List;
         note = "We need to return this entity to the user for CRUD, hence cascade creation not possible.")
 @Entity
 @EntityListeners(EntityLifeCycleListener.class)
-public class PrivateEvent {
+public class PrivateEvent implements RefreshData<PrivateEvent> {
 
     public Long privateEventId;
 
@@ -174,7 +175,7 @@ public class PrivateEvent {
     }
 
     @UNIDIRECTIONAL
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Album getPrivateEventAlbum() {
         return privateEventAlbum;
     }
@@ -192,7 +193,7 @@ public class PrivateEvent {
     @WARNING(warning = "Owner because once an event needs to be deleted, deleting this entity is easier if owner." +
             "If this entity is not the owner, individual owner viewer accepteee rejectee will have to delete their events individually.")
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<HumansPrivateEvent> getPrivateEventInvites() {
         return privateEventInvites;
     }
@@ -204,7 +205,7 @@ public class PrivateEvent {
     @WARNING(warning = "Owner because once an event needs to be deleted, deleting this entity is easier if owner." +
             "If this entity is not the owner, individual owner viewer accepteee rejectee will have to delete their events individually.")
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<HumansPrivateEvent> getPrivateEventViewers() {
         return privateEventViewers;
     }
@@ -216,7 +217,7 @@ public class PrivateEvent {
     @WARNING(warning = "Owner because once an event needs to be deleted, deleting this entity is easier if owner." +
             "If this entity is not the owner, individual owner viewer accepteee rejectee will have to delete their events individually.")
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<HumansPrivateEvent> getPrivateEventOwners() {
         return privateEventOwners;
     }
@@ -228,7 +229,7 @@ public class PrivateEvent {
     @WARNING(warning = "Owner because once an event needs to be deleted, deleting this entity is easier if owner." +
             "If this entity is not the owner, individual owner viewer accepteee rejectee will have to delete their events individually.")
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<HumansPrivateEvent> getPrivateEventRejects() {
         return privateEventRejects;
     }
@@ -259,5 +260,24 @@ public class PrivateEvent {
                 ", privateEventId=" + privateEventId +
                 ", privateLocation=" + privateLocation +
                 '}';
+    }
+
+    /**
+     * Calling this method will refresh any lazily fetched lists in this entity making them availabe for use.
+     *
+     * @throws ai.ilikeplaces.exception.DBFetchDataException
+     *
+     */
+    @Override
+    public PrivateEvent refresh() throws DBFetchDataException {
+        try {
+            this.getPrivateEventInvites().size();
+            this.getPrivateEventOwners().size();
+            this.getPrivateEventViewers().size();
+            this.getPrivateEventRejects().size();
+        } catch (final Exception e__) {
+            throw new DBFetchDataException(e__);
+        }
+        return this;
     }
 }

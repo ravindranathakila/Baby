@@ -40,7 +40,9 @@ final public class
     public enum Page implements PageFace {
         Album("ai/ilikeplaces/widgets/Album.xhtml",
                Controller.Page.AlbumNotice,
-               Controller.Page.AlbumPivateEventId
+               Controller.Page.AlbumPivateEventId,
+               Controller.Page.AlbumOwner,
+               Controller.Page.AlbumPhotos
         ) {
             @Override
             public String toString() {
@@ -600,6 +602,8 @@ final public class
         /*Album IDs*/
         final static public String AlbumNotice = "AlbumNotice";
         final static public String AlbumPivateEventId = "AlbumPivateEventId";
+        final static public String AlbumOwner = "AlbumOwner";
+        final static public String AlbumPhotos = "AlbumPhotos";
 
         /*ProfileWidget Page*/
         final static public String DocUserProperty = "DocUserProperty";

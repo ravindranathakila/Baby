@@ -8,10 +8,7 @@ import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.HumansPrivateEvent;
 import ai.ilikeplaces.entities.PrivateEvent;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.exception.DBDishonourException;
-import ai.ilikeplaces.exception.NoPrivilegesException;
-import ai.ilikeplaces.exception.NotFriendsException;
+import ai.ilikeplaces.exception.*;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 
@@ -50,9 +47,9 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     @OK
     @Override
-    public PrivateEvent doUPrivateEventData(final String humanId__, final long privateEventId__, final String privateEventName__, final String privateEventInfo__, final String privateEventStartDate__, final String privateEventEndDate__) throws DBDishonourCheckedException {
+    public PrivateEvent doUPrivateEventData(final String humanId__, final long privateEventId__, final String privateEventName__, final String privateEventInfo__, final String privateEventStartDate__, final String privateEventEndDate__) throws DBDishonourCheckedException, DBFetchDataException {
         final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.find(PrivateEvent.class, privateEventId__);
-        if (rPrivateEventLocal_.doDirtyRPrivateEventIsOwner(humanId__, privateEventId__)) {
+        if (rPrivateEventLocal_.doRPrivateEventIsOwner(humanId__, privateEventId__)) {
             throw new NoPrivilegesException(humanId__, UPDATE_EVENT_DATA_OF + privateEvent_.toString());
         }
 

@@ -38,6 +38,7 @@ final public class GenericFileGrabber extends HttpServlet {
 
     static String fileCache = RBGet.globalConfig.getString("FILE_CACHE");
     private static final String HYPHEN = "-";
+    private static final int UPLOAD_LIMIT = 2 * 1024 * 1024;
 
     static {
         fileCache = fileCache.endsWith("/") || fileCache.endsWith("\\") ? fileCache : fileCache + "/";
@@ -179,7 +180,7 @@ final public class GenericFileGrabber extends HttpServlet {
     }
 
 
-    @FIXME(issues = {"Handle exception","Tuple ordering changed with respect to profile photo upload."})
+    @FIXME(issues = {"Handle exception", "Tuple ordering changed with respect to profile photo upload."})
     private void errorReorderedSomethingWentWrong(final PrintWriter out, final String msg) {
         try {
             flush(out).print(formatTuple(Error, msg, "something_went_wrong"));
@@ -331,11 +332,10 @@ final public class GenericFileGrabber extends HttpServlet {
                 final int extensionDotIndex = usersFileName.lastIndexOf(".");
                 userFileExtension = usersFileName.substring(extensionDotIndex + 1);
                 final FileOutputStream fos = new FileOutputStream(tempFile);
-                final int uploadLimit = 1024 * 1024;//1MB
                 int byteCount = 0;
                 while (true) {
                     final int dataByte = stream.read();
-                    if (byteCount++ > uploadLimit) {
+                    if (byteCount++ > UPLOAD_LIMIT) {
                         fos.close();
                         tempFile.delete();
                         return new ReturnImpl<File>(ExceptionCache.FILE_SIZE_EXCEPTION, "File Too Big!", true);

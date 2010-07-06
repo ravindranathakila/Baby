@@ -21,6 +21,12 @@ public interface Return<T> {
 
     public T returnValue();
 
+    /**
+     * Use to optimistically obtain return value assuming there were no errors. This will throw a runtime exception if
+     * errors had occured.
+     *
+     * @return
+     */
     public T returnValueBadly();
 
     public Throwable returnError();

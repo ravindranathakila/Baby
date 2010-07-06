@@ -60,6 +60,8 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     private static final String READ_WALL_FAILED = "Read wall FAILED!";
     private static final String UPDATE_PRIVATE_EVENT_FAILED = "Update private event FAILED!";
     private static final String UPDATE_PRIVATE_EVENT_SUCCESSFUL = "Update private event Successful!";
+    private static final String READ_ALBUM_SUCCESSFUL = "Read album Successful!";
+    private static final String READ_ALBUM_FAILED = "Read album FAILED!";
 
 
     @Override
@@ -227,7 +229,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     public Return<PrivateEvent> dirtyRPrivateEvent(final String humanId, final long privateEventId) {
         Return<PrivateEvent> r;
         try {
-            r = new ReturnImpl<PrivateEvent>(rPrivateEventLocal_.doDirtyRPrivateEvent(humanId, privateEventId), VIEW_PRIVATE_EVENT_SUCCESSFUL);
+            r = new ReturnImpl<PrivateEvent>(rPrivateEventLocal_.doRPrivateEventAsAny(humanId, privateEventId), VIEW_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateEvent>(t, VIEW_PRIVATE_EVENT_FAILED, true);
         }
@@ -240,7 +242,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     public Return<Boolean> dirtyRPrivateEventIsOwner(final HumanId humanId, final Long privateEventId) {
         Return<Boolean> r;
         try {
-            r = new ReturnImpl<Boolean>(rPrivateEventLocal_.doDirtyRPrivateEventIsOwner(humanId.getObjectAsValid(), privateEventId), CHECK_OWNERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL);
+            r = new ReturnImpl<Boolean>(rPrivateEventLocal_.doRPrivateEventIsOwner(humanId.getObjectAsValid(), privateEventId), CHECK_OWNERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Boolean>(t, CHECK_OWNERSHIP_OF_PRIVATE_EVENT_FAILED, true);
         }
@@ -252,7 +254,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     public Return<Boolean> dirtyRPrivateEventIsViewer(final HumanId humanId, final Long privateEventId) {
         Return<Boolean> r;
         try {
-            r = new ReturnImpl<Boolean>(rPrivateEventLocal_.doDirtyRPrivateEventIsViewer(humanId.getObjectAsValid(), privateEventId), CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL);
+            r = new ReturnImpl<Boolean>(rPrivateEventLocal_.doRPrivateEventIsViewer(humanId.getObjectAsValid(), privateEventId), CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Boolean>(t, CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_FAILED, true);
         }
@@ -273,7 +275,13 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
 
     @Override
     public Return<Album> rPrivateEventReadAlbum(final HumanId operator__, final long privateEventId__) {
-        throw ExceptionCache.METHOD_NOT_IMPLEMENTED;
+        Return<Album> r;
+        try {
+            r = new ReturnImpl<Album>(crudAlbumLocal_.doRAlbumByPrivateEvent(operator__.getObjectAsValid(), privateEventId__, true), READ_ALBUM_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<Album>(t, READ_ALBUM_FAILED, true);
+        }
+        return r;
     }
 
     @Override

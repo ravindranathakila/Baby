@@ -100,6 +100,14 @@
             <!--<param-value>Expires: Thu, 15 Apr 2011 20:00:00 GMT</param-value>-->
         <!--</init-param>-->
     </filter>
+    <filter>
+    <filter-name>FilterCharset</filter-name>
+    <filter-class>ai.ilikeplaces.servlets.filters.FilterCharset</filter-class>
+      <init-param>
+        <param-name>requestEncoding</param-name>
+        <param-value>UTF-8</param-value>
+      </init-param>
+  </filter>
     <!--###################### ENF OF FILTERS ####################################-->
 
 
@@ -208,6 +216,10 @@
     </filter-mapping>
 
 
+    <filter-mapping>
+      <filter-name>FilterCharset</filter-name>
+      <url-pattern>/page/*</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>ProfileFilter</filter-name>
         <url-pattern>/i/*</url-pattern>

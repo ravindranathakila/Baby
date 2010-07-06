@@ -65,6 +65,11 @@ public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace,H
         return r.returnValue();
     }
 
+    @Override
+    public boolean notFriend(final String friendsHumanId) {
+        return !isFriend(friendsHumanId);        
+    }
+
     public void setHuman(final Human human) {
         this.human = human;
     }

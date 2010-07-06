@@ -3,7 +3,7 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.exception.DBFetchDataException;
 
 import javax.ejb.Local;
 
@@ -18,13 +18,15 @@ import javax.ejb.Local;
 @Local
 public interface RPrivateEventLocal {
 
-    public PrivateEvent doDirtyRPrivateEvent(final String humanId, final long privateEventId) throws DBDishonourCheckedException;
+    public PrivateEvent doRPrivateEventAsAny(final String humanId, final long privateEventId) throws DBDishonourCheckedException, DBFetchDataException;
 
-    public boolean doDirtyRPrivateEventIsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException;
+    public PrivateEvent doRPrivateEventAsSystem(final long privateEventId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException;
 
-    public boolean doDirtyRPrivateEventIsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException;
+    public boolean doRPrivateEventIsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException;
 
-    public PrivateEvent doRPrivateEventAsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException;
+    public boolean doRPrivateEventIsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException;
 
-    public PrivateEvent doRPrivateEventAsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException;
+    public PrivateEvent doRPrivateEventAsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException;
+
+    public PrivateEvent doRPrivateEventAsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException;
 }

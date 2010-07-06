@@ -82,7 +82,7 @@ abstract public class FriendAdd extends AbstractWidgetListener {
                         SendMail.getSendMailLocal().sendAsSimpleText(myaddee.getObj(),
                                 adder.getDisplayName(),
                                 adder.getDisplayName() + " has added you as a friend. You can add " + adder.getDisplayName() + " back as your friend at "
-                                        + "httP://www.ilikeplaces.com/i/" + DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPublicURL(mycaller).returnValue());
+                                        + "http://www.ilikeplaces.com/i/" + DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPublicURL(mycaller).returnValue());
                     }
                     remove(evt_.getTarget(), EventType.CLICK, this);
                 } else {
