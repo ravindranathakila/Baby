@@ -5,10 +5,7 @@ import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.entities.PrivateLocation;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.exception.DBDishonourException;
-import ai.ilikeplaces.exception.NoPrivilegesException;
-import ai.ilikeplaces.exception.NotFriendsException;
+import ai.ilikeplaces.exception.*;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 
@@ -55,13 +52,13 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateLocation doUPrivateLocationAddOwner(final String adder, final long privateLocationId__, final HumansFriend addee) throws NoPrivilegesException {
+    public PrivateLocation doUPrivateLocationAddOwner(final String adder, final long privateLocationId__, final HumansFriend addee) throws NoPrivilegesException, DBFetchDataException {
 
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addee.getHumanId())) {
             throw new NotFriendsException(adder, addee.getHumanId());
         }
 
-        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__);
+        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__).refresh();
 
         final HumansPrivateLocation adeehumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, addee.getHumanId());
 
@@ -97,13 +94,13 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateLocation doUPrivateLocationRemoveOwner(final String remover, final long privateLocationId__, final HumansFriend removee) throws NoPrivilegesException {
+    public PrivateLocation doUPrivateLocationRemoveOwner(final String remover, final long privateLocationId__, final HumansFriend removee) throws NoPrivilegesException, DBFetchDataException {
 
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removee.getHumanId())) {
             throw new NotFriendsException(remover, removee.getHumanId());
         }
 
-        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__);
+        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__).refresh();
 
         //also safe to keep adder scoped within
         checkAuthority:
@@ -138,13 +135,13 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateLocation doUPrivateLocationAddViewer(final String adder, final long privateLocationId__, final HumansFriend addee) throws NoPrivilegesException {
+    public PrivateLocation doUPrivateLocationAddViewer(final String adder, final long privateLocationId__, final HumansFriend addee) throws NoPrivilegesException, DBFetchDataException {
 
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addee.getHumanId())) {
             throw new NotFriendsException(adder, addee.getHumanId());
         }
 
-        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__);
+        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__).refresh();
 
 
         //also safe to keep adder scoped within
@@ -181,13 +178,13 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateLocation doUPrivateLocationRemoveViewer(final String remover, final long privateLocationId__, final HumansFriend removee) throws DBDishonourCheckedException {
+    public PrivateLocation doUPrivateLocationRemoveViewer(final String remover, final long privateLocationId__, final HumansFriend removee) throws DBDishonourCheckedException, DBFetchDataException {
 
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removee.getHumanId())) {
             throw new NotFriendsException(remover, removee.getHumanId());
         }
 
-        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__);
+        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__).refresh();
 
         //also safe to keep adder scoped within
         checkAuthority:

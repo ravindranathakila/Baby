@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.exception.DBFetchDataException;
 
 import javax.ejb.Local;
 
@@ -16,6 +17,6 @@ import javax.ejb.Local;
 @Local
 public interface CPrivateLocationLocal {
 
-    public PrivateLocation doNTxCPrivateLocation(final String humanId, final String locationName, final String locationInfo);
+    public PrivateLocation doNTxCPrivateLocation(final String humanId, final String locationName, final String locationInfo) throws DBFetchDataException;
 
 }

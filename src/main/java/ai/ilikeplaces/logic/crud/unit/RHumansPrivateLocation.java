@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
@@ -36,10 +37,8 @@ public class RHumansPrivateLocation extends AbstractSLBCallbacks implements RHum
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public HumansPrivateLocation doNTxRHumansPrivateLocation(String humanId) throws DBDishonourCheckedException {
-        final HumansPrivateLocation hpl = humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId);
-        hpl.getPrivateLocationsOwned().size();//Initializing list
-        hpl.getPrivateLocationsViewed().size();//initializing list
+    public HumansPrivateLocation doNTxRHumansPrivateLocation(String humanId) throws DBDishonourCheckedException, DBFetchDataException {
+        final HumansPrivateLocation hpl = humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId).refresh();
         return hpl;
     }
 

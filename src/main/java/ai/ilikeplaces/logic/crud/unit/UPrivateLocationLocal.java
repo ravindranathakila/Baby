@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.exception.NoPrivilegesException;
 
 import javax.ejb.Local;
@@ -21,12 +22,12 @@ public interface UPrivateLocationLocal {
 
     public PrivateLocation doUPrivateLocationData(final String humanId__, final String privateLocationId__, final String privateLocationName__, final String privateLocationInfo__);
 
-    public PrivateLocation doUPrivateLocationAddOwner(final String humanId__, final long privateLocationId__, final HumansFriend privateLocationOwner__) throws NoPrivilegesException;
+    public PrivateLocation doUPrivateLocationAddOwner(final String humanId__, final long privateLocationId__, final HumansFriend privateLocationOwner__) throws NoPrivilegesException, DBFetchDataException;
 
-    public PrivateLocation doUPrivateLocationRemoveOwner(final String humanId__, final long privateLocationId__, final HumansFriend privateLocationOwner__) throws NoPrivilegesException;
+    public PrivateLocation doUPrivateLocationRemoveOwner(final String humanId__, final long privateLocationId__, final HumansFriend privateLocationOwner__) throws NoPrivilegesException, DBFetchDataException;
 
-    public PrivateLocation doUPrivateLocationAddViewer(final String humanId__, final long privateLocationId__, final HumansFriend privateLocationVisitor__) throws NoPrivilegesException;
+    public PrivateLocation doUPrivateLocationAddViewer(final String humanId__, final long privateLocationId__, final HumansFriend privateLocationVisitor__) throws NoPrivilegesException, DBFetchDataException;
 
-    public PrivateLocation doUPrivateLocationRemoveViewer(final String humanId__, final long privateLocationId__, final HumansFriend privateLocationVisitor__) throws DBDishonourCheckedException;
+    public PrivateLocation doUPrivateLocationRemoveViewer(final String humanId__, final long privateLocationId__, final HumansFriend privateLocationVisitor__) throws DBDishonourCheckedException, DBFetchDataException;
 
 }

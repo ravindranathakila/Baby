@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
+import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.logic.crud.unit.CPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.DPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.RPrivateLocationLocal;
@@ -54,11 +55,14 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
 
 
     @Override
-    public Return<PrivateLocation> cPrivateLocation(final RefObj<String> humanId, final String privateLocationName, final String privateLocationInfo) {
+    public Return<PrivateLocation> cPrivateLocation(final RefObj<String> humanId, final String privateLocationName, final String privateLocationInfo){
         Return<PrivateLocation> r;
-        r = new ReturnImpl<PrivateLocation>(cPrivateLocationLocal.doNTxCPrivateLocation(humanId.getObjectAsValid(), privateLocationName, privateLocationInfo), SAVE_PRIVATE_LOCATION_SUCCESSFUL);
+        try {
+            r = new ReturnImpl<PrivateLocation>(cPrivateLocationLocal.doNTxCPrivateLocation(humanId.getObjectAsValid(), privateLocationName, privateLocationInfo), SAVE_PRIVATE_LOCATION_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<PrivateLocation>(t, UPDATE_PRIVATE_LOCATION_FAILED, true);
+        }
         return r;
-
     }
 
 
@@ -111,7 +115,7 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
     public Return<PrivateLocation> dirtyRPrivateLocationAsAny(final RefObj<String> humanId, final long privateLocationId) {
         Return<PrivateLocation> r;
         try {
-            r = new ReturnImpl<PrivateLocation>(rPrivateLocationLocal.doDirtyRPrivateLocationAsAny(humanId.getObjectAsValid(), privateLocationId), READ_PRIVATE_LOCATION_SUCCESSFUL);
+            r = new ReturnImpl<PrivateLocation>(rPrivateLocationLocal.doRPrivateLocationAsAny(humanId.getObjectAsValid(), privateLocationId), READ_PRIVATE_LOCATION_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateLocation>(t, READ_PRIVATE_LOCATION_FAILED, true);
         }
@@ -150,7 +154,7 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
     public Return<Boolean> dirtyRPrivateLocationIsOwner(final RefObj<String> humanId, final Long privateLocationId) {
         Return<Boolean> r;
         try {
-            r = new ReturnImpl<Boolean>(rPrivateLocationLocal.doDirtyRPrivateLocationIsOwner(humanId.getObjectAsValid(), privateLocationId), CHECK_OWNERSHIP_OF_PRIVATE_LOCATION_SUCCESSFUL);
+            r = new ReturnImpl<Boolean>(rPrivateLocationLocal.doRPrivateLocationIsOwner(humanId.getObjectAsValid(), privateLocationId), CHECK_OWNERSHIP_OF_PRIVATE_LOCATION_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Boolean>(t, CHECK_OWNERSHIP_OF_PRIVATE_LOCATION_FAILED, true);
         }
@@ -162,7 +166,7 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
     public Return<Boolean> dirtyRPrivateLocationIsViewer(final RefObj<String> humanId, final Long privateLocationId) {
         Return<Boolean> r;
         try {
-            r = new ReturnImpl<Boolean>(rPrivateLocationLocal.doDirtyRPrivateLocationIsViewer(humanId.getObjectAsValid(), privateLocationId), CHECK_VIEWERSHIP_OF_PRIVATE_LOCATION_SUCCESSFUL);
+            r = new ReturnImpl<Boolean>(rPrivateLocationLocal.doRPrivateLocationIsViewer(humanId.getObjectAsValid(), privateLocationId), CHECK_VIEWERSHIP_OF_PRIVATE_LOCATION_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Boolean>(t, CHECK_VIEWERSHIP_OF_PRIVATE_LOCATION_FAILED, true);
         }
@@ -172,8 +176,11 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
     @Override
     public Return<Boolean> dPrivateLocation(final RefObj<String> humanId, final long privateLocationId) {
         Return<Boolean> r;
-        r = new ReturnImpl<Boolean>(dPrivateLocationLocal.doNTxDPrivateLocation(humanId.getObjectAsValid(), privateLocationId), DELETE_PRIVATE_LOCATION_SUCCESSFUL);
+        try {
+            r = new ReturnImpl<Boolean>(dPrivateLocationLocal.doNTxDPrivateLocation(humanId.getObjectAsValid(), privateLocationId), DELETE_PRIVATE_LOCATION_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<Boolean>(t, CHECK_VIEWERSHIP_OF_PRIVATE_LOCATION_FAILED, true);
+        }
         return r;
-
     }
 }

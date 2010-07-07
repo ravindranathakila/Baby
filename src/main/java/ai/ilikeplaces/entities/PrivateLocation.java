@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.BIDIRECTIONAL;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ import java.util.List;
                 query = "SELECT loc FROM PrivateLocation loc WHERE loc.privateLocationName = :privateLocationName"),
         @NamedQuery(name = "FindAllPrivateLocationNamesByLikeName",
                 query = "SELECT loc.privateLocationName FROM PrivateLocation loc WHERE UPPER(loc.privateLocationName) LIKE :privateLocationName")})
-public class PrivateLocation implements Serializable {
+public class PrivateLocation implements Serializable,RefreshData<PrivateLocation> {
 
     final static Logger logger = LoggerFactory.getLogger(PrivateLocation.class.getName());
 
@@ -108,7 +109,7 @@ public class PrivateLocation implements Serializable {
 
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
     @WARNING(warning = "Owning as deleting a location should automatically reflect in humans, not vice versa.")
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<HumansPrivateLocation> getPrivateLocationOwners() {
         return privateLocationOwners;
     }
@@ -119,7 +120,7 @@ public class PrivateLocation implements Serializable {
 
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
     @WARNING(warning = "Owning as deleting a location should automatically reflect in humans, not vice versa.")
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<HumansPrivateLocation> getPrivateLocationViewers() {
         return privateLocationViewers;
     }
@@ -149,5 +150,19 @@ public class PrivateLocation implements Serializable {
                 "privateLocationId=" + privateLocationId +
                 ", privateLocationName='" + privateLocationName + '\'' +
                 '}';
+    }
+
+    /**
+     * Calling this method will refresh any lazily fetched lists in this entity making them availabe for use.
+     *
+     * @throws ai.ilikeplaces.exception.DBFetchDataException
+     *
+     */
+    @Override
+    public PrivateLocation refresh() throws DBFetchDataException {
+        this.getPrivateEvents().size();
+        this.getPrivateLocationOwners().size();
+        this.getPrivateLocationViewers().size();
+        return this;
     }
 }

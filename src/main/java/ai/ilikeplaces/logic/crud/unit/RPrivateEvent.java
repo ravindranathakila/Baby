@@ -48,7 +48,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
         securityChecks:
         {
-            if (!privateEvent_.getPrivateEventOwners().contains(human) || !privateEvent_.getPrivateEventViewers().contains(human)) {
+            if (!(privateEvent_.getPrivateEventOwners().contains(human) || privateEvent_.getPrivateEventViewers().contains(human))) {
                 throw new NoPrivilegesException(humanId, VIEW_PRIVATE_LOCATION + privateEvent_.toString());
             }
         }

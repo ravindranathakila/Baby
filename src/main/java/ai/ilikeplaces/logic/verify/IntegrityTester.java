@@ -7,15 +7,11 @@ import ai.ilikeplaces.management.MemorySafe;
 import ai.ilikeplaces.management.MemoryWarningSystem;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.SmartLogger;
-import com.rackspacecloud.client.cloudfiles.FilesClient;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * @author Ravindranath Akila
@@ -58,5 +54,11 @@ public class IntegrityTester implements IntegrityTesterLocal {
                 MemorySafe.allocate(maxMemory - usedMemory);
             }
         });
+    }
+
+    @Override
+    public boolean gc() {
+        System.gc();
+        return true;
     }
 }
