@@ -24,7 +24,7 @@ import java.util.Arrays;
 @Startup
 @Singleton
 @NOTE(note = "USE s.o.p FOR LOGGING AS LOGGER MIGHT FAIL TOO!")
-public class IntegrityTester implements StartupILikePlacesLocal {
+public class IntegrityTester implements IntegrityTesterLocal {
 
     @EJB
     private MemcLocal memcLocal_;
