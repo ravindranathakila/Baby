@@ -131,6 +131,11 @@ public class HumansNet implements HumanPkJoinFace, HumansFriend {
         return r.returnValue();
     }
 
+    @Override
+    public boolean notFriend(final String friendsHumanId) {
+        return !isFriend(friendsHumanId);
+    }
+
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }

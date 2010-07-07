@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;

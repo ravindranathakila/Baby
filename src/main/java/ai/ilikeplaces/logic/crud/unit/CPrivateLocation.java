@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 
@@ -35,7 +36,7 @@ public class CPrivateLocation extends AbstractSLBCallbacks implements CPrivateLo
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
-    public PrivateLocation doNTxCPrivateLocation(final String humanId, final String locationName, final String locationInfo) {
+    public PrivateLocation doNTxCPrivateLocation(final String humanId, final String locationName, final String locationInfo) throws DBFetchDataException {
         final Human owner = humanCrudServiceLocal_.findBadly(Human.class, humanId);
 
         final PrivateLocation privateLocation = new PrivateLocation();
@@ -46,10 +47,10 @@ public class CPrivateLocation extends AbstractSLBCallbacks implements CPrivateLo
         final PrivateLocation returnVal = privateLocationCrudServiceLocal_.create(privateLocation);
 
         /*Give rights to CRUD private location*/
-        returnVal.getPrivateLocationOwners().add(owner.getHumansPrivateLocation());
+        returnVal.refresh().getPrivateLocationOwners().add(owner.getHumansPrivateLocation());
 
         /*Give rights to View private location*/
-        returnVal.getPrivateLocationViewers().add(owner.getHumansPrivateLocation());
+        returnVal.refresh().getPrivateLocationViewers().add(owner.getHumansPrivateLocation());
 
         /*Enrolled private locations. Right to view only*/
         owner.getHumansPrivateLocation().getPrivateLocationsViewed().add(returnVal);

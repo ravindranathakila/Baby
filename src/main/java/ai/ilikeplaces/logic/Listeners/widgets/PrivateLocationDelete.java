@@ -66,34 +66,37 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationDelete), EventType.CLICK.toString(), new EventListener() {
+        delete:
+        {
+            itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationDelete), EventType.CLICK.toString(), new EventListener() {
 
-            final HumanId myhumanId = humanId;
-            final Long myprivateLocationId = privateLocationId;
+                final HumanId myhumanId = humanId;
+                final Long myprivateLocationId = privateLocationId;
 
-            @Override
-            public void handleEvent(final Event evt_) {
-                logger.debug("{}", "HELLO! CLICKED DELETE.");
+                @Override
+                public void handleEvent(final Event evt_) {
+                    logger.debug("{}", "HELLO! CLICKED DELETE.");
 
-                final Return<Boolean> r = DB.getHumanCrudPrivateLocationLocal(true).dPrivateLocation(myhumanId, myprivateLocationId);
-                if (r.returnStatus() == 0) {
-                    logger.debug("{}", "HELLO! DELETED. DB REPLY:" + r.returnValue());
-                    remove(evt_.getTarget(), EventType.CLICK, this);
-                    logger.debug("{}", "HELLO! REMOVED CLICK.");
-                    clear($$(privateLocationDeleteNotice));
-                } else {
-                    $$(privateLocationDelete).setTextContent(r.returnMsg());
+                    final Return<Boolean> r = DB.getHumanCrudPrivateLocationLocal(true).dPrivateLocation(myhumanId, myprivateLocationId);
+                    if (r.returnStatus() == 0) {
+                        logger.debug("{}", "HELLO! DELETED. DB REPLY:" + r.returnValue());
+                        remove(evt_.getTarget(), EventType.CLICK, this);
+                        logger.debug("{}", "HELLO! REMOVED CLICK.");
+                        clear($$(privateLocationDeleteNotice));
+                    } else {
+                        $$(privateLocationDelete).setTextContent(r.returnMsg());
+                    }
+
+
                 }
 
-
-            }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
-        }, false, JSCodeToSend.RefreshPage);
+                @Override
+                public void finalize() throws Throwable {
+                    Loggers.finalized(this.getClass().getName());
+                    super.finalize();
+                }
+            }, false, JSCodeToSend.RefreshPage);
+        }
 
         final HumansNetPeople user = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);
         this.possibilities = user.getHumansNetPeoples();

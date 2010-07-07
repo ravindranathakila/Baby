@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.exception.DBFetchDataException;
 
 import javax.ejb.Local;
 
@@ -15,5 +16,5 @@ import javax.ejb.Local;
 @Local
 public interface RHumansPrivateLocationLocal {
 
-    public HumansPrivateLocation doNTxRHumansPrivateLocation(String humanId) throws DBDishonourCheckedException;
+    public HumansPrivateLocation doNTxRHumansPrivateLocation(String humanId) throws DBDishonourCheckedException, DBFetchDataException;
 }

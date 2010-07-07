@@ -92,7 +92,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                 }
             };
             new WallWidgetPrivateEvent(itsNatDocument_, $$(Page.privateEventDeleteWall), humanId, r.returnValue().getPrivateEventId());
-            new AlbumManager(itsNatDocument_, $$(Page.privateEventDeleteAlbum),humanId,r.returnValue().getPrivateEventId());
+            new AlbumManager(itsNatDocument_, $$(Page.privateEventDeleteAlbum), humanId, r.returnValue().getPrivateEventId());
         } else {
             $$(privateEventDeleteNotice).setTextContent(r.returnMsg());
         }
@@ -101,49 +101,37 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventDelete), EventType.CLICK.toString(), new EventListener() {
+        delete:
+        {
+            itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventDelete), EventType.CLICK.toString(), new EventListener() {
 
-            final HumanId myhumanId = humanId;
-            final Long myprivateEventId = privateEventId;
-            boolean confirm = false;
+                final HumanId myhumanId = humanId;
+                final Long myprivateEventId = privateEventId;
+                boolean confirm = false;
 
-            @Override
-            public void handleEvent(final Event evt_) {
-                Loggers.USER.info(myhumanId.getObj() + " clicked delete for private event " + myprivateEventId);
-//                if (!confirm) {//First visit
-//                    $$(evt_).setTextContent("Delete? Sure?");
-//                    confirm = true;
-//                    new Thread(
-//                            new Runnable(){
-//                                @Override
-//                                public void run() {
-//                                    ThreadSleep.sleep(10000);
-//                                    confirm = false;
-//                                    $$(privateEventDelete).setTextContent("Delete");
-//                                }
-//                            }
-//                    ).run();
-//                    return;
-//                }
+                @Override
+                public void handleEvent(final Event evt_) {
+                    Loggers.USER.info(myhumanId.getObj() + " clicked delete for private event " + myprivateEventId);
 
-                final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dPrivateEvent(myhumanId, myprivateEventId);
-                if (r.returnStatus() == 0) {
-                    Loggers.USER.info(humanId.getObj() + " clicked deleted private event " + r.returnValue());
-                    remove(evt_.getTarget(), EventType.CLICK, this);
-                    clear($$(privateEventDeleteNotice));
-                } else {
-                    $$(privateEventDelete).setTextContent(r.returnMsg());
+                    final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dPrivateEvent(myhumanId, myprivateEventId);
+                    if (r.returnStatus() == 0) {
+                        Loggers.USER.info(humanId.getObj() + " clicked deleted private event " + r.returnValue());
+                        remove(evt_.getTarget(), EventType.CLICK, this);
+                        clear($$(privateEventDeleteNotice));
+                    } else {
+                        $$(privateEventDelete).setTextContent(r.returnMsg());
+                    }
+
+
                 }
 
-
-            }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
-        }, false, JSCodeToSend.RefreshPage);
+                @Override
+                public void finalize() throws Throwable {
+                    Loggers.finalized(this.getClass().getName());
+                    super.finalize();
+                }
+            }, false, JSCodeToSend.RefreshPage);
+        }
 
         final HumansNetPeople user = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);
         this.possibilities = user.getHumansNetPeoples();

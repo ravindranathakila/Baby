@@ -173,9 +173,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                                     UCListOfActions:
                                                     {
                                                         for (final PrivateLocation prvLoc : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPrivateLocation(new HumanId(getUsernameAsValid())).returnValue().getPrivateLocationsViewed()) {
-//                                                            new PrivateLocationView(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), prvLoc.getPrivateLocationId()) {
-//                                                            };
-                                                            attachPrivateLocationAsRolesPermit(itsNatDocument__, $(Skeleton_center_skeleton), prvLoc);
+                                                            attachPrivateLocationAsRolesPermit(itsNatDocument__, $(Skeleton_center_skeleton), prvLoc, true, false);
                                                         }
                                                         new PrivateLocationCreate(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
                                                         };
@@ -192,9 +190,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                                     new PrivateLocationCreate(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
                                                     };
                                                     for (final PrivateLocation prvLoc : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPrivateLocation(new HumanId(getUsernameAsValid())).returnValue().getPrivateLocationsViewed()) {
-//                                                        new PrivateLocationView(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), prvLoc.getPrivateLocationId()) {
-//                                                        };
-                                                        attachPrivateLocationAsRolesPermit(itsNatDocument__, $(Skeleton_center_skeleton), prvLoc);
+                                                        attachPrivateLocationAsRolesPermit(itsNatDocument__, $(Skeleton_center_skeleton), prvLoc, true, false);
                                                     }
 
                                                 } catch (final Throwable t) {
@@ -251,81 +247,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                                                                 }
                                                                             };
                                                                         }
-                                                                        attachPrivateLocationAsRolesPermit(itsNatDocument__, $(Skeleton_center_skeleton), r.returnValue());
-
-//                                                                        checkAuthority:
-//                                                                        {
-////                                                                            final boolean isOwner = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationIsOwner(getUsernameAsValid(), requestedPrivateLocation).returnValue();
-////                                                                            final boolean isViewer = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationIsViewer(getUsernameAsValid(), requestedPrivateLocation).returnValue();
-//
-//                                                                            final boolean isOwner = r.returnValue().getPrivateLocationOwners().contains(new HumanIdEq(getUsernameAsValid()));
-//                                                                            final boolean isViewer = r.returnValue().getPrivateLocationViewers().contains(new HumanIdEq(getUsernameAsValid()));
-//
-//
-//                                                                            if (isOwner || isViewer) {
-//                                                                                USER.info(getUsernameAsValid() + " is granted access to view this private location.");
-//                                                                                final long validPrivateLocationId = r.returnValue().getPrivateLocationId();
-//
-//                                                                                UseCaseIntroduction:
-//                                                                                {
-//                                                                                    if (isViewer) {
-//                                                                                        USER.info(getUsernameAsValid() + " is accepted as a owner of this location.");
-//                                                                                        new PrivateLocationView(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), requestedPrivateLocation) {
-//                                                                                        };
-//                                                                                    } else if (isOwner) {
-//                                                                                        USER.info(getUsernameAsValid() + " is accepted as a viewer of this location.");
-//                                                                                        new PrivateLocationDelete(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), requestedPrivateLocation) {
-//                                                                                        };
-//                                                                                        UseCaseCreatePrivateEvents:
-//                                                                                        {
-//                                                                                            new PrivateEventCreate(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), validPrivateLocationId) {
-//                                                                                            };
-//                                                                                        }
-//                                                                                    }
-//                                                                                    UseCaseViewPrivateEvents:
-//                                                                                    {
-//                                                                                        for (final PrivateEvent p : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPrivateEvent(new HumanId(getUsernameAsValid())).returnValue().getPrivateEventsViewed())
-//                                                                                            if (p.getPrivateLocation().getPrivateLocationId() == validPrivateLocationId) {
-//                                                                                                new PrivateEventView(itsNatDocument__, $(Skeleton_center_skeleton), getUsernameAsValid(), p.getPrivateEventId()) {
-//                                                                                                };
-//                                                                                            }
-//                                                                                    }
-//                                                                                }
-///*                                                                                getAndDisplayAllThePhotos:
-//                                                                                {
-//                                                                                    List<PublicPhoto> listPublicPhoto = existingLocation_.getPublicPhotos();
-//                                                                                    logger.info(RBGet.logMsgs.getString("NUMBER_OF_PHOTOS_FOR_LOCATION"), existingLocation_.getLocationName(), listPublicPhoto.size());
-//
-//                                                                                    int i = 0;
-//                                                                                    for (final Iterator<PublicPhoto> it = listPublicPhoto.iterator(); it.hasNext(); i++) {
-//                                                                                        try {
-//                                                                                            final PublicPhoto publicPhoto = it.next();
-//
-//                                                                                            //old mode pasted end of class if needed
-//                                                                                            newMode:
-//                                                                                            {
-//                                                                                                final Element image = $(IMG);
-//                                                                                                image.setAttribute(IMG.src(), publicPhoto.getPublicPhotoURLPath());
-//                                                                                                image.setAttribute(IMG.alt(), publicPhoto.getPublicPhotoDescription());
-//                                                                                                image.setAttribute(IMG.style(), "width:110px;");
-//
-//                                                                                                final Element link = $(A);
-//                                                                                                link.setAttribute(A.href(), publicPhoto.getPublicPhotoURLPath());
-//
-//                                                                                                link.appendChild(image);
-//
-//                                                                                                $(Main_yox).appendChild(link);
-//                                                                                            }
-//                                                                                        } catch (final Throwable t) {
-//                                                                                            Loggers.EXCEPTION.error("", t);
-//                                                                                        }
-//                                                                                    }
-//                                                                                }*/
-//                                                                            } else {
-//                                                                                USER.info(getUsernameAsValid() + " is denied rights to view this private location.");
-//                                                                                $(Skeleton_notice).setTextContent(gUI.getString("NO_RIGHTS_TO_VIEW"));
-//                                                                            }
-//                                                                        }
+                                                                        attachPrivateLocationAsRolesPermit(itsNatDocument__, $(Skeleton_center_skeleton), r.returnValue(), false, true);
                                                                     } catch (
                                                                             final Throwable t) {
                                                                         EXCEPTION.error("{}", t);
@@ -367,7 +289,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                                     if (r.returnStatus() == 0)
                                                         UCReadPrivateEventOK:
                                                                 {
-                                                                    attachPrivateEventAsRolesPermit(itsNatDocument__, $(Skeleton_center_skeleton), r.returnValue());
+                                                                    attachPrivateEventAsRolesPermit(itsNatDocument__, $(Skeleton_center_skeleton), r.returnValue(), false);
                                                                 }
                                                     else
                                                         UCReadNonExistingPrivateEventEtc:
@@ -393,7 +315,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
             }
 
 
-            private void attachPrivateEventAsRolesPermit(final ItsNatDocument itsNatDocument__, final Element appendToElement, final PrivateEvent r) {
+            private void attachPrivateEventAsRolesPermit(final ItsNatDocument itsNatDocument__, final Element appendToElement, final PrivateEvent r, final boolean favorViewership) {
                 final boolean isOwner = r.getPrivateEventOwners().contains(new HumanIdEq(getUsernameAsValid()));
                 final boolean isViewer = r.getPrivateEventViewers().contains(new HumanIdEq(getUsernameAsValid()));
 
@@ -401,9 +323,18 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                     USER.info(getUsernameAsValid() + " is granted access to view this private event.");
                     final long validPrivateLocationId = r.getPrivateEventId();
                     if (isOwner) {
-                        new PrivateEventDelete(itsNatDocument__, appendToElement, getUsernameAsValid(), r.getPrivateEventId()) {
-                        };
-                    } else if (isViewer) {
+                        if (!favorViewership) {
+                            new PrivateEventDelete(itsNatDocument__, appendToElement, getUsernameAsValid(), r.getPrivateEventId()) {
+                            };
+                        } else if (isViewer) {
+                            new PrivateEventView(itsNatDocument__, appendToElement, getUsernameAsValid(), r.getPrivateEventId()) {
+                            };
+                        } else {
+                            new PrivateEventDelete(itsNatDocument__, appendToElement, getUsernameAsValid(), r.getPrivateEventId()) {
+                            };
+                        }
+
+                    } else {
                         new PrivateEventView(itsNatDocument__, appendToElement, getUsernameAsValid(), r.getPrivateEventId()) {
                         };
                     }
@@ -413,49 +344,60 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                 }
             }
 
-            private void attachPrivateLocationAsRolesPermit(final ItsNatDocument itsNatDocument__, final Element appendToElement, final PrivateLocation r) {
-                {
+            private void attachPrivateLocationAsRolesPermit(final ItsNatDocument itsNatDocument__, final Element appendToElement, PrivateLocation r, final boolean favorViewership, final boolean showEventCreate) {
 
-                    final long requestedPrivateLocation = r.getPrivateLocationId();
+                final long requestedPrivateLocation = r.getPrivateLocationId();
 
-                    final boolean isOwner = r.getPrivateLocationOwners().contains(new HumanIdEq(getUsernameAsValid()));
-                    final boolean isViewer = r.getPrivateLocationViewers().contains(new HumanIdEq(getUsernameAsValid()));
+                final PrivateLocation pl = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationAsAny(new HumanId(getUsernameAsValid()).getSelfAsValid(), r.getPrivateLocationId()).returnValueBadly();
+
+                final boolean isOwner = pl.getPrivateLocationOwners().contains(new HumanIdEq(getUsernameAsValid()));
+                final boolean isViewer = pl.getPrivateLocationViewers().contains(new HumanIdEq(getUsernameAsValid()));
 
 
-                    if ((isOwner || isViewer)) {
-                        final long validPrivateLocationId = r.getPrivateLocationId();
+                if (isOwner || isViewer) {
+                    final long validPrivateLocationId = pl.getPrivateLocationId();
 
-                        UseCaseIntroduction:
-                        {
+                    UseCaseIntroduction:
+                    {
 
-                            if (isOwner) {
-                                USER.info(getUsernameAsValid() + " is accepted as a viewer of this location:" + validPrivateLocationId);
+                        if (isOwner) {
+                            USER.info(getUsernameAsValid() + " is accepted as a owner of this location:" + validPrivateLocationId);
+                            if (!favorViewership) {
                                 new PrivateLocationDelete(itsNatDocument__, appendToElement, getUsernameAsValid(), requestedPrivateLocation) {
                                 };
-                                UseCaseCreatePrivateEvents:
-                                {
+                            } else if (isViewer) {//Because this can be false even though a user is an owner
+                                new PrivateLocationView(itsNatDocument__, appendToElement, getUsernameAsValid(), requestedPrivateLocation) {
+                                };
+                            } else {
+                                new PrivateLocationDelete(itsNatDocument__, appendToElement, getUsernameAsValid(), requestedPrivateLocation) {
+                                };
+                            }
+
+                            UseCaseCreatePrivateEvents:
+                            {
+                                if (showEventCreate) {
                                     new PrivateEventCreate(itsNatDocument__, appendToElement, getUsernameAsValid(), validPrivateLocationId) {
                                     };
                                 }
-                            } else if (isViewer) {
-                                USER.info(getUsernameAsValid() + " is accepted as a owner of this location:" + validPrivateLocationId);
-                                new PrivateLocationView(itsNatDocument__, appendToElement, getUsernameAsValid(), requestedPrivateLocation) {
-                                };
                             }
-
-                            UseCaseViewPrivateEvents:
-                            {
-                                for (final PrivateEvent p : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPrivateEvent(new HumanId(getUsernameAsValid())).returnValue().getPrivateEventsViewed())
-                                    if (p.getPrivateLocation().getPrivateLocationId() == validPrivateLocationId) {
-                                        new PrivateEventView(itsNatDocument__, appendToElement, getUsernameAsValid(), p.getPrivateEventId()) {
-                                        };
-                                    }
-                            }
+                        } else {
+                            USER.info(getUsernameAsValid() + " is accepted as a viewer of this location:" + validPrivateLocationId);
+                            new PrivateLocationView(itsNatDocument__, appendToElement, getUsernameAsValid(), requestedPrivateLocation) {
+                            };
                         }
-                    } else {
-                        USER.info(getUsernameAsValid() + " is denied rights to view this private location:" + r.getPrivateLocationId());
-                        $(Skeleton_notice).setTextContent(RBGet.gui().getString("NO_RIGHTS_TO_VIEW"));
+
+                        UseCaseViewPrivateEvents:
+                        {
+                            for (final PrivateEvent p : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPrivateEvent(new HumanId(getUsernameAsValid())).returnValue().getPrivateEventsViewed())
+                                if (p.getPrivateLocation().getPrivateLocationId() == validPrivateLocationId) {
+                                    new PrivateEventView(itsNatDocument__, appendToElement, getUsernameAsValid(), p.getPrivateEventId()) {
+                                    };
+                                }
+                        }
                     }
+                } else {
+                    USER.info(getUsernameAsValid() + " is denied rights to view this private location:" + r.getPrivateLocationId());
+                    $(Skeleton_notice).setTextContent(RBGet.gui().getString("NO_RIGHTS_TO_VIEW"));
                 }
             }
 
