@@ -1,6 +1,9 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.Email;
@@ -195,15 +198,17 @@ final public class ServletSignup extends HttpServlet {
                         new HumanId().setObjAsValid(username),
                         new Password().setObjAsValid(password),
                         new Email().setObjAsValid(username));
-                
+
                 if (r.returnStatus() != 0) {
                     throw r.returnError();
                 } else {
                     try {
+                        final String mail = MessageFormat.format(gUI.getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
+                                .replace("{activationURL}", "");
                         SendMail.getSendMailLocal().sendAsSimpleText(
                                 username,
                                 gUI.getString("SIGNUP_HEADER"),
-                                MessageFormat.format(gUI.getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail")));
+                                mail);
                     } catch (final Throwable t) {
                         Loggers.EXCEPTION.error("{}", t);
                     }
@@ -223,11 +228,11 @@ final public class ServletSignup extends HttpServlet {
 
     }
 
-    final private boolean isSignUpPermitted() {
+    private boolean isSignUpPermitted() {
         return RBGet.getGlobalConfigKey("signUpEnabled") != null && RBGet.getGlobalConfigKey("signUpEnabled").equals(TRUE);
     }
 
-    final private int signUpSleep() {
+    private int signUpSleep() {
         return RBGet.getGlobalConfigKey("signUpSleep") != null ? Integer.parseInt(RBGet.getGlobalConfigKey("signUpSleep")) : 1;
     }
 
