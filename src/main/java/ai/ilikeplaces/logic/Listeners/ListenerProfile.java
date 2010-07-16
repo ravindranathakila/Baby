@@ -45,7 +45,7 @@ public class ListenerProfile implements ItsNatServletRequestListener {
              */
             @Override
             @SuppressWarnings("unchecked")
-            protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
+            protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor);
 
                 final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");

@@ -43,7 +43,7 @@ public abstract class AbstractListener {
     /**
      *
      */
-    final private ItsNatHttpSession itsNatHttpSession;
+    final protected ItsNatHttpSession itsNatHttpSession;
 
     /**
      *
@@ -59,7 +59,7 @@ public abstract class AbstractListener {
      * @param request_
      */
     @SuppressWarnings("unchecked")
-    public AbstractListener(final ItsNatServletRequest request_) {
+    public AbstractListener(final ItsNatServletRequest request_, final Object... initArgs) {
         this.itsNatDocument = request_.getItsNatDocument();
         
         this.itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument;
@@ -72,7 +72,7 @@ public abstract class AbstractListener {
                 null : (!((SessionBoundBadRefWrapper<HumanUserLocal>) attribute__).isAlive() ?
                 null : ((SessionBoundBadRefWrapper<HumanUserLocal>) attribute__));
 
-        init(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument);
+        init(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument, initArgs);
 
         registerEventListeners(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument);
 
@@ -84,8 +84,9 @@ public abstract class AbstractListener {
      * @param itsNatHTMLDocument__
      * @param hTMLDocument__
      * @param itsNatDocument__
+     * @param initArgs
      */
-    protected abstract void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__);
+    protected abstract void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs);
 
     /**
      * Use ItsNatHTMLDocument variable stored in the AbstractListener class

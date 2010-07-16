@@ -42,6 +42,9 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     private DHumanLocal dHumanLocal_;
 
     @EJB
+    private UHumanLocal uHumanLocal;
+
+    @EJB
     private UHumansIdentityLocal uHumansIdentityLocal_;
 
     @EJB
@@ -356,6 +359,8 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         }
         final Human newUser = new Human();
         newUser.setHumanId(humanId.getObjectAsValid());
+        newUser.setHumanAlive(false);//Wait for signup confirmation click by email
+
         final HumansAuthentication ha = new HumansAuthentication();
         ha.setHumanId(newUser.getHumanId());
         ha.setHumanAuthenticationSalt(BCrypt.gensalt());
@@ -425,6 +430,10 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         return r;
     }
 
+
+    public Return<Boolean> doUActivateHuman(final RefObj<String> username) throws DBDishonourCheckedException {
+        return new ReturnImpl<Boolean>(uHumanLocal.doUActivateHuman(username.getObjectAsValid()), "Activate Profile Successful.");
+    }
 
     /*END OF PREPERATOR METHODS*/
 

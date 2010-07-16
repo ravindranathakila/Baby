@@ -23,6 +23,10 @@
         <servlet-class>ai.ilikeplaces.servlets.ServletSignup</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ServletActivate</servlet-name>
+        <servlet-class>ai.ilikeplaces.servlets.ServletActivate</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AccessViewStatusMessages</servlet-name>
         <servlet-class>ch.qos.logback.access.ViewStatusMessagesServlet</servlet-class>
     </servlet>
@@ -46,6 +50,10 @@
     <servlet-mapping>
         <servlet-name>ServletSignup</servlet-name>
         <url-pattern>/signup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletActivate</servlet-name>
+        <url-pattern>/activate</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

@@ -57,7 +57,7 @@ public class ListenerI implements ItsNatServletRequestListener {
              */
             @Override
             @SuppressWarnings("unchecked")
-            protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
+            protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor);
 
                 final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, "Returning I Page", 60000, null, true);

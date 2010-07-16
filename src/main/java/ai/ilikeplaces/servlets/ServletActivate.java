@@ -37,10 +37,11 @@ import java.util.Properties;
  * @author Ravindranath Akila
  */
 
+// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @FIXME(issue = "XSS")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @TODO(task = "USE A STATIC METHOD TO GET THE LOGGED ON USER INSTANCE.")
-final public class ServletLogin extends HttpServlet {
+final public class ServletActivate extends HttpServlet {
 
     /**
      * Stateful Session Bean Containing User Data
@@ -56,13 +57,14 @@ final public class ServletLogin extends HttpServlet {
      */
     public final static String Password = "Password";
 
-    final Logger logger = LoggerFactory.getLogger(ServletLogin.class.getName());
+    final Logger logger = LoggerFactory.getLogger(ServletActivate.class.getName());
     final private Properties p_ = new Properties();
     private Context context = null;
     private SingletonHashingFace singletonHashingFace = null;
     private static final String HEADER_REFERER = "Referer";
 
-    final PageFace home = Page.home;
+    //final PageFace home = Page.home;
+    final PageFace organize = Page.Organize;
     final PageFace signup = Page.signup;
 
     @Override
@@ -75,11 +77,6 @@ final public class ServletLogin extends HttpServlet {
             try {
                 p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
                 context = new InitialContext(p_);
-                if (context == null) {
-                    log.append("\nVARIABLE context IS NULL! ");
-                    log.append(context);
-                    break init;
-                }
 
                 singletonHashingFace = (SingletonHashingFace) context.lookup("SingletonHashingLocal");
                 if (singletonHashingFace == null) {
@@ -112,8 +109,8 @@ final public class ServletLogin extends HttpServlet {
      *
      * @param request__
      * @param response__
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws javax.servlet.ServletException if a servlet-specific error occurs
+     * @throws java.io.IOException            if an I/O error occurs
      */
     protected void processRequest(final HttpServletRequest request__, final HttpServletResponse response__)
             throws ServletException, IOException {
@@ -150,53 +147,46 @@ final public class ServletLogin extends HttpServlet {
             logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0007"), param);
             logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0008"), request__.getParameter(param).length());
         }
-        doLogin:
+        doActivate:
         {
             if (!isSignOnPermitted()) {
                 response__.sendRedirect(request__.getRequestURI());
-                break doLogin;
+                break doActivate;
             }
             if (userSession_.getAttribute(HumanUser) == null) {
                 /*Ok the session does not have the bean, initialize it with the user with email id and password*/
                 if (request__.getParameter(Username) != null && request__.getParameter(Password) != null) {/*We need both these to sign in a user*/
                     try {
                         Human existingUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(request__.getParameter(Username));
-                        if (existingUser != null && existingUser.getHumanAlive()) {/*Ok user name valid but now we check for password*/
+                        if (existingUser != null) {/*Ok user name valid but now we check for password*/
                             final HumansAuthentication humansAuthentications = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(request__.getParameter(Username))).returnValue();
 
-                            if (humansAuthentications.getHumanAuthenticationHash().equals(singletonHashingFace.getHash(request__.getParameter(Password), humansAuthentications.getHumanAuthenticationSalt()))) {
-                                final HumanUserLocal humanUserLocal = (HumanUserLocal) context.lookup(HumanUserLocal.NAME);
-                                humanUserLocal.setHumanUserId(request__.getParameter(Username));
-                                userSession_.setAttribute(HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
-
-                                logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0001") + ((SessionBoundBadRefWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).boundInstance.getHumanUserId());
-
-                                final String referer = request__.getHeader(HEADER_REFERER);
-                                response__.sendRedirect(!referer.contains("signup") ? referer : home.getURL());
-
-                                break doLogin;/*This is unnecessary but lets not leave chance for introducing bugs*/
-                            } else {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
+                            if (humansAuthentications.getHumanAuthenticationHash().equals(request__.getParameter(Password))) {
+                                DB.getHumanCRUDHumanLocal(true).doUActivateHuman(new HumanId(existingUser.getHumanId()).getSelfAsValid());
+                                response__.sendRedirect(organize.getURL());
+                                break doActivate;/*This is unnecessary but lets not leave chance for introducing bugs*/
+                            } else {/*Ok password wrong. What do we do with this guy? First lets make his session object null*/
                                 userSession_.invalidate();
                                 logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0002"));
-                                Loggers.USER.info(existingUser.getHumanId() + " entered wrong password.");
+                                Loggers.USER.info(existingUser.getHumanId() + " comes with wrong activation hash.");
                                 response__.sendRedirect(request__.getHeader(HEADER_REFERER));
-                                break doLogin;
+                                break doActivate;
                             }
                         } else {/*There is no such user. Ask if he forgot username or whether to create a new account :)*/
                             logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0003"));
                             response__.sendRedirect(request__.getHeader(HEADER_REFERER));
-                            break doLogin;
+                            break doActivate;
                         }
 
                     } catch (final Exception ex) {
                         logger.error(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0004"), ex);
                         response__.sendRedirect(request__.getHeader(HEADER_REFERER));
-                        break doLogin;
+                        break doActivate;
                     }
                 } else {/*Why was the user sent here without either username or password or both(by the page)? Send him back!*/
                     logger.warn(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0009") + request__.getRequestURL().toString());
                     response__.sendRedirect(request__.getHeader(HEADER_REFERER));
-                    break doLogin;
+                    break doActivate;
                 }
 
             } else {/*Why did the user come to this page if he was already logged on? Send him back!*/
@@ -274,8 +264,8 @@ final public class ServletLogin extends HttpServlet {
      *
      * @param request  servlet request
      * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws javax.servlet.ServletException if a servlet-specific error occurs
+     * @throws java.io.IOException            if an I/O error occurs
      */
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
@@ -288,8 +278,8 @@ final public class ServletLogin extends HttpServlet {
      *
      * @param request  servlet request
      * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws javax.servlet.ServletException if a servlet-specific error occurs
+     * @throws java.io.IOException            if an I/O error occurs
      */
     @Override
     protected void doPost(final HttpServletRequest request, final HttpServletResponse response)

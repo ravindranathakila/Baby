@@ -72,6 +72,16 @@
         </style>
 		        
         <script type="text/javascript">
+            ilp_hide_body = function(){
+                                try{
+                                        document.getElementById('ilp_main_content').style.display='none';
+                                        clearInterval(ilp_hide_body_interval);
+                                }catch(err){//body not yet loaded, just ignore
+                                }
+                        }
+            ilp_hide_body_interval = setInterval("ilp_hide_body()",100);
+        </script>
+        <script type="text/javascript">
 			ilp_progressing = false;
 			ilp_progressing_gm = "";
 			ilp_current_percent = 0;

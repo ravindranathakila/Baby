@@ -63,6 +63,10 @@ public abstract class AbstractWidgetListener {
     private static final String STYLE = "style";
     private static final String DISPLAY_BLOCK = "display:block;";
     private static final String DISPLAY_NONE = "display:none;";
+    /**
+     * Check for null before use. Null if not initialized
+     */
+    public String fetchToEmail = null;
 
 
     /**
@@ -102,6 +106,10 @@ public abstract class AbstractWidgetListener {
      */
     protected abstract void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_);
 
+    protected void fetchToEmail(final Object... args) {
+        throw ExceptionCache.METHOD_NOT_IMPLEMENTED;
+    }
+
     /**
      * Id registry should be globally visible to callers
      *
@@ -139,6 +147,17 @@ public abstract class AbstractWidgetListener {
      */
     final protected Element $$(final String key__) {
         return getWidgetElementById(key__);
+    }
+
+    /**
+     * Fetches the element disregarding widget behavior. i.e. ignores dynamic nature of ID's
+     *
+     * @param key__
+     * @param document__
+     * @return
+     */
+    final protected Element $$(final String key__, final Document document__) {
+        return document__.getElementById(key__);
     }
 
     final private Element getWidgetElementById(final String key__) {
