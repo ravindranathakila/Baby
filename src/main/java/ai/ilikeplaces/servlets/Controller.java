@@ -2,6 +2,7 @@ package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.logic.Listeners.*;
+import ai.ilikeplaces.logic.Listeners.widgets.WallWidget;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
@@ -35,14 +36,16 @@ final public class
     final static private Logger staticLogger = LoggerFactory.getLogger(Controller.class.getName());
     private static final String ITSNAT_DOC_NAME = "itsnat_doc_name";
     public static final String LOCATION_HUB = "/page/Earth_of_Earth?WOEID=1";
+    public static String REAL_PATH;//Weak implementation but suffices
+    public static final String WEB_INF_PAGES = "WEB-INF/pages/";
 
     @NOTE(note = "Inner Enums are static. Therefore, the lists shall be populated only once.")
     public enum Page implements PageFace {
         Album("ai/ilikeplaces/widgets/Album.xhtml",
-               Controller.Page.AlbumNotice,
-               Controller.Page.AlbumPivateEventId,
-               Controller.Page.AlbumOwner,
-               Controller.Page.AlbumPhotos
+                Controller.Page.AlbumNotice,
+                Controller.Page.AlbumPivateEventId,
+                Controller.Page.AlbumOwner,
+                Controller.Page.AlbumPhotos
         ) {
             @Override
             public String toString() {
@@ -56,7 +59,9 @@ final public class
         UserProperty("ai/ilikeplaces/widgets/UserProperty.xhtml",
                 Controller.Page.user_property_profile_photo,
                 Controller.Page.user_property_name,
+                Controller.Page.user_property_widget,
                 Controller.Page.user_property_content
+
         ) {
             @Override
             public String toString() {
@@ -301,6 +306,19 @@ final public class
             @Override
             public String toString() {
                 return DocOrganize;
+            }},
+
+        Activate(null
+        ) {
+
+            @Override
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "page/_activate";
+            }
+
+            @Override
+            public String toString() {
+                return DocActivate;
             }},
 
         Profile(null,
@@ -610,6 +628,7 @@ final public class
         /*ProfileWidget IDs*/
         final static public String user_property_profile_photo = "user_property_profile_photo";
         final static public String user_property_name = "user_property_name";
+        final static public String user_property_widget = "user_property_widget";
         final static public String user_property_content = "user_property_content";
 
 
@@ -738,6 +757,9 @@ final public class
 
         /*I Page*/
         final static public String DocI = "DocI";
+
+        /*Actiavte Page*/
+        final static public String DocActivate = "DocActivate";
 
         /*Organize Page*/
         final static public String DocOrganize = "DocOrganize";
@@ -991,12 +1013,6 @@ final public class
             @Override
             public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
 
-                setHeaders:
-                {
-                    ((HttpServletResponse) response__.getServletResponse()).setDateHeader("Expires",
-                            System.currentTimeMillis() + 24 * 60 * 60 * 1000);
-                }
-
                 final ItsNatDocument itsNatDocument__ = request__.getItsNatDocument();
                 /*if(itsNatDocument != null && ((HttpServletRequest) request__.getServletRequest()).getPathInfo().contains("itsnat_doc_name")){
                 throw new java.lang.RuntimeException("INVALID URL");//This code does not seem to work, please verify.
@@ -1004,15 +1020,17 @@ final public class
                 if (itsNatDocument__ == null && request__.getServletRequest().getAttribute(ITSNAT_DOC_NAME) == null) {
                     final HttpServletRequest httpServletRequest = (HttpServletRequest) request__.getServletRequest();
                     pathResolver(request__, response__);
+                    parameterResolver(request__);
                     request__.getItsNatServlet().processRequest(httpServletRequest, response__.getServletResponse());
                 }
             }
         });
 
         final String realPath__ = getServletContext().getRealPath("/");
+        REAL_PATH = realPath__;
         /*final String pathPrefix__ = realPath__ + "WEB-INF/pages/";*/
 
-        final String pathPrefix__ = RBGet.getGlobalConfigKey("PAGEFILES") != null ? RBGet.getGlobalConfigKey("PAGEFILES") : realPath__ + "WEB-INF/pages/";
+        final String pathPrefix__ = RBGet.getGlobalConfigKey("PAGEFILES") != null ? RBGet.getGlobalConfigKey("PAGEFILES") : realPath__ + WEB_INF_PAGES;
 
         registerDocumentTemplates:
         {
@@ -1033,6 +1051,8 @@ final public class
             inhs__.registerItsNatDocumentTemplate(profile.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerProfile());
 
             inhs__.registerItsNatDocumentTemplate(i.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerI());
+
+            inhs__.registerItsNatDocumentTemplate(i.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerActivate());
         }
 
         registerDocumentFragmentTemplatesAKAWidgets:
@@ -1078,6 +1098,31 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(album.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(album));
 
             inhs__.registerItsNatDocFragmentTemplate(userProperty.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(userProperty));
+        }
+    }
+
+    /**
+     * Some nested widgets have no access to the request. instead of passing the request along the widget chain,
+     * we store it in the users session.
+     * <p/>
+     * While this implementation may consume a bit more memory(could be an issue), it allows the widget to set the
+     * value to null on a per request basis.
+     *
+     * @param request__
+     */
+    private static void parameterResolver(final ItsNatServletRequest request__) {
+
+        wallEntryRelated:
+        {
+            final String wall_entry = request__.getServletRequest().getParameter(WallWidget.PARAM_WALL_ENTRY);
+            if (wall_entry != null) {
+                request__.getItsNatSession().setAttribute(WallWidget.PARAM_WALL_ENTRY, wall_entry);
+            }
+        }
+
+        others:
+        {
+
         }
     }
 
@@ -1157,6 +1202,9 @@ final public class
                 } else if (isIPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocI);/*Framework specific*/
                     Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0017"));
+                } else if (isActivatePage(URL__)) {
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocActivate);/*Framework specific*/
+                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0018"));
                 } else {/*Divert to home page*/
                     Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
                     request__.getServletRequest().setAttribute("location", "");
@@ -1237,6 +1285,10 @@ final public class
 
     static private boolean isIPage(final String URL_) {
         return (URL_.startsWith("_i"));
+    }
+
+    static private boolean isActivatePage(final String URL_) {
+        return (URL_.startsWith("_activate"));
     }
 
     static private boolean isSignOut(final String URL_) {

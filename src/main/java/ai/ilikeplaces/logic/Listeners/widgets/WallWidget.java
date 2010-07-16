@@ -22,6 +22,7 @@ import org.w3c.dom.events.EventTarget;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class WallWidget extends AbstractWidgetListener {
 
+    final static public String PARAM_WALL_ENTRY = "wall_entry";
 
     final protected WallEntry wallAppend = new WallEntry("");
 

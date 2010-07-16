@@ -45,6 +45,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String WRONG_WOEID_FORMAT = "SORRY! WRONG WOEID FORMAT";
     public static final String NUMBER_OF_PHOTOS_FOR = "Number of photos for ";
     public static final String COLON = ":";
+    private static final String HTTP_SESSION_ATTR_LOCATION = "HttpSessionAttr.location";
 
     /**
      * @param request__
@@ -67,7 +68,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
             @Override
             @SuppressWarnings("unchecked")
             @TODO(task = "If location is not available, it should be added through a widget(or fragment maybe?)")
-            protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
+            protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
 
                 checkUserSpentTime:
                 {
@@ -93,7 +94,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 //this.location = (String) request_.getServletRequest().getAttribute(RBGet.config.getString("HttpSessionAttr.location"));
                 getLocationSuperLocation:
                 {
-                    final String[] attr = ((String) request__.getServletRequest().getAttribute(RBGet.globalConfig.getString("HttpSessionAttr.location"))).split("_");
+                    final String[] attr = ((String) request__.getServletRequest().getAttribute(RBGet.globalConfig.getString(HTTP_SESSION_ATTR_LOCATION))).split("_");
                     location = attr[0];
                     if (attr.length == 3) {
                         superLocation = attr[2];

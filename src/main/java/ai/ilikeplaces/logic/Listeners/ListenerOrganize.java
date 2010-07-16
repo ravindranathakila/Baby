@@ -35,7 +35,6 @@ import static ai.ilikeplaces.util.Loggers.*;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class ListenerOrganize implements ItsNatServletRequestListener {
 
-    final private Logger logger = LoggerFactory.getLogger(ListenerOrganize.class.getName());
     private static final NumberFormatException CATEGORY_NUMBER_FORMAT_EXCEPTION = new NumberFormatException("SORRY! INVALID CATEGORY VALUE.");
     public static final int ModeIntroduction = 123;
     public static final int ModeCreatePlace = 143;
@@ -55,7 +54,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
              */
             @Override
             @SuppressWarnings("unchecked")
-            protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
+            protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor);
 
                 final ResourceBundle gUI = RBGet.gui();

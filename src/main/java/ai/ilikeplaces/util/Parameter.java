@@ -49,7 +49,7 @@ public class Parameter {
      *
      * @param key
      * @param value
-     * @param isFirst
+     * @param isFirst which if not present is taken as false
      * @return
      */
     public Parameter append(final String key, final Object value, final boolean... isFirst) {

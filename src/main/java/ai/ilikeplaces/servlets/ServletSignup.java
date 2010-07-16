@@ -12,6 +12,7 @@ import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.Parameter;
 import ai.ilikeplaces.util.Return;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -204,11 +205,19 @@ final public class ServletSignup extends HttpServlet {
                 } else {
                     try {
                         final String mail = MessageFormat.format(gUI.getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
-                                .replace("{activationURL}", "");
+                                .replace("activationURL",
+                                        new Parameter("http://www.ilikeplaces.com/" + "activate")
+                                                .append(ServletLogin.Username, username, true)
+                                                .append(ServletLogin.Password,
+                                                        DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(request__.getParameter(Username)))
+                                                                .returnValue()
+                                                                .getHumanAuthenticationHash())
+                                                .get());
                         SendMail.getSendMailLocal().sendAsSimpleText(
                                 username,
                                 gUI.getString("SIGNUP_HEADER"),
                                 mail);
+                        response__.sendRedirect(Page.Activate.getURL());
                     } catch (final Throwable t) {
                         Loggers.EXCEPTION.error("{}", t);
                     }
@@ -221,8 +230,8 @@ final public class ServletSignup extends HttpServlet {
                 request__.getRequestDispatcher("/signup.jsp").forward(request__, response__);
                 break processSignup;
             }
-            final Page login = Page.login;
-            request__.getRequestDispatcher(login.toString()).forward(request__, response__);
+            //final Page login = Page.login;
+            //request__.getRequestDispatcher(login.toString()).forward(request__, response__);
             break processSignup;
         }
 

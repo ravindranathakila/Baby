@@ -1,9 +1,12 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.HumansPrivateEvent;
 import ai.ilikeplaces.entities.Msg;
+import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.EventType;
@@ -42,6 +45,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
     protected void init(final Object... initArgs) {
         this.humanId = (HumanId) ((HumanId) initArgs[0]).getSelfAsValid();
         this.privateEventId = (Long) initArgs[1];
+        
         for (final Msg msg : DB.getHumanCrudPrivateEventLocal(true).
                 rPrivateEventReadWall(humanId, privateEventId).returnValueBadly().getWallMsgs()) {
             new UserProperty(itsNatDocument_, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
@@ -89,13 +93,19 @@ public class WallWidgetPrivateEvent extends WallWidget {
                             $$(Controller.Page.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
                             clear($$(Controller.Page.wallContent));
                             final Wall wall = (DB.getHumanCrudPrivateEventLocal(true).rPrivateEventReadWall(myhumanId, myprivateEventId).returnValueBadly());
+                            final StringBuilder b = new StringBuilder("");
                             for (final Msg msg : wall.getWallMsgs()) {
-
-                                new UserProperty(itsNatDocument_, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
-                                    protected void init(final Object... initArgs) {
-                                        $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
-                                    }
-                                };
+                                b.append(
+                                        new UserProperty(itsNatDocument_, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
+                                            protected void init(final Object... initArgs) {
+                                                $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
+                                            }
+                                        }.fetchToEmail
+                                );
+                            }
+                            final PrivateEvent pe = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEvent(myhumanId.getObj(), privateEventId).returnValue();
+                            for (final HumansPrivateEvent hpe : pe.getPrivateEventViewers()) {
+                                SendMail.getSendMailLocal().sendAsHTML(hpe.getHumanId(), pe.getPrivateEventName(), b.toString());
                             }
                         } else {
                             $$(Controller.Page.wallNotice).setTextContent(r.returnMsg());

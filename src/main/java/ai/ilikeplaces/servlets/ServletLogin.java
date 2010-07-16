@@ -161,7 +161,7 @@ final public class ServletLogin extends HttpServlet {
                 if (request__.getParameter(Username) != null && request__.getParameter(Password) != null) {/*We need both these to sign in a user*/
                     try {
                         Human existingUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(request__.getParameter(Username));
-                        if (existingUser != null) {/*Ok user name valid but now we check for password*/
+                        if (existingUser != null && existingUser.getHumanAlive()) {/*Ok user name valid but now we check for password*/
                             final HumansAuthentication humansAuthentications = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(request__.getParameter(Username))).returnValue();
 
                             if (humansAuthentications.getHumanAuthenticationHash().equals(singletonHashingFace.getHash(request__.getParameter(Password), humansAuthentications.getHumanAuthenticationSalt()))) {
@@ -175,7 +175,7 @@ final public class ServletLogin extends HttpServlet {
                                 response__.sendRedirect(!referer.contains("signup") ? referer : home.getURL());
 
                                 break doLogin;/*This is unnecessary but lets not leave chance for introducing bugs*/
-                            } else {/*Ok password wrong. What do we do with this guy? First lets make his session object null*/
+                            } else {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
                                 userSession_.invalidate();
                                 logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0002"));
                                 Loggers.USER.info(existingUser.getHumanId() + " entered wrong password.");
