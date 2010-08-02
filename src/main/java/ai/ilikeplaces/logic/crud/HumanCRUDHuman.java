@@ -366,7 +366,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         ha.setHumanAuthenticationSalt(BCrypt.gensalt());
         ha.setHumanAuthenticationHash(singletonHashingFace.getHash(password.getObjectAsValid(), ha.getHumanAuthenticationSalt()));
         newUser.setHumansAuthentications(ha);
-        newUser.setHumanAlive(true);
+        newUser.setHumanAlive(false);
 
         setHumansIdentityInfo:
         {
