@@ -46,6 +46,12 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     @EJB
     private DPrivateEventLocal dPrivateEventLocal_;
 
+    @EJB
+    private RPrivateLocationLocal rPrivateLocationLocal_;
+
+    @EJB
+    private UPrivateLocationLocal uPrivateLocationLocal_;
+
 
     private static final String CHECK_OWNERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL = "Check ownership of private event Successful!";
     private static final String CHECK_OWNERSHIP_OF_PRIVATE_EVENT_FAILED = "Check ownership of private event FAILED!";
@@ -62,6 +68,9 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     private static final String UPDATE_PRIVATE_EVENT_SUCCESSFUL = "Update private event Successful!";
     private static final String READ_ALBUM_SUCCESSFUL = "Read album Successful!";
     private static final String READ_ALBUM_FAILED = "Read album FAILED!";
+    private static final String VIEWER_OWNERSHIP_STATUS = "Viewer/Ownership status:";
+    private static final String ADDING_USER_AS_VIEWER_TO_PRIVATE_LOCATION_OF_THIS_EVENT_AS_HE_ISN_T_ANYBODY_OF_IT = "Adding user as viewer to private location of this event as he isn't anybody of it.";
+    private static final String SAVE_PRIVATE_EVENT_FAILED = "Save private event FAILED!";
 
 
     @Override
@@ -70,18 +79,37 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         try {
             r = new ReturnImpl<PrivateEvent>(cPrivateEventLocal_.doNTxCPrivateEvent(humanId, privateLocationId, privateEventName, privateEventInfo, startDate, endDate), "Save private event Successful!");
         } catch (final AbstractEjbApplicationException t) {
-            r = new ReturnImpl<PrivateEvent>(t, "Save private event FAILED!", true);
+            r = new ReturnImpl<PrivateEvent>(t, SAVE_PRIVATE_EVENT_FAILED, true);
         }
         return r;
 
     }
 
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
-    public Return<PrivateEvent> uPrivateEventAddOwner(final HumanId humanId__, final long privateEventId__, final HumansFriend owner) {
+    public Return<PrivateEvent> uPrivateEventAddOwner(final HumanId friend__, final long privateEventId__, final HumansFriend owner) {
         Return<PrivateEvent> r;
         try {
-            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventAddOwner(humanId__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventAddOwner(friend__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
+        }
+        return r;
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
+    public Return<PrivateEvent> uPrivateEventAddOwnerWithPrivateLocationCheck(final HumanId owner__, final long privateEventId__, final HumansFriend friend__, final long privateLocationId__) {
+        Return<PrivateEvent> r;
+        try {
+            final boolean isAnybody = rPrivateLocationLocal_.doRPrivateLocationIsViewerOrOwner(friend__.getHumanId(), privateLocationId__);//Will happen within this transaction
+            Loggers.DEBUG.debug(VIEWER_OWNERSHIP_STATUS + isAnybody);
+            if (!isAnybody) {
+                Loggers.DEBUG.debug(ADDING_USER_AS_VIEWER_TO_PRIVATE_LOCATION_OF_THIS_EVENT_AS_HE_ISN_T_ANYBODY_OF_IT);
+                uPrivateLocationLocal_.doUPrivateLocationAddViewer(owner__.getObj(), privateLocationId__, friend__.getHumanId());
+            }
+            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventAddOwner(owner__.getObj(), privateEventId__, friend__), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
@@ -89,10 +117,10 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     }
 
     @Override
-    public Return<PrivateEvent> uPrivateEventRemoveOwner(final HumanId humanId__, final long privateEventId__, final HumansFriend owner) {
+    public Return<PrivateEvent> uPrivateEventRemoveOwner(final HumanId friend__, final long privateEventId__, final HumansFriend owner) {
         Return<PrivateEvent> r;
         try {
-            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventRemoveOwner(humanId__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventRemoveOwner(friend__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
@@ -100,10 +128,10 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     }
 
     @Override
-    public Return<PrivateEvent> uPrivateEventAddVisitor(final HumanId humanId__, final long privateEventId__, final HumansFriend owner) {
+    public Return<PrivateEvent> uPrivateEventAddVisitor(final HumanId friend__, final long privateEventId__, final HumansFriend owner) {
         Return<PrivateEvent> r;
         try {
-            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventAddViewer(humanId__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventAddViewer(friend__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
@@ -111,10 +139,16 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     }
 
     @Override
-    public Return<PrivateEvent> uPrivateEventRemoveVisitor(final HumanId humanId__, final long privateEventId__, final HumansFriend owner) {
+    public Return<PrivateEvent> uPrivateEventAddVisitorWithPrivateLocationCheck(final HumanId owner__, final long privateEventId__, final HumansFriend friend__, final long privateLocationId__) {
         Return<PrivateEvent> r;
         try {
-            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventRemoveViewer(humanId__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+            final boolean isAnybody = rPrivateLocationLocal_.doRPrivateLocationIsViewerOrOwner(friend__.getHumanId(), privateLocationId__);//Will happen within this transaction
+            Loggers.DEBUG.debug(VIEWER_OWNERSHIP_STATUS + isAnybody);
+            if (!isAnybody) {
+                Loggers.DEBUG.debug(ADDING_USER_AS_VIEWER_TO_PRIVATE_LOCATION_OF_THIS_EVENT_AS_HE_ISN_T_ANYBODY_OF_IT);
+                uPrivateLocationLocal_.doUPrivateLocationAddViewer(owner__.getObj(), privateLocationId__, friend__.getHumanId());
+            }
+            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventAddViewer(owner__.getObj(), privateEventId__, friend__), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
@@ -122,10 +156,10 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     }
 
     @Override
-    public Return<PrivateEvent> uPrivateEventAddInvite(final HumanId humanId__, final long privateEventId__, final HumansFriend owner) {
+    public Return<PrivateEvent> uPrivateEventRemoveVisitor(final HumanId friend__, final long privateEventId__, final HumansFriend owner) {
         Return<PrivateEvent> r;
         try {
-            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventAddInvite(humanId__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventRemoveViewer(friend__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
@@ -133,10 +167,10 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     }
 
     @Override
-    public Return<PrivateEvent> uPrivateEventRemoveInvite(final HumanId humanId__, final long privateEventId__, final HumansFriend owner) {
+    public Return<PrivateEvent> uPrivateEventAddInvite(final HumanId friend__, final long privateEventId__, final HumansFriend owner) {
         Return<PrivateEvent> r;
         try {
-            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventRemoveInvite(humanId__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventAddInvite(friend__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
@@ -144,10 +178,16 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     }
 
     @Override
-    public Return<PrivateEvent> uPrivateEventAddReject(final HumanId humanId__, final long privateEventId__, final HumansFriend owner) {
+    public Return<PrivateEvent> uPrivateEventAddInviteWithPrivateLocationCheck(final HumanId owner__, final long privateEventId__, final HumansFriend friend__, final long privateLocationId__) {
         Return<PrivateEvent> r;
         try {
-            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventAddReject(humanId__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+            final boolean isAnybody = rPrivateLocationLocal_.doRPrivateLocationIsViewerOrOwner(friend__.getHumanId(), privateLocationId__);//Will happen within this transaction
+            Loggers.DEBUG.debug(VIEWER_OWNERSHIP_STATUS + isAnybody);
+            if (!isAnybody) {
+                Loggers.DEBUG.debug(ADDING_USER_AS_VIEWER_TO_PRIVATE_LOCATION_OF_THIS_EVENT_AS_HE_ISN_T_ANYBODY_OF_IT);
+                uPrivateLocationLocal_.doUPrivateLocationAddViewer(owner__.getObj(), privateLocationId__, friend__.getHumanId());
+            }
+            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventAddInvite(owner__.getObj(), privateEventId__, friend__), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
@@ -155,10 +195,32 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     }
 
     @Override
-    public Return<PrivateEvent> uPrivateEventRemoveReject(final HumanId humanId__, final long privateEventId__, final HumansFriend owner) {
+    public Return<PrivateEvent> uPrivateEventRemoveInvite(final HumanId friend__, final long privateEventId__, final HumansFriend owner) {
         Return<PrivateEvent> r;
         try {
-            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventRemoveReject(humanId__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventRemoveInvite(friend__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
+        }
+        return r;
+    }
+
+    @Override
+    public Return<PrivateEvent> uPrivateEventAddReject(final HumanId friend__, final long privateEventId__, final HumansFriend owner) {
+        Return<PrivateEvent> r;
+        try {
+            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventAddReject(friend__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
+        }
+        return r;
+    }
+
+    @Override
+    public Return<PrivateEvent> uPrivateEventRemoveReject(final HumanId friend__, final long privateEventId__, final HumansFriend owner) {
+        Return<PrivateEvent> r;
+        try {
+            r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventRemoveReject(friend__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
@@ -171,8 +233,8 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doNTxUAppendToWall(dirtyRPrivateEvent(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId(),
-                    contentToBeAppended), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+                    .doNTxUAppendToWall(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId(),
+                                        contentToBeAppended), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
@@ -187,9 +249,9 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doNTxUAddEntry(dirtyRPrivateEvent(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId(),
-                    msgOwner__.getObj(),
-                    contentToBeAppended), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+                    .doNTxUAddEntry(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId(),
+                                    msgOwner__.getObj(),
+                                    contentToBeAppended), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
@@ -204,7 +266,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doNTxUClearWall(dirtyRPrivateEvent(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+                    .doNTxUClearWall(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
@@ -217,7 +279,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doDirtyRWall(dirtyRPrivateEvent(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId()), "Read wall Successful!");
+                    .doDirtyRWall(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId()), "Read wall Successful!");
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, READ_WALL_FAILED, true);
         }
@@ -226,7 +288,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     @Override
-    public Return<PrivateEvent> dirtyRPrivateEvent(final String humanId, final long privateEventId) {
+    public Return<PrivateEvent> dirtyRPrivateEventAsAny(final String humanId, final long privateEventId) {
         Return<PrivateEvent> r;
         try {
             r = new ReturnImpl<PrivateEvent>(rPrivateEventLocal_.doRPrivateEventAsAny(humanId, privateEventId), VIEW_PRIVATE_EVENT_SUCCESSFUL);

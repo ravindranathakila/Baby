@@ -23,6 +23,22 @@ P{
 
 /*DEFAULTS**/
 
+/*LOGO*/
+.logo_red
+{
+    color:#B9121B
+}.logo_green
+{
+    color:#85DB18
+}.logo_blue
+{
+    color:#0074D9
+}.logo_yellow
+{
+    color:#F2B705
+}
+/*EO LOGO*/
+
 /**BLUE*/
 /**Light Blue*/
 .fg_e9eaff

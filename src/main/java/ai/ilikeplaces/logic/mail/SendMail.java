@@ -165,6 +165,28 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
         return r;
     }
 
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<Boolean> sendAsSimpleTextAsynchronously(final String recepientEmail, final String simpleTextSubject, final String simpleTextBody) {
+        Return<Boolean> r;
+        try {
+
+            new Thread(
+                    new Runnable() {
+
+                        @Override
+                        public void run() {
+                            sendAsSimpleText(recepientEmail, simpleTextSubject, simpleTextBody);
+                        }
+                    }).start();
+            r = new ReturnImpl<Boolean>(true, "Mail sending to " + recepientEmail + " issued asynchronously!");
+
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Boolean>(t, "FAILED! Mail sending to " + recepientEmail + " FAILED!", true);
+        }
+        return r;
+    }
+
 
     @Override
     public Return<Boolean> sendAsHTML(final String recepientEmail, final String simpleTextSubject, final String htmlBody) {
@@ -179,6 +201,26 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recepientEmail));
 
             r = new ReturnImpl<Boolean>(finalSend(message), "Mail sending to " + recepientEmail + " successful!");
+
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Boolean>(t, "FAILED! Mail sending to " + recepientEmail + " FAILED!", true);
+        }
+        return r;
+    }
+
+    @Override
+    public Return<Boolean> sendAsHTMLAsynchronously(final String recepientEmail, final String simpleTextSubject, final String htmlBody) {
+        Return<Boolean> r;
+        try {
+            new Thread(
+                    new Runnable() {
+
+                        @Override
+                        public void run() {
+                            sendAsHTML(recepientEmail, simpleTextSubject, htmlBody);
+                        }
+                    }).start();
+            r = new ReturnImpl<Boolean>(true, "Mail sending to " + recepientEmail + " issued asynchronously!");
 
         } catch (final Throwable t) {
             r = new ReturnImpl<Boolean>(t, "FAILED! Mail sending to " + recepientEmail + " FAILED!", true);

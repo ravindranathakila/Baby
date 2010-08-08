@@ -24,6 +24,8 @@ public interface RPrivateLocationLocal {
 
     public boolean doRPrivateLocationIsViewer(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException;
 
+    public boolean doRPrivateLocationIsViewerOrOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException;
+
     public PrivateLocation doRPrivateLocationAsViewer(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException;
 
     public PrivateLocation doRPrivateLocationAsOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException;

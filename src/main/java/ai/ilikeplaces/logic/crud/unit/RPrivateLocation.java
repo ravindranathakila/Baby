@@ -82,6 +82,16 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
                 .contains(humanCrudServiceLocal_.findBadly(Human.class, humanId));
     }
 
+    @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
+    @Override
+    public boolean doRPrivateLocationIsViewerOrOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException {
+        final PrivateLocation pl = privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).refresh();
+        return pl.getPrivateLocationViewers()
+                .contains(humanCrudServiceLocal_.findBadly(Human.class, humanId)) ||
+                pl.getPrivateLocationOwners()
+                        .contains(humanCrudServiceLocal_.findBadly(Human.class, humanId));
+    }
+
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     public PrivateLocation doRPrivateLocationAsViewer(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException {

@@ -25,6 +25,10 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend {
     public String humanId;
     public HumansNet humansNet;
     public List<HumansNetPeople> humansNetPeoples;
+    private static final String HUMANS_NET_PEOPLE = "HumansNetPeople{";
+    private static final String HUMAN_ID = "humanId='";
+    private static final char CHAR = '}';
+    private static final char BACKSLASH = '\'';
 
     @Id
     public String getHumanId() {
@@ -101,5 +105,12 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend {
     @Override
     public int hashCode() {
         return humanId != null ? humanId.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return HUMANS_NET_PEOPLE +
+                HUMAN_ID + humanId + BACKSLASH +
+                CHAR;
     }
 }

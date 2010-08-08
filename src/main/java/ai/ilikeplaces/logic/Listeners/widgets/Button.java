@@ -9,6 +9,7 @@ import ai.ilikeplaces.util.EventType;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MarkupTag;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
@@ -24,14 +25,15 @@ import org.w3c.dom.html.HTMLDocument;
 abstract public class Button extends AbstractWidgetListener {
 
     /**
-     * @param itsNatDocument__
+     *
+     * @param request__
      * @param appendToElement__
      * @param buttonText
      * @param doRefreshPageOnClick
      * @param params
      */
-    public Button(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final String buttonText, final boolean doRefreshPageOnClick, final Object... params) {
-        super(itsNatDocument__, Page.GenericButton, appendToElement__, buttonText, doRefreshPageOnClick, params);
+    public Button(final ItsNatServletRequest request__,  final Element appendToElement__, final String buttonText, final boolean doRefreshPageOnClick, final Object... params) {
+        super(request__, Page.GenericButton, appendToElement__, buttonText, doRefreshPageOnClick, params);
 
         $$(Controller.Page.GenericButtonText).setTextContent(buttonText);
         $$(Controller.Page.GenericButtonText).setAttribute(MarkupTag.GENERIC.classs(), "vtip");

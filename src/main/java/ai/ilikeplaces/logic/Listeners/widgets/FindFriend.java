@@ -13,6 +13,7 @@ import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import net.sf.oval.exception.ConstraintsViolatedException;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
@@ -43,8 +44,8 @@ abstract public class FindFriend extends AbstractWidgetListener {
     Set<Email> emails;
 
 
-    public FindFriend(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final HumanId humanId) {
-        super(itsNatDocument__, Page.FindFriend, appendToElement__, humanId);
+    public FindFriend(final ItsNatServletRequest request__,  final Element appendToElement__, final HumanId humanId) {
+        super(request__, Page.FindFriend, appendToElement__, humanId);
     }
 
     /**
@@ -171,18 +172,18 @@ abstract public class FindFriend extends AbstractWidgetListener {
                         matchedEmailList.add(new Email(humansIdentity.getHumanId()));
                         if (!humansNetPeoples.contains(humansIdentity.getHumanId())) {
 
-                            new UserProperty(itsNatDocument_, $$(Controller.Page.friendFindSearchResults), new HumanId(humansIdentity.getHumanId())) {
+                            new UserProperty(request, $$(Controller.Page.friendFindSearchResults), new HumanId(humansIdentity.getHumanId())) {
                                 protected void init(final Object... initArgs) {
-                                    new FriendAdd(itsNatDocument_, $$(Controller.Page.user_property_content), (HumanId) initArgs[0], myhumanId) {
+                                    new FriendAdd(request, $$(Controller.Page.user_property_content), (HumanId) initArgs[0], myhumanId) {
                                     };
                                 }
                             };
 
                         } else {
 
-                            new UserProperty(itsNatDocument_, $$(Controller.Page.friendFindSearchResults), new HumanId(humansIdentity.getHumanId())) {
+                            new UserProperty(request, $$(Controller.Page.friendFindSearchResults), new HumanId(humansIdentity.getHumanId())) {
                                 protected void init(final Object... initArgs) {
-                                    new FriendDelete(itsNatDocument_, $$(Controller.Page.user_property_content), (HumanId) initArgs[0], myhumanId) {
+                                    new FriendDelete(request, $$(Controller.Page.user_property_content), (HumanId) initArgs[0], myhumanId) {
                                     };
                                 }
                             };
@@ -195,7 +196,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
                     for (final Email email : myemails) {
                         if (!matchedEmailList.contains(email)) {
 
-                            new Button(itsNatDocument_, $$(Controller.Page.friendFindSearchInvites), "Invite " + email, false) {
+                            new Button(request, $$(Controller.Page.friendFindSearchInvites), "Invite " + email, false) {
                                 private HumanId mymyhumanId = myhumanId;
                                 private Email mymyemail = email;
 

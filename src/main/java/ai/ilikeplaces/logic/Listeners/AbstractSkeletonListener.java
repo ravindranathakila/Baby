@@ -35,8 +35,12 @@ import static ai.ilikeplaces.util.Loggers.*;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class AbstractSkeletonListener extends AbstractListener {
 
-    public static final int ModeCreatePlace = 143;
     public static final String DISCOVER_AND_HAVE_FUN_IN_PLACES = "Discover and Have Fun in Places! ";
+    private static final String NO_LOGIN = "NoLogin";
+    private static final String BN = "bn";
+    private static final String PROFILE_PHOTOS = "PROFILE_PHOTOS";
+    private static final String FABRICATING_SKELETON_PAGE = "Fabricating skeleton page";
+    private static final String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004 = "ai.ilikeplaces.logic.Listeners.ListenerMain.0004";
 
     /**
      * @param request_
@@ -64,14 +68,14 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
 
         final ResourceBundle gUI = RBGet.gui();
 
-        final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, "Returning organize page", 60000, null, true);
+        final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, FABRICATING_SKELETON_PAGE, 100, null, true);
 
         layoutNeededForAllPages:
         {
             setLoginWidget:
             {
                 try {
-                    new SignInOn(itsNatDocument__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
+                    new SignInOn(request__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
                     };
                 } catch (final Throwable t) {
                     EXCEPTION.error("{}", t);
@@ -84,14 +88,14 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                     {
                         $(skeletonTitle).setTextContent(
                                 DISCOVER_AND_HAVE_FUN_IN_PLACES +
-                                        RBGet.globalConfig.getString("bn"));
+                                        RBGet.globalConfig.getString(BN));
 
                     }
                     setMetaDescription:
                     {
                         $(skeletonTitle).setAttribute(MarkupTag.META.namee(),
                                 DISCOVER_AND_HAVE_FUN_IN_PLACES +
-                                        RBGet.globalConfig.getString("bn"));
+                                        RBGet.globalConfig.getString(BN));
                     }
                 }
                 catch (final Throwable t) {
@@ -103,13 +107,13 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                 try {
                     if (getUsername() != null) {
                         final Element usersName = $(MarkupTag.P);
-                        usersName.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0004") + getUsernameAsValid());
+                        usersName.setTextContent(gUI.getString(AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004) + getUsernameAsValid());
                         //$(Skeleton_othersidebar_identity).appendChild(usersName);
-                        new DisplayName(itsNatDocument__, $(Skeleton_othersidebar_identity), new HumanId(getUsernameAsValid()), request__.getServletRequest()) {
+                        new DisplayName(request__, $(Skeleton_othersidebar_identity), new HumanId(getUsernameAsValid()), request__.getServletRequest()) {
                         };
                     } else {
                         final Element locationElem = $(MarkupTag.P);
-                        locationElem.setTextContent(gUI.getString("NoLogin"));
+                        locationElem.setTextContent(gUI.getString(NO_LOGIN));
                         $(Skeleton_othersidebar_identity).appendChild(locationElem);
                     }
                 } catch (final Throwable t) {
@@ -138,7 +142,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                          * TODO check for db failure
                          */
                         String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(getUsernameAsValid())).returnValueBadly();
-                        url = url == null ? null : RBGet.globalConfig.getString("PROFILE_PHOTOS") + url;
+                        url = url == null ? null : RBGet.globalConfig.getString(PROFILE_PHOTOS) + url;
                         if (url != null) {
                             $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(), url);
                         }

@@ -11,11 +11,12 @@ import ai.ilikeplaces.logic.Listeners.widgets.Button;
 import ai.ilikeplaces.logic.Listeners.widgets.MemberHandler;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
-import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,13 +46,22 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
     private Long privateEventId = null;
     Return<PrivateEvent> r;
     List<HumansNetPeople> possibilities;
+    private static final String HAS_ADDED_YOU_AS_AN_OWNER_OF = " has added you as an Owner of ";
+    private static final String HAS_REMOVED_YOU_AS_AN_OWNER_OF = " has removed you as an Owner of ";
+    private static final String HAS_ADDED_YOU_AS_A_VISITOR_OF = " has added you as a Visitor of ";
+    private static final String HAS_REMOVED_YOU_AS_A_VISITOR_OF = " has removed you as a Visitor of ";
+    private static final String HAS_INVITED_YOU_TO = " has invited you to ";
+    private static final String HAS_CANCELLED_YOUR_INVITATION_TO = " has cancelled your invitation to ";
 
     /**
-     * @param itsNatDocument__
+     * @param request__
      * @param appendToElement__
+     * @param humanId__
+     * @param privateEventId__
+     * @param detailedMode__
      */
-    public PrivateEventDelete(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final String humanId__, final long privateEventId__) {
-        super(itsNatDocument__, Page.PrivateEventDelete, appendToElement__, humanId__, privateEventId__);
+    public PrivateEventDelete(final ItsNatServletRequest request__, final Element appendToElement__, final String humanId__, final long privateEventId__, final boolean detailedMode__) {
+        super(request__, Page.PrivateEventDelete, appendToElement__, humanId__, privateEventId__, detailedMode__);
     }
 
     /**
@@ -62,11 +72,11 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
         this.humanId = new HumanId((String) initArgs[0]);
         this.privateEventId = (Long) initArgs[1];
 
-        r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEvent(humanId.getObj(), privateEventId);
+        r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(humanId.getObj(), privateEventId);
         if (r.returnStatus() == 0) {
             $$(privateEventDeleteName).setTextContent(r.returnValue().getPrivateEventName());
             $$(privateEventDeleteInfo).setTextContent(r.returnValue().getPrivateEventInfo());
-            new Button(itsNatDocument_, $$(privateEventDeleteLink), "Link to " + r.returnValue().getPrivateEventName(), false, r.returnValue()) {
+            new Button(request, $$(privateEventDeleteLink), "Link to " + r.returnValue().getPrivateEventName(), false, r.returnValue()) {
                 PrivateEvent privateEvent = null;
 
                 @Override
@@ -77,11 +87,11 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                         setLink:
                         {
                             $$(GenericButtonLink).setAttribute(MarkupTag.A.href(),
-                                    new Parameter(Organize.getURL())
-                                            .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
-                                            .append(DocOrganizeLocation, r.returnValue().getPrivateLocation().getPrivateLocationId())
-                                            .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
-                                            .get()
+                                                               new Parameter(Organize.getURL())
+                                                                       .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
+                                                                       .append(DocOrganizeLocation, r.returnValue().getPrivateLocation().getPrivateLocationId())
+                                                                       .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
+                                                                       .get()
                             );
                         }
                         setImage:
@@ -91,8 +101,11 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                     }
                 }
             };
-            new WallWidgetPrivateEvent(itsNatDocument_, $$(Page.privateEventDeleteWall), humanId, r.returnValue().getPrivateEventId());
-            new AlbumManager(itsNatDocument_, $$(Page.privateEventDeleteAlbum), humanId, r.returnValue().getPrivateEventId());
+            if ((Boolean) initArgs[2]) {
+                new WallWidgetPrivateEvent(request, $$(Page.privateEventDeleteWall), humanId, r.returnValue().getPrivateEventId());
+                new AlbumManager(request, $$(Page.privateEventDeleteAlbum), humanId, r.returnValue().getPrivateEventId());
+            }
+
         } else {
             $$(privateEventDeleteNotice).setTextContent(r.returnMsg());
         }
@@ -139,8 +152,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
         AddRemoveOwners:
         {
             new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
-                    itsNatDocument_,
-                    $$(privateEventDeleteOwners),
+                    request, $$(privateEventDeleteOwners),
                     user.getHumansNet(),
                     possibilities,
                     r.returnValue().getPrivateEventOwners(),
@@ -150,7 +162,16 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
                         @Override
                         public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
-                            return DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddOwner(humanId, myprivateEventId, humansFriend);
+
+
+                            final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddOwnerWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, r.returnValue().getPrivateLocation().getPrivateLocationId());
+                            if (returnVal.returnStatus() == 0) {
+                                SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
+                                                                                           humanId.getObj(),
+                                                                                           humanId.getObj() + HAS_ADDED_YOU_AS_AN_OWNER_OF + returnVal.returnValue().getPrivateEventName());
+                            }
+                            return returnVal;
+
                         }
                     },
                     new Save<Return<PrivateEvent>>() {
@@ -159,7 +180,16 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
                         @Override
                         public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
-                            return DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveOwner(humanId, myprivateEventId, humansFriend);
+
+
+                            final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveOwner(humanId, myprivateEventId, humansFriend);
+                            if (returnVal.returnStatus() == 0) {
+                                SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
+                                                                                           humanId.getObj(),
+                                                                                           humanId.getObj() + HAS_REMOVED_YOU_AS_AN_OWNER_OF + returnVal.returnValue().getPrivateEventName());
+                            }
+                            return returnVal;
+
                         }
                     }) {
             };
@@ -167,8 +197,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
         AddRemoveVisitors:
         {
             new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
-                    itsNatDocument_,
-                    $$(privateEventDeleteVisitors),
+                    request, $$(privateEventDeleteVisitors),
                     user.getHumansNet(),
                     possibilities,
                     r.returnValue().getPrivateEventViewers(),
@@ -178,7 +207,15 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
                         @Override
                         public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
-                            return DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddVisitor(humanId, myprivateEventId, humansFriend);
+
+                            final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddVisitorWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, r.returnValue().getPrivateLocation().getPrivateLocationId());
+                            if (returnVal.returnStatus() == 0) {
+                                SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
+                                                                                           humanId.getObj(),
+                                                                                           humanId.getObj() + HAS_ADDED_YOU_AS_A_VISITOR_OF + returnVal.returnValue().getPrivateEventName());
+                            }
+                            return returnVal;
+
                         }
                     },
                     new Save<Return<PrivateEvent>>() {
@@ -187,15 +224,21 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
                         @Override
                         public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
-                            return DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveVisitor(humanId, myprivateEventId, humansFriend);
+                            final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveVisitor(humanId, myprivateEventId, humansFriend);
+                            if (returnVal.returnStatus() == 0) {
+                                SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
+                                                                                           humanId.getObj(),
+                                                                                           humanId.getObj() + HAS_REMOVED_YOU_AS_A_VISITOR_OF + returnVal.returnValue().getPrivateEventName());
+                            }
+                            return returnVal;
+
                         }
                     }) {
             };
             AddRemoveInvitee:
             {
                 new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
-                        itsNatDocument_,
-                        $$(privateEventDeleteInvitees),
+                        request, $$(privateEventDeleteInvitees),
                         user.getHumansNet(),
                         possibilities,
                         r.returnValue().getPrivateEventInvites(),
@@ -205,7 +248,16 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
                             @Override
                             public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
-                                return DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddInvite(humanId, myprivateEventId, humansFriend);
+
+                                final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddInviteWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, r.returnValue().getPrivateLocation().getPrivateLocationId());
+                                if (returnVal.returnStatus() == 0) {
+                                    SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
+                                                                                               humanId.getObj(),
+                                                                                               humanId.getObj() + HAS_INVITED_YOU_TO + returnVal.returnValue().getPrivateEventName());
+                                }
+                                return returnVal;
+
+
                             }
                         },
                         new Save<Return<PrivateEvent>>() {
@@ -214,7 +266,13 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
                             @Override
                             public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
-                                return DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveInvite(humanId, myprivateEventId, humansFriend);
+                                final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveInvite(humanId, myprivateEventId, humansFriend);
+                                if (returnVal.returnStatus() == 0) {
+                                    SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
+                                                                                               humanId.getObj(),
+                                                                                               humanId.getObj() + HAS_CANCELLED_YOUR_INVITATION_TO + returnVal.returnValue().getPrivateEventName());
+                                }
+                                return returnVal;
                             }
                         });
             }

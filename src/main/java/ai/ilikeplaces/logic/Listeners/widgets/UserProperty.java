@@ -9,7 +9,7 @@ import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
-import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -26,26 +26,62 @@ import java.io.IOException;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class UserProperty extends AbstractWidgetListener {
 
-    private static final String USER_PROPERTY_EMAIL_XHTML = "UserProperty_email.xhtml";
+    private static final String USER_PROPERTY_EMAIL_XHTML = "ai/ilikeplaces/widgets/UserProperty_email.xhtml";
 
     /**
      * Shows the profile belonging to humanId
+     * <p/>
+     * Does not support fetchtoemail. use other constructor instead.
+     * <p/>
+     * Use this if you are not using fetchtomail.
      *
-     * @param itsNatDocument__
+     * @param request__
      * @param appendToElement__
      * @param humanId
      * @param params
      */
-    public UserProperty(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final HumanId humanId, final Object... params) {
-        super(itsNatDocument__, Page.UserProperty, appendToElement__, humanId, params);
+    public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId, final Object... params) {
+        super(request__, Page.UserProperty, appendToElement__, humanId, params);
         final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(humanId);
         if (r.returnStatus() == 0) {
             final HumansIdentity hi = r.returnValue();
             $$(Controller.Page.user_property_name).setTextContent(hi.getHuman().getDisplayName());
             $$(Controller.Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-            $$(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfileUrl(hi.getHumansIdentityProfilePhoto()));
+            $$(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
 
-            fetchToEmail(hi.getHuman().getDisplayName(), MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl(), formatProfileUrl(hi.getHumansIdentityProfilePhoto()));
+            /*  fetchToEmail(//WARNING! This does not append the content.
+            hi.getHuman().getDisplayName(),
+            formatProfileUrl(ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl(), true),
+            formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));*/
+        } else {
+            final String error = RBGet.gui().getString("YIKES_SOMETHING_WENT_WRONG");
+            $$(Controller.Page.user_property_name).setTextContent(error);
+        }
+    }
+
+    /**
+     * Shows the profile belonging to humanId
+     *
+     * @param request__
+     * @param appendToElement__
+     * @param humanId
+     * @param params
+     */
+    public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final Element content, final HumanId humanId, final Object... params) {
+        super(request__, Page.UserProperty, appendToElement__, humanId, params);
+        final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(humanId);
+        if (r.returnStatus() == 0) {
+            final HumansIdentity hi = r.returnValue();
+            $$(Controller.Page.user_property_name).setTextContent(hi.getHuman().getDisplayName());
+            $$(Controller.Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+            $$(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+            $$(Controller.Page.user_property_content).appendChild(content);
+
+            fetchToEmail(
+                    hi.getHuman().getDisplayName(),
+                    formatProfileUrl(ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl(), true),
+                    formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()),
+                    content);
         } else {
             final String error = RBGet.gui().getString("YIKES_SOMETHING_WENT_WRONG");
             $$(Controller.Page.user_property_name).setTextContent(error);
@@ -61,8 +97,12 @@ abstract public class UserProperty extends AbstractWidgetListener {
             $$(Controller.Page.user_property_name, document).setTextContent((String) args[0]);
             $$(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), (String) args[1]);
             $$(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(), (String) args[2]);
+            $$(Controller.Page.user_property_content, document).appendChild(
+                    document.importNode(((Element) args[3]), true)
+            );
 
-            fetchToEmail = HTMLDocParser.convertNodeToHtml($$(Page.user_property_widget));
+
+            fetchToEmail = HTMLDocParser.convertNodeToHtml($$(Controller.Page.user_property_widget, document));
         } catch (final TransformerException e) {
             Loggers.EXCEPTION.error("", e);
         } catch (final SAXException e) {
@@ -97,9 +137,13 @@ abstract public class UserProperty extends AbstractWidgetListener {
      * @param rawURLFromDB
      * @return
      */
-    static public String formatProfileUrl(final String rawURLFromDB) {
+    static public String formatProfilePhotoUrl(final String rawURLFromDB) {
         return rawURLFromDB == null || rawURLFromDB.isEmpty() ?
                 RBGet.globalConfig.getString("PROFILE_PHOTO_DEFAULT") :
                 RBGet.globalConfig.getString("PROFILE_PHOTOS") + rawURLFromDB;
+    }
+
+    static public String formatProfileUrl(final String relativeURL, final boolean makeAbsolute) {
+        return makeAbsolute ? RBGet.globalConfig.getString("WEBSITE") + relativeURL : relativeURL;
     }
 }

@@ -7,6 +7,22 @@ import javax.ejb.Local;
 import java.io.File;
 
 /**
+ * Just one thing. When sending mails, DON'T WASTE TIME OF PEOPLE.
+ * <p/>
+ * Right now I am deciding even whether to talk off the disclaimer at the end.
+ * <p/>
+ * The snappier the mails and responses are, the closer we are to McDonaldization anyway, which is also good.
+ * <p/>
+ * <p/>
+ * So, make the subject bear what the mail is about which makes it easier for the user to decide whether to open the
+ * mail even at work or not.
+ * <p/>
+ * Make the mail bodies in point form unless it is a really creative content or an HTML promotional mail.
+ * <p/>
+ * <p/>
+ * Happy Mailing!
+ * <p/>
+ * <p/>
  * Created by IntelliJ IDEA.
  * User: Ravindranath Akila
  * Date: Jan 13, 2010
@@ -23,9 +39,19 @@ public interface SendMailLocal {
                                             final String simpleTextSubject,
                                             final String simpleTextBody);
 
+    public Return<Boolean> sendAsSimpleTextAsynchronously(final String recepientEmail,
+                                                          final String simpleTextSubject,
+                                                          final String simpleTextBody);
+
     public Return<Boolean> sendAsHTML(final String recepientEmail,
                                       final String simpleTextSubject,
                                       final String htmlBody);
+
+    public Return<Boolean> sendAsHTMLAsynchronously(
+            final String recepientEmail,
+            final String simpleTextSubject,
+            final String htmlBody);
+
 
     public Return<Boolean> sendWithAttachmentAsSimpleText(final String recepientEmail,
                                                           final String simpleTextSubject,

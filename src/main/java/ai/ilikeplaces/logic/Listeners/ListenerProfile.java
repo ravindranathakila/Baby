@@ -55,7 +55,7 @@ public class ListenerProfile implements ItsNatServletRequestListener {
                     setLoginWidget:
                     {
                         try {
-                            new SignInOn(itsNatDocument__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
+                            new SignInOn(request__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
                             };
                         } catch (final Throwable t) {
                             Loggers.EXCEPTION.error("{}", t);
@@ -69,7 +69,7 @@ public class ListenerProfile implements ItsNatServletRequestListener {
                                 final Element usersName = $(MarkupTag.P);
                                 usersName.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0004") + getUsernameAsValid());
                                 //$(Skeleton_othersidebar_identity).appendChild(usersName);
-                                new DisplayName(itsNatDocument__, $(Skeleton_othersidebar_identity), new HumanId(getUsernameAsValid()), request__.getServletRequest()) {
+                                new DisplayName(request__, $(Skeleton_othersidebar_identity), new HumanId(getUsernameAsValid()), request__.getServletRequest()) {
                                 };
                             } else {
                                 final Element locationElem = $(MarkupTag.P);
@@ -116,10 +116,10 @@ public class ListenerProfile implements ItsNatServletRequestListener {
                 if (getUsername() != null) {
                     try {
                         {
-                            new PasswordManager(itsNatDocument__, $(Skeleton_center_content), new HumanId(getUsernameAsValid()), ((ItsNatHttpSession) request__.getItsNatSession()).getHttpSession()) {
+                            new PasswordManager(request__, $(Skeleton_center_content), new HumanId(getUsernameAsValid()), ((ItsNatHttpSession) request__.getItsNatSession()).getHttpSession()) {
                             };
 
-                            new Profile(itsNatDocument__, $(Skeleton_center_content), new HumanId(getUsernameAsValid()));
+                            new Profile(request__, $(Skeleton_center_content), new HumanId(getUsernameAsValid()));
                         }
 
                     } catch (final Throwable t) {
@@ -128,7 +128,7 @@ public class ListenerProfile implements ItsNatServletRequestListener {
                 } else {
                     try {
                         {
-                            new ForgotPasswordManager(itsNatDocument__, $(Skeleton_center_content), ((ItsNatHttpSession) request__.getItsNatSession()).getHttpSession()) {
+                            new ForgotPasswordManager(request__, $(Skeleton_center_content), ((ItsNatHttpSession) request__.getItsNatSession()).getHttpSession()) {
                             };
                         }
 

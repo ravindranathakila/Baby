@@ -55,7 +55,7 @@ public class ListenerBookings implements ItsNatServletRequestListener {
                     setLoginWidget:
                     {
                         try {
-                            new SignInOn(itsNatDocument__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
+                            new SignInOn(request__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
                             };
                         } catch (final Throwable t) {
                             Loggers.EXCEPTION.error("{}", t);
@@ -69,7 +69,7 @@ public class ListenerBookings implements ItsNatServletRequestListener {
                                 final Element usersName = $(MarkupTag.P);
                                 usersName.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0004") + getUsername());
                                 //$(Skeleton_othersidebar_identity).appendChild(usersName);
-                                new DisplayName(itsNatDocument__, $(Skeleton_othersidebar_identity), new HumanId(getUsernameAsValid()), request__.getServletRequest()) {
+                                new DisplayName(request__, $(Skeleton_othersidebar_identity), new HumanId(getUsernameAsValid()), request__.getServletRequest()) {
                                 };
                             } else {
                                 final Element locationElem = $(MarkupTag.P);

@@ -8,6 +8,7 @@ import ai.ilikeplaces.util.EventType;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MarkupTag;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
@@ -27,13 +28,13 @@ abstract public class WallWidget extends AbstractWidgetListener {
     final protected WallEntry wallAppend = new WallEntry("");
 
 
-    public WallWidget(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final Object... initArgs) {
-        super(itsNatDocument__, Page.WallHandler, appendToElement__, initArgs);
+    public WallWidget(final ItsNatServletRequest request__,  final Element appendToElement__, final Object... initArgs) {
+        super(request__, Page.WallHandler, appendToElement__, initArgs);
 
         UCProcessWallText:
         {
 
-            itsNatDocument__.addEventListener((EventTarget) $$(Page.wallAppend), EventType.BLUR.toString(), new EventListener() {
+            itsNatDocument_.addEventListener((EventTarget) $$(Page.wallAppend), EventType.BLUR.toString(), new EventListener() {
 
                 @Override
                 public void handleEvent(final Event evt_) {

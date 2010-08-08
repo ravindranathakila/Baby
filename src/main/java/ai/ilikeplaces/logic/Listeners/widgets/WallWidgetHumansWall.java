@@ -11,6 +11,7 @@ import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MarkupTag;
 import ai.ilikeplaces.util.Return;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
@@ -30,8 +31,8 @@ public class WallWidgetHumansWall extends WallWidget {
     HumanId humanId;
     HumanId visitor;
 
-    public WallWidgetHumansWall(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final HumanId humanId, final HumanId visitor) {
-        super(itsNatDocument__, appendToElement__, humanId, visitor);
+    public WallWidgetHumansWall(final ItsNatServletRequest request__,  final Element appendToElement__, final HumanId humanId, final HumanId visitor) {
+        super(request__, appendToElement__, humanId, visitor);
     }
 
     /**
@@ -43,7 +44,7 @@ public class WallWidgetHumansWall extends WallWidget {
         this.visitor = (HumanId) ((HumanId) initArgs[1]).getSelfAsValid();
 
         for (final Msg msg : DB.getHumanCrudWallLocal(true).dirtyRWall(humanId).returnValue().getWallMsgs()) {
-            new UserProperty(itsNatDocument_, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
+            new UserProperty(request, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
                 protected void init(final Object... initArgs) {
                     $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
                 }
@@ -82,11 +83,13 @@ public class WallWidgetHumansWall extends WallWidget {
 
                         if (r.returnStatus() == 0) {
                             $$(Controller.Page.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
+                            wallAppend.setObj("");
+                            
                             clear($$(Controller.Page.wallContent));
                             final Wall wall = DB.getHumanCrudWallLocal(true).dirtyRWall(humanId).returnValue();
                             for (final Msg msg : wall.getWallMsgs()) {
 
-                                new UserProperty(itsNatDocument_, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
+                                new UserProperty(request, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
                                     protected void init(final Object... initArgs) {
                                         $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
                                     }

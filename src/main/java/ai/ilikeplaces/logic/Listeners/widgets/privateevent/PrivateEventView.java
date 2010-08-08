@@ -2,15 +2,19 @@ package ai.ilikeplaces.logic.Listeners.widgets.privateevent;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.entities.HumansPrivateEvent;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.logic.Listeners.widgets.AlbumManager;
 import ai.ilikeplaces.logic.Listeners.widgets.Button;
+import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
+import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
-import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,15 +34,20 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
 
 
     final private Logger logger = LoggerFactory.getLogger(PrivateEventView.class.getName());
+    private static final String ARROW_RIGHT_GIF = "arrow-right.gif";
+    private static final String OWNER = "Owner";
+    private static final String VISITOR = "Visitor";
+    private static final String INVITEE = "Invitee";
 
     /**
-     * @param itsNatDocument__
+     * @param request__
      * @param appendToElement__
      * @param humanId__
      * @param privateEventId__
+     * @param detailedMode__
      */
-    public PrivateEventView(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final String humanId__, final long privateEventId__) {
-        super(itsNatDocument__, Page.PrivateEventView, appendToElement__, humanId__, privateEventId__);
+    public PrivateEventView(final ItsNatServletRequest request__, final Element appendToElement__, final String humanId__, final long privateEventId__, final boolean detailedMode__) {
+        super(request__, Page.PrivateEventView, appendToElement__, humanId__, privateEventId__, detailedMode__);
     }
 
     /**
@@ -49,7 +58,7 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
         final String humanId = (String) initArgs[0];
         final long privateEventId = (Long) initArgs[1];
 
-        final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEvent(humanId, privateEventId);
+        final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(humanId, privateEventId);
 
 
         LoggerFactory.getLogger(PrivateEventView.class.getName()).debug(r.toString());
@@ -58,7 +67,7 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
             LoggerFactory.getLogger(PrivateEventView.class.getName()).debug("Setting values");
             $$(privateEventViewName).setTextContent(r.returnValue().getPrivateEventName());
             $$(privateEventViewInfo).setTextContent(r.returnValue().getPrivateEventInfo());
-            new Button(itsNatDocument_, $$(privateEventViewLink), "Link to " + r.returnValue().getPrivateEventName(), false, r.returnValue()) {
+            new Button(request, $$(privateEventViewLink), "Link to " + r.returnValue().getPrivateEventName(), false, r.returnValue()) {
                 PrivateEvent privateEvent = null;
 
                 @Override
@@ -69,21 +78,58 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
                         setLink:
                         {
                             $$(GenericButtonLink).setAttribute(MarkupTag.A.href(),
-                                    new Parameter(Organize.getURL())
-                                            .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
-                                            .append(DocOrganizeLocation, r.returnValue().getPrivateLocation().getPrivateLocationId())
-                                            .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
-                                            .get()
+                                                               new Parameter(Organize.getURL())
+                                                                       .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
+                                                                       .append(DocOrganizeLocation, r.returnValue().getPrivateLocation().getPrivateLocationId())
+                                                                       .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
+                                                                       .get()
                             );
                         }
                         setImage:
                         {
-                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + "arrow-right.gif");
+                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + ARROW_RIGHT_GIF);
                         }
                     }
                 }
             };
-            new WallWidgetPrivateEvent(itsNatDocument_, $$(Page.privateEventViewWall), new HumanId(humanId), r.returnValue().getPrivateEventId());
+            if ((Boolean) initArgs[2]) {
+                new WallWidgetPrivateEvent(request, $$(Page.privateEventViewWall), new HumanId(humanId), r.returnValue().getPrivateEventId());
+                new AlbumManager(request, $$(Controller.Page.privateEventViewAlbum), new HumanId(humanId), r.returnValue().getPrivateEventId());
+            }
+
+            UCShowOwners:
+            {
+                for (final HumansPrivateEvent hpe : r.returnValue().getPrivateEventOwners()) {
+                    new UserProperty(request, $$(Controller.Page.privateEventViewOwners), new HumanId(hpe.getHumanId())) {
+                        protected void init(final Object... initArgs) {
+                            $$(Controller.Page.user_property_content).setTextContent(OWNER);
+                        }
+                    };
+                }
+            }
+
+            UCShowViewers:
+            {
+                for (final HumansPrivateEvent hpe : r.returnValue().getPrivateEventViewers()) {
+                    new UserProperty(request, $$(Controller.Page.privateEventViewVisitors), new HumanId(hpe.getHumanId())) {
+                        protected void init(final Object... initArgs) {
+                            $$(Controller.Page.user_property_content).setTextContent(VISITOR);
+                        }
+                    };
+                }
+            }
+
+            UCShowInvites:
+            {
+                for (final HumansPrivateEvent hpe : r.returnValue().getPrivateEventInvites()) {
+                    new UserProperty(request, $$(Controller.Page.privateEventViewInvites), new HumanId(hpe.getHumanId())) {
+                        protected void init(final Object... initArgs) {
+                            $$(Controller.Page.user_property_content).setTextContent(INVITEE);
+                        }
+                    };
+                }
+            }
+
         } else {
             $$(privateEventViewNotice).setTextContent(r.returnMsg());
         }
@@ -92,7 +138,6 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
-        //No events as this is just a view widget/ Edit button???
     }
 
     @Override

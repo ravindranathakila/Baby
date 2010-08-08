@@ -14,6 +14,7 @@ import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MarkupTag;
 import ai.ilikeplaces.util.Return;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ import static ai.ilikeplaces.servlets.Controller.Page.pd_photo_permalink;
 
 
 /**
+ *
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
@@ -34,8 +36,8 @@ public class AlbumManager extends AbstractWidgetListener {
 
     final private Logger logger = LoggerFactory.getLogger(AlbumManager.class.getName());
 
-    public AlbumManager(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final HumanId humanId__, final long privateEventId) {
-        super(itsNatDocument__, Page.Album, appendToElement__, humanId__, privateEventId);
+    public AlbumManager(final ItsNatServletRequest request__,  final Element appendToElement__, final HumanId humanId__, final long privateEventId) {
+        super(request__, Page.Album, appendToElement__, humanId__, privateEventId);
     }
 
     /**
@@ -54,7 +56,7 @@ public class AlbumManager extends AbstractWidgetListener {
                 final Album album = ra.returnValue();
 
                 for (final PrivatePhoto privatePhoto__ : album.getAlbumPhotos())
-                    new Photo$Description(itsNatDocument_, $$(Controller.Page.AlbumPhotos)) {
+                    new Photo$Description(request, $$(Controller.Page.AlbumPhotos)) {
 
                         @Override
                         protected void init(final Object... initArgs) {

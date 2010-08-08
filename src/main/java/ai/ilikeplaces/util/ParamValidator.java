@@ -6,8 +6,6 @@ import ai.ilikeplaces.doc.TODO;
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
 import net.sf.oval.exception.ConstraintsViolatedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
@@ -26,20 +24,32 @@ import java.util.*;
 @TODO(task = "IMPLEMENT RECURRSSIVE VALIDATOR. NOW ITS COMMENTED.")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class ParamValidator {
+    private static final String PARAMETER_VALIDATION_ERROR_MESSAGE = "SORRY! I ENCOUNTERED AN EXCEPTION WITHIN THE PARAMETER VALIDATION INTERCEPTOR. DETAILS ARE AS FOLLOWS. ";
+    private static final String SORRY_PARAMETER_POSITION_NUMBER_GUESSED = "SORRY! PARAMETER POSITION NUMBER(GUESSED) ";
+    private static final String IS_NULL = " IS NULL";
 
     @AroundInvoke
-    public Object validate(InvocationContext invocation) throws Exception {
+    public Object validate(final InvocationContext invocation) throws Exception {
         final Object[] args = invocation.getParameters();
         final List<ConstraintViolation> violations = new ArrayList<ConstraintViolation>();
         final Validator v = new Validator();
 
-        for (final Object param : args) {
+        Object param = null;
+
+        for (int i = 0; i < args.length; i++) {
+            param = args[i];
             //violations.addAll(recursiveCollectionValidator(param, v));
-            violations.addAll(v.validate(param));
+            if (param == null) {
+                Loggers.EXCEPTION.error(PARAMETER_VALIDATION_ERROR_MESSAGE + SORRY_PARAMETER_POSITION_NUMBER_GUESSED + (i + 1) + IS_NULL);
+                throw new NullPointerException((SORRY_PARAMETER_POSITION_NUMBER_GUESSED + (i + 1) + IS_NULL));
+            } else {
+                violations.addAll(v.validate(param));
+            }
         }
 
+
         if (violations.size() != 0) {
-            Loggers.EXCEPTION.error("SORRY! I ENCOUNTERED AN EXCEPTION WITHIN THE PARAMETER VALIDATION INTERCEPTOR. DETAILS ARE AS FOLLOWS." + RefObj.validationMessages(violations));
+            Loggers.EXCEPTION.error(PARAMETER_VALIDATION_ERROR_MESSAGE + RefObj.validationMessages(violations));
             throw new ConstraintsViolatedException(violations);
         }
         return invocation.proceed();

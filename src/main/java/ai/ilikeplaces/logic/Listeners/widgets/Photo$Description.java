@@ -5,6 +5,7 @@ import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.Loggers;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
@@ -22,11 +23,13 @@ import static ai.ilikeplaces.servlets.Controller.Page.close;
 abstract public class Photo$Description extends AbstractWidgetListener {
 
     /**
-     * @param itsNatDocument__
+     *
+     * @param request__
      * @param appendToElement__
+     * @param initArgs
      */
-    public Photo$Description(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final Object... initArgs) {
-        super(itsNatDocument__, Page.Photo$Description, appendToElement__, initArgs);
+    public Photo$Description(final ItsNatServletRequest request__,  final Element appendToElement__, final Object... initArgs) {
+        super(request__, Page.Photo$Description, appendToElement__, initArgs);
     }
 
     /**

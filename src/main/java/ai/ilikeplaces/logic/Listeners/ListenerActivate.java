@@ -14,7 +14,6 @@ import org.w3c.dom.html.HTMLDocument;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @WARNING(warning = "Remember, this shows profiles of other users to the current user. Might impose serious privacy issues if " +
         "not handled with utmost care")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
@@ -27,13 +26,19 @@ public class ListenerActivate implements ItsNatServletRequestListener {
     @WARNING(warning = "Remember, this shows profiles of other users to the current user. Might impose serious privacy issues if " +
             "not handled with utmost care")
     @Override
-    public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
+    public void processRequest(final ItsNatServletRequest request__,
+                               final ItsNatServletResponse response__) {
 
         new AbstractSkeletonListener(request__) {
 
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
-                $(Controller.Page.Skeleton_notice).setTextContent("We've just mailed you! Click the link in the mail to activate your account. See ya soon!");
                 super.init(itsNatHTMLDocument__, hTMLDocument__, itsNatDocument__, initArgs);
+                UCShowActivateMSG:
+                {
+                    $(Controller.Page.Skeleton_notice).setTextContent("We've just mailed you! Click the link in the mail to activate your account. See ya soon!");
+                    displayBlock($(Controller.Page.Skeleton_notice_sh));
+                }
+
             }
         };
     }
