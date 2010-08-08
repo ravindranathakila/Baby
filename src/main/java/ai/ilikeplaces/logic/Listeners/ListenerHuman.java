@@ -62,7 +62,7 @@ public class ListenerHuman implements ItsNatServletRequestListener {
                 {
                     setLoginWidget:
                     {
-                        new SignInOn(itsNatDocument__, $(Main_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
+                        new SignInOn(request__, $(Main_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
                         };
                     }
 
@@ -126,7 +126,7 @@ public class ListenerHuman implements ItsNatServletRequestListener {
 
                     if (r.returnStatus() == 0) {
                         for (final PublicPhoto publicPhoto : r.returnValue()) {
-                            new PhotoCRUD(itsNatDocument__, $(Controller.Page.Main_center_main), publicPhoto, getUsernameAsValid()) {
+                            new PhotoCRUD(request__, $(Controller.Page.Main_center_main), publicPhoto, getUsernameAsValid()) {
 
                                 @Override
                                 protected void init(final Object... initArgs) {

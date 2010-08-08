@@ -10,6 +10,7 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,11 +32,11 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
     final private Logger logger = LoggerFactory.getLogger(PrivateLocationView.class.getName());
 
     /**
-     * @param itsNatDocument__
+     * @param privateLocationId__
      * @param appendToElement__
      */
-    public PrivateLocationView(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final String humanId__, final long privateLocationId__) {
-        super(itsNatDocument__, Page.PrivateLocationView, appendToElement__, humanId__, privateLocationId__);
+    public PrivateLocationView(final ItsNatServletRequest request__,  final Element appendToElement__, final String humanId__, final long privateLocationId__) {
+        super(request__, Page.PrivateLocationView, appendToElement__, humanId__, privateLocationId__);
     }
 
     /**
@@ -55,7 +56,7 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
             LoggerFactory.getLogger(PrivateLocationView.class.getName()).debug("Setting values");
             $$(privateLocationViewName).setTextContent(r.returnValue().getPrivateLocationName());
             $$(privateLocationViewInfo).setTextContent(r.returnValue().getPrivateLocationInfo());
-            new Button(itsNatDocument_, $$(privateLocationViewLink), "Link to " + r.returnValue().getPrivateLocationName(), false, r.returnValue()) {
+            new Button(request, $$(privateLocationViewLink), "Link to " + r.returnValue().getPrivateLocationName(), false, r.returnValue()) {
                 PrivateLocation privateLocation = null;
 
                 @Override

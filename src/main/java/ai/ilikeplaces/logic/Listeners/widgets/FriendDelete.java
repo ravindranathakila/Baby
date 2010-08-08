@@ -9,6 +9,7 @@ import ai.ilikeplaces.util.EventType;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Return;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
@@ -34,8 +35,8 @@ public class FriendDelete extends AbstractWidgetListener {
      * @param page__
      * @param appendToElement__
      */
-    public FriendDelete(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final HumanId humanId, final HumanId caller) {
-        super(itsNatDocument__, Controller.Page.FriendDelete, appendToElement__, humanId, caller);
+    public FriendDelete(final ItsNatServletRequest request__,  final Element appendToElement__, final HumanId humanId, final HumanId caller) {
+        super(request__, Controller.Page.FriendDelete, appendToElement__, humanId, caller);
     }
 
     @Override

@@ -48,7 +48,7 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
 
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor + JSCodeToSend.FnLocationId + JSCodeToSend.FnLocationName + JSCodeToSend.FnSetTitle);
 
-                new Photo$Description(itsNatDocument__, $(Controller.Page.Main_center_main)) {
+                new Photo$Description(request__, $(Controller.Page.Main_center_main)) {
 
                     @Override
                     protected void init(final Object... initArgs) {

@@ -141,7 +141,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     setLoginWidget:
                     {
                         try {
-                            new SignInOn(itsNatDocument__, $(Main_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
+                            new SignInOn(request__, $(Main_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
                             };
                         } catch (final Throwable t) {
                             Loggers.EXCEPTION.error("", t);

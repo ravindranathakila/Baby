@@ -12,6 +12,7 @@ import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import net.sf.oval.Validator;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
@@ -42,12 +43,12 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
     final private Logger logger = LoggerFactory.getLogger(PrivateLocationCreate.class.getName());
 
     /**
-     * @param itsNatDocument__
+     * @param request__
      * @param appendToElement__
      * @param humanId__
      */
-    public PrivateLocationCreate(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final String humanId__) {
-        super(itsNatDocument__, Page.PrivateLocationCreate, appendToElement__, humanId__);
+    public PrivateLocationCreate(final ItsNatServletRequest request__,  final Element appendToElement__, final String humanId__) {
+        super(request__, Page.PrivateLocationCreate, appendToElement__, humanId__);
     }
 
     /**

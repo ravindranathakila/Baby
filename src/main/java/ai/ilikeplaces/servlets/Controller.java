@@ -2,6 +2,7 @@ package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.logic.Listeners.*;
+import ai.ilikeplaces.logic.Listeners.widgets.ListenerShare;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidget;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.rbs.RBGet;
@@ -42,10 +43,10 @@ final public class
     @NOTE(note = "Inner Enums are static. Therefore, the lists shall be populated only once.")
     public enum Page implements PageFace {
         Album("ai/ilikeplaces/widgets/Album.xhtml",
-                Controller.Page.AlbumNotice,
-                Controller.Page.AlbumPivateEventId,
-                Controller.Page.AlbumOwner,
-                Controller.Page.AlbumPhotos
+              Controller.Page.AlbumNotice,
+              Controller.Page.AlbumPivateEventId,
+              Controller.Page.AlbumOwner,
+              Controller.Page.AlbumPhotos
         ) {
             @Override
             public String toString() {
@@ -57,10 +58,10 @@ final public class
             }
         },
         UserProperty("ai/ilikeplaces/widgets/UserProperty.xhtml",
-                Controller.Page.user_property_profile_photo,
-                Controller.Page.user_property_name,
-                Controller.Page.user_property_widget,
-                Controller.Page.user_property_content
+                     Controller.Page.user_property_profile_photo,
+                     Controller.Page.user_property_name,
+                     Controller.Page.user_property_widget,
+                     Controller.Page.user_property_content
 
         ) {
             @Override
@@ -75,10 +76,10 @@ final public class
 
 
         ProfileWidget("ai/ilikeplaces/widgets/profile.xhtml",
-                Controller.Page.ProfileNotice,
-                Controller.Page.ProfileURLChange,
-                Controller.Page.ProfileURL,
-                Controller.Page.ProfileURLUpdate
+                      Controller.Page.ProfileNotice,
+                      Controller.Page.ProfileURLChange,
+                      Controller.Page.ProfileURL,
+                      Controller.Page.ProfileURLUpdate
         ) {
             @Override
             public String toString() {
@@ -89,14 +90,14 @@ final public class
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
             }},
         ForgotPasswordChange("ai/ilikeplaces/widgets/password.xhtml",
-                Controller.Page.ProfileForgotPasswordWidget,
-                Controller.Page.ProfileForgotPasswordNotice,
-                Controller.Page.ProfileForgotPasswordEmailAddress,
-                Controller.Page.ProfileForgotPasswordCodeMail,
-                Controller.Page.ProfileForgotPasswordEmailedCode,
-                Controller.Page.ProfileForgotPasswordNew,
-                Controller.Page.ProfileForgotPasswordNewConfirm,
-                Controller.Page.ProfileForgotPasswordSave
+                             Controller.Page.ProfileForgotPasswordWidget,
+                             Controller.Page.ProfileForgotPasswordNotice,
+                             Controller.Page.ProfileForgotPasswordEmailAddress,
+                             Controller.Page.ProfileForgotPasswordCodeMail,
+                             Controller.Page.ProfileForgotPasswordEmailedCode,
+                             Controller.Page.ProfileForgotPasswordNew,
+                             Controller.Page.ProfileForgotPasswordNewConfirm,
+                             Controller.Page.ProfileForgotPasswordSave
         ) {
             @Override
             public String toString() {
@@ -107,12 +108,12 @@ final public class
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
             }},
         PasswordChange("ai/ilikeplaces/widgets/password.xhtml",
-                Controller.Page.ProfilePasswordWidget,
-                Controller.Page.ProfilePasswordNotice,
-                Controller.Page.ProfilePasswordCurrent,
-                Controller.Page.ProfilePasswordNewConfirm,
-                Controller.Page.ProfilePasswordNew,
-                Controller.Page.ProfilePasswordSave
+                       Controller.Page.ProfilePasswordWidget,
+                       Controller.Page.ProfilePasswordNotice,
+                       Controller.Page.ProfilePasswordCurrent,
+                       Controller.Page.ProfilePasswordNewConfirm,
+                       Controller.Page.ProfilePasswordNew,
+                       Controller.Page.ProfilePasswordSave
         ) {
             @Override
             public String toString() {
@@ -123,10 +124,10 @@ final public class
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
             }},
         WallHandler("ai/ilikeplaces/widgets/wall.xhtml",
-                Controller.Page.wallContent,
-                Controller.Page.wallAppend,
-                Controller.Page.wallSubmit,
-                Controller.Page.wallNotice
+                    Controller.Page.wallContent,
+                    Controller.Page.wallAppend,
+                    Controller.Page.wallSubmit,
+                    Controller.Page.wallNotice
         ) {
             @Override
             public String toString() {
@@ -137,7 +138,7 @@ final public class
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
             }},
         DisplayName("ai/ilikeplaces/widgets/DisplayName.xhtml",
-                Controller.Page.DisplayNameDisplay) {
+                    Controller.Page.DisplayNameDisplay) {
             @Override
             public String toString() {
                 return DocDisplayName;
@@ -147,10 +148,10 @@ final public class
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
             }},
         PrivateEventCreate("ai/ilikeplaces/widgets/privateevent/private_event_create.xhtml",
-                Controller.Page.privateEventCreateName,
-                Controller.Page.privateEventCreateInfo,
-                Controller.Page.privateEventCreateSave,
-                Controller.Page.privateEventCreateNotice
+                           Controller.Page.privateEventCreateName,
+                           Controller.Page.privateEventCreateInfo,
+                           Controller.Page.privateEventCreateSave,
+                           Controller.Page.privateEventCreateNotice
         ) {
 
             @Override
@@ -164,13 +165,15 @@ final public class
             }},
 
         PrivateEventView("ai/ilikeplaces/widgets/privateevent/private_event_view.xhtml",
-                Controller.Page.privateEventViewNotice,
-                Controller.Page.privateEventViewName,
-                Controller.Page.privateEventViewInfo,
-                Controller.Page.privateEventViewOwners,
-                Controller.Page.privateEventViewVisitors,
-                Controller.Page.privateEventViewLink,
-                Controller.Page.privateEventViewWall
+                         Controller.Page.privateEventViewNotice,
+                         Controller.Page.privateEventViewName,
+                         Controller.Page.privateEventViewInfo,
+                         Controller.Page.privateEventViewOwners,
+                         Controller.Page.privateEventViewVisitors,
+                         Controller.Page.privateEventViewInvites,
+                         Controller.Page.privateEventViewLink,
+                         Controller.Page.privateEventViewWall,
+                         Controller.Page.privateEventViewAlbum
         ) {
 
             @Override
@@ -185,16 +188,16 @@ final public class
 
 
         PrivateEventDelete("ai/ilikeplaces/widgets/privateevent/private_event_delete.xhtml",
-                Controller.Page.privateEventDeleteName,
-                Controller.Page.privateEventDeleteInfo,
-                Controller.Page.privateEventDeleteNotice,
-                Controller.Page.privateEventDelete,
-                Controller.Page.privateEventDeleteLink,
-                Controller.Page.privateEventDeleteOwners,
-                Controller.Page.privateEventDeleteVisitors,
-                Controller.Page.privateEventDeleteInvitees,
-                Controller.Page.privateEventDeleteWall,
-                Controller.Page.privateEventDeleteAlbum
+                           Controller.Page.privateEventDeleteName,
+                           Controller.Page.privateEventDeleteInfo,
+                           Controller.Page.privateEventDeleteNotice,
+                           Controller.Page.privateEventDelete,
+                           Controller.Page.privateEventDeleteLink,
+                           Controller.Page.privateEventDeleteOwners,
+                           Controller.Page.privateEventDeleteVisitors,
+                           Controller.Page.privateEventDeleteInvitees,
+                           Controller.Page.privateEventDeleteWall,
+                           Controller.Page.privateEventDeleteAlbum
         ) {
 
             @Override
@@ -208,10 +211,10 @@ final public class
             }},
 
         FindFriend("ai/ilikeplaces/widgets/friend/friend_find.xhtml",
-                Controller.Page.friendFindSearchTextInput,
-                Controller.Page.friendFindSearchButtonInput,
-                Controller.Page.friendFindSearchResults,
-                Controller.Page.friendFindSearchInvites
+                   Controller.Page.friendFindSearchTextInput,
+                   Controller.Page.friendFindSearchButtonInput,
+                   Controller.Page.friendFindSearchResults,
+                   Controller.Page.friendFindSearchInvites
         ) {
 
             @Override
@@ -225,12 +228,12 @@ final public class
             }},
 
         FriendAdd("ai/ilikeplaces/widgets/friend/friend_add.xhtml",
-                Controller.Page.friendAddAddButton,
+                  Controller.Page.friendAddAddButton,
 //                Controller.Page.friendAddBirthYearLabel,
 //                Controller.Page.friendAddFirstNameLabel,
 //                Controller.Page.friendAddLastNameLabel,
 //                Controller.Page.friendAddLocationLabel
-                Controller.Page.friendAddDisplayNameLabel
+Controller.Page.friendAddDisplayNameLabel
         ) {
 
             @Override
@@ -244,8 +247,8 @@ final public class
             }},
 
         FriendDelete("ai/ilikeplaces/widgets/friend/friend_delete.xhtml",
-                Controller.Page.friendDeleteAddButton,
-                Controller.Page.friendDeleteDisplayNameLabel
+                     Controller.Page.friendDeleteAddButton,
+                     Controller.Page.friendDeleteDisplayNameLabel
 //                Controller.Page.friendDeleteBirthYearLabel,
 //                Controller.Page.friendDeleteFirstNameLabel,
 //                Controller.Page.friendDeleteLastNameLabel,
@@ -263,7 +266,7 @@ final public class
             }},
 
         FriendList("ai/ilikeplaces/widgets/friend/friend_list.xhtml",
-                Controller.Page.FriendListList
+                   Controller.Page.FriendListList
 
         ) {
 
@@ -278,10 +281,10 @@ final public class
             }},
 
         GenericButton("ai/ilikeplaces/widgets/button.xhtml",
-                Controller.Page.GenericButtonLink,
-                Controller.Page.GenericButtonText,
-                Controller.Page.GenericButtonImage,
-                Controller.Page.GenericButtonWidth
+                      Controller.Page.GenericButtonLink,
+                      Controller.Page.GenericButtonText,
+                      Controller.Page.GenericButtonImage,
+                      Controller.Page.GenericButtonWidth
 
         ) {
 
@@ -319,6 +322,19 @@ final public class
             @Override
             public String toString() {
                 return DocActivate;
+            }},
+
+        Share(null
+        ) {
+
+            @Override
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "page/_share";
+            }
+
+            @Override
+            public String toString() {
+                return DocShare;
             }},
 
         Profile(null,
@@ -373,28 +389,28 @@ final public class
             }},
 
         Skeleton("ai/ilikeplaces/Skeleton.xhtml",
-                Controller.Page.skeletonTitle,
-                Controller.Page.SkeletonCPageTitle,
-                Controller.Page.SkeletonCPageIntro,
-                Controller.Page.SkeletonCPageNotice,
-                Controller.Page.Skeleton_center,
-                Controller.Page.Skeleton_center_content,
-                Controller.Page.Skeleton_center_skeleton,
-                Controller.Page.Skeleton_file_list,
-                Controller.Page.Skeleton_left_column,
-                Controller.Page.Skeleton_login_widget,
-                Controller.Page.Skeleton_notice,
-                Controller.Page.Skeleton_notice_sh,
-                Controller.Page.Skeleton_othersidebar,
-                Controller.Page.Skeleton_profile_photo,
-                Controller.Page.Skeleton_othersidebar_identity,
-                Controller.Page.Skeleton_othersidebar_organizer_link,
-                Controller.Page.Skeleton_othersidebar_photo_manager_link,
-                Controller.Page.Skeleton_othersidebar_places_link,
-                Controller.Page.Skeleton_othersidebar_profile_link,
-                Controller.Page.Skeleton_othersidebar_upload_file_sh,
-                Controller.Page.Skeleton_right_column,
-                Controller.Page.Skeleton_sidebar
+                 Controller.Page.skeletonTitle,
+                 Controller.Page.SkeletonCPageTitle,
+                 Controller.Page.SkeletonCPageIntro,
+                 Controller.Page.SkeletonCPageNotice,
+                 Controller.Page.Skeleton_center,
+                 Controller.Page.Skeleton_center_content,
+                 Controller.Page.Skeleton_center_skeleton,
+                 Controller.Page.Skeleton_file_list,
+                 Controller.Page.Skeleton_left_column,
+                 Controller.Page.Skeleton_login_widget,
+                 Controller.Page.Skeleton_notice,
+                 Controller.Page.Skeleton_notice_sh,
+                 Controller.Page.Skeleton_othersidebar,
+                 Controller.Page.Skeleton_profile_photo,
+                 Controller.Page.Skeleton_othersidebar_identity,
+                 Controller.Page.Skeleton_othersidebar_organizer_link,
+                 Controller.Page.Skeleton_othersidebar_photo_manager_link,
+                 Controller.Page.Skeleton_othersidebar_places_link,
+                 Controller.Page.Skeleton_othersidebar_profile_link,
+                 Controller.Page.Skeleton_othersidebar_upload_file_sh,
+                 Controller.Page.Skeleton_right_column,
+                 Controller.Page.Skeleton_sidebar
 
         ) {
 
@@ -408,12 +424,12 @@ final public class
                 return DocSkeleton;
             }},
         PrivateLocationCreate("ai/ilikeplaces/widgets/privatelocation/private_location_create.xhtml",
-                Controller.Page.privateLocationCreateName,
-                Controller.Page.privateLocationCreateInfo,
-                Controller.Page.privateLocationCreateSave,
-                Controller.Page.PrivateLocationCreateCNotice,
-                Controller.Page.PrivateLocaionCreateCTitle,
-                Controller.Page.PrivateLocaionCreateCIntro
+                              Controller.Page.privateLocationCreateName,
+                              Controller.Page.privateLocationCreateInfo,
+                              Controller.Page.privateLocationCreateSave,
+                              Controller.Page.PrivateLocationCreateCNotice,
+                              Controller.Page.PrivateLocaionCreateCTitle,
+                              Controller.Page.PrivateLocaionCreateCIntro
         ) {
 
             @Override
@@ -427,13 +443,13 @@ final public class
             }},
 
         PrivateLocationView("ai/ilikeplaces/widgets/privatelocation/private_location_view.xhtml",
-                Controller.Page.privateLocationViewNotice,
-                Controller.Page.privateLocationViewName,
-                Controller.Page.privateLocationViewInfo,
-                Controller.Page.privateLocationViewOwners,
-                Controller.Page.privateLocationViewVisitors,
-                Controller.Page.privateLocationViewLink,
-                Controller.Page.privateLocationViewEventList
+                            Controller.Page.privateLocationViewNotice,
+                            Controller.Page.privateLocationViewName,
+                            Controller.Page.privateLocationViewInfo,
+                            Controller.Page.privateLocationViewOwners,
+                            Controller.Page.privateLocationViewVisitors,
+                            Controller.Page.privateLocationViewLink,
+                            Controller.Page.privateLocationViewEventList
         ) {
 
             @Override
@@ -448,12 +464,13 @@ final public class
 
 
         PrivateLocationDelete("ai/ilikeplaces/widgets/privatelocation/private_location_delete.xhtml",
-                Controller.Page.privateLocationDeleteName,
-                Controller.Page.privateLocationDeleteInfo,
-                Controller.Page.privateLocationDeleteNotice,
-                Controller.Page.privateLocationDelete,
-                Controller.Page.privateLocationDeleteOwners,
-                Controller.Page.privateLocationDeleteVisitors
+                              Controller.Page.privateLocationDeleteName,
+                              Controller.Page.privateLocationDeleteInfo,
+                              Controller.Page.privateLocationDeleteNotice,
+                              Controller.Page.privateLocationDelete,
+                              Controller.Page.privateLocationDeleteOwners,
+                              Controller.Page.privateLocationDeleteVisitors,
+                              Controller.Page.privateLocationDeleteEventList
         ) {
 
             @Override
@@ -684,8 +701,10 @@ final public class
         final static public String privateEventViewInfo = "privateEventViewInfo";
         final static public String privateEventViewOwners = "privateEventViewOwners";
         final static public String privateEventViewVisitors = "privateEventViewVisitor";
+        final static public String privateEventViewInvites = "privateEventViewInvites";
         final static public String privateEventViewLink = "privateEventViewLink";
         final static public String privateEventViewWall = "privateEventViewWall";
+        final static public String privateEventViewAlbum = "privateEventViewAlbum";
 
         /*Private Event Page*/
         final static public String DocPrivateEventCreate = "PrivateEventCreate";
@@ -760,6 +779,9 @@ final public class
 
         /*Actiavte Page*/
         final static public String DocActivate = "DocActivate";
+        
+        /*Share Page*/
+        final static public String DocShare = "DocShare";
 
         /*Organize Page*/
         final static public String DocOrganize = "DocOrganize";
@@ -821,6 +843,7 @@ final public class
         final static public String privateLocationCreateSave = "privateLocationCreateSave";
         final static public String privateLocationDeleteOwners = "privateLocationDeleteOwners";
         final static public String privateLocationDeleteVisitors = "privateLocationDeleteVisitors";
+        final static public String privateLocationDeleteEventList = "privateLocationDeleteEventList";
 
         /*Private Location Page*/
         final static public String DocPrivateLocationDelete = "PrivateLocationDelete";
@@ -955,6 +978,8 @@ final public class
     final PageFace book = Page.Bookings;
     final PageFace profile = Page.Profile;
     final PageFace i = Page.I;
+    final PageFace activate = Page.Activate;
+    final PageFace share = Page.Share;
 
     final PageFace findFriendWidget = Page.FindFriend;
     final PageFace friendAdd = Page.FriendAdd;
@@ -1052,7 +1077,9 @@ final public class
 
             inhs__.registerItsNatDocumentTemplate(i.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerI());
 
-            inhs__.registerItsNatDocumentTemplate(i.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerActivate());
+            inhs__.registerItsNatDocumentTemplate(activate.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerActivate());
+
+            inhs__.registerItsNatDocumentTemplate(share.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerShare());
         }
 
         registerDocumentFragmentTemplatesAKAWidgets:
@@ -1142,8 +1169,8 @@ final public class
             Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
             Loggers.INFO.info(((HttpServletRequest) request__.getServletRequest()).getRequestURL().toString()
                     + (((HttpServletRequest) request__.getServletRequest()).getQueryString() != null
-                    ? ((HttpServletRequest) request__.getServletRequest()).getQueryString()
-                    : ""));
+                       ? ((HttpServletRequest) request__.getServletRequest()).getQueryString()
+                       : ""));
             request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
 
             final ItsNatHttpSession itsNatHttpSession = (ItsNatHttpSession) request__.getItsNatSession();
@@ -1205,6 +1232,9 @@ final public class
                 } else if (isActivatePage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocActivate);/*Framework specific*/
                     Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0018"));
+                } else if (isSharePage(URL__)) {
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocShare);/*Framework specific*/
+                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0019"));
                 } else {/*Divert to home page*/
                     Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
                     request__.getServletRequest().setAttribute("location", "");
@@ -1251,9 +1281,30 @@ final public class
         return (URL_.startsWith("_") || URL_.startsWith("#"));
     }
 
+    static private boolean isActivatePage(final String URL_) {
+        return (URL_.startsWith("_activate"));
+    }
+
+    static private boolean isBookingsPage(final String URL_) {
+        return (URL_.startsWith("_book"));
+    }
+
+    static private boolean isIPage(final String URL_) {
+        return (URL_.startsWith("_i"));
+    }
+
+    static private boolean isFriendsPage(final String URL_) {
+        return (URL_.startsWith("_friends"));
+    }
+
     static private boolean isHumanPage(final String URL_) {
         return (URL_.startsWith("_me"));
     }
+
+    static private boolean isOrganizePage(final String URL_) {
+        return (URL_.startsWith("_org"));
+    }
+
 
     static private boolean isPhotoPage(final String URL_) {
         return (URL_.startsWith("_photo_") && URL_.split("_").length == 4);
@@ -1262,35 +1313,16 @@ final public class
     static private String getPhotoLocation(final String URL_) {
         return URL_.replace("_photo_", "").split("_")[0];
     }
-
     static private String getPhotoURL(final String URL_) {
         return URL_.replace("_photo_", "").split("_")[1];
     }
-
-    static private boolean isOrganizePage(final String URL_) {
-        return (URL_.startsWith("_org"));
-    }
-
-    static private boolean isFriendsPage(final String URL_) {
-        return (URL_.startsWith("_friends"));
-    }
-
-    static private boolean isBookingsPage(final String URL_) {
-        return (URL_.startsWith("_book"));
-    }
-
     static private boolean isProfilePage(final String URL_) {
         return (URL_.startsWith("_profile"));
     }
 
-    static private boolean isIPage(final String URL_) {
-        return (URL_.startsWith("_i"));
+    static private boolean isSharePage(final String URL_) {
+        return (URL_.startsWith("_share"));
     }
-
-    static private boolean isActivatePage(final String URL_) {
-        return (URL_.startsWith("_activate"));
-    }
-
     static private boolean isSignOut(final String URL_) {
         return (URL_.equals("_so"));
     }

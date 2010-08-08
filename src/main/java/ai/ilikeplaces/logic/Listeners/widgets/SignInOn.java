@@ -8,6 +8,7 @@ import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.Loggers;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
@@ -24,11 +25,14 @@ abstract public class SignInOn extends AbstractWidgetListener {
     private static final String ISSIGNUP = "issignup";
 
     /**
-     * @param itsNatDocument__
+     *
+     * @param request__
      * @param appendToElement__
+     * @param humanId
+     * @param request
      */
-    public SignInOn(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final HumanId humanId, final ServletRequest request) {
-        super(itsNatDocument__, Page.SignInOn, appendToElement__, humanId, isSignUp(request));
+    public SignInOn(final ItsNatServletRequest request__,  final Element appendToElement__, final HumanId humanId, final ServletRequest request) {
+        super(request__, Page.SignInOn, appendToElement__, humanId, isSignUp(request));
     }
 
     @WARNING(warning = "During work ont this class, from time to time you'll want to make it a WEB 2.0 login." +

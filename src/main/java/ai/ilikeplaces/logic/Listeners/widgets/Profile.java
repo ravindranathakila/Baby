@@ -7,6 +7,7 @@ import ai.ilikeplaces.logic.validators.unit.ProfileUrl;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
@@ -30,10 +31,9 @@ public class Profile extends AbstractWidgetListener {
      * @param appendToElement__
      * @param humanId
      */
-    public Profile(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final HumanId humanId) {
+    public Profile(final ItsNatServletRequest request__,  final Element appendToElement__, final HumanId humanId) {
         super(
-                itsNatDocument__,
-                Page.ProfileWidget, appendToElement__,
+                request__, Page.ProfileWidget, appendToElement__,
                 humanId
         );
     }

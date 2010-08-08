@@ -11,6 +11,7 @@ import ai.ilikeplaces.util.EventType;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Return;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,15 +36,14 @@ abstract public class FriendAdd extends AbstractWidgetListener {
     HumanId caller = null;
 
     /**
-     * caller is the human who adds addee as a friend
      *
-     * @param itsNatDocument__
+     * @param request__
      * @param appendToElement__
      * @param addee
      * @param caller
      */
-    public FriendAdd(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final HumanId addee, final HumanId caller) {
-        super(itsNatDocument__, Controller.Page.FriendAdd, appendToElement__, addee, caller);
+    public FriendAdd(final ItsNatServletRequest request__,  final Element appendToElement__, final HumanId addee, final HumanId caller) {
+        super(request__, Controller.Page.FriendAdd, appendToElement__, addee, caller);
     }
 
     @Override

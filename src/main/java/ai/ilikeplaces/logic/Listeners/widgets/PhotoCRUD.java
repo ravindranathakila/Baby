@@ -12,6 +12,7 @@ import ai.ilikeplaces.util.EventType;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MarkupTag;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
@@ -50,8 +51,8 @@ abstract public class PhotoCRUD extends AbstractWidgetListener {
      * @param publicPhoto__
      * @param humanId__
      */
-    public PhotoCRUD(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final PublicPhoto publicPhoto__, final String humanId__) {
-        super(itsNatDocument__, Page.PhotoCRUD, appendToElement__);
+    public PhotoCRUD(final ItsNatServletRequest request__,  final Element appendToElement__, final PublicPhoto publicPhoto__, final String humanId__) {
+        super(request__, Page.PhotoCRUD, appendToElement__);
         this.humanId = humanId__;
         this.publicPhoto = publicPhoto__;
     }

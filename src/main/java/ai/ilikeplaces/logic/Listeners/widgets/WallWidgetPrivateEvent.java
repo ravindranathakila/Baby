@@ -5,21 +5,25 @@ import ai.ilikeplaces.entities.HumansPrivateEvent;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.logic.validators.unit.WallEntry;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.util.EventType;
-import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.MarkupTag;
-import ai.ilikeplaces.util.Return;
-import org.itsnat.core.ItsNatDocument;
+import ai.ilikeplaces.util.*;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
+import org.xml.sax.SAXException;
+
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -31,11 +35,21 @@ import org.w3c.dom.html.HTMLDocument;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class WallWidgetPrivateEvent extends WallWidget {
 
+    private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
+
     HumanId humanId;
     Long privateEventId = null;
+    private static final String WALL_ENTRY_CONSUMED_STATUES = "&wall_entry_consumed=true";
+    private static final String WALL_ENTRY_CONSUMED = "wall_entry_consumed";
+    private static final String TRUE = "true";
+    private static final String NULL = "null";
+    private static final String WALL_ENTRY = "wall_entry=";
+    private static final String WALL_ENTRY_FROM_EMAIL_RECEIVED = "Wall entry from email received!";
+    private static final String DERIVED_FROM_EMAIL = "DERIVED FROM EMAIL:{}";
+    private static final String WALL_SUBMIT_WIDGET = "wall_submit_widget";
 
-    public WallWidgetPrivateEvent(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final HumanId humanId, final long privateEventId__) {
-        super(itsNatDocument__, appendToElement__, humanId, privateEventId__);
+    public WallWidgetPrivateEvent(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId, final long privateEventId__) {
+        super(request__, appendToElement__, humanId, privateEventId__);
     }
 
     /**
@@ -43,16 +57,84 @@ public class WallWidgetPrivateEvent extends WallWidget {
      */
     @Override
     protected void init(final Object... initArgs) {
-        this.humanId = (HumanId) ((HumanId) initArgs[0]).getSelfAsValid();
+        this.humanId = ((HumanId) initArgs[0]).getSelfAsValid();
         this.privateEventId = (Long) initArgs[1];
-        
-        for (final Msg msg : DB.getHumanCrudPrivateEventLocal(true).
-                rPrivateEventReadWall(humanId, privateEventId).returnValueBadly().getWallMsgs()) {
-            new UserProperty(itsNatDocument_, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
-                protected void init(final Object... initArgs) {
-                    $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
-                }
-            };
+
+        final PrivateEvent pe = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(humanId.getObjectAsValid(), privateEventId).returnValueBadly();
+
+        fetchToEmail(pe.getPrivateLocation().getPrivateLocationId(),
+                     pe.getPrivateEventId());
+
+        final String wall_entry = request.getServletRequest().getParameter(WallWidget.PARAM_WALL_ENTRY);
+        final String wall_entry_consumed = request.getServletRequest().getParameter(WALL_ENTRY_CONSUMED);
+        Loggers.DEBUG.debug(WALL_ENTRY + (wall_entry != null ? wall_entry : NULL));
+
+        /**
+         * If null, this means we have to check on if the wall entry parameter is avaialbe and update.
+         * If not null, this means the wall entry has been consumed(we set it to true)
+         */
+        if ((wall_entry_consumed == null || !wall_entry_consumed.equals(TRUE)) && wall_entry != null) {//This will refresh the page after actions
+            Loggers.DEBUG.debug(WALL_ENTRY_FROM_EMAIL_RECEIVED);
+            final Return<Wall> r = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddEntryToWall(this.humanId,
+                                                                                                      this.humanId,
+                                                                                                      this.privateEventId,
+                                                                                                      new WallEntry().setObjAsValid(wall_entry).getObj());//Use of class scoped wall entry is not possible as it isn't initialized yet
+            Loggers.log(Loggers.LEVEL.DEBUG, DERIVED_FROM_EMAIL, r.returnMsg());
+            final StringBuilder b = new StringBuilder("");
+
+
+            for (final Msg msg : DB.getHumanCrudPrivateEventLocal(true).
+                    rPrivateEventReadWall(humanId, privateEventId).returnValueBadly().getWallMsgs()) {//For the purpose of emailing the users the update
+                b.append(
+                        new UserProperty(
+                                request,
+                                $$(Controller.Page.wallContent),
+                                ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
+                                new HumanId(msg.getMsgMetadata())) {
+                        }.fetchToEmail
+                );
+            }
+            for (final HumansPrivateEvent hpe : pe.getPrivateEventViewers()) {
+                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), pe.getPrivateEventName(), fetchToEmail + b.toString());
+            }
+
+            itsNatDocument_.addCodeToSend(JSCodeToSend.refreshPageWith(WALL_ENTRY_CONSUMED_STATUES));//
+
+        } else {//Moves on with the wall without refresh
+            for (final Msg msg : DB.getHumanCrudPrivateEventLocal(true).
+                    rPrivateEventReadWall(humanId, privateEventId).returnValueBadly().getWallMsgs()) {
+                new UserProperty(request, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
+                    protected void init(final Object... initArgs) {
+                        $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
+                    }
+                };//No use of fetching email content or initializing it
+            }
+        }
+
+
+    }
+
+
+    /**
+     * @param args
+     */
+    protected void fetchToEmail(final Object... args) {
+        try {
+            final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + WALL_SUBIT_FROM_EMAIL);
+
+            $$("category", document).setAttribute(MarkupTag.INPUT.value(), Integer.toString(Controller.Page.DocOrganizeModeEvent));
+            $$("location", document).setAttribute(MarkupTag.INPUT.value(), args[0].toString());
+            $$("event", document).setAttribute(MarkupTag.INPUT.value(), args[1].toString());
+
+
+            fetchToEmail = HTMLDocParser.convertNodeToHtml($$(WALL_SUBMIT_WIDGET, document));
+
+        } catch (final TransformerException e) {
+            Loggers.EXCEPTION.error("", e);
+        } catch (final SAXException e) {
+            Loggers.EXCEPTION.error("", e);
+        } catch (final IOException e) {
+            Loggers.EXCEPTION.error("", e);
         }
     }
 
@@ -64,17 +146,9 @@ public class WallWidgetPrivateEvent extends WallWidget {
 
             private HumanId myhumanId = humanId;
             private Long myprivateEventId = privateEventId;
-            private boolean autoupdating = false;
 
             @Override
             public void handleEvent(final Event evt_) {
-/*                    UCStartAutoUpdateThread:
-                    {
-                        if(!autoupdating){
-                            new Thread();
-                            autoupdating = true;
-                        }
-                    }*/
 
                 Loggers.USER.info(myhumanId.getObj() + " enters text:" + wallAppend.getObj());
                 if (wallAppend.validate() == 0) {
@@ -84,28 +158,31 @@ public class WallWidgetPrivateEvent extends WallWidget {
 
 
                         final Return<Wall> r = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddEntryToWall(myhumanId,
-                                myhumanId,
-                                myprivateEventId,
-                                wallAppend.getObj());
+                                                                                                                  myhumanId,
+                                                                                                                  myprivateEventId,
+                                                                                                                  wallAppend.getObj());
 
 
                         if (r.returnStatus() == 0) {
                             $$(Controller.Page.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
+                            wallAppend.setObj("");
+                            
                             clear($$(Controller.Page.wallContent));
                             final Wall wall = (DB.getHumanCrudPrivateEventLocal(true).rPrivateEventReadWall(myhumanId, myprivateEventId).returnValueBadly());
                             final StringBuilder b = new StringBuilder("");
                             for (final Msg msg : wall.getWallMsgs()) {
                                 b.append(
-                                        new UserProperty(itsNatDocument_, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
-                                            protected void init(final Object... initArgs) {
-                                                $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
-                                            }
+                                        new UserProperty(
+                                                request,
+                                                $$(Controller.Page.wallContent),
+                                                ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
+                                                new HumanId(msg.getMsgMetadata())) {
                                         }.fetchToEmail
                                 );
                             }
-                            final PrivateEvent pe = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEvent(myhumanId.getObj(), privateEventId).returnValue();
+                            final PrivateEvent pe = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(myhumanId.getObj(), myprivateEventId).returnValue();
                             for (final HumansPrivateEvent hpe : pe.getPrivateEventViewers()) {
-                                SendMail.getSendMailLocal().sendAsHTML(hpe.getHumanId(), pe.getPrivateEventName(), b.toString());
+                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), pe.getPrivateEventName(), fetchToEmail + b.toString());
                             }
                         } else {
                             $$(Controller.Page.wallNotice).setTextContent(r.returnMsg());

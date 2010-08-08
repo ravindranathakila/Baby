@@ -9,6 +9,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +44,7 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
     Save<RETURN_TYPE> saveRemove;
 
     /**
-     * @param itsNatDocument__
+     * @param request__
      * @param appendToElement__
      * @param m
      * @param possibilities
@@ -51,17 +52,17 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
      * @param saveAdd
      * @param saveRemove
      */
-    public MemberHandler(final ItsNatDocument itsNatDocument__,
-                         final Element appendToElement__,
-                         @NOTE(note = "The member owning everything")
-                         final M m,
-                         @NOTE(note = "The list containing possible adds to be added.")
-                         final List<? extends HumansFriend> possibilities,
-                         @NOTE(note = "The list of existing users contains users this guy does not know.")
-                         final List<? extends HumansFriend> existingAll,
-                         final Save<RETURN_TYPE> saveAdd,
-                         final Save<RETURN_TYPE> saveRemove) {
-        super(itsNatDocument__, Controller.Page.FriendList, appendToElement__, m, possibilities, existingAll, saveAdd, saveRemove);
+    public MemberHandler(
+            final ItsNatServletRequest request__, final Element appendToElement__,
+            @NOTE(note = "The member owning everything")
+            final M m,
+            @NOTE(note = "The list containing possible adds to be added.")
+            final List<? extends HumansFriend> possibilities,
+            @NOTE(note = "The list of existing users contains users this guy does not know.")
+            final List<? extends HumansFriend> existingAll,
+            final Save<RETURN_TYPE> saveAdd,
+            final Save<RETURN_TYPE> saveRemove) {
+        super(request__, Controller.Page.FriendList, appendToElement__, m, possibilities, existingAll, saveAdd, saveRemove);
     }
 
 
@@ -96,7 +97,7 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
 
             $$(Controller.Page.FriendListList).appendChild(li);
 
-            new UserProperty(itsNatDocument_, $$(Controller.Page.FriendListList), new HumanId(possibility.getHumanId())) {
+            new UserProperty(request, $$(Controller.Page.FriendListList), new HumanId(possibility.getHumanId())) {
                 protected void init(final Object... initArgs) {
                     $$(Controller.Page.user_property_content).appendChild(li);
                 }

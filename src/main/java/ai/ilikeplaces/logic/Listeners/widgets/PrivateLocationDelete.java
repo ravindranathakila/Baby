@@ -4,13 +4,15 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.HumansNetPeople;
+import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
-import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,9 +41,13 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
     private Long privateLocationId = null;
     Return<PrivateLocation> r;
     List<HumansNetPeople> possibilities;
+    private static final String HAS_ADDED_YOU_AS_AN_OWNER_OF = " has added you as an Owner of ";
+    private static final String HAS_REMOVED_YOU_AS_AN_OWNER_OF = " has removed you as an Owner of ";
+    private static final String HAS_ADDED_YOU_AS_AN_VISITOR_OF = " has added you as an Visitor of ";
+    private static final String HAS_REMOVED_YOU_AS_AN_VISITOR_OF = " has removed you as an Visitor of ";
 
-    public PrivateLocationDelete(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final String humanId__, final long privateLocationId__) {
-        super(itsNatDocument__, Page.PrivateLocationDelete, appendToElement__, humanId__, privateLocationId__);
+    public PrivateLocationDelete(final ItsNatServletRequest request__, final Element appendToElement__, final String humanId__, final long privateLocationId__) {
+        super(request__, Page.PrivateLocationDelete, appendToElement__, humanId__, privateLocationId__);
     }
 
     /**
@@ -58,6 +64,28 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
         if (r.returnStatus() == 0) {
             $$(privateLocationDeleteName).setTextContent(r.returnValue().getPrivateLocationName());
             $$(privateLocationDeleteInfo).setTextContent(r.returnValue().getPrivateLocationInfo());
+            SetEventList:
+            {
+                for (final PrivateEvent pe : r.returnValue().getPrivateEvents()) {
+                    if (DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventIsViewer(humanId, pe.getPrivateEventId()).returnValue()) {
+                        $$(privateLocationDeleteEventList).appendChild(
+                                ElementComposer.compose($$(MarkupTag.LI))
+                                        .wrapThis(
+                                                ElementComposer.compose($$(MarkupTag.A))
+                                                        .$ElementSetText(pe.getPrivateEventName())
+                                                        .$ElementSetHref(
+                                                                new Parameter(Organize.getURL())
+                                                                        .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
+                                                                        .append(DocOrganizeLocation, r.returnValue().getPrivateLocationId())
+                                                                        .append(DocOrganizeEvent, pe.getPrivateEventId())
+                                                                        .get()
+                                                        )
+                                                        .get()
+                                        )
+                                        .get());
+                    }
+                }
+            }
         } else {
             $$(privateLocationDeleteNotice).setTextContent(r.returnMsg());
         }
@@ -104,8 +132,7 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
         AddRemoveOwners:
         {
             new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateLocation>>(
-                    itsNatDocument_,
-                    $$(privateLocationDeleteOwners),
+                    request, $$(privateLocationDeleteOwners),
                     user.getHumansNet(),
                     possibilities,
                     r.returnValue().getPrivateLocationOwners(),
@@ -115,7 +142,13 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
 
                         @Override
                         public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
-                            return DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationAddOwner(humanId, myprivateLocationId, humansFriend);
+                            final Return<PrivateLocation> returnVal = DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationAddOwner(humanId, myprivateLocationId, humansFriend);
+                            if (returnVal.returnStatus() == 0) {
+                                SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
+                                                                                           humanId.getObj(),
+                                                                                           humanId.getObj() + HAS_ADDED_YOU_AS_AN_OWNER_OF + returnVal.returnValue().getPrivateLocationName());
+                            }
+                            return returnVal;
                         }
                     },
                     new Save<Return<PrivateLocation>>() {
@@ -124,7 +157,14 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
 
                         @Override
                         public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
-                            return DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationRemoveOwner(humanId, myprivateLocationId, humansFriend);
+                            final Return<PrivateLocation> returnVal = DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationRemoveOwner(humanId, myprivateLocationId, humansFriend);
+                            if (returnVal.returnStatus() == 0) {
+                                SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
+                                                                                           humanId.getObj(),
+                                                                                           humanId.getObj() + HAS_REMOVED_YOU_AS_AN_OWNER_OF + returnVal.returnValue().getPrivateLocationName());
+                            }
+
+                            return returnVal;
                         }
                     }) {
             };
@@ -132,8 +172,7 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
         AddRemoveVisitors:
         {
             new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateLocation>>(
-                    itsNatDocument_,
-                    $$(privateLocationDeleteVisitors),
+                    request, $$(privateLocationDeleteVisitors),
                     user.getHumansNet(),
                     possibilities,
                     r.returnValue().getPrivateLocationViewers(),
@@ -143,7 +182,15 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
 
                         @Override
                         public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
-                            return DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationAddVisitor(humanId, myprivateLocationId, humansFriend);
+
+                            final Return<PrivateLocation> returnVal = DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationAddVisitor(humanId, myprivateLocationId, humansFriend);
+                            if (returnVal.returnStatus() == 0) {
+                                SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
+                                                                                           humanId.getObj(),
+                                                                                           humanId.getObj() + HAS_ADDED_YOU_AS_AN_VISITOR_OF + returnVal.returnValue().getPrivateLocationName());
+                            }
+                            return returnVal;
+
                         }
                     },
                     new Save<Return<PrivateLocation>>() {
@@ -152,7 +199,15 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
 
                         @Override
                         public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
-                            return DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationRemoveVisitor(humanId, myprivateLocationId, humansFriend);
+
+                            final Return<PrivateLocation> returnVal = DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationRemoveVisitor(humanId, myprivateLocationId, humansFriend);
+                            if (returnVal.returnStatus() == 0) {
+                                SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
+                                                                                           humanId.getObj(),
+                                                                                           humanId.getObj() + HAS_REMOVED_YOU_AS_AN_VISITOR_OF + returnVal.returnValue().getPrivateLocationName());
+                            }
+                            return returnVal;
+
                         }
                     }) {
             };

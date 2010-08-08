@@ -59,7 +59,7 @@ public class ListenerFriends implements ItsNatServletRequestListener {
                     setLoginWidget:
                     {
                         try {
-                            new SignInOn(itsNatDocument__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
+                            new SignInOn(request__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
                             };
                         } catch (final Throwable t) {
                             Loggers.EXCEPTION.error("{}", t);
@@ -127,7 +127,7 @@ public class ListenerFriends implements ItsNatServletRequestListener {
                 }
                 if (getUsername() != null) {
                     try {
-                        new FindFriend(itsNatDocument, $(Skeleton_center_skeleton), new HumanId(getUsernameAsValid())) {
+                        new FindFriend(request__, $(Skeleton_center_skeleton), new HumanId(getUsernameAsValid())) {
                         };
                     } catch (final Throwable t) {
                         Loggers.EXCEPTION.error("{}", t);

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+  -->
+
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>WallSubmitFromEmail</title>
+</head>
+<body>
+<form action="http://localhost:8080/page/_org" method="get" id="wall_submit_widget">
+<div style="display:none;">
+    <input type="hidden"
+           name="category"
+           id="category"
+           value="-1"/>
+    
+    <input type="hidden"
+           name="location"
+           id="location"
+           value="-1"/>
+
+    <input type="hidden"
+           name="event"
+           id="event"
+           value="-1"/>
+
+    <input type="text"
+           name="wall_entry"/>
+
+    <input type="submit"
+           value="Post to Wall"/>
+</div>
+</form>
+</body>
+</html>

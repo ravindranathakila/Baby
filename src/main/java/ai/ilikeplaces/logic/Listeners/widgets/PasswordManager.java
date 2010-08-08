@@ -8,6 +8,7 @@ import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
@@ -45,8 +46,8 @@ abstract public class PasswordManager extends AbstractWidgetListener {
      * @param humanId__
      * @param httpSession__
      */
-    public PasswordManager(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final HumanId humanId__, final HttpSession httpSession__) {
-        super(itsNatDocument__, Page.PasswordChange, appendToElement__, humanId__, httpSession__);
+    public PasswordManager(final ItsNatServletRequest request__,  final Element appendToElement__, final HumanId humanId__, final HttpSession httpSession__) {
+        super(request__, Page.PasswordChange, appendToElement__, humanId__, httpSession__);
     }
 
     /**

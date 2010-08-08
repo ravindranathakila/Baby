@@ -11,6 +11,7 @@ import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Return;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
@@ -27,15 +28,15 @@ abstract public class DisplayName extends AbstractWidgetListener {
     private static final String CHANGED_DISPLAY_NAME_TO_SAME_AS_OLD_ONE = "changed display name to same as old one";
 
     /**
-     * @param itsNatDocument__
+     *
+     * @param request__
      * @param appendToElement__
      * @param humanId
      * @param request
      */
-    public DisplayName(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final HumanId humanId, final ServletRequest request) {
+    public DisplayName(final ItsNatServletRequest request__,  final Element appendToElement__, final HumanId humanId, final ServletRequest request) {
         super(
-                itsNatDocument__,
-                Page.DisplayName, appendToElement__,
+                request__, Page.DisplayName, appendToElement__,
                 humanId,
                 request.getParameter(DISPLAYNAME)
         );

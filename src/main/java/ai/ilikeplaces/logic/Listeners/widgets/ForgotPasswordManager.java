@@ -14,6 +14,7 @@ import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
@@ -55,8 +56,8 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
      * @param appendToElement__
      * @param httpSession__
      */
-    public ForgotPasswordManager(final ItsNatDocument itsNatDocument__, final Element appendToElement__, final HttpSession httpSession__) {
-        super(itsNatDocument__, Page.ForgotPasswordChange, appendToElement__, httpSession__);
+    public ForgotPasswordManager(final ItsNatServletRequest request__,  final Element appendToElement__, final HttpSession httpSession__) {
+        super(request__, Page.ForgotPasswordChange, appendToElement__, httpSession__);
     }
 
     /**

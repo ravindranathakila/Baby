@@ -72,10 +72,10 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
     @OK
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateEvent doUPrivateEventAddOwner(final String adder, final long privateEventId__, final HumansFriend addee) throws DBDishonourCheckedException {
+    public PrivateEvent doUPrivateEventAddOwner(final String adder, final long privateEventId__, final HumansFriend addeee) throws DBDishonourCheckedException {
 
-        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addee.getHumanId())) {
-            throw new NotFriendsException(adder, addee.getHumanId());
+        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addeee.getHumanId())) {
+            throw new NotFriendsException(adder, addeee.getHumanId());
         }
 
         @EXPECTNULL
@@ -97,7 +97,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
         {
 
             @FORGETNULL
-            final HumansPrivateEvent adeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, addee.getHumanId());
+            final HumansPrivateEvent adeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, addeee.getHumanId());
 
             if (!privateEvent_.getPrivateEventOwners().contains(adeehumansPrivateEvent)) {//Concurrent update safe
                 privateEvent_.getPrivateEventOwners().add(adeehumansPrivateEvent);
@@ -118,10 +118,10 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateEvent doUPrivateEventRemoveOwner(final String remover, final long privateEventId__, final HumansFriend removee) throws DBDishonourCheckedException {
+    public PrivateEvent doUPrivateEventRemoveOwner(final String remover, final long privateEventId__, final HumansFriend removeee) throws DBDishonourCheckedException {
 
-        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removee.getHumanId())) {
-            throw new NotFriendsException(remover, removee.getHumanId());
+        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removeee.getHumanId())) {
+            throw new NotFriendsException(remover, removeee.getHumanId());
         }
 
         @EXPECTNULL
@@ -141,7 +141,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
         wiringBothSides:
         {
             @FORGETNULL
-            final HumansPrivateEvent removeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, removee.getHumanId());
+            final HumansPrivateEvent removeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, removeee.getHumanId());
 
             if (privateEvent_.getPrivateEventOwners().contains(removeehumansPrivateEvent)) {//Concurrent update safe
                 privateEvent_.getPrivateEventOwners().remove(removeehumansPrivateEvent);
@@ -162,10 +162,10 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateEvent doUPrivateEventAddViewer(final String adder, final long privateEventId__, final HumansFriend addee) throws DBDishonourCheckedException {
+    public PrivateEvent doUPrivateEventAddViewer(final String adder, final long privateEventId__, final HumansFriend addeee) throws DBDishonourCheckedException {
 
-        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addee.getHumanId())) {
-            throw new NotFriendsException(adder, addee.getHumanId());
+        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addeee.getHumanId())) {
+            throw new NotFriendsException(adder, addeee.getHumanId());
         }
 
         @EXPECTNULL
@@ -187,7 +187,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
         wiringBothSides:
         {
             @FORGETNULL
-            final HumansPrivateEvent adeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, addee.getHumanId());
+            final HumansPrivateEvent adeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, addeee.getHumanId());
 
             if (!privateEvent_.getPrivateEventViewers().contains(adeehumansPrivateEvent)) {//Concurrent update safe
                 privateEvent_.getPrivateEventViewers().add(adeehumansPrivateEvent);
@@ -208,10 +208,10 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateEvent doUPrivateEventRemoveViewer(final String remover, final long privateEventId__, final HumansFriend removee) throws DBDishonourCheckedException {
+    public PrivateEvent doUPrivateEventRemoveViewer(final String remover, final long privateEventId__, final HumansFriend removeee) throws DBDishonourCheckedException {
 
-        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removee.getHumanId())) {
-            throw new NotFriendsException(remover, removee.getHumanId());
+        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removeee.getHumanId())) {
+            throw new NotFriendsException(remover, removeee.getHumanId());
         }
 
         @EXPECTNULL
@@ -231,7 +231,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
         wiringBothSides:
         {
             @FORGETNULL
-            final HumansPrivateEvent removerhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, removee.getHumanId());
+            final HumansPrivateEvent removerhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, removeee.getHumanId());
 
             if (privateEvent_.getPrivateEventViewers().contains(removerhumansPrivateEvent)) {//Concurrent update safe
                 privateEvent_.getPrivateEventViewers().remove(removerhumansPrivateEvent);
@@ -252,10 +252,10 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateEvent doUPrivateEventAddInvite(final String adder, final long privateEventId__, final HumansFriend addee) throws NoPrivilegesException {
+    public PrivateEvent doUPrivateEventAddInvite(final String adder, final long privateEventId__, final HumansFriend addeee) throws NoPrivilegesException {
 
-        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addee.getHumanId())) {
-            throw new NotFriendsException(adder, addee.getHumanId());
+        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addeee.getHumanId())) {
+            throw new NotFriendsException(adder, addeee.getHumanId());
         }
 
         @EXPECTNULL
@@ -277,7 +277,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
         wiringBothSides:
         {
             @FORGETNULL
-            final HumansPrivateEvent adeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, addee.getHumanId());
+            final HumansPrivateEvent adeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, addeee.getHumanId());
 
             if (!privateEvent_.getPrivateEventInvites().contains(adeehumansPrivateEvent)) {//Concurrent update safe
                 privateEvent_.getPrivateEventInvites().add(adeehumansPrivateEvent);
@@ -298,10 +298,10 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateEvent doUPrivateEventRemoveInvite(final String remover, final long privateEventId__, final HumansFriend removee) throws DBDishonourCheckedException {
+    public PrivateEvent doUPrivateEventRemoveInvite(final String remover, final long privateEventId__, final HumansFriend removeee) throws DBDishonourCheckedException {
 
-        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removee.getHumanId())) {
-            throw new NotFriendsException(remover, removee.getHumanId());
+        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removeee.getHumanId())) {
+            throw new NotFriendsException(remover, removeee.getHumanId());
         }
 
         @EXPECTNULL
@@ -321,7 +321,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
         wiringBothSides:
         {
             @FORGETNULL
-            final HumansPrivateEvent removerhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, removee.getHumanId());
+            final HumansPrivateEvent removerhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, removeee.getHumanId());
 
             if (privateEvent_.getPrivateEventInvites().contains(removerhumansPrivateEvent)) {//Concurrent update safe
                 privateEvent_.getPrivateEventInvites().remove(removerhumansPrivateEvent);
@@ -342,10 +342,10 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateEvent doUPrivateEventAddReject(final String adder, final long privateEventId__, final HumansFriend addee) throws DBDishonourCheckedException {
+    public PrivateEvent doUPrivateEventAddReject(final String adder, final long privateEventId__, final HumansFriend addeee) throws DBDishonourCheckedException {
 
-        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addee.getHumanId())) {
-            throw new NotFriendsException(adder, addee.getHumanId());
+        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addeee.getHumanId())) {
+            throw new NotFriendsException(adder, addeee.getHumanId());
         }
 
         @EXPECTNULL
@@ -367,7 +367,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
         wiringBothSides:
         {
             @FORGETNULL
-            final HumansPrivateEvent adeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, addee.getHumanId());
+            final HumansPrivateEvent adeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, addeee.getHumanId());
 
             if (!privateEvent_.getPrivateEventRejects().contains(adeehumansPrivateEvent)) {//Concurrent update safe
                 privateEvent_.getPrivateEventRejects().add(adeehumansPrivateEvent);
@@ -388,10 +388,10 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateEvent doUPrivateEventRemoveReject(final String remover, final long privateEventId__, final HumansFriend removee) throws DBDishonourCheckedException {
+    public PrivateEvent doUPrivateEventRemoveReject(final String remover, final long privateEventId__, final HumansFriend removeee) throws DBDishonourCheckedException {
 
-        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removee.getHumanId())) {
-            throw new NotFriendsException(remover, removee.getHumanId());
+        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removeee.getHumanId())) {
+            throw new NotFriendsException(remover, removeee.getHumanId());
         }
 
         @EXPECTNULL
@@ -411,7 +411,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
         wiringBothSides:
         {
             @FORGETNULL
-            final HumansPrivateEvent removerhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, removee.getHumanId());
+            final HumansPrivateEvent removerhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, removeee.getHumanId());
 
             if (privateEvent_.getPrivateEventRejects().contains(removerhumansPrivateEvent)) {//Concurrent update safe
                 privateEvent_.getPrivateEventRejects().remove(removerhumansPrivateEvent);

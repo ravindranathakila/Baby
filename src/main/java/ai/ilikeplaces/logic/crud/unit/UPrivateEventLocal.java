@@ -22,20 +22,20 @@ public interface UPrivateEventLocal {
 
     public PrivateEvent doUPrivateEventData(final String humanId__, final long privateEventId__, final String privateEventName__, final String privateEventInfo__, final String privateEventStartDate__, final String privateEventE) throws DBDishonourCheckedException, DBFetchDataException;
 
-    public PrivateEvent doUPrivateEventAddOwner(final String humanId__, final long privateEventId__, final HumansFriend privateEventOwner__) throws DBDishonourCheckedException;
+    public PrivateEvent doUPrivateEventAddOwner(final String adder__, final long privateEventId__, final HumansFriend addeee__) throws DBDishonourCheckedException;
 
-    public PrivateEvent doUPrivateEventRemoveOwner(final String humanId__, final long privateEventId__, final HumansFriend privateEventOwner__) throws DBDishonourCheckedException;
+    public PrivateEvent doUPrivateEventRemoveOwner(final String remover__, final long privateEventId__, final HumansFriend removeee__) throws DBDishonourCheckedException;
 
-    public PrivateEvent doUPrivateEventAddViewer(final String humanId__, final long privateEventId__, final HumansFriend privateEventViewer__) throws DBDishonourCheckedException;
+    public PrivateEvent doUPrivateEventAddViewer(final String adder__, final long privateEventId__, final HumansFriend addeee__) throws DBDishonourCheckedException;
 
-    public PrivateEvent doUPrivateEventRemoveViewer(final String humanId__, final long privateEventId__, final HumansFriend privateEventViewer__) throws DBDishonourCheckedException;
+    public PrivateEvent doUPrivateEventRemoveViewer(final String remover__, final long privateEventId__, final HumansFriend removeee__) throws DBDishonourCheckedException;
 
-    public PrivateEvent doUPrivateEventAddInvite(final String humanId__, final long privateEventId__, final HumansFriend privateEventInvite__) throws NoPrivilegesException;
+    public PrivateEvent doUPrivateEventAddInvite(final String adder__, final long privateEventId__, final HumansFriend addeee__) throws NoPrivilegesException;
 
-    public PrivateEvent doUPrivateEventRemoveInvite(final String humanId__, final long privateEventId__, final HumansFriend privateEventInvite__) throws DBDishonourCheckedException;
+    public PrivateEvent doUPrivateEventRemoveInvite(final String remover__, final long privateEventId__, final HumansFriend removeee__) throws DBDishonourCheckedException;
 
-    public PrivateEvent doUPrivateEventAddReject(final String humanId__, final long privateEventId__, final HumansFriend privateEventReject__) throws DBDishonourCheckedException;
+    public PrivateEvent doUPrivateEventAddReject(final String adder__, final long privateEventId__, final HumansFriend addeee__) throws DBDishonourCheckedException;
 
-    public PrivateEvent doUPrivateEventRemoveReject(final String humanId__, final long privateEventId__, final HumansFriend privateEventReject__) throws DBDishonourCheckedException;
+    public PrivateEvent doUPrivateEventRemoveReject(final String remover__, final long privateEventId__, final HumansFriend removeee__) throws DBDishonourCheckedException;
 
 }

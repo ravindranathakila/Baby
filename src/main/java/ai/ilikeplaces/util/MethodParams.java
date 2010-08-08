@@ -32,15 +32,21 @@ public class MethodParams {
             }
         }
     };
+    private static final String TARGET = "TARGET: ";
+    private static final String METHOD_NAME = "\tMETHOD NAME: ";
+    private static final String PARAMETERS = "\tPARAMETERS: ";
 
     @AroundInvoke
     public Object profile(InvocationContext invocation) throws Exception {
         if (DO_LOG.getObj()) {
-
-            logger.debug(
-                    "TARGET:\n\t"+invocation.getTarget().toString()+
-                        "\nMETHOD NAME:\n\t" + invocation.getMethod().getName() +
-                        "\nPARAMETERS:\n\t" + Arrays.toString(invocation.getParameters()));
+            try {
+                logger.debug(
+                        TARGET + invocation.getTarget().toString() +
+                                METHOD_NAME + invocation.getMethod().getName() +
+                                PARAMETERS + Arrays.toString(invocation.getParameters()));
+            } catch (final Throwable t) {
+                Loggers.EXCEPTION.error("SORRY! I FAILED TO LOG THE METHOD PARAMETERS. DETAILS FOLLOW:", t);
+            }
             return invocation.proceed();
         } else {
             return invocation.proceed();

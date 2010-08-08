@@ -6,6 +6,7 @@ import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.servlets.Controller;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServlet;
+import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocFragmentTemplate;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
@@ -54,6 +55,13 @@ public abstract class AbstractWidgetListener {
     final protected Page page;
     final private static String Id = "id";
     private boolean visible = true;
+
+    /**
+     * Per request refresh needs to be verified.
+     */
+    final protected ItsNatServletRequest request;
+
+
     final static private String NPE_1 = "SORRY! THIS DOCUMENT APPEARS NOT TO HAVE BEEN REGISTERED. PLEASE VERIFY THIS FIRST.(CAUSE OF NPE COULD BE DIFFERENT)";
     private static final String SORRY_I_FIND_THAT_ELEMENT = "SORRY! I FIND THAT ELEMENT \"";
     private static final String CONTAINS_NULL_OR_NO_REFERENCE_IN_REGISTRY = "\" CONTAINS NULL OR NO REFERENCE IN REGISTRY!";
@@ -70,17 +78,18 @@ public abstract class AbstractWidgetListener {
 
 
     /**
-     * @param itsNatDocument__
+     * @param request__
      * @param page__
      * @param appendToElement__
      */
     @WARNING(warning = "If you want your variables initialized by the time you reach registereventlisteners, do the asignmen in init, NOT the implemented subclass constructer" +
             "which runs as super, init, registereventlisteners and THEN the remainder of the constructer.")
-    public AbstractWidgetListener(final ItsNatDocument itsNatDocument__, final Page page__, final Element appendToElement__, final Object... initArgs) {
+    public AbstractWidgetListener(final ItsNatServletRequest request__, final Page page__, final Element appendToElement__, final Object... initArgs) {
 
+        request = request__;
         instanceId = InstanceCounter_++;
         page = page__;
-        this.itsNatDocument_ = itsNatDocument__;
+        this.itsNatDocument_ = request__.getItsNatDocument();
         final ItsNatHTMLDocument itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument_;
         this.hTMLDocument_ = itsNatHTMLDocument_.getHTMLDocument();
         this.document_ = itsNatDocument_.getDocument();
@@ -221,6 +230,10 @@ public abstract class AbstractWidgetListener {
         return document_.createElement(tagNameInAllCaps.toString());
     }
 
+    final protected Element $$(MarkupTagFace tagNameInAllCaps__,final Document document__) {
+        return document__.createElement(tagNameInAllCaps__.toString());
+    }
+
     /**
      * @param eventTarget_
      * @param eventType_
@@ -238,7 +251,7 @@ public abstract class AbstractWidgetListener {
      */
     final protected Element clear(final Element whoseChildrenRemoved) {
         try {
-            whoseChildrenRemoved.normalize();//Clearing the air for text nodes
+            //whoseChildrenRemoved.normalize();//Clearing the air for text nodes
             while (whoseChildrenRemoved.hasChildNodes()) {
                 whoseChildrenRemoved.removeChild(whoseChildrenRemoved.getFirstChild());
             }

@@ -22,12 +22,14 @@ public interface UPrivateLocationLocal {
 
     public PrivateLocation doUPrivateLocationData(final String humanId__, final String privateLocationId__, final String privateLocationName__, final String privateLocationInfo__);
 
-    public PrivateLocation doUPrivateLocationAddOwner(final String humanId__, final long privateLocationId__, final HumansFriend privateLocationOwner__) throws NoPrivilegesException, DBFetchDataException;
+    public PrivateLocation doUPrivateLocationAddOwner(final String adder__, final long privateLocationId__, final HumansFriend addeee__) throws NoPrivilegesException, DBFetchDataException;
 
-    public PrivateLocation doUPrivateLocationRemoveOwner(final String humanId__, final long privateLocationId__, final HumansFriend privateLocationOwner__) throws NoPrivilegesException, DBFetchDataException;
+    public PrivateLocation doUPrivateLocationRemoveOwner(final String remover__, final long privateLocationId__, final HumansFriend removeee__) throws NoPrivilegesException, DBFetchDataException;
 
-    public PrivateLocation doUPrivateLocationAddViewer(final String humanId__, final long privateLocationId__, final HumansFriend privateLocationVisitor__) throws NoPrivilegesException, DBFetchDataException;
+    public PrivateLocation doUPrivateLocationAddViewer(final String adder__, final long privateLocationId__, final HumansFriend addeee__) throws NoPrivilegesException, DBFetchDataException;
 
-    public PrivateLocation doUPrivateLocationRemoveViewer(final String humanId__, final long privateLocationId__, final HumansFriend privateLocationVisitor__) throws DBDishonourCheckedException, DBFetchDataException;
+    public PrivateLocation doUPrivateLocationAddViewer(final String adder__, final long privateLocationId__, final String addeee__) throws NoPrivilegesException, DBFetchDataException;
+
+    public PrivateLocation doUPrivateLocationRemoveViewer(final String remover__, final long privateLocationId__, final HumansFriend removeee__) throws DBDishonourCheckedException, DBFetchDataException;
 
 }

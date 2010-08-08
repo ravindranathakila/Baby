@@ -32,6 +32,10 @@ import static ai.ilikeplaces.util.Loggers.EXCEPTION;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class ListenerI implements ItsNatServletRequestListener {
     public static final String USER_PROFILE = "up";
+    private static final String NOT_YET_YOUR_FRIEND = "Not yet your friend";
+    private static final String VIEW_FRIEND_SUCCESSFUL = "View Friend Successful.";
+    private static final String NOT_FRIEND = "Not Friend.";
+    private static final String SORRY_I_ENCOUNTERED_AN_ERROR_IN_REDIRECTING_THE_USER_FROM_I_PAGE = "SORRY! I ENCOUNTERED AN ERROR IN REDIRECTING THE USER FROM 'I' PAGE {}";
 
     /**
      * @param request__
@@ -48,7 +52,7 @@ public class ListenerI implements ItsNatServletRequestListener {
                 try {
                     ((HttpServletResponse) response.getServletResponse()).sendRedirect(Controller.Page.Organize.getURL());
                 } catch (final IOException e) {
-                    Loggers.EXCEPTION.error("SORRY! I ENCOUNTERED AN ERROR IN REDIRECTING THE USER FROM 'I' PAGE {}", e);
+                    Loggers.EXCEPTION.error(SORRY_I_ENCOUNTERED_AN_ERROR_IN_REDIRECTING_THE_USER_FROM_I_PAGE, e);
                 }
             }
 
@@ -85,7 +89,7 @@ public class ListenerI implements ItsNatServletRequestListener {
                                 setLoginWidget:
                                 {
                                     try {
-                                        new SignInOn(itsNatDocument__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
+                                        new SignInOn(request__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
                                         };
                                     } catch (final Throwable t) {
                                         Loggers.EXCEPTION.error("{}", t);
@@ -118,7 +122,7 @@ public class ListenerI implements ItsNatServletRequestListener {
                                              */
                                             final String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(requestedProfile)).returnValueBadly();
                                             $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(),
-                                                    ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfileUrl(url));
+                                                                                   ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrl(url));
                                         }
                                     } catch (final Throwable t) {
                                         EXCEPTION.error("{}", t);
@@ -126,17 +130,18 @@ public class ListenerI implements ItsNatServletRequestListener {
                                     }
                                 }
 
-                                setAddAsFrindIfNotFriend:
+                                setAddAsFriendIfNotFriend:
                                 {
                                     try {
                                         final Human me = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(getUsernameAsValid());
-                                        if (me.notFriend(requestedProfile)) {
-                                            new UserProperty(itsNatDocument__, $(Skeleton_center_content), new HumanId(requestedProfile)) {
+                                        if (/*Self*/!me.getHumanId().equals(requestedProfile)
+                                                /*Other*/ && me.notFriend(requestedProfile)) {
+                                            new UserProperty(request__, $(Skeleton_center_content), new HumanId(requestedProfile)) {
                                                 protected void init(final Object... initArgs) {
                                                     $$(Controller.Page.user_property_content).appendChild(
                                                             ElementComposer.compose($$(MarkupTag.DIV))
-                                                                    .$ElementSetText("Not yet your friend").get());
-                                                    new FriendAdd(itsNatDocument_, $$(Controller.Page.user_property_content), new HumanId(requestedProfile).getSelfAsValid(), new HumanId(getUsernameAsValid()).getSelfAsValid()) {
+                                                                    .$ElementSetText(NOT_YET_YOUR_FRIEND).get());
+                                                    new FriendAdd(request__, $$(Controller.Page.user_property_content), new HumanId(requestedProfile).getSelfAsValid(), new HumanId(getUsernameAsValid()).getSelfAsValid()) {
                                                     };
                                                 }
                                             };
@@ -149,16 +154,16 @@ public class ListenerI implements ItsNatServletRequestListener {
                                 setWall:
                                 {
                                     try {
-                                        new WallWidgetHumansWall(itsNatDocument__, $(Skeleton_center_content), new HumanId(requestedProfile), new HumanId(getUsernameAsValid()));
+                                        new WallWidgetHumansWall(request__, $(Skeleton_center_content), new HumanId(requestedProfile), new HumanId(getUsernameAsValid()));
                                     } catch (final Throwable t) {
                                         EXCEPTION.error("{}", t);
 
                                     }
                                 }
                             }
-                            sl.complete(Loggers.LEVEL.DEBUG, "View Friend Successful." + Loggers.DONE);
+                            sl.complete(Loggers.LEVEL.DEBUG, VIEW_FRIEND_SUCCESSFUL + Loggers.DONE);
                         } else {
-                            sl.complete(Loggers.LEVEL.DEBUG, "Not Friend." + Loggers.DONE);
+                            sl.complete(Loggers.LEVEL.DEBUG, NOT_FRIEND + Loggers.DONE);
                             redirectToSomeOtherPage(response__);
                         }
                     }
