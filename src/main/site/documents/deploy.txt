@@ -32,6 +32,15 @@
 
  # disable disqus developer mood
 
+ # check if ilp role is defined in tomcat users
+
+<?xml version='1.0' encoding='utf-8'?>
+<tomcat-users>
+  <role rolename="ilp"/>
+  <user username="ilikeplaces_admin" password="sumo_is_a_780_game" roles="ilp"/>
+</tomcat-users>
+
+
  # upload sources
 
  # importing geo data to derby. Tab character, should be copied off something like notepad and pasted   
@@ -43,10 +52,87 @@ IN columnDelimiter CHAR(1), IN characterDelimiter  CHAR(1),
 IN codeset VARCHAR(128), IN replace SMALLINT)
 
 No Result is returned from the procedure.
-To import data from a file to a subset of columns in a table, use the SYSCS_UTIL.SYSCS_IMPORT_DATA procedure. To import data to subset of columns in a table, you specify insertColumns on the table into which data will be imported and/or specify columnIndexes to import data fields from a file to columns in a table. The procedure definition is:
+To import data from a file to a subset of columns in a table, use the SYSCS_UTIL.SYSCS_IMPORT_DATA procedure.
+To import data to subset of columns in a table, you specify insertColumns on the table into which data will be imported and/or specify columnIndexes to import data fields from a file to columns in a table.
+The procedure definition is:
 SYSCS_UTIL.SYSCS_IMPORT_DATA (IN schemaName VARCHAR(128),
 IN tableName VARCHAR(128), IN insertColumns VARCHAR(32672),
 IN columnIndexes VARCHAR(32672), IN fileName VARCHAR(32672),
 IN columnDelimiter CHAR(1), IN characterDelimiter  CHAR(1),
 IN codeset VARCHAR(128), IN replace SMALLINT)
+
+
+CALL SYSCS_UTIL.SYSCS_IMPORT_DATA ('ILPIMP','LOCATION','LOCATIONID,LOCATIONNAME,LOCATIONSUPERSET_LOCATIONID','1,3,6', '/root/downloads/ygd/7.5.2/geoplanet_places_7.5.2.tsv', '	','"','UTF-8', 1)
+
+1. Create a sample database
+
+2. Create Tables for Import(Use intellij DBHelper)
+CREATE TABLE  ILPIMP.LOCATION (
+LOCATIONID BIGINT,
+CLEARANCE BIGINT,
+LOCATIONGEO1 VARCHAR(63),
+LOCATIONGEO2 VARCHAR(63),
+LOCATIONINFO VARCHAR(1000),
+LOCATIONNAME VARCHAR(255),
+LOCATIONSUPERSET_LOCATIONID BIGINT
+, PRIMARY KEY (LOCATIONID)
+);
+
+2. Do a sample import and verity import works with the TSV
+1. Backup existing database
+2. Remove existing database
+3. Startup new app so that the ables are generated
+4. Stop new app
+
+5. Import data
+CALL SYSCS_UTIL.SYSCS_IMPORT_DATA ('ILPIMP','LOCATION','LOCATIONID,LOCATIONNAME,LOCATIONSUPERSET_LOCATIONID','1,3,6', '/root/downloads/ygd/7.5.2/geoplanet_places_7.5.2.tsv', '	','"','UTF-8', 1)
+
+6. Start new app
+
+
+
+
+
+
+
+
+User backup
+
+
+ravindranathakila@gmail.com                                                                                                     |0                   |1
+lakshitha_atapattu@yahoo.com                                                                                                    |0                   |1
+akila@adimpression.mobi                                                                                                         |0                   |1
+abc@yahoo.com                                                                                                                   |0                   |1
+lakshitha@intervest.gi                                                                                                          |0                   |1
+mahesh.hewawasam@gmail.com                                                                                                      |0                   |1
+muh@muh.de                                                                                                                      |0                   |1
+sankihtha@gmail.com                                                                                                             |0                   |1
+201008011@ilikeplaces.com                                                                                                       |0                   |1
+sltorrent@gmail.com                                                                                                             |0                   |1
+201008161@ilikeplaces.com                                                                                                       |0                   |1
+goldgrail@163.com
+
+
+
+
+
+if exists( select 1 from sys.systable  where table_name='LOCATION' and table_type in ('BASE', 'GBL TEMP') ) then
+    drop table "LOCATION"
+end if;
+
+
+CREATE TABLE  ILPIMP.LOCATION (
+LOCATIONID BIGINT,
+CLEARANCE BIGINT,
+LOCATIONGEO1 VARCHAR(63),
+LOCATIONGEO2 VARCHAR(63),
+LOCATIONINFO VARCHAR(1000),
+LOCATIONNAME VARCHAR(255),
+LOCATIONSUPERSET_LOCATIONID BIGINT
+, PRIMARY KEY (LOCATIONID)
+);
+
+
+
+
 
