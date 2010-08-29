@@ -16,6 +16,9 @@ import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.html.HTMLDocument;
 
+import static ai.ilikeplaces.servlets.Controller.Page.pd_photo;
+import static ai.ilikeplaces.servlets.Controller.Page.pd_photo_permalink;
+
 /**
  * This page is mainly intended to show shares from external sites within it's content.
  * <p/>
@@ -73,12 +76,25 @@ public class ListenerShare implements ItsNatServletRequestListener {
                             AppendPhoto:
                             {
                                 final String url = request__.getServletRequest().getParameter(URL);
-                                $(Controller.Page.Skeleton_center_content).appendChild(
-                                        ElementComposer.compose(
-                                                $(MarkupTag.IMG))
-                                                .$ElementSetAttribute("src", url != null ? url : RBGet.globalConfig.getString("PROFILE_PHOTO_DEFAULT"))
-                                                .$ElementSetAlt("Loading...").get()
-                                );
+//                                $(Controller.Page.Skeleton_center_content).appendChild(
+//                                        ElementComposer.compose(
+//                                                $(MarkupTag.IMG))
+//                                                .$ElementSetAttribute("src", url != null ? url : RBGet.globalConfig.getString("PROFILE_PHOTO_DEFAULT"))
+//                                                .$ElementSetAlt("Loading...")
+//                                                .$ElementSetClasses("span-14 last")
+//                                                .get()
+//                                );
+
+                                new Photo$Description(request__, $(Controller.Page.Skeleton_center_content)) {
+
+                                    @Override
+                                    protected void init(final Object... initArgs) {
+                                        final String imageURL =  url != null ? url : RBGet.globalConfig.getString("PROFILE_PHOTO_DEFAULT");
+                                        $$(pd_photo_permalink).setAttribute("href", imageURL);
+                                        $$(pd_photo).setAttribute("src", imageURL);
+                                        $$(pd_photo).setAttribute("alt", "Loading...");
+                                    }
+                                };
 
                             }
 

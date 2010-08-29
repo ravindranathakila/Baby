@@ -1,18 +1,15 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.entities.Location;
-import ai.ilikeplaces.entities.PrivateEvent;
-import ai.ilikeplaces.entities.PrivateLocation;
-import ai.ilikeplaces.logic.Listeners.widgets.Button;
+import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.logic.Listeners.widgets.DisplayName;
-import ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationCreate;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
+import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
+import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
@@ -23,7 +20,8 @@ import org.w3c.dom.html.HTMLDocument;
 import java.util.ResourceBundle;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
-import static ai.ilikeplaces.util.Loggers.*;
+import static ai.ilikeplaces.util.Loggers.EXCEPTION;
+import static ai.ilikeplaces.util.Loggers.LEVEL;
 
 /**
  * Created by IntelliJ IDEA.
@@ -94,8 +92,8 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                     setMetaDescription:
                     {
                         $(skeletonTitle).setAttribute(MarkupTag.META.namee(),
-                                DISCOVER_AND_HAVE_FUN_IN_PLACES +
-                                        RBGet.globalConfig.getString(BN));
+                                                      DISCOVER_AND_HAVE_FUN_IN_PLACES +
+                                                              RBGet.globalConfig.getString(BN));
                     }
                 }
                 catch (final Throwable t) {
@@ -134,17 +132,15 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
 
                 }
             }
-            setProfilePhotoLink:
+            setProfileDataLink:
             {
                 try {
                     if (getUsername() != null) {
-                        /**
-                         * TODO check for db failure
-                         */
-                        String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(getUsernameAsValid())).returnValueBadly();
-                        url = url == null ? null : RBGet.globalConfig.getString(PROFILE_PHOTOS) + url;
-                        if (url != null) {
-                            $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(), url);
+                        final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(new HumanId(getUsername()).getSelfAsValid());
+                        if (r.returnStatus() == 0) {
+                            final HumansIdentity hi = r.returnValue();
+                            $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(), ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+                            $(Skeleton_othersidebar_wall_link).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
                         }
                     }
                 } catch (final Throwable t) {
@@ -153,7 +149,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                 }
             }
         }
-        
+
         sl.complete(LEVEL.DEBUG, Loggers.DONE);//Request completed within timeout. If not, goes to LEVEL.SERVER_STATUS
     }
 

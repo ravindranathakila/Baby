@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml version="1.0" encoding="UTF-8"?-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">
     <head itsnat:nocache="true">
         <meta id="mainMetaDesc" name="Description" content="Discover and Have Fun in Places!"></meta>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type"></meta>
-        
+
         <title id="mainTitle">
             Discover and Have Fun in Places!
         </title>
@@ -23,7 +23,7 @@
         <link rel="stylesheet" type="text/css" href="/nifty/niftyCorners.css"/>
         <link rel="stylesheet" type="text/css" href="/css/vtip.css" />
 
-        <link rel="stylesheet" type="text/css" href="/js/jquery.yoxview/yoxview.css"/>
+        <!--<link rel="stylesheet" type="text/css" href="/js/jquery.yoxview/yoxview.css"/>-->
 
         <!--link rel="stylesheet" type="text/css" href="/css/getflickr.css"/-->
         <!--link rel="stylesheet" type="text/css" href="/cdn/js/niftyPrint.css" media="print"/-->
@@ -70,15 +70,14 @@
 			   height: 39px;
 			}
         </style>
-		        
         <script type="text/javascript">
             ilp_hide_body = function(){
-                                try{
-                                        document.getElementById('ilp_main_content').style.display='none';
-                                        clearInterval(ilp_hide_body_interval);
-                                }catch(err){//body not yet loaded, just ignore
-                                }
+                        try{
+                            document.getElementById('ilp_main_content').style.display='none';
+                            clearInterval(ilp_hide_body_interval);
+                        }catch(err){//body not yet loaded, just ignore
                         }
+                    }
             ilp_hide_body_interval = setInterval("ilp_hide_body()",100);
         </script>
         <script type="text/javascript">
@@ -93,13 +92,13 @@
 					clearTimeout(to3);
 					clearTimeout(to4);
 				}
-				
+
 				if(percent == 100){
 				percent = percent - 5;
 					setTimeout("ilp_progress_finalize()",14000);
 				}
-				
-				ilp_progress_incr(percent);			
+
+				ilp_progress_incr(percent);
 
 				if(percent){
 					var to1 = setTimeout( "ilp_progress_incr("+(percent+1)+")", 4000);
@@ -111,47 +110,47 @@
 					ilp_progressing = false;
 				}
 			}
-			
+
 			function ilp_load_map(){
-			}			
-			
+			}
+
 			function ilp_progress_finalize(){
 				document.getElementById('ilp_progress_block').style.display = 'none';
 				document.getElementById('ilp_main_content').style.display = 'block';
 				ilp_load_map();
 			}
-			
+
 			function ilp_progress_initialize(){
 				document.getElementById('ilp_main_content').style.display = 'none';
 				document.getElementById('ilp_progress_block').style.display = 'block';
 			}
-			
+
 			function ilp_progress_incr(percent){
 				percent = percent > 100 ? 100 : percent;
 				if(percent > ilp_current_percent){
 					ilp_current_percent = percent;
-					document.getElementById('ilp_current_operation').innerHTML = ilp_progressing_gm + ".. " + percent+"%";				
+					document.getElementById('ilp_current_operation').innerHTML = ilp_progressing_gm + ".. " + percent+"%";
 					document.getElementById('progress-level').setAttribute(
 					"style",
-					'background: url(/images/progress.png) no-repeat left center;height: 39px;width:'+percent+'%;');	
-					
-					//document.getElementById('progress-level').style.background = 'url(/images/progress.png) no-repeat left center;height: 39px;width:'+percent+'%;';	
-					
-				}				
+					'background: url(/images/progress.png) no-repeat left center;height: 39px;width:'+percent+'%;');
+
+					//document.getElementById('progress-level').style.background = 'url(/images/progress.png) no-repeat left center;height: 39px;width:'+percent+'%;';
+
+				}
 			}
         </script>
-		        
+
         <script type="text/javascript">
             addthis_config = {
                 data_track_clickback: true
             }
         </script>
         <script type="text/javascript">
-            var disqus_developer = 1;
+            var disqus_developer = 0;
             var disqus_category_id = 777;
         </script>
         <script type="text/javascript">
-        
+
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', 'UA-13297277-1']);
           _gaq.push(['_trackPageview']);
@@ -161,14 +160,22 @@
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
           })();
-
         </script>
+
+        <script type="text/javascript">
+            try{
+                document.getElementById('ilp_main_content').style.display='none'
+            }catch(error){
+                //element not rendered. there is a reattempt to hide, so ignore.
+            }
+        </script>
+
     </head>
     <body style="background:white;" id="body"
-    	class="vtip" title="Next photo: Ctrl + ]<br/>Previous photo: Ctrl + [<br/>Vanish(7 secs): Ctrl + \\<br/>Photo Page: Ctrl + ;<br/>Owner Page: Ctrl + '<br/>Panoramio photos are copyrighted by their owners"
-        >
-		<div id="Main_display" class="container" itsnat:nocache="true" style="display:block;background:white;opacity:0.9; filter:alpha(opacity=90)">
-			<div class="span-24 last" id="ilp_progress_block" style="display:none">
+
+    	class="vtip" title="Next photo: Ctrl + ]<br/>Previous photo: Ctrl + [<br/>Vanish(7 secs): Ctrl + \\<br/>Photo Page: Ctrl + ;<br/>Owner Page: Ctrl + '<br/>Panoramio photos are copyrighted by their owners">
+		<div id="Main_display" class="container" itsnat:nocache="true" style="display:block;background:white;opacity:0.8; filter:alpha(opacity=80)">
+			<div class="span-24 last" id="ilp_progress_block" style="display:none;background:white;opacity:0.3; filter:alpha(opacity=30)">
 				<br/>
 				<br/>
 				<br/>
@@ -200,7 +207,7 @@
                                 href="http://travel.ilikeplaces.com/go.jsp?link=http://cruises.travelnow.com">Straight to CRUISE bookings</a></div>
 				</div>
 			</div>
-            <div class="span-24 last" id="ilp_main_content" style="display:block;">
+            <div class="span-24 last" id="ilp_main_content" style="display:block;" onload="javascript:document.getElementById('ilp_main_content').style.display='none';">
                 <div class="span-24 last height_5 bg_a9abf1 ntyST">
                     &nbsp;
                 </div>
@@ -343,36 +350,79 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="span-5 last">
+                                       <div class="span-5 last" id="twitterplaceFromSearch" style="overflow:hidden;">
+                                       </div>
+                                       <div class="span-5 last" style="overflow:hidden;">
+                                            <!-- script type="text/javascript">
+                                            new TWTR.Widget({
+                                              version: 2,
+                                              type: 'faves',
+                                              rpp: 20,
+                                              interval: 6000,
+                                              title: 'Zeitgeist',
+                                              subject: '',
+                                              width: 'auto',
+                                              height: 400,
+                                              theme: {
+                                                shell: {
+                                                  background: '#0aaecf',
+                                                  color: '#ffffff'
+                                                },
+                                                tweets: {
+                                                  background: '#ffffff',
+                                                  color: '#444444',
+                                                  links: '#c2406d'
+                                                }
+                                              },
+                                              features: {
+                                                scrollbar: false,
+                                                loop: false,
+                                                live: false,
+                                                hashtags: true,
+                                                timestamp: true,
+                                                avatars: true,
+                                                behavior: 'all'
+                                              }
+                                            }).render().setUser('ilikeplaces').start();
+                                        </script -->
+					                </div>
+                                </div>
                             </div>
                         </div>
                         <div class="span-14" id="Main_center">
                             <div class="span-14 last">
                                 <div class="span-4 nav_link ntyBT" style="background-color:#ff6c6c">
-                                     <a href="http://travel.ilikeplaces.com/hotels/index.jsp?cid=317285" class="vtip" target="_blank" title="Book a Hotel. Link opens   in new tab.">
-                                       HOTELS
+                                     <a href="http://travel.ilikeplaces.com/hotels/index.jsp?cid=317285" id="Main_hotels_link" class="vtip" target="_blank" title="Book a Hotel. Link opens   in new tab.">
+                                       HOTELS AT
                                      </a>
                                 </div>
                                 <div class="span-3 nav_link ntyBT" style="background-color:#a9abf1">
                                     <a href="http://travel.ilikeplaces.com/airlines/index.jsp?cid=317285" class="vtip" target="_blank" title="Book a Flight. Link opens in new tab.">
-                                      FLIGHTS
+                                      FLIGHTS AT
                                     </a>
                                 </div>
                                 <div class="span-3 nav_link ntyBT" style="background-color:#a5dbb0">
                                     <a href="http://travel.ilikeplaces.com/cars/index.jsp?cid=317285" class="vtip" target="_blank" title="Hire a Car. Link opens in new tab.">
-                                     CAR HIRE
+                                     CAR HIRE AT
                                     </a>
                                 </div>
                                 <div class="span-4 last nav_link ntyBT" style="background-color:#fdd17c">
                                     <a href="http://dg.ilikeplaces.com/index.jsp?cid=317285" class="vtip" target="_blank" title="Check out the Destination Guides. Link opens in new tab.">
-                                     TRAVEL GUIDES
+                                     TRAVEL GUIDES OF
                                     </a>
                                 </div>
+                            </div>
+                            <div class="span-14 last center" style="background-color:#0aaecf; color=ffffff;">
+                                            <h1 id="Main_center_main_location_title" class="title_blend bold" style="font-size:12px;">
+                                                &nbsp;
+                                            </h1>
                             </div>
                             <div class="span-14 last" id="Main_center_main">
                                 <div class="span-14 last" style="overflow:hidden;">
                                     <div id="map" class="vtip" title="<i>Double-click to Zoom<br/>Links open in new tabs</i>" style="height:410px;"></div>
                                 </div>
-								
+
                                 <div id="Main_notice_sh" class="span-14 last" style="display:block;">
                                 </div>
                                 <div class="span-14 last" style="display:block;">
@@ -380,7 +430,7 @@
                                         <div class="span-14 last">
                                             <div class="span-14 last">
                                                 <br/>
-                                                <form method="get" autocomplete="off"  class="span-14 last">
+                                                <form method="get" autocomplete="off"  class="span-14 last" action="">
                                                     <div>
                                                         <label for="q" class="vtip" title="Enter a place name to filter the list below">
                                                         <span>
@@ -396,13 +446,6 @@
                                                     </div>
                                                 </form>
                                             </div>
-                                            <!--<div class="span-3">-->
-                                                <!--<br/>-->
-                                                <!--<span>-->
-                                                  <!--<img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/controls_rewind_32.png" height="14px" alt="Back link"/>-->
-                                                  <!--<span id="Main_location_backlink"></span>-->
-                                                <!--</span>-->
-                                            <!--</div>                                            -->
                                         </div>
                                         <div class="span-12 prepend-1 append-1 last">
                                           <p id="Main_location_list" class="yellow_fg bold large"></p>
@@ -410,12 +453,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--<div class="span-14 last">-->
-                                    <!--<div class="span-14 last">-->
-                                        <!--<div id="fb-root" style="color:#ffffff">-->
-                                        <!--</div>-->
-									<!--</div>-->
-                                <!--</div>-->
                                 <div class="span-14 last">
                                     <div class="span-14 last">
                                         <div id="disqus_thread"></div>
@@ -437,9 +474,6 @@
                                     <div class="span-12 title_blend white_bg">
                                         <div class="span-10 prepend-1 append-1 title_blend white_bg">
                                             <br/>
-                                            <h1 id="Main_center_main_location_title" class="title_blend bold" style="font-size:12px;">
-                                                &nbsp;
-                                            </h1>
                                         </div>
                                     </div>
                                     <div class="span-1 last bg_e9eaff fg_a9abf1 height_total">
@@ -448,17 +482,6 @@
                                 </div>
 
                                 <div class="span-14 last bg_e9eaff fg_a9abf1">
-                                    <!-- form method="post" id="html_login" action="/login">
-                                    <fieldset style="border:none;padding:0px;margin:0px;">
-                                        <label for="LocationSearch" class="bg_e9eaff fg_a9abf1">
-                                            &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-                                            Discover places, type in a a name:
-                                            &nbsp; &nbsp; &nbsp; &nbsp;
-                                        </label>
-                                        <input class="dark_orange_fg  bg_e9eaff bold" id="LocationSearch" name="LocationSearch" type="text" value=""/>
-                                        <a href="#" onclick="javascript:window.location=''+getElementById('LocationSearch').value;">search</a>
-                                    </fieldset>
-                                    </form -->
                                     <br/><br/>
                                     <div class="span-2 last prepend-12" style="display:none;">
                                         <a id="Main_flickr" href="http://flickr.com/photos/tags/Sri+Lanka" class="getflickrphotos btn bg_a9abf1"><i></i><span><span></span><i></i>Try Flickr</span></a>
@@ -476,9 +499,6 @@
                                     &nbsp;
                                 </div>
 
-                                <div class="span-14 last">
-                                    <!--<span id="Main_center_main_location_title" />-->
-                                </div>
                             </div>
                             <div class="span-14 last" id="Main_center_content">
                                 <div class="span-7" id="Main_left_column" style="overflow: hidden; clip: rect(auto, auto, auto, auto);">
@@ -489,13 +509,8 @@
                                 </div>
                             </div>
 
-
-
                             <div id="Main_yox" class="span-14 last thumbnails yoxview bg_feffac">
-
                             </div>
-
-
                         </div>
                         <div class="span-5 last" id="Main_sidebar">
                             <div class="span-5 last">
@@ -505,10 +520,13 @@
                                 </a>
                                 <br/><br/>
                             </div>
-                            
+
                             <div class="span-5 last" style="float:right;">
                                 <div class="span-5 last">
-                                    
+                                    <div>
+                                        <h4 class="bold" style="color:#0aaecf;">Please Share US!</h4>
+                                    </div>
+
                                     <!-- AddThis Button BEGIN -->
                                     <div class="addthis_toolbox addthis_default_style">
                                     <a class="addthis_button_compact" href="http://www.addthis.com/bookmark.php?v=250&username=ravindranathakila"></a>
@@ -565,6 +583,7 @@
                                     <!-- search box -->
                                     <form action="http://travel.ilikeplaces.com/index.jsp" method="post" name="frm_Search" target="_blank" class="vtip"
                                           title="search results will open in new window<br/>e.g. 'paris', 'london'">
+                                        <!-- http://travel.ilikeplaces.com/index.jsp?cid=317285&pageName=hotSearch&submitted=true&validateCity=true&city -->
                                         <input type="hidden" name="cid" value="317285"/>
                                         <input type="hidden" name="pageName" value="hotSearch"/>
                                         <input type="hidden" name="submitted" value="true"/>
@@ -584,31 +603,7 @@
                                     &nbsp;
                                 </div>
                             </div>
-                            <div class="span-5 last" style="font-family: 'Tangerine'">
-                                    <div class="span-5 last nav_link ntyBT bg_a9abf1">
-                                          <b style="font-size:30px;">Discount Corner</b>
-                                    </div>
-                                    <div class="span-5 last nav_link bg_e9eaff" style="background-color:#E9EAFF;font-family: 'Lobster'; font-size:20px;">
-                                        <a href="http://travel.ilikeplaces.com/index.jsp?pageName=hotelSpecials&currencyCode=USD&additionalDataString=vrBookingSource|index&locale=en_US_US&cid=317285"
-                                                target="_blank"><b>Travel Deals!</b></a>
-                                    </div>
-                                    <div class="span-5 nav_link bg_fdd17c" style="background-color:#E9EAFF;font-family: 'Lobster'; font-size:20px;">
-                                        <a href="http://dg.ilikeplaces.com/index.jsp?cid=317285" class="vtip" target="_blank" title="Free of Charge!. Link opens in new tab.">
-                                          <b>Free!</b> Travel Guides!!!
-                                        </a>
-                                    </div>
-                                    <div class="span-5 nav_link bg_fdd17c" style="background-color:#E9EAFF;font-family: 'Lobster'; font-size:20px;">
-                                        <a href="http://travel.ilikeplaces.com/index.jsp?pageName=promo&currencyCode=USD&additionalDataString=vrBookingSource|index&locale=en_US_US&cid=317285" class="vtip" target="_blank" title="Link opens in new tab.">
-                                          Upto <b>$100</b> Rebate!
-                                        </a>
-                                    </div>
-                                    <div class="span-5 last nav_link bg_fdd17c ntyBB" style="background-color:#E9EAFF;font-family: 'Lobster'; font-size:20px;">
-                                        <a href="http://travel.ilikeplaces.com/index.jsp?pageName=hotelSpecials&currencyCode=USD&additionalDataString=vrBookingSource|index&locale=en_US_US&cid=317285"
-                                                target="_blank"><b>Lowest Daily Rates!</b></a>
-                                    </div>
-                            </div>
-                            <div class="span-5 last" style="float:right;">
-                                &nbsp;
+                            <div class="span-5 last" id="twitterplaceToSearch">
                             </div>
                             <div class="span-5 last">
                                 <!--div class="span-5 last just_link">
@@ -616,7 +611,7 @@
                                          style="font-size:19px;">
                                           <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/security_closed_32.png"
                                                             style="vertical-align:middle;"
-                                                            height="19px"                       
+                                                            height="19px"
                                                             alt="Customer Care Image"/>&nbsp;Credit Card Safety
                                       </a>
                                  </div-->
@@ -678,31 +673,23 @@
         <!--Initializing Progress Check-->
 	    <script type="text/javascript">ilp_progress_initialize();</script>
 
-        
         <!--Expected to be cached in use since wide usage-->
 	    <script type="text/javascript">ilp_progress(20,document.title.split('?')[0]);</script>
         <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
 
-            <script type="text/javascript">ilp_progress(35,'Loading utilities...');</script>
+        <script type="text/javascript">ilp_progress(35,'Loading utilities...');</script>
         <script type="text/javascript" src="/js/miniquarry/util.js"></script>
 
 	    <script type="text/javascript">ilp_progress(40,'Loading search filters...');</script>
         <script type="text/javascript" src="/js/jquery.livesearch.js"></script>
-        <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/jquery.livesearch.js"></script>-->
 
 	    <script type="text/javascript">ilp_progress(45,'Loading event monitors...');</script>
         <script type="text/javascript" src="/js/miniquarry/ItsNatEventMonitor.js"></script>
-		
+
 	    <script type="text/javascript">ilp_progress(50,'Loading  special effects...');</script>
         <script type="text/javascript" src="/js/miniquarry/Nifty.onload.js"></script>
 
-        <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/jquery.gmap-1.1.0-min.js"></script>-->
-
-        <!-- script type="text/javascript" src="http://www.panoramio.com/wapi/wapi.js?v=1"></script -->        
-
-
         <script type="text/javascript" src="/js/miniquarry/vtip.js"></script>
-        <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/vtip.js"></script>-->
 
         <script type="text/javascript">ilp_progress(50,'Loading location map...');</script>
         <script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAHZRdzKv28xq0_XcHxHxXfBS9EVSNZwL5zfIrTpz_X5_CttifKhS-WLi0e8kEMyJzCwXGhjISm8sYnA"></script>
@@ -711,31 +698,28 @@
         <script type="text/javascript" src="/js/miniquarry/jquery.ready.yox.js"></script>
 
         <script type="text/javascript" src="/nifty/niftycube.js"></script>
-        
+
         <!--AddThis runs only after page load so is in the end-->
 	    <script type="text/javascript">ilp_progress(55,'Loading social network data...');</script>
         <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=ravindranathakila"></script>
-        
-        <script type="text/javascript" src="/js/jquery.yoxview/yoxview-init.js"></script>
-        <script type="text/javascript" src="/js/jquery.yoxview/jquery.yoxview-0.9.min.js"></script>
-        <script type="text/javascript" src="/js/jquery.yoxview/jquery.timers-1.2.min.js"></script>
+        <script src="http://widgets.twimg.com/j/2/widget.js" type="text/javascript"></script>
 
+        <!--<script type="text/javascript" src="/js/jquery.yoxview/yoxview-init.js"></script>-->
+        <!--<script type="text/javascript" src="/js/jquery.yoxview/jquery.yoxview-0.9.min.js"></script>-->
+        <!--<script type="text/javascript" src="/js/jquery.yoxview/jquery.timers-1.2.min.js"></script>-->
 
-        <!--script type="text/javascript" src="http://c0804152.cdn.cloudfiles.rackspacecloud.com/getflickr.js"></script-->
 
         <script type="text/javascript" src="/js/jquery-impromptu.2.7.min.js"></script>
-        <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/jquery-impromptu.2.7.min.js"></script>-->
 
         <script type="text/javascript" src="/js/miniquarry/ajaxupload.3.5.js"></script>
-        <!--<script type="text/javascript" src="http://c1515892.cdn.cloudfiles.rackspacecloud.com/ajaxupload.3.5.j"></script>-->
-		
-		<!--script type="text/javascript" src="http://ilikeplaces.disqus.com/embed.js"></script-->
+
 
         <script type="text/javascript">
             var ILP_REFERER = function(){
             $.prompt("Rating is based on number and quality of referals to this page. Click here to " +
                      "<a href='http://www.addthis.com/bookmark.php' target='_blank'>SHARE</a>",
                         {
+
                                 buttons:
                                  {
                                     Share:true,
@@ -744,12 +728,15 @@
                                 submit:function(v,m,f)
                                  {
                                    if(v){
+                                     //window.location = "http://www.addthis.com/bookmark.php";
                                      window.open("http://www.addthis.com/bookmark.php","Share This Place!","width=500,menubar=no");
+                                   }else{
                                    }
                                  }
-                                
+
                         }
             );
+
             }
         </script>
     </body>
