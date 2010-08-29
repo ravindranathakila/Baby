@@ -410,7 +410,8 @@ Controller.Page.friendAddDisplayNameLabel
                  Controller.Page.Skeleton_othersidebar_profile_link,
                  Controller.Page.Skeleton_othersidebar_upload_file_sh,
                  Controller.Page.Skeleton_right_column,
-                 Controller.Page.Skeleton_sidebar
+                 Controller.Page.Skeleton_sidebar,
+                 Controller.Page.Skeleton_othersidebar_wall_link
 
         ) {
 
@@ -505,6 +506,7 @@ Controller.Page.friendAddDisplayNameLabel
                 Controller.Page.Main_othersidebar_profile_link,
                 Controller.Page.Main_othersidebar_upload_file_sh,
                 Controller.Page.Main_notice_sh,
+                Controller.Page.Main_hotels_link,
                 Controller.Page.Main_center_main,
                 Controller.Page.Main_notice,
                 Controller.Page.Main_center_main_location_title,
@@ -823,6 +825,7 @@ Controller.Page.friendAddDisplayNameLabel
         final static public String Skeleton_left_column = "Skeleton_left_column";
         final static public String Skeleton_right_column = "Skeleton_right_column";
         final static public String Skeleton_sidebar = "Skeleton_sidebar";
+        final static public String Skeleton_othersidebar_wall_link = "Skeleton_othersidebar_wall_link";
 
         /*Private Location Page*/
         final static public String DocPrivateLocationView = "PrivateLocationView";
@@ -881,6 +884,7 @@ Controller.Page.friendAddDisplayNameLabel
         final static public String Main_profile_photo = "Main_profile_photo";
         final static public String Main_othersidebar_profile_link = "Main_othersidebar_profile_link";
         final static public String Main_othersidebar_upload_file_sh = "Main_othersidebar_upload_file_sh";
+        final static public String Main_hotels_link = "Main_hotels_link";
         final static public String Main_center_main = "Main_center_main";
         final static public String Main_notice = "Main_notice";
         final static public String Main_notice_sh = "Main_notice_sh";

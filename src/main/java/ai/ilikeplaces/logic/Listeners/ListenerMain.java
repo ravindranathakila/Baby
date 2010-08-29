@@ -160,6 +160,10 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             {
                                 $(mainMetaDesc).setAttribute(MarkupTag.META.content(), "Do a flight booking to " + location + " and find a hotel to stay. Hire a car to travel around. Click here to check for offers.");
                             }
+                            setHotelsLink:
+                            {
+                                $(Main_hotels_link).setAttribute(MarkupTag.A.href(), "http://travel.ilikeplaces.com/index.jsp?cid=317285&pageName=hotSearch&submitted=true&validateCity=true&city=" + location.split(" of ")[0].replace("/", " "));
+                            }
                         }
                         catch (final Throwable t) {
                             Loggers.DEBUG.debug(t.getMessage());
@@ -379,17 +383,17 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     link.setTextContent("Travel to " + location.getLocationName() + " of " + location.getLocationSuperSet().getLocationName());
 
                     link.setAttribute(A.href(),
-                            "/page/"
-                                    + location.getLocationName()
-                                    + "_of_"
-                                    + location.getLocationSuperSet().getLocationName()
-                                    + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
+                                      "/page/"
+                                              + location.getLocationName()
+                                              + "_of_"
+                                              + location.getLocationSuperSet().getLocationName()
+                                              + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
 
                     link.setAttribute(A.alt(),
-                            "/page/" + location.getLocationName() + "_of_" + location.getLocationSuperSet().getLocationName());
+                                      "/page/" + location.getLocationName() + "_of_" + location.getLocationSuperSet().getLocationName());
 
                     link.setAttribute(A.title(),
-                            "Click to explore " + location.getLocationName() + " of " + location.getLocationSuperSet().getLocationName());
+                                      "Click to explore " + location.getLocationName() + " of " + location.getLocationSuperSet().getLocationName());
 
                     link.setAttribute(A.classs(), "vtip");
 
@@ -451,14 +455,14 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 final Element link = $(A);
                 link.setTextContent("Travel to " + location.getLocationName() + " of " + location.getLocationSuperSet().getLocationName());
                 link.setAttribute(A.href(),
-                        "/page/"
-                                + location.getLocationName()
-                                + "_of_"
-                                + location.getLocationSuperSet().getLocationName()
-                                + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
+                                  "/page/"
+                                          + location.getLocationName()
+                                          + "_of_"
+                                          + location.getLocationSuperSet().getLocationName()
+                                          + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
 
                 link.setAttribute(A.alt(),
-                        "/page/" + location.getLocationName() + "_of_" + location.getLocationSuperSet().getLocationName());
+                                  "/page/" + location.getLocationName() + "_of_" + location.getLocationSuperSet().getLocationName());
                 return link;
             }
 
@@ -466,12 +470,12 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 final Element link = $(A);
                 link.setTextContent(location.getLocationName());
                 link.setAttribute(A.href(),
-                        "/page/"
-                                + location.getLocationName()
-                                + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
+                                  "/page/"
+                                          + location.getLocationName()
+                                          + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
 
                 link.setAttribute(A.alt(),
-                        "/page/" + location.getLocationName());
+                                  "/page/" + location.getLocationName());
                 return link;
             }
         };//Listener

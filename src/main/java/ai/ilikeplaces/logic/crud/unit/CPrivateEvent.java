@@ -64,7 +64,7 @@ public class CPrivateEvent extends AbstractSLBCallbacks implements CPrivateEvent
         wireLocation:
         {
             managedPrivateEvent.setPrivateLocation(managedPrivateLocation);
-            managedPrivateLocation.getPrivateEvents().add(managedPrivateEvent);
+            managedPrivateLocation.refresh().getPrivateEvents().add(managedPrivateEvent);
         }
 
         wireOwnership:

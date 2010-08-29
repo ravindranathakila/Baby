@@ -15,7 +15,8 @@ public interface RefreshData<T>{
     /**
      * Calling this method will refresh any lazily fetched lists in this entity making them availabe for use.
      *
-     * @throws DBFetchDataException
+     * @throws DBFetchDataException in case the entity fails to refresh something inside it
+     * @return T
      */
     public T refresh() throws DBFetchDataException;
 }

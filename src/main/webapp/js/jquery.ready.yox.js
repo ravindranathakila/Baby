@@ -70,7 +70,7 @@ $(document).ready(function(){
                     function(data){
                         if(data.count>0){
                             runontime = function(){
-                                $('body').css('background','url('+data.photos[0].photo_file_url+')');
+                                $('body').css('background-image','url('+data.photos[0].photo_file_url+')');
                                 $('#Main_location_photo').attr("src",data.photos[0].photo_file_url);
                                 $('#Main_othersidebar_identity').text(data.photos[0].photo_title+' by '+data.photos[0].owner_name);
                             }
@@ -167,7 +167,7 @@ $(document).ready(function(){
 							+"<br/>US and Canada: 1-800-780-5733"
 							+"<br/>Europe: 00-800-11-20-11-40"
 							+"</sub></div>",
-							popup:false
+							popup:true
 						}]
 					}
 					);
@@ -181,7 +181,7 @@ $(document).ready(function(){
         }
         );
 
-    $('.yoxview').yoxview();
+//    $('.yoxview').yoxview();
     var button=$('#button1'),interval;
     buttonText='uploading';
     var fub=new AjaxUpload(button,{

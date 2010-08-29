@@ -27,10 +27,10 @@ import java.util.List;
 @EntityListeners(EntityLifeCycleListener.class)
 @NamedQueries({
         @NamedQuery(name = "FindAllPrivateLocationsByName",
-                query = "SELECT loc FROM PrivateLocation loc WHERE loc.privateLocationName = :privateLocationName"),
+                    query = "SELECT loc FROM PrivateLocation loc WHERE loc.privateLocationName = :privateLocationName"),
         @NamedQuery(name = "FindAllPrivateLocationNamesByLikeName",
-                query = "SELECT loc.privateLocationName FROM PrivateLocation loc WHERE UPPER(loc.privateLocationName) LIKE :privateLocationName")})
-public class PrivateLocation implements Serializable,RefreshData<PrivateLocation> {
+                    query = "SELECT loc.privateLocationName FROM PrivateLocation loc WHERE UPPER(loc.privateLocationName) LIKE :privateLocationName")})
+public class PrivateLocation implements Serializable, RefreshData<PrivateLocation> {
 
     final static Logger logger = LoggerFactory.getLogger(PrivateLocation.class.getName());
 
@@ -81,7 +81,6 @@ public class PrivateLocation implements Serializable,RefreshData<PrivateLocation
     }
 
     /**
-     *
      * @param privateLocationName__
      */
     public void setPrivateLocationName(final String privateLocationName__) {
@@ -95,7 +94,7 @@ public class PrivateLocation implements Serializable,RefreshData<PrivateLocation
      *
      * @return privateLocationInfo
      */
-    @Column(unique = false, nullable = false, length = 1000)
+    @Column(nullable = false, length = 1000)
     public String getPrivateLocationInfo() {
         return privateLocationInfo;
     }
@@ -129,13 +128,13 @@ public class PrivateLocation implements Serializable,RefreshData<PrivateLocation
         this.privateLocationViewers = privateLocationViewers;
     }
 
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
     @OneToMany(
             mappedBy = PrivateEvent.privateLocationCOL,
             /*All events are associated to a location*/
             /*No cascade ALL as we have to return an instance to the user, hence list cascading not possible.*/
             cascade = {CascadeType.REFRESH, CascadeType.REMOVE},
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     public List<PrivateEvent> getPrivateEvents() {
         return privateEvents;
     }
@@ -166,3 +165,4 @@ public class PrivateLocation implements Serializable,RefreshData<PrivateLocation
         return this;
     }
 }
+

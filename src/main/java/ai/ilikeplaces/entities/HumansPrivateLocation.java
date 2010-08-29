@@ -79,8 +79,8 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
 
     @BIDIRECTIONAL
     @WARNING(warning = "Many",
-            warnings = {"Not owner as deleting a location should automatically reflect in here, not vice versa.",
-                    "DO NOT MAKE EAGER WHEN LOADING, WHICH CAUSES A GALACTIC FETCH ON ALMOST THE ENTIRE TABLE. MAKING LAZY MADE A HUGE PERFORMANCE IMPACT OF SCALE 10^2"})
+             warnings = {"Not owner as deleting a location should automatically reflect in here, not vice versa.",
+                     "DO NOT MAKE EAGER WHEN LOADING, WHICH CAUSES A GALACTIC FETCH ON ALMOST THE ENTIRE TABLE. MAKING LAZY MADE A HUGE PERFORMANCE IMPACT OF SCALE 10^2"})
     @NOTE(note = "Locations which this user is INVOLVED with, NOT specifically OWNS.")
     @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = PrivateLocation.privateLocationViewersCOL, fetch = FetchType.LAZY)
     public List<PrivateLocation> getPrivateLocationsViewed() {
@@ -93,8 +93,8 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
 
     @BIDIRECTIONAL
     @WARNING(warning = "Many",
-            warnings = {"Not owner as deleting a location should automatically reflect in here, not vice versa.",
-                    "DO NOT MAKE EAGER WHEN LOADING, WHICH CAUSES A GALACTIC FETCH ON ALMOST THE ENTIRE TABLE. MAKING LAZY MADE A HUGE PERFORMANCE IMPACT OF SCALE 10^2"})
+             warnings = {"Not owner as deleting a location should automatically reflect in here, not vice versa.",
+                     "DO NOT MAKE EAGER WHEN LOADING, WHICH CAUSES A GALACTIC FETCH ON ALMOST THE ENTIRE TABLE. MAKING LAZY MADE A HUGE PERFORMANCE IMPACT OF SCALE 10^2"})
     @NOTE(note = "Locations which this user is INVOLVED with, NOT specifically OWNS.")
     @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = PrivateLocation.privateLocationOwnersCOL, fetch = FetchType.LAZY)
     public List<PrivateLocation> getPrivateLocationsOwned() {
@@ -107,9 +107,13 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null) return false;
+        if (o == null) {
+            return false;
+        }
 
         if (getClass() == o.getClass()) {
             final HumansPrivateLocation that = (HumansPrivateLocation) o;
@@ -140,8 +144,12 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
      */
     @Override
     public HumansPrivateLocation refresh() throws DBFetchDataException {
-        this.getPrivateLocationsOwned().size();
-        this.getPrivateLocationsViewed().size();
+        try {
+            this.getPrivateLocationsOwned().size();
+            this.getPrivateLocationsViewed().size();
+        } catch (final Exception e) {
+            throw new DBFetchDataException(e);
+        }
         return this;
     }
 }

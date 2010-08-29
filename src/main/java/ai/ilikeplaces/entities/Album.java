@@ -20,7 +20,7 @@ import java.util.List;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
-public class Album implements RefreshData<Album>{
+public class Album implements RefreshData<Album> {
 
     public Long albumId;
 
@@ -137,9 +137,13 @@ public class Album implements RefreshData<Album>{
      */
     @Override
     public Album refresh() throws DBFetchDataException {
-        this.getAlbumPhotos().size();
-        this.getAlbumOwners().size();
-        this.getAlbumVisitors().size();
+        try {
+            this.getAlbumPhotos().size();
+            this.getAlbumOwners().size();
+            this.getAlbumVisitors().size();
+        } catch (final Exception e) {
+            throw new DBFetchDataException(e);
+        }
         return this;
     }
 }
