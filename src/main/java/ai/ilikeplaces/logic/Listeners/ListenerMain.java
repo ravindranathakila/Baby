@@ -46,6 +46,31 @@ public class ListenerMain implements ItsNatServletRequestListener {
     public static final String NUMBER_OF_PHOTOS_FOR = "Number of photos for ";
     public static final String COLON = ":";
     private static final String HTTP_SESSION_ATTR_LOCATION = "HttpSessionAttr.location";
+    private static final String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004 = "ai.ilikeplaces.logic.Listeners.ListenerMain.0004";
+    private static final String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0005 = "ai.ilikeplaces.logic.Listeners.ListenerMain.0005";
+    private static final String HTTP_TRAVEL_ILIKEPLACES_COM_INDEX_JSP_CID_317285_PAGE_NAME_HOT_SEARCH_SUBMITTED_TRUE_VALIDATE_CITY_TRUE_CITY = "http://travel.ilikeplaces.com/index.jsp?cid=317285&pageName=hotSearch&submitted=true&validateCity=true&city=";
+    private static final String QUERIES_FOR_LOCATION = " queries for location ";
+    private static final String OF = " of ";
+    private static final String AI_ILIKEPLACES_RBS_GUI = "ai.ilikeplaces.rbs.GUI";
+    private static final String TRAVELING_TO = "Traveling to ";
+    private static final String RESERVE_A_FLIGHT_BOOK_A_HOTEL_AND_YOU_RE_ALL_SET = "? Reserve A Flight, Book A Hotel, and You're All Set!";
+    private static final String DO_A_FLIGHT_BOOKING_TO = "Do a flight booking to ";
+    private static final String AND_FIND_A_HOTEL_TO_STAY_HIRE_A_CAR_TO_TRAVEL_AROUND_CLICK_HERE_TO_CHECK_FOR_OFFERS = " and find a hotel to stay. Hire a car to travel around. Click here to check for offers.";
+    private static final String PROFILE_PHOTOS = "PROFILE_PHOTOS";
+    private static final String THIS_IS = "This is ";
+    private static final String BACK_TO = "Back to";
+    private static final String AT = "At ";
+    private static final String YOU_CAN_VISIT = " you can visit";
+    private static final String SPACE = " ";
+    private static final String PLACE_LIST = "place_list";
+    private static final String TRAVEL_TO = "Travel to ";
+    private static final String PAGE = "/page/";
+    private static final String _OF_ = "_of_";
+    private static final String CLICK_TO_EXPLORE = "Click to explore ";
+    private static final String VTIP = "vtip";
+    private static final String WIDTH = "width";
+    private static final String PX = "110px;";
+    private static final String UNLOADING_BODY_TIME_SPENT = "Unloading body. Time spent:";
 
     /**
      * @param request__
@@ -78,7 +103,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                         @Override
                         public void handleEvent(final Event evt_) {
-                            Loggers.DEBUG.debug("Unloading body. Time spent:" + (System.currentTimeMillis() - timeSpent.getObj()));
+                            Loggers.DEBUG.debug(UNLOADING_BODY_TIME_SPENT + (System.currentTimeMillis() - timeSpent.getObj()));
                         }
 
                         @Override
@@ -123,15 +148,15 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 );
 
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor + JSCodeToSend.FnLocationId + JSCodeToSend.FnLocationName + JSCodeToSend.FnSetTitle);
-                final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
+                final ResourceBundle gUI = ResourceBundle.getBundle(AI_ILIKEPLACES_RBS_GUI);
 
                 logTheQueryLocationPerUser:
                 {
                     if (getUsername() != null) {
-                        Loggers.USER.info(getUsernameAsValid() + " queries for location " + location + " of " + superLocation);
+                        Loggers.USER.info(getUsernameAsValid() + QUERIES_FOR_LOCATION + location + OF + superLocation);
                         sl.appendToLogMSG(getUsernameAsValid());
                     } else {
-                        Loggers.NON_USER.info(request__.getServletRequest().getRemoteHost() + " queries for location " + location + " of " + superLocation);
+                        Loggers.NON_USER.info(request__.getServletRequest().getRemoteHost() + QUERIES_FOR_LOCATION + location + OF + superLocation);
                         sl.appendToLogMSG(request__.getServletRequest().getRemoteHost());
                     }
                 }
@@ -153,16 +178,17 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         try {
                             setMainTitle:
                             {
-                                $(mainTitle).setTextContent("Traveling to " + location + "? Reserve A Flight, Book A Hotel, and You're All Set!");
+                                $(mainTitle).setTextContent(TRAVELING_TO + location + RESERVE_A_FLIGHT_BOOK_A_HOTEL_AND_YOU_RE_ALL_SET);
 
                             }
                             setMetaDescription:
                             {
-                                $(mainMetaDesc).setAttribute(MarkupTag.META.content(), "Do a flight booking to " + location + " and find a hotel to stay. Hire a car to travel around. Click here to check for offers.");
+                                $(mainMetaDesc).setAttribute(MarkupTag.META.content(), DO_A_FLIGHT_BOOKING_TO + location + AND_FIND_A_HOTEL_TO_STAY_HIRE_A_CAR_TO_TRAVEL_AROUND_CLICK_HERE_TO_CHECK_FOR_OFFERS);
                             }
                             setHotelsLink:
                             {
-                                $(Main_hotels_link).setAttribute(MarkupTag.A.href(), "http://travel.ilikeplaces.com/index.jsp?cid=317285&pageName=hotSearch&submitted=true&validateCity=true&city=" + location.split(" of ")[0].replace("/", " "));
+                                $(Main_hotels_link).setAttribute(MarkupTag.A.href(), HTTP_TRAVEL_ILIKEPLACES_COM_INDEX_JSP_CID_317285_PAGE_NAME_HOT_SEARCH_SUBMITTED_TRUE_VALIDATE_CITY_TRUE_CITY + location.split(OF)[0].replace("/", SPACE));
+                                $(Main_loading_hotels_link).setAttribute(MarkupTag.A.href(), HTTP_TRAVEL_ILIKEPLACES_COM_INDEX_JSP_CID_317285_PAGE_NAME_HOT_SEARCH_SUBMITTED_TRUE_VALIDATE_CITY_TRUE_CITY + location.split(OF)[0].replace("/", SPACE));
                             }
                         }
                         catch (final Throwable t) {
@@ -173,9 +199,9 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     {
                         try {
                             if (getUsername() != null) {
-                                $(Main_othersidebar_identity).setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0004") + getUsernameAsValid());
+                                $(Main_othersidebar_identity).setTextContent(gUI.getString(AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004) + getUsernameAsValid());
                             } else {
-                                $(Main_othersidebar_identity).setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0005") + location);
+                                $(Main_othersidebar_identity).setTextContent(gUI.getString(AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0005) + location);
                             }
                         } catch (final Throwable t) {
                             Loggers.EXCEPTION.error("", t);
@@ -186,9 +212,9 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     {
                         try {
                             if (getUsername() != null) {
-                                $(Main_othersidebar_profile_link).setAttribute("href", Controller.Page.Profile.getURL());
+                                $(Main_othersidebar_profile_link).setAttribute(MarkupTag.A.href(), Controller.Page.Profile.getURL());
                             } else {
-                                $(Main_othersidebar_profile_link).setAttribute("href", Controller.Page.signup.getURL());
+                                $(Main_othersidebar_profile_link).setAttribute(MarkupTag.A.href(), Controller.Page.signup.getURL());
                             }
                         } catch (final Throwable t) {
                             Loggers.EXCEPTION.error("", t);
@@ -202,7 +228,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                  * TODO check for db failure
                                  */
                                 String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(getUsernameAsValid())).returnValueBadly();
-                                url = url == null ? null : RBGet.globalConfig.getString("PROFILE_PHOTOS") + url;
+                                url = url == null ? null : RBGet.globalConfig.getString(PROFILE_PHOTOS) + url;
                                 if (url != null) {
                                     $(Main_profile_photo).setAttribute(MarkupTag.IMG.src(), url);
 //                                    displayBlock($(Main_profile_photo));
@@ -264,7 +290,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             final Element hiddenLocationIdInputTag = $(INPUT);
                             hiddenLocationIdInputTag.setAttribute(INPUT.type(), INPUT.typeValueHidden());
                             hiddenLocationIdInputTag.setAttribute(INPUT.id(), JSCodeToSend.LocationName);
-                            hiddenLocationIdInputTag.setAttribute(INPUT.value(), existingLocation_.getLocationName() + " of " + existingLocation_.getLocationSuperSet().getLocationName());
+                            hiddenLocationIdInputTag.setAttribute(INPUT.value(), existingLocation_.getLocationName() + OF + existingLocation_.getLocationSuperSet().getLocationName());
                             hTMLDocument__.getBody().appendChild(hiddenLocationIdInputTag);
                         } catch (final Throwable t) {
                             Loggers.EXCEPTION.error("", t);
@@ -275,12 +301,12 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     setLocationAsPageTopic:
                     {
                         try {
-                            $(Main_center_main_location_title).setTextContent("This is " + existingLocation_.getLocationName() + " of " + existingLocation_.getLocationSuperSet());
+                            $(Main_center_main_location_title).setTextContent(THIS_IS + existingLocation_.getLocationName() + OF + existingLocation_.getLocationSuperSet());
 
-                            $(Main_location_backlink).appendChild($(P).appendChild(hTMLDocument__.createTextNode("Back to" + COLON + " ")));
+                            $(Main_location_backlink).appendChild($(P).appendChild(hTMLDocument__.createTextNode(BACK_TO + COLON + SPACE)));
                             $(Main_location_backlink).appendChild(generateSimpleLocationLink(existingLocation_.getLocationSuperSet()));
 
-                            $(Main_location_list_header).appendChild(($(P).appendChild(hTMLDocument__.createTextNode("At " + existingLocation_.getLocationName() + " you can visit" + COLON + " "))));
+                            $(Main_location_list_header).appendChild(($(P).appendChild(hTMLDocument__.createTextNode(AT + existingLocation_.getLocationName() + YOU_CAN_VISIT + COLON + SPACE))));
 
                             for (final Element element : generateLocationLinks(DB.getHumanCRUDLocationLocal(true).doDirtyRLocationsBySuperLocation(existingLocation_))) {
                                 $(Main_location_list).appendChild(element);
@@ -291,12 +317,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             Loggers.EXCEPTION.error("", t);
                         }
 
-                    }
-
-                    setFlickrLink:
-                    {
-//                        $(Main_flickr).setAttribute(MarkupTag.A.href(), RBGet.config.getString("flickr.json") + location.toLowerCase().replace(" ", "+").replace("/", "+"));
-                    }
+                    } 
 
                     getAndDisplayAllThePhotos:
                     {
@@ -314,7 +335,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                     final Element image = $(IMG);
                                     image.setAttribute(IMG.src(), publicPhoto.getPublicPhotoURLPath());
                                     image.setAttribute(IMG.alt(), publicPhoto.getPublicPhotoDescription());
-                                    image.setAttribute(IMG.style(), "width" + COLON + "110px;");
+                                    image.setAttribute(IMG.style(), WIDTH + COLON + PX);
 
                                     final Element link = $(A);
                                     link.setAttribute(A.href(), publicPhoto.getPublicPhotoURLPath());
@@ -375,27 +396,27 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
             private List<Element> generateLocationLinks(final List<Location> locationList) {
 
-                final ElementComposer UList = ElementComposer.compose($(UL)).$ElementSetAttribute(MarkupTag.UL.id(), "place_list");
+                final ElementComposer UList = ElementComposer.compose($(UL)).$ElementSetAttribute(MarkupTag.UL.id(), PLACE_LIST);
 
                 for (Location location : locationList) {
                     final Element link = $(A);
 
-                    link.setTextContent("Travel to " + location.getLocationName() + " of " + location.getLocationSuperSet().getLocationName());
+                    link.setTextContent(TRAVEL_TO + location.getLocationName() + OF + location.getLocationSuperSet().getLocationName());
 
                     link.setAttribute(A.href(),
-                                      "/page/"
+                                      PAGE
                                               + location.getLocationName()
-                                              + "_of_"
+                                              + _OF_
                                               + location.getLocationSuperSet().getLocationName()
                                               + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
 
                     link.setAttribute(A.alt(),
-                                      "/page/" + location.getLocationName() + "_of_" + location.getLocationSuperSet().getLocationName());
+                                      PAGE + location.getLocationName() + _OF_ + location.getLocationSuperSet().getLocationName());
 
                     link.setAttribute(A.title(),
-                                      "Click to explore " + location.getLocationName() + " of " + location.getLocationSuperSet().getLocationName());
+                                      CLICK_TO_EXPLORE + location.getLocationName() + OF + location.getLocationSuperSet().getLocationName());
 
-                    link.setAttribute(A.classs(), "vtip");
+                    link.setAttribute(A.classs(), VTIP);
 
 
                     final Element linkDiv = $(DIV);
@@ -413,56 +434,19 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 return elements;
 
             }
-//            private List<Element> generateLocationLinks
-//                    (
-//                            final List<Location> locationList) {
-//
-//                List<Element> links = new ArrayList<Element>();
-//
-//                for (Location location : locationList) {
-//                    final Element link = $(A);
-//
-//                    link.setTextContent("Travel to " + location.getLocationName() + " of " + location.getLocationSuperSet().getLocationName());
-//
-//                    link.setAttribute(A.href(),
-//                            "/page/"
-//                                    + location.getLocationName()
-//                                    + "_of_"
-//                                    + location.getLocationSuperSet().getLocationName()
-//                                    + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
-//
-//                    link.setAttribute(A.alt(),
-//                            "/page/" + location.getLocationName() + "_of_" + location.getLocationSuperSet().getLocationName());
-//
-//                    link.setAttribute(A.title(),
-//                            "Click to explore " + location.getLocationName() + " of " + location.getLocationSuperSet().getLocationName());
-//
-//                    link.setAttribute(A.classs(), "vtip");
-//
-//
-//                    final Element linkDiv = $(DIV);
-//
-//                    linkDiv.appendChild(link);
-//
-//                    links.add(linkDiv);
-//                }
-//
-//                return links;
-//
-//            }
 
             private Element generateLocationLink(final Location location) {
                 final Element link = $(A);
-                link.setTextContent("Travel to " + location.getLocationName() + " of " + location.getLocationSuperSet().getLocationName());
+                link.setTextContent(TRAVEL_TO + location.getLocationName() + OF + location.getLocationSuperSet().getLocationName());
                 link.setAttribute(A.href(),
-                                  "/page/"
+                                  PAGE
                                           + location.getLocationName()
-                                          + "_of_"
+                                          + _OF_
                                           + location.getLocationSuperSet().getLocationName()
                                           + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
 
                 link.setAttribute(A.alt(),
-                                  "/page/" + location.getLocationName() + "_of_" + location.getLocationSuperSet().getLocationName());
+                                  PAGE + location.getLocationName() + _OF_ + location.getLocationSuperSet().getLocationName());
                 return link;
             }
 
@@ -470,39 +454,14 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 final Element link = $(A);
                 link.setTextContent(location.getLocationName());
                 link.setAttribute(A.href(),
-                                  "/page/"
+                                  PAGE
                                           + location.getLocationName()
                                           + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
 
                 link.setAttribute(A.alt(),
-                                  "/page/" + location.getLocationName());
+                                  PAGE + location.getLocationName());
                 return link;
             }
         };//Listener
     }
 }
-
-
-//                                oldMode:
-//                                {
-//                                    if (i % 2 == 0) {
-//                                        new Photo$Description(itsNatDocument__, $(Main_center_main)) {
-//                                            @Override
-//                                            protected void init(final Object... initArgs) {
-//                                                $$(pd_photo_permalink).setAttribute(A.href(), publicPhoto.getPublicPhotoURLPath() + "|" + publicPhoto.getPublicPhotoName());
-//                                                $$(pd_photo).setAttribute(A.src(), publicPhoto.getPublicPhotoURLPath());
-//                                                $$(pd_photo_description).setTextContent(publicPhoto.getPublicPhotoDescription());
-//                                            }
-//                                        };
-//                                    } else {
-//                                        new Photo$Description(itsNatDocument__, $(Main_center_main)) {
-//                                            @Override
-//                                            protected void init(final Object... initArgs) {
-//                                                $$(pd_photo_permalink).setAttribute(A.href(), publicPhoto.getPublicPhotoURLPath() + "|" + publicPhoto.getPublicPhotoName());
-//                                                $$(pd_photo).setAttribute(A.src(), publicPhoto.getPublicPhotoURLPath());
-//                                                $$(pd_photo_description).setTextContent(publicPhoto.getPublicPhotoDescription());
-//
-//                                            }
-//                                        };
-//                                    }
-//                                }
