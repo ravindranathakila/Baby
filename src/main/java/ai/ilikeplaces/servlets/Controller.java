@@ -660,7 +660,7 @@ Controller.Page.friendAddDisplayNameLabel
         final static public String ProfileURLUpdate = "ProfileURLUpdate";
 
         /*Forgot Password Page*/
-        final static public String DocForgotPasswordChange = "DocPasswordChange";
+        final static public String DocForgotPasswordChange = "DocForgotPasswordChange";
         /*Forgot Password IDs*/
         final static public String ProfileForgotPasswordWidget = "ProfileForgotPasswordWidget";
         final static public String ProfileForgotPasswordNotice = "ProfileForgotPasswordNotice";
@@ -781,7 +781,7 @@ Controller.Page.friendAddDisplayNameLabel
 
         /*Actiavte Page*/
         final static public String DocActivate = "DocActivate";
-        
+
         /*Share Page*/
         final static public String DocShare = "DocShare";
 
@@ -884,6 +884,7 @@ Controller.Page.friendAddDisplayNameLabel
         final static public String Main_profile_photo = "Main_profile_photo";
         final static public String Main_othersidebar_profile_link = "Main_othersidebar_profile_link";
         final static public String Main_othersidebar_upload_file_sh = "Main_othersidebar_upload_file_sh";
+        final static public String Main_loading_hotels_link = "Main_loading_hotels_link";
         final static public String Main_hotels_link = "Main_hotels_link";
         final static public String Main_center_main = "Main_center_main";
         final static public String Main_notice = "Main_notice";
@@ -1021,7 +1022,7 @@ Controller.Page.friendAddDisplayNameLabel
         itsNatServletConfig.setClientErrorMode(ClientErrorMode.SHOW_SERVER_AND_CLIENT_ERRORS);
         itsNatServletConfig.setLoadScriptInline(true);
         itsNatServletConfig.setUseGZip(UseGZip.MARKUP);
-        itsNatServletConfig.setDefaultSyncMode(SyncMode.SYNC);
+        //itsNatServletConfig.setDefaultSyncMode(SyncMode.SYNC);
         itsNatServletConfig.setAutoCleanEventListeners(true);
         itsNatServletConfig.setDefaultEncoding("UTF-8");
         itsNatServletConfig.setReferrerEnabled(true);
@@ -1317,9 +1318,11 @@ Controller.Page.friendAddDisplayNameLabel
     static private String getPhotoLocation(final String URL_) {
         return URL_.replace("_photo_", "").split("_")[0];
     }
+
     static private String getPhotoURL(final String URL_) {
         return URL_.replace("_photo_", "").split("_")[1];
     }
+
     static private boolean isProfilePage(final String URL_) {
         return (URL_.startsWith("_profile"));
     }
@@ -1327,6 +1330,7 @@ Controller.Page.friendAddDisplayNameLabel
     static private boolean isSharePage(final String URL_) {
         return (URL_.startsWith("_share"));
     }
+
     static private boolean isSignOut(final String URL_) {
         return (URL_.equals("_so"));
     }
