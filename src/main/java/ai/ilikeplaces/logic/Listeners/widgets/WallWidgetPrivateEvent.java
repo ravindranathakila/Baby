@@ -47,6 +47,10 @@ public class WallWidgetPrivateEvent extends WallWidget {
     private static final String WALL_ENTRY_FROM_EMAIL_RECEIVED = "Wall entry from email received!";
     private static final String DERIVED_FROM_EMAIL = "DERIVED FROM EMAIL:{}";
     private static final String WALL_SUBMIT_WIDGET = "wall_submit_widget";
+    private static final String ENTERS_TEXT = " enters text:";
+    private static final String CATEGORY = "category";
+    private static final String LOCATION = "location";
+    private static final String EVENT = "event";
 
     public WallWidgetPrivateEvent(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId, final long privateEventId__) {
         super(request__, appendToElement__, humanId, privateEventId__);
@@ -70,7 +74,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
         Loggers.DEBUG.debug(WALL_ENTRY + (wall_entry != null ? wall_entry : NULL));
 
         /**
-         * If null, this means we have to check on if the wall entry parameter is avaialbe and update.
+         * If null, this means we have to check on if the wall entry parameter is available and update.
          * If not null, this means the wall entry has been consumed(we set it to true)
          */
         if ((wall_entry_consumed == null || !wall_entry_consumed.equals(TRUE)) && wall_entry != null) {//This will refresh the page after actions
@@ -95,10 +99,18 @@ public class WallWidgetPrivateEvent extends WallWidget {
                 );
             }
             for (final HumansPrivateEvent hpe : pe.getPrivateEventViewers()) {
-                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), pe.getPrivateEventName(), fetchToEmail + b.toString());
+                if (!hpe.getHumanId().equals(humanId.getObj())) {
+                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), pe.getPrivateEventName(), fetchToEmail + b.toString());
+                }
             }
 
-            itsNatDocument_.addCodeToSend(JSCodeToSend.refreshPageWith(WALL_ENTRY_CONSUMED_STATUES));//
+            final boolean loadWallPageAfterAnEmailWallSubmit = false;
+            
+            if(loadWallPageAfterAnEmailWallSubmit){
+                itsNatDocument_.addCodeToSend(JSCodeToSend.refreshPageWith(WALL_ENTRY_CONSUMED_STATUES));//
+            }else{
+                itsNatDocument_.addCodeToSend(JSCodeToSend.ClosePage);//
+            }
 
         } else {//Moves on with the wall without refresh
             for (final Msg msg : DB.getHumanCrudPrivateEventLocal(true).
@@ -122,9 +134,9 @@ public class WallWidgetPrivateEvent extends WallWidget {
         try {
             final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + WALL_SUBIT_FROM_EMAIL);
 
-            $$("category", document).setAttribute(MarkupTag.INPUT.value(), Integer.toString(Controller.Page.DocOrganizeModeEvent));
-            $$("location", document).setAttribute(MarkupTag.INPUT.value(), args[0].toString());
-            $$("event", document).setAttribute(MarkupTag.INPUT.value(), args[1].toString());
+            $$(CATEGORY, document).setAttribute(MarkupTag.INPUT.value(), Integer.toString(Controller.Page.DocOrganizeModeEvent));
+            $$(LOCATION, document).setAttribute(MarkupTag.INPUT.value(), args[0].toString());
+            $$(EVENT, document).setAttribute(MarkupTag.INPUT.value(), args[1].toString());
 
 
             fetchToEmail = HTMLDocParser.convertNodeToHtml($$(WALL_SUBMIT_WIDGET, document));
@@ -150,11 +162,11 @@ public class WallWidgetPrivateEvent extends WallWidget {
             @Override
             public void handleEvent(final Event evt_) {
 
-                Loggers.USER.info(myhumanId.getObj() + " enters text:" + wallAppend.getObj());
+                Loggers.USER.info(myhumanId.getObj() + ENTERS_TEXT + wallAppend.getObj());
                 if (wallAppend.validate() == 0) {
                     if (!wallAppend.getObj().equals("")) {
 
-                        Loggers.USER.info(myhumanId.getObj() + " enters text:" + wallAppend.getObj());
+                        Loggers.USER.info(myhumanId.getObj() + ENTERS_TEXT + wallAppend.getObj());
 
 
                         final Return<Wall> r = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddEntryToWall(myhumanId,
@@ -166,7 +178,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
                         if (r.returnStatus() == 0) {
                             $$(Controller.Page.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
                             wallAppend.setObj("");
-                            
+
                             clear($$(Controller.Page.wallContent));
                             final Wall wall = (DB.getHumanCrudPrivateEventLocal(true).rPrivateEventReadWall(myhumanId, myprivateEventId).returnValueBadly());
                             final StringBuilder b = new StringBuilder("");
