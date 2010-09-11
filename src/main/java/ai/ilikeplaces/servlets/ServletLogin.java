@@ -75,11 +75,6 @@ final public class ServletLogin extends HttpServlet {
             try {
                 p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
                 context = new InitialContext(p_);
-                if (context == null) {
-                    log.append("\nVARIABLE context IS NULL! ");
-                    log.append(context);
-                    break init;
-                }
 
                 singletonHashingFace = (SingletonHashingFace) context.lookup("SingletonHashingLocal");
                 if (singletonHashingFace == null) {

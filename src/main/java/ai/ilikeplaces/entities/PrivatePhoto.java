@@ -193,7 +193,7 @@ public class PrivatePhoto implements Serializable {
      */
     @Override
     public String toString() {
-        String toString_ = new String(getClass().getName());
+        String toString_ = getClass().getName();
         try {
             final Field[] fields = {getClass().getDeclaredField("locationId"),
                     getClass().getDeclaredField("locationName"),
@@ -222,7 +222,7 @@ public class PrivatePhoto implements Serializable {
      * @return changeLog
      */
     public String toString(final boolean showChangeLog__) {
-        String changeLog = new String(toString() + "\n");
+        String changeLog = toString() + "\n";
         changeLog += "20090914 Added this class \n";
         return showChangeLog__ ? changeLog : toString();
     }

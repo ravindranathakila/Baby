@@ -35,4 +35,16 @@ final public class JSCodeToSend {
         return WINDOW_LOCATION_HREF_WINDOW_LOCATION_HREF + "+" + "'" + stringToBeAppended + "';\n";
 
     }
+
+    /**
+     * Uses window.location.href = 'urlTobeRedirectedTo';
+     * Might turn out to be buggy if there are outer quotes. Verify with firebug for safety.
+     *
+     * @param urlTobeRedirectedTo
+     * @return
+     */
+    public static String redirectPageWithURL(final String urlTobeRedirectedTo) {
+        return "\nwindow.location.href = '" + urlTobeRedirectedTo + "';\n";
+
+    }
 }

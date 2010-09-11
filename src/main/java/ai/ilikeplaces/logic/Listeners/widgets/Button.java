@@ -41,7 +41,7 @@ abstract public class Button extends AbstractWidgetListener {
 
 
         if (doRefreshPageOnClick) {
-            ((ItsNatHTMLDocument) itsNatDocument_).addEventListener((EventTarget) $$(Controller.Page.GenericButtonLink), EventType.CLICK.toString(), new EventListener() {
+            itsNatDocument_.addEventListener((EventTarget) $$(Controller.Page.GenericButtonLink), EventType.CLICK.toString(), new EventListener() {
                 @Override
                 public void handleEvent(final Event evt_) {
                 }

@@ -45,7 +45,7 @@ public abstract class VOValidator {
     private final void validator(final InvocationContext invocationContext) {
         try {
             try {
-                this.getClass().getMethod(invocationContext.getMethod().getName(), new Class[]{InvocationContext.class, Object[].class}).invoke(this, new Object[]{invocationContext, invocationContext.getParameters()});
+                this.getClass().getMethod(invocationContext.getMethod().getName(), new Class[]{InvocationContext.class, Object[].class}).invoke(this, invocationContext, invocationContext.getParameters());
             } catch (final IllegalAccessException ex) {
                 LoggerFactory.getLogger(VOValidator.class.getName()).error( "ERROR IN VALIDATING BEAN FOR METHOD:"+invocationContext.getMethod().toGenericString(), ex);
             } catch (final IllegalArgumentException ex) {

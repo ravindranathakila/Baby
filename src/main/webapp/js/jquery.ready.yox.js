@@ -72,7 +72,7 @@ $(document).ready(function(){
                             runontime = function(){
                                 $('body').css('background-image','url('+data.photos[0].photo_file_url+')');
                                 $('#Main_location_photo').attr("src",data.photos[0].photo_file_url);
-                                $('#Main_othersidebar_identity').text(data.photos[0].photo_title+' by '+data.photos[0].owner_name);
+                                $('#Main_othersidebar_identity').text(data.photos[0].photo_title);
                             }
                             setTimeout("runontime();", 20000);
                             $('body').css('background-attachment','fixed');
@@ -89,9 +89,9 @@ $(document).ready(function(){
                                 if(ckdp==17)isCtrl=true;
                                 if(ckdp==221&&isCtrl==true){
                                     var indexi=i>data.count-1?data.count-1:++i;
-                                    $('body').css('background-image','url('+data.photos[indexi].photo_file_url+')');
+                                    $('body').css('background','url('+data.photos[indexi].photo_file_url+')');
                                     $('#Main_location_photo').attr("src",data.photos[indexi].photo_file_url);
-                                    $('#Main_othersidebar_identity').text(data.photos[indexi].photo_title+' by '+data.photos[0].owner_name);
+                                    $('#Main_othersidebar_identity').text(data.photos[indexi].photo_title);
                                     return false;
                                 }
                             });
@@ -103,9 +103,9 @@ $(document).ready(function(){
                                 if(ckdn==17)isCtrl=true;
                                 if(ckdn==219&&isCtrl==true){
                                     var indexj=i<1?0:--i;
-                                    $('body').css('background-image','url('+data.photos[indexj].photo_file_url+')');
+                                    $('body').css('background','url('+data.photos[indexj].photo_file_url+')');
                                     $('#Main_location_photo').attr("src",data.photos[indexj].photo_file_url);
-                                    $('#Main_othersidebar_identity').text(data.photos[indexj].photo_title+' by '+data.photos[0].owner_name);
+                                    $('#Main_othersidebar_identity').text(data.photos[indexj].photo_title);
                                     return false;
                                 }
                             });
@@ -147,9 +147,9 @@ $(document).ready(function(){
                     });
 
 
-				ilp_progress(100,'Finalizing '+getLocationName()+' ..');//Have to do this due to a bug in gmap
+				ilp_progress(100,'Almost at '+getLocationName()+' ..:)');//Have to do this due to a bug in gmap
 				//setTimeout("ilp_load_map()",30000);
-				ilp_load_map = function(){}//The definition of the following function will take time to initialize
+				ilp_load_map = function(){};//The definition of the following function will take time to initialize
                 ilp_load_map = function(){
 					$("#map").gMap(
 					{
@@ -173,150 +173,88 @@ $(document).ready(function(){
 					);
 					$("#ilp_progress_block").hide();
 					$("#ilp_main_content").show();
-				}
+				};
+				                           //'travel OR trip OR fun OR vacation amazing place -seo -book',
+									var twtrLocShort = getLocationName().split(' of ')[0].replace('/',' ');
+
+                                    var placeTRT = new TWTR.Widget({
+                                      version: 2,
+                                      type: 'search',
+                                      id: 'twitterplaceToSearch',
+                                      //search: 'travel OR trip OR fun OR vacation OR amazing OR place -seo -book near:' + getLocationName().split(' of ')[0].replace('/',' '),
+                                      search: 'travel OR trip OR holiday OR party OR celebrate OR fun OR vacation OR amazing OR place -seo -book geocode:' + y.place.centroid.latitude + ',' + y.place.centroid.longitude + ',1000mi',
+									  interval: 6000,
+                                      title: 'Whats happening...',
+                                      subject: twtrLocShort + '?!',
+                                      width: 'auto',
+                                      height: 120,
+                                      theme: {
+                                        shell: {
+                                          background: '#a9acf1',
+                                          color: '#ffffff'
+                                        },
+                                        tweets: {
+                                          background: '#fafafa',
+                                          color: '#444444',
+                                          links: '#1985b5'
+                                        }
+                                      },
+                                      features: {
+                                        scrollbar: false,
+                                        loop: true,
+                                        live: true,
+                                        hashtags: true,
+                                        timestamp: true,
+                                        avatars: true,
+                                        toptweets: true,
+                                        behavior: 'default'
+                                      }
+                                    });
+                                    //.render().start()
+                                    placeTRT.render().start();
+
+                                    var placeFRT = new TWTR.Widget({
+                                      version: 2,
+                                      type: 'search',
+                                      id: 'twitterplaceFromSearch',
+                                      //search: 'travel OR trip OR fun OR vacation OR amazing OR place -seo -book near:' + getLocationName().split(' of ')[0].replace('/',' '),
+                                      //search: twtrLocShort + ' travel OR ' + twtrLocShort + ' trip OR ' + twtrLocShort + ' holiday OR ' + twtrLocShort + ' party OR ' + twtrLocShort + ' celebrate OR ' + twtrLocShort + ' fun OR ' + twtrLocShort + ' vacation OR ' + twtrLocShort + ' amazing OR ' + twtrLocShort + ' place -seo -book',
+                                      search: '\"' + twtrLocShort + '\"' + ' -seo -book -estate -realestate',
+									  interval: 7000,
+                                      title: 'Who goes...',
+                                      subject: twtrLocShort + '?!',
+                                      width: 'auto',
+                                      height: 120,
+                                      theme: {
+                                        shell: {
+                                          background: '#a9acf1',
+                                          color: '#ffffff'
+                                        },
+                                        tweets: {
+                                          background: '#fafafa',
+                                          color: '#444444',
+                                          links: '#1985b5'
+                                        }
+                                      },
+                                      features: {
+                                        scrollbar: false,
+                                        loop: true,
+                                        live: true,
+                                        hashtags: true,
+                                        timestamp: true,
+                                        avatars: true,
+                                        toptweets: true,
+                                        behavior: 'default'
+                                      }
+                                    });
+                                    //.render().start()
+                                    placeFRT.render().start();
             }catch(err){
                 $("#map").hide();
                 alert(err);
             }
         }
         );
-
-//    $('.yoxview').yoxview();
-    var button=$('#button1'),interval;
-    buttonText='uploading';
-    var fub=new AjaxUpload(button,{
-        action:'/fileuploads',
-        name:'myfile',
-        onChange:function(file,ext){
-            var hostInput=new Object(fub._input);
-            thisVal=this;
-            var locationId=getLocationId();
-            var isPublic;
-            var isPrivate;
-            var photoName;
-            var photoDescription;
-            $.prompt({
-                state0:{
-                    html:'Which type is this photo?<br/> '+
-                    'Public photos will be shared with everybody.<br/> '+
-                    'Private photos will be shared only with people you have added.',
-                    buttons:{
-                        Public:true,
-                        Private:false
-                    },
-                    submit:function(v,m,f){
-                        isPublic=v;
-                        isPrivate=!v;
-                        $.prompt.goToState('state1');
-                        return false;
-                    }
-                },
-                state1:{
-                    html:'Give a simple but descriptive name for your photo:<br /> '+
-                    '<input type=\"text\" id=\"photoNameInput\" name=\"photoNameInput\" value=\"\" />',
-                    buttons:{
-                        Back:-1,
-                        Next:1
-                    },
-                    focus:1,
-                    submit:function(v,m,f){
-                        if(v==1){
-                            an=m.children('#photoNameInput');
-                            if(!f.photoNameInput){
-                                an.css("border","solid #ff0000 1px");
-                                $.prompt.goToState('state1');
-                                return false;
-                            }else{
-                                photoName=f.photoNameInput;
-                                $.prompt.goToState('state2');
-                                return false;
-                            }
-                        }else{
-                            $.prompt.goToState('state0');
-                            return false;
-                        }
-                    }
-                },
-                state2:{
-                    html:"What is this photo all about?!"+
-                    "<br />"+
-                    "<textarea "+
-                    "id='photoDescriptionAlert' "+
-                    "name='photoDescriptionAlert' "+
-                    "style='width:360px;height:370px;' "+
-                    "class='dark_orange_fg' "+
-                    "onkeyup='javascript:this.value = trimInput(this.value,900);'/>"+
-                    "<br />",
-                    buttons:{
-                        Back:-1,
-                        Next:1
-                    },
-                    focus:2,
-                    submit:function(v,m,f){
-                        if(v==1){
-                            an=m.children('#photoDescriptionAlert');
-                            if(!f.photoDescriptionAlert){
-                                an.css("border","solid #ff0000 1px");
-                                $.prompt.goToState('state2');
-                                return false;
-                            }else{
-                                photoDescription=f.photoDescriptionAlert;
-                                $.prompt('Complete!<br/>'+
-                                    'The photo is '+(isPublic?'public.':'private.')+'<br/>'+
-                                    'The photo name is '+photoName+'.<br/>'+
-                                    'The photo description: '+photoDescription);
-                                return true;
-                            }
-                        }else{
-                            $.prompt.goToState('state1');
-                            return false;
-                        }
-                    }
-                }
-            },
-            {
-                callback:function(v,m,f){
-                    fub.onChange=function(file,extension){
-                        fub.setData({
-                            'locationId':locationId,
-                            'isPublic':isPublic,
-                            'isPrivate':isPrivate,
-                            'photoDescription':photoDescription,
-                            'photoName':photoName
-                        });
-                        return true;
-                    };
-                    fub.onChange.call(thisVal,file,getExt(file));
-                    fub.submit();
-                }
-            }
-            );
-            return false;
-        },
-        onSubmit:function(file,ext){
-            button.text(buttonText);
-            fub.disable();
-            interval=window.setInterval(function(){
-                var text=button.text();
-                if(text.length<buttonText.length+10){
-                    button.text('^'+text+'^');
-                }else{
-                    button.text(buttonText);
-                }
-            },200);
-        },
-        onComplete:function(file,response){
-            window.clearInterval(interval);
-            if(String(response).split("|")[0]=="ok"){
-                alert("No Error!")
-            }else{
-                alert("An Error Occurred");
-                alert(response);
-            }
-            fub.enable();
-            $('<li></li>').appendTo('#Main_file_list .files').text(file);
-        }
-    });
 
 	ilp_progress(100,'Painting Backdrops ..');//Nifty will work at this moment and  also in case errors occurred
 

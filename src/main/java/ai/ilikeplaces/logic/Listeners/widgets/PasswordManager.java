@@ -170,8 +170,9 @@ abstract public class PasswordManager extends AbstractWidgetListener {
             }
 
             @Override
-            public void finalize() {
+            public void finalize() throws Throwable {
                 Loggers.finalized(this.getClass().getName());
+                super.finalize();
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 

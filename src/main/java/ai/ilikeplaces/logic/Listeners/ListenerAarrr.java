@@ -107,7 +107,7 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
      * @return changeLog
      */
     public String toString(final boolean showChangeLog__) {
-        String changeLog = new String(toString() + "\n");
+        String changeLog = toString() + "\n";
         return showChangeLog__ ? changeLog : toString();
     }
 }

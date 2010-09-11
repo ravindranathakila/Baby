@@ -40,8 +40,8 @@ public class WallWidgetHumansWall extends WallWidget {
      */
     @Override
     protected void init(final Object... initArgs) {
-        this.humanId = (HumanId) ((HumanId) initArgs[0]).getSelfAsValid();
-        this.visitor = (HumanId) ((HumanId) initArgs[1]).getSelfAsValid();
+        this.humanId = ((HumanId) initArgs[0]).getSelfAsValid();
+        this.visitor = ((HumanId) initArgs[1]).getSelfAsValid();
 
         for (final Msg msg : DB.getHumanCrudWallLocal(true).dirtyRWall(humanId).returnValue().getWallMsgs()) {
             new UserProperty(request, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
