@@ -34,7 +34,7 @@ import java.util.TreeMap;
  * @author <a href="mailto:alex@purpletech.com">Alexander Day Chaffee</a>
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @since 2.0
- * @version $Id: Entities.java,v 1.1 2010-03-25 18:53:51 vergy Exp $
+ * @version $Id: Entities.java,v 1.2 2010-09-11 14:15:20 vergy Exp $
  */
 class Entities {
 
@@ -698,8 +698,8 @@ class Entities {
      * @param entityArray array of entities to be added
      */
     public void addEntities(String[][] entityArray) {
-        for (int i = 0; i < entityArray.length; ++i) {
-            addEntity(entityArray[i][0], Integer.parseInt(entityArray[i][1]));
+        for (String[] anEntityArray : entityArray) {
+            addEntity(anEntityArray[0], Integer.parseInt(anEntityArray[1]));
         }
     }
 

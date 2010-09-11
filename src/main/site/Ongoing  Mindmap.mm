@@ -1,6 +1,7 @@
 <map version="0.8.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node CREATED="1266111255046" ID="Freemind_Link_1364723499" MODIFIED="1278865982328" STYLE="bubble" TEXT="Hibernate">
+<node CREATED="1266111255046" ID="Freemind_Link_1364723499" MODIFIED="1283702725295" STYLE="bubble" TEXT="Hibernate">
+<hook NAME="accessories/plugins/CreationModificationPlugin_new.properties"/>
 <node CREATED="1266112497203" FOLDED="true" ID="Freemind_Link_98693104" MODIFIED="1270054292968" POSITION="left" TEXT="Postponed(1 week rule)">
 <icon BUILTIN="messagebox_warning"/>
 <node CREATED="1266112516093" ID="Freemind_Link_170625570" MODIFIED="1266112615062" TEXT="Uplaoding Multiple files&#xa;Bookmarked:file upload, chosen, "/>
@@ -86,10 +87,90 @@
 <node CREATED="1270809013921" ID="Freemind_Link_1890656078" MODIFIED="1270809021359" TEXT="Weblog Link"/>
 <node CREATED="1270809023171" ID="Freemind_Link_1801560210" MODIFIED="1270809026203" TEXT="RSS import"/>
 </node>
+<node CREATED="1278409792968" ID="Freemind_Link_1775907172" MODIFIED="1278409809296" TEXT="POST LOAD HANDLING FOR ISALIVE IN ENTITIES"/>
+<node CREATED="1275556382078" ID="Freemind_Link_1362219142" MODIFIED="1275556389828" TEXT="RECIPROCAL LINKING ON BLOGS">
+<node CREATED="1275556390531" ID="Freemind_Link_1216918716" MODIFIED="1275556424624" TEXT="Find similar like blogs and get links"/>
 </node>
-<node CREATED="1266111290796" ID="Freemind_Link_650211779" MODIFIED="1266111515281" POSITION="left" STYLE="bubble" TEXT="Done">
+<node CREATED="1283778886828" ID="Freemind_Link_1216764454" MODIFIED="1283779046765" TEXT="A given user may not have an event, &#xa;but knows what the fun places are.">
+<node CREATED="1283779049968" ID="Freemind_Link_1064352760" MODIFIED="1283779055187" TEXT="A localite of that area"/>
+<node CREATED="1283779055625" ID="Freemind_Link_1771226222" MODIFIED="1283779060640" TEXT="A travel guide"/>
+</node>
+<node CREATED="1283778835734" ID="Freemind_Link_1410928980" MODIFIED="1283872160515" TEXT="I see a map of fun places ranked by users">
+<node CREATED="1283778886828" ID="Freemind_Link_853110763" MODIFIED="1283779046765" TEXT="A given user may not have an event, &#xa;but knows what the fun places are.">
+<node CREATED="1283872146359" ID="Freemind_Link_1005452003" MODIFIED="1283872154484" TEXT="Check if this is always true"/>
+</node>
+</node>
+<node CREATED="1283778817171" ID="Freemind_Link_1302457204" MODIFIED="1283779022984" TEXT="How do I find where to have fun at this place?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1283778835734" ID="Freemind_Link_1352535944" MODIFIED="1283779029578" TEXT="I see a map of fun places ranked by users">
+<icon BUILTIN="full-3"/>
+<node CREATED="1283779122718" ID="Freemind_Link_904592741" MODIFIED="1283779575187" TEXT="Who&apos;s involved?">
+<icon BUILTIN="full-4"/>
+<node CREATED="1283779143656" ID="Freemind_Link_260384434" MODIFIED="1283779149906" TEXT="Fun seeker"/>
+<node CREATED="1283779151875" ID="Freemind_Link_272305044" MODIFIED="1283779172328" TEXT="Travel Guide"/>
+<node CREATED="1283779155921" ID="Freemind_Link_1393823433" MODIFIED="1283779166062" TEXT="Localite"/>
+</node>
+<node CREATED="1283778886828" ID="Freemind_Link_257607459" MODIFIED="1283779046765" TEXT="A given user may not have an event, &#xa;but knows what the fun places are.">
+<node CREATED="1283779049968" ID="Freemind_Link_1838498591" MODIFIED="1283779055187" TEXT="A localite of that area"/>
+<node CREATED="1283779055625" ID="Freemind_Link_1788167664" MODIFIED="1283779060640" TEXT="A travel guide"/>
+</node>
+<node CREATED="1283779312687" ID="Freemind_Link_1690043396" MODIFIED="1283779326828" TEXT="There will be spelling conflits of place names"/>
+<node CREATED="1283779358984" ID="Freemind_Link_1440738243" MODIFIED="1283779540671" TEXT="A map might be too complex to use for the users"/>
+<node CREATED="1283785581953" ID="Freemind_Link_48976821" MODIFIED="1283871711218" TEXT="LatLong Spot Cloud Ranking On Events">
+<icon BUILTIN="idea"/>
+<node CREATED="1283785596515" ID="Freemind_Link_1786375856" MODIFIED="1283785612375" TEXT="Each user has his own location latlong"/>
+<node CREATED="1283785612859" ID="Freemind_Link_1579388008" MODIFIED="1283871666500" TEXT="A given small area will have several users ranking it"/>
+<node CREATED="1283871605062" ID="Freemind_Link_1337201069" MODIFIED="1283871786234" TEXT="Problem with spamming :-("/>
+</node>
+<node CREATED="1283871614484" ID="Freemind_Link_1277001958" MODIFIED="1283871795156" TEXT="LatLong Spot Cloud Ranking On User Count On Events">
+<icon BUILTIN="idea"/>
+<node CREATED="1283871718859" ID="Freemind_Link_1576119504" MODIFIED="1283871737421" TEXT="Each area has several events and users joining that event"/>
+<node CREATED="1283871740921" ID="Freemind_Link_1699770035" MODIFIED="1283871753875" TEXT="Each user will add to the ranking(when he joins the event)"/>
+<node CREATED="1283871755812" ID="Freemind_Link_778195842" MODIFIED="1283871786250" TEXT="Solves the spammer issue as spammer cannot simulate many users(lets hope!)">
+<arrowlink DESTINATION="Freemind_Link_1337201069" ENDARROW="Default" ENDINCLINATION="354;0;" ID="Freemind_Arrow_Link_293088079" STARTARROW="None" STARTINCLINATION="354;0;"/>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1283778806593" ID="Freemind_Link_1396159246" MODIFIED="1283778870015" TEXT="Fun Map">
+<icon BUILTIN="full-1"/>
+<node CREATED="1283778817171" ID="Freemind_Link_1533085734" MODIFIED="1283779022984" TEXT="How do I find where to have fun at this place?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1283778835734" ID="Freemind_Link_1401545186" MODIFIED="1283779029578" TEXT="I see a map of fun places ranked by users">
+<icon BUILTIN="full-3"/>
+<node CREATED="1283779122718" ID="Freemind_Link_1392194749" MODIFIED="1283779575187" TEXT="Who&apos;s involved?">
+<icon BUILTIN="full-4"/>
+<node CREATED="1283779143656" ID="Freemind_Link_1168145139" MODIFIED="1283779149906" TEXT="Fun seeker"/>
+<node CREATED="1283779151875" ID="Freemind_Link_1903110819" MODIFIED="1283779172328" TEXT="Travel Guide"/>
+<node CREATED="1283779155921" ID="Freemind_Link_1936535094" MODIFIED="1283779166062" TEXT="Localite"/>
+</node>
+<node CREATED="1283778886828" ID="Freemind_Link_1394957617" MODIFIED="1283779046765" TEXT="A given user may not have an event, &#xa;but knows what the fun places are.">
+<node CREATED="1283779049968" ID="Freemind_Link_1688563702" MODIFIED="1283779055187" TEXT="A localite of that area"/>
+<node CREATED="1283779055625" ID="Freemind_Link_669595551" MODIFIED="1283779060640" TEXT="A travel guide"/>
+</node>
+<node CREATED="1283779312687" ID="Freemind_Link_1563164227" MODIFIED="1283779326828" TEXT="There will be spelling conflits of place names"/>
+<node CREATED="1283779358984" ID="Freemind_Link_461387030" MODIFIED="1283779540671" TEXT="A map might be too complex to use for the users"/>
+<node CREATED="1283785581953" ID="Freemind_Link_503798127" MODIFIED="1283871711218" TEXT="LatLong Spot Cloud Ranking On Events">
+<icon BUILTIN="idea"/>
+<node CREATED="1283785596515" ID="Freemind_Link_378457885" MODIFIED="1283785612375" TEXT="Each user has his own location latlong"/>
+<node CREATED="1283785612859" ID="Freemind_Link_453609823" MODIFIED="1283871666500" TEXT="A given small area will have several users ranking it"/>
+<node CREATED="1283871605062" ID="Freemind_Link_855479781" MODIFIED="1283871786234" TEXT="Problem with spamming :-("/>
+</node>
+<node CREATED="1283871614484" ID="Freemind_Link_1713497206" MODIFIED="1283871795156" TEXT="LatLong Spot Cloud Ranking On User Count On Events">
+<icon BUILTIN="idea"/>
+<node CREATED="1283871718859" ID="Freemind_Link_1558808649" MODIFIED="1283871737421" TEXT="Each area has several events and users joining that event"/>
+<node CREATED="1283871740921" ID="Freemind_Link_118501657" MODIFIED="1283871753875" TEXT="Each user will add to the ranking(when he joins the event)"/>
+<node CREATED="1283871755812" ID="Freemind_Link_170867698" MODIFIED="1283871786250" TEXT="Solves the spammer issue as spammer cannot simulate many users(lets hope!)">
+<arrowlink DESTINATION="Freemind_Link_855479781" ENDARROW="Default" ENDINCLINATION="354;0;" ID="Freemind_Arrow_Link_176313070" STARTARROW="None" STARTINCLINATION="354;0;"/>
+</node>
+</node>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1266111290796" FOLDED="true" ID="Freemind_Link_650211779" MODIFIED="1266111515281" POSITION="left" STYLE="bubble" TEXT="Done">
 <icon BUILTIN="button_ok"/>
-<node CREATED="1278155975953" ID="Freemind_Link_1352119735" MODIFIED="1278156014671" TEXT="I LIKE PLACES">
+<node CREATED="1278155975953" FOLDED="true" ID="Freemind_Link_1352119735" MODIFIED="1278156014671" TEXT="I LIKE PLACES">
 <node CREATED="1266130493234" FOLDED="true" ID="Freemind_Link_83930112" MODIFIED="1278155998343" TEXT="Undated">
 <icon BUILTIN="button_ok"/>
 <node CREATED="1266111285031" FOLDED="true" ID="_" MODIFIED="1266121552250" STYLE="bubble" TEXT="Design Button">
@@ -506,7 +587,7 @@
 <node CREATED="1275630296515" ID="Freemind_Link_1463964379" MODIFIED="1276078103922" TEXT="SIGNUP EMAIL CONFIRMATION">
 <icon BUILTIN="button_ok"/>
 </node>
-<node CREATED="1278865991562" ID="Freemind_Link_5100622" MODIFIED="1279442057046" TEXT="CDN entries TTL maximum with Expires Maximum">
+<node CREATED="1278865991562" ID="Freemind_Link_5100622" MODIFIED="1283696123467" TEXT="CDN entries TTL maximum with Expires Maximum">
 <icon BUILTIN="button_ok"/>
 </node>
 <node CREATED="1269238785859" ID="Freemind_Link_482118644" MODIFIED="1280633996437" TEXT="No login if human isn&apos;t alive">
@@ -572,34 +653,44 @@
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
+<node CREATED="1283695890317" ID="Freemind_Link_1109105016" MODIFIED="1283695900437" TEXT="by 2010-09-04">
+<node CREATED="1282974821750" ID="Freemind_Link_844586629" MODIFIED="1283695666568" TEXT="Hotel Links to Hotel Search">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1283005710484" ID="Freemind_Link_651683932" MODIFIED="1283695709734" TEXT="Location photo onclick full screen">
+<icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1266111340984" ID="Freemind_Link_499177571" MODIFIED="1266111523828" POSITION="right" TEXT="Current">
-<icon BUILTIN="flag"/>
-<node CREATED="1266112839468" ID="Freemind_Link_674125175" MODIFIED="1266112859718" TEXT="Side fixing">
-<icon BUILTIN="clanbomber"/>
-<node CREATED="1269275488521" ID="Freemind_Link_884635171" MODIFIED="1269275494052" TEXT="Fix just a second in IE">
-<node CREATED="1269275495380" ID="Freemind_Link_1539917814" MODIFIED="1269277581521" TEXT="Fixed positioning"/>
 </node>
-<node CREATED="1275233658718" ID="Freemind_Link_660425762" MODIFIED="1275233663406" TEXT="UPDATE">
-<node CREATED="1275233664140" ID="Freemind_Link_1914339065" MODIFIED="1275233682062" TEXT="Local GMap Version to 1.1.0 "/>
 </node>
-<node CREATED="1275238187281" ID="Freemind_Link_872128949" MODIFIED="1275238198062" TEXT="Move Right click code to JS"/>
-<node CREATED="1275247786984" ID="Freemind_Link_841143219" MODIFIED="1275247834859" TEXT="Startup and Shutdown mails"/>
-<node CREATED="1275560646484" ID="Freemind_Link_1853958841" MODIFIED="1275560665390" TEXT="Skeleton view with dbg css on shows overlaps"/>
+<node BACKGROUND_COLOR="#cc0000" COLOR="#ffffff" CREATED="1283695985941" ID="Freemind_Link_1290727434" MODIFIED="1283872257796" POSITION="right" TEXT="FOCUS">
+<font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
+<icon BUILTIN="ksmiletris"/>
+<node CREATED="1283696103180" ID="Freemind_Link_187413455" MODIFIED="1283704465660" TEXT="1st Time Experience">
+<node CREATED="1283702493670" ID="Freemind_Link_735119548" MODIFIED="1283702663030" TEXT="Useful">
+<arrowlink DESTINATION="Freemind_Link_1388025006" ENDARROW="Default" ENDINCLINATION="152;0;" ID="Freemind_Arrow_Link_977531318" STARTARROW="None" STARTINCLINATION="152;0;"/>
 </node>
-<node CREATED="1266887457609" ID="Freemind_Link_1934932138" MODIFIED="1266887461968" TEXT="I Like Places">
-<node CREATED="1275630483843" ID="Freemind_Link_811522395" MODIFIED="1275630513796" TEXT="NAVIGATION">
-<node CREATED="1275630514281" ID="Freemind_Link_1575097980" MODIFIED="1275630520437" TEXT="Fix Sidebar Links"/>
-<node CREATED="1275630522781" ID="Freemind_Link_1615062004" MODIFIED="1275630539546" TEXT="Check These Linked Pages for Working"/>
+<node CREATED="1283696193199" ID="Freemind_Link_649016232" MODIFIED="1283702489608" TEXT="Fast"/>
+<node CREATED="1283704466847" ID="Freemind_Link_257352169" MODIFIED="1283704486768" TEXT="Practical">
+<arrowlink DESTINATION="Freemind_Link_1388025006" ENDARROW="Default" ENDINCLINATION="154;0;" ID="Freemind_Arrow_Link_529331154" STARTARROW="None" STARTINCLINATION="154;0;"/>
 </node>
-<node CREATED="1275556343203" ID="Freemind_Link_373425608" MODIFIED="1275556361531" TEXT="PRESS RELEASE SUBMISSIONS">
-<node CREATED="1275556363515" ID="Freemind_Link_1449575583" MODIFIED="1275556376046" TEXT="50 sites on google bookarks"/>
+<node CREATED="1283702490170" ID="Freemind_Link_1879633110" MODIFIED="1283702689874" TEXT="Attractive">
+<arrowlink DESTINATION="Freemind_Link_1388025006" ENDARROW="Default" ENDINCLINATION="157;0;" ID="Freemind_Arrow_Link_1494181713" STARTARROW="None" STARTINCLINATION="157;0;"/>
 </node>
-<node CREATED="1275556382078" ID="Freemind_Link_1362219142" MODIFIED="1275556389828" TEXT="RECIPROCAL LINKING ON BLOGS">
-<node CREATED="1275556390531" ID="Freemind_Link_1216918716" MODIFIED="1275556424624" TEXT="Find similar like blogs and get links"/>
 </node>
-<node CREATED="1277979649390" FOLDED="true" ID="Freemind_Link_242564620" MODIFIED="1277979652531" TEXT="BLOG">
+<node CREATED="1283702522967" ID="Freemind_Link_1388025006" MODIFIED="1283704486768" TEXT="Fun Map"/>
+<node CREATED="1283702949642" ID="Freemind_Link_339679164" MODIFIED="1283702961845" TEXT="Email Intro">
+<node CREATED="1283702969080" FOLDED="true" ID="Freemind_Link_1672305503" MODIFIED="1283703045800" TEXT="Bookmarks and Help Email">
+<node CREATED="1283703049597" ID="Freemind_Link_1712974284" MODIFIED="1283703080504" TEXT="Places and Events Intro"/>
+<node CREATED="1283703090066" ID="Freemind_Link_34457799" MODIFIED="1283703224178" TEXT="Places and Events Help"/>
+<node CREATED="1283703225413" ID="Freemind_Link_790559746" MODIFIED="1283703238085" TEXT="Public Places Intro"/>
+<node CREATED="1283703242960" ID="Freemind_Link_984471606" MODIFIED="1283703248023" TEXT="Public Places Help"/>
+<node CREATED="1283703251429" ID="Freemind_Link_82503060" MODIFIED="1283703270867" TEXT="Bookmarks for Hotels, Flights, Cars and Cruises"/>
+</node>
+</node>
+</node>
+<node CREATED="1277979649390" FOLDED="true" ID="Freemind_Link_242564620" MODIFIED="1283704394740" POSITION="right" TEXT="BLOG">
+<icon BUILTIN="Mail"/>
 <node CREATED="1277999161031" ID="Freemind_Link_601044398" MODIFIED="1277999163109" TEXT="TAG">
 <node CREATED="1277979653453" ID="Freemind_Link_624513466" MODIFIED="1277999183015" TEXT="FEATURES">
 <node CREATED="1277979666750" ID="Freemind_Link_771089732" MODIFIED="1277979703796" TEXT="LOCATION LIST FILTER"/>
@@ -612,17 +703,115 @@
 </node>
 </node>
 </node>
-<node CREATED="1278409792968" ID="Freemind_Link_1775907172" MODIFIED="1278409809296" TEXT="POST LOAD HANDLING FOR ISALIVE IN ENTITIES"/>
+<node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" ID="Freemind_Link_1303374308" MODIFIED="1283778680546" POSITION="right" TEXT="Lab">
+<icon BUILTIN="wizard"/>
+<node CREATED="1283778655218" FOLDED="true" ID="Freemind_Link_1143795250" MODIFIED="1283779225796" TEXT="Guide">
+<icon BUILTIN="help"/>
+<node CREATED="1283871999906" ID="Freemind_Link_1891457905" MODIFIED="1283872001937" TEXT="SPILL">
+<node CREATED="1283778709546" ID="Freemind_Link_1267112987" MODIFIED="1283779225781" TEXT="first node should be a clear name">
+<icon BUILTIN="help"/>
+</node>
+<node CREATED="1283778731421" ID="Freemind_Link_72849697" MODIFIED="1283779225796" TEXT="second node should be a clear problem">
+<icon BUILTIN="help"/>
+</node>
+<node CREATED="1283778741140" ID="Freemind_Link_929868034" MODIFIED="1283779225796" TEXT="third level should be a clear solution">
+<icon BUILTIN="help"/>
+</node>
+<node CREATED="1283778760218" ID="Freemind_Link_1421236166" MODIFIED="1283779225781" TEXT="fouth level should be an approach to the clear solution">
+<icon BUILTIN="help"/>
+</node>
+<node CREATED="1283779105156" ID="Freemind_Link_3750248" MODIFIED="1283779225781" TEXT="fourth leve should have a node with the entities invovled">
+<icon BUILTIN="help"/>
+</node>
+</node>
+<node CREATED="1283872008593" ID="Freemind_Link_236959404" MODIFIED="1283872010218" TEXT="SELL">
+<node CREATED="1283872171218" ID="Freemind_Link_1566316578" MODIFIED="1283872192046" TEXT="Remove Remove Remove. Stripe Down Everything!"/>
+<node CREATED="1283872201750" ID="Freemind_Link_1046609847" MODIFIED="1283872257796" TEXT="Recheck FOCUS">
+<arrowlink DESTINATION="Freemind_Link_1290727434" ENDARROW="Default" ENDINCLINATION="307;0;" ID="Freemind_Arrow_Link_966682086" STARTARROW="None" STARTINCLINATION="307;0;"/>
+</node>
+</node>
+</node>
+<node CREATED="1283778802578" ID="Freemind_Link_371419217" MODIFIED="1283871925359" TEXT="Spill">
+<icon BUILTIN="bookmark"/>
+</node>
+<node CREATED="1283871927859" ID="Freemind_Link_504513171" MODIFIED="1283871940437" TEXT="Sell">
+<icon BUILTIN="bell"/>
+<node CREATED="1283778806593" ID="Freemind_Link_991036540" MODIFIED="1283778870015" TEXT="Fun Map">
+<icon BUILTIN="full-1"/>
+<node CREATED="1283778817171" ID="Freemind_Link_832808578" MODIFIED="1283779022984" TEXT="How do I find where to have fun at this place?">
+<icon BUILTIN="full-2"/>
+<node COLOR="#338800" CREATED="1283778835734" ID="Freemind_Link_853743146" MODIFIED="1283873340531" TEXT="I see a map of fun places made by users. Contains Ranking and Pricing.">
+<icon BUILTIN="full-3"/>
+<node CREATED="1283779122718" ID="Freemind_Link_1577448723" MODIFIED="1283779575187" TEXT="Who&apos;s involved?">
+<icon BUILTIN="full-4"/>
+<node CREATED="1283779143656" ID="Freemind_Link_671774638" MODIFIED="1283779149906" TEXT="Fun seeker"/>
+</node>
+<node CREATED="1283871614484" ID="Freemind_Link_1027859579" MODIFIED="1283873416234" TEXT="LatLong Spot Cloud Ranking On User Count and On Events and Event budget estimate">
+<icon BUILTIN="idea"/>
+<node CREATED="1283871718859" ID="Freemind_Link_579131481" MODIFIED="1283871737421" TEXT="Each area has several events and users joining that event"/>
+<node CREATED="1283871740921" ID="Freemind_Link_321059686" MODIFIED="1283871753875" TEXT="Each user will add to the ranking(when he joins the event)"/>
+<node CREATED="1283872887031" ID="Freemind_Link_1669583540" MODIFIED="1283873538203" TEXT="Each user will rank his experience of the event he joins"/>
+<node CREATED="1283872343953" ID="Freemind_Link_1442871832" MODIFIED="1283872359187" TEXT="Dotted Heat Map Instead of Place Names"/>
+<node CREATED="1283873417296" ID="Freemind_Link_1391675943" MODIFIED="1283873430359" TEXT="Mode of Budget Estimates"/>
+<node CREATED="1284107994655" ID="Freemind_Link_4483558" MODIFIED="1284108035494" TEXT="A user will provide latlong info when creating a location">
+<icon BUILTIN="help"/>
+<node CREATED="1284108036776" ID="Freemind_Link_1424842828" MODIFIED="1284108039620" TEXT="Marketable?">
+<node CREATED="1284108043293" ID="Freemind_Link_876212936" MODIFIED="1284108054828" TEXT="Useful?"/>
+<node CREATED="1284108058844" ID="Freemind_Link_809528463" MODIFIED="1284108060485" TEXT="Fast?"/>
+<node CREATED="1284108060970" ID="Freemind_Link_885975850" MODIFIED="1284108064252" TEXT="Practical?"/>
+</node>
+<node CREATED="1284108081866" ID="Freemind_Link_1309351158" MODIFIED="1284108101965" TEXT="This is a critical requirement for the server as this is where the location data is taken"/>
+<node CREATED="1284108104560" ID="Freemind_Link_830250831" MODIFIED="1284108119407" TEXT="Is this action configurable later. is that better"/>
+</node>
+</node>
+</node>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1283703158802" ID="Freemind_Link_640830008" MODIFIED="1283703160896" POSITION="right" TEXT="Marketing">
+<node CREATED="1283703177927" FOLDED="true" ID="Freemind_Link_1817341781" MODIFIED="1283703202084" TEXT="Checklist">
+<node CREATED="1283703161521" ID="Freemind_Link_63383641" MODIFIED="1283703168865" TEXT="Does it do what it says?"/>
+<node CREATED="1283703169490" ID="Freemind_Link_499084225" MODIFIED="1283703174943" TEXT="Does it say what is does?"/>
+</node>
+</node>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1266112502968" FOLDED="true" ID="Freemind_Link_102406912" MODIFIED="1283702881594" POSITION="left" TEXT="Abandonned">
+<icon BUILTIN="button_cancel"/>
+<node CREATED="1275556343203" ID="Freemind_Link_373425608" MODIFIED="1275556361531" TEXT="PRESS RELEASE SUBMISSIONS">
+<node CREATED="1275556363515" ID="Freemind_Link_1449575583" MODIFIED="1275556376046" TEXT="50 sites on google bookarks"/>
+</node>
+</node>
+<node CREATED="1283704339086" FOLDED="true" ID="Freemind_Link_386369610" MODIFIED="1283704377334" POSITION="right" TEXT="QA">
+<icon BUILTIN="pencil"/>
+<node CREATED="1275630483843" ID="Freemind_Link_811522395" MODIFIED="1275630513796" TEXT="NAVIGATION">
+<node CREATED="1275630514281" ID="Freemind_Link_1575097980" MODIFIED="1275630520437" TEXT="Fix Sidebar Links"/>
+<node CREATED="1275630522781" ID="Freemind_Link_1615062004" MODIFIED="1275630539546" TEXT="Check These Linked Pages for Working"/>
+</node>
+</node>
+<node CREATED="1266112839468" FOLDED="true" ID="Freemind_Link_674125175" MODIFIED="1266112859718" POSITION="right" TEXT="Side fixing">
+<icon BUILTIN="clanbomber"/>
+<node CREATED="1275247786984" ID="Freemind_Link_841143219" MODIFIED="1275247834859" TEXT="Startup and Shutdown mails"/>
 <node CREATED="1270054635078" ID="Freemind_Link_408918916" MODIFIED="1281967604656" TEXT="JSP forward or deny on OpenEJB"/>
 </node>
-<node CREATED="1275667013786" ID="Freemind_Link_374011926" MODIFIED="1280636215964" TEXT="NEXT">
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1275667013786" FOLDED="true" ID="Freemind_Link_374011926" MODIFIED="1283704601093" POSITION="right" TEXT="NEXT">
+<arrowlink DESTINATION="Freemind_Link_374011926" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Freemind_Arrow_Link_447360971" STARTARROW="None" STARTINCLINATION="0;0;"/>
+<font BOLD="true" NAME="Comic Sans MS" SIZE="14"/>
+<icon BUILTIN="flag"/>
 <node CREATED="1281972204546" ID="Freemind_Link_1990924033" MODIFIED="1281972215078" TEXT="Wall Link Href"/>
-<node CREATED="1282974821750" ID="Freemind_Link_844586629" MODIFIED="1282974830328" TEXT="Hotel Links to Hotel Search"/>
-<node CREATED="1283005710484" ID="Freemind_Link_651683932" MODIFIED="1283005727781" TEXT="Location photo onclick full screen"/>
 </node>
+<node CREATED="1284106510102" ID="Freemind_Link_1687377836" MODIFIED="1284107539812" POSITION="left" TEXT="Distractions">
+<node CREATED="1284106515588" ID="Freemind_Link_276492500" MODIFIED="1284106703251" TEXT="Static Map for Location Pages">
+<icon BUILTIN="full-1"/>
 </node>
-<node CREATED="1266112502968" ID="Freemind_Link_102406912" MODIFIED="1266112513765" POSITION="left" TEXT="Abandonned">
-<icon BUILTIN="button_cancel"/>
+<node CREATED="1284107540703" ID="Freemind_Link_1533962093" MODIFIED="1284107560787" TEXT="Open Social Platform Implementation">
+<icon BUILTIN="full-4"/>
+</node>
+<node CREATED="1284108211667" ID="Freemind_Link_508162469" MODIFIED="1284108238814" TEXT="How do i get to this location, map">
+<icon BUILTIN="full-2"/>
+</node>
+<node CREATED="1284108220528" ID="Freemind_Link_796314945" MODIFIED="1284108238830" TEXT="Static map image after providing latlong data">
+<icon BUILTIN="full-2"/>
+</node>
 </node>
 </node>
 </map>

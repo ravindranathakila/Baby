@@ -185,7 +185,7 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
      */
     @Override
     public String toString() {
-        String toString_ = new String(getClass().getName());
+        String toString_ = getClass().getName();
         try {
             final Field[] fields = {getClass().getDeclaredField("entityManager")};
 
@@ -212,7 +212,7 @@ final public class CrudService<T> extends AbstractSLBCallbacks implements CrudSe
      * @return changeLog
      */
     public String toString(final boolean showChangeLog__) {
-        String changeLog = new String(toString() + "\n");
+        String changeLog = toString() + "\n";
         changeLog += "20090915 Added Javadoc\n";
         return showChangeLog__ ? changeLog : toString();
     }

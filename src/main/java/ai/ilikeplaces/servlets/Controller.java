@@ -210,6 +210,20 @@ final public class
                 return DocPrivateEventDelete;
             }},
 
+
+        WOEIDGrabber("ai/ilikeplaces/widgets/WOEIDGrabber.xhtml"
+        ) {
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocWOEIDGrabber;
+            }},
+
         FindFriend("ai/ilikeplaces/widgets/friend/friend_find.xhtml",
                    Controller.Page.friendFindSearchTextInput,
                    Controller.Page.friendFindSearchButtonInput,
@@ -427,6 +441,8 @@ Controller.Page.friendAddDisplayNameLabel
         PrivateLocationCreate("ai/ilikeplaces/widgets/privatelocation/private_location_create.xhtml",
                               Controller.Page.privateLocationCreateName,
                               Controller.Page.privateLocationCreateInfo,
+                              Controller.Page.privateLocationCreateWOEID,
+                              Controller.Page.privateLocationCreateWOEIDGrabber,
                               Controller.Page.privateLocationCreateSave,
                               Controller.Page.PrivateLocationCreateCNotice,
                               Controller.Page.PrivateLocaionCreateCTitle,
@@ -730,6 +746,10 @@ Controller.Page.friendAddDisplayNameLabel
         final static public String privateEventDeleteWall = "privateEventDeleteWall";
         final static public String privateEventDeleteAlbum = "privateEventDeleteAlbum";
 
+        /*DocWOIEDGrabber Page*/
+        final static public String DocWOEIDGrabber = "DocWOEIDGrabber";
+        /*DocWOIEDGrabber IDs*/
+
         /*FindFriend Page*/
         final static public String DocFindFriend = "DocFindFriend";
         /*FindFriend IDs*/
@@ -843,6 +863,8 @@ Controller.Page.friendAddDisplayNameLabel
         /*Private Location Create IDs*/
         final static public String privateLocationCreateName = "privateLocationCreateName";
         final static public String privateLocationCreateInfo = "privateLocationCreateInfo";
+        final static public String privateLocationCreateWOEID = "privateLocationCreateWOEID";
+        final static public String privateLocationCreateWOEIDGrabber = "privateLocationCreateWOEIDGrabber";
         final static public String privateLocationCreateSave = "privateLocationCreateSave";
         final static public String privateLocationDeleteOwners = "privateLocationDeleteOwners";
         final static public String privateLocationDeleteVisitors = "privateLocationDeleteVisitors";
@@ -977,6 +999,8 @@ Controller.Page.friendAddDisplayNameLabel
     final PageFace privateEventView = Page.PrivateEventView;
     final PageFace privateEventDelete = Page.PrivateEventDelete;
 
+    final PageFace wOIEDGrabber = Page.WOEIDGrabber;
+
     final PageFace skeleton = Page.Skeleton;
     final PageFace organize = Page.Organize;
     final PageFace findFriend = Page.Friends;
@@ -1107,6 +1131,8 @@ Controller.Page.friendAddDisplayNameLabel
 
             inhs__.registerItsNatDocFragmentTemplate(privateEventDelete.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateEventDelete));
 
+            inhs__.registerItsNatDocFragmentTemplate(wOIEDGrabber.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(wOIEDGrabber));
+
             inhs__.registerItsNatDocFragmentTemplate(findFriendWidget.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(findFriendWidget));
 
             inhs__.registerItsNatDocFragmentTemplate(friendAdd.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(friendAdd));
@@ -1182,7 +1208,7 @@ Controller.Page.friendAddDisplayNameLabel
             final Object attribute__ = itsNatHttpSession.getAttribute(ServletLogin.HumanUser);
             final SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper = attribute__ == null ? null : (SessionBoundBadRefWrapper<HumanUserLocal>) attribute__;
 
-            if (sessionBoundBadRefWrapper != null & sessionBoundBadRefWrapper.boundInstance.getHumanUserId() != null) {
+            if (sessionBoundBadRefWrapper != null && sessionBoundBadRefWrapper.boundInstance.getHumanUserId() != null) {
                 try {
                     ((HttpServletResponse) response__.getServletResponse()).sendRedirect(LOCATION_HUB);
                 } catch (final IOException e) {
@@ -1367,13 +1393,7 @@ Controller.Page.friendAddDisplayNameLabel
 
     private final static void PutAllPageElementIdsByPage(final PageFace page__, final String... ids__) {
         final HashSet<String> ids_ = new HashSet<String>();
-        for (final String id_ : ids__) {
-            /**
-             * Do not verify if element exists in "document" here as elements
-             * can be dynamically created
-             */
-            ids_.add(id_);
-        }
+        ids_.addAll(Arrays.asList(ids__));
         GlobalPageIdRegistry.put(page__, ids_);
     }
 }

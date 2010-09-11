@@ -1,0 +1,72 @@
+<!--
+~ @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+-->        <!--?xml version="1.0" encoding="UTF-8"?-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>WOEIDGrabber</title>
+</head>
+<body>
+<div class="span-14 last" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
+    <script type="text/javascript">
+
+        function initialize_WOEIDGrabber_map(){
+        var myLatlng = new google.maps.LatLng(-34.397, 150.644);
+        var myLatlng2 = new google.maps.LatLng(-35.397, 151.644);
+        var myLatlng3 = new google.maps.LatLng(-36.397, 152.644);
+          var myOptions = {
+            zoom: 8,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+          var map = new google.maps.Map(document.getElementById("WOEIDGrabber_map"), myOptions);
+
+          var placeMarker = new google.maps.Marker({
+              position: myLatlng,
+              map: map,
+              title:"Is it here? if so, click on this marker!!!"
+          });
+
+          google.maps.event.addListener(placeMarker, 'click', function() {
+            alert(map.getZoom());
+            if(map.getZoom() > 10 ){
+                if(confirm("Here? Sure? Latitude Longitude Value:" + map.getCenter().toString())){
+                    privateLocationCreateWOEIDUpdate(map.getCenter().lat(), map.getCenter().lng());
+                }
+            }else{
+                alert("nah! i'm not that dumb! u've gotto zoom in on the exact place!");
+            }
+          });
+
+          google.maps.event.addListener(map, 'center_changed', function() {
+              placeMarker.setPosition(map.getCenter());
+          });
+
+        }
+
+        function check(){
+            alert('check ok');
+        }
+        function initialize_gmap_scripts(){
+          document.getElementById("WOEIDGrabber_load_click").style.display = "none";
+          document.getElementById("WOEIDGrabber_map_wrapper").style.display = "block";
+          var scripts = document.createElement("script");
+          scripts.type = "text/javascript";
+          scripts.src = "http://maps.google.com/maps/api/js?sensor=false&callback=initialize_WOEIDGrabber_map";
+          document.body.appendChild(scripts);
+          alert("hold on to ur seat tight! we're gonna spin the Earth to find your place!;)");
+        }
+        
+    </script>
+
+    <div class="span-14 last" style="overflow:hidden;" onclick="javascript:initialize_gmap_scripts();" id="WOEIDGrabber_load_click">
+        Click here to find your place!
+    </div>
+    <div class="span-14 last" style="overflow:hidden;display:none;" id="WOEIDGrabber_map_wrapper">
+            <div id="WOEIDGrabber_map" class="vtip" title="<i>Double-click to Zoom<br/>Links open in new tabs</i>" style="height:410px;">
+            </div>
+    </div>
+    <hr/>
+</div>
+</body>
+</html>
