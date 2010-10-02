@@ -23,11 +23,11 @@ import org.w3c.dom.html.HTMLDocument;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public class WOEIDGrabber extends AbstractWidgetListener {
+public class DownTownHeatMap extends AbstractWidgetListener {
 
     private static final String WOEIDUPDATE_TOKEN = "WOEIDUPDATE_TOKEN";
-    private static final String WOEIDGrabberWOEIDUpdate =
-            "\nWOEIDGrabberWOEIDUpdate = function(lat,lng){document.getElementById('" + WOEIDUPDATE_TOKEN + "').value = '' + lat + ',' + lng; document.getElementById('" + WOEIDUPDATE_TOKEN + "').focus(); return document.getElementById('" + WOEIDUPDATE_TOKEN + "');}\n";
+    private static final String DownTownHeatMapWOEIDUpdate =
+            "\nDownTownHeatMapWOEIDUpdate = function(lat,lng){document.getElementById('" + WOEIDUPDATE_TOKEN + "').value = '' + lat + ',' + lng; document.getElementById('" + WOEIDUPDATE_TOKEN + "').focus(); return document.getElementById('" + WOEIDUPDATE_TOKEN + "');}\n";
 
 
     private Element elementToUpdateWithWOEID;
@@ -37,8 +37,8 @@ public class WOEIDGrabber extends AbstractWidgetListener {
      * @param appendToElement__
      * @param elementToUpdateWithWOEID
      */
-    public WOEIDGrabber(final ItsNatServletRequest request__, final Element appendToElement__, final Element elementToUpdateWithWOEID) {
-        super(request__, Controller.Page.WOEIDGrabber, appendToElement__, elementToUpdateWithWOEID);
+    public DownTownHeatMap(final ItsNatServletRequest request__, final Element appendToElement__, final Element elementToUpdateWithWOEID) {
+        super(request__, Controller.Page.DownTownHeatMap, appendToElement__, elementToUpdateWithWOEID);
     }
 
     @Override
@@ -47,9 +47,9 @@ public class WOEIDGrabber extends AbstractWidgetListener {
         elementToUpdateWithWOEID = (Element) initArgs[0];
 
         itsNatDocument_.addCodeToSend(
-                WOEIDGrabberWOEIDUpdate.replace(
+                DownTownHeatMapWOEIDUpdate.replace(
                         WOEIDUPDATE_TOKEN,
-                        $$(Controller.Page.WOEIDGrabberWOEID).getAttribute(MarkupTag.GENERIC.id()))
+                        $$(Controller.Page.DownTownHeatMapWOEID).getAttribute(MarkupTag.GENERIC.id()))
         );
     }
 
@@ -64,7 +64,7 @@ public class WOEIDGrabber extends AbstractWidgetListener {
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
 
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.WOEIDGrabberWOEID), EventType.BLUR.toString(), new EventListener() {
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapWOEID), EventType.BLUR.toString(), new EventListener() {
 
             final Validator v = new Validator();
             RefObj<String> woeid;

@@ -16,7 +16,9 @@ import net.sf.oval.constraint.NotNull;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public class WallEntry extends RefObj<String> {
+public class
+        WallEntry extends RefObj<String> {
+    private static final String SPEAK_UP = "Speak up!";
 
     public WallEntry() {
     }
@@ -26,9 +28,9 @@ public class WallEntry extends RefObj<String> {
     }
 
     @IsInvariant
-    @NotNull(message = "Sorry! You must enter a value.")
-    @NotEmpty(message = "Sorry! You must enter a value")
-    @WallSeparators(message = "Sorry! You cannot use the characters " + WallSeparatorsCheck.GT + " or " + WallSeparatorsCheck.PIPE)
+    @NotNull(message = SPEAK_UP)
+    @NotEmpty(message = SPEAK_UP)
+    //@WallSeparators(message = "Don't use " + WallSeparatorsCheck.GT + " or " + WallSeparatorsCheck.PIPE)
     @Override
     public String getObj() {
         return obj;

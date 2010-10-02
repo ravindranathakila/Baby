@@ -4,12 +4,12 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
-import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.logic.crud.unit.CPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.DPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.RPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.UPrivateLocationLocal;
 import ai.ilikeplaces.util.*;
+import com.google.gdata.data.geo.impl.W3CPoint;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -54,11 +54,29 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
     private static final String UPDATE_PRIVATE_LOCATION_FAILED = "Update private location FAILED!";
 
 
+    @Deprecated
     @Override
-    public Return<PrivateLocation> cPrivateLocation(final RefObj<String> humanId, final String privateLocationName, final String privateLocationInfo){
+    public Return<PrivateLocation> cPrivateLocation(final RefObj<String> humanId, final String privateLocationName, final String privateLocationInfo) {
         Return<PrivateLocation> r;
         try {
             r = new ReturnImpl<PrivateLocation>(cPrivateLocationLocal.doNTxCPrivateLocation(humanId.getObjectAsValid(), privateLocationName, privateLocationInfo), SAVE_PRIVATE_LOCATION_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<PrivateLocation>(t, UPDATE_PRIVATE_LOCATION_FAILED, true);
+        }
+        return r;
+    }
+
+    @Override
+    public Return<PrivateLocation> cPrivateLocation(final RefObj<String> humanId, final RefObj<String> privateLocationName, final RefObj<String> privateLocationInfo, final RefObj<W3CPoint> woeid) {
+        Return<PrivateLocation> r;
+        try {
+            r = new ReturnImpl<PrivateLocation>(cPrivateLocationLocal.doNTxCPrivateLocation(
+                    humanId.getObjectAsValid(),
+                    privateLocationName.getObjectAsValid(),
+                    privateLocationInfo.getObjectAsValid(),
+                    woeid.getObjectAsValid().getLatitude(),
+                    woeid.getObjectAsValid().getLongitude()
+            ), SAVE_PRIVATE_LOCATION_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateLocation>(t, UPDATE_PRIVATE_LOCATION_FAILED, true);
         }

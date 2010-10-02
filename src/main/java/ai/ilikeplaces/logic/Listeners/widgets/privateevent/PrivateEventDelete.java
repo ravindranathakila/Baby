@@ -12,6 +12,7 @@ import ai.ilikeplaces.logic.Listeners.widgets.MemberHandler;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
+import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
@@ -52,6 +53,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
     private static final String HAS_REMOVED_YOU_AS_A_VISITOR_OF = " has removed you as a Visitor of ";
     private static final String HAS_INVITED_YOU_TO = " has invited you to ";
     private static final String HAS_CANCELLED_YOUR_INVITATION_TO = " has cancelled your invitation to ";
+    private static final String ARROW_RIGHT_GIF = "arrow-right.gif";
 
     /**
      * @param request__
@@ -96,7 +98,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                         }
                         setImage:
                         {
-                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + "arrow-right.gif");
+                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + ARROW_RIGHT_GIF);
                         }
                     }
                 }
@@ -104,13 +106,27 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
             if ((Boolean) initArgs[2]) {
                 new WallWidgetPrivateEvent(request, $$(Page.privateEventDeleteWall), humanId, r.returnValue().getPrivateEventId());
                 new AlbumManager(request, $$(Page.privateEventDeleteAlbum), humanId, r.returnValue().getPrivateEventId());
+
+                final GeoCoord gc = new GeoCoord();
+                gc.setObj(r.returnValue().getPrivateLocation().getPrivateLocationLatitude() + "," + r.returnValue().getPrivateLocation().getPrivateLocationLongitude());
+                gc.validateThrow();
+
+                $$(privateEventDeleteLocationMap).setAttribute(MarkupTag.IMG.src(),
+                                                               new Parameter("http://maps.google.com/maps/api/staticmap")
+                                                                       .append("sensor", "false", true)
+                                                                       .append("center", gc.toString())
+                                                                       .append("size", "230x250")
+                                                                       .append("format", "jpg")
+                                                                       .append("markers", "color:0x7fe2ff|label:S|path=fillcolor:0xAA000033|color:0xFFFFFF00|"
+                                                                               + gc.toString())
+                                                                       .get());
             }
 
         } else {
             $$(privateEventDeleteNotice).setTextContent(r.returnMsg());
         }
 
-    }
+    }//init
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {

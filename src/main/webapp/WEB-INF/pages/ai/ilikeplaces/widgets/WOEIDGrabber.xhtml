@@ -11,15 +11,14 @@
     <script type="text/javascript">
 
         function initialize_WOEIDGrabber_map(){
-        var myLatlng = new google.maps.LatLng(-34.397, 150.644);
-        var myLatlng2 = new google.maps.LatLng(-35.397, 151.644);
-        var myLatlng3 = new google.maps.LatLng(-36.397, 152.644);
+        
+        var myLatlng = new google.maps.LatLng(0,0);
           var myOptions = {
-            zoom: 8,
+            zoom: 1,
             center: myLatlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
           };
-          var map = new google.maps.Map(document.getElementById("WOEIDGrabber_map"), myOptions);
+          map = new google.maps.Map(document.getElementById("WOEIDGrabber_map"), myOptions);
 
           var placeMarker = new google.maps.Marker({
               position: myLatlng,
@@ -27,14 +26,20 @@
               title:"Is it here? if so, click on this marker!!!"
           });
 
+        var infowindow = new google.maps.InfoWindow({
+            content: 'This should finally point to your intended location.<br/> Zoom in on the exact place, click on the marker to confirm! <br/> Zoom to street level!'
+        });
+
+        infowindow.open(map,placeMarker);
+
           google.maps.event.addListener(placeMarker, 'click', function() {
             alert(map.getZoom());
             if(map.getZoom() > 10 ){
-                if(confirm("Here? Sure? Latitude Longitude Value:" + map.getCenter().toString())){
-                    privateLocationCreateWOEIDUpdate(map.getCenter().lat(), map.getCenter().lng());
+                if(confirm("Here? Sure? Latitude,Longitude Value:" + map.getCenter().toString())){
+                    WOEIDGrabberWOEIDUpdate(map.getCenter().lat(), map.getCenter().lng()).focus();
                 }
             }else{
-                alert("nah! i'm not that dumb! u've gotto zoom in on the exact place!");
+                alert("Nah! U've gotto zoom in on the exact place!");
             }
           });
 
@@ -44,9 +49,6 @@
 
         }
 
-        function check(){
-            alert('check ok');
-        }
         function initialize_gmap_scripts(){
           document.getElementById("WOEIDGrabber_load_click").style.display = "none";
           document.getElementById("WOEIDGrabber_map_wrapper").style.display = "block";
@@ -59,6 +61,9 @@
         
     </script>
 
+    <div class="span-14 last">
+        <input type="text" id="WOEIDGrabberWOEID" value="0,0"/>
+    </div>
     <div class="span-14 last" style="overflow:hidden;" onclick="javascript:initialize_gmap_scripts();" id="WOEIDGrabber_load_click">
         Click here to find your place!
     </div>

@@ -17,14 +17,14 @@
 }
 
 .nav_link {
-    background-color:#a9abf1;
+    background-color:#892e40;
     color:#ffffff;
     height:25px;
     text-align:center;
     line-height:25px;
     font-size: 14px;
 } .nav_link:hover {
-    background-color: #cee7ef;
+    background-color: #fd78e1;
 }.nav_link a {
     vertical-align:middle;
     text-decoration: underline;

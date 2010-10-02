@@ -1,19 +1,18 @@
 package ai.ilikeplaces.logic.cdn;
 
-import javax.swing.*;
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.color.ColorSpace;
-import java.awt.event.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Line2D;
 import java.awt.image.*;
-import java.net.URL;
-import java.util.Collections;
-import java.util.Enumeration;
+import java.io.File;
+import java.io.IOException;
 import java.util.Hashtable;
-import java.util.Vector;
 
-public class Sampler extends Frame {
+/**
+ * Source: http://www.java2s.com/Code/Java/2D-Graphics-GUI/Imagedemo.htm
+ */
+public class Sampler {
     private Frame mImageFrame;
 
     private SplitImageComponent mSplitImageComponent;
@@ -21,19 +20,43 @@ public class Sampler extends Frame {
     private Hashtable mOps;
 
     public static void main(String[] args) {
-        String imageFile = "C:\\posterize\\22036_330336595855_726280855_5172426_6354785_n.jpg";
-        if (args.length > 0) {
-            imageFile = args[0];
+        //String imageFile = "C:\\posterize\\22036_330336595855_726280855_5172426_6354785_n.jpg";
+        //String imageFile = "C:\\posterize\\25510_419307415855_726280855_5734986_3496079_n.jpg";
+        String imageFile = "C:\\posterize\\output.jpg";
+        try {
+            saveImage(new Sampler().run(imageFile),new File("C:\\posterize\\output.jpg"));
+        } catch (final Exception e) {
+            e.printStackTrace(System.out);
         }
-        new Sampler(imageFile)
     }
 
-    public Sampler(String imageFile) {
-        super();
+
+    public Sampler getInstance() throws Exception {
+        return new Sampler();
+    }
+
+    public BufferedImage run(String imageFile) throws Exception {
         createOps();
-        createImageFrame(imageFile);
-        createUI();
-        setVisible(true);
+        setMSplitImageComponent(imageFile);
+
+//        create("Blur");
+//        create("Blur");
+//        create("Blur");
+//        create("Blur");
+//        create("Sharpen");
+
+        return create("Posterize");
+    }
+
+    public static void saveImage(final BufferedImage img, final File ref) throws IOException {
+        //final String format = (ref.endsWith(".png")) ? "png" : "jpg";
+        //ImageIO.write(img, format, new File(ref));
+        ImageIO.write(img, ref.getName().substring(ref.getName().lastIndexOf(".") + 1), ref);
+
+    }
+
+    private void setMSplitImageComponent(final String source) throws Exception {
+        mSplitImageComponent = new SplitImageComponent(source);
     }
 
     private void createOps() {
@@ -87,7 +110,8 @@ public class Sampler extends Frame {
         for (int i = 0; i < 256; i++) {
             brighten[i] = (short) (128 + i / 2);
             betterBrighten[i] = (short) (Math.sqrt((double) i / 255.0) * 255.0);
-            posterize[i] = (short) (i - (i % 32));
+            //posterize[i] = (short) (i - (i % 32));//Original
+            posterize[i] = (short) (i - (i % 64));
             invert[i] = (short) (255 - i);
             straight[i] = (short) i;
             zero[i] = (short) 0;
@@ -133,109 +157,109 @@ public class Sampler extends Frame {
                 .getInstance(ColorSpace.CS_GRAY), null));
     }
 
-    private void createImageFrame(String imageFile) {
-        // Create the image frame.
-        mSplitImageComponent = new SplitImageComponent(imageFile);
-        mImageFrame = new Frame(imageFile);
-        mImageFrame.setLayout(new BorderLayout());
-        mImageFrame.add(mSplitImageComponent, BorderLayout.CENTER);
-//    Utilities.sizeContainerToComponent(mImageFrame, mSplitImageComponent);
-        //  Utilities.centerFrame(mImageFrame);
-        mImageFrame.setVisible(true);
-    }
+//    private void createImageFrame(String imageFile) {
+//        // Create the image frame.
+//        mSplitImageComponent = new SplitImageComponent(imageFile);
+//        mImageFrame = new Frame(imageFile);
+//        mImageFrame.setLayout(new BorderLayout());
+//        mImageFrame.add(mSplitImageComponent, BorderLayout.CENTER);
+////    Utilities.sizeContainerToComponent(mImageFrame, mSplitImageComponent);
+//        //  Utilities.centerFrame(mImageFrame);
+//        mImageFrame.setVisible(true);
+//    }
 
-    private void createUI() {
-        setFont(new Font("Serif", Font.PLAIN, 12));
-        setLayout(new BorderLayout());
-        // Set our location to the left of the image frame.
-        setSize(200, 350);
-        Point pt = mImageFrame.getLocation();
-        setLocation(pt.x - getSize().width, pt.y);
+//    private void createUI() {
+//        setFont(new Font("Serif", Font.PLAIN, 12));
+//        setLayout(new BorderLayout());
+//        // Set our location to the left of the image frame.
+//        setSize(200, 350);
+//        Point pt = mImageFrame.getLocation();
+//        setLocation(pt.x - getSize().width, pt.y);
+//
+//        final Checkbox accumulateCheckbox = new Checkbox("Accumulate", false);
+//        final Label statusLabel = new Label("");
+//
+//        // Make a sorted list of the operators.
+//        Enumeration e = mOps.keys();
+//        Vector names = new Vector();
+//        while (e.hasMoreElements()) {
+//            names.addElement(e.nextElement());
+//        }
+//        Collections.sort(names);
+//        final java.awt.List list = new java.awt.List();
+//        for (int i = 0; i < names.size(); i++) {
+//            list.add((String) names.elementAt(i));
+//        }
+//        add(list, BorderLayout.CENTER);
+//
+//        // When an item is selected, do the corresponding transformation.
+//        list.addItemListener(new ItemListener() {
+//            public void itemStateChanged(ItemEvent ie) {
+//                if (ie.getStateChange() != ItemEvent.SELECTED) {
+//                    return;
+//                }
+//                String key = list.getSelectedItem();
+//                BufferedImageOp op = (BufferedImageOp) mOps.get(key);
+//                BufferedImage source = mSplitImageComponent.getSecondImage();
+//                boolean accumulate = accumulateCheckbox.getState();
+//                if (source == null || accumulate == false) {
+//                    source = mSplitImageComponent.getImage();
+//                }
+//                String previous = mImageFrame.getTitle() + " + ";
+//                if (accumulate == false) {
+//                    previous = "";
+//                }
+//                mImageFrame.setTitle(previous + key);
+//                statusLabel.setText("Performing " + key + "...");
+//                list.setEnabled(false);
+//                accumulateCheckbox.setEnabled(false);
+//                BufferedImage destination = op.filter(source, null);
+//                mSplitImageComponent.setSecondImage(destination);
+//                mSplitImageComponent.setSize(mSplitImageComponent
+//                        .getPreferredSize());
+//                mImageFrame.setSize(mImageFrame.getPreferredSize());
+//                list.setEnabled(true);
+//                accumulateCheckbox.setEnabled(true);
+//                statusLabel.setText("Performing " + key + "...done.");
+//            }
+//        });
+//
+//        Button loadButton = new Button("Load...");
+//        loadButton.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent ae) {
+//                FileDialog fd = new FileDialog(Sampler.this);
+//                fd.show();
+//                if (fd.getFile() == null) {
+//                    return;
+//                }
+//                String path = fd.getDirectory() + fd.getFile();
+//                mSplitImageComponent.setImage(path);
+//                mSplitImageComponent.setSecondImage(null);
+////        Utilities.sizeContainerToComponent(mImageFrame,
+//                //          mSplitImageComponent);
+//                mImageFrame.validate();
+//                mImageFrame.repaint();
+//            }
+//        });
+//
+//        Panel bottom = new Panel(new GridLayout(2, 1));
+//        Panel topBottom = new Panel();
+//        topBottom.add(accumulateCheckbox);
+//        topBottom.add(loadButton);
+//        bottom.add(topBottom);
+//        bottom.add(statusLabel);
+//        add(bottom, BorderLayout.SOUTH);
+//
+//        addWindowListener(new WindowAdapter() {
+//            public void windowClosing(WindowEvent e) {
+//                mImageFrame.dispose();
+//                dispose();
+//                System.exit(0);
+//            }
+//        });
+//    }
 
-        final Checkbox accumulateCheckbox = new Checkbox("Accumulate", false);
-        final Label statusLabel = new Label("");
-
-        // Make a sorted list of the operators.
-        Enumeration e = mOps.keys();
-        Vector names = new Vector();
-        while (e.hasMoreElements()) {
-            names.addElement(e.nextElement());
-        }
-        Collections.sort(names);
-        final java.awt.List list = new java.awt.List();
-        for (int i = 0; i < names.size(); i++) {
-            list.add((String) names.elementAt(i));
-        }
-        add(list, BorderLayout.CENTER);
-
-        // When an item is selected, do the corresponding transformation.
-        list.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent ie) {
-                if (ie.getStateChange() != ItemEvent.SELECTED) {
-                    return;
-                }
-                String key = list.getSelectedItem();
-                BufferedImageOp op = (BufferedImageOp) mOps.get(key);
-                BufferedImage source = mSplitImageComponent.getSecondImage();
-                boolean accumulate = accumulateCheckbox.getState();
-                if (source == null || accumulate == false) {
-                    source = mSplitImageComponent.getImage();
-                }
-                String previous = mImageFrame.getTitle() + " + ";
-                if (accumulate == false) {
-                    previous = "";
-                }
-                mImageFrame.setTitle(previous + key);
-                statusLabel.setText("Performing " + key + "...");
-                list.setEnabled(false);
-                accumulateCheckbox.setEnabled(false);
-                BufferedImage destination = op.filter(source, null);
-                mSplitImageComponent.setSecondImage(destination);
-                mSplitImageComponent.setSize(mSplitImageComponent
-                        .getPreferredSize());
-                mImageFrame.setSize(mImageFrame.getPreferredSize());
-                list.setEnabled(true);
-                accumulateCheckbox.setEnabled(true);
-                statusLabel.setText("Performing " + key + "...done.");
-            }
-        });
-
-        Button loadButton = new Button("Load...");
-        loadButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                FileDialog fd = new FileDialog(Sampler.this);
-                fd.show();
-                if (fd.getFile() == null) {
-                    return;
-                }
-                String path = fd.getDirectory() + fd.getFile();
-                mSplitImageComponent.setImage(path);
-                mSplitImageComponent.setSecondImage(null);
-//        Utilities.sizeContainerToComponent(mImageFrame,
-                //          mSplitImageComponent);
-                mImageFrame.validate();
-                mImageFrame.repaint();
-            }
-        });
-
-        Panel bottom = new Panel(new GridLayout(2, 1));
-        Panel topBottom = new Panel();
-        topBottom.add(accumulateCheckbox);
-        topBottom.add(loadButton);
-        bottom.add(topBottom);
-        bottom.add(statusLabel);
-        add(bottom, BorderLayout.SOUTH);
-
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                mImageFrame.dispose();
-                dispose();
-                System.exit(0);
-            }
-        });
-    }
-
-    class SplitImageComponent extends JPanel {
+    class SplitImageComponent {
         private BufferedImage mImage;
 
         private BufferedImage mSecondImage;
@@ -244,12 +268,11 @@ public class Sampler extends Frame {
 
         public SplitImageComponent(String path) {
             setImage(path);
-            init();
+            setSecondImage(mImage);
         }
 
         public SplitImageComponent(BufferedImage image) {
             setImage(image);
-            init();
         }
 
         public void setImage(String path) {
@@ -263,7 +286,6 @@ public class Sampler extends Frame {
 
         public void setSecondImage(BufferedImage image) {
             mSecondImage = image;
-            repaint();
         }
 
         public BufferedImage getImage() {
@@ -274,63 +296,14 @@ public class Sampler extends Frame {
             return mSecondImage;
         }
 
-        private void init() {
-            setBackground(Color.white);
-            addMouseListener(new MouseAdapter() {
-                public void mousePressed(MouseEvent me) {
-                    mSplitX = me.getX();
-                    repaint();
-                }
-            });
-            addMouseMotionListener(new MouseMotionAdapter() {
-                public void mouseDragged(MouseEvent me) {
-                    mSplitX = me.getX();
-                    repaint();
-                }
-            });
+    }
+
+    public Image blockingLoad(String path) {
+        Image image = Toolkit.getDefaultToolkit().getImage(path);
+        if (waitForImage(image) == false) {
+            return null;
         }
-
-        public void paint(Graphics g) {
-            Graphics2D g2 = (Graphics2D) g;
-            int width = getSize().width;
-            int height = getSize().height;
-
-            // Explicitly clear the window.
-            Rectangle clear = new Rectangle(0, 0, width, height);
-            g2.setPaint(getBackground());
-            g2.fill(clear);
-            // Clip the first image, if appropriate,
-            // to be on the right side of the split.
-            if (mSplitX != 0 && mSecondImage != null) {
-                Rectangle firstClip = new Rectangle(mSplitX, 0, width - mSplitX,
-                                                    height);
-                g2.setClip(firstClip);
-            }
-            g2.drawImage(getImage(), 0, 0, null);
-
-            if (mSplitX == 0 || mSecondImage == null) {
-                return;
-            }
-
-            Rectangle secondClip = new Rectangle(0, 0, mSplitX, height);
-            g2.setClip(secondClip);
-            g2.drawImage(mSecondImage, 0, 0, null);
-
-            Line2D splitLine = new Line2D.Float(mSplitX, 0, mSplitX, height);
-            g2.setClip(null);
-            g2.setColor(Color.white);
-            g2.draw(splitLine);
-        }
-
-        public Dimension getPreferredSize() {
-            int width = getImage().getWidth();
-            int height = getImage().getHeight();
-            if (mSecondImage != null) {
-                width = Math.max(width, mSecondImage.getWidth());
-                height = Math.max(height, mSecondImage.getHeight());
-            }
-            return new Dimension(width, height);
-        }
+        return image;
     }
 
     private Component sComponent = new Component() {
@@ -339,6 +312,7 @@ public class Sampler extends Frame {
     private final MediaTracker sTracker = new MediaTracker(sComponent);
 
     private int sID = 0;
+
 
     public boolean waitForImage(Image image) {
         int id;
@@ -357,22 +331,6 @@ public class Sampler extends Frame {
         return true;
     }
 
-    public Image blockingLoad(String path) {
-        Image image = Toolkit.getDefaultToolkit().getImage(path);
-        if (waitForImage(image) == false) {
-            return null;
-        }
-        return image;
-    }
-
-    public Image blockingLoad(URL url) {
-        Image image = Toolkit.getDefaultToolkit().getImage(url);
-        if (waitForImage(image) == false) {
-            return null;
-        }
-        return image;
-    }
-
     public BufferedImage makeBufferedImage(Image image) {
         return makeBufferedImage(image, BufferedImage.TYPE_INT_RGB);
     }
@@ -389,4 +347,17 @@ public class Sampler extends Frame {
         return bufferedImage;
     }
 
+    private BufferedImage create(final String key) {
+
+        BufferedImageOp op = (BufferedImageOp) mOps.get(key);
+        BufferedImage source = mSplitImageComponent.getSecondImage();
+        boolean accumulate = true;
+        if (source == null || accumulate == false) {
+            source = mSplitImageComponent.getImage();
+        }
+
+        BufferedImage destination = op.filter(source, null);
+        mSplitImageComponent.setSecondImage(destination);
+        return destination;
+    }
 }

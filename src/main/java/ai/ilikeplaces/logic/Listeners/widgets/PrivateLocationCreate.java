@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Info;
 import ai.ilikeplaces.logic.validators.unit.SimpleName;
@@ -38,15 +39,17 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
     RefObj<String> privateLocationInfo = null;
 
+    GeoCoord woeid = null;
+
     HumanId humanId = null;
 
     final private Logger logger = LoggerFactory.getLogger(PrivateLocationCreate.class.getName());
     private static final String SAVING_PRIVATE_LOCATION = "Saving private location";
     private static final String WAS_CREATED = " was created!";
 
-    private static final String PRIVATE_LOCATION_CREATE_WOEIDUPDATE_TOKEN = "privateLocationCreateWOEIDUpdateToken";
-    private static final String privateLocationCreateWOEIDUpdate =
-            "\nprivateLocationCreateWOEIDUpdate = function(lat,lng){document.getElementById('" + PRIVATE_LOCATION_CREATE_WOEIDUPDATE_TOKEN + "').value = '' + lat + ',' + lng;}\n";
+//    private static final String PRIVATE_LOCATION_CREATE_WOEIDUPDATE_TOKEN = "privateLocationCreateWOEIDUpdateToken";
+//    private static final String privateLocationCreateWOEIDUpdate =
+//            "\nprivateLocationCreateWOEIDUpdate = function(lat,lng){document.getElementById('" + PRIVATE_LOCATION_CREATE_WOEIDUPDATE_TOKEN + "').value = '' + lat + ',' + lng;}\n";
 
     /**
      * @param request__
@@ -63,6 +66,7 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
     @Override
     protected void init(final Object... initArgs) {
         this.humanId = new HumanId();
+        this.woeid = new GeoCoord();
         humanId.setObjAsValid((String) initArgs[0]);
 
         this.privateLocationName = new SimpleName();
@@ -73,11 +77,11 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
         {
             new WOEIDGrabber(request, $$(privateLocationCreateWOEIDGrabber), $$(privateLocationCreateWOEID));
         }
-        itsNatDocument_.addCodeToSend(
-                privateLocationCreateWOEIDUpdate.replace(
-                        PRIVATE_LOCATION_CREATE_WOEIDUPDATE_TOKEN,
-                        $$(privateLocationCreateWOEID).getAttribute(MarkupTag.GENERIC.id()))
-        );
+//        itsNatDocument_.addCodeToSend(
+//                privateLocationCreateWOEIDUpdate.replace(
+//                        PRIVATE_LOCATION_CREATE_WOEIDUPDATE_TOKEN,
+//                        $$(privateLocationCreateWOEID).getAttribute(MarkupTag.GENERIC.id()))
+//        );
     }
 
     @Override
@@ -138,32 +142,32 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateWOEID), EventType.BLUR.toString(), new EventListener() {
-
-            final RefObj<String> myprivateLocationInfo = privateLocationInfo;
-            final Validator v = new Validator();
-            RefObj<String> info;
-
-            @Override
-            public void handleEvent(final Event evt_) {
-                info = new Info(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
-                logger.debug("{}", info);
-                logger.debug("{}", $$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
-
-                if (info.validate(v) == 0) {
-                    myprivateLocationInfo.setObj(info.getObj());
-                    clear($$(PrivateLocationCreateCNotice));
-                } else {
-                    $$(PrivateLocationCreateCNotice).setTextContent(info.getViolationAsString());
-                }
-            }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
-        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+//        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateWOEID), EventType.BLUR.toString(), new EventListener() {
+//
+//            final RefObj<String> myprivateLocationInfo = privateLocationInfo;
+//            final Validator v = new Validator();
+//            RefObj<String> info;
+//
+//            @Override
+//            public void handleEvent(final Event evt_) {
+//                info = new Info(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+//                logger.debug("{}", info);
+//                logger.debug("{}", $$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
+//
+//                if (info.validate(v) == 0) {
+//                    myprivateLocationInfo.setObj(info.getObj());
+//                    clear($$(PrivateLocationCreateCNotice));
+//                } else {
+//                    $$(PrivateLocationCreateCNotice).setTextContent(info.getViolationAsString());
+//                }
+//            }
+//
+//            @Override
+//            public void finalize() throws Throwable {
+//                Loggers.finalized(this.getClass().getName());
+//                super.finalize();
+//            }
+//        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateSave), EventType.CLICK.toString(), new EventListener() {
 
@@ -171,23 +175,24 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
             final RefObj<String> myprivateLocationName = privateLocationName;
             final RefObj<String> myprivateLocationInfo = privateLocationInfo;
             final Validator v = new Validator();
+            final GeoCoord mywoeid = woeid;
 
             @Override
             public void handleEvent(final Event evt_) {
                 final SmartLogger sl;
                 logger.debug("{}", $$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
+                mywoeid.setObj($$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
 
-                if (myprivateLocationName.validate(v) == 0 && myprivateLocationInfo.validate(v) == 0) {
+                if (myprivateLocationName.validate(v) == 0 && myprivateLocationInfo.validate(v) == 0 && mywoeid.validate(v) == 0) {
                     sl = SmartLogger.start(Loggers.LEVEL.DEBUG, SAVING_PRIVATE_LOCATION, 10000, null, true);
-                    final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).cPrivateLocation(myhumanId, myprivateLocationName.getObj(), myprivateLocationInfo.getObj());
+                    final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).cPrivateLocation(
+                                    myhumanId,
+                                    myprivateLocationName,
+                                    myprivateLocationInfo,
+                                    mywoeid);
                     if (r.returnStatus() == 0) {
                         remove(evt_.getTarget(), EventType.CLICK, this);
                         $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationName.getObj() + WAS_CREATED);
-//                        $$(privateLocationCreateSave).setAttribute(MarkupTag.A.href(),
-//                                                                   new Parameter(Controller.Page.Organize.getURL())
-//                                                                           .append(Controller.Page.DocOrganizeCategory, 2, true)
-//                                                                           .append(Controller.Page.DocOrganizeLocation, r.returnValue().getPrivateLocationId())
-//                                                                           .get());
                         itsNatDocument_.addCodeToSend(JSCodeToSend.redirectPageWithURL(
                                 new Parameter(Controller.Page.Organize.getURL())
                                         .append(Controller.Page.DocOrganizeCategory, 2, true)
@@ -205,6 +210,8 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
                         $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationName.getViolationAsString());
                     } else if (myprivateLocationInfo.validate(v) != 0) {
                         $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationInfo.getViolationAsString());
+                    } else if (mywoeid.validate(v) != 0) {
+                        $$(PrivateLocationCreateCNotice).setTextContent(mywoeid.getViolationAsString());
                     }
                 }
             }

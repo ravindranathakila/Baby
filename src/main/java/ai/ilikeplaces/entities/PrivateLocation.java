@@ -14,10 +14,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Important, if privateLocationName & privateLocationSuperSet of two objects are equal,
- * then the two are talking about the same privateLocation. They should be merged.
- * i.e. Made to have the same id.
- *
+ * 
  * @author Ravindranath Akila
  */
 
@@ -43,6 +40,9 @@ public class PrivateLocation implements Serializable, RefreshData<PrivateLocatio
     public String privateLocationName;
     public String privateLocationInfo;
 
+    public Double privateLocationLatitude;
+    public Double privateLocationLongitude;
+
     /**
      * Usually other members having rights to that place.
      * They cannot delete the location though. Only the creator can.
@@ -54,6 +54,11 @@ public class PrivateLocation implements Serializable, RefreshData<PrivateLocatio
     final static public String privateLocationViewersCOL = "privateLocationViewers";
 
     public List<PrivateEvent> privateEvents;
+    private static final String PRIVATE_LOCATION = "PrivateLocation{";
+    private static final String PRIVATE_LOCATION_ID = "privateLocationId=";
+    private static final String LATITUDE = ", latitude=";
+    private static final String LONGITUDE = ", longitude=";
+    private static final char CLOSECURL = '}';
 
 
     /**
@@ -106,6 +111,24 @@ public class PrivateLocation implements Serializable, RefreshData<PrivateLocatio
         this.privateLocationInfo = privateLocationInfo__;
     }
 
+    @Column
+    public Double getPrivateLocationLatitude() {
+        return privateLocationLatitude;
+    }
+
+    public void setPrivateLocationLatitude(final Double privateLocationLatitude_) {
+        this.privateLocationLatitude = privateLocationLatitude_;
+    }
+
+    @Column
+    public Double getPrivateLocationLongitude() {
+        return privateLocationLongitude;
+    }
+
+    public void setPrivateLocationLongitude(final Double privateLocationLongitude_) {
+        this.privateLocationLongitude = privateLocationLongitude_;
+    }
+
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
     @WARNING(warning = "Owning as deleting a location should automatically reflect in humans, not vice versa.")
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
@@ -143,12 +166,14 @@ public class PrivateLocation implements Serializable, RefreshData<PrivateLocatio
         this.privateEvents = privateEvents;
     }
 
+
     @Override
     public String toString() {
-        return "PrivateLocation{" +
-                "privateLocationId=" + privateLocationId +
-                ", privateLocationName='" + privateLocationName + '\'' +
-                '}';
+        return PRIVATE_LOCATION +
+                PRIVATE_LOCATION_ID + privateLocationId +
+                LATITUDE + privateLocationLatitude +
+                LONGITUDE + privateLocationLongitude +
+                CLOSECURL;
     }
 
     /**

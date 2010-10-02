@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+  -->
+
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>\ilikeplaces\src\main\webapp\WEB-INF\pages\ai\ilikeplaces\widgets\DownTownHeatMap.xhtml</title>
+</head>
+<body>
+<div class="span-14 last" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
+    <script type="text/javascript">
+
+        focusLat = 0;
+        focusLng = 0;
+
+        function initialize_DownTownHeatMap_map(){
+
+        var myLatlng = new google.maps.LatLng(focusLat,focusLng);
+          var myOptions = {
+            zoom: 2,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+          map = new google.maps.Map(document.getElementById("DownTownHeatMap_map"), myOptions);
+
+          var placeMarker = new google.maps.Marker({
+              position: myLatlng,
+              map: map,
+              title:"Is it here? if so, click on this marker!!!"
+          });
+
+        var infowindow = new google.maps.InfoWindow({
+            content: 'This should finally point to your intended location.<br/> Zoom in on the exact place, click on the marker to confirm! <br/> Zoom to street level!'
+        });
+
+        infowindow.open(map,placeMarker);
+
+          google.maps.event.addListener(placeMarker, 'click', function() {
+            alert(map.getZoom());
+            if(map.getZoom() > 10 ){
+                if(confirm("Here? Sure? Latitude,Longitude Value:" + map.getCenter().toString())){
+                    DownTownHeatMapWOEIDUpdate(map.getCenter().lat(), map.getCenter().lng()).focus();
+                }
+            }else{
+                alert("U've gotto zoom in on the exact place!");
+            }
+          });
+
+          google.maps.event.addListener(map, 'center_changed', function() {
+              placeMarker.setPosition(map.getCenter());
+          });
+
+        }
+                                                                             W
+        function initialize_gmap_scripts(){
+          document.getElementById("DownTownHeatMap_load_click").style.display = "none";
+          document.getElementById("DownTownHeatMap_map_wrapper").style.display = "block";
+          var scripts = document.createElement("script");
+          scripts.type = "text/javascript";
+          scripts.src = "http://maps.google.com/maps/api/js?sensor=false&callback=initialize_DownTownHeatMap_map";
+          document.body.appendChild(scripts);
+          alert("Hold on to ur seat tight! Down Town is loading the heat map...");
+        }
+
+    </script>
+
+    <div class="span-14 last center">
+        <input type="text" id="DownTownHeatMapWOEID" value="0,0"/>
+    </div>
+    <div class="span-14 last" style="overflow:hidden;" onclick="javascript:initialize_gmap_scripts();" id="DownTownHeatMap_load_click">
+        <div class="span-14" title="fun places map!" style="cursor:pointer;">
+            <div class="span-14 last">
+                <img src="/images/worldsized11.JPG" alt="Loading..." class="" onclick="javascript:focusLat=46.01222384063238;focusLng=-96.328125;"/>
+                <img src="/images/worldsized21.JPG" alt="Loading..." class="" onclick="javascript:focusLat=40.3130432088809;focusLng=15.556640625;"/>
+                <img src="/images/worldsized31.JPG" alt="Loading..." class="" onclick="javascript:focusLat=38.95940879245423;focusLng=105.64453125;"/>
+            </div>
+            <div class="span-14 last">
+                <img src="/images/worldsized12.JPG" alt="Loading..." class="" onclick="javascript:focusLat=-31.802892586706747;focusLng=-66.181640625;"/>
+                <img src="/images/worldsized22.JPG" alt="Loading..." class="" onclick="javascript:focusLat=2.1088986592431382;focusLng=20.56640625;"/>
+                <img src="/images/worldsized32.JPG" alt="Loading..." class="" onclick="javascript:focusLat=-14.434680215297266;focusLng=135.703125;"/>
+            </div>
+        </div>
+    </div>
+    <div class="span-14 last" style="overflow:hidden;display:none;" id="DownTownHeatMap_map_wrapper">
+        <div id="DownTownHeatMap_map" class="vtip" title="<i>Double-click to Zoom<br/>Links open in new tabs</i>" style="height:400px;">
+        </div>
+    </div>
+    <hr/>
+</div>
+</body>
+</html>
