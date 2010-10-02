@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.Listeners.widgets.privateevent;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Info;
@@ -10,7 +11,6 @@ import ai.ilikeplaces.logic.validators.unit.SimpleName;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import net.sf.oval.Validator;
-import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -42,15 +42,15 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
     Long privateLocationId = null;
 
     final private Logger logger = LoggerFactory.getLogger(PrivateEventCreate.class.getName());
+    private static final String WAS_CREATED = " was created!";
 
     /**
-     *
      * @param request__
      * @param appendToElement__
      * @param humanId__
      * @param privateLocationId
      */
-    public PrivateEventCreate(final ItsNatServletRequest request__,  final Element appendToElement__, final String humanId__, final long privateLocationId) {
+    public PrivateEventCreate(final ItsNatServletRequest request__, final Element appendToElement__, final String humanId__, final long privateLocationId) {
         super(request__, Page.PrivateEventCreate, appendToElement__, humanId__, privateLocationId);
     }
 
@@ -138,14 +138,14 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
                     final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).cPrivateEvent(myhumanId.getObj(), myprivateLocationId, myprivateEventName.getObjectAsValid(), myprivateEventInfo.getObjectAsValid(), "TODO DATE", "TODO DATE");
                     if (r.returnStatus() == 0) {
                         remove(evt_.getTarget(), EventType.CLICK, this);
-                        $$(privateEventCreateNotice).setTextContent(myprivateEventName.getObj() + " was created!");
-                        $$(privateEventCreateSave).setAttribute(MarkupTag.A.href(),
+                        $$(privateEventCreateNotice).setTextContent(myprivateEventName.getObj() + WAS_CREATED);
+                        itsNatDocument_.addCodeToSend(JSCodeToSend.redirectPageWithURL(
                                 new Parameter(Organize.getURL())
                                         .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
                                         .append(DocOrganizeLocation, r.returnValue().getPrivateLocation().getPrivateLocationId())
                                         .append(DocOrganizeEvent, r.returnValue().getPrivateEventId())
                                         .get()
-                        );
+                        ));
                     } else {
                         $$(privateEventCreateNotice).setTextContent(r.returnMsg());
                     }

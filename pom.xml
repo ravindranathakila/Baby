@@ -35,58 +35,58 @@
         </dependency>
 
         <dependency>
-            <groupId>ItsNat0.7</groupId>
+            <groupId>ItsNat1.0</groupId>
             <artifactId>ItsNat</artifactId>
-            <version>0.7</version>
+            <version>1.0</version>
             <scope>system</scope>
             <systemPath>D:/1/adimpression/itsnat/1.0/fw_dist/lib/ItsNat.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>ItsNat0.7</groupId>
+            <groupId>ItsNat1.0</groupId>
             <artifactId>nekohtml</artifactId>
-            <version>0.7</version>
+            <version>1.0</version>
             <scope>system</scope>
             <systemPath>D:/1/adimpression/itsnat/1.0/fw_dist/lib/nekohtml.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>ItsNat0.7</groupId>
+            <groupId>ItsNat1.0</groupId>
             <artifactId>serializer</artifactId>
-            <version>0.7</version>
+            <version>1.0</version>
             <scope>system</scope>
             <systemPath>D:/1/adimpression/itsnat/1.0/fw_dist/lib/serializer.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>ItsNat0.7</groupId>
+            <groupId>ItsNat1.0</groupId>
             <artifactId>xercesImpl</artifactId>
-            <version>0.7</version>
+            <version>1.0</version>
             <scope>system</scope>
             <systemPath>D:/1/adimpression/itsnat/1.0/fw_dist/lib/xercesImpl.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>ItsNat0.7</groupId>
+            <groupId>ItsNat1.0</groupId>
             <artifactId>xml-apis</artifactId>
-            <version>0.7</version>
+            <version>1.0</version>
             <scope>system</scope>
             <systemPath>D:/1/adimpression/itsnat/1.0/fw_dist/lib/xml-apis.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>ItsNat0.7</groupId>
+            <groupId>ItsNat1.0</groupId>
             <artifactId>batik-dom</artifactId>
-            <version>0.7</version>
+            <version>1.0</version>
             <scope>system</scope>
             <systemPath>D:/1/adimpression/itsnat/1.0/fw_dist/lib/batik-dom.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>ItsNat0.7</groupId>
+            <groupId>ItsNat1.0</groupId>
             <artifactId>batik-util</artifactId>
-            <version>0.7</version>
+            <version>1.0</version>
             <scope>system</scope>
             <systemPath>D:/1/adimpression/itsnat/1.0/fw_dist/lib/batik-util.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>ItsNat0.7</groupId>
+            <groupId>ItsNat1.0</groupId>
             <artifactId>batik-xml</artifactId>
-            <version>0.7</version>
+            <version>1.0</version>
             <scope>system</scope>
             <systemPath>D:/1/adimpression/itsnat/1.0/fw_dist/lib/batik-xml.jar</systemPath>
         </dependency>
@@ -239,6 +239,14 @@
             <scope>system</scope>
             <systemPath>D:/1/adimpression/oval/oval-1.40-with-dependencies/oval-1.40.jar
             </systemPath>            
+        </dependency>
+        <dependency>
+            <groupId>com.google</groupId>
+            <artifactId>gdata</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>D:/1/adimpression/geo/google/gdata-core-1.0.jar
+            </systemPath>
         </dependency>
         <!--<dependency>-->
             <!--<groupId>net.recaptcha</groupId>-->

@@ -17,6 +17,9 @@ import javax.ejb.Local;
 @Local
 public interface CPrivateLocationLocal {
 
+    @Deprecated
     public PrivateLocation doNTxCPrivateLocation(final String humanId, final String locationName, final String locationInfo) throws DBFetchDataException;
+
+    public PrivateLocation doNTxCPrivateLocation(final String humanId, final String locationName, final String locationInfo, final Double latitude, final Double longitude) throws DBFetchDataException;
 
 }

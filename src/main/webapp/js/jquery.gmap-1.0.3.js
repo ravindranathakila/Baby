@@ -16,7 +16,7 @@
 		// Build main options before element iteration
 		var opts = $.extend({}, $.fn.gMap.defaults, options);
     
-		// Iterate each matched element
+		// Iterate each markermatched element
 		return this.each(function()
 		{
 			// Create new map and set initial options

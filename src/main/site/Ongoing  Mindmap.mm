@@ -705,14 +705,17 @@
 </node>
 <node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" ID="Freemind_Link_1303374308" MODIFIED="1283778680546" POSITION="right" TEXT="Lab">
 <icon BUILTIN="wizard"/>
-<node CREATED="1283778655218" FOLDED="true" ID="Freemind_Link_1143795250" MODIFIED="1283779225796" TEXT="Guide">
+<node CREATED="1283778655218" ID="Freemind_Link_1143795250" MODIFIED="1283779225796" TEXT="Guide">
 <icon BUILTIN="help"/>
 <node CREATED="1283871999906" ID="Freemind_Link_1891457905" MODIFIED="1283872001937" TEXT="SPILL">
-<node CREATED="1283778709546" ID="Freemind_Link_1267112987" MODIFIED="1283779225781" TEXT="first node should be a clear name">
+<node CREATED="1283778709546" ID="Freemind_Link_1267112987" MODIFIED="1285777891181" TEXT="first level should be a clear name">
 <icon BUILTIN="help"/>
 </node>
-<node CREATED="1283778731421" ID="Freemind_Link_72849697" MODIFIED="1283779225796" TEXT="second node should be a clear problem">
+<node CREATED="1283778731421" ID="Freemind_Link_72849697" MODIFIED="1285777894797" TEXT="second level should be a clear problem people face">
 <icon BUILTIN="help"/>
+<node CREATED="1285122159453" ID="Freemind_Link_698135352" MODIFIED="1285122185046" TEXT="A topic can have serveral problems. More the worse!">
+<icon BUILTIN="clanbomber"/>
+</node>
 </node>
 <node CREATED="1283778741140" ID="Freemind_Link_929868034" MODIFIED="1283779225796" TEXT="third level should be a clear solution">
 <icon BUILTIN="help"/>
@@ -733,14 +736,12 @@
 </node>
 <node CREATED="1283778802578" ID="Freemind_Link_371419217" MODIFIED="1283871925359" TEXT="Spill">
 <icon BUILTIN="bookmark"/>
-</node>
-<node CREATED="1283871927859" ID="Freemind_Link_504513171" MODIFIED="1283871940437" TEXT="Sell">
-<icon BUILTIN="bell"/>
 <node CREATED="1283778806593" ID="Freemind_Link_991036540" MODIFIED="1283778870015" TEXT="Fun Map">
 <icon BUILTIN="full-1"/>
 <node CREATED="1283778817171" ID="Freemind_Link_832808578" MODIFIED="1283779022984" TEXT="How do I find where to have fun at this place?">
 <icon BUILTIN="full-2"/>
-<node COLOR="#338800" CREATED="1283778835734" ID="Freemind_Link_853743146" MODIFIED="1283873340531" TEXT="I see a map of fun places made by users. Contains Ranking and Pricing.">
+<node COLOR="#338800" CREATED="1283778835734" ID="Freemind_Link_853743146" MODIFIED="1285122130406" TEXT="I see a map of fun places made by users. Contains Ranking and Pricing.">
+<arrowlink DESTINATION="Freemind_Link_853567227" ENDARROW="Default" ENDINCLINATION="457;0;" ID="Freemind_Arrow_Link_1694876026" STARTARROW="None" STARTINCLINATION="457;0;"/>
 <icon BUILTIN="full-3"/>
 <node CREATED="1283779122718" ID="Freemind_Link_1577448723" MODIFIED="1283779575187" TEXT="Who&apos;s involved?">
 <icon BUILTIN="full-4"/>
@@ -766,11 +767,49 @@
 </node>
 </node>
 </node>
+<node CREATED="1284472739951" ID="Freemind_Link_853567227" MODIFIED="1285122130390" TEXT="Where do I see the fun map? How can I find it?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1284473278446" ID="Freemind_Link_1881215959" MODIFIED="1284897864801" TEXT="I see a map of fun places in home page made by users. Contains Ranking and Pricing.">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1284473461267" ID="Freemind_Link_1874650634" MODIFIED="1284473490422" TEXT="A static summarized fun map for travel pages">
+<icon BUILTIN="full-3"/>
 </node>
 </node>
+</node>
+<node CREATED="1284651235765" ID="Freemind_Link_995976715" MODIFIED="1285777908494" TEXT="WOEID Guide Sites">
+<icon BUILTIN="full-1"/>
+</node>
+<node CREATED="1285777788240" ID="Freemind_Link_1951455230" MODIFIED="1285777908494" TEXT="Down Town">
+<icon BUILTIN="full-1"/>
+<node CREATED="1285777838818" ID="Freemind_Link_1783957198" MODIFIED="1285777921988" TEXT="How do I fulfill my gaming hunger?">
+<icon BUILTIN="full-2"/>
+</node>
+<node CREATED="1285777930253" ID="Freemind_Link_1226116814" MODIFIED="1285777941102" TEXT="How do I kill time online">
+<icon BUILTIN="full-2"/>
+</node>
+<node CREATED="1285777942824" ID="Freemind_Link_461955397" MODIFIED="1285777958149" TEXT="How do I show dominion over people?">
+<icon BUILTIN="full-2"/>
+</node>
+<node CREATED="1285777960920" ID="Freemind_Link_168784394" MODIFIED="1285777971783" TEXT="How do I feel important?">
+<icon BUILTIN="full-2"/>
+</node>
+<node CREATED="1285777996689" ID="Freemind_Link_1276572671" MODIFIED="1285778019262" TEXT="How do I interact A LOT with people online?">
+<icon BUILTIN="full-2"/>
+</node>
+<node CREATED="1285778237886" ID="Freemind_Link_824669099" MODIFIED="1285778268489" TEXT="How do I cater for the teddy bear crowd?">
+<icon BUILTIN="full-2"/>
+</node>
+</node>
+</node>
+<node CREATED="1283871927859" ID="Freemind_Link_504513171" MODIFIED="1283871940437" TEXT="Sell">
+<icon BUILTIN="bell"/>
+</node>
+<node CREATED="1284993034015" ID="Freemind_Link_693571932" MODIFIED="1284993039546" TEXT="Page Turner"/>
 </node>
 <node CREATED="1283703158802" ID="Freemind_Link_640830008" MODIFIED="1283703160896" POSITION="right" TEXT="Marketing">
-<node CREATED="1283703177927" FOLDED="true" ID="Freemind_Link_1817341781" MODIFIED="1283703202084" TEXT="Checklist">
+<node CREATED="1283703177927" ID="Freemind_Link_1817341781" MODIFIED="1283703202084" TEXT="Checklist">
+<node CREATED="1285778293411" ID="Freemind_Link_1030747214" MODIFIED="1285778304447" TEXT="Are you being dumb? No? BE DUMB!"/>
 <node CREATED="1283703161521" ID="Freemind_Link_63383641" MODIFIED="1283703168865" TEXT="Does it do what it says?"/>
 <node CREATED="1283703169490" ID="Freemind_Link_499084225" MODIFIED="1283703174943" TEXT="Does it say what is does?"/>
 </node>

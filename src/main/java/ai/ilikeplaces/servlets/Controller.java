@@ -197,7 +197,8 @@ final public class
                            Controller.Page.privateEventDeleteVisitors,
                            Controller.Page.privateEventDeleteInvitees,
                            Controller.Page.privateEventDeleteWall,
-                           Controller.Page.privateEventDeleteAlbum
+                           Controller.Page.privateEventDeleteAlbum,
+                           Controller.Page.privateEventDeleteLocationMap
         ) {
 
             @Override
@@ -211,7 +212,8 @@ final public class
             }},
 
 
-        WOEIDGrabber("ai/ilikeplaces/widgets/WOEIDGrabber.xhtml"
+        WOEIDGrabber("ai/ilikeplaces/widgets/WOEIDGrabber.xhtml",
+                     Controller.Page.WOEIDGrabberWOEID
         ) {
 
             @Override
@@ -222,6 +224,21 @@ final public class
             @Override
             public String toString() {
                 return DocWOEIDGrabber;
+            }},
+
+
+        DownTownHeatMap("ai/ilikeplaces/widgets/DownTownHeatMap.xhtml",
+                        Controller.Page.DownTownHeatMapWOEID
+        ) {
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocDownTownHeatMap;
             }},
 
         FindFriend("ai/ilikeplaces/widgets/friend/friend_find.xhtml",
@@ -547,9 +564,9 @@ Controller.Page.friendAddDisplayNameLabel
         },
         Aarrr(
                 "ai/ilikeplaces/AARRR.xhtml",
-                Controller.Page.AarrrTitle,
-                Controller.Page.AarrrEmail,
-                Controller.Page.AarrrFunTypes) {
+                Controller.Page.AarrrDownTownHeatMap,
+                Controller.Page.AarrrWOEID
+        ) {
             @Override
             public String getURL() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "page/";
@@ -745,10 +762,17 @@ Controller.Page.friendAddDisplayNameLabel
         final static public String privateEventDeleteInvitees = "privateEventDeleteInvitees";
         final static public String privateEventDeleteWall = "privateEventDeleteWall";
         final static public String privateEventDeleteAlbum = "privateEventDeleteAlbum";
+        final static public String privateEventDeleteLocationMap = "privateEventDeleteLocationMap";
 
-        /*DocWOIEDGrabber Page*/
+        /*WOIEDGrabber Page*/
         final static public String DocWOEIDGrabber = "DocWOEIDGrabber";
-        /*DocWOIEDGrabber IDs*/
+        /*WOIEDGrabber IDs*/
+        final static public String WOEIDGrabberWOEID = "WOEIDGrabberWOEID";
+
+        /*DownTownHeatMap Page*/
+        final static public String DocDownTownHeatMap = "DocDownTownHeatMap";
+        /*DownTownHeatMap IDs*/
+        final static public String DownTownHeatMapWOEID =  "DownTownHeatMapWOEID";
 
         /*FindFriend Page*/
         final static public String DocFindFriend = "DocFindFriend";
@@ -889,9 +913,8 @@ Controller.Page.friendAddDisplayNameLabel
         /*Aarrr Page*/
         final static public String DocAarrr = "Aarrr";
         /*Aarrr Specific IDs*/
-        final static public String AarrrTitle = "AarrrTitle";
-        final static public String AarrrFunTypes = "AarrrFunTypes";
-        final static public String AarrrEmail = "AarrrEmail";
+        final static public String AarrrDownTownHeatMap = "AarrrDownTownHeatMap";
+        final static public String AarrrWOEID = "AarrrWOEID";
 
 
         /*DocLocation Page*/
@@ -1000,6 +1023,8 @@ Controller.Page.friendAddDisplayNameLabel
     final PageFace privateEventDelete = Page.PrivateEventDelete;
 
     final PageFace wOIEDGrabber = Page.WOEIDGrabber;
+
+    final PageFace downTownHeatMap = Page.DownTownHeatMap;
 
     final PageFace skeleton = Page.Skeleton;
     final PageFace organize = Page.Organize;
@@ -1132,6 +1157,8 @@ Controller.Page.friendAddDisplayNameLabel
             inhs__.registerItsNatDocFragmentTemplate(privateEventDelete.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateEventDelete));
 
             inhs__.registerItsNatDocFragmentTemplate(wOIEDGrabber.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(wOIEDGrabber));
+
+            inhs__.registerItsNatDocFragmentTemplate(downTownHeatMap.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(downTownHeatMap));
 
             inhs__.registerItsNatDocFragmentTemplate(findFriendWidget.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(findFriendWidget));
 

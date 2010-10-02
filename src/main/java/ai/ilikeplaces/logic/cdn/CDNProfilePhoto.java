@@ -6,29 +6,24 @@ import ai.ilikeplaces.exception.DBOperationException;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
 import com.rackspacecloud.client.cloudfiles.FilesConstants;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Remove;
 import javax.ejb.Stateless;
 import javax.imageio.ImageIO;
 import javax.interceptor.Interceptors;
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.LookupOp;
+import java.awt.image.ShortLookupTable;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
-
-import static ai.ilikeplaces.util.Loggers.EXCEPTION;
 
 /**
  * Okay, this class is supposed to do the following.
@@ -61,6 +56,8 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
     private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_IMAGE_MANIPULATION_ISSUES = "Profile Photo Upload Failed Due To Image Manipulation Issues!";
     private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_RENAMING_ISSUES = "Profile Photo Upload Failed Due To Renaming Issues!";
     private static final String PROFILE_PHOTO_UPLOAD_SUCCESSFUL = "Profile Photo Upload Successful.";
+    private static final String POSTERIZING = "Posterizing";
+    private static final String SAVING_POSTERIZED_IMAGE = "Saving Posterized Image";
 
     public static CDNProfilePhotoLocal getProfilePhotoCDNLocal() {
         isOK();
@@ -80,7 +77,7 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
         if (status) {
             sl.complete(Loggers.DONE);
 
-        }else{
+        } else {
             sl.appendToLogMSG("Login Failed. Destroying Session Bean!");
             sl.complete(Loggers.FAILED);
             throw LOGIN_EXCEPTION;
@@ -123,6 +120,12 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
                     sl.appendToLogMSG(SAVING_SCALED_IMAGE);
                     saveImage(bi, newFile);
 
+                    sl.appendToLogMSG(POSTERIZING);
+                    bi = new Sampler().run(newFile.getCanonicalPath());
+
+                    sl.appendToLogMSG(SAVING_POSTERIZED_IMAGE);
+                    saveImage(bi, newFile);
+
                     try {
                         final String cdnFileName = newFile.getName();
                         sl.appendToLogMSG(UPLOADING_IMAGE);
@@ -140,8 +143,8 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
                             } else {
                                 final Return<HumansIdentity> dbr = DB.getHumanCRUDHumanLocal(true).doUHumansProfilePhoto(humanId, cdnFileName);
                                 r = dbr.returnStatus() == 0 ?
-                                        new ReturnImpl<File>(newFile, PROFILE_PHOTO_UPLOAD_SUCCESSFUL)
-                                        : new ReturnImpl<File>(new DBOperationException(dbr.returnError()), PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES, true);
+                                    new ReturnImpl<File>(newFile, PROFILE_PHOTO_UPLOAD_SUCCESSFUL)
+                                                            : new ReturnImpl<File>(new DBOperationException(dbr.returnError()), PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES, true);
                             }
                         } else {
                             r = new ReturnImpl<File>(ExceptionCache.CDN_FILE_UPLOAD_FAILED, PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES, true);
@@ -225,6 +228,48 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
         g.dispose();
         return dimg;
     }
+
+
+    //Use the LookupOp class from the Java 2D API along
+    // with three separate data arrays to process the
+    // color values in the selected color bands.  The
+    // alpha value is not modified.  This is a common method
+    // that is called by the code that processes each
+    // individual page in the tabbed pane.
+
+    BufferedImage processImageForThePage(
+            BufferedImage theImage,
+            short[] red,
+            short[] green,
+            short[] blue) {
+        //Create and populate a 2D array with data for the
+        // lookup table.  Note that this is a 2D array, rather
+        // than a 1D array, which is the case when a single
+        // data array is used to process all three color bands.
+        short[][] lookupData = new short[][]{red, green, blue};
+
+        //Create the lookup table.  The first parameter is an
+        // offset for extracting data from the array object.
+        //In this case, all of the data is extracted from the
+        // array object beginning at an index of 0.
+        ShortLookupTable lookupTable =
+                new ShortLookupTable(0, lookupData);
+
+        //Create the filter object. The second parameter
+        // provides the opportunity to use RenderingHints.
+        BufferedImageOp filterObject =
+                new LookupOp(lookupTable, null);
+
+
+        //Apply the filter to the incoming image and return
+        // a reference to the resulting BufferedImage object.
+        // The second parameter can optionally specify an
+        // existing BufferedImage object to serve as a
+        // destination for the processed image.
+        return filterObject.filter(theImage, null);
+    }//end processImageForThePage
+    //-----------------------------------------------------//
+
 
 //    /**
 //     * http://www.javalobby.org/articles/ultimate-image/

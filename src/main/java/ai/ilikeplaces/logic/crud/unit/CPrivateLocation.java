@@ -58,4 +58,31 @@ public class CPrivateLocation extends AbstractSLBCallbacks implements CPrivateLo
         return returnVal;
 
     }
+
+    @Override
+    @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
+    public PrivateLocation doNTxCPrivateLocation(final String humanId, final String locationName, final String locationInfo, final Double latitude, final Double longitude) throws DBFetchDataException {
+        final Human owner = humanCrudServiceLocal_.findBadly(Human.class, humanId);
+
+        final PrivateLocation privateLocation = new PrivateLocation();
+
+        privateLocation.setPrivateLocationName(locationName);
+        privateLocation.setPrivateLocationInfo(locationInfo);
+        privateLocation.setPrivateLocationLatitude(latitude);
+        privateLocation.setPrivateLocationLongitude(longitude);
+
+        final PrivateLocation returnVal = privateLocationCrudServiceLocal_.create(privateLocation);
+
+        /*Give rights to CRUD private location*/
+        returnVal.refresh().getPrivateLocationOwners().add(owner.getHumansPrivateLocation());
+
+        /*Give rights to View private location*/
+        returnVal.refresh().getPrivateLocationViewers().add(owner.getHumansPrivateLocation());
+
+        /*Enrolled private locations. Right to view only*/
+        owner.getHumansPrivateLocation().getPrivateLocationsViewed().add(returnVal);
+
+        return returnVal;
+
+    }
 }

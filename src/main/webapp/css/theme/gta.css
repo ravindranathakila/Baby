@@ -11,6 +11,277 @@ Divineness through white foreground
 /**DEFAULT*/
 BODY{
     color: #000000;
+	font-family: impact;
+}
+
+DIV{
+    color: #000000;
+	font-family: impact;
+}
+
+P{
+    color: #000000;
+	font-family: impact;
+}
+
+/*DEFAULTS**/
+
+
+/**RED*/
+
+.fg_892e40
+{
+    color:#892e40
+}
+.bg_892e40
+{
+    background-color: #892e40
+}
+
+/*RED**/
+
+
+/**Orange*/
+
+/*Organge**/
+
+
+
+
+/**YELLOW*/
+
+
+
+.fg_7e6e5f
+{
+    color:#7e6e5f
+}
+.bg_7e6e5f
+{
+    background-color: #7e6e5f
+}
+
+.fg_7e5f40
+{
+    color:#7e5f40
+}
+.bg_7e5f40
+{
+    background-color: #7e5f40
+}
+
+.fg_644e50
+{
+    color:#644e50
+}
+.bg_644e50
+{
+    background-color: #644e50
+}
+
+.fg_ab702c
+{
+    color:#ab702c
+}
+.bg_ab702c
+{
+    background-color: #ab702c
+}
+
+.fg_82612e
+{
+    color:#82612e
+}
+.bg_82612e
+{
+    background-color: #82612e
+}
+
+/*YELLOW**/
+
+
+
+/**GREEN*/
+.fg_313729
+{
+    color:#313729
+}
+.bg_313729
+{
+    background-color: #313729
+}
+
+.fg_4d5726
+{
+    color:#4d5726
+}
+.bg_4d5726
+{
+    background-color: #4d5726
+}
+
+
+/*GREEN**/
+
+
+
+/**BLUE*/
+
+.fg_9999ff
+{
+    color:#9999ff
+}
+.bg_9999ff
+{
+    background-color: #9999ff
+}
+
+.fg_7fe2ff
+{
+    color:#7fe2ff
+}
+.bg_7fe2ff
+{
+    background-color: #7fe2ff
+}
+
+
+.fg_2d2e4c
+{
+    color:#2d2e4c
+}
+.bg_2d2e4c
+{
+    background-color: #2d2e4c
+}
+
+.fg_325b6e
+{
+    color:#325b6e
+}
+.bg_325b6e
+{
+    background-color: #325b6e
+}
+
+
+/*BLUE**/
+
+
+
+/**PURPLE*/
+.fg_dd55ee
+{
+    color:#dd55ee
+}
+.bg_dd55ee
+{
+    background-color: #dd55ee
+}
+
+.fg_fd78e1
+{
+    color:#fd78e1
+}
+.bg_fd78e1
+{
+    background-color: #fd78e1
+}
+
+.fg_bb77ee
+{
+    color:#bb77ee
+}
+.bg_bb77ee
+{
+    background-color: #bb77ee
+}
+
+.fg_aa77ff
+{
+    color:#aa77ff
+}
+.bg_aa77ff
+{
+    background-color: #aa77ff
+}
+
+.fg_f5ec63
+{
+    color:#f5ec63
+}
+.bg_f5ec63
+{
+    background-color: #f5ec63
+}
+
+.fg_6a3a67
+{
+    color:#6a3a67
+}
+.bg_6a3a67
+{
+    background-color: #6a3a67
+}
+
+.fg_c181be
+{
+    color:#c181be
+}
+.bg_c181be
+{
+    background-color: #c181be
+}
+
+
+
+/*PURPLE**/
+
+
+
+/**BLACK AND WHITE*/
+
+.fg_807c71
+{
+    color:#807c71
+}
+.bg_807c71
+{
+    background-color: #807c71
+}
+
+.fg_647484
+{
+    color:#647484
+}
+.bg_647484
+{
+    background-color: #647484
+}
+
+
+/**BLACK AND WHITE**/
+
+
+
+
+
+DIVINE MSG
+
+
+/*
+------------------------------
+The idea is to
+Definitely use white as the background of page
+Light colors as background of elements
+White or darker color of the background as foreground
+Divineness through white foreground
+------------------------------
+*/
+
+/**DEFAULT*/
+BODY{
+    color: #000000;
 }
 
 DIV{

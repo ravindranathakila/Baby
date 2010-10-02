@@ -1,26 +1,17 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.TODO;
-import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.validators.faces.ValidatorFace;
+import ai.ilikeplaces.logic.Listeners.widgets.DownTownHeatMap;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractListener;
-import ai.ilikeplaces.util.EventType;
-import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.MarkupTag;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
-import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Element;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
 import java.util.ResourceBundle;
@@ -54,6 +45,8 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
                 final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
 
+                new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID));
+
             }
 
             /**
@@ -61,43 +54,43 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
              */
             @Override
             protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
-                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.AarrrFunTypes), EventType.BLUR.toString(), new EventListener() {
-
-                    final ValidatorFace v = ValidatorFace.impl.getInstance();
-
-                    @Override
-                    public void handleEvent(final Event evt_) {
-                        logger.debug("{}", v.isLessThan1000(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value())).toString());
-
-                        DB.getHumanCRUDMapLocal(true).createEntry("fun", v.isLessThan1000(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value())).returnStatus() == 0 ? ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()) : "Entry too big");
-
-                    }
-
-                    @Override
-                    public void finalize() throws Throwable {
-                        Loggers.finalized(this.getClass().getName());
-                        super.finalize();
-                    }
-                }, false, new NodePropertyTransport(MarkupTag.INPUT.value()));
-
-                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.AarrrEmail), EventType.BLUR.toString(), new EventListener() {
-
-                    final ValidatorFace v = ValidatorFace.impl.getInstance();
-
-                    @Override
-                    public void handleEvent(final Event evt_) {
-                        logger.debug("{}", v.isLessThan1000(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value())).toString());
-
-                        DB.getHumanCRUDMapLocal(true).createEntry("email", v.isLessThan1000(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value())).returnStatus() == 0 ? ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()) : "Entry too big");
-
-                    }
-
-                    @Override
-                    public void finalize() throws Throwable {
-                        Loggers.finalized(this.getClass().getName());
-                        super.finalize();
-                    }
-                }, false, new NodePropertyTransport(MarkupTag.INPUT.value()));
+//                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.AarrrFunTypes), EventType.BLUR.toString(), new EventListener() {
+//
+//                    final ValidatorFace v = ValidatorFace.impl.getInstance();
+//
+//                    @Override
+//                    public void handleEvent(final Event evt_) {
+//                        logger.debug("{}", v.isLessThan1000(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value())).toString());
+//
+//                        DB.getHumanCRUDMapLocal(true).createEntry("fun", v.isLessThan1000(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value())).returnStatus() == 0 ? ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()) : "Entry too big");
+//
+//                    }
+//
+//                    @Override
+//                    public void finalize() throws Throwable {
+//                        Loggers.finalized(this.getClass().getName());
+//                        super.finalize();
+//                    }
+//                }, false, new NodePropertyTransport(MarkupTag.INPUT.value()));
+//
+//                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.AarrrEmail), EventType.BLUR.toString(), new EventListener() {
+//
+//                    final ValidatorFace v = ValidatorFace.impl.getInstance();
+//
+//                    @Override
+//                    public void handleEvent(final Event evt_) {
+//                        logger.debug("{}", v.isLessThan1000(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value())).toString());
+//
+//                        DB.getHumanCRUDMapLocal(true).createEntry("email", v.isLessThan1000(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value())).returnStatus() == 0 ? ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()) : "Entry too big");
+//
+//                    }
+//
+//                    @Override
+//                    public void finalize() throws Throwable {
+//                        Loggers.finalized(this.getClass().getName());
+//                        super.finalize();
+//                    }
+//                }, false, new NodePropertyTransport(MarkupTag.INPUT.value()));
             }
         };
     }
