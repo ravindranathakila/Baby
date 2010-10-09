@@ -25,7 +25,7 @@ import java.util.*;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class ParamValidator {
     private static final String PARAMETER_VALIDATION_ERROR_MESSAGE = "SORRY! I ENCOUNTERED AN EXCEPTION WITHIN THE PARAMETER VALIDATION INTERCEPTOR. DETAILS ARE AS FOLLOWS. ";
-    private static final String SORRY_PARAMETER_POSITION_NUMBER_GUESSED = "SORRY! PARAMETER POSITION NUMBER(GUESSED) ";
+    private static final String SORRY_PARAMETER_POSITION_NUMBER_GUESSED = "SORRY! PARAMETER WITH POSITION NUMBER(GUESSED) ";
     private static final String IS_NULL = " IS NULL";
 
     @AroundInvoke
