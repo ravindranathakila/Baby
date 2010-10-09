@@ -228,7 +228,8 @@ final public class
 
 
         DownTownHeatMap("ai/ilikeplaces/widgets/DownTownHeatMap.xhtml",
-                        Controller.Page.DownTownHeatMapWOEID
+                        Controller.Page.DownTownHeatMapWOEID,
+                        Controller.Page.DownTownHeatMapBB
         ) {
 
             @Override
@@ -773,6 +774,7 @@ Controller.Page.friendAddDisplayNameLabel
         final static public String DocDownTownHeatMap = "DocDownTownHeatMap";
         /*DownTownHeatMap IDs*/
         final static public String DownTownHeatMapWOEID =  "DownTownHeatMapWOEID";
+        final static public String DownTownHeatMapBB =  "DownTownHeatMapBB";
 
         /*FindFriend Page*/
         final static public String DocFindFriend = "DocFindFriend";
@@ -1231,17 +1233,17 @@ Controller.Page.friendAddDisplayNameLabel
                        : ""));
             request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
 
-            final ItsNatHttpSession itsNatHttpSession = (ItsNatHttpSession) request__.getItsNatSession();
-            final Object attribute__ = itsNatHttpSession.getAttribute(ServletLogin.HumanUser);
-            final SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper = attribute__ == null ? null : (SessionBoundBadRefWrapper<HumanUserLocal>) attribute__;
-
-            if (sessionBoundBadRefWrapper != null && sessionBoundBadRefWrapper.boundInstance.getHumanUserId() != null) {
-                try {
-                    ((HttpServletResponse) response__.getServletResponse()).sendRedirect(LOCATION_HUB);
-                } catch (final IOException e) {
-                    Loggers.EXCEPTION.error("", e);
-                }
-            }
+//            final ItsNatHttpSession itsNatHttpSession = (ItsNatHttpSession) request__.getItsNatSession();
+//            final Object attribute__ = itsNatHttpSession.getAttribute(ServletLogin.HumanUser);
+//            final SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper = attribute__ == null ? null : (SessionBoundBadRefWrapper<HumanUserLocal>) attribute__;
+//
+//            if (sessionBoundBadRefWrapper != null && sessionBoundBadRefWrapper.boundInstance.getHumanUserId() != null) {
+//                try {
+//                    ((HttpServletResponse) response__.getServletResponse()).sendRedirect(LOCATION_HUB);
+//                } catch (final IOException e) {
+//                    Loggers.EXCEPTION.error("", e);
+//                }
+//            }
         } else {
             if (isNonLocationPage(URL__)) {/*i.e. starts with underscore*/
                 final HttpSession httpSession = ((HttpServletRequest) request__.getServletRequest()).getSession(false);

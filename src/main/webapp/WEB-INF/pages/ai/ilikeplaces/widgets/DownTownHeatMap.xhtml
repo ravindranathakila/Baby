@@ -12,48 +12,138 @@
 </head>
 <body>
 <div class="span-14 last" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
-    <script type="text/javascript">
+
+<script type="text/javascript">
+        alert('hi');
+
+        markerIcon = "";
 
         focusLat = 0;
         focusLng = 0;
 
+        listOfHotSpots = new Array();
+
+        function trackHotSpots(marker){
+            listOfHotSpots.unshift(marker);
+        }
+
+        function clearHotSpots(marker){
+        }
+        
+
         function initialize_DownTownHeatMap_map(){
 
-        var myLatlng = new google.maps.LatLng(focusLat,focusLng);
-          var myOptions = {
-            zoom: 2,
-            center: myLatlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
-          map = new google.maps.Map(document.getElementById("DownTownHeatMap_map"), myOptions);
+                myLatlng = new google.maps.LatLng(focusLat,focusLng);
+                  var myOptions = {
+                    zoom: 2,
+                    center: myLatlng,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                  };
 
-          var placeMarker = new google.maps.Marker({
-              position: myLatlng,
-              map: map,
-              title:"Is it here? if so, click on this marker!!!"
-          });
+                map = new google.maps.Map(document.getElementById("DownTownHeatMap_map"), myOptions);
 
-        var infowindow = new google.maps.InfoWindow({
-            content: 'This should finally point to your intended location.<br/> Zoom in on the exact place, click on the marker to confirm! <br/> Zoom to street level!'
-        });
+                placeMarker = new google.maps.Marker({
+                      position: myLatlng,
+                      map: map,
+                      title:"Is it here? if so, click on this marker!!!",
+                      icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=Point%20this%20Marker|14|000|glyphish_map-marker|16|bb77ee|892e40"
+                });
 
-        infowindow.open(map,placeMarker);
+                infowindow = new google.maps.InfoWindow({
+                    content: "Zoom to street level & Point marker to EXACT place. Click the marker to confirm!",
+                    maxWidth:400
+                });
 
-          google.maps.event.addListener(placeMarker, 'click', function() {
-            alert(map.getZoom());
-            if(map.getZoom() > 10 ){
-                if(confirm("Here? Sure? Latitude,Longitude Value:" + map.getCenter().toString())){
-                    DownTownHeatMapWOEIDUpdate(map.getCenter().lat(), map.getCenter().lng()).focus();
-                }
-            }else{
-                alert("U've gotto zoom in on the exact place!");
-            }
-          });
+                infowindow.open(map,placeMarker);
 
-          google.maps.event.addListener(map, 'center_changed', function() {
-              placeMarker.setPosition(map.getCenter());
-          });
+                geocoder = new google.maps.Geocoder();
 
+                geocodetoinfowindow = function(){
+                        if(map.getZoom() > 13){
+                            infowindow.setContent("Tracking you...");
+                            geocoder.geocode(
+                                  {
+                                    location:map.getCenter()
+                                  },
+                                 function(geocoderResult,geocoderStatus){
+                                        if(geocoderStatus == google.maps.GeocoderStatus.OK){
+                                            infowindow.setContent("Vicinity.. "+geocoderResult[0].address_components[0].long_name+", " + geocoderResult[geocoderResult.length-1].address_components[geocoderResult[geocoderResult.length-1].address_components.length-1].long_name);
+                                        }else{
+                                            infowindow.setContent("Can't track you. Hope you know where the hell you are!");
+                                        }
+                                 }
+                            );
+                        }
+                };
+
+                  google.maps.event.addListener(placeMarker, 'click', function() {
+                    if(map.getZoom() > 10 ){
+                        if(18 > map.getZoom()){
+                            if(!confirm("Not yet in street level. " + (18 - map.getZoom()) + " more levels to go. Ingore and continue?")){
+                                return;
+                            }
+                        }
+
+                        if(confirm("Here? Sure? Latitude,Longitude Value:" + map.getCenter().toString())){
+                            infowindow.setContent("That's the place you selected!");
+                            map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+                            infowindow.setPosition(placeMarker.getPosition());
+                            DownTownHeatMapWOEIDUpdate(map.getCenter().lat(), map.getCenter().lng()).focus();
+                        }
+                    }else{
+                        alert("Zoom to Street Level! "+ (18-(map.getZoom())) + " levels more to go...");
+                    }
+                  });
+
+                  google.maps.event.addListener(map, 'center_changed', function() {
+                      placeMarker.setPosition(map.getCenter());
+                  });
+
+                  google.maps.event.addListener(map, 'click', function(latLng) {
+                      map.setCenter(latLng.latLng);
+                  });
+
+                google.maps.event.addListener(map, 'zoom_changed', function() {
+                  infowindow.setContent("Zoom to Street Level! "+ (18-(map.getZoom())) + " levels more to go...");
+                  infowindow.setPosition(placeMarker.getPosition());
+
+                  geocodetoinfowindow();
+
+                });
+
+                google.maps.event.addListener(map, 'zoom_changed', function() {
+                  if(map.getZoom()>19){
+                      var myOptions = {
+                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        draggable:false
+                      };
+                    map.setOptions(myOptions);
+                  }else{
+                    var myOptions = {
+                        draggable:true
+                      };
+                    map.setOptions(myOptions);
+                  }
+                });
+
+                  google.maps.event.addListener(map, 'dragstart', function() {
+                      infowindow.setContent("Point the marker to the EXACT place.<br/>Click on the marker to confirm!");
+                      infowindow.setPosition(placeMarker.getPosition());
+                  });
+
+                  google.maps.event.addListener(map, 'dragend', function() {
+                      if(map.getZoom()>16){
+                         DownTownHeatMapBBUpdate(
+                            map.getBounds().getSouthWest().lat(),
+                            map.getBounds().getSouthWest().lng(),
+                            map.getBounds().getNorthEast().lat(),
+                            map.getBounds().getNorthEast().lng()).focus();
+                      }
+                  });
+
+                  google.maps.event.addListener(map, 'dragend', function() {
+                    geocodetoinfowindow();
+                  });
         }
 
         function initialize_gmap_scripts(){
@@ -66,27 +156,30 @@
           alert("Hold on to ur seat tight! Down Town is loading the heat map...");
         }
 
-    </script>
+</script>
 
     <div class="span-14 last center">
         <input type="text" id="DownTownHeatMapWOEID" value="0,0"/>
     </div>
-    <div class="span-14 last" style="overflow:hidden;" onclick="javascript:initialize_gmap_scripts();" id="DownTownHeatMap_load_click">
+    <div class="span-14 last center">
+        <input type="text" id="DownTownHeatMapBB" value="0,0"/>
+    </div>
+    <div class="span-14 last" style="overflow:hidden;" id="DownTownHeatMap_load_click">
         <div class="span-14" title="fun places map!" style="cursor:pointer;">
             <div class="span-14 last">
-                <img src="/images/worldsized11.JPG" alt="Loading..." class="" onclick="javascript:focusLat=46.01222384063238;focusLng=-96.328125;"/>
-                <img src="/images/worldsized21.JPG" alt="Loading..." class="" onclick="javascript:focusLat=40.3130432088809;focusLng=15.556640625;"/>
-                <img src="/images/worldsized31.JPG" alt="Loading..." class="" onclick="javascript:focusLat=38.95940879245423;focusLng=105.64453125;"/>
+                <img src="/images/worldsized11.JPG" alt="Loading..." class="" onclick="javascript:focusLat=46.01222384063238;focusLng=-96.328125;initialize_gmap_scripts();"/>
+                <img src="/images/worldsized21.JPG" alt="Loading..." class="" onclick="javascript:focusLat=40.3130432088809;focusLng=15.556640625;initialize_gmap_scripts();"/>
+                <img src="/images/worldsized31.JPG" alt="Loading..." class="" onclick="javascript:focusLat=38.95940879245423;focusLng=105.64453125;initialize_gmap_scripts();"/>
             </div>
             <div class="span-14 last">
-                <img src="/images/worldsized12.JPG" alt="Loading..." class="" onclick="javascript:focusLat=-31.802892586706747;focusLng=-66.181640625;"/>
-                <img src="/images/worldsized22.JPG" alt="Loading..." class="" onclick="javascript:focusLat=2.1088986592431382;focusLng=20.56640625;"/>
-                <img src="/images/worldsized32.JPG" alt="Loading..." class="" onclick="javascript:focusLat=-14.434680215297266;focusLng=135.703125;"/>
+                <img src="/images/worldsized12.JPG" alt="Loading..." class="" onclick="javascript:focusLat=-31.802892586706747;focusLng=-66.181640625;initialize_gmap_scripts();"/>
+                <img src="/images/worldsized22.JPG" alt="Loading..." class="" onclick="javascript:focusLat=2.1088986592431382;focusLng=20.56640625;initialize_gmap_scripts();"/>
+                <img src="/images/worldsized32.JPG" alt="Loading..." class="" onclick="javascript:focusLat=-14.434680215297266;focusLng=135.703125;initialize_gmap_scripts();"/>
             </div>
         </div>
     </div>
     <div class="span-14 last" style="overflow:hidden;display:none;" id="DownTownHeatMap_map_wrapper">
-        <div id="DownTownHeatMap_map" class="vtip" title="<i>Double-click to Zoom<br/>Links open in new tabs</i>" style="height:400px;">
+        <div id="DownTownHeatMap_map" class="vtip" title="<i>Double-click to Zoom<br/>Links open in new tabs</i>" style="height:400px;font-size:12px;">
         </div>
     </div>
     <hr/>

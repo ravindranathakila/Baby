@@ -8,12 +8,14 @@ import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.exception.NoPrivilegesException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -62,6 +64,13 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
             }
         }
         return privateLocation_;
+    }
+
+
+    @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
+    public PrivateLocation doRPrivateLocationAsSystem(final Long privateLocationId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException {
+        return eager ? privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).refresh() :
+               privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId);
     }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
@@ -131,4 +140,26 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
 
         return privateLocation_;
     }
+
+    @Override
+    @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
+    public List<PrivateLocation> doRPrivateLocationsAsGlobal(
+            final Double PrivateLocationLatitudeSouth,
+            final Double PrivateLocationLatitudeNorth,
+            final Double PrivateLocationLongitudeWest,
+            final Double PrivateLocationLongitudeEast) {
+
+        return privateLocationCrudServiceLocal_
+                .findWithNamedQuery(PrivateLocation.FindAllPrivateLocationsByBounds,
+                                    QueryParameter
+                                            .newInstance()
+                                            .add(PrivateLocation.PrivateLocationLatitudeSouth, PrivateLocationLatitudeSouth)
+                                            .add(PrivateLocation.PrivateLocationLatitudeNorth, PrivateLocationLatitudeNorth)
+                                            .add(PrivateLocation.PrivateLocationLongitudeWest, PrivateLocationLongitudeWest)
+                                            .add(PrivateLocation.PrivateLocationLongitudeEast, PrivateLocationLongitudeEast)
+                                            .parameters());
+    }
 }
+
+
+//select * from ilp.privatelocation where (privatelocationlatitude BETWEEN 40 AND 50) AND (privatelocationlongitude between -75 and -7)

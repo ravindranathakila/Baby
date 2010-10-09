@@ -767,12 +767,13 @@
 </node>
 </node>
 </node>
-<node CREATED="1284472739951" ID="Freemind_Link_853567227" MODIFIED="1285122130390" TEXT="Where do I see the fun map? How can I find it?">
+<node CREATED="1284472739951" ID="Freemind_Link_853567227" MODIFIED="1286032046640" TEXT="Where do I see the fun map? How can I find it?">
+<arrowlink DESTINATION="Freemind_Link_1909905561" ENDARROW="Default" ENDINCLINATION="160;0;" ID="Freemind_Arrow_Link_1857085611" STARTARROW="None" STARTINCLINATION="160;0;"/>
 <icon BUILTIN="full-2"/>
-<node CREATED="1284473278446" ID="Freemind_Link_1881215959" MODIFIED="1284897864801" TEXT="I see a map of fun places in home page made by users. Contains Ranking and Pricing.">
+<node CREATED="1284473278446" ID="Freemind_Link_1881215959" MODIFIED="1286032041703" TEXT="I see a map of fun places in home page made by users. Contains Ranking and Pricing.">
 <icon BUILTIN="full-3"/>
 </node>
-<node CREATED="1284473461267" ID="Freemind_Link_1874650634" MODIFIED="1284473490422" TEXT="A static summarized fun map for travel pages">
+<node CREATED="1284473461267" ID="Freemind_Link_1874650634" MODIFIED="1286031585750" TEXT="A static summarized fun map for travel pages">
 <icon BUILTIN="full-3"/>
 </node>
 </node>
@@ -780,25 +781,51 @@
 <node CREATED="1284651235765" ID="Freemind_Link_995976715" MODIFIED="1285777908494" TEXT="WOEID Guide Sites">
 <icon BUILTIN="full-1"/>
 </node>
-<node CREATED="1285777788240" ID="Freemind_Link_1951455230" MODIFIED="1285777908494" TEXT="Down Town">
+<node CREATED="1285777788240" ID="Freemind_Link_1951455230" MODIFIED="1286032041718" TEXT="Down Town">
 <icon BUILTIN="full-1"/>
-<node CREATED="1285777838818" ID="Freemind_Link_1783957198" MODIFIED="1285777921988" TEXT="How do I fulfill my gaming hunger?">
+<node CREATED="1285777942824" ID="Freemind_Link_461955397" MODIFIED="1286031708562" TEXT="How do I show dominion over people(gaming)?">
 <icon BUILTIN="full-2"/>
+<icon BUILTIN="wizard"/>
+<node CREATED="1286031764921" ID="Freemind_Link_644110300" MODIFIED="1286031806843" TEXT="Hopefully this would happen automatically">
+<icon BUILTIN="full-3"/>
 </node>
-<node CREATED="1285777930253" ID="Freemind_Link_1226116814" MODIFIED="1285777941102" TEXT="How do I kill time online">
-<icon BUILTIN="full-2"/>
 </node>
-<node CREATED="1285777942824" ID="Freemind_Link_461955397" MODIFIED="1285777958149" TEXT="How do I show dominion over people?">
+<node CREATED="1285777996689" ID="Freemind_Link_1276572671" MODIFIED="1286031627562" TEXT="How do I interact A LOT with people online?">
 <icon BUILTIN="full-2"/>
+<icon BUILTIN="wizard"/>
+<node CREATED="1285778237886" ID="Freemind_Link_824669099" MODIFIED="1286031658671" TEXT="How do I cater for the teddy bear crowd?">
+<icon BUILTIN="full-2"/>
+<icon BUILTIN="wizard"/>
+<node CREATED="1286031887671" ID="Freemind_Link_1746120193" MODIFIED="1286031927000" TEXT="Teddybear type interface">
+<icon BUILTIN="full-3"/>
+<node CREATED="1286031902906" ID="Freemind_Link_1089539684" MODIFIED="1286031929875" TEXT="Color themes upon GTA Visualization">
+<arrowlink DESTINATION="Freemind_Link_265385249" ENDARROW="Default" ENDINCLINATION="128;0;" ID="Freemind_Arrow_Link_509910944" STARTARROW="None" STARTINCLINATION="128;0;"/>
+<icon BUILTIN="full-4"/>
 </node>
-<node CREATED="1285777960920" ID="Freemind_Link_168784394" MODIFIED="1285777971783" TEXT="How do I feel important?">
-<icon BUILTIN="full-2"/>
 </node>
-<node CREATED="1285777996689" ID="Freemind_Link_1276572671" MODIFIED="1285778019262" TEXT="How do I interact A LOT with people online?">
-<icon BUILTIN="full-2"/>
 </node>
-<node CREATED="1285778237886" ID="Freemind_Link_824669099" MODIFIED="1285778268489" TEXT="How do I cater for the teddy bear crowd?">
+<node CREATED="1286031728437" ID="Freemind_Link_1995925944" MODIFIED="1286031738796" TEXT="How do I cater of mafia crow?">
 <icon BUILTIN="full-2"/>
+<node CREATED="1286031827250" ID="Freemind_Link_940463263" MODIFIED="1286031865062" TEXT="Mafia gaming type interface">
+<icon BUILTIN="full-3"/>
+<node CREATED="1286031865531" ID="Freemind_Link_265385249" MODIFIED="1286031918625" TEXT="GTA Visualization">
+<icon BUILTIN="full-4"/>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1284472739951" ID="Freemind_Link_1909905561" MODIFIED="1286032082406" TEXT="How do I find hot spots?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1286032305187" ID="Freemind_Link_1193841187" MODIFIED="1286032358125" TEXT="When I zoom in on a location, I see a heat map.">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1286032331421" ID="Freemind_Link_1329780584" MODIFIED="1286032353671" TEXT="How do I find what the location is about?(name etc.)">
+<icon BUILTIN="full-2"/>
+<node CREATED="1286032785140" ID="Freemind_Link_498711804" MODIFIED="1286032808453" TEXT="Mode of names withing the box">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1286033005203" ID="Freemind_Link_1157978573" MODIFIED="1286033024453" TEXT="Give only on zoom level 20. Also check distance of bounding box."/>
+</node>
 </node>
 </node>
 </node>
@@ -809,10 +836,11 @@
 </node>
 <node CREATED="1283703158802" ID="Freemind_Link_640830008" MODIFIED="1283703160896" POSITION="right" TEXT="Marketing">
 <node CREATED="1283703177927" ID="Freemind_Link_1817341781" MODIFIED="1283703202084" TEXT="Checklist">
-<node CREATED="1285778293411" ID="Freemind_Link_1030747214" MODIFIED="1285778304447" TEXT="Are you being dumb? No? BE DUMB!"/>
+<node CREATED="1285778293411" ID="Freemind_Link_1030747214" MODIFIED="1286031836875" TEXT="Are you being dumb? No? BE DUMB!"/>
 <node CREATED="1283703161521" ID="Freemind_Link_63383641" MODIFIED="1283703168865" TEXT="Does it do what it says?"/>
 <node CREATED="1283703169490" ID="Freemind_Link_499084225" MODIFIED="1283703174943" TEXT="Does it say what is does?"/>
 </node>
+<node CREATED="1286620028609" ID="Freemind_Link_1155133426" MODIFIED="1286620041578" TEXT="Rules make the game interesting"/>
 </node>
 <node BACKGROUND_COLOR="#ffff00" CREATED="1266112502968" FOLDED="true" ID="Freemind_Link_102406912" MODIFIED="1283702881594" POSITION="left" TEXT="Abandonned">
 <icon BUILTIN="button_cancel"/>

@@ -14,7 +14,6 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 
  * @author Ravindranath Akila
  */
 
@@ -26,14 +25,24 @@ import java.util.List;
         @NamedQuery(name = "FindAllPrivateLocationsByName",
                     query = "SELECT loc FROM PrivateLocation loc WHERE loc.privateLocationName = :privateLocationName"),
         @NamedQuery(name = "FindAllPrivateLocationNamesByLikeName",
-                    query = "SELECT loc.privateLocationName FROM PrivateLocation loc WHERE UPPER(loc.privateLocationName) LIKE :privateLocationName")})
+                    query = "SELECT loc.privateLocationName FROM PrivateLocation loc WHERE UPPER(loc.privateLocationName) LIKE :privateLocationName"),
+        @NamedQuery(name = "FindAllPrivateLocationsByBounds",
+                    query = "SELECT loc FROM PrivateLocation loc WHERE (loc.privateLocationLatitude BETWEEN " + ":" + PrivateLocation.PrivateLocationLatitudeSouth + " AND " + ":" + PrivateLocation.PrivateLocationLatitudeNorth + ") AND (loc.privateLocationLongitude BETWEEN " + ":" + PrivateLocation.PrivateLocationLongitudeWest + " AND " + ":" + PrivateLocation.PrivateLocationLongitudeEast + ")")})
+//                           select *   FROM ilp.privatelocation WHERE (    privatelocationlatitude BETWEEN                                 40                         AND                                   50                      ) AND (    privatelocationlongitude between                                 -75                        and                               -7                          )
 public class PrivateLocation implements Serializable, RefreshData<PrivateLocation> {
 
     final static Logger logger = LoggerFactory.getLogger(PrivateLocation.class.getName());
 
     final static public String FindAllPrivateLocationsByName = "FindAllPrivateLocationsByName";
     final static public String FindAllPrivateLocationNamesByLikeName = "FindAllPrivateLocationNamesByLikeName";
+    final static public String FindAllPrivateLocationsByBounds = "FindAllPrivateLocationsByBounds";
     final static public String PrivateLocationName = "privateLocationName";
+
+    public static final String PrivateLocationLatitudeSouth = "privateLocationLatitudeSouth";
+    public static final String PrivateLocationLatitudeNorth = "privateLocationLatitudeNorth";
+    public static final String PrivateLocationLongitudeWest = "privateLocationLongitudeWest";
+    public static final String PrivateLocationLongitudeEast = "privateLocationLongitudeEast";
+
 
     public Long privateLocationId;
 

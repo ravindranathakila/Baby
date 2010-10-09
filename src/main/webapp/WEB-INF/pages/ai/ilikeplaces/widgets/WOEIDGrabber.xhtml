@@ -12,7 +12,7 @@
 
         function initialize_WOEIDGrabber_map(){
         
-        var myLatlng = new google.maps.LatLng(0,0);
+        myLatlng = new google.maps.LatLng(0,0);
           var myOptions = {
             zoom: 1,
             center: myLatlng,
@@ -20,26 +20,70 @@
           };
           map = new google.maps.Map(document.getElementById("WOEIDGrabber_map"), myOptions);
 
-          var placeMarker = new google.maps.Marker({
+        placeMarker = new google.maps.Marker({
               position: myLatlng,
               map: map,
-              title:"Is it here? if so, click on this marker!!!"
+              icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=point%20this%20marker|14|000|glyphish_map-marker|16|bb77ee|892e40"
           });
 
-        var infowindow = new google.maps.InfoWindow({
+        infowindow = new google.maps.InfoWindow({
             content: 'This should finally point to your intended location.<br/> Zoom in on the exact place, click on the marker to confirm! <br/> Zoom to street level!'
         });
 
         infowindow.open(map,placeMarker);
+        geocoder = new google.maps.Geocoder();
+
+        geocodetoinfowindow = function(){
+                if(map.getZoom() > 13){
+                    infowindow.setContent("Tracking you...");
+                    geocoder.geocode(
+                          {
+                            location:map.getCenter()
+                          },
+                         function(geocoderResult,geocoderStatus){
+                                if(geocoderStatus == google.maps.GeocoderStatus.OK){
+                                    infowindow.setContent("Vicinity.. "+geocoderResult[0].address_components[0].long_name+", " + geocoderResult[geocoderResult.length-1].address_components[geocoderResult[geocoderResult.length-1].address_components.length-1].long_name);
+                                }else{
+                                    infowindow.setContent("Can't track you. Hope you know where the hell you are!");
+                                }
+                         }
+                    );
+                }
+        };
 
           google.maps.event.addListener(placeMarker, 'click', function() {
-            alert(map.getZoom());
             if(map.getZoom() > 10 ){
+                if(18 > map.getZoom()){
+                    if(!confirm("Not yet in street level. " + (18 - map.getZoom()) + " more levels to go. Ingore and continue?")){
+                        return;
+                    }
+                }
+
                 if(confirm("Here? Sure? Latitude,Longitude Value:" + map.getCenter().toString())){
+                    infowindow.setContent("That's the place you selected!");
+                    infowindow.setPosition(placeMarker.getPosition());
                     WOEIDGrabberWOEIDUpdate(map.getCenter().lat(), map.getCenter().lng()).focus();
                 }
             }else{
-                alert("Nah! U've gotto zoom in on the exact place!");
+                alert("Zoom to Street Level! "+ (18-(map.getZoom())) + " levels more to go...");
+            }
+          });
+
+          google.maps.event.addListener(placeMarker, 'click', function() {
+            if(map.getZoom() > 10 ){
+                if(18 > map.getZoom()){
+                    if(!confirm("Not yet in street level. " + (18 - map.getZoom()) + " more levels to go. Ingore and continue?")){
+                        return;
+                    }
+                }
+
+                if(confirm("Here? Sure? Latitude,Longitude Value:" + map.getCenter().toString())){
+                    infowindow.setContent("That's the place you selected!");
+                    infowindow.setPosition(placeMarker.getPosition());
+                    DownTownHeatMapWOEIDUpdate(map.getCenter().lat(), map.getCenter().lng()).focus();
+                }
+            }else{
+                alert("Zoom to Street Level! "+ (18-(map.getZoom())) + " levels more to go...");
             }
           });
 
@@ -47,8 +91,27 @@
               placeMarker.setPosition(map.getCenter());
           });
 
+          google.maps.event.addListener(map, 'zoom_changed', function() {
+            infowindow.setContent("Zoom to Street Level! "+ (18-(map.getZoom())) + " levels more to go...");
+            infowindow.setPosition(placeMarker.getPosition());
+
+            geocodetoinfowindow();
+
+          });
+
+          google.maps.event.addListener(map, 'dragstart', function() {
+              infowindow.setContent("Point the marker to the EXACT place.<br/>Click on the marker to confirm!");
+              infowindow.setPosition(placeMarker.getPosition());
+          });
+
+          google.maps.event.addListener(map, 'dragend', function() {
+            geocodetoinfowindow();
+          });
+
         }
 
+        
+				
         function initialize_gmap_scripts(){
           document.getElementById("WOEIDGrabber_load_click").style.display = "none";
           document.getElementById("WOEIDGrabber_map_wrapper").style.display = "block";
