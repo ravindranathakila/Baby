@@ -39,6 +39,16 @@ public class GeoCoord extends RefObj<W3CPoint> {
         return this;
     }
 
+    public static GeoCoord[] getGeoCoordsByBounds(final String listOfLatCommaLongOfBoundsInOrder) {
+        final String[] vals = listOfLatCommaLongOfBoundsInOrder.split(",");
+        final GeoCoord[] bounds = new GeoCoord[(vals.length / 2) + 1];
+
+        for (int i = 0; i < vals.length; i += 2) {
+            bounds[i == 0 ? i : i / 2] = new GeoCoord().setObj(vals[i], vals[i + 1]);
+        }
+        return bounds;
+    }
+
     /**
      * @param latitude
      * @param longitude
@@ -67,8 +77,7 @@ public class GeoCoord extends RefObj<W3CPoint> {
     }
 
     /**
-     *
-     * @return  3.13343,23.23232 format lat,lng
+     * @return 3.13343,23.23232 format lat,lng
      */
     @Override
     public String toString() {

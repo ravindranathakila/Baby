@@ -58,6 +58,12 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
     private static final String PROFILE_PHOTO_UPLOAD_SUCCESSFUL = "Profile Photo Upload Successful.";
     private static final String POSTERIZING = "Posterizing";
     private static final String SAVING_POSTERIZED_IMAGE = "Saving Posterized Image";
+    private static final String LOGIN_TO_RACKSPACE_CLOUD = "Login to rackspace cloud";
+    private static final String LOGIN_FAILED_DESTROYING_SESSION_BEAN = "Login Failed. Destroying Session Bean!";
+    private static final String UPLOADING_PROFILE_PHOTO = "Uploading Profile Photo";
+    private static final String RENAME_ERROR = "Rename Error";
+    private static final String PLEASE_LOGIN = "Please login!";
+    private static final String NO_LOGIN = "No Login!";
 
     public static CDNProfilePhotoLocal getProfilePhotoCDNLocal() {
         isOK();
@@ -72,13 +78,13 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
 
     @PostConstruct
     public void postConstruct() {
-        final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, "Login to rackspace cloud", 60000, null, true);
+        final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, LOGIN_TO_RACKSPACE_CLOUD, 60000, null, true);
         final boolean status = doLogin();
         if (status) {
             sl.complete(Loggers.DONE);
 
         } else {
-            sl.appendToLogMSG("Login Failed. Destroying Session Bean!");
+            sl.appendToLogMSG(LOGIN_FAILED_DESTROYING_SESSION_BEAN);
             sl.complete(Loggers.FAILED);
             throw LOGIN_EXCEPTION;
         }
@@ -87,7 +93,7 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
 
     @Override
     public Return<File> run(File file, final Map parameterMap, final String userFileExtension, final HttpSession session) {
-        final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, "Uploading Profile Photo", 120000, null, true);
+        final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, UPLOADING_PROFILE_PHOTO, 120000, null, true);
         Return<File> r;
         /**
          * Renaming the file to contain extension for image manipulation flexibility
@@ -97,16 +103,16 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
             final boolean rename = file.renameTo(newFile);
 
             if (!rename) {
-                sl.complete("Rename Error!");
-                return new ReturnImpl<File>(new RuntimeException("Rename Error"), "Rename Error!", true);
+                sl.complete(RENAME_ERROR);
+                return new ReturnImpl<File>(new RuntimeException(RENAME_ERROR), RENAME_ERROR, true);
             }
 
 
             final SessionBoundBadRefWrapper<HumanUserLocal> s = (SessionBoundBadRefWrapper<HumanUserLocal>) session.getAttribute(ServletLogin.HumanUser);
 
             if (!s.isAlive()) {
-                sl.complete("No Login!");
-                r = new ReturnImpl<File>(ExceptionCache.NO_LOGIN, "Please login!", true);
+                sl.complete(NO_LOGIN);
+                r = new ReturnImpl<File>(ExceptionCache.NO_LOGIN, PLEASE_LOGIN, true);
             } else {
                 final HumanId humanId = new HumanId(s.boundInstance.getHumanUserId());
 

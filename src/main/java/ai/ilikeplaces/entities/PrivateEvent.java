@@ -16,7 +16,7 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @CREATED_BY(who = {PrivateEvent.class},
-        note = "We need to return this entity to the user for CRUD, hence cascade creation not possible.")
+            note = "We need to return this entity to the user for CRUD, hence cascade creation not possible.")
 @Entity
 @EntityListeners(EntityLifeCycleListener.class)
 public class PrivateEvent implements RefreshData<PrivateEvent> {
@@ -280,4 +280,5 @@ public class PrivateEvent implements RefreshData<PrivateEvent> {
         }
         return this;
     }
+
 }

@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.exception.NoPrivilegesException;
@@ -13,6 +14,8 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -34,6 +37,9 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @EJB
     private CrudServiceLocal<Human> humanCrudServiceLocal_;
+
+    @EJB
+    private RPrivateLocationLocal rPrivateLocationLocal_;
 
     private static final String READ_EVENT_AS_OWNER = "read event as owner.";
     private static final String READ_EVENT_AS_VIEWER = "read event as viewer.";
@@ -61,8 +67,8 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
     @Override
     public PrivateEvent doRPrivateEventAsSystem(final long privateEventId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException {
         return eager ?
-                privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).refresh() :
-                privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId);
+               privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).refresh() :
+               privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId);
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -121,5 +127,34 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
         }
 
         return privateEvent_;
+    }
+
+    @Override
+    @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
+    public List<PrivateEvent> doDirtyRPrivateEventsByPrivateLocationAsSystem(final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException {
+
+        final PrivateLocation privateLocation__ = rPrivateLocationLocal_.doRPrivateLocationAsSystem(privateLocationId, true);
+
+        privateLocation__.getPrivateEvents().size();
+
+        return privateLocation__.getPrivateEvents();
+    }
+
+    /**
+     * @param latitudeSouth horizontal bottom of bounding box
+     * @param latitudeNorth horizontal up of bounding box
+     * @param longitudeWest vertical left of bounding box
+     * @param longitudeEast vertical right of bounding box
+     * @return the list of private events inside a specific bounding box
+     */
+    @Override
+    public List<PrivateEvent> doRPrivateEventsByBoundingBoxAsSystem(final double latitudeSouth, final double latitudeNorth, final double longitudeWest, final double longitudeEast) throws DBFetchDataException, DBDishonourCheckedException {
+        final List<PrivateEvent> returnVal = new ArrayList<PrivateEvent>();
+        final List<PrivateLocation> locationsWithinBox = rPrivateLocationLocal_.doRPrivateLocationsAsGlobal(latitudeSouth, latitudeNorth, longitudeWest, longitudeEast);
+
+        for (final PrivateLocation privateLocation : locationsWithinBox) {
+            returnVal.addAll(doDirtyRPrivateEventsByPrivateLocationAsSystem(privateLocation.getPrivateLocationId()));
+        }
+        return returnVal;
     }
 }

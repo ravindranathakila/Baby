@@ -5,11 +5,14 @@ import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
 
 import javax.ejb.Local;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -79,4 +82,12 @@ public interface HumanCRUDPrivateEventLocal {
     public Return<Album> uPrivateEventRemoveEntryFromAlbum(final HumanId operator__, final long privateEventId__);
 
 
+    /**
+     * @param latitudeSouth horizontal bottom of bounding box
+     * @param latitudeNorth horizontal up of bounding box
+     * @param longitudeWest vertical left of bounding box
+     * @param longitudeEast vertical right of bounding box
+     * @return the list of private events inside a specific bounding box
+     */
+    public Return<List<PrivateEvent>> doRPrivateEventsByBounds(final HumanId operator__, final double latitudeSouth, final double latitudeNorth, final double longitudeWest, final double longitudeEast);
 }

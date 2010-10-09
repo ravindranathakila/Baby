@@ -1,11 +1,14 @@
 package ai.ilikeplaces.logic.crud;
 
+import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.*;
@@ -15,6 +18,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -71,6 +75,9 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     private static final String VIEWER_OWNERSHIP_STATUS = "Viewer/Ownership status:";
     private static final String ADDING_USER_AS_VIEWER_TO_PRIVATE_LOCATION_OF_THIS_EVENT_AS_HE_ISN_T_ANYBODY_OF_IT = "Adding user as viewer to private location of this event as he isn't anybody of it.";
     private static final String SAVE_PRIVATE_EVENT_FAILED = "Save private event FAILED!";
+    private static final String READ_WALL_SUCCESSFUL = "Read wall Successful!";
+    private static final String FETCH_BOUNDED_EVENTS_SUCCESSFUL = "Fetch bounded events Successful!";
+    private static final String FETCH_BOUNDED_EVENTS_FAILED = "Fetch bounded events FAILED!";
 
 
     @Override
@@ -279,7 +286,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doDirtyRWall(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId()), "Read wall Successful!");
+                    .doDirtyRWall(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId()), READ_WALL_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, READ_WALL_FAILED, true);
         }
@@ -353,6 +360,18 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
             r = new ReturnImpl<Album>(crudAlbumLocal_.doUAlbumAddEntry(privateEventId__, operator__.getObjectAsValid(), cdnFileName.getObjectAsValid()), ADD_PHOTO_TO_ALBUM_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Album>(t, ADD_PHOTO_TO_ALBUM_FAILED, true);
+        }
+        return r;
+    }
+
+    @FIXME(issue = "Use human, or move to a different class")
+    @Override
+    public Return<List<PrivateEvent>> doRPrivateEventsByBounds(final HumanId operator__, final double latitudeSouth, final double latitudeNorth, final double longitudeWest, final double longitudeEast) {
+        Return<List<PrivateEvent>> r;
+        try {
+            r = new ReturnImpl<List<PrivateEvent>>(rPrivateEventLocal_.doRPrivateEventsByBoundingBoxAsSystem(latitudeSouth, latitudeNorth, longitudeWest, longitudeEast), FETCH_BOUNDED_EVENTS_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<List<PrivateEvent>>(t, FETCH_BOUNDED_EVENTS_FAILED, true);
         }
         return r;
     }
