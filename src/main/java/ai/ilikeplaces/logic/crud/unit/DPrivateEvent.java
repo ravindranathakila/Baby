@@ -18,7 +18,7 @@ import javax.ejb.TransactionAttributeType;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Jan 14, 2010
  * Time: 11:53:11 PM
  */

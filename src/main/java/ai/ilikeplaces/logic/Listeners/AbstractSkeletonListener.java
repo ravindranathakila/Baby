@@ -25,7 +25,7 @@ import static ai.ilikeplaces.util.Loggers.LEVEL;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Jul 12, 2010
  * Time: 9:54:25 PM
  */

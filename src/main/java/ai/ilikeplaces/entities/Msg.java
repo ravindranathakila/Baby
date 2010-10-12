@@ -14,7 +14,7 @@ import javax.persistence.*;
  * 2. This entity should be super efficient since it will be used everywhere.
  *
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Jan 25, 2010
  * Time: 1:01:22 PM
  */

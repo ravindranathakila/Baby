@@ -10,7 +10,7 @@ package ai.ilikeplaces.servlets.filters;
  * select * from ilp.location where woeid=24865698 or any other id having encoding issues to verify
  *
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Jul 5, 2010
  * Time: 12:34:33 PM
  */

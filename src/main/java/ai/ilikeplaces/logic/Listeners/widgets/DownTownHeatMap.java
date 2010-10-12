@@ -3,11 +3,16 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.hotspots.Hotspot;
+import ai.ilikeplaces.logic.hotspots.HotspotAnalyzer;
+import ai.ilikeplaces.logic.hotspots.Rawspot;
+import ai.ilikeplaces.logic.validators.unit.BoundingBox;
 import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Info;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
+import com.google.gdata.data.geo.impl.W3CPoint;
 import net.sf.oval.Validator;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
@@ -19,11 +24,13 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Sep 10, 2010
  * Time: 5:07:59 PM
  */
@@ -133,13 +140,58 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                                 geoCoord[0].getObjectAsValid().getLongitude(),
                                 geoCoord[1].getObjectAsValid().getLongitude()).returnValue();
 
+
+                        /////////////////////////////
+                        final Set<Rawspot> rs = new HashSet<Rawspot>();
                         for (final PrivateEvent privateEvent : privateEvents__) {
-                            itsNatDocument_.addCodeToSend(" new google.maps.Marker({ position: new google.maps.LatLng("
-                                    + privateEvent.getPrivateLocation().getPrivateLocationLatitude()
-                                    + ","
-                                    + privateEvent.getPrivateLocation().getPrivateLocationLongitude()
-                                    + "),map: map, icon: markerIcon});");
+                            rs.add(
+                                    new Rawspot(
+                                            new W3CPoint(privateEvent.getPrivateLocation().getPrivateLocationLatitude(), privateEvent.getPrivateLocation().getPrivateLocationLongitude()),
+                                            privateEvent.getPrivateLocation().getPrivateLocationName()));
                         }
+
+                        final BoundingBox bb = new BoundingBox().setObj(
+                                geoCoord[0].getObjectAsValid().getLatitude(),
+                                geoCoord[1].getObjectAsValid().getLatitude(),
+                                geoCoord[0].getObjectAsValid().getLongitude(),
+                                geoCoord[1].getObjectAsValid().getLongitude());
+
+                        final HotspotAnalyzer hsa = new HotspotAnalyzer(rs, bb);
+                        final Hotspot[][] hotspots = hsa.getHotspots();
+                        for (final Hotspot[] hotspotspitch : hotspots) {
+                            for (final Hotspot yaw : hotspotspitch) {
+                                if (yaw.getCoordinates() != null) {
+                                    itsNatDocument_.addCodeToSend("listOfHotSpots.unshift(new google.maps.Marker({ position: new google.maps.LatLng("
+                                            + yaw.getCoordinates().getLatitude()
+                                            + ","
+                                            + yaw.getCoordinates().getLongitude()
+                                            + "),map: map, icon: markerIcon}));");
+                                }
+                            }
+                        }
+
+
+                        //////////////////////////////
+
+//                        for (final PrivateEvent privateEvent : privateEvents__) {
+//                            itsNatDocument_.addCodeToSend("listOfHotSpots.unshift(new google.maps.Marker({ position: new google.maps.LatLng("
+//                                    + privateEvent.getPrivateLocation().getPrivateLocationLatitude()
+//                                    + ","
+//                                    + privateEvent.getPrivateLocation().getPrivateLocationLongitude()
+//                                    + "),map: map, icon: markerIcon}));");
+//
+//                            /*
+//                            //Below is the working javascript code put here for reference. Do not delete.
+//                            listOfHotSpots.unshift(
+//                                new google.maps.Marker({
+//                                      position: myLatlng,
+//                                      map: map,
+//                                      title:"2",
+//                                      icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=Point%20this%20Marker|14|000|glyphish_map-marker|16|bb77ee|892e40"
+//                                })
+//                            );
+//                            */
+//                        }
                     }
 
                     // markerShadow,

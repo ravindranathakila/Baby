@@ -2,7 +2,7 @@ package ai.ilikeplaces.util;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Jan 1, 2010
  * Time: 5:19:59 PM
  */

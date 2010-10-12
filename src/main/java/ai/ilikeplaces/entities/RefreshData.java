@@ -5,7 +5,7 @@ import ai.ilikeplaces.exception.DBFetchDataException;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Jul 6, 2010
  * Time: 2:35:56 PM
  */

@@ -10,7 +10,7 @@ import net.sf.oval.constraint.NotNull;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Sep 12, 2010
  * Time: 7:29:37 PM
  */
@@ -61,6 +61,26 @@ public class GeoCoord extends RefObj<W3CPoint> {
 
             final GeoLong geoLong = new GeoLong();
             geoLong.setValue(longitude);//will throw a runtime exception if wrong.
+
+            setObj(new W3CPoint(geoLat.getLatitude(), geoLong.getLongitude()));
+        } catch (final RuntimeException e) {
+            super.setObj(null);
+        }
+        return this;
+    }
+
+    /**
+     * @param latitude
+     * @param longitude
+     * @return this
+     */
+    public GeoCoord setObj(final double latitude, final double longitude) {
+        try {
+            final GeoLat geoLat = new GeoLat();
+            geoLat.setLatitude(latitude);//will throw a runtime exception if wrong.
+
+            final GeoLong geoLong = new GeoLong();
+            geoLong.setLongitude(longitude);//will throw a runtime exception if wrong.
 
             setObj(new W3CPoint(geoLat.getLatitude(), geoLong.getLongitude()));
         } catch (final RuntimeException e) {

@@ -7,7 +7,7 @@ import javax.persistence.Transient;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Feb 10, 2010
  * Time: 6:39:28 PM
  */

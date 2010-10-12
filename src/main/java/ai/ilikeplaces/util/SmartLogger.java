@@ -24,7 +24,7 @@ import static ai.ilikeplaces.util.Loggers.LEVEL;
  * Hence, this smart logger is to facilitate a start and time out, completion or delayed completion
  * of a process
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: May 29, 2010
  * Time: 8:28:17 PM
  */

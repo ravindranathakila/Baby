@@ -5,7 +5,7 @@ import ai.ilikeplaces.doc.License;
 /**
  * DOM event types
  * <p/>
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Dec 8, 2009
  * Time: 11:17:06 PM
  */

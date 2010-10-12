@@ -10,7 +10,7 @@ import ai.ilikeplaces.util.SmartLogger;
  * Used in conjunction with the MemoryManagementSystem
  * <p/>
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Jun 2, 2010
  * Time: 12:03:02 AM
  */

@@ -4,7 +4,7 @@ import ai.ilikeplaces.doc.License;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Feb 3, 2010
  * Time: 5:07:40 PM
  */
