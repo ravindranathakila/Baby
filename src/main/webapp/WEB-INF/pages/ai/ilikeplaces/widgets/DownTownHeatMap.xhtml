@@ -14,20 +14,21 @@
 <div class="span-14 last" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
 
 <script type="text/javascript">
-        alert('hi');
-
-        markerIcon = "";
+        markerIcon = "http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=1|14|000|glyphish_map-marker|16|4bf202|892e40";
 
         focusLat = 0;
         focusLng = 0;
 
         listOfHotSpots = new Array();
 
-        function trackHotSpots(marker){
-            listOfHotSpots.unshift(marker);
-        }
-
-        function clearHotSpots(marker){
+        function clearHotSpots(){
+            try{
+                for(var i in listOfHotSpots){
+                    listOfHotSpots[i].setMap(null);
+                }
+            }catch(err){
+                alert(err);
+            }
         }
         
 
@@ -48,6 +49,27 @@
                       title:"Is it here? if so, click on this marker!!!",
                       icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=Point%20this%20Marker|14|000|glyphish_map-marker|16|bb77ee|892e40"
                 });
+
+
+                <!--listOfHotSpots.unshift(-->
+                    <!--new google.maps.Marker({-->
+                          <!--position: myLatlng,-->
+                          <!--map: map,-->
+                          <!--title:"2",-->
+                          <!--icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=Point%20this%20Marker|14|000|glyphish_map-marker|16|bb77ee|892e40"-->
+                    <!--})-->
+                <!--);-->
+                <!--listOfHotSpots.unshift(-->
+                    <!--new google.maps.Marker({-->
+                          <!--position: myLatlng,-->
+                          <!--map: map,-->
+                          <!--title:"1",-->
+                          <!--icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=Point%20this%20Marker|14|000|glyphish_map-marker|16|bb77ee|892e40"-->
+                    <!--})-->
+                <!--);-->
+
+                <!--alert(listOfHotSpots[1].title);-->
+                <!--clearHotSpots();-->
 
                 infowindow = new google.maps.InfoWindow({
                     content: "Zoom to street level & Point marker to EXACT place. Click the marker to confirm!",
@@ -115,7 +137,7 @@
                   if(map.getZoom()>19){
                       var myOptions = {
                         mapTypeId: google.maps.MapTypeId.ROADMAP,
-                        draggable:false
+                        draggable:true//TODO, set to false
                       };
                     map.setOptions(myOptions);
                   }else{
@@ -133,11 +155,14 @@
 
                   google.maps.event.addListener(map, 'dragend', function() {
                       if(map.getZoom()>16){
-                         DownTownHeatMapBBUpdate(
+                         var curr = DownTownHeatMapBBUpdate(
                             map.getBounds().getSouthWest().lat(),
                             map.getBounds().getSouthWest().lng(),
                             map.getBounds().getNorthEast().lat(),
-                            map.getBounds().getNorthEast().lng()).focus();
+                            map.getBounds().getNorthEast().lng());
+                            curr.focus();
+                            curr.blur();
+                            clearHotSpots();
                       }
                   });
 

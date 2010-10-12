@@ -16,7 +16,7 @@ import java.util.List;
  * <p/>
  * <p/>
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Jan 21, 2010
  * Time: 6:03:22 PM
  */
@@ -158,6 +158,22 @@ public abstract class RefObj<T> {
             throw new ConstraintsViolatedException(constraintViolations);
         }
         return obj;
+    }
+
+  /**
+     * validator is useful if you are using profiling or if you need to avoid lots of validator instances
+     * being created
+     *
+     * @param validator
+     * @return 0 if no errors or number of errors
+     */
+    public RefObj<T> validateThrowAndGetThis(final Validator... validator) {
+        final Validator v = validator.length == 0 ? new Validator() : validator[0];
+        constraintViolations = v.validate(this);
+        if (constraintViolations.size() != 0) {
+            throw new ConstraintsViolatedException(constraintViolations);
+        }
+        return this;
     }
 
     public List<ConstraintViolation> getViolations() {

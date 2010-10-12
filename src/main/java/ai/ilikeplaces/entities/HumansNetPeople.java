@@ -14,7 +14,7 @@ import java.util.List;
  * These are the people needed for an event
  * <p/>
  * <p/>
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Dec 8, 2009
  * Time: 9:54:03 PM
  */

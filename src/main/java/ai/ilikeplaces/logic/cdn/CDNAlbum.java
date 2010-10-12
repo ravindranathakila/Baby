@@ -30,7 +30,7 @@ import java.util.Map;
  * 5. The photo name will be email@example.org
  * <p/>
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Apr 29, 2010
  * Time: 4:10:12 PM
  */

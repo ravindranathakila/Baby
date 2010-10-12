@@ -5,7 +5,7 @@ import ai.ilikeplaces.util.apache.StringEscapeUtils;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Mar 8, 2010
  * Time: 11:15:43 PM
  */

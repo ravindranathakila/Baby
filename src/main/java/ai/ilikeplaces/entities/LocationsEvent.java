@@ -3,7 +3,7 @@ package ai.ilikeplaces.entities;
 import ai.ilikeplaces.doc.License;
 
 /**
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Dec 6, 2009
  * Time: 6:19:10 PM
  */

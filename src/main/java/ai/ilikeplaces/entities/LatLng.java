@@ -4,7 +4,7 @@ import ai.ilikeplaces.doc.License;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Sep 12, 2010
  * Time: 9:26:21 PM
  * To change this template use File | Settings | File Templates.

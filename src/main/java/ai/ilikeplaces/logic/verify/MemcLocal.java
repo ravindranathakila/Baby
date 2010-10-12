@@ -7,7 +7,7 @@ import javax.persistence.Lob;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Apr 29, 2010
  * Time: 4:08:49 PM
  */

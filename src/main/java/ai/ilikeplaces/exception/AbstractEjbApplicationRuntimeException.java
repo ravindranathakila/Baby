@@ -18,7 +18,7 @@ import javax.ejb.ApplicationException;
  * <p/>
  * <p/>
  * Created by IntelliJ IDEA.
- * User: Ravindranath Akila
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Jun 17, 2010
  * Time: 9:32:33 PM
  */
