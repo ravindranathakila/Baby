@@ -4,15 +4,12 @@ import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.logic.Listeners.*;
 import ai.ilikeplaces.logic.Listeners.widgets.ListenerShare;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidget;
-import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
 import org.itsnat.core.*;
 import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.http.HttpServletWrapper;
 import org.itsnat.core.http.ItsNatHttpServlet;
-import org.itsnat.core.http.ItsNatHttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -395,6 +392,18 @@ Controller.Page.friendAddDisplayNameLabel
                 return DocI;
             }},
 
+        Photos(null) {
+
+            @Override
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "page/_me";
+            }
+
+            @Override
+            public String toString() {
+                return DocPhotos;
+            }},
+
         Friends(null
         ) {
 
@@ -631,27 +640,27 @@ Controller.Page.friendAddDisplayNameLabel
                 return RBGet.getGlobalConfigKey("AppRoot") + "login";
             }
         },
-        PhotoCRUD(
-                "ai/ilikeplaces/widgets/PhotoCRUD.xhtml",
-                Controller.Page.pc_photo_title,
-                Controller.Page.pc_close,
-                Controller.Page.pc,
-                Controller.Page.pc_photo,
-                Controller.Page.pc_photo_permalink,
-                Controller.Page.pc_photo_name,
-                Controller.Page.pc_update_name,
-                Controller.Page.pc_photo_description,
-                Controller.Page.pc_delete,
-                Controller.Page.pc_update_description) {
-            @Override
-            public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "page/_me";
-            }
-            @Override
-            public String toString() {
-                return "me";
-            }
-        },
+//        PhotoCRUD(
+//                "ai/ilikeplaces/widgets/PhotoCRUD.xhtml",
+//                Controller.Page.pc_photo_title,
+//                Controller.Page.pc_close,
+//                Controller.Page.pc,
+//                Controller.Page.pc_photo,
+//                Controller.Page.pc_photo_permalink,
+//                Controller.Page.pc_photo_name,
+//                Controller.Page.pc_update_name,
+//                Controller.Page.pc_photo_description,
+//                Controller.Page.pc_delete,
+//                Controller.Page.pc_update_description) {
+//            @Override
+//            public String getURL() {
+//                return RBGet.getGlobalConfigKey("AppRoot") + "page/_me";
+//            }
+//            @Override
+//            public String toString() {
+//                return "me";
+//            }
+//        },
         SignInOn(
                 "ai/ilikeplaces/widgets/SignInOn.xhtml",
                 Controller.Page.signinon_login,
@@ -824,6 +833,9 @@ Controller.Page.friendAddDisplayNameLabel
 
         /*I Page*/
         final static public String DocI = "DocI";
+
+        /*Photos Page*/
+        final static public String DocPhotos = "DocPhotos";
 
         /*Actiavte Page*/
         final static public String DocActivate = "DocActivate";
@@ -1012,7 +1024,7 @@ Controller.Page.friendAddDisplayNameLabel
 
     final PageFace locationMain = Page.LocationMain;
     final PageFace aarrr = Page.Aarrr;
-    final PageFace photoCRUD = Page.PhotoCRUD;
+//    final PageFace photoCRUD = Page.PhotoCRUD;
     final PageFace photo$Description = Page.Photo$Description;
     final PageFace signInOn = Page.SignInOn;
 
@@ -1036,6 +1048,7 @@ Controller.Page.friendAddDisplayNameLabel
     final PageFace i = Page.I;
     final PageFace activate = Page.Activate;
     final PageFace share = Page.Share;
+    final PageFace photos = Page.Photos;
 
     final PageFace findFriendWidget = Page.FindFriend;
     final PageFace friendAdd = Page.FriendAdd;
@@ -1119,9 +1132,7 @@ Controller.Page.friendAddDisplayNameLabel
 
             inhs__.registerItsNatDocumentTemplate(locationMain.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(locationMain)).addItsNatServletRequestListener(new ListenerMain());
 
-            inhs__.registerItsNatDocumentTemplate("photo", "text/html", pathPrefix__ + PrettyURLMap_.get(locationMain)).addItsNatServletRequestListener(new ListenerPhoto());
-
-            inhs__.registerItsNatDocumentTemplate(photoCRUD.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(locationMain)).addItsNatServletRequestListener(new ListenerHuman());
+            inhs__.registerItsNatDocumentTemplate(photos.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerPhoto());
 
             inhs__.registerItsNatDocumentTemplate(organize.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerOrganize());
 
@@ -1140,7 +1151,7 @@ Controller.Page.friendAddDisplayNameLabel
 
         registerDocumentFragmentTemplatesAKAWidgets:
         {
-            inhs__.registerItsNatDocFragmentTemplate(photoCRUD.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(photoCRUD));
+//            inhs__.registerItsNatDocFragmentTemplate(photoCRUD.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(photoCRUD));
 
             inhs__.registerItsNatDocFragmentTemplate(photo$Description.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(photo$Description));
 
@@ -1268,7 +1279,7 @@ Controller.Page.friendAddDisplayNameLabel
                     Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0005") + getPhotoLocation(URL__));
                     Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0006") + getPhotoURL(URL__));
                 } else if (isHumanPage(URL__)) {
-                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, "me");/*Framework specific*/
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocPhotos);/*Framework specific*/
                     Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0007"));
                 } else if (isOrganizePage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocOrganize);/*Framework specific*/

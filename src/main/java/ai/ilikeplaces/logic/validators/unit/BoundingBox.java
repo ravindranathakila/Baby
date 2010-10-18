@@ -39,7 +39,10 @@ public class BoundingBox extends RefObj<GeoCoord[]> {
      * @return
      */
     public BoundingBox setObj(final double swlatitude, final double swlongitude, final double nelatitude, final double nelongitude) {
-        super.setObj(new GeoCoord[]{new GeoCoord().setObj(swlatitude, swlongitude), new GeoCoord().setObj(nelatitude, nelongitude)});
+        super.setObj(new GeoCoord[]{(
+                GeoCoord) new GeoCoord().setObj(swlatitude, swlongitude).getSelfAsValid(),
+                (GeoCoord) new GeoCoord().setObj(nelatitude, nelongitude).getSelfAsValid()
+        });
         return this;
     }
 

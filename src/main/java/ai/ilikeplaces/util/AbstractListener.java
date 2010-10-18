@@ -54,14 +54,17 @@ public abstract class AbstractListener {
     private static final IllegalArgumentException ILLEGAL_ARGUMENT_EXCEPTION = new IllegalArgumentException("SORRY! I RECEIVED A NUMBER OF PARAMETERS WHICH I CANNOT HANDLE.");
     private static final IllegalStateException ILLEGAL_STATE_EXCEPTION = new IllegalStateException("SORRY! THE CODE REFLECTING THIS CALL SHOULD ONLY WORK IF THE USER IS LOGGED IN, BUT ACTUALLY IS NOT.");
 
+    final protected SmartLogger sl;
+    private static final String INITIALIZING_LISTENER = "Initializing page";
 
     /**
      * @param request_
      */
     @SuppressWarnings("unchecked")
     public AbstractListener(final ItsNatServletRequest request_, final Object... initArgs) {
+        sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, INITIALIZING_LISTENER, 10000, null, true);
         this.itsNatDocument = request_.getItsNatDocument();
-        
+
         this.itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument;
         this.hTMLDocument_ = itsNatHTMLDocument_.getHTMLDocument();
         this.itsNatServlet_ = itsNatDocument.getItsNatDocumentTemplate().getItsNatServlet();
@@ -70,7 +73,7 @@ public abstract class AbstractListener {
         this.sessionBoundBadRefWrapper =
                 attribute__ == null ?
                 null : (!((SessionBoundBadRefWrapper<HumanUserLocal>) attribute__).isAlive() ?
-                null : ((SessionBoundBadRefWrapper<HumanUserLocal>) attribute__));
+                        null : ((SessionBoundBadRefWrapper<HumanUserLocal>) attribute__));
 
         init(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument, initArgs);
 
@@ -209,8 +212,8 @@ public abstract class AbstractListener {
      */
     final protected String getUsername() {
         return sessionBoundBadRefWrapper != null ?
-                (sessionBoundBadRefWrapper.isAlive() ?
-                        sessionBoundBadRefWrapper.boundInstance.getHumanUserId() : null) : null;
+               (sessionBoundBadRefWrapper.isAlive() ?
+                sessionBoundBadRefWrapper.boundInstance.getHumanUserId() : null) : null;
     }
 
     /**

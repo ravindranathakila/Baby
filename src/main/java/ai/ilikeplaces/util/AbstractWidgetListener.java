@@ -230,7 +230,7 @@ public abstract class AbstractWidgetListener {
         return document_.createElement(tagNameInAllCaps.toString());
     }
 
-    final protected Element $$(MarkupTagFace tagNameInAllCaps__,final Document document__) {
+    final protected Element $$(MarkupTagFace tagNameInAllCaps__, final Document document__) {
         return document__.createElement(tagNameInAllCaps__.toString());
     }
 
@@ -282,6 +282,26 @@ public abstract class AbstractWidgetListener {
             Loggers.EXCEPTION.error("SORRY! THIS ELEMENT DOES NOT HAVE ANY CHILDREN", npe);
         }
         return elementToBeSetTextOf;
+    }
+
+    /**
+     * A new line will be inserted at the start and end of the string.
+     *
+     * @param jsToBeSentToClient JS To Be Sent To Client
+     */
+    protected void sendJS(final String jsToBeSentToClient) {
+        itsNatDocument_.addCodeToSend("\n" + jsToBeSentToClient + "\n");
+    }
+
+    /**
+     * A new line will be inserted at the start and end of the string.
+     * <p/>
+     * If not trailing semicolon is found, it will be added
+     *
+     * @param jsStatementToBeSentToClient JS statement To Be Sent To Client
+     */
+    protected void sendJSStmt(final String jsStatementToBeSentToClient) {
+        itsNatDocument_.addCodeToSend("\n" + jsStatementToBeSentToClient + (jsStatementToBeSentToClient.endsWith(";") ? "\n" : ";\n"));
     }
 
     protected Element $$(final Event event) {

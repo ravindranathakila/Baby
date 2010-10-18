@@ -3,138 +3,145 @@
 -->        <!--?xml version="1.0" encoding="UTF-8"?-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>WOEIDGrabber</title>
-</head>
-<body>
-<div class="span-14 last" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
-    <script type="text/javascript">
+    <head>
+        <title>WOEIDGrabber</title>
+    </head>
+    <body>
+        <div class="span-14 last" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
+            <script type="text/javascript">
 
-        function initialize_WOEIDGrabber_map(){
-        
-        myLatlng = new google.maps.LatLng(0,0);
-          var myOptions = {
-            zoom: 1,
-            center: myLatlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
-          map = new google.maps.Map(document.getElementById("WOEIDGrabber_map"), myOptions);
+focusLat = 0;
+focusLng = 0;
+zoomLevel = 0;
 
-        placeMarker = new google.maps.Marker({
-              position: myLatlng,
-              map: map,
-              icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=point%20this%20marker|14|000|glyphish_map-marker|16|bb77ee|892e40"
-          });
+function initialize_WOEIDGrabber_map(){
 
-        infowindow = new google.maps.InfoWindow({
-            content: 'This should finally point to your intended location.<br/> Zoom in on the exact place, click on the marker to confirm! <br/> Zoom to street level!'
-        });
+    myLatlng = new google.maps.LatLng(focusLat,focusLng);
 
-        infowindow.open(map,placeMarker);
-        geocoder = new google.maps.Geocoder();
+    var myOptions = {
+        zoom: zoomLevel,
+        center: myLatlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById("WOEIDGrabber_map"), myOptions);
 
-        geocodetoinfowindow = function(){
-                if(map.getZoom() > 13){
-                    infowindow.setContent("Tracking you...");
-                    geocoder.geocode(
-                          {
-                            location:map.getCenter()
-                          },
-                         function(geocoderResult,geocoderStatus){
-                                if(geocoderStatus == google.maps.GeocoderStatus.OK){
-                                    infowindow.setContent("Vicinity.. "+geocoderResult[0].address_components[0].long_name+", " + geocoderResult[geocoderResult.length-1].address_components[geocoderResult[geocoderResult.length-1].address_components.length-1].long_name);
-                                }else{
-                                    infowindow.setContent("Can't track you. Hope you know where the hell you are!");
-                                }
-                         }
-                    );
+    placeMarker = new google.maps.Marker({
+        position: myLatlng,
+        map: map,
+        icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=point%20this%20marker|14|000|glyphish_map-marker|16|bb77ee|892e40"
+    });
+
+    infowindow = new google.maps.InfoWindow({
+        content: 'This should finally point to your intended location.<br/> Zoom in on the exact place, click on the marker to confirm! <br/> Zoom to street level!'
+    });
+
+    infowindow.open(map,placeMarker);
+    geocoder = new google.maps.Geocoder();
+
+    geocodetoinfowindow = function(){
+        if(map.getZoom() > 13){
+            infowindow.setContent("Tracking you...");
+            geocoder.geocode(
+            {
+                location:map.getCenter()
+            },
+            function(geocoderResult,geocoderStatus){
+                if(geocoderStatus == google.maps.GeocoderStatus.OK){
+                    infowindow.setContent("Vicinity.. "+geocoderResult[0].address_components[0].long_name+", " +
+                        geocoderResult[geocoderResult.length-1].address_components[geocoderResult[geocoderResult.length-1].address_components.length-1].long_name);
+                }else{
+                    infowindow.setContent("Can't track you. Hope you know where the hell you are!");
                 }
-        };
-
-          google.maps.event.addListener(placeMarker, 'click', function() {
-            if(map.getZoom() > 10 ){
-                if(18 > map.getZoom()){
-                    if(!confirm("Not yet in street level. " + (18 - map.getZoom()) + " more levels to go. Ingore and continue?")){
-                        return;
-                    }
-                }
-
-                if(confirm("Here? Sure? Latitude,Longitude Value:" + map.getCenter().toString())){
-                    infowindow.setContent("That's the place you selected!");
-                    infowindow.setPosition(placeMarker.getPosition());
-                    WOEIDGrabberWOEIDUpdate(map.getCenter().lat(), map.getCenter().lng()).focus();
-                }
-            }else{
-                alert("Zoom to Street Level! "+ (18-(map.getZoom())) + " levels more to go...");
             }
-          });
+            );
+        }
+    };
 
-          google.maps.event.addListener(placeMarker, 'click', function() {
-            if(map.getZoom() > 10 ){
-                if(18 > map.getZoom()){
-                    if(!confirm("Not yet in street level. " + (18 - map.getZoom()) + " more levels to go. Ingore and continue?")){
-                        return;
-                    }
+    google.maps.event.addListener(placeMarker, 'click', function() {
+        if(map.getZoom() > 10 ){
+            if(18 > map.getZoom()){
+                if(!confirm("Not yet in street level. " + (18 - map.getZoom()) + " more levels to go. Ingore and continue?")){
+                    return;
                 }
-
-                if(confirm("Here? Sure? Latitude,Longitude Value:" + map.getCenter().toString())){
-                    infowindow.setContent("That's the place you selected!");
-                    infowindow.setPosition(placeMarker.getPosition());
-                    DownTownHeatMapWOEIDUpdate(map.getCenter().lat(), map.getCenter().lng()).focus();
-                }
-            }else{
-                alert("Zoom to Street Level! "+ (18-(map.getZoom())) + " levels more to go...");
             }
-          });
 
-          google.maps.event.addListener(map, 'center_changed', function() {
-              placeMarker.setPosition(map.getCenter());
-          });
-
-          google.maps.event.addListener(map, 'zoom_changed', function() {
-            infowindow.setContent("Zoom to Street Level! "+ (18-(map.getZoom())) + " levels more to go...");
-            infowindow.setPosition(placeMarker.getPosition());
-
-            geocodetoinfowindow();
-
-          });
-
-          google.maps.event.addListener(map, 'dragstart', function() {
-              infowindow.setContent("Point the marker to the EXACT place.<br/>Click on the marker to confirm!");
-              infowindow.setPosition(placeMarker.getPosition());
-          });
-
-          google.maps.event.addListener(map, 'dragend', function() {
-            geocodetoinfowindow();
-          });
-
+            if(confirm("Here? Sure? Latitude,Longitude Value:" + map.getCenter().toString())){
+                infowindow.setContent("That's the place you selected!");
+                infowindow.setPosition(placeMarker.getPosition());
+                WOEIDGrabberWOEIDUpdate(map.getCenter().lat(), map.getCenter().lng()).focus();
+            }
+        }else{
+            alert("Zoom to Street Level! "+ (18-(map.getZoom())) + " levels more to go...");
         }
+    });
 
-        
-				
-        function initialize_gmap_scripts(){
-          document.getElementById("WOEIDGrabber_load_click").style.display = "none";
-          document.getElementById("WOEIDGrabber_map_wrapper").style.display = "block";
-          var scripts = document.createElement("script");
-          scripts.type = "text/javascript";
-          scripts.src = "http://maps.google.com/maps/api/js?sensor=false&callback=initialize_WOEIDGrabber_map";
-          document.body.appendChild(scripts);
-          alert("hold on to ur seat tight! we're gonna spin the Earth to find your place!;)");
+    google.maps.event.addListener(placeMarker, 'click', function() {
+        if(map.getZoom() > 10 ){
+            if(18 > map.getZoom()){
+                if(!confirm("Not yet in street level. " + (18 - map.getZoom()) + " more levels to go. Ingore and continue?")){
+                    return;
+                }
+            }
+
+            if(confirm("Here? Sure? Latitude,Longitude Value:" + map.getCenter().toString())){
+                infowindow.setContent("That's the place you selected!");
+                infowindow.setPosition(placeMarker.getPosition());
+                DownTownHeatMapWOEIDUpdate(map.getCenter().lat(), map.getCenter().lng()).focus();
+            }
+        }else{
+            alert("Zoom to Street Level! "+ (18-(map.getZoom())) + " levels more to go...");
         }
-        
-    </script>
+    });
 
-    <div class="span-14 last">
-        <input type="text" id="WOEIDGrabberWOEID" value="0,0"/>
-    </div>
-    <div class="span-14 last" style="overflow:hidden;" onclick="javascript:initialize_gmap_scripts();" id="WOEIDGrabber_load_click">
-        Click here to find your place!
-    </div>
-    <div class="span-14 last" style="overflow:hidden;display:none;" id="WOEIDGrabber_map_wrapper">
-            <div id="WOEIDGrabber_map" class="vtip" title="<i>Double-click to Zoom<br/>Links open in new tabs</i>" style="height:410px;">
+    google.maps.event.addListener(map, 'center_changed', function() {
+        placeMarker.setPosition(map.getCenter());
+    });
+
+    google.maps.event.addListener(map, 'zoom_changed', function() {
+        infowindow.setContent("Zoom to Street Level! "+ (18-(map.getZoom())) + " levels more to go...");
+        infowindow.setPosition(placeMarker.getPosition());
+
+        geocodetoinfowindow();
+
+    });
+
+    google.maps.event.addListener(map, 'dragstart', function() {
+        infowindow.setContent("Point the marker to the EXACT place.<br/>Click on the marker to confirm!");
+        infowindow.setPosition(placeMarker.getPosition());
+    });
+
+    google.maps.event.addListener(map, 'dragend', function() {
+        geocodetoinfowindow();
+    });
+
+}
+
+
+function initialize_gmap_scripts(){
+    document.getElementById("WOEIDGrabber_load_click").style.display = "none";
+    document.getElementById("WOEIDGrabber_map_wrapper").style.display = "block";
+    var scripts = document.createElement("script");
+    scripts.type = "text/javascript";
+    scripts.src = "http://maps.google.com/maps/api/js?sensor=false&callback=initialize_WOEIDGrabber_map";
+    document.body.appendChild(scripts);
+    alert("hold on to ur seat tight! we're gonna spin the Earth to find your place!;)");
+}
+
+            </script>
+
+            <div class="span-14 last">
+                <input type="text" id="WOEIDGrabberWOEID" value="0,0"/>
             </div>
-    </div>
-    <hr/>
-</div>
-</body>
+            <div class="span-14 last" style="overflow:hidden;" onclick="javascript:initialize_gmap_scripts();"
+                 id="WOEIDGrabber_load_click">
+                Click here to find your place!
+            </div>
+            <div class="span-14 last" style="overflow:hidden;display:none;" id="WOEIDGrabber_map_wrapper">
+                <div id="WOEIDGrabber_map" class="vtip" title="<i>Double-click to Zoom<br/>Links open in new tabs</i>"
+                     style="height:410px;">
+                </div>
+            </div>
+            <hr class="blank"/>
+        </div>
+    </body>
 </html>

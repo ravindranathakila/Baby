@@ -7,6 +7,7 @@ import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.logic.crud.unit.CPrivatePhotoLocal;
+import ai.ilikeplaces.logic.crud.unit.RPrivatePhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.UPrivatePhotoLocal;
 import ai.ilikeplaces.util.*;
 import org.slf4j.Logger;
@@ -35,6 +36,10 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
     private CPrivatePhotoLocal cPrivatePhotoLocal_;
     @EJB
     private UPrivatePhotoLocal uPrivatePhotoLocal_;
+    @EJB
+    private RPrivatePhotoLocal rPrivatePhotoLocal_;
+    protected static final String FIND_ALL_PHOTOS_BY_HUMAN_FAILED = "Find all photos by human FAILED!";
+    protected static final String FIND_ALL_PHOTOS_BY_HUMAN_SUCCESSFUL = "Find all photos by human Successful!";
 
     public HumanCRUDPrivatePhoto() {
         logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", HumanCRUDPrivatePhoto.class, this.hashCode());
@@ -54,19 +59,19 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
         Return<PrivatePhoto> r;
 
         r = new ReturnImpl<PrivatePhoto>(cPrivatePhotoLocal_.doNTxCPrivatePhotoLocal(humanId,
-                new PrivatePhoto().
-                        setPrivatePhotoNameR(privatePhotoName)
-                        .setPrivatePhotoFilePathR(fileName)
-                        .setPrivatePhotoDescriptionR(privatePhotoDescription)
-                        .setPrivatePhotoURLPathR(privatePhotoURLPath)), "Create PrivatePhoto by human Successful!");
+                                                                                     new PrivatePhoto().
+                                                                                             setPrivatePhotoNameR(privatePhotoName)
+                                                                                             .setPrivatePhotoFilePathR(fileName)
+                                                                                             .setPrivatePhotoDescriptionR(privatePhotoDescription)
+                                                                                             .setPrivatePhotoURLPathR(privatePhotoURLPath)), "Create PrivatePhoto by human Successful!");
         return r;
     }
 
     @FIXME(issue = "When adding a location, there cannot be two equal location names such that super locations are equal too. Please update specific CRUD service. Also His As, My As.")
     @Override
-    public Return<PrivatePhoto> addPrivatePhotoAlbum(final long publicPhotoId, final long albumId){
+    public Return<PrivatePhoto> addPrivatePhotoAlbum(final long publicPhotoId, final long albumId) {
         Return<PrivatePhoto> r;
-        r = new ReturnImpl<PrivatePhoto>(null,"Add photo to album Successful!");
+        r = new ReturnImpl<PrivatePhoto>(null, "Add photo to album Successful!");
 
         return r;
     }
@@ -75,8 +80,12 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Return<List<PrivatePhoto>> rPrivatePhoto(final String humanId) {
         Return<List<PrivatePhoto>> r;
-        throw ExceptionCache.UNSUPPORTED_OPERATION_EXCEPTION;
-        //r = new ReturnImpl<List<PrivatePhoto>>(rPrivatePhotoLocal_.doRAllPrivatePhotos(humanId), "Find all photos by human Successful!");
+        try {
+            return new ReturnImpl<List<PrivatePhoto>>(rPrivatePhotoLocal_.doRAllPrivatePhotos(humanId), FIND_ALL_PHOTOS_BY_HUMAN_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<List<PrivatePhoto>>(t, FIND_ALL_PHOTOS_BY_HUMAN_FAILED, true);
+        }
+        return r;
     }
 
 

@@ -15,10 +15,13 @@ import com.google.gdata.data.geo.impl.W3CPoint;
 public class Hotspot{
     private W3CPoint coordinates;
     private String commonName;
+    private long hits;
+    
 
-    public Hotspot(final W3CPoint coordinates, final String commonName) {
+    public Hotspot(final W3CPoint coordinates, final String commonName, final long hits) {
         this.coordinates = coordinates;
         this.commonName = commonName;
+        this.hits = hits;
     }
 
     public W3CPoint getCoordinates() {
@@ -39,6 +42,14 @@ public class Hotspot{
         return this;
     }
 
+    public long getHits() {
+        return hits;
+    }
+
+    public Hotspot setHits(final long hits) {
+        this.hits = hits;
+        return this;
+    }
 
     /**
      * @param obj object to compare with
