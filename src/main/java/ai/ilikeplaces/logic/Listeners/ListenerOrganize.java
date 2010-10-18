@@ -66,7 +66,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
     @Override
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
 
-        new AbstractListener(request__) {
+        new AbstractSkeletonListener(request__) {
 
             /**
              * Initialize your document here by appending fragments
@@ -74,95 +74,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
             @Override
             @SuppressWarnings("unchecked")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
-                itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor);
-
-                final ResourceBundle gUI = RBGet.gui();
-
-                final SmartLogger sl = SmartLogger.start(LEVEL.SERVER_STATUS, RETURNING_ORGANIZE_PAGE, 60000, null, true);
-
-                layoutNeededForAllPages:
-                {
-                    setLoginWidget:
-                    {
-                        try {
-                            new SignInOn(request__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
-                            };
-                        } catch (final Throwable t) {
-                            EXCEPTION.error("{}", t);
-                        }
-                    }
-                    SEO:
-                    {
-                        try {
-                            setMainTitle:
-                            {
-                                $(skeletonTitle).setTextContent(
-                                        DISCOVER_AND_HAVE_FUN_IN_PLACES +
-                                                RBGet.globalConfig.getString(BN));
-
-                            }
-                            setMetaDescription:
-                            {
-                                $(skeletonTitle).setAttribute(MarkupTag.META.namee(),
-                                        DISCOVER_AND_HAVE_FUN_IN_PLACES +
-                                                RBGet.globalConfig.getString(BN));
-                            }
-                        }
-                        catch (final Throwable t) {
-                            Loggers.DEBUG.debug(t.getMessage());
-                        }
-                    }
-                    signOnDisplayLink:
-                    {
-                        try {
-                            if (getUsername() != null) {
-                                final Element usersName = $(MarkupTag.P);
-                                usersName.setTextContent(gUI.getString(AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004) + getUsernameAsValid());
-                                //$(Skeleton_othersidebar_identity).appendChild(usersName);
-                                new DisplayName(request__, $(Skeleton_othersidebar_identity), new HumanId(getUsernameAsValid()), request__.getServletRequest()) {
-                                };
-                            } else {
-                                final Element locationElem = $(MarkupTag.P);
-                                locationElem.setTextContent(gUI.getString(NO_LOGIN));
-                                $(Skeleton_othersidebar_identity).appendChild(locationElem);
-                            }
-                        } catch (final Throwable t) {
-                            EXCEPTION.error("{}", t);
-                        }
-
-                    }
-                    setProfileLink:
-                    {
-                        try {
-                            if (getUsername() != null) {
-                                $(Skeleton_othersidebar_profile_link).setAttribute(MarkupTag.A.href(), Controller.Page.Profile.getURL());
-                            } else {
-                                $(Skeleton_othersidebar_profile_link).setAttribute(MarkupTag.A.href(), Controller.Page.signup.getURL());
-                            }
-                        } catch (final Throwable t) {
-                            EXCEPTION.error("{}", t);
-
-                        }
-                    }
-                    setProfilePhotoLink:
-                    {
-                        try {
-                            if (getUsername() != null) {
-                                /**
-                                 * TODO check for db failure
-                                 */
-                                String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(getUsernameAsValid())).returnValueBadly();
-                                url = url == null ? null : RBGet.globalConfig.getString(PROFILE_PHOTOS) + url;
-                                if (url != null) {
-                                    $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(), url);
-                                }
-                            }
-                        } catch (final Throwable t) {
-                            EXCEPTION.error("{}", t);
-
-                        }
-                    }
-                }
+                super.init(itsNatHTMLDocument__, hTMLDocument__, itsNatDocument__, initArgs);
 
                 if (getUsername() != null)
                     handleRequestType:
@@ -183,10 +95,10 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                                 try {
                                                     UCIntroduction:
                                                     {
-                                                        $(SkeletonCPageTitle).setTextContent(gUI.getString(ORGANIZE_MAIN_TITLE));
-                                                        $(SkeletonCPageTitle).setAttribute(MarkupTag.GENERIC.title(), gUI.getString(ORGANIZE_MAIN_TITLE_TITLE));
-                                                        $(SkeletonCPageIntro).setTextContent(gUI.getString(ORGANIZE_MAIN_INTRO));
-                                                        $(SkeletonCPageTitle).setAttribute(MarkupTag.GENERIC.title(), gUI.getString(ORGANIZE_MAIN_INTRO_TITLE));
+                                                        $(SkeletonCPageTitle).setTextContent(GUI.getString(ORGANIZE_MAIN_TITLE));
+                                                        $(SkeletonCPageTitle).setAttribute(MarkupTag.GENERIC.title(), GUI.getString(ORGANIZE_MAIN_TITLE_TITLE));
+                                                        $(SkeletonCPageIntro).setTextContent(GUI.getString(ORGANIZE_MAIN_INTRO));
+                                                        $(SkeletonCPageTitle).setAttribute(MarkupTag.GENERIC.title(), GUI.getString(ORGANIZE_MAIN_INTRO_TITLE));
                                                     }
                                                     UCListOfActions:
                                                     {
@@ -275,7 +187,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                                         NonExistentLocation:
                                                                 {
                                                                     USER.warn(getUsernameAsValid() + FAILS_TO_ACCESS_THIS_LOCATION);
-                                                                    $(Skeleton_notice).setTextContent(gUI.getString(NO_EXIST_OR_ERROR));
+                                                                    $(Skeleton_notice).setTextContent(GUI.getString(NO_EXIST_OR_ERROR));
                                                                 }
                                                 } catch (final Throwable t) {
                                                     EXCEPTION.error("", t);

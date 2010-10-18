@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.hotspots.Hotspot;
 import ai.ilikeplaces.logic.hotspots.HotspotAnalyzer;
@@ -26,6 +27,7 @@ import org.w3c.dom.html.HTMLDocument;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -142,33 +144,79 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
 
                         /////////////////////////////
-                        final Set<Rawspot> rs = new HashSet<Rawspot>();
-                        for (final PrivateEvent privateEvent : privateEvents__) {
-                            rs.add(
-                                    new Rawspot(
-                                            new W3CPoint(privateEvent.getPrivateLocation().getPrivateLocationLatitude(), privateEvent.getPrivateLocation().getPrivateLocationLongitude()),
-                                            privateEvent.getPrivateLocation().getPrivateLocationName()));
-                        }
+                        final Set<Rawspot> rs = new HashSet<Rawspot>() {{
+                            for (final PrivateEvent privateEvent : privateEvents__) {
+                                add(
+                                        new Rawspot(
+                                                new W3CPoint(privateEvent.getPrivateLocation().getPrivateLocationLatitude(), privateEvent.getPrivateLocation().getPrivateLocationLongitude()),
+                                                privateEvent.getPrivateLocation().getPrivateLocationName()));
+                            }
+                        }};
 
                         final BoundingBox bb = new BoundingBox().setObj(
                                 geoCoord[0].getObjectAsValid().getLatitude(),
-                                geoCoord[1].getObjectAsValid().getLatitude(),
                                 geoCoord[0].getObjectAsValid().getLongitude(),
+                                geoCoord[1].getObjectAsValid().getLatitude(),
                                 geoCoord[1].getObjectAsValid().getLongitude());
 
-                        final HotspotAnalyzer hsa = new HotspotAnalyzer(rs, bb);
+                        final HotspotAnalyzer hsa = new HotspotAnalyzer(rs, (BoundingBox) bb.validateThrowAndGetThis());
+//                        final Map<Integer, Map<Integer, Hotspot>> hotspots = hsa.getHotspots();
+
                         final Hotspot[][] hotspots = hsa.getHotspots();
                         for (final Hotspot[] hotspotspitch : hotspots) {
                             for (final Hotspot yaw : hotspotspitch) {
+                                final W3CPoint coords = yaw.getCoordinates();
+
                                 if (yaw.getCoordinates() != null) {
-                                    itsNatDocument_.addCodeToSend("listOfHotSpots.unshift(new google.maps.Marker({ position: new google.maps.LatLng("
-                                            + yaw.getCoordinates().getLatitude()
+                                    itsNatDocument_.addCodeToSend("listOfHotSpots.unshift(new google.maps.Marker({ " +
+                                            "position: new google.maps.LatLng("
+                                            + coords.getLatitude()
                                             + ","
-                                            + yaw.getCoordinates().getLongitude()
-                                            + "),map: map, icon: markerIcon}));");
+                                            + coords.getLongitude()
+                                            + "), " +
+                                            "title:'" + yaw.getCommonName() + "', " +
+                                            "map: map, " +
+                                            "icon: 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=" + yaw.getHits() + "|14|000|glyphish_map-marker|16|4bf202|892e40'  }));");
+
+                                    sendJSStmt("google.maps.event.addListener(listOfHotSpots[0], 'click', function() {\n" +
+                                            JSCodeToSend.redirectPageWithURL(
+                                                    new Parameter(Controller.Page.Organize.getURL())
+                                                            .append(Controller.Page.DocOrganizeCategory, 143, true)
+                                                            .append(WOEIDGrabber.WOEHINT, coords.getLatitude() + "," + coords.getLongitude())
+                                                            .get()
+                                            ) +
+                                            "});");
                                 }
                             }
                         }
+
+
+//                        for (int i = 0; i < hotspots.size(); i++) {
+//                            for (int j = 0; j < hotspots.get(i).size(); j++) {
+//                                final W3CPoint coords = hotspots.get(i).get(j).getCoordinates();
+//
+//                                if (coords != null) {
+//                                    itsNatDocument_.addCodeToSend("listOfHotSpots.unshift(new google.maps.Marker({ " +
+//                                            "position: new google.maps.LatLng("
+//                                            + coords.getLatitude()
+//                                            + ","
+//                                            + coords.getLongitude()
+//                                            + "), " +
+//                                            "title:'" + hotspots.get(i).get(j).getCommonName() + "', " +
+//                                            "map: map, " +
+//                                            "icon: 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=" + hotspots.get(i).get(j).getHits() + "|14|000|glyphish_map-marker|16|4bf202|892e40'  }));");
+//
+//                                    sendJSStmt("google.maps.event.addListener(listOfHotSpots[0], 'click', function() {\n" +
+//                                            JSCodeToSend.redirectPageWithURL(
+//                                                    new Parameter(Controller.Page.Organize.getURL())
+//                                                            .append(Controller.Page.DocOrganizeCategory, 143, true)
+//                                                            .append(WOEIDGrabber.WOEHINT, coords.getLatitude() + "," + coords.getLongitude())
+//                                                            .get()
+//                                            ) +
+//                                            "});");
+//                                }
+//                            }
+//                        }
 
 
                         //////////////////////////////

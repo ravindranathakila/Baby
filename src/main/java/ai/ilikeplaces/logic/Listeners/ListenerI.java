@@ -10,7 +10,9 @@ import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.ElementComposer;
+import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.MarkupTag;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -46,7 +48,7 @@ public class ListenerI implements ItsNatServletRequestListener {
     @Override
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
 
-        new AbstractListener(request__) {
+        new AbstractSkeletonListener(request__) {
 
             private void redirectToSomeOtherPage(final ItsNatServletResponse response) {
                 try {
@@ -64,7 +66,7 @@ public class ListenerI implements ItsNatServletRequestListener {
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor);
 
-                final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, "Returning I Page", 60000, null, true);
+                sl.appendToLogMSG("Returning I Page");
 
 
                 final String requestedProfile = DB.getHumanCRUDHumanLocal(true).doDirtyProfileFromURL(request__.getServletRequest().getParameter(USER_PROFILE)).returnValueBadly();
@@ -88,12 +90,12 @@ public class ListenerI implements ItsNatServletRequestListener {
                             {
                                 setLoginWidget:
                                 {
-                                    try {
-                                        new SignInOn(request__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
-                                        };
-                                    } catch (final Throwable t) {
-                                        Loggers.EXCEPTION.error("{}", t);
-                                    }
+                                    setLoginWidget((ItsNatServletRequest) initArgs[0]);
+                                }
+
+                                setTitle:
+                                {
+                                    setTitle((ItsNatServletRequest) initArgs[0]);
                                 }
 
                                 signOnDisplayLink:
@@ -102,16 +104,7 @@ public class ListenerI implements ItsNatServletRequestListener {
                                 }
                                 setProfileLink:
                                 {
-                                    try {
-                                        if (getUsername() != null) {
-                                            $(Skeleton_othersidebar_profile_link).setAttribute("href", Controller.Page.Profile.getURL());
-                                        } else {
-                                            $(Skeleton_othersidebar_profile_link).setAttribute("href", Controller.Page.signup.getURL());
-                                        }
-                                    } catch (final Throwable t) {
-                                        Loggers.EXCEPTION.error("{}", t);
-
-                                    }
+                                   setProfileDataLink();
                                 }
                                 setProfilePhotoLink:
                                 {

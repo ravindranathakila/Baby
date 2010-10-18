@@ -1,9 +1,13 @@
 package ai.ilikeplaces.logic.Listeners;
 
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.logic.Listeners.widgets.Photo$Description;
+import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.util.AbstractListener;
+import ai.ilikeplaces.util.Return;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -13,6 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.html.HTMLDocument;
 
+import java.util.List;
+
 import static ai.ilikeplaces.servlets.Controller.Page.pd_photo;
 import static ai.ilikeplaces.servlets.Controller.Page.pd_photo_permalink;
 
@@ -20,7 +26,7 @@ import static ai.ilikeplaces.servlets.Controller.Page.pd_photo_permalink;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class ListenerPhoto implements ItsNatServletRequestListener {
 
     final private String permaLink = null;
@@ -34,10 +40,8 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
     @Override
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
 
-        @NOTE(note = "This value will be set per request. Remember that this is both for logged in and out users.")
-        final String publicPhotoURLPath = (String) request__.getServletRequest().getAttribute("photoURL");
 
-        new AbstractListener(request__) {
+        new AbstractSkeletonListener(request__) {
 
             /**
              * Intialize your document here by appending fragments
@@ -45,18 +49,31 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
             @Override
             @SuppressWarnings("unchecked")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
+                super.init(itsNatHTMLDocument__, hTMLDocument__, itsNatDocument__, initArgs);
 
-                itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor + JSCodeToSend.FnLocationId + JSCodeToSend.FnLocationName + JSCodeToSend.FnSetTitle);
+                if (super.getUsername() != null) {
 
-                new Photo$Description(request__, $(Controller.Page.Main_center_main)) {
+                    final Return<List<PrivatePhoto>> r = DB.getHumanCRUDPrivatePhotoLocal(true).rPrivatePhoto(getUsernameAsValid());
 
-                    @Override
-                    protected void init(final Object... initArgs) {
+                    if (r.returnStatus() == 0) {
 
-                        $$(pd_photo_permalink).setAttribute("href", permaLink + "|" + "TODO");
-                        $$(pd_photo).setAttribute("src", publicPhotoURLPath);
+                        for (final PrivatePhoto privatePhoto : r.returnValue()) {
+                            new Photo$Description(request__, $(Controller.Page.Skeleton_center_content)) {
+                                @Override
+                                protected void init(final Object... initArgs) {
+                                    final String imageURL = RBGet.globalConfig.getString("ALBUM_PHOTOS") + privatePhoto.getPrivatePhotoURLPath();
+                                    $$(pd_photo_permalink).setAttribute("href", imageURL);
+                                    $$(pd_photo).setAttribute("src", imageURL);
+                                }
+                            };
+                        }
+
+
+                    } else {
+                        $(Controller.Page.SkeletonCPageNotice).setTextContent(r.returnMsg());
                     }
-                };
+                }
+                sl.complete("Done loading photo page");
 
             }
 

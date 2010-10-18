@@ -663,7 +663,7 @@
 </node>
 </node>
 </node>
-<node BACKGROUND_COLOR="#cc0000" COLOR="#ffffff" CREATED="1283695985941" ID="Freemind_Link_1290727434" MODIFIED="1283872257796" POSITION="right" TEXT="FOCUS">
+<node BACKGROUND_COLOR="#cc0000" COLOR="#ffffff" CREATED="1283695985941" FOLDED="true" ID="Freemind_Link_1290727434" MODIFIED="1283872257796" POSITION="right" TEXT="FOCUS">
 <font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
 <icon BUILTIN="ksmiletris"/>
 <node CREATED="1283696103180" ID="Freemind_Link_187413455" MODIFIED="1283704465660" TEXT="1st Time Experience">
@@ -705,7 +705,7 @@
 </node>
 <node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" ID="Freemind_Link_1303374308" MODIFIED="1283778680546" POSITION="right" TEXT="Lab">
 <icon BUILTIN="wizard"/>
-<node CREATED="1283778655218" ID="Freemind_Link_1143795250" MODIFIED="1283779225796" TEXT="Guide">
+<node CREATED="1283778655218" FOLDED="true" ID="Freemind_Link_1143795250" MODIFIED="1283779225796" TEXT="Guide">
 <icon BUILTIN="help"/>
 <node CREATED="1283871999906" ID="Freemind_Link_1891457905" MODIFIED="1283872001937" TEXT="SPILL">
 <node CREATED="1283778709546" ID="Freemind_Link_1267112987" MODIFIED="1285777891181" TEXT="first level should be a clear name">
@@ -736,24 +736,30 @@
 </node>
 <node CREATED="1283778802578" ID="Freemind_Link_371419217" MODIFIED="1283871925359" TEXT="Spill">
 <icon BUILTIN="bookmark"/>
+<node CREATED="1284651235765" ID="Freemind_Link_995976715" MODIFIED="1285777908494" TEXT="WOEID Guide Sites">
+<icon BUILTIN="full-1"/>
+</node>
+</node>
+<node CREATED="1283871927859" ID="Freemind_Link_504513171" MODIFIED="1283871940437" TEXT="Sell">
+<icon BUILTIN="bell"/>
 <node CREATED="1283778806593" ID="Freemind_Link_991036540" MODIFIED="1283778870015" TEXT="Fun Map">
 <icon BUILTIN="full-1"/>
 <node CREATED="1283778817171" ID="Freemind_Link_832808578" MODIFIED="1283779022984" TEXT="How do I find where to have fun at this place?">
 <icon BUILTIN="full-2"/>
-<node COLOR="#338800" CREATED="1283778835734" ID="Freemind_Link_853743146" MODIFIED="1285122130406" TEXT="I see a map of fun places made by users. Contains Ranking and Pricing.">
-<arrowlink DESTINATION="Freemind_Link_853567227" ENDARROW="Default" ENDINCLINATION="457;0;" ID="Freemind_Arrow_Link_1694876026" STARTARROW="None" STARTINCLINATION="457;0;"/>
+<node COLOR="#338800" CREATED="1283778835734" FOLDED="true" ID="Freemind_Link_853743146" MODIFIED="1287019112830" TEXT="I see a map of fun places made by users. Contains Ranking and Pricing.">
 <icon BUILTIN="full-3"/>
 <node CREATED="1283779122718" ID="Freemind_Link_1577448723" MODIFIED="1283779575187" TEXT="Who&apos;s involved?">
 <icon BUILTIN="full-4"/>
 <node CREATED="1283779143656" ID="Freemind_Link_671774638" MODIFIED="1283779149906" TEXT="Fun seeker"/>
 </node>
-<node CREATED="1283871614484" ID="Freemind_Link_1027859579" MODIFIED="1283873416234" TEXT="LatLong Spot Cloud Ranking On User Count and On Events and Event budget estimate">
-<icon BUILTIN="idea"/>
+<node CREATED="1283871614484" ID="Freemind_Link_1027859579" MODIFIED="1287018712830" TEXT="LatLong Spot Cloud Ranking On User Count and On Events and Event budget estimate">
+<icon BUILTIN="full-4"/>
 <node CREATED="1283871718859" ID="Freemind_Link_579131481" MODIFIED="1283871737421" TEXT="Each area has several events and users joining that event"/>
 <node CREATED="1283871740921" ID="Freemind_Link_321059686" MODIFIED="1283871753875" TEXT="Each user will add to the ranking(when he joins the event)"/>
 <node CREATED="1283872887031" ID="Freemind_Link_1669583540" MODIFIED="1283873538203" TEXT="Each user will rank his experience of the event he joins"/>
-<node CREATED="1283872343953" ID="Freemind_Link_1442871832" MODIFIED="1283872359187" TEXT="Dotted Heat Map Instead of Place Names"/>
+<node CREATED="1283872343953" ID="Freemind_Link_1442871832" MODIFIED="1287018751608" TEXT="Dotted Heat Map"/>
 <node CREATED="1283873417296" ID="Freemind_Link_1391675943" MODIFIED="1283873430359" TEXT="Mode of Budget Estimates"/>
+<node CREATED="1287018753483" ID="Freemind_Link_1752732004" MODIFIED="1287018760435" TEXT="Mode of Place Names"/>
 <node CREATED="1284107994655" ID="Freemind_Link_4483558" MODIFIED="1284108035494" TEXT="A user will provide latlong info when creating a location">
 <icon BUILTIN="help"/>
 <node CREATED="1284108036776" ID="Freemind_Link_1424842828" MODIFIED="1284108039620" TEXT="Marketable?">
@@ -765,21 +771,17 @@
 <node CREATED="1284108104560" ID="Freemind_Link_830250831" MODIFIED="1284108119407" TEXT="Is this action configurable later. is that better"/>
 </node>
 </node>
-</node>
-</node>
-<node CREATED="1284472739951" ID="Freemind_Link_853567227" MODIFIED="1286032046640" TEXT="Where do I see the fun map? How can I find it?">
-<arrowlink DESTINATION="Freemind_Link_1909905561" ENDARROW="Default" ENDINCLINATION="160;0;" ID="Freemind_Arrow_Link_1857085611" STARTARROW="None" STARTINCLINATION="160;0;"/>
+<node CREATED="1284472739951" ID="Freemind_Link_853567227" MODIFIED="1287019112893" TEXT="Where do I see the fun map? How can I find it?">
 <icon BUILTIN="full-2"/>
-<node CREATED="1284473278446" ID="Freemind_Link_1881215959" MODIFIED="1286032041703" TEXT="I see a map of fun places in home page made by users. Contains Ranking and Pricing.">
+<node CREATED="1284473278446" ID="Freemind_Link_1881215959" MODIFIED="1287019015666" TEXT="Home Page">
 <icon BUILTIN="full-3"/>
 </node>
-<node CREATED="1284473461267" ID="Freemind_Link_1874650634" MODIFIED="1286031585750" TEXT="A static summarized fun map for travel pages">
+<node CREATED="1284473461267" ID="Freemind_Link_1874650634" MODIFIED="1287019042226" TEXT="Static Summarized Map on Travel Pages">
 <icon BUILTIN="full-3"/>
 </node>
 </node>
 </node>
-<node CREATED="1284651235765" ID="Freemind_Link_995976715" MODIFIED="1285777908494" TEXT="WOEID Guide Sites">
-<icon BUILTIN="full-1"/>
+</node>
 </node>
 <node CREATED="1285777788240" ID="Freemind_Link_1951455230" MODIFIED="1286032041718" TEXT="Down Town">
 <icon BUILTIN="full-1"/>
@@ -790,7 +792,7 @@
 <icon BUILTIN="full-3"/>
 </node>
 </node>
-<node CREATED="1285777996689" ID="Freemind_Link_1276572671" MODIFIED="1286031627562" TEXT="How do I interact A LOT with people online?">
+<node CREATED="1285777996689" FOLDED="true" ID="Freemind_Link_1276572671" MODIFIED="1286031627562" TEXT="How do I interact A LOT with people online?">
 <icon BUILTIN="full-2"/>
 <icon BUILTIN="wizard"/>
 <node CREATED="1285778237886" ID="Freemind_Link_824669099" MODIFIED="1286031658671" TEXT="How do I cater for the teddy bear crowd?">
@@ -814,7 +816,8 @@
 </node>
 </node>
 </node>
-<node CREATED="1284472739951" ID="Freemind_Link_1909905561" MODIFIED="1286032082406" TEXT="How do I find hot spots?">
+<node CREATED="1284472739951" ID="Freemind_Link_1909905561" MODIFIED="1287018927751" TEXT="How do I find hot spots?">
+<arrowlink DESTINATION="Freemind_Link_853567227" ENDARROW="Default" ENDINCLINATION="138;0;" ID="Freemind_Arrow_Link_627134621" STARTARROW="None" STARTINCLINATION="138;0;"/>
 <icon BUILTIN="full-2"/>
 <node CREATED="1286032305187" ID="Freemind_Link_1193841187" MODIFIED="1286032358125" TEXT="When I zoom in on a location, I see a heat map.">
 <icon BUILTIN="full-3"/>
@@ -828,9 +831,6 @@
 </node>
 </node>
 </node>
-</node>
-<node CREATED="1283871927859" ID="Freemind_Link_504513171" MODIFIED="1283871940437" TEXT="Sell">
-<icon BUILTIN="bell"/>
 </node>
 <node CREATED="1284993034015" ID="Freemind_Link_693571932" MODIFIED="1284993039546" TEXT="Page Turner"/>
 </node>

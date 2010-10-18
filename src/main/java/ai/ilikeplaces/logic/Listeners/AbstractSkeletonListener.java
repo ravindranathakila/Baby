@@ -4,7 +4,6 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.logic.Listeners.widgets.DisplayName;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
-import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
@@ -21,7 +20,6 @@ import java.util.ResourceBundle;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 import static ai.ilikeplaces.util.Loggers.EXCEPTION;
-import static ai.ilikeplaces.util.Loggers.LEVEL;
 
 /**
  * Created by IntelliJ IDEA.
@@ -37,8 +35,9 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
     private static final String NO_LOGIN = "NoLogin";
     private static final String BN = "bn";
     private static final String PROFILE_PHOTOS = "PROFILE_PHOTOS";
-    private static final String FABRICATING_SKELETON_PAGE = "Fabricating skeleton page";
     private static final String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004 = "ai.ilikeplaces.logic.Listeners.ListenerMain.0004";
+    protected static final ResourceBundle GUI = RBGet.gui();
+    boolean initStatus = false;
 
     /**
      * @param request_
@@ -60,13 +59,15 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
     @Override
     @SuppressWarnings("unchecked")
     protected void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
+        if (initStatus) {
+            throw ExceptionCache.MULTIPLE_INITS;
+        }
+
+        initStatus = true;
+
         final ItsNatServletRequest request__ = (ItsNatServletRequest) initArgs[0];
 
         itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor);
-
-        final ResourceBundle gUI = RBGet.gui();
-
-        final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, FABRICATING_SKELETON_PAGE, 100, null, true);
 
         layoutNeededForAllPages:
         {
@@ -105,13 +106,13 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                 try {
                     if (getUsername() != null) {
                         final Element usersName = $(MarkupTag.P);
-                        usersName.setTextContent(gUI.getString(AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004) + getUsernameAsValid());
+                        usersName.setTextContent(GUI.getString(AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004) + getUsernameAsValid());
                         //$(Skeleton_othersidebar_identity).appendChild(usersName);
                         new DisplayName(request__, $(Skeleton_othersidebar_identity), new HumanId(getUsernameAsValid()), request__.getServletRequest()) {
                         };
                     } else {
                         final Element locationElem = $(MarkupTag.P);
-                        locationElem.setTextContent(gUI.getString(NO_LOGIN));
+                        locationElem.setTextContent(GUI.getString(NO_LOGIN));
                         $(Skeleton_othersidebar_identity).appendChild(locationElem);
                     }
                 } catch (final Throwable t) {
@@ -149,8 +150,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                 }
             }
         }
-
-        sl.complete(LEVEL.DEBUG, Loggers.DONE);//Request completed within timeout. If not, goes to LEVEL.SERVER_STATUS
     }
 
 
@@ -167,5 +166,95 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
      */
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_, final ItsNatDocument itsNatDocument__) {
+    }
+
+
+    protected void setLoginWidget(final ItsNatServletRequest request__) {
+        initStatus = true;
+
+        try {
+            new SignInOn(request__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
+            };
+        } catch (final Throwable t) {
+            EXCEPTION.error("{}", t);
+        }
+    }
+
+    protected void setTitle(final ItsNatServletRequest request__) {
+        initStatus = true;
+
+        try {
+            setMainTitle:
+            {
+                $(skeletonTitle).setTextContent(
+                        DISCOVER_AND_HAVE_FUN_IN_PLACES +
+                                RBGet.globalConfig.getString(BN));
+
+            }
+            setMetaDescription:
+            {
+                $(skeletonTitle).setAttribute(MarkupTag.META.namee(),
+                                              DISCOVER_AND_HAVE_FUN_IN_PLACES +
+                                                      RBGet.globalConfig.getString(BN));
+            }
+        }
+        catch (final Throwable t) {
+            Loggers.DEBUG.debug(t.getMessage());
+        }
+    }
+
+    protected void signOnDisplayLink(final ItsNatServletRequest request__) {
+        initStatus = true;
+
+        try {
+            if (getUsername() != null) {
+                final Element usersName = $(MarkupTag.P);
+                usersName.setTextContent(GUI.getString(AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004) + getUsernameAsValid());
+                //$(Skeleton_othersidebar_identity).appendChild(usersName);
+                new DisplayName(request__, $(Skeleton_othersidebar_identity), new HumanId(getUsernameAsValid()), request__.getServletRequest()) {
+                };
+            } else {
+                final Element locationElem = $(MarkupTag.P);
+                locationElem.setTextContent(GUI.getString(NO_LOGIN));
+                $(Skeleton_othersidebar_identity).appendChild(locationElem);
+            }
+        } catch (final Throwable t) {
+            EXCEPTION.error("{}", t);
+        }
+
+    }
+
+    protected void setProfileLink() {
+        initStatus = true;
+
+        try {
+            if (getUsername() != null) {
+                $(Skeleton_othersidebar_profile_link).setAttribute(MarkupTag.A.href(), Controller.Page.Profile.getURL());
+            } else {
+                $(Skeleton_othersidebar_profile_link).setAttribute(MarkupTag.A.href(), Controller.Page.signup.getURL());
+            }
+        } catch (final Throwable t) {
+            EXCEPTION.error("{}", t);
+
+        }
+    }
+
+    protected void setProfileDataLink() {
+        initStatus = true;
+
+
+        try {
+            if (getUsername() != null) {
+                final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(new HumanId(getUsername()).getSelfAsValid());
+                if (r.returnStatus() == 0) {
+                    final HumansIdentity hi = r.returnValue();
+                    $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(), ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+                    $(Skeleton_othersidebar_wall_link).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+                }
+            }
+        } catch (final Throwable t) {
+            EXCEPTION.error("{}", t);
+
+        }
     }
 }

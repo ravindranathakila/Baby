@@ -52,20 +52,12 @@ public abstract class RefObj<T> {
 
     /**
      * Use this method to obtain an object that is expected to be valid.
-     * <p/>
-     * Use conjunction with a setter which checks for validation, or validate before calling this method.
      *
      * @return valid object
      * @throws ConstraintsViolatedException if found validation errors
      * @throws IllegalAccessError           if called without validating
      */
     public T getObjectAsValid() {
-//        final Validator v = validator.length == 0 ? new Validator() : validator[0];
-//        constraintViolations = v.validate(this);
-//        if (constraintViolations.size() != 0) {
-//            throw new ConstraintsViolatedException(constraintViolations);
-//        }
-//        return obj;
         if (constraintViolations != null) {
             if (constraintViolations.size() == 0) {
                 return getObj();
@@ -73,7 +65,11 @@ public abstract class RefObj<T> {
                 throw new ConstraintsViolatedException(constraintViolations);
             }
         } else {
-            throw new IllegalAccessError("SORRY! YOU HAVE NOT VALIDATED THIS OBJECT.");
+            if (this.validate() == 0) {
+                return getObj();
+            } else {
+                throw new ConstraintsViolatedException(constraintViolations);
+            }
         }
     }
 
@@ -126,7 +122,7 @@ public abstract class RefObj<T> {
         final List<String> returnVal = new ArrayList<String>();
         for (final ConstraintViolation v : e) {
             returnVal.add(v.getMessage());
-                    //+ (v.getErrorCode() != null ? CODE + v.getErrorCode() + CLOSE_SQUARE_BRACKET : ""));
+            //+ (v.getErrorCode() != null ? CODE + v.getErrorCode() + CLOSE_SQUARE_BRACKET : ""));
         }
         return returnVal;
     }
@@ -160,7 +156,7 @@ public abstract class RefObj<T> {
         return obj;
     }
 
-  /**
+    /**
      * validator is useful if you are using profiling or if you need to avoid lots of validator instances
      * being created
      *
