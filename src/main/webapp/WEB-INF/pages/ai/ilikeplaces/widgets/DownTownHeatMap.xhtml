@@ -153,6 +153,19 @@ function initialize_DownTownHeatMap_map(){
         }
     });
 
+    google.maps.event.addListener(map, 'zoom_changed', function() {
+        if(map.getZoom()>16){
+            var curr = DownTownHeatMapBBUpdate(
+                map.getBounds().getSouthWest().lat(),
+                map.getBounds().getSouthWest().lng(),
+                map.getBounds().getNorthEast().lat(),
+                map.getBounds().getNorthEast().lng());
+            curr.focus();
+            curr.blur();
+            clearHotSpots();
+        }
+    });
+
     google.maps.event.addListener(map, 'dragend', function() {
         geocodetoinfowindow();
     });

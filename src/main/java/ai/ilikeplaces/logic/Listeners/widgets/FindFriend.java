@@ -12,7 +12,6 @@ import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import net.sf.oval.exception.ConstraintsViolatedException;
-import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -44,7 +43,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
     Set<Email> emails;
 
 
-    public FindFriend(final ItsNatServletRequest request__,  final Element appendToElement__, final HumanId humanId) {
+    public FindFriend(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId) {
         super(request__, Page.FindFriend, appendToElement__, humanId);
     }
 
@@ -78,6 +77,25 @@ abstract public class FindFriend extends AbstractWidgetListener {
              * For chrome!
              */
             $$(Controller.Page.friendFindSearchTextInput).setTextContent(Arrays.toString(emails.toArray()));
+        }
+
+        UCDisplayExistingUsers:
+        {
+            clear($$(Controller.Page.friendFindSearchResults));
+
+            final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);
+
+            for (final HumansNetPeople friend : humansNetPeople.getHumansNetPeoples()) {
+
+                new UserProperty(request, $$(Controller.Page.friendFindSearchResults), new HumanId(friend.getHumanId())) {
+                    protected void init(final Object... initArgs) {
+                        new FriendDelete(request, $$(Controller.Page.user_property_content), (HumanId) initArgs[0], humanId) {
+                        };
+                    }
+                };
+
+            }
+
         }
     }
 
@@ -152,10 +170,10 @@ abstract public class FindFriend extends AbstractWidgetListener {
                 @Override
                 public void handleEvent(final Event evt_) {
                     final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.USER,
-                            myhumanId.getObj() + " finding friends",
-                            60000,
-                            null,
-                            true
+                                                             myhumanId.getObj() + " finding friends",
+                                                             60000,
+                                                             null,
+                                                             true
                     );
 
                     final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(myhumanId);
@@ -211,10 +229,10 @@ abstract public class FindFriend extends AbstractWidgetListener {
                                         @Override
                                         public void handleEvent(final Event evt_) {
                                             final SmartLogger inviteSL = SmartLogger.start(Loggers.LEVEL.USER,
-                                                    mymyhumanId.getObj() + " sending join social network invitation to " + mymyemail.getObj(),
-                                                    60000,
-                                                    null,
-                                                    true);
+                                                                                           mymyhumanId.getObj() + " sending join social network invitation to " + mymyemail.getObj(),
+                                                                                           60000,
+                                                                                           null,
+                                                                                           true);
                                             SendMail.getSendMailLocal().sendAsSimpleText(
                                                     mymyemail.getObj(),
                                                     "On behalf of " + mymyhumanId.getObj(),

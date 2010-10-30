@@ -8,27 +8,27 @@ import org.slf4j.LoggerFactory;
  * Any loggers used outside the context of the variable name, might result in losing log entries.
  * For example, do not use DEBUG.info("msg"). Use, DEBUG.debug("msg").
  * <p/>
- *
+ * <p/>
  * Okay, this next part, is admittedly written because I messed up with the my "OWN" logging convention.
- *
+ * <p/>
  * Why the hell did I use capitals? Well, the intention is the ease of noticing text within a exception stack trace,
  * This leads to rule #1.
- *
+ * <p/>
  * Then again, warnings and errors should be clearly shown among debug messages. Hence #2.
- *
+ * <p/>
  * Hello and sorry was used to give a personal touch. Always helps when you are in QA or support staring at logs all day. Therefore
  * do bring in the application as "I". In fact, it IS a bot. Hence #3 and #4.
- *
+ * <p/>
  * #1. Use all caps for an exception message
- *
+ * <p/>
  * #2. Use all caps for warnings and errors. Better append a couple or 3 exclamation marks if immediate attention is needed.
- *
+ * <p/>
  * #3. "Hello," for +ve messages and "SORRY!" for -ve messages. Simple.
- *
+ * <p/>
  * #4. Treat the application in first person("I") sense.
- *
- *
- *
+ * <p/>
+ * <p/>
+ * <p/>
  * Created by IntelliJ IDEA.
  * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Jan 30, 2010
@@ -147,7 +147,7 @@ final public class Loggers {
                 Loggers.WARN.warn(message, obj);
                 break;
             case ERROR:
-                Loggers.EXCEPTION.error(message, (Throwable) obj);
+                Loggers.EXCEPTION.error(message, obj instanceof Throwable ? (Throwable) obj : new Throwable(obj.toString()));
                 break;
             case SERVER_STATUS:
                 Loggers.STATUS.info(message, obj);
@@ -156,7 +156,7 @@ final public class Loggers {
                 Loggers.USER.info(message, obj);
                 break;
             case USER_EXCEPTION:
-                Loggers.USER_EXCEPTION.error(message, obj);
+                Loggers.USER_EXCEPTION.error(message,  obj instanceof Throwable ? (Throwable) obj : new Throwable(obj.toString()));
                 break;
             case NON_USER:
                 Loggers.NON_USER.info(message, obj);

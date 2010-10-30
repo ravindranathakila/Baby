@@ -238,7 +238,7 @@
             <version>1.4</version>
             <scope>system</scope>
             <systemPath>D:/1/adimpression/oval/oval-1.40-with-dependencies/oval-1.40.jar
-            </systemPath>            
+            </systemPath>
         </dependency>
         <dependency>
             <groupId>com.google</groupId>
@@ -248,15 +248,12 @@
             <systemPath>D:/1/adimpression/geo/google/gdata-core-1.0.jar
             </systemPath>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>net.recaptcha</groupId>-->
-            <!--<artifactId>recaptcha</artifactId>-->
-            <!--<version>0.0.7</version>-->
-            <!--<scope>system</scope>-->
-            <!--<systemPath>D:\1\adimpression\recaptcha\recaptcha4j-0.0.7\recaptcha4j-0.0.7.jar-->
-            <!--</systemPath>-->
-        <!--</dependency>-->
-        
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-core</artifactId>
+            <version>[2.1,)</version>
+        </dependency>
+
     </dependencies>
     <build>
         <resources>
@@ -268,7 +265,7 @@
                 <includes>
                     <include>**/*.properties</include>
                 </includes>
-                <filtering>true</filtering>                
+                <filtering>true</filtering>
             </resource>
             <resource>
                 <directory>src/main/java</directory>
@@ -277,14 +274,14 @@
                 </includes>
             </resource>
             <!--<resource>-->
-                <!--<directory>src/main/java</directory>-->
-                <!--<includes>-->
-                    <!--<include>**/*.java</include>-->
-                <!--</includes>-->
+            <!--<directory>src/main/java</directory>-->
+            <!--<includes>-->
+            <!--<include>**/*.java</include>-->
+            <!--</includes>-->
             <!--</resource>-->
         </resources>
         <plugins>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -335,14 +332,14 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>validate</phase>                        
+                        <phase>validate</phase>
                         <goals>
                             <goal>create</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
-            
+
         </plugins>
         <finalName>ROOT</finalName>
     </build>
@@ -351,18 +348,29 @@
     </properties>
     <repositories>
         <repository>
-          <id>mvn</id>
-          <url>repo1.maven.org/maven2</url>
+            <id>mvn</id>
+            <url>repo1.maven.org/maven2</url>
         </repository>
         <repository>
-          <id>mvnrepository</id>
-          <url>http://mvnrepository.com</url>
+            <id>mvnrepository</id>
+            <url>http://mvnrepository.com</url>
         </repository>
         <repository>
-          <id>javamail</id>
-          <url>http://download.java.net/maven/2/javax/mail/mail/</url>
+            <id>javamail</id>
+            <url>http://download.java.net/maven/2/javax/mail/mail/</url>
         </repository>
-     </repositories>
+        <repository>
+            <id>twitter4j.org</id>
+            <name>twitter4j.org Repository</name>
+            <url>http://twitter4j.org/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>
 
 

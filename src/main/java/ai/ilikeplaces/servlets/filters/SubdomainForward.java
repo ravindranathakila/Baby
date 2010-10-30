@@ -1,0 +1,92 @@
+package ai.ilikeplaces.servlets.filters;
+
+import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.SmartLogger;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URI;
+
+/**
+ * Okay this class if for the profiles. However, still we do not support "very" short urls.
+ * Instead, we support www.ilikeplaces/i/username kind of urls here. Looks better huh? :D
+ * <p/>
+ * <p/>
+ * Hey this filter I say again, is to support www.ilikeplaces.com/i/ urls. No other filter should mess with this url too.
+ * <p/>
+ * <p/>
+ * Well, nevertheless, when a request comes in the above format, we redirect it to the
+ * ItsNat servlet, (current url format is /page/_i?up=userurl and maybe /page/_i_userurl.
+ * We send a redirect there.
+ * <p/>
+ * <p/>
+ * Let's try to make it fast and simple.
+ * <p/>
+ * <p/>
+ * Created by IntelliJ IDEA.
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
+ * Date: Jun 10, 2010
+ * Time: 3:27:18 PM
+ */
+
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+public class SubdomainForward implements Filter {
+    private static final String SLASH = "/";
+    private static final String SUBDOMAIN_PAGE_FORMAT = "/page/_org?" + "subdomain" + "=";
+    private static final String REDIRECTING_USER_TO = "Redirecting User To:";
+    private static final String REQUESTED_PATH = "Requested Path:";
+    protected static final String DROPPING_SUBDOMAIN_GRAB_FOR = "Dropping Subdomain Grab for:";
+    protected static final String WWW = "www";
+
+    protected static boolean ON = false;
+    protected static final String PROCESSING_SUBDOMAIN_FORWARD = "Processing Subdomain Forward";
+    protected static final String EMPTY = "";
+
+    @Override
+    public void init(final FilterConfig filterConfig) throws ServletException {
+        ON = Boolean.getBoolean(filterConfig.getInitParameter("ON"));
+    }
+
+    @Override
+    public void doFilter(final ServletRequest request, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
+
+        if (!ON) {
+            filterChain.doFilter(request, servletResponse);
+            return;
+        }
+
+        final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.DEBUG, PROCESSING_SUBDOMAIN_FORWARD, 100, null, true);
+        try {
+            final String unformattedurl = ((HttpServletRequest) request).getRequestURL().toString();
+
+            sl.appendToLogMSG(REQUESTED_PATH + unformattedurl);
+
+            final String domain = new URI(unformattedurl).getHost();
+            final String[] domainArr = domain.split(".");
+            String subdomain = EMPTY;
+            for (int i = 0; i < domainArr.length - 2/*Disregards co.uk, co.in, us nd goes for com, org type length 3*/; i++) {
+                subdomain += domainArr[i];
+            }
+
+            if (!subdomain.toLowerCase().equals(WWW) && !subdomain.toLowerCase().equals(EMPTY)) {
+                sl.appendToLogMSG(REDIRECTING_USER_TO + subdomain);
+                ((HttpServletResponse) servletResponse).sendRedirect(SUBDOMAIN_PAGE_FORMAT + subdomain);
+                sl.complete(Loggers.DONE);
+            } else {
+                filterChain.doFilter(request, servletResponse);
+                sl.trash();
+            }
+        } catch (final Throwable e) {
+            sl.multiComplete(new Loggers.LEVEL[]{Loggers.LEVEL.DEBUG, Loggers.LEVEL.ERROR}, Loggers.FAILED);
+            filterChain.doFilter(request, servletResponse);
+        }
+    }
+
+    @Override
+    public void destroy() {
+        //So far nothing to put here
+    }
+}

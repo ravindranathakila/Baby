@@ -35,7 +35,7 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
     @Override
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
 
-        new AbstractListener(request__) {
+        new AbstractSkeletonListener(request__) {
 
             /**
              * Intialize your document here by appending fragments
@@ -43,7 +43,7 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
             @Override
             @SuppressWarnings("unchecked")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
-                final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
+                super.init(itsNatHTMLDocument__, hTMLDocument__, itsNatDocument__, initArgs);
 
                 new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
 
@@ -54,43 +54,7 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
              */
             @Override
             protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
-//                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.AarrrFunTypes), EventType.BLUR.toString(), new EventListener() {
-//
-//                    final ValidatorFace v = ValidatorFace.impl.getInstance();
-//
-//                    @Override
-//                    public void handleEvent(final Event evt_) {
-//                        logger.debug("{}", v.isLessThan1000(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value())).toString());
-//
-//                        DB.getHumanCRUDMapLocal(true).createEntry("fun", v.isLessThan1000(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value())).returnStatus() == 0 ? ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()) : "Entry too big");
-//
-//                    }
-//
-//                    @Override
-//                    public void finalize() throws Throwable {
-//                        Loggers.finalized(this.getClass().getName());
-//                        super.finalize();
-//                    }
-//                }, false, new NodePropertyTransport(MarkupTag.INPUT.value()));
-//
-//                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.AarrrEmail), EventType.BLUR.toString(), new EventListener() {
-//
-//                    final ValidatorFace v = ValidatorFace.impl.getInstance();
-//
-//                    @Override
-//                    public void handleEvent(final Event evt_) {
-//                        logger.debug("{}", v.isLessThan1000(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value())).toString());
-//
-//                        DB.getHumanCRUDMapLocal(true).createEntry("email", v.isLessThan1000(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value())).returnStatus() == 0 ? ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()) : "Entry too big");
-//
-//                    }
-//
-//                    @Override
-//                    public void finalize() throws Throwable {
-//                        Loggers.finalized(this.getClass().getName());
-//                        super.finalize();
-//                    }
-//                }, false, new NodePropertyTransport(MarkupTag.INPUT.value()));
+
             }
         };
     }
