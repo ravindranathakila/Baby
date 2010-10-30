@@ -42,7 +42,7 @@ public class ListenerFriends implements ItsNatServletRequestListener {
     @Override
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
 
-        new AbstractListener(request__) {
+        new AbstractSkeletonListener(request__) {
 
             /**
              * Intialize your document here by appending fragments
@@ -50,81 +50,8 @@ public class ListenerFriends implements ItsNatServletRequestListener {
             @Override
             @SuppressWarnings("unchecked")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
-                itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor);
+                super.init(itsNatHTMLDocument__, hTMLDocument__, itsNatDocument__, initArgs);
 
-                final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
-
-                layoutNeededForAllPages:
-                {
-                    setLoginWidget:
-                    {
-                        try {
-                            new SignInOn(request__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
-                            };
-                        } catch (final Throwable t) {
-                            Loggers.EXCEPTION.error("{}", t);
-                        }
-                    }
-
-                    setMainTitle:
-                    {
-                        try {
-                            //$(skeletonTitle).setTextContent("Welcome to ilikeplaces!");
-                        } catch (
-                                @FIXME(issue = "This is very important for SEO. Contact ItsNat and find out why exception always occurs here. It says element not found.")
-                                final Exception e__) {
-                            logger.debug(e__.getMessage());
-                        }
-                    }
-                    signOnDisplayLink:
-                    {
-                        try {
-                            if (getUsername() != null) {
-                                final Element usersName = $(MarkupTag.P);
-                                usersName.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0004") + getUsername());
-                                $(Skeleton_othersidebar_identity).appendChild(usersName);
-                            } else {
-                                final Element locationElem = $(MarkupTag.P);
-                                locationElem.setTextContent(gUI.getString("NoLogin"));
-                                $(Skeleton_othersidebar_identity).appendChild(locationElem);
-                            }
-                        } catch (final Throwable t) {
-                            Loggers.EXCEPTION.error("{}", t);
-                        }
-
-                    }
-                    setProfileLink:
-                    {
-                        try {
-                            if (getUsername() != null) {
-                                $(Skeleton_othersidebar_profile_link).setAttribute("href", Controller.Page.Profile.getURL());
-                            } else {
-                                $(Skeleton_othersidebar_profile_link).setAttribute("href", Controller.Page.signup.getURL());
-                            }
-                        } catch (final Throwable t) {
-                            Loggers.EXCEPTION.error("{}", t);
-
-                        }
-                    }
-                    setProfilePhotoLink:
-                    {
-                        try {
-                            if (getUsername() != null) {
-                                /**
-                                 * TODO check for db failure
-                                 */
-                                String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(getUsernameAsValid())).returnValueBadly();
-                                url = url == null ? null : RBGet.globalConfig.getString("PROFILE_PHOTOS") + url;
-                                if (url != null) {
-                                    $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(), url);
-                                }
-                            }
-                        } catch (final Throwable t) {
-                            EXCEPTION.error("{}", t);
-
-                        }
-                    }
-                }
                 if (getUsername() != null) {
                     try {
                         new FindFriend(request__, $(Skeleton_center_skeleton), new HumanId(getUsernameAsValid())) {

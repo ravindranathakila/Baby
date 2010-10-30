@@ -39,6 +39,8 @@ final public class SmartLogger extends Thread {
 
     boolean logged = false;
 
+    boolean discarded = false;
+
     /*The following string constants might look odd but we do not want any delays in a logger. Macro optimization!!*/
     private static final String CAUSE_UNRESPONSIVE_IN_MILLIS = "{} <= cause UNRESPONSIVE in millis:";
     private static final String SORRY_I_FAILED_TO_LOG_THIS_MESSAGE = "SORRY! I FAILED TO LOG THIS MESSAGE:";
@@ -48,6 +50,8 @@ final public class SmartLogger extends Thread {
     private static final String COLON = ":";
     private static final String EMPTY = "";
     private static final String PIPE = "|";
+    protected static final String CALL_TO_A_DISCARDED_LOGGER = "Call to a discarded logger!";
+    protected static final String LOGGER_DISCARDED_TWICE = "Logger Discarded Twice";
 
     /**
      * Leaving optional parameters as null will simply ignore them.
@@ -97,13 +101,25 @@ final public class SmartLogger extends Thread {
         try {
             if (sleep != 0) {//Sleep 0 avoids timeout. This is when this object will wait till task "complete"
                 Thread.sleep(sleep);
-                if (!status()) {
+                if (!status() && !discarded) {
                     Loggers.log(level, CAUSE_UNRESPONSIVE_IN_MILLIS + sleep, logmsg);
                 }
             }
         } catch (final InterruptedException e) {
             Loggers.log(LEVEL.ERROR, SORRY_I_FAILED_TO_LOG_THIS_MESSAGE + logmsg, e);
         }
+    }
+
+    /**
+     * Discards this logger and ignores all future logging
+     *
+     * @return discard status
+     */
+    public boolean trash() {
+        if (discarded ? discarded : !(discarded = true)) {
+            Loggers.WARN.warn(LOGGER_DISCARDED_TWICE);
+        }
+        return discarded;
     }
 
     private synchronized boolean status() {
@@ -137,10 +153,16 @@ final public class SmartLogger extends Thread {
     }
 
     public void appendToLogMSG(final String stringToBeAppended) {
+        if (discarded) {
+            Loggers.WARN.warn(CALL_TO_A_DISCARDED_LOGGER);
+            return;
+        }
+
         logmsg += PIPE + stringToBeAppended;
     }
 
     static public void complete(final SmartLogger smartLogger, final LEVEL completeLevel, final String completeStatus) {
+
         smartLogger.complete(completeLevel, completeStatus);
     }
 
@@ -153,6 +175,9 @@ final public class SmartLogger extends Thread {
      * @param completeStatus Throwable type needed in case of ERROR
      */
     public void complete(final LEVEL completeLevel, final Object completeStatus) {
+        if (trash()) {
+            return;
+        }
         if (!status()) {
             Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
         } else {
@@ -161,6 +186,9 @@ final public class SmartLogger extends Thread {
     }
 
     public void multiComplete(final LEVEL[] completeLevels, final Object completeStatus) {
+        if (trash()) {
+            return;
+        }
         if (!status()) {
             for (final LEVEL completeLevel : completeLevels) {
                 Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
@@ -173,6 +201,9 @@ final public class SmartLogger extends Thread {
     }
 
     public void complete(final String completeStatus) {
+        if (trash()) {
+            return;
+        }
         if (!status()) {
             Loggers.log(level, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
         } else {

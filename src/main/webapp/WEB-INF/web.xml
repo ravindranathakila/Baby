@@ -99,6 +99,15 @@
         <filter-class>ai.ilikeplaces.servlets.filters.LogoutNRedirect</filter-class>
     </filter>
     <filter>
+        <description>Subdomain Filter.</description>
+        <filter-name>SubdomainForward</filter-name>
+        <filter-class>ai.ilikeplaces.servlets.filters.SubdomainForward</filter-class>
+        <init-param>
+            <param-name>ON</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter>
         <description>Set HTTP headers for a mapping.</description>
         <filter-name>HeaderFilter</filter-name>
         <filter-class>ai.ilikeplaces.servlets.filters.FilterHeader</filter-class>
@@ -237,6 +246,15 @@
         <filter-name>LogoutNRedirect</filter-name>
         <url-pattern>/page/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>SubdomainForward</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <init-param>
+            <param-name>ON</param-name>
+            <param-value>false</param-value>
+        </init-param>
     </filter-mapping>
 
     <!--###################### END OF FILTER MAPPINGS ####################################-->
