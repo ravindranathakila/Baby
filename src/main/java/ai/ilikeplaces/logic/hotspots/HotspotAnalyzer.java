@@ -7,9 +7,7 @@ import ai.ilikeplaces.util.SmartLogger;
 import com.google.gdata.data.geo.impl.W3CPoint;
 import net.sf.oval.Validator;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -40,7 +38,7 @@ public class HotspotAnalyzer {
     private Hotspot[][] hotspots;
 //    private Map<Integer, Map<Integer, Hotspot>> hotspots;
 
-    public double[] blockWH = new double[]{0.000184401869775, 0.000133145585763375};
+    public double[] blockWH;//= new double[]{0.000184401869775, 0.000133145585763375};
 
     private Validator v = new Validator();
     private int arrayWSize;
@@ -80,6 +78,11 @@ public class HotspotAnalyzer {
 
         final double width = widthEnd - widthStart;
         final double height = heightEnd - heightStart;
+
+        blockWH = new double[]{width / 5, height / 4};
+
+//        arrayWSize = (int) Math.ceil(width / blockWH[0]);
+//        arrayHSize = (int) Math.ceil(height / blockWH[1]);
 
         arrayWSize = (int) Math.ceil(width / blockWH[0]);
         arrayHSize = (int) Math.ceil(height / blockWH[1]);
@@ -175,7 +178,7 @@ public class HotspotAnalyzer {
 
         for (int i = 0; i < allocatedrawspots.length; i++) {
             for (int j = 0; j < allocatedrawspots[i].length; j++) {
-                hotspots[i][j] = new Hotspot(allocatedrawspots[i][j].spotAverage(), allocatedrawspots[i][j].modeName() , allocatedrawspots[i][j].getValue().array.length);
+                hotspots[i][j] = new Hotspot(allocatedrawspots[i][j].spotAverage(), allocatedrawspots[i][j].modeName(), allocatedrawspots[i][j].getValue().array.length);
             }
         }
 
@@ -255,7 +258,7 @@ public class HotspotAnalyzer {
                 final W3CPoint coords = hotspots[i][j].getCoordinates();
 
                 if (coords != null) {
-                    System.out.println("Hotspot:" +hotspots[i][j].getCommonName()+ ":" + coords.getLatitude() + "," + coords.getLongitude());
+                    System.out.println("Hotspot:" + hotspots[i][j].getCommonName() + ":" + coords.getLatitude() + "," + coords.getLongitude());
                 }
             }
         }

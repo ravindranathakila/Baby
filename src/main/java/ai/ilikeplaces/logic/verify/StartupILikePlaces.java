@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.verify;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.rbs.RBGet;
+import ai.ilikeplaces.util.EntityLifeCycleListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -115,6 +116,12 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
 //        }
 
         System.out.println("");
+        System.out.println("SETTING PERSISTENCE LOGGING");
+
+        EntityLifeCycleListener.PRE_ACTIONS.setObj(false);
+        EntityLifeCycleListener.POST_ACTIONS.setObj(false);
+        
+        System.out.println("DONE SETTING PERSISTENCE LOGGING");
 
         System.out.println(RBGet.globalConfig.getString("bn"));
         System.out.println(RBGet.globalConfig.getString("codename"));

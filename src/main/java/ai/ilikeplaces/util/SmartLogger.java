@@ -162,7 +162,6 @@ final public class SmartLogger extends Thread {
     }
 
     static public void complete(final SmartLogger smartLogger, final LEVEL completeLevel, final String completeStatus) {
-
         smartLogger.complete(completeLevel, completeStatus);
     }
 
@@ -183,6 +182,7 @@ final public class SmartLogger extends Thread {
         } else {
             Loggers.log(completeLevel, Loggers.EMBED + CAUSE_RECOVERED_WITH_STATUS + COLON + completeStatus + timeTaken(), logmsg);
         }
+        clearLog();
     }
 
     public void multiComplete(final LEVEL[] completeLevels, final Object completeStatus) {
@@ -198,6 +198,7 @@ final public class SmartLogger extends Thread {
                 Loggers.log(completeLevel, Loggers.EMBED + CAUSE_RECOVERED_WITH_STATUS + COLON + completeStatus + timeTaken(), logmsg);
             }
         }
+        clearLog();
     }
 
     public void complete(final String completeStatus) {
@@ -209,5 +210,10 @@ final public class SmartLogger extends Thread {
         } else {
             Loggers.log(level, Loggers.EMBED + CAUSE_RECOVERED_WITH_STATUS + completeStatus + COLON + timeTaken(), logmsg);
         }
+        clearLog();
+    }
+
+    private void clearLog(){
+        logmsg = "";
     }
 }

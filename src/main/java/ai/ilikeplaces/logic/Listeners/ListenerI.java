@@ -3,10 +3,8 @@ package ai.ilikeplaces.logic.Listeners;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.Human;
-import ai.ilikeplaces.logic.Listeners.widgets.FriendAdd;
-import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
-import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
-import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall;
+import ai.ilikeplaces.entities.HumansNetPeople;
+import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
@@ -104,7 +102,7 @@ public class ListenerI implements ItsNatServletRequestListener {
                                 }
                                 setProfileLink:
                                 {
-                                   setProfileDataLink();
+                                    setProfileDataLink();
                                 }
                                 setProfilePhotoLink:
                                 {

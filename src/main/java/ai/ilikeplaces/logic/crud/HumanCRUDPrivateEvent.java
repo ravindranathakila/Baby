@@ -7,8 +7,6 @@ import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.*;
@@ -367,6 +365,18 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     @FIXME(issue = "Use human, or move to a different class")
     @Override
     public Return<List<PrivateEvent>> doRPrivateEventsByBounds(final HumanId operator__, final double latitudeSouth, final double latitudeNorth, final double longitudeWest, final double longitudeEast) {
+        Return<List<PrivateEvent>> r;
+        try {
+            r = new ReturnImpl<List<PrivateEvent>>(rPrivateEventLocal_.doRPrivateEventsByBoundingBoxAsSystem(latitudeSouth, latitudeNorth, longitudeWest, longitudeEast), FETCH_BOUNDED_EVENTS_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<List<PrivateEvent>>(t, FETCH_BOUNDED_EVENTS_FAILED, true);
+        }
+        return r;
+    }
+
+    @FIXME(issue = "Use human, or move to a different class")
+    @Override
+    public Return<List<PrivateEvent>> doRPrivateEventsByBoundsAsSystem(final double latitudeSouth, final double latitudeNorth, final double longitudeWest, final double longitudeEast) {
         Return<List<PrivateEvent>> r;
         try {
             r = new ReturnImpl<List<PrivateEvent>>(rPrivateEventLocal_.doRPrivateEventsByBoundingBoxAsSystem(latitudeSouth, latitudeNorth, longitudeWest, longitudeEast), FETCH_BOUNDED_EVENTS_SUCCESSFUL);

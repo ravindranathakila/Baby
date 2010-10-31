@@ -703,7 +703,7 @@
 </node>
 </node>
 </node>
-<node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" ID="Freemind_Link_1303374308" MODIFIED="1283778680546" POSITION="right" TEXT="Lab">
+<node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" FOLDED="true" ID="Freemind_Link_1303374308" MODIFIED="1283778680546" POSITION="right" TEXT="Lab">
 <icon BUILTIN="wizard"/>
 <node CREATED="1283778655218" FOLDED="true" ID="Freemind_Link_1143795250" MODIFIED="1283779225796" TEXT="Guide">
 <icon BUILTIN="help"/>
@@ -834,7 +834,7 @@
 </node>
 <node CREATED="1284993034015" ID="Freemind_Link_693571932" MODIFIED="1284993039546" TEXT="Page Turner"/>
 </node>
-<node CREATED="1283703158802" ID="Freemind_Link_640830008" MODIFIED="1283703160896" POSITION="right" TEXT="Marketing">
+<node CREATED="1283703158802" FOLDED="true" ID="Freemind_Link_640830008" MODIFIED="1283703160896" POSITION="right" TEXT="Marketing">
 <node CREATED="1283703177927" ID="Freemind_Link_1817341781" MODIFIED="1283703202084" TEXT="Checklist">
 <node CREATED="1285778293411" ID="Freemind_Link_1030747214" MODIFIED="1286031836875" TEXT="Are you being dumb? No? BE DUMB!"/>
 <node CREATED="1283703161521" ID="Freemind_Link_63383641" MODIFIED="1283703168865" TEXT="Does it do what it says?"/>
@@ -848,11 +848,110 @@
 <node CREATED="1275556363515" ID="Freemind_Link_1449575583" MODIFIED="1275556376046" TEXT="50 sites on google bookarks"/>
 </node>
 </node>
-<node CREATED="1283704339086" FOLDED="true" ID="Freemind_Link_386369610" MODIFIED="1283704377334" POSITION="right" TEXT="QA">
+<node CREATED="1283704339086" ID="Freemind_Link_386369610" MODIFIED="1283704377334" POSITION="right" TEXT="QA">
 <icon BUILTIN="pencil"/>
+<node CREATED="1288415653343" ID="Freemind_Link_540547344" MODIFIED="1288423654031" TEXT="FREEZER">
+<icon BUILTIN="desktop_new"/>
+<node CREATED="1288421673765" ID="Freemind_Link_1507643800" MODIFIED="1288422805046" TEXT="MARKETABILITY FREEZE">
+<icon BUILTIN="full-1"/>
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>Unless you freeze the product as &quot;marketable&quot;, you cannot do ANY freezing.</text>
+</hook>
+<node CREATED="1288493873906" ID="Freemind_Link_1602200353" MODIFIED="1288493992343" TEXT="Search for a list of hotspots">
+<node CREATED="1288494009296" ID="Freemind_Link_487003763" MODIFIED="1288494025578" TEXT="A search box for easy map navigation"/>
+<node CREATED="1288494026281" ID="Freemind_Link_1809855193" MODIFIED="1288494051421" TEXT="An event based hotspot heat map">
+<node CREATED="1288494241734" ID="Freemind_Link_860375365" MODIFIED="1288537475218" TEXT="TODO zoom break on 4&lt;5">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+</node>
+<node CREATED="1288494134890" ID="Freemind_Link_1722996598" MODIFIED="1288494424984" TEXT="Create personal locations based on hh">
+<edge WIDTH="thin"/>
+<node CREATED="1288494499906" ID="Freemind_Link_1464782037" MODIFIED="1288494525531" TEXT="Specify other owners to it"/>
+<node CREATED="1288494514015" ID="Freemind_Link_1160306731" MODIFIED="1288494721937" TEXT="Specify other viewers to it"/>
+<node CREATED="1288494752125" ID="Freemind_Link_1845246042" MODIFIED="1288494767093" TEXT="Create personal events based on location">
+<node CREATED="1288494769250" ID="Freemind_Link_1358764859" MODIFIED="1288494942437" TEXT="Specify other owners to it"/>
+<node CREATED="1288494943015" ID="Freemind_Link_1997054608" MODIFIED="1288494949640" TEXT="Specify other viewss to it"/>
+<node CREATED="1288494950187" ID="Freemind_Link_486328416" MODIFIED="1288494954984" TEXT="Specify other invites to it"/>
+<node CREATED="1288494957750" ID="Freemind_Link_796263707" MODIFIED="1288495017093" TEXT="Wall">
+<node CREATED="1288495017437" ID="Freemind_Link_1165287616" MODIFIED="1288495021078" TEXT="Event collaboration"/>
+<node CREATED="1288495022187" ID="Freemind_Link_476419257" MODIFIED="1288495026828" TEXT="Just talk"/>
+<node CREATED="1288505455328" ID="Freemind_Link_100061593" MODIFIED="1288505467984" TEXT="Email Conversation">
+<node CREATED="1288505468890" ID="Freemind_Link_798420819" MODIFIED="1288537488968" TEXT="TODO: close on update">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+</node>
+<node CREATED="1288494976062" ID="Freemind_Link_883921747" MODIFIED="1288505500703" TEXT="See a map of the event location">
+<node CREATED="1288494987984" ID="Freemind_Link_1043652536" MODIFIED="1288495001140" TEXT="Map helps people find the place"/>
+<node CREATED="1288495003125" ID="Freemind_Link_1736837459" MODIFIED="1288495010796" TEXT="Maps gives the place better identty"/>
+<node CREATED="1288505501953" ID="Freemind_Link_1504477530" MODIFIED="1288537492125" TEXT="TODO: private event view map">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1288495037421" ID="Freemind_Link_91009859" MODIFIED="1288495039562" TEXT="Album">
+<node CREATED="1288495040046" ID="Freemind_Link_1216857146" MODIFIED="1288495047062" TEXT="Share photos of event"/>
+<node CREATED="1288495050328" ID="Freemind_Link_368622347" MODIFIED="1288495054359" TEXT="Discuss photos of event"/>
+<node CREATED="1288495058250" ID="Freemind_Link_1798050489" MODIFIED="1288495071265" TEXT="TODO:Email forwards">
+<icon BUILTIN="flag"/>
+</node>
+<node CREATED="1288495118515" ID="Freemind_Link_1513470069" MODIFIED="1288495124656" TEXT="Further share photos of event"/>
+</node>
+<node CREATED="1288506345625" ID="Freemind_Link_1982919547" MODIFIED="1288506395281" TEXT="TODO: Event Name as Header">
+<icon BUILTIN="flag"/>
+</node>
+</node>
+<node CREATED="1288506383718" ID="Freemind_Link_675679815" MODIFIED="1288506395296" TEXT="TODO: Location Name as Header">
+<icon BUILTIN="flag"/>
+</node>
+</node>
+<node CREATED="1288507314546" ID="Freemind_Link_1436401670" MODIFIED="1288507322015" TEXT="Sidebar connections">
+<node CREATED="1288507322703" ID="Freemind_Link_255638645" MODIFIED="1288537483875" TEXT="TODO: implement">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+</node>
+<node CREATED="1288415702156" ID="Freemind_Link_57901070" MODIFIED="1288422854234" TEXT="FEATURE FREEZE">
+<icon BUILTIN="full-2"/>
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>After a marketing freeze, it becomes clear what features are to be added, removed now, and then freeze features.</text>
+</hook>
+</node>
+<node CREATED="1288421879843" ID="Freemind_Link_891692060" MODIFIED="1288422884843" TEXT="GUI FREEZE">
+<icon BUILTIN="full-3"/>
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>GUI freeze is where you know for sure the look and feel is ok. This can be done only after the features are frozen.</text>
+</hook>
+<node CREATED="1288421982656" ID="Freemind_Link_694091115" MODIFIED="1288422274187" TEXT="LOOK FREEZE">
+<icon BUILTIN="full-1"/>
+</node>
+<node CREATED="1288421996140" ID="Freemind_Link_1210620995" MODIFIED="1288422277515" TEXT="FEEL(USABILITY) FREEZE">
+<icon BUILTIN="full-2"/>
+</node>
+</node>
+<node CREATED="1288415723171" ID="Freemind_Link_264841006" MODIFIED="1288422973234" TEXT="GOF FREEZE">
+<icon BUILTIN="full-4"/>
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>GOF is to do with all the design pattern freezes you can do to the code. This is the core place of the freeze. &#xa;If you got here freezing the ones before this freeze, you&apos;ve done most of of your freeze.</text>
+</hook>
+</node>
+<node CREATED="1288421834390" ID="Freemind_Link_1220495101" MODIFIED="1288422171531" TEXT="OPTIMIZATION/LOAD TEST FREEZE">
+<icon BUILTIN="full-5"/>
+</node>
+<node CREATED="1288421842125" ID="Freemind_Link_761289785" MODIFIED="1288422192375" TEXT="TEST/BUG FIX FREEZE">
+<icon BUILTIN="full-6"/>
+</node>
+</node>
+<node CREATED="1288415685656" FOLDED="true" ID="Freemind_Link_1137422245" MODIFIED="1288421666187" TEXT="SKEPTIC">
+<font NAME="Comic Sans MS" SIZE="14"/>
 <node CREATED="1275630483843" ID="Freemind_Link_811522395" MODIFIED="1275630513796" TEXT="NAVIGATION">
 <node CREATED="1275630514281" ID="Freemind_Link_1575097980" MODIFIED="1275630520437" TEXT="Fix Sidebar Links"/>
 <node CREATED="1275630522781" ID="Freemind_Link_1615062004" MODIFIED="1275630539546" TEXT="Check These Linked Pages for Working"/>
+</node>
 </node>
 </node>
 <node CREATED="1266112839468" FOLDED="true" ID="Freemind_Link_674125175" MODIFIED="1266112859718" POSITION="right" TEXT="Side fixing">
