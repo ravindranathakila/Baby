@@ -77,7 +77,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
          * If null, this means we have to check on if the wall entry parameter is available and update.
          * If not null, this means the wall entry has been consumed(we set it to true)
          */
-        if ((wall_entry_consumed == null || !wall_entry_consumed.equals(TRUE)) && wall_entry != null) {//This will refresh the page after actions
+        if ((wall_entry_consumed == null || !wall_entry_consumed.equals(TRUE)) && wall_entry != null) {//This will refresh or close the page after actions
             Loggers.DEBUG.debug(WALL_ENTRY_FROM_EMAIL_RECEIVED);
             final Return<Wall> r = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddEntryToWall(this.humanId,
                                                                                                       this.humanId,

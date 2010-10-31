@@ -5,8 +5,6 @@ import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.Wall;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
@@ -83,6 +81,7 @@ public interface HumanCRUDPrivateEventLocal {
 
 
     /**
+     * @param operator__    operator__
      * @param latitudeSouth horizontal bottom of bounding box
      * @param latitudeNorth horizontal up of bounding box
      * @param longitudeWest vertical left of bounding box
@@ -90,4 +89,15 @@ public interface HumanCRUDPrivateEventLocal {
      * @return the list of private events inside a specific bounding box
      */
     public Return<List<PrivateEvent>> doRPrivateEventsByBounds(final HumanId operator__, final double latitudeSouth, final double latitudeNorth, final double longitudeWest, final double longitudeEast);
+
+    /**
+     * @param latitudeSouth horizontal bottom of bounding box
+     * @param latitudeNorth horizontal up of bounding box
+     * @param longitudeWest vertical left of bounding box
+     * @param longitudeEast vertical right of bounding box
+     * @return the list of private events inside a specific bounding box
+     */
+    public Return<List<PrivateEvent>> doRPrivateEventsByBoundsAsSystem(final double latitudeSouth, final double latitudeNorth, final double longitudeWest, final double longitudeEast);
+
+
 }

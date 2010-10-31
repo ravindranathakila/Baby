@@ -72,6 +72,24 @@ final public class
         },
 
 
+        UserPropertySidebar("ai/ilikeplaces/widgets/UserProperty_sidebar.xhtml",
+                     Controller.Page.user_property_sidebar_profile_photo,
+                     Controller.Page.user_property_sidebar_name,
+                     Controller.Page.user_property_sidebar_widget,
+                     Controller.Page.user_property_sidebar_content
+
+        ) {
+            @Override
+            public String toString() {
+                return DocUserPropertySidebar;
+            }
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
+
         ProfileWidget("ai/ilikeplaces/widgets/profile.xhtml",
                       Controller.Page.ProfileNotice,
                       Controller.Page.ProfileURLChange,
@@ -170,7 +188,8 @@ final public class
                          Controller.Page.privateEventViewInvites,
                          Controller.Page.privateEventViewLink,
                          Controller.Page.privateEventViewWall,
-                         Controller.Page.privateEventViewAlbum
+                         Controller.Page.privateEventViewAlbum,
+                         Controller.Page.privateEventViewLocationMap
         ) {
 
             @Override
@@ -693,6 +712,14 @@ Controller.Page.friendAddDisplayNameLabel
         final static public String user_property_widget = "user_property_widget";
         final static public String user_property_content = "user_property_content";
 
+        /*UserPropertySidebar Page*/
+        final static public String DocUserPropertySidebar = "DocUserPropertySidebar";
+        /*UserPropertySidebar IDs*/
+        final static public String user_property_sidebar_profile_photo = "user_property_sidebar_profile_photo";
+        final static public String user_property_sidebar_name = "user_property_sidebar_name";
+        final static public String user_property_sidebar_widget = "user_property_sidebar_widget";
+        final static public String user_property_sidebar_content = "user_property_sidebar_content";
+
 
         /*ProfileWidget Page*/
         final static public String DocProfileWidget = "DocProfileWidget";
@@ -750,6 +777,7 @@ Controller.Page.friendAddDisplayNameLabel
         final static public String privateEventViewLink = "privateEventViewLink";
         final static public String privateEventViewWall = "privateEventViewWall";
         final static public String privateEventViewAlbum = "privateEventViewAlbum";
+        final static public String privateEventViewLocationMap = "privateEventViewLocationMap";
 
         /*Private Event Page*/
         final static public String DocPrivateEventCreate = "PrivateEventCreate";
@@ -1068,6 +1096,7 @@ Controller.Page.friendAddDisplayNameLabel
     final PageFace album = Page.Album;
 
     final PageFace userProperty = Page.UserProperty;
+    final PageFace userPropertySidebar = Page.UserPropertySidebar;
 
     /**
      * @param serveletConfig__
@@ -1196,6 +1225,8 @@ Controller.Page.friendAddDisplayNameLabel
             inhs__.registerItsNatDocFragmentTemplate(album.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(album));
 
             inhs__.registerItsNatDocFragmentTemplate(userProperty.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(userProperty));
+
+            inhs__.registerItsNatDocFragmentTemplate(userPropertySidebar.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(userPropertySidebar));
         }
     }
 

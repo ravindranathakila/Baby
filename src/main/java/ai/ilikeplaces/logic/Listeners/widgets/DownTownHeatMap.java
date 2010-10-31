@@ -27,7 +27,6 @@ import org.w3c.dom.html.HTMLDocument;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -53,9 +52,10 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private HumanId humanId;
 
     /**
-     * @param request__
-     * @param appendToElement__
-     * @param elementToUpdateWithWOEID
+     * @param request__                request__
+     * @param appendToElement__        appendToElement__
+     * @param elementToUpdateWithWOEID elementToUpdateWithWOEID
+     * @param humanId__                humanId__
      */
     public DownTownHeatMap(final ItsNatServletRequest request__, final Element appendToElement__, final Element elementToUpdateWithWOEID, final String humanId__) {
         super(request__, Controller.Page.DownTownHeatMap, appendToElement__, elementToUpdateWithWOEID, humanId__);
@@ -134,61 +134,60 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                     elementToUpdateWithWOEID.setAttribute(MarkupTag.INPUT.value(), geoCoord[0].toString() + "," + geoCoord[1]);
 
 
-                    if (myhumanId.validate() == 0) {
-                        final List<PrivateEvent> privateEvents__ = DB.getHumanCrudPrivateEventLocal(true).doRPrivateEventsByBounds(
-                                myhumanId,
-                                geoCoord[0].getObjectAsValid().getLatitude(),
-                                geoCoord[1].getObjectAsValid().getLatitude(),
-                                geoCoord[0].getObjectAsValid().getLongitude(),
-                                geoCoord[1].getObjectAsValid().getLongitude()).returnValue();
+                    final List<PrivateEvent> privateEvents__ = DB.getHumanCrudPrivateEventLocal(true).doRPrivateEventsByBoundsAsSystem(
+                            geoCoord[0].getObjectAsValid().getLatitude(),
+                            geoCoord[1].getObjectAsValid().getLatitude(),
+                            geoCoord[0].getObjectAsValid().getLongitude(),
+                            geoCoord[1].getObjectAsValid().getLongitude()).returnValue();
 
 
-                        /////////////////////////////
-                        final Set<Rawspot> rs = new HashSet<Rawspot>() {{
-                            for (final PrivateEvent privateEvent : privateEvents__) {
-                                add(
-                                        new Rawspot(
-                                                new W3CPoint(privateEvent.getPrivateLocation().getPrivateLocationLatitude(), privateEvent.getPrivateLocation().getPrivateLocationLongitude()),
-                                                privateEvent.getPrivateLocation().getPrivateLocationName()));
-                            }
-                        }};
+                    /////////////////////////////
+                    final Set<Rawspot> rs = new HashSet<Rawspot>() {{
+                        for (final PrivateEvent privateEvent : privateEvents__) {
+                            add(
+                                    new Rawspot(
+                                            new W3CPoint(privateEvent.getPrivateLocation().getPrivateLocationLatitude(), privateEvent.getPrivateLocation().getPrivateLocationLongitude()),
+                                            privateEvent.getPrivateLocation().getPrivateLocationName()));
+                        }
+                    }};
 
-                        final BoundingBox bb = new BoundingBox().setObj(
-                                geoCoord[0].getObjectAsValid().getLatitude(),
-                                geoCoord[0].getObjectAsValid().getLongitude(),
-                                geoCoord[1].getObjectAsValid().getLatitude(),
-                                geoCoord[1].getObjectAsValid().getLongitude());
+                    final BoundingBox bb = new BoundingBox().setObj(
+                            geoCoord[0].getObjectAsValid().getLatitude(),
+                            geoCoord[0].getObjectAsValid().getLongitude(),
+                            geoCoord[1].getObjectAsValid().getLatitude(),
+                            geoCoord[1].getObjectAsValid().getLongitude());
 
-                        final HotspotAnalyzer hsa = new HotspotAnalyzer(rs, (BoundingBox) bb.validateThrowAndGetThis());
-//                        final Map<Integer, Map<Integer, Hotspot>> hotspots = hsa.getHotspots();
+                    final HotspotAnalyzer hsa = new HotspotAnalyzer(rs, (BoundingBox) bb.validateThrowAndGetThis());
 
-                        final Hotspot[][] hotspots = hsa.getHotspots();
-                        for (final Hotspot[] hotspotspitch : hotspots) {
-                            for (final Hotspot yaw : hotspotspitch) {
-                                final W3CPoint coords = yaw.getCoordinates();
+//                  final Map<Integer, Map<Integer, Hotspot>> hotspots = hsa.getHotspots();
+                    final Hotspot[][] hotspots = hsa.getHotspots();
+                    
+                    for (final Hotspot[] hotspotspitch : hotspots) {
+                        for (final Hotspot yaw : hotspotspitch) {
+                            final W3CPoint coords = yaw.getCoordinates();
 
-                                if (yaw.getCoordinates() != null) {
-                                    itsNatDocument_.addCodeToSend("listOfHotSpots.unshift(new google.maps.Marker({ " +
-                                            "position: new google.maps.LatLng("
-                                            + coords.getLatitude()
-                                            + ","
-                                            + coords.getLongitude()
-                                            + "), " +
-                                            "title:'" + yaw.getCommonName() + "', " +
-                                            "map: map, " +
-                                            "icon: 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=" + yaw.getHits() + "|14|000|glyphish_map-marker|16|4bf202|892e40'  }));");
+                            if (yaw.getCoordinates() != null) {
+                                itsNatDocument_.addCodeToSend("listOfHotSpots.unshift(new google.maps.Marker({ " +
+                                        "position: new google.maps.LatLng("
+                                        + coords.getLatitude()
+                                        + ","
+                                        + coords.getLongitude()
+                                        + "), " +
+                                        "title:'" + yaw.getCommonName() + "', " +
+                                        "map: map, " +
+                                        "icon: 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=" + yaw.getHits() + "|14|000|glyphish_map-marker|16|4bf202|892e40'  }));");
 
-                                    sendJSStmt("google.maps.event.addListener(listOfHotSpots[0], 'click', function() {\n" +
-                                            JSCodeToSend.redirectPageWithURL(
-                                                    new Parameter(Controller.Page.Organize.getURL())
-                                                            .append(Controller.Page.DocOrganizeCategory, 143, true)
-                                                            .append(WOEIDGrabber.WOEHINT, coords.getLatitude() + "," + coords.getLongitude())
-                                                            .get()
-                                            ) +
-                                            "});");
-                                }
+                                sendJSStmt("google.maps.event.addListener(listOfHotSpots[0], 'click', function() {\n" +
+                                        JSCodeToSend.redirectPageWithURL(
+                                                new Parameter(Controller.Page.Organize.getURL())
+                                                        .append(Controller.Page.DocOrganizeCategory, 143, true)
+                                                        .append(WOEIDGrabber.WOEHINT, coords.getLatitude() + "," + coords.getLongitude())
+                                                        .get()
+                                        ) +
+                                        "});");
                             }
                         }
+                    }
 
 
 //                        for (int i = 0; i < hotspots.size(); i++) {
@@ -218,34 +217,8 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 //                            }
 //                        }
 
-
-                        //////////////////////////////
-
-//                        for (final PrivateEvent privateEvent : privateEvents__) {
-//                            itsNatDocument_.addCodeToSend("listOfHotSpots.unshift(new google.maps.Marker({ position: new google.maps.LatLng("
-//                                    + privateEvent.getPrivateLocation().getPrivateLocationLatitude()
-//                                    + ","
-//                                    + privateEvent.getPrivateLocation().getPrivateLocationLongitude()
-//                                    + "),map: map, icon: markerIcon}));");
-//
-//                            /*
-//                            //Below is the working javascript code put here for reference. Do not delete.
-//                            listOfHotSpots.unshift(
-//                                new google.maps.Marker({
-//                                      position: myLatlng,
-//                                      map: map,
-//                                      title:"2",
-//                                      icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=Point%20this%20Marker|14|000|glyphish_map-marker|16|bb77ee|892e40"
-//                                })
-//                            );
-//                            */
-//                        }
-                    }
-
-                    // markerShadow,
-                    // clear($$(PrivateLocationCreateCNotice));
                 } else {
-//                    $$(PrivateLocationCreateCNotice).setTextContent(woeid.getViolationAsString());
+
                 }
             }
 
@@ -259,3 +232,16 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
     }
 }
+
+
+//                            /*
+//                            //Below is the working javascript code put here for reference. Do not delete.
+//                            listOfHotSpots.unshift(
+//                                new google.maps.Marker({
+//                                      position: myLatlng,
+//                                      map: map,
+//                                      title:"2",
+//                                      icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=Point%20this%20Marker|14|000|glyphish_map-marker|16|bb77ee|892e40"
+//                                })
+//                            );
+//                            */

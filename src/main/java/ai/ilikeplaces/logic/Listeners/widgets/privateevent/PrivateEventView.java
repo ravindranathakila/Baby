@@ -9,6 +9,7 @@ import ai.ilikeplaces.logic.Listeners.widgets.Button;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
@@ -55,16 +56,15 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
      */
     @Override
     protected void init(final Object... initArgs) {
-        final String humanId = (String) initArgs[0];
+        final HumanId humanId = new HumanId((String) initArgs[0]);
         final long privateEventId = (Long) initArgs[1];
 
-        final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(humanId, privateEventId);
+        final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(humanId.getObjectAsValid(), privateEventId);
 
 
         LoggerFactory.getLogger(PrivateEventView.class.getName()).debug(r.toString());
 
         if (r.returnStatus() == 0) {
-            LoggerFactory.getLogger(PrivateEventView.class.getName()).debug("Setting values");
             $$(privateEventViewName).setTextContent(r.returnValue().getPrivateEventName());
             $$(privateEventViewInfo).setTextContent(r.returnValue().getPrivateEventInfo());
             new Button(request, $$(privateEventViewLink), "Link to " + r.returnValue().getPrivateEventName(), false, r.returnValue()) {
@@ -93,8 +93,22 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
                 }
             };
             if ((Boolean) initArgs[2]) {
-                new WallWidgetPrivateEvent(request, $$(Page.privateEventViewWall), new HumanId(humanId), r.returnValue().getPrivateEventId());
-                new AlbumManager(request, $$(Controller.Page.privateEventViewAlbum), new HumanId(humanId), r.returnValue().getPrivateEventId());
+                new WallWidgetPrivateEvent(request, $$(Page.privateEventViewWall), humanId, r.returnValue().getPrivateEventId());
+                new AlbumManager(request, $$(Controller.Page.privateEventViewAlbum), humanId, r.returnValue().getPrivateEventId());
+                
+                final GeoCoord gc = new GeoCoord();
+                gc.setObj(r.returnValue().getPrivateLocation().getPrivateLocationLatitude() + "," + r.returnValue().getPrivateLocation().getPrivateLocationLongitude());
+                gc.validateThrow();
+
+                $$(Controller.Page.privateEventViewLocationMap).setAttribute(MarkupTag.IMG.src(),
+                                                               new Parameter("http://maps.google.com/maps/api/staticmap")
+                                                                       .append("sensor", "false", true)
+                                                                       .append("center", gc.toString())
+                                                                       .append("size", "230x250")
+                                                                       .append("format", "jpg")
+                                                                       .append("markers", "color:0x7fe2ff|label:S|path=fillcolor:0xAA000033|color:0xFFFFFF00|"
+                                                                               + gc.toString())
+                                                                       .get());
             }
 
             UCShowOwners:

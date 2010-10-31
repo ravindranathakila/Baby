@@ -2,8 +2,10 @@ package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
+import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.logic.Listeners.widgets.DisplayName;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
+import ai.ilikeplaces.logic.Listeners.widgets.UserPropertySidebar;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
@@ -142,6 +144,26 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                             final HumansIdentity hi = r.returnValue();
                             $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(), ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
                             $(Skeleton_othersidebar_wall_link).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+                        }
+                    }
+                } catch (final Throwable t) {
+                    EXCEPTION.error("{}", t);
+
+                }
+            }
+            sideBarFriends:
+            {
+                try {
+                    if (getUsername() != null) {
+                        final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(getUsernameAsValid()).getSelfAsValid());
+
+                        for (final HumansNetPeople friend : humansNetPeople.getHumansNetPeoples()) {
+
+                            new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
+                                protected void init(final Object... initArgs) {
+                                    $$(Controller.Page.user_property_sidebar_content).setTextContent("Talk!");
+                                }
+                            };
                         }
                     }
                 } catch (final Throwable t) {
