@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.mail.GetMailAddress;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.Return;
 
@@ -21,7 +22,7 @@ import java.util.List;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners(EntityLifeCycleListener.class)
-public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace,HumansFriend {
+public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace,HumansFriend, GetMailAddress {
 
     public String humanId;
 
@@ -126,5 +127,13 @@ public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace,H
         } else {
             return matchHumanId(o);
         }
+    }
+
+    /**
+     * @return Email Address
+     */
+    @Override
+    public String getEmail() {
+        return this.getHumanId();
     }
 }

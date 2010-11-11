@@ -22,7 +22,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import static ai.ilikeplaces.util.Loggers.*;
@@ -165,6 +167,46 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
         return r;
     }
 
+    @Deprecated
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<Boolean> sendWithAttachmentAsSimpleText(final String recepientEmail, final String simpleTextSubject, final String simpleTextBody, final List<String> files) {
+        Return<Boolean> r;
+        try {
+
+            final MimeMessage message = new MimeMessage(mailSession);
+            message.setSender(new InternetAddress(U_S_E_R_N_A_M_E));
+
+            message.setSubject(simpleTextSubject);
+
+            // Create the Multipart to be added the parts to
+            Multipart mp = new MimeMultipart();
+            {
+                // Create and fill the first message part
+                MimeBodyPart mbp = new MimeBodyPart();
+                mbp.setText(simpleTextBody);
+                mp.addBodyPart(mbp);
+
+                // Attach the files to the message
+                for (final String file : files) {
+                    mbp.setDataHandler(new DataHandler(new URL(file)));
+                    mp.addBodyPart(mbp);
+                }
+            }
+
+            message.setContent(mp);
+            //message.setContent(simpleTextBody, TEXT_PLAIN);
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(recepientEmail));
+            message.addRecipient(Message.RecipientType.CC, new InternetAddress(RBGet.globalConfig.getString("noti_app_mail")));
+
+            r = new ReturnImpl<Boolean>(finalSend(message), "Mail sending to " + recepientEmail + " successful!");
+
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Boolean>(t, "FAILED! Mail sending to " + recepientEmail + " FAILED!", true);
+        }
+        return r;
+    }
+
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Return<Boolean> sendAsSimpleTextAsynchronously(final String recepientEmail, final String simpleTextSubject, final String simpleTextBody) {
@@ -183,6 +225,52 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
 
         } catch (final Throwable t) {
             r = new ReturnImpl<Boolean>(t, "FAILED! Mail sending to " + recepientEmail + " FAILED!", true);
+        }
+        return r;
+    }
+
+    @Deprecated
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<Boolean> sendWithAttachmentAsSimpleTextAsynchronously(final String recepientEmail, final String simpleTextSubject, final String simpleTextBody, final List<String> files) {
+        Return<Boolean> r;
+        try {
+
+            new Thread(
+                    new Runnable() {
+
+                        @Override
+                        public void run() {
+                            sendWithAttachmentAsSimpleText(recepientEmail, simpleTextSubject, simpleTextBody, files);
+                        }
+                    }).start();
+            r = new ReturnImpl<Boolean>(true, "Mail sending to " + recepientEmail + " issued asynchronously!");
+
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Boolean>(t, "FAILED! Mail sending to " + recepientEmail + " FAILED!", true);
+        }
+        return r;
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<Boolean> sendWithAttachmentAsSimpleTextAsynchronously(final List<GetMailAddress> recepientEmails, final String simpleTextSubject, final String simpleTextBody, final List<String> files) {
+        Return<Boolean> r;
+        try {
+            for (final GetMailAddress recepientEmail : recepientEmails) {
+                new Thread(
+                        new Runnable() {
+
+                            @Override
+                            public void run() {
+                                sendWithAttachmentAsSimpleText(recepientEmail.getEmail(), simpleTextSubject, simpleTextBody, files);
+                            }
+                        }).start();
+            }
+            r = new ReturnImpl<Boolean>(true, "Mail sending to group issued asynchronously!");
+
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Boolean>(t, "FAILED! Mail sending to group FAILED!", true);
         }
         return r;
     }

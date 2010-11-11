@@ -3,8 +3,9 @@ package ai.ilikeplaces.logic.Listeners;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.Human;
-import ai.ilikeplaces.entities.HumansNetPeople;
-import ai.ilikeplaces.logic.Listeners.widgets.*;
+import ai.ilikeplaces.logic.Listeners.widgets.FriendAdd;
+import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
+import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
@@ -119,6 +120,10 @@ public class ListenerI implements ItsNatServletRequestListener {
                                         EXCEPTION.error("{}", t);
 
                                     }
+                                }
+                                setSidebarFriends:
+                                {
+                                    setSideBarFriends((ItsNatServletRequest) initArgs[0]);
                                 }
 
                                 setAddAsFriendIfNotFriend:

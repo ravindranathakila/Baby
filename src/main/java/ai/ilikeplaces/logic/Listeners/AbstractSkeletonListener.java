@@ -279,4 +279,26 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
 
         }
     }
+
+    protected void setSideBarFriends(final ItsNatServletRequest request__) {
+        initStatus = true;
+
+        try {
+            if (getUsername() != null) {
+                final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(getUsernameAsValid()).getSelfAsValid());
+
+                for (final HumansNetPeople friend : humansNetPeople.getHumansNetPeoples()) {
+
+                    new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
+                        protected void init(final Object... initArgs) {
+                            $$(Controller.Page.user_property_sidebar_content).setTextContent("Talk!");
+                        }
+                    };
+                }
+            }
+        } catch (final Throwable t) {
+            EXCEPTION.error("{}", t);
+
+        }
+    }
 }

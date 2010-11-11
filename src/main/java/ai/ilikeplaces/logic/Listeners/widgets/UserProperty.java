@@ -64,6 +64,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
      *
      * @param request__
      * @param appendToElement__
+     * @param content
      * @param humanId
      * @param params
      */
@@ -113,6 +114,34 @@ abstract public class UserProperty extends AbstractWidgetListener {
     }
 
     /**
+     * @param usersName
+     * @param usersUrl
+     * @param usersPhoto
+     * @param content
+     * @return String content or null if something goes wrong
+     */
+    public static String fetchToEmail(final String usersName, final String usersUrl, final String usersPhoto, final Element content) {
+        try {
+            final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + USER_PROPERTY_EMAIL_XHTML);
+            document.getElementById(Controller.Page.user_property_name).setTextContent(usersName);
+            document.getElementById(Controller.Page.user_property_name).setAttribute(MarkupTag.A.href(), usersUrl);
+            document.getElementById(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), usersPhoto);
+            document.getElementById(Controller.Page.user_property_content).appendChild(document.importNode(content, true));
+
+            return HTMLDocParser.convertNodeToHtml(document);
+        } catch (final TransformerException e) {
+            Loggers.EXCEPTION.error("", e);
+            return null;
+        } catch (final SAXException e) {
+            Loggers.EXCEPTION.error("", e);
+            return null;
+        } catch (final IOException e) {
+            Loggers.EXCEPTION.error("", e);
+            return null;
+        }
+    }
+
+    /**
      *
      */
     @Override
@@ -139,8 +168,8 @@ abstract public class UserProperty extends AbstractWidgetListener {
      */
     static public String formatProfilePhotoUrl(final String rawURLFromDB) {
         return rawURLFromDB == null || rawURLFromDB.isEmpty() ?
-                RBGet.globalConfig.getString("PROFILE_PHOTO_DEFAULT") :
-                RBGet.globalConfig.getString("PROFILE_PHOTOS") + rawURLFromDB;
+               RBGet.globalConfig.getString("PROFILE_PHOTO_DEFAULT") :
+               RBGet.globalConfig.getString("PROFILE_PHOTOS") + rawURLFromDB;
     }
 
     static public String formatProfileUrl(final String relativeURL, final boolean makeAbsolute) {

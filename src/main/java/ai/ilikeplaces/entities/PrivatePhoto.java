@@ -15,7 +15,7 @@ import java.util.List;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-public class PrivatePhoto implements Serializable {
+public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto> {
 
     private static final long serialVersionUID = 1L;
     public Long privatePhotoId;
@@ -225,5 +225,15 @@ public class PrivatePhoto implements Serializable {
         String changeLog = toString() + "\n";
         changeLog += "20090914 Added this class \n";
         return showChangeLog__ ? changeLog : toString();
+    }
+
+
+    /**
+     * @param toBeComparedWith Object To Be ComparedWith
+     * @return curent - toBeComparedWith
+     */
+    @Override
+    public int compareTo(final PrivatePhoto toBeComparedWith) {
+        return (int) (this.getPrivatePhotoId() - toBeComparedWith.getPrivatePhotoId());
     }
 }

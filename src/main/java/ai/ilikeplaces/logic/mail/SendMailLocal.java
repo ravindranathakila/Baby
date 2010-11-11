@@ -5,6 +5,7 @@ import ai.ilikeplaces.util.Return;
 
 import javax.ejb.Local;
 import java.io.File;
+import java.util.List;
 
 /**
  * Just one thing. When sending mails, DON'T WASTE TIME OF PEOPLE.
@@ -39,6 +40,11 @@ public interface SendMailLocal {
                                             final String simpleTextSubject,
                                             final String simpleTextBody);
 
+    public Return<Boolean> sendWithAttachmentAsSimpleText(final String recepientEmail,
+                                            final String simpleTextSubject,
+                                            final String simpleTextBody,
+                                            final List<String> files);
+
     public Return<Boolean> sendAsSimpleTextAsynchronously(final String recepientEmail,
                                                           final String simpleTextSubject,
                                                           final String simpleTextBody);
@@ -46,6 +52,16 @@ public interface SendMailLocal {
     public Return<Boolean> sendAsHTML(final String recepientEmail,
                                       final String simpleTextSubject,
                                       final String htmlBody);
+
+    public Return<Boolean> sendWithAttachmentAsSimpleTextAsynchronously(final String recepientEmail,
+                                                          final String simpleTextSubject,
+                                                          final String simpleTextBody,
+                                                          final List<String> files);
+
+    public Return<Boolean> sendWithAttachmentAsSimpleTextAsynchronously(final List<GetMailAddress> recepientEmails,
+                                                          final String simpleTextSubject,
+                                                          final String simpleTextBody,
+                                                          final List<String> files);
 
     public Return<Boolean> sendAsHTMLAsynchronously(
             final String recepientEmail,
