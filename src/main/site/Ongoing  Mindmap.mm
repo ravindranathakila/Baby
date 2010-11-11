@@ -834,13 +834,44 @@
 </node>
 <node CREATED="1284993034015" ID="Freemind_Link_693571932" MODIFIED="1284993039546" TEXT="Page Turner"/>
 </node>
-<node CREATED="1283703158802" FOLDED="true" ID="Freemind_Link_640830008" MODIFIED="1283703160896" POSITION="right" TEXT="Marketing">
+<node CREATED="1283703158802" FOLDED="true" ID="Freemind_Link_640830008" MODIFIED="1289101846764" POSITION="right" TEXT="Marketing">
+<icon BUILTIN="bell"/>
+<node CREATED="1289010658744" ID="Freemind_Link_1999101897" MODIFIED="1289010663868" TEXT="GUIDE">
+<icon BUILTIN="help"/>
+<node CREATED="1289010668102" ID="Freemind_Link_1280564673" MODIFIED="1289010673273" TEXT="Inception">
+<node CREATED="1289010674023" ID="Freemind_Link_1823484800" MODIFIED="1289010707582" TEXT="The act of snapping the subject&apos;s attention"/>
+</node>
+<node CREATED="1289012978175" ID="Freemind_Link_845177365" MODIFIED="1289012981253" TEXT="Deception">
+<node CREATED="1289010740532" ID="Freemind_Link_1436190554" MODIFIED="1289010770872" TEXT="The action by the subject by which he spreads his deception"/>
+</node>
+<node CREATED="1289012981738" ID="Freemind_Link_1091601485" MODIFIED="1289012984535" TEXT="Diffusion">
+<node CREATED="1289010710144" ID="Freemind_Link_1437503295" MODIFIED="1289010738875" TEXT="The act of retaining the subject&apos;s attention"/>
+</node>
+</node>
 <node CREATED="1283703177927" ID="Freemind_Link_1817341781" MODIFIED="1283703202084" TEXT="Checklist">
 <node CREATED="1285778293411" ID="Freemind_Link_1030747214" MODIFIED="1286031836875" TEXT="Are you being dumb? No? BE DUMB!"/>
 <node CREATED="1283703161521" ID="Freemind_Link_63383641" MODIFIED="1283703168865" TEXT="Does it do what it says?"/>
 <node CREATED="1283703169490" ID="Freemind_Link_499084225" MODIFIED="1283703174943" TEXT="Does it say what is does?"/>
 </node>
-<node CREATED="1286620028609" ID="Freemind_Link_1155133426" MODIFIED="1286620041578" TEXT="Rules make the game interesting"/>
+<node CREATED="1289010405006" ID="Freemind_Link_1694440250" MODIFIED="1289010479138" TEXT="Inception">
+<node CREATED="1289010825100" ID="Freemind_Link_112206367" MODIFIED="1289010840552" TEXT="Inception thu social sites">
+<node CREATED="1289010799494" ID="Freemind_Link_1483011254" MODIFIED="1289010974514" TEXT="OnlyWire submission"/>
+<node CREATED="1289012914173" ID="Freemind_Link_1477421608" MODIFIED="1289012920486" TEXT="Grab Words">
+<node CREATED="1289012935596" ID="Freemind_Link_538999889" MODIFIED="1289012941158" TEXT="OMG!"/>
+</node>
+</node>
+</node>
+<node CREATED="1289010479826" ID="Freemind_Link_452188577" MODIFIED="1289010481653" TEXT="Deception">
+<node CREATED="1286620028609" ID="Freemind_Link_1155133426" MODIFIED="1286620041578" TEXT="Rules make the game interesting">
+<node CREATED="1289012922548" ID="Freemind_Link_941219317" MODIFIED="1289012927298" TEXT="Hyber Words">
+<node CREATED="1289012941580" ID="Freemind_Link_1632147330" MODIFIED="1289012965659" TEXT="I just got robbed"/>
+</node>
+</node>
+</node>
+<node CREATED="1289010597860" ID="Freemind_Link_1689932969" MODIFIED="1289010609124" TEXT="Diffusion"/>
+<node CREATED="1289013173634" ID="Freemind_Link_477801137" MODIFIED="1289013175572" TEXT="TODOs">
+<node CREATED="1289013178135" ID="Freemind_Link_917995578" MODIFIED="1289013186635" TEXT="Sign up for all social networks under a different username"/>
+</node>
 </node>
 <node BACKGROUND_COLOR="#ffff00" CREATED="1266112502968" FOLDED="true" ID="Freemind_Link_102406912" MODIFIED="1283702881594" POSITION="left" TEXT="Abandonned">
 <icon BUILTIN="button_cancel"/>
@@ -895,16 +926,20 @@
 <node CREATED="1288495037421" ID="Freemind_Link_91009859" MODIFIED="1288495039562" TEXT="Album">
 <node CREATED="1288495040046" ID="Freemind_Link_1216857146" MODIFIED="1288495047062" TEXT="Share photos of event"/>
 <node CREATED="1288495050328" ID="Freemind_Link_368622347" MODIFIED="1288495054359" TEXT="Discuss photos of event"/>
-<node CREATED="1288495058250" ID="Freemind_Link_1798050489" MODIFIED="1288495071265" TEXT="TODO:Email forwards">
-<icon BUILTIN="flag"/>
-</node>
 <node CREATED="1288495118515" ID="Freemind_Link_1513470069" MODIFIED="1288495124656" TEXT="Further share photos of event"/>
+<node CREATED="1288495058250" ID="Freemind_Link_1798050489" MODIFIED="1289102216453" TEXT="TODO:Email forwards">
+<icon BUILTIN="flag"/>
 </node>
-<node CREATED="1288506345625" ID="Freemind_Link_1982919547" MODIFIED="1288506395281" TEXT="TODO: Event Name as Header">
+<node CREATED="1289101997604" ID="Freemind_Link_635591026" MODIFIED="1289102213972" TEXT="TODO:Email on attatch">
 <icon BUILTIN="flag"/>
 </node>
 </node>
-<node CREATED="1288506383718" ID="Freemind_Link_675679815" MODIFIED="1288506395296" TEXT="TODO: Location Name as Header">
+<node CREATED="1288506345625" ID="Freemind_Link_1982919547" MODIFIED="1289102211055" TEXT="TODO: Event Name as Header">
+<icon BUILTIN="flag"/>
+</node>
+</node>
+<node CREATED="1288506383718" ID="Freemind_Link_675679815" MODIFIED="1289102206249" TEXT="TODO: Location Name as Header">
+<arrowlink DESTINATION="Freemind_Link_675679815" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Freemind_Arrow_Link_1478457679" STARTARROW="None" STARTINCLINATION="0;0;"/>
 <icon BUILTIN="flag"/>
 </node>
 </node>
@@ -938,6 +973,12 @@
 <hook NAME="accessories/plugins/NodeNote.properties">
 <text>GOF is to do with all the design pattern freezes you can do to the code. This is the core place of the freeze. &#xa;If you got here freezing the ones before this freeze, you&apos;ve done most of of your freeze.</text>
 </hook>
+<node CREATED="1289102022661" ID="Freemind_Link_1346535151" MODIFIED="1289102046485" TEXT="TODO:Mail queueing or trying mechanism">
+<icon BUILTIN="flag"/>
+</node>
+<node CREATED="1289102149989" ID="Freemind_Link_1880544995" MODIFIED="1289102162345" TEXT="TODO:Osgi startup">
+<icon BUILTIN="flag"/>
+</node>
 </node>
 <node CREATED="1288421834390" ID="Freemind_Link_1220495101" MODIFIED="1288422171531" TEXT="OPTIMIZATION/LOAD TEST FREEZE">
 <icon BUILTIN="full-5"/>
@@ -959,11 +1000,21 @@
 <node CREATED="1275247786984" ID="Freemind_Link_841143219" MODIFIED="1275247834859" TEXT="Startup and Shutdown mails"/>
 <node CREATED="1270054635078" ID="Freemind_Link_408918916" MODIFIED="1281967604656" TEXT="JSP forward or deny on OpenEJB"/>
 </node>
-<node BACKGROUND_COLOR="#ffcc00" CREATED="1275667013786" FOLDED="true" ID="Freemind_Link_374011926" MODIFIED="1283704601093" POSITION="right" TEXT="NEXT">
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1275667013786" ID="Freemind_Link_374011926" MODIFIED="1289101795496" POSITION="right" TEXT="ITPS">
 <arrowlink DESTINATION="Freemind_Link_374011926" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Freemind_Arrow_Link_447360971" STARTARROW="None" STARTINCLINATION="0;0;"/>
 <font BOLD="true" NAME="Comic Sans MS" SIZE="14"/>
 <icon BUILTIN="flag"/>
-<node CREATED="1281972204546" ID="Freemind_Link_1990924033" MODIFIED="1281972215078" TEXT="Wall Link Href"/>
+<node CREATED="1289101790160" ID="Freemind_Link_698262843" MODIFIED="1289101812611" TEXT="Freeze">
+<node CREATED="1289101825873" ID="Freemind_Link_847716500" MODIFIED="1289101865970" TEXT="2010-11-07">
+<node CREATED="1289102164499" ID="Freemind_Link_730065184" MODIFIED="1289102216453" TEXT="Complete Marketing Freeze">
+<arrowlink DESTINATION="Freemind_Link_635591026" ENDARROW="Default" ENDINCLINATION="776;0;" ID="Freemind_Arrow_Link_367957169" STARTARROW="None" STARTINCLINATION="776;0;"/>
+<arrowlink DESTINATION="Freemind_Link_1798050489" ENDARROW="Default" ENDINCLINATION="780;0;" ID="Freemind_Arrow_Link_1360630555" STARTARROW="None" STARTINCLINATION="780;0;"/>
+<arrowlink DESTINATION="Freemind_Link_1982919547" ENDARROW="Default" ENDINCLINATION="744;0;" ID="Freemind_Arrow_Link_726215153" STARTARROW="None" STARTINCLINATION="744;0;"/>
+<arrowlink DESTINATION="Freemind_Link_675679815" ENDARROW="Default" ENDINCLINATION="521;0;" ID="Freemind_Arrow_Link_748341540" STARTARROW="None" STARTINCLINATION="521;0;"/>
+</node>
+</node>
+</node>
+<node CREATED="1289101817884" ID="Freemind_Link_999512085" MODIFIED="1289101820365" TEXT="Osgi"/>
 </node>
 <node CREATED="1284106510102" ID="Freemind_Link_1687377836" MODIFIED="1284107539812" POSITION="left" TEXT="Distractions">
 <node CREATED="1284106515588" ID="Freemind_Link_276492500" MODIFIED="1284106703251" TEXT="Static Map for Location Pages">

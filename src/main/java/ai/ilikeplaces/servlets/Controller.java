@@ -43,6 +43,7 @@ final public class
               Controller.Page.AlbumNotice,
               Controller.Page.AlbumPivateEventId,
               Controller.Page.AlbumOwner,
+              Controller.Page.AlbumForward,
               Controller.Page.AlbumPhotos
         ) {
             @Override
@@ -702,6 +703,7 @@ Controller.Page.friendAddDisplayNameLabel
         final static public String AlbumNotice = "AlbumNotice";
         final static public String AlbumPivateEventId = "AlbumPivateEventId";
         final static public String AlbumOwner = "AlbumOwner";
+        final static public String AlbumForward = "AlbumForward";
         final static public String AlbumPhotos = "AlbumPhotos";
 
         /*ProfileWidget Page*/

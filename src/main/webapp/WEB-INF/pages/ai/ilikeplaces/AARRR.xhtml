@@ -75,9 +75,11 @@
         </script>
     </head>
     <!--<body style="background-color:#99b3cc;">-->
-    <body  style="background:#892e40;">
+    <!--<body style="background-color::#892e40;">-->
+    <!--<body style="background-color:#9999ff;"><!--chosen-->
+    <body style="background-color:#325b6e;"><!--chosen-->
         <div id="Main_display" class="container" itsnat:nocache="true" style="display:block;">
-            <div class="span-24 last" style="background-color:#892e40;">
+            <div class="span-24 last" style="background-color:#325b6e;">
                 <div class="span-24 last center" style="height:20px;">
                     &nbsp;
                 </div>
@@ -88,9 +90,10 @@
                 <div class="span-24 last center">
                     <div class="span-24 last center vtip" title="WHERE'S THE FUN? FIND OUT! ENTER THE PLACE HERE FIRST">
                         <input class="span-12 prepend-6 append-6 last center"
+                               id="seachbox"
                                style="background:#f7c05c;border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;color:#ff1493;font:18px arial,sans-serif bold;height:30px;margin:0;padding:5px 8px 0 6px;vertical-align:top" value="las vegas, united states"
                                 onfocus="javascript:initialize_gmap_scripts();"
-                                onblur="javascript:try{new google.maps.Geocoder().geocode({address:this.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){alert('You might want to zoom in for a clearer view!');map.setCenter(geocoderResult[0].geometry.location);map.setZoom(9);}else{alert('No find :(  (try city, state or a larger place)');;}});}catch(err){}"
+                                onblur=""
                                 />
                     </div>
                     <div class="span-24 last center vtip" style="height:15px">
@@ -100,8 +103,11 @@
                         <div class="span-10 center vtip">
                             &nbsp;
                         </div>
-                        <div class="span-4 center vtip"  title="WHERE'S THE FUN? COME ON CLICK CLICK!!">
-                            <input class="last lsb center" type="submit" name="Fun Search" value=""/>
+                        <div class="span-4 center vtip"  title="Enter place and click to find hotspots. Zoom in for clearer view.">
+                            <input class="last center"
+                                   onclick="javascript: try{searchbox = document.getElementById('seachbox');new google.maps.Geocoder().geocode({address:searchbox.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){alert('You might want to zoom in for a clearer view!');map.setCenter(geocoderResult[0].geometry.location);map.setZoom(10);}else{alert('No find '+searchbox.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
+                                   style="font-family: impact; font-size: 18px; background-color: transparent;border-width: thin;border-style: solid;"
+                                   type="submit" value="Find Hotspots&nbsp"/>
                         </div>
                         <div class="span-10 last center vtip">
                             &nbsp;

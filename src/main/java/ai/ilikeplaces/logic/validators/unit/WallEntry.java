@@ -1,8 +1,6 @@
 package ai.ilikeplaces.logic.validators.unit;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.logic.validators.oval.WallSeparators;
-import ai.ilikeplaces.logic.validators.oval.internal.WallSeparatorsCheck;
 import ai.ilikeplaces.util.RefObj;
 import net.sf.oval.configuration.annotation.IsInvariant;
 import net.sf.oval.constraint.NotEmpty;
