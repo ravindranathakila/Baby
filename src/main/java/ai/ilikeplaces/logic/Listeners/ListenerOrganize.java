@@ -5,7 +5,10 @@ import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
-import ai.ilikeplaces.logic.Listeners.widgets.*;
+import ai.ilikeplaces.logic.Listeners.widgets.Button;
+import ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationCreate;
+import ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationDelete;
+import ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationView;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventCreate;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventView;
@@ -13,7 +16,10 @@ import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.HumanIdEq;
+import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.MarkupTag;
+import ai.ilikeplaces.util.Return;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -21,8 +27,6 @@ import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
-
-import java.util.ResourceBundle;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 import static ai.ilikeplaces.util.Loggers.*;
@@ -55,7 +59,9 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
     private static final String IS_DENIED_RIGHTS_TO_VIEW_THIS_PRIVATE_LOCATION = " is denied rights to view this private location:";
     private static final String IS_GRANTED_ACCESS_TO_VIEW_THIS_PRIVATE_EVENT = " is granted access to view this private event.";
     private static final String FAILS_TO_ACCESS_THIS_LOCATION = " fails to access this location";
+    private static final String FAILS_TO_ACCESS_THIS_EVENT = " fails to access this event";
     private static final String NO_EXIST_OR_ERROR = "NO_EXIST_OR_ERROR";
+    private static final String NO_EXIST_OR_ERROR_EVENT = "NO_EXIST_OR_ERROR_EVENT";
     private static final String NO_LOGIN = "NoLogin";
     private static final String RETURNING_ORGANIZE_PAGE = "Returning organize page";
 
@@ -76,171 +82,188 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
                 super.init(itsNatHTMLDocument__, hTMLDocument__, itsNatDocument__, initArgs);
 
-                if (getUsername() != null)
+                if (getUsername() != null) {
                     handleRequestType:
-                            {
-                                try {
-                                    /*Be fault tolerant with the user. Just parse category here. Later parse other values when needed*/
-                                    int category = 0;
-                                    try {
-                                        final String tolerantCategory = request__.getServletRequest().getParameter(Controller.Page.DocOrganizeCategory);
-                                        category = Integer.parseInt(tolerantCategory != null ? tolerantCategory : "123");
-                                    } catch (final NumberFormatException nfe_) {
-                                        USER_EXCEPTION.error("", nfe_);
+                    {
+                        try {
+                            /*Be fault tolerant with the user. Just parse category here. Later parse other values when needed*/
+                            int category = 0;
+                            try {
+                                final String tolerantCategory = request__.getServletRequest().getParameter(Controller.Page.DocOrganizeCategory);
+                                category = Integer.parseInt(tolerantCategory != null ? tolerantCategory : "123");
+                            } catch (final NumberFormatException nfe_) {
+                                USER_EXCEPTION.error("", nfe_);
+                            }
+                            switch (category) {
+                                case ModeIntroduction:
+                                    UCEngage:
+                                    {
+                                        try {
+                                            UCIntroduction:
+                                            {
+                                                $(SkeletonCPageTitle).setTextContent(GUI.getString(ORGANIZE_MAIN_TITLE));
+                                                $(SkeletonCPageTitle).setAttribute(MarkupTag.GENERIC.title(), GUI.getString(ORGANIZE_MAIN_TITLE_TITLE));
+                                                $(SkeletonCPageIntro).setTextContent(GUI.getString(ORGANIZE_MAIN_INTRO));
+                                                $(SkeletonCPageTitle).setAttribute(MarkupTag.GENERIC.title(), GUI.getString(ORGANIZE_MAIN_INTRO_TITLE));
+                                            }
+                                            UCListOfActions:
+                                            {
+                                                for (final PrivateLocation prvLoc : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPrivateLocation(new HumanId(getUsernameAsValid())).returnValue().getPrivateLocationsViewed()) {
+                                                    attachPrivateLocationAsRolesPermit(request__, $(Skeleton_center_skeleton), prvLoc, true, false);
+                                                }
+                                                new PrivateLocationCreate(request__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
+                                                };
+                                            }
+                                        } catch (final Throwable t) {
+                                            EXCEPTION.error("{}", t);
+                                        }
                                     }
-                                    switch (category) {
-                                        case ModeIntroduction:
-                                            UCEngage:
-                                            {
-                                                try {
-                                                    UCIntroduction:
-                                                    {
-                                                        $(SkeletonCPageTitle).setTextContent(GUI.getString(ORGANIZE_MAIN_TITLE));
-                                                        $(SkeletonCPageTitle).setAttribute(MarkupTag.GENERIC.title(), GUI.getString(ORGANIZE_MAIN_TITLE_TITLE));
-                                                        $(SkeletonCPageIntro).setTextContent(GUI.getString(ORGANIZE_MAIN_INTRO));
-                                                        $(SkeletonCPageTitle).setAttribute(MarkupTag.GENERIC.title(), GUI.getString(ORGANIZE_MAIN_INTRO_TITLE));
-                                                    }
-                                                    UCListOfActions:
-                                                    {
-                                                        for (final PrivateLocation prvLoc : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPrivateLocation(new HumanId(getUsernameAsValid())).returnValue().getPrivateLocationsViewed()) {
-                                                            attachPrivateLocationAsRolesPermit(request__, $(Skeleton_center_skeleton), prvLoc, true, false);
-                                                        }
-                                                        new PrivateLocationCreate(request__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
-                                                        };
-                                                    }
-                                                } catch (final Throwable t) {
-                                                    EXCEPTION.error("{}", t);
-                                                }
+                                    break;
+                                case Controller.Page.DocOrganizeModeOrganize:
+                                    UCOrganize:
+                                    {
+                                        try {
+                                            new PrivateLocationCreate(request__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
+                                            };
+                                            for (final PrivateLocation prvLoc : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPrivateLocation(new HumanId(getUsernameAsValid())).returnValue().getPrivateLocationsViewed()) {
+                                                attachPrivateLocationAsRolesPermit(request__, $(Skeleton_center_skeleton), prvLoc, true, false);
                                             }
-                                            break;
-                                        case Controller.Page.DocOrganizeModeOrganize:
-                                            UCOrganize:
-                                            {
-                                                try {
-                                                    new PrivateLocationCreate(request__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
-                                                    };
-                                                    for (final PrivateLocation prvLoc : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPrivateLocation(new HumanId(getUsernameAsValid())).returnValue().getPrivateLocationsViewed()) {
-                                                        attachPrivateLocationAsRolesPermit(request__, $(Skeleton_center_skeleton), prvLoc, true, false);
-                                                    }
 
-                                                } catch (final Throwable t) {
-                                                    EXCEPTION.error("{}", t);
-                                                }
-                                            }
-                                            break;
-                                        case ModeCreatePlace:
-                                            UCCretePlace:
-                                            {
-                                                try {
-                                                    new PrivateLocationCreate(request__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
-                                                    };
-                                                } catch (final Throwable t) {
-                                                    EXCEPTION.error("{}", t);
-                                                }
-                                            }
-                                            break;
-                                        case Controller.Page.DocOrganizeModeLocation:
-                                            UCLocation:
-                                            {
-                                                @NOTE(note = "Outside try as this is caught by the outermost common Number format exception.")
-                                                final int location = Integer.parseInt(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeLocation));
-                                                try {
-                                                    final Element intro = $(MarkupTag.P);
-                                                    final Location userLoc = DB.getHumanCRUDLocationLocal(true).dirtyRLocation(location).returnValue();
-                                                    intro.setTextContent(userLoc.getLocationName());
-                                                } catch (final Throwable t) {
-                                                    EXCEPTION.error("{}", t);
-                                                }
-                                            }
-                                            break;
+                                        } catch (final Throwable t) {
+                                            EXCEPTION.error("{}", t);
+                                        }
+                                    }
+                                    break;
+                                case ModeCreatePlace:
+                                    UCCretePlace:
+                                    {
+                                        try {
+                                            new PrivateLocationCreate(request__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
+                                            };
+                                        } catch (final Throwable t) {
+                                            EXCEPTION.error("{}", t);
+                                        }
+                                    }
+                                    break;
+                                case Controller.Page.DocOrganizeModeLocation:
+                                    UCLocation:
+                                    {
+                                        @NOTE(note = "Outside try as this is caught by the outermost common Number format exception.")
+                                        final int location = Integer.parseInt(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeLocation));
+                                        try {
+                                            final Element intro = $(MarkupTag.P);
+                                            final Location userLoc = DB.getHumanCRUDLocationLocal(true).dirtyRLocation(location).returnValue();
+                                            intro.setTextContent(userLoc.getLocationName());
+                                        } catch (final Throwable t) {
+                                            EXCEPTION.error("{}", t);
+                                        }
+                                    }
+                                    break;
 
-                                        case Controller.Page.DocOrganizeModePrivateLocation:
-                                            UCPrivateLocation:
-                                            {
-                                                try {
-                                                    @NOTE(note = "Outside try as this is caught by the outermost common Number format exception.")
-                                                    final long requestedPrivateLocation = Long.parseLong(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeLocation));
-                                                    final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationAsAny(new HumanId().setObjAsValid(getUsername()), requestedPrivateLocation);
-                                                    if (r.returnStatus() == 0)
-                                                        UCPrivateLocationIsExistent:
-                                                                {
-                                                                    try {
-
-                                                                        setBackButton:
-                                                                        {
-                                                                            new Button(request__, $(Skeleton_center_skeleton), LOCATIONS, false) {
-                                                                                @Override
-                                                                                protected void init(final Object... initArgs) {
-                                                                                    $$(Controller.Page.GenericButtonLink).setAttribute(MarkupTag.A.href(), Controller.Page.Organize.getURL() + QMARK
-                                                                                            + Controller.Page.DocOrganizeCategory + EQUALS + 0);
-                                                                                    $$(Controller.Page.GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + ARROW_LEFT_GIF);
-                                                                                }
-                                                                            };
-                                                                        }
-                                                                        attachPrivateLocationAsRolesPermit(request__, $(Skeleton_center_skeleton), r.returnValue(), false, true);
-                                                                    } catch (
-                                                                            final Throwable t) {
-                                                                        EXCEPTION.error("{}", t);
-                                                                    }
-                                                                }
-                                                    else
-                                                        NonExistentLocation:
-                                                                {
-                                                                    USER.warn(getUsernameAsValid() + FAILS_TO_ACCESS_THIS_LOCATION);
-                                                                    $(Skeleton_notice).setTextContent(GUI.getString(NO_EXIST_OR_ERROR));
-                                                                }
-                                                } catch (final Throwable t) {
-                                                    EXCEPTION.error("", t);
-                                                }
-                                            }
-                                            break;
-                                        case Controller.Page.DocOrganizeModeEvent: {
+                                case Controller.Page.DocOrganizeModePrivateLocation:
+                                    UCPrivateLocation:
+                                    {
+                                        try {
                                             @NOTE(note = "Outside try as this is caught by the outermost common Number format exception.")
                                             final long requestedPrivateLocation = Long.parseLong(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeLocation));
-
-                                            @NOTE(note = "Outside try as this is caught by the outermost common Number format exception.")
-                                            final long event = Long.parseLong(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeEvent));
-
-                                            try {
-                                                SetBackButton:
+                                            final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationAsAny(new HumanId().setObjAsValid(getUsername()), requestedPrivateLocation);
+                                            if (r.returnStatus() == 0) {
+                                                UCPrivateLocationIsExistent:
                                                 {
-                                                    new Button(request__, $(Skeleton_center_skeleton), LOCATIONS, false) {
-                                                        @Override
-                                                        protected void init(final Object... initArgs) {
-                                                            $$(Controller.Page.GenericButtonLink).setAttribute(MarkupTag.A.href(), Controller.Page.Organize.getURL() + QMARK
-                                                                    + Controller.Page.DocOrganizeCategory + EQUALS + 0);
-                                                            $$(Controller.Page.GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + ARROW_LEFT_GIF);
+                                                    try {
+                                                        setTitle:
+                                                        {
+                                                            $(skeletonTitle).setTextContent(r.returnValue().getPrivateLocationName());
                                                         }
-                                                    };
+                                                        setBackButton:
+                                                        {
+                                                            new Button(request__, $(Skeleton_center_skeleton), LOCATIONS, false) {
+                                                                @Override
+                                                                protected void init(final Object... initArgs) {
+                                                                    $$(Controller.Page.GenericButtonLink).setAttribute(MarkupTag.A.href(), Controller.Page.Organize.getURL() + QMARK
+                                                                            + Controller.Page.DocOrganizeCategory + EQUALS + 0);
+                                                                    $$(Controller.Page.GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + ARROW_LEFT_GIF);
+                                                                }
+                                                            };
+                                                        }
+                                                        attachPrivateLocationAsRolesPermit(request__, $(Skeleton_center_skeleton), r.returnValue(), false, true);
+                                                    } catch (
+                                                            final Throwable t) {
+                                                        EXCEPTION.error("{}", t);
+                                                    }
                                                 }
-                                                ShowEvent:
+                                            } else {
+                                                NonExistentLocation:
                                                 {
-                                                    final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(getUsernameAsValid(), event);
-                                                    if (r.returnStatus() == 0)
-                                                        UCReadPrivateEventOK:
-                                                                {
-                                                                    attachPrivateEventAsRolesPermit(request__, $(Skeleton_center_skeleton), r.returnValue(), false, true);
-                                                                }
-                                                    else
-                                                        UCReadNonExistingPrivateEventEtc:
-                                                                {
-                                                                    userError(getUsernameAsValid(), r.returnMsg());
-                                                                }
+                                                    USER.warn(getUsernameAsValid() + FAILS_TO_ACCESS_THIS_LOCATION);
+                                                    $(Skeleton_notice).setTextContent(GUI.getString(NO_EXIST_OR_ERROR));
                                                 }
-
-                                            } catch (final Throwable t) {
-                                                EXCEPTION.error("{}", t);
                                             }
+                                        } catch (final Throwable t) {
+                                            EXCEPTION.error("", t);
                                         }
-                                        break;
-                                        default:
-                                            throw CATEGORY_NUMBER_FORMAT_EXCEPTION;
                                     }
-                                } catch (
-                                        final NumberFormatException e_) {
-                                    USER_EXCEPTION.error("", e_);
+                                    break;
+                                case Controller.Page.DocOrganizeModeEvent: {
+                                    @NOTE(note = "Outside try as this is caught by the outermost common Number format exception.")
+                                    final long requestedPrivateLocation = Long.parseLong(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeLocation));
+
+                                    @NOTE(note = "Outside try as this is caught by the outermost common Number format exception.")
+                                    final long event = Long.parseLong(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeEvent));
+                                    final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(getUsernameAsValid(), event);
+                                    if (r.returnStatus() == 0) {
+                                        try {
+                                            setTitle:
+                                            {
+                                                $(skeletonTitle).setTextContent(r.returnValue().getPrivateEventName());
+                                            }
+                                            SetBackButton:
+                                            {
+                                                new Button(request__, $(Skeleton_center_skeleton), LOCATIONS, false) {
+                                                    @Override
+                                                    protected void init(final Object... initArgs) {
+                                                        $$(Controller.Page.GenericButtonLink).setAttribute(MarkupTag.A.href(), Controller.Page.Organize.getURL() + QMARK
+                                                                + Controller.Page.DocOrganizeCategory + EQUALS + 0);
+                                                        $$(Controller.Page.GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + ARROW_LEFT_GIF);
+                                                    }
+                                                };
+                                            }
+                                            ShowEvent:
+                                            {
+                                                if (r.returnStatus() == 0) {
+                                                    UCReadPrivateEventOK:
+                                                    {
+                                                        attachPrivateEventAsRolesPermit(request__, $(Skeleton_center_skeleton), r.returnValue(), false, true);
+                                                    }
+                                                } else {
+                                                    UCReadNonExistingPrivateEventEtc:
+                                                    {
+                                                        userError(getUsernameAsValid(), r.returnMsg());
+                                                    }
+                                                }
+                                            }
+
+                                        } catch (final Throwable t) {
+                                            EXCEPTION.error("{}", t);
+                                        }
+                                    } else {
+                                        NonExistentEvent:
+                                        {
+                                            USER.warn(getUsernameAsValid() + FAILS_TO_ACCESS_THIS_EVENT);
+                                            $(Skeleton_notice).setTextContent(GUI.getString(NO_EXIST_OR_ERROR_EVENT));
+                                        }
+                                    }
                                 }
+                                break;
+                                default:
+                                    throw CATEGORY_NUMBER_FORMAT_EXCEPTION;
                             }
+                        } catch (
+                                final NumberFormatException e_) {
+                            USER_EXCEPTION.error("", e_);
+                        }
+                    }
+                }
                 sl.complete(LEVEL.DEBUG, Loggers.DONE);//Request completed within timeout. If not, goes to LEVEL.SERVER_STATUS
             }
 
@@ -298,12 +321,13 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                             } else if (isViewer) {//Because this can be false even though a user is an owner
                                 new PrivateLocationView(request__, appendToElement, getUsernameAsValid(), requestedPrivateLocation) {
                                 };
-                            } else {                                                                                                    
+                            } else {
                                 new PrivateLocationDelete(request__, appendToElement, getUsernameAsValid(), requestedPrivateLocation) {
                                 };
                             }
 
-                            UseCaseCreatePrivateEvents://Can be done only by owners
+                            UseCaseCreatePrivateEvents:
+//Can be done only by owners
                             {
                                 if (showEventCreate) {
                                     new PrivateEventCreate(request__, appendToElement, getUsernameAsValid(), validPrivateLocationId) {

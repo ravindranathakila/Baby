@@ -78,11 +78,11 @@ abstract public class UserProperty extends AbstractWidgetListener {
             $$(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
             $$(Controller.Page.user_property_content).appendChild(content);
 
-            fetchToEmail(
+            this.fetchToEmail(
                     hi.getHuman().getDisplayName(),
                     formatProfileUrl(ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl(), true),
                     formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()),
-                    content);
+                    content); //http://blog.ilikeplaces.com/
         } else {
             final String error = RBGet.gui().getString("YIKES_SOMETHING_WENT_WRONG");
             $$(Controller.Page.user_property_name).setTextContent(error);
@@ -120,7 +120,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
      * @param content
      * @return String content or null if something goes wrong
      */
-    public static String fetchToEmail(final String usersName, final String usersUrl, final String usersPhoto, final Element content) {
+    public static String fetchToEmailStatically(final String usersName, final String usersUrl, final String usersPhoto, final Element content) {
         try {
             final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + USER_PROPERTY_EMAIL_XHTML);
             document.getElementById(Controller.Page.user_property_name).setTextContent(usersName);
