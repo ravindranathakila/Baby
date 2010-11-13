@@ -112,19 +112,15 @@ public class AlbumManager extends AbstractWidgetListener {
                         final Album album = ra.returnValue();
                         Collections.sort(album.getAlbumPhotos());
 
-                        final List<String> listContainingJustLatestPhoto = new ArrayList<String>(1);
-                        listContainingJustLatestPhoto.add(RBGet.globalConfig.getString("ALBUM_PHOTOS") + album.getAlbumPhotos().get(0).getPrivatePhotoURLPath());
-
-
-                        final HumansIdentity hi = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(humanId).returnValue();
+                        final HumansIdentity hi = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(myhumanId).returnValue();
                         final StringBuilder b = new StringBuilder("");
                         for (final PrivatePhoto pp : album.getAlbumPhotos()) {
                             b.append(
-                                    UserProperty.fetchToEmail(
+                                    UserProperty.fetchToEmailStatically(
                                             hi.getHuman().getDisplayName(),
                                             UserProperty.formatProfileUrl(hi.getUrl().getUrl(), true),
                                             UserProperty.formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()),
-                                            ElementComposer.compose($$(MarkupTag.IMG)).$ElementSetAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString("ALBUM_PHOTOS") + album.getAlbumPhotos().get(0).getPrivatePhotoURLPath()).get()
+                                            ElementComposer.compose($$(MarkupTag.IMG)).$ElementSetAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString("ALBUM_PHOTOS") + pp.getPrivatePhotoURLPath()).get()
                                     )
                             );
                         }

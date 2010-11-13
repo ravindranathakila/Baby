@@ -834,9 +834,10 @@
 </node>
 <node CREATED="1284993034015" ID="Freemind_Link_693571932" MODIFIED="1284993039546" TEXT="Page Turner"/>
 </node>
-<node CREATED="1283703158802" FOLDED="true" ID="Freemind_Link_640830008" MODIFIED="1289101846764" POSITION="right" TEXT="Marketing">
+<node CREATED="1283703158802" FOLDED="true" ID="Freemind_Link_640830008" MODIFIED="1289573580515" POSITION="right" TEXT="Marketing">
+<font NAME="Comic Sans MS" SIZE="14"/>
 <icon BUILTIN="bell"/>
-<node CREATED="1289010658744" ID="Freemind_Link_1999101897" MODIFIED="1289010663868" TEXT="GUIDE">
+<node CREATED="1289010658744" FOLDED="true" ID="Freemind_Link_1999101897" MODIFIED="1289010663868" TEXT="GUIDE">
 <icon BUILTIN="help"/>
 <node CREATED="1289010668102" ID="Freemind_Link_1280564673" MODIFIED="1289010673273" TEXT="Inception">
 <node CREATED="1289010674023" ID="Freemind_Link_1823484800" MODIFIED="1289010707582" TEXT="The act of snapping the subject&apos;s attention"/>
@@ -848,12 +849,12 @@
 <node CREATED="1289010710144" ID="Freemind_Link_1437503295" MODIFIED="1289010738875" TEXT="The act of retaining the subject&apos;s attention"/>
 </node>
 </node>
-<node CREATED="1283703177927" ID="Freemind_Link_1817341781" MODIFIED="1283703202084" TEXT="Checklist">
+<node CREATED="1283703177927" FOLDED="true" ID="Freemind_Link_1817341781" MODIFIED="1283703202084" TEXT="Checklist">
 <node CREATED="1285778293411" ID="Freemind_Link_1030747214" MODIFIED="1286031836875" TEXT="Are you being dumb? No? BE DUMB!"/>
 <node CREATED="1283703161521" ID="Freemind_Link_63383641" MODIFIED="1283703168865" TEXT="Does it do what it says?"/>
 <node CREATED="1283703169490" ID="Freemind_Link_499084225" MODIFIED="1283703174943" TEXT="Does it say what is does?"/>
 </node>
-<node CREATED="1289010405006" ID="Freemind_Link_1694440250" MODIFIED="1289010479138" TEXT="Inception">
+<node CREATED="1289010405006" FOLDED="true" ID="Freemind_Link_1694440250" MODIFIED="1289010479138" TEXT="Inception">
 <node CREATED="1289010825100" ID="Freemind_Link_112206367" MODIFIED="1289010840552" TEXT="Inception thu social sites">
 <node CREATED="1289010799494" ID="Freemind_Link_1483011254" MODIFIED="1289010974514" TEXT="OnlyWire submission"/>
 <node CREATED="1289012914173" ID="Freemind_Link_1477421608" MODIFIED="1289012920486" TEXT="Grab Words">
@@ -861,7 +862,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1289010479826" ID="Freemind_Link_452188577" MODIFIED="1289010481653" TEXT="Deception">
+<node CREATED="1289010479826" FOLDED="true" ID="Freemind_Link_452188577" MODIFIED="1289010481653" TEXT="Deception">
 <node CREATED="1286620028609" ID="Freemind_Link_1155133426" MODIFIED="1286620041578" TEXT="Rules make the game interesting">
 <node CREATED="1289012922548" ID="Freemind_Link_941219317" MODIFIED="1289012927298" TEXT="Hyber Words">
 <node CREATED="1289012941580" ID="Freemind_Link_1632147330" MODIFIED="1289012965659" TEXT="I just got robbed"/>
@@ -871,6 +872,13 @@
 <node CREATED="1289010597860" ID="Freemind_Link_1689932969" MODIFIED="1289010609124" TEXT="Diffusion"/>
 <node CREATED="1289013173634" ID="Freemind_Link_477801137" MODIFIED="1289013175572" TEXT="TODOs">
 <node CREATED="1289013178135" ID="Freemind_Link_917995578" MODIFIED="1289013186635" TEXT="Sign up for all social networks under a different username"/>
+</node>
+<node CREATED="1289567662906" ID="Freemind_Link_492559131" MODIFIED="1289567673250" TEXT="Use Cases">
+<icon BUILTIN="ksmiletris"/>
+<node CREATED="1289567691343" ID="Freemind_Link_1829373110" MODIFIED="1289567725312" TEXT="Each Use Case Is A Marketable One. If Not, Get Rid Of IT!">
+<icon BUILTIN="help"/>
+</node>
+<node CREATED="1289567745921" ID="Freemind_Link_973070027" MODIFIED="1289567758843" TEXT="View Home Page Hotspot Heat Map"/>
 </node>
 </node>
 <node BACKGROUND_COLOR="#ffff00" CREATED="1266112502968" FOLDED="true" ID="Freemind_Link_102406912" MODIFIED="1283702881594" POSITION="left" TEXT="Abandonned">
@@ -900,12 +908,24 @@
 <node CREATED="1288494134890" ID="Freemind_Link_1722996598" MODIFIED="1288494424984" TEXT="Create personal locations based on hh">
 <edge WIDTH="thin"/>
 <node CREATED="1288494499906" ID="Freemind_Link_1464782037" MODIFIED="1288494525531" TEXT="Specify other owners to it"/>
-<node CREATED="1288494514015" ID="Freemind_Link_1160306731" MODIFIED="1288494721937" TEXT="Specify other viewers to it"/>
+<node CREATED="1288494514015" ID="Freemind_Link_1160306731" MODIFIED="1288494721937" TEXT="Specify other viewers to it">
+<node CREATED="1289574440312" ID="Freemind_Link_1875120660" MODIFIED="1289574501484" TEXT="TODO:SE:Remove oneself from a location">
+<icon BUILTIN="flag"/>
+</node>
+</node>
 <node CREATED="1288494752125" ID="Freemind_Link_1845246042" MODIFIED="1288494767093" TEXT="Create personal events based on location">
 <node CREATED="1288494769250" ID="Freemind_Link_1358764859" MODIFIED="1288494942437" TEXT="Specify other owners to it"/>
-<node CREATED="1288494943015" ID="Freemind_Link_1997054608" MODIFIED="1288494949640" TEXT="Specify other viewss to it"/>
-<node CREATED="1288494950187" ID="Freemind_Link_486328416" MODIFIED="1288494954984" TEXT="Specify other invites to it"/>
-<node CREATED="1288494957750" ID="Freemind_Link_796263707" MODIFIED="1288495017093" TEXT="Wall">
+<node CREATED="1288494943015" ID="Freemind_Link_1997054608" MODIFIED="1288494949640" TEXT="Specify other viewss to it">
+<node CREATED="1289574440312" ID="Freemind_Link_1302493726" MODIFIED="1289574504656" TEXT="TODO:SE:Remove oneself from an event">
+<icon BUILTIN="flag"/>
+</node>
+</node>
+<node CREATED="1288494950187" ID="Freemind_Link_486328416" MODIFIED="1288494954984" TEXT="Specify other invites to it">
+<node CREATED="1289574440312" ID="Freemind_Link_1444033085" MODIFIED="1289574507968" TEXT="TODO:SE:Remove oneself from an event">
+<icon BUILTIN="flag"/>
+</node>
+</node>
+<node CREATED="1288494957750" ID="Freemind_Link_796263707" MODIFIED="1289574560281" TEXT="Wall">
 <node CREATED="1288495017437" ID="Freemind_Link_1165287616" MODIFIED="1288495021078" TEXT="Event collaboration"/>
 <node CREATED="1288495022187" ID="Freemind_Link_476419257" MODIFIED="1288495026828" TEXT="Just talk"/>
 <node CREATED="1288505455328" ID="Freemind_Link_100061593" MODIFIED="1288505467984" TEXT="Email Conversation">
@@ -924,23 +944,39 @@
 </node>
 </node>
 <node CREATED="1288495037421" ID="Freemind_Link_91009859" MODIFIED="1288495039562" TEXT="Album">
-<node CREATED="1288495040046" ID="Freemind_Link_1216857146" MODIFIED="1288495047062" TEXT="Share photos of event"/>
-<node CREATED="1288495050328" ID="Freemind_Link_368622347" MODIFIED="1288495054359" TEXT="Discuss photos of event"/>
+<node CREATED="1288495040046" ID="Freemind_Link_1216857146" MODIFIED="1289574578890" TEXT="(Upload)Share photos of event">
+<node CREATED="1289574580609" ID="Freemind_Link_103327350" MODIFIED="1289574591828" TEXT="TODO:SE:Remove photos">
+<icon BUILTIN="flag"/>
+<node CREATED="1289574626062" ID="Freemind_Link_417645007" MODIFIED="1289574646390" TEXT="TODO:photoname_thump.jpg">
+<icon BUILTIN="flag"/>
+</node>
+</node>
+</node>
+<node CREATED="1288495050328" ID="Freemind_Link_368622347" MODIFIED="1289574560296" TEXT="Discuss photos of event">
+<arrowlink DESTINATION="Freemind_Link_796263707" ENDARROW="Default" ENDINCLINATION="225;0;" ID="Freemind_Arrow_Link_317934661" STARTARROW="None" STARTINCLINATION="225;0;"/>
+</node>
 <node CREATED="1288495118515" ID="Freemind_Link_1513470069" MODIFIED="1288495124656" TEXT="Further share photos of event"/>
-<node CREATED="1288495058250" ID="Freemind_Link_1798050489" MODIFIED="1289102216453" TEXT="TODO:Email forwards">
+<node CREATED="1288495058250" ID="Freemind_Link_1798050489" MODIFIED="1289573802703" TEXT="TODO:Email forwards">
 <icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
 </node>
-<node CREATED="1289101997604" ID="Freemind_Link_635591026" MODIFIED="1289102213972" TEXT="TODO:Email on attatch">
+<node CREATED="1289101997604" ID="Freemind_Link_635591026" MODIFIED="1289573788625" TEXT="TODO:Email on attatch">
 <icon BUILTIN="flag"/>
+<icon BUILTIN="button_cancel"/>
+<node CREATED="1289573762328" ID="Freemind_Link_1308896135" MODIFIED="1289573792015" TEXT="Uploading Several Photos Will Spam Members">
+<icon BUILTIN="clanbomber"/>
 </node>
 </node>
-<node CREATED="1288506345625" ID="Freemind_Link_1982919547" MODIFIED="1289102211055" TEXT="TODO: Event Name as Header">
+</node>
+<node CREATED="1288506345625" ID="Freemind_Link_1982919547" MODIFIED="1289574391312" TEXT="TODO: Event Name as Header">
 <icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1288506383718" ID="Freemind_Link_675679815" MODIFIED="1289102206249" TEXT="TODO: Location Name as Header">
+<node CREATED="1288506383718" ID="Freemind_Link_675679815" MODIFIED="1289574391296" TEXT="TODO: Location Name as Header">
 <arrowlink DESTINATION="Freemind_Link_675679815" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Freemind_Arrow_Link_1478457679" STARTARROW="None" STARTINCLINATION="0;0;"/>
 <icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
 </node>
 </node>
 <node CREATED="1288507314546" ID="Freemind_Link_1436401670" MODIFIED="1288507322015" TEXT="Sidebar connections">
@@ -1006,7 +1042,7 @@
 <icon BUILTIN="flag"/>
 <node CREATED="1289101790160" ID="Freemind_Link_698262843" MODIFIED="1289101812611" TEXT="Freeze">
 <node CREATED="1289101825873" ID="Freemind_Link_847716500" MODIFIED="1289101865970" TEXT="2010-11-07">
-<node CREATED="1289102164499" ID="Freemind_Link_730065184" MODIFIED="1289102216453" TEXT="Complete Marketing Freeze">
+<node CREATED="1289102164499" ID="Freemind_Link_730065184" MODIFIED="1289573643859" TEXT="Complete Marketing Freeze">
 <arrowlink DESTINATION="Freemind_Link_635591026" ENDARROW="Default" ENDINCLINATION="776;0;" ID="Freemind_Arrow_Link_367957169" STARTARROW="None" STARTINCLINATION="776;0;"/>
 <arrowlink DESTINATION="Freemind_Link_1798050489" ENDARROW="Default" ENDINCLINATION="780;0;" ID="Freemind_Arrow_Link_1360630555" STARTARROW="None" STARTINCLINATION="780;0;"/>
 <arrowlink DESTINATION="Freemind_Link_1982919547" ENDARROW="Default" ENDINCLINATION="744;0;" ID="Freemind_Arrow_Link_726215153" STARTARROW="None" STARTINCLINATION="744;0;"/>
