@@ -2,9 +2,11 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Msg;
+import ai.ilikeplaces.entities.Mute;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.ilikeplaces.util.Loggers;
 import org.slf4j.Logger;
@@ -14,6 +16,10 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Ravindranath Akila
@@ -49,7 +55,7 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
     public Wall doNTxUAppendToWall(long wallId, String contentToBeAppended) throws DBDishonourCheckedException {
         final Wall returnVal = crudServiceLocal_.findBadly(Wall.class, wallId);
         final int wallLength = returnVal.getWallContent().length();
-        if ( wallLength > (Wall.WALL_LENGTH - 1) - contentToBeAppended.length()) {
+        if (wallLength > (Wall.WALL_LENGTH - 1) - contentToBeAppended.length()) {
             Loggers.DEBUG.debug("Trimming long wall content.");
             returnVal.setWallContent(returnVal.getWallContent().subSequence(
                     contentToBeAppended.length() - 1, wallLength - 1)
@@ -71,6 +77,41 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
                 .setMsgMetadata(humanId);
 
         returnVal.getWallMsgs().add(msg);
+        return returnVal;
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public Wall doNTxUAddMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException {
+        final Wall returnVal = crudServiceLocal_.findBadly(Wall.class, wallId);
+
+        if(returnVal.getWallMutes().contains(new HumanId(mutee).getSelfAsValid())){
+            throw DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE;
+        }
+
+        returnVal.getWallMutes().add(new Mute()
+                .setMuteContentR(mutee)
+                .setMuteTypeR(Mute.muteTypeHUMAN)
+                .setMuteMetadataR(mutee));
+        
+        return returnVal;
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public Wall doNTxURemoveMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException {
+        final Wall returnVal = crudServiceLocal_.findBadly(Wall.class, wallId);
+        final HumanId humanId = new HumanId(mutee).getSelfAsValid();
+        final List<Mute> existing = new ArrayList<Mute>(2);//One for existing, other expecting duplicate entries.
+        for (final Mute mute : returnVal.getWallMutes()) {
+            if (mute.equals(humanId)){
+                existing.add(mute);
+            }
+        }
+        if(!returnVal.getWallMutes().removeAll(existing)){
+            throw DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
+        }
+
         return returnVal;
     }
 

@@ -21,11 +21,10 @@ import ai.ilikeplaces.util.Loggers;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public abstract class HumanEquals {
+public abstract class HumanEquals implements HumanEqualsFace{
     private static final UnsupportedOperationException UNSUPPORTED_OPERATION_EXCEPTION = new UnsupportedOperationException("SORRY! YOU ARE COMPARING OBJECTS OF THE SAME CLASS IN THIS METHOD, WHICH IS NOT CORRECT.");
     private static final UnsupportedOperationException NOT_EXTEND = new UnsupportedOperationException("SORRY! THE OTHER OBJECT DOES NOT EXTEND HumanEquals.");
-
-    abstract public String getHumanId();
+    private static final UnsupportedOperationException NOT_IMPLEMENTED = new UnsupportedOperationException("SORRY! THE OTHER OBJECT DOES NOT IMPLEMENTED HumanEqualsFace.");
 
     /**
      * This method is advisable to be called upon falsified conditions in the equals method.
@@ -40,16 +39,16 @@ public abstract class HumanEquals {
      * @return if HumanIds of the two objects match
      */
     public boolean matchHumanId(final Object other) {
-        Loggers.DEBUG.debug(this.getClass().getSimpleName() + " " + other.getClass().getSimpleName());
-        if (this.getClass() == other.getClass()) {
+        //Loggers.DEBUG.debug(this.getClass().getSimpleName() + " " + other.getClass().getSimpleName());
+        if (this.getClass().equals(other.getClass())) {
             throw UNSUPPORTED_OPERATION_EXCEPTION;
         }
         //Warning: added later. check for sanity with existing code
-        if (!(other instanceof HumanEquals)) {
-            throw NOT_EXTEND;
+        if (!(other instanceof HumanEqualsFace)) {
+            throw NOT_IMPLEMENTED;
         }
 //        return other instanceof HumanEquals && this.getHumanId().equals(((HumanEquals) other).getHumanId());
-        return this.getHumanId().equals(((HumanEquals) other).getHumanId());
+        return this.getHumanId().equals(((HumanEqualsFace) other).getHumanId());
     }
 
     /**
@@ -63,15 +62,15 @@ public abstract class HumanEquals {
     @NOTE(note = "Use an interface based equals matching approach if you are using this. Logic is" +
             "If the two classes of of different types, but instanceof same interface, then match humanid." +
             "This approach avoids necessity to extend a class.")
-    static public boolean staticMatchHumanId(final HumanEquals main, final Object other) {
+    static public boolean staticMatchHumanId(final HumanEqualsFace main, final Object other) {
         //Loggers.DEBUG.debug(main.getClass().getSimpleName() + " " + other.getClass().getSimpleName());
-        if (main.getClass() == other.getClass()) {
+        if (main.getClass().equals(other.getClass())) {
             throw UNSUPPORTED_OPERATION_EXCEPTION;
         }
-        if (!(other instanceof HumanEquals)) {
-            throw NOT_EXTEND;
+        if (!(other instanceof HumanEqualsFace)) {
+            throw NOT_IMPLEMENTED;
         }
-        return main.getHumanId().equals(((HumanEquals) other).getHumanId());
+        return main.getHumanId().equals(((HumanEqualsFace) other).getHumanId());
     }
 
 

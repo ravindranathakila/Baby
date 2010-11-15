@@ -27,6 +27,7 @@ import java.io.IOException;
 abstract public class UserPropertySidebar extends AbstractWidgetListener {
 
     private static final String USER_PROPERTY_EMAIL_XHTML = "ai/ilikeplaces/widgets/UserProperty_email.xhtml";
+    protected String profilePhotoURLFinal = "#";
 
     /**
      * Shows the profile belonging to humanId
@@ -47,7 +48,7 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
             final HumansIdentity hi = r.returnValue();
             $$(Page.user_property_sidebar_name).setTextContent(hi.getHuman().getDisplayName());
             $$(Page.user_property_sidebar_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-            $$(Page.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+            $$(Page.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.src(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
 
             /*  fetchToEmail(//WARNING! This does not append the content.
             hi.getHuman().getDisplayName(),
@@ -74,7 +75,7 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
             final HumansIdentity hi = r.returnValue();
             $$(Page.user_property_sidebar_name).setTextContent(hi.getHuman().getDisplayName());
             $$(Page.user_property_sidebar_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-            $$(Page.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+            $$(Page.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.src(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
             $$(Page.user_property_sidebar_content).appendChild(content);
 
             fetchToEmail(
@@ -139,8 +140,8 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
      */
     static public String formatProfilePhotoUrl(final String rawURLFromDB) {
         return rawURLFromDB == null || rawURLFromDB.isEmpty() ?
-                RBGet.globalConfig.getString("PROFILE_PHOTO_DEFAULT") :
-                RBGet.globalConfig.getString("PROFILE_PHOTOS") + rawURLFromDB;
+               RBGet.globalConfig.getString("PROFILE_PHOTO_DEFAULT") :
+               RBGet.globalConfig.getString("PROFILE_PHOTOS") + rawURLFromDB;
     }
 
     static public String formatProfileUrl(final String relativeURL, final boolean makeAbsolute) {

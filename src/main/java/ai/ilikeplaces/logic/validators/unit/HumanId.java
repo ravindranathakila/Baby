@@ -1,6 +1,9 @@
 package ai.ilikeplaces.logic.validators.unit;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.HumanEquals;
+import ai.ilikeplaces.entities.HumanEqualsFace;
+import ai.ilikeplaces.entities.Mute;
 import ai.ilikeplaces.util.RefObj;
 import net.sf.oval.Validator;
 import net.sf.oval.configuration.annotation.IsInvariant;
@@ -16,7 +19,7 @@ import net.sf.oval.exception.ConstraintsViolatedException;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public class HumanId extends RefObj<String> {
+public class HumanId extends RefObj<String> implements HumanEqualsFace {
 
     public HumanId() {
     }
@@ -46,5 +49,28 @@ public class HumanId extends RefObj<String> {
     @Override
     public String getObj() {
         return obj;
+    }
+
+    public String getHumanId() {
+        return getObjectAsValid();
+    }
+
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null) {
+            return false;
+        }
+
+        if (getClass() == o.getClass()) {
+            final Mute that = (Mute) o;
+            return !(this.getHumanId() == null || that.getHumanId() == null) && this.getHumanId().equals(that.getHumanId());
+        } else {
+            return HumanEquals.staticMatchHumanId(this,o);
+        }
     }
 }

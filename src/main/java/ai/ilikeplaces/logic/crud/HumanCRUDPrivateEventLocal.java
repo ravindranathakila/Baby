@@ -65,6 +65,10 @@ public interface HumanCRUDPrivateEventLocal {
 
     public Return<Wall> uPrivateEventAddEntryToWall(final HumanId operator, final HumanId msgOwner__, final long privateEventId__, final String contentToBeAppended);
 
+    public Return<Wall> uPrivateEventAddMuteEntryToWall(final HumanId operator, final HumanId mutee__, final long privateEventId__);
+
+    public Return<Wall> uPrivateEventRemoveMuteEntryToWall(final HumanId operator, final HumanId mutee__, final long privateEventId__);
+
     public Return<Wall> uPrivateEventClearWall(final HumanId operator__, final long privateEventId__);
 
     public Return<Wall> rPrivateEventReadWall(final HumanId operator__, final long privateEventId__);

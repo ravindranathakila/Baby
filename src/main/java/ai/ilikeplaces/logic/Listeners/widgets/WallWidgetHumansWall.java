@@ -1,23 +1,26 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.util.EventType;
-import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.MarkupTag;
-import ai.ilikeplaces.util.Return;
-import org.itsnat.core.ItsNatDocument;
+import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
+import org.xml.sax.SAXException;
+
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -28,11 +31,14 @@ import org.w3c.dom.html.HTMLDocument;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class WallWidgetHumansWall extends WallWidget {
 
-    HumanId humanId;
-    HumanId visitor;
+    private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
 
-    public WallWidgetHumansWall(final ItsNatServletRequest request__,  final Element appendToElement__, final HumanId humanId, final HumanId visitor) {
-        super(request__, appendToElement__, humanId, visitor);
+
+    HumanId requestedProfile;
+    HumanId currUserAsVisitor;
+
+    public WallWidgetHumansWall(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId requestedProfile, final HumanId currUserAsVisitor) {
+        super(request__, appendToElement__, requestedProfile, currUserAsVisitor);
     }
 
     /**
@@ -40,15 +46,45 @@ public class WallWidgetHumansWall extends WallWidget {
      */
     @Override
     protected void init(final Object... initArgs) {
-        this.humanId = ((HumanId) initArgs[0]).getSelfAsValid();
-        this.visitor = ((HumanId) initArgs[1]).getSelfAsValid();
+        this.requestedProfile = ((HumanId) initArgs[0]).getSelfAsValid();
+        this.currUserAsVisitor = ((HumanId) initArgs[1]).getSelfAsValid();
 
-        for (final Msg msg : DB.getHumanCrudWallLocal(true).dirtyRWall(humanId).returnValue().getWallMsgs()) {
+        fetchToEmail();
+
+        for (final Msg msg : DB.getHumanCrudWallLocal(true).dirtyRWall(requestedProfile).returnValue().getWallMsgs()) {
             new UserProperty(request, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
                 protected void init(final Object... initArgs) {
                     $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
                 }
             };
+        }
+
+        if (DB.getHumanCrudWallLocal(true).dirtyRWall(requestedProfile).returnValueBadly().getWallMutes().contains(currUserAsVisitor)) {
+            $$(Controller.Page.wallMute).setTextContent(WallWidget.LISTEN);
+        } else {
+            $$(Controller.Page.wallMute).setTextContent(WallWidget.MUTE);
+        }
+    }
+
+
+    /**
+     * @param args
+     */
+    protected void fetchToEmail(final Object... args) {
+        try {
+            final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + WALL_SUBIT_FROM_EMAIL);
+
+            displayNone($$(ORGANIZE_SECTION, document));
+            $$(ORGANIZE_SECTION, document).getParentNode().removeChild($$(ORGANIZE_SECTION, document));
+
+            fetchToEmail = HTMLDocParser.convertNodeToHtml($$(WALL_SUBMIT_WIDGET, document));
+
+        } catch (final TransformerException e) {
+            Loggers.EXCEPTION.error("", e);
+        } catch (final SAXException e) {
+            Loggers.EXCEPTION.error("", e);
+        } catch (final IOException e) {
+            Loggers.EXCEPTION.error("", e);
         }
     }
 
@@ -58,42 +94,39 @@ public class WallWidgetHumansWall extends WallWidget {
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.wallSubmit), EventType.CLICK.toString(), new EventListener() {
 
-            private HumanId myhumanId = humanId;
-            private boolean autoupdating = false;
+            private HumanId myrequestedProfile = requestedProfile;
+            private HumanId mycurrUserAsVisitor = currUserAsVisitor;
 
             @Override
             public void handleEvent(final Event evt_) {
-/*                    UCStartAutoUpdateThread:
-                    {
-                        if(!autoupdating){
-                            new Thread();
-                            autoupdating = true;
-                        }
-                    }*/
 
-                Loggers.USER.info(myhumanId.getObj() + " enters text:" + wallAppend.getObj());
                 if (wallAppend.validate() == 0) {
                     if (!wallAppend.getObj().equals("")) {
 
-                        Loggers.USER.info(myhumanId.getObj() + " enters text:" + wallAppend.getObj());
-
-
-                        final Return<Wall> r = DB.getHumanCrudWallLocal(true).uNTxAddEntryToWall(myhumanId, visitor, wallAppend.getObj());
+                        final Return<Wall> r = DB.getHumanCrudWallLocal(true).uNTxAddEntryToWall(myrequestedProfile, currUserAsVisitor, wallAppend.getObj());
 
 
                         if (r.returnStatus() == 0) {
                             $$(Controller.Page.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
                             wallAppend.setObj("");
-                            
-                            clear($$(Controller.Page.wallContent));
-                            final Wall wall = DB.getHumanCrudWallLocal(true).dirtyRWall(humanId).returnValue();
-                            for (final Msg msg : wall.getWallMsgs()) {
 
-                                new UserProperty(request, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
-                                    protected void init(final Object... initArgs) {
-                                        $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
-                                    }
-                                };
+                            clear($$(Controller.Page.wallContent));
+                            final Wall wall = DB.getHumanCrudWallLocal(true).dirtyRWall(requestedProfile).returnValue();
+                            final StringBuilder b = new StringBuilder("");
+                            for (final Msg msg : wall.getWallMsgs()) {
+                                b.append(new UserProperty(request,
+                                                          $$(Controller.Page.wallContent),
+                                                          ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
+                                                          new HumanId(msg.getMsgMetadata())) {
+                                }.fetchToEmail);
+                            }
+
+                            final HumansNetPeople hnp = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(myrequestedProfile);
+
+                            for (final HumansNetPeople hpe : hnp.getHumansNetPeoples()) {
+                                if (!wall.getWallMutes().contains(hnp)) {
+                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), hnp.getDisplayName(), fetchToEmail + b.toString());
+                                }
                             }
                         } else {
                             $$(Controller.Page.wallNotice).setTextContent(r.returnMsg());
@@ -107,6 +140,27 @@ public class WallWidgetHumansWall extends WallWidget {
             public void finalize() throws Throwable {
                 Loggers.finalized(this.getClass().getName());
                 super.finalize();
+            }
+        }, false);
+
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.wallMute), EventType.CLICK.toString(), new EventListener() {
+
+            private HumanId myrequestedProfile = requestedProfile;
+            private HumanId mycurrUserAsVisitor = currUserAsVisitor;
+
+            @Override
+            public void handleEvent(final Event evt_) {
+
+                if (DB.getHumanCrudWallLocal(true).dirtyRWall(myrequestedProfile).returnValueBadly().getWallMutes().contains(mycurrUserAsVisitor)) {
+                    if (DB.getHumanCrudWallLocal(true).uWallRemoveMuteEntryToWall(myrequestedProfile, mycurrUserAsVisitor).returnStatus() == 0) {
+                        $$(evt_).setTextContent(WallWidget.MUTE);
+                    }
+
+                } else {
+                    if (DB.getHumanCrudWallLocal(true).uWallAddMuteEntryToWall(myrequestedProfile, mycurrUserAsVisitor).returnStatus() == 0) {
+                        $$(evt_).setTextContent(WallWidget.LISTEN);
+                    }
+                }
             }
         }, false);
     }
