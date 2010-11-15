@@ -6,6 +6,7 @@ import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.logic.crud.unit.CRUDHumansWallLocal;
+import ai.ilikeplaces.logic.crud.unit.CRUDWallLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.*;
 
@@ -32,10 +33,16 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
     @EJB
     private CRUDHumansWallLocal crudHumansWallLocal_;
 
+    @WARNING(warning = "Try not to use CRUDWallLocal because CRUDHumansWallLocal suffices. Pay special attention to performance issues here. Walls are bulky")
+    @EJB
+    private CRUDWallLocal crudWallLocal_;
+
     public static final String READ_WALL_SUCCESSFUL = "Read Wall Successful!";
     public static final String READ_WALL_FAILED = "Read Wall FAILED!";
     public static final String UPDATE_WALL_SUCCESSFUL = "Update Wall Successful!";
     public static final String UPDATE_WALL_FAILED = "Update wall FAILED!";
+    private static final String UPDATE_WALL_SUBSCRIPTION_SUCCESSFUL = "Update Wall Subscription Successful!";
+    private static final String UPDATE_WALL_SUBSCRIPTION_FALIED = "Update Wall Subscription FALIED!";
 
 
     @Override
@@ -67,6 +74,39 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
         return r;
 
     }
+
+    @Override
+    public Return<Wall> uWallAddMuteEntryToWall(final HumanId operator__, final HumanId mutee) {
+
+        Return<Wall> r;
+        try {
+            r = new ReturnImpl<Wall>(crudWallLocal_
+                    .doNTxUAddMuteEntry(crudHumansWallLocal_.dirtyRHumansWallID(operator__.getHumanId()),
+                                           mutee.getObj()), UPDATE_WALL_SUBSCRIPTION_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<Wall>(t, UPDATE_WALL_SUBSCRIPTION_FALIED, true);
+        }
+        return r;
+
+
+    }
+
+    @Override
+    public Return<Wall> uWallRemoveMuteEntryToWall(final HumanId operator__, final HumanId mutee) {
+
+        Return<Wall> r;
+        try {
+            r = new ReturnImpl<Wall>(crudWallLocal_
+                    .doNTxURemoveMuteEntry(crudHumansWallLocal_.dirtyRHumansWallID(operator__.getHumanId()),
+                                           mutee.getObj()), UPDATE_WALL_SUBSCRIPTION_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<Wall>(t, UPDATE_WALL_SUBSCRIPTION_FALIED, true);
+        }
+        return r;
+
+
+    }
+
 
     @Override
     public String verify() {

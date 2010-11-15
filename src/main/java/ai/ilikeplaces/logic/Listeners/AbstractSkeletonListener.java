@@ -40,6 +40,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
     private static final String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004 = "ai.ilikeplaces.logic.Listeners.ListenerMain.0004";
     protected static final ResourceBundle GUI = RBGet.gui();
     boolean initStatus = false;
+    private static final String TALK = "Talk!";
 
     /**
      * @param request_
@@ -161,7 +162,9 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
 
                             new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
                                 protected void init(final Object... initArgs) {
-                                    $$(Controller.Page.user_property_sidebar_content).setTextContent("Talk!");
+                                    $$(Controller.Page.user_property_sidebar_content).appendChild(
+                                            ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(TALK).$ElementSetHref("#").get()
+                                    );
                                 }
                             };
                         }
@@ -291,7 +294,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
 
                     new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
                         protected void init(final Object... initArgs) {
-                            $$(Controller.Page.user_property_sidebar_content).setTextContent("Talk!");
+                            $$(Controller.Page.user_property_sidebar_content).setTextContent(TALK);
                         }
                     };
                 }

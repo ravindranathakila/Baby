@@ -21,4 +21,10 @@ public interface HumanCRUDWallLocal extends Verify {
     public Return<Wall> dirtyRWall(final HumanId humanId);
 
     public Return<Wall> uNTxAddEntryToWall(final HumanId humanId__, final HumanId msgOwner__, final String contentToBeAppended);
+
+    public Return<Wall> uWallAddMuteEntryToWall(final HumanId operator__, final HumanId mutee);
+
+    public Return<Wall> uWallRemoveMuteEntryToWall(final HumanId operator__, final HumanId mutee);
+
+
 }

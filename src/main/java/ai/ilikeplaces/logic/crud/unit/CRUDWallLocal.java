@@ -43,6 +43,18 @@ public interface CRUDWallLocal {
      * @param wallId
      * @return Wall
      */
+    public Wall doNTxUAddMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException;
+
+    /**
+     * @param wallId
+     * @return Wall
+     */
+    public Wall doNTxURemoveMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException;
+
+    /**
+     * @param wallId
+     * @return Wall
+     */
     public Wall doNTxUClearWall(final long wallId) throws DBDishonourCheckedException;
 
     /**

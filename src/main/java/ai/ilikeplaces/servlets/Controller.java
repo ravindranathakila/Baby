@@ -143,7 +143,8 @@ final public class
                     Controller.Page.wallContent,
                     Controller.Page.wallAppend,
                     Controller.Page.wallSubmit,
-                    Controller.Page.wallNotice
+                    Controller.Page.wallNotice,
+                    Controller.Page.wallMute
         ) {
             @Override
             public String toString() {
@@ -761,6 +762,7 @@ Controller.Page.friendAddDisplayNameLabel
         final static public String wallAppend = "wallAppend";
         final static public String wallSubmit = "wallSubmit";
         final static public String wallNotice = "wallNotice";
+        final static public String wallMute = "wallMute";
 
         /*DisplayName Page*/
         final static public String DocDisplayName = "DocDisplayName";

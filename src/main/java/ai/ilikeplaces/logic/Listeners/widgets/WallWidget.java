@@ -26,6 +26,10 @@ abstract public class WallWidget extends AbstractWidgetListener {
     final static public String PARAM_WALL_ENTRY = "wall_entry";
 
     final protected WallEntry wallAppend = new WallEntry("");
+    public static final String MUTE = "Mute";
+    public static final String LISTEN = "Listen";
+    protected static final String WALL_SUBMIT_WIDGET = "wall_submit_widget";
+    protected static final String ORGANIZE_SECTION = "organize";
 
 
     public WallWidget(final ItsNatServletRequest request__,  final Element appendToElement__, final Object... initArgs) {

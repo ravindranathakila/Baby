@@ -266,6 +266,38 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     }
 
     @Override
+    public Return<Wall> uPrivateEventAddMuteEntryToWall(final HumanId operator__, final HumanId mutee, final long privateEventId__) {
+
+        Return<Wall> r;
+        try {
+            r = new ReturnImpl<Wall>(crudWallLocal_
+                    .doNTxUAddMuteEntry(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId(),
+                                    mutee.getObj()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<Wall>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
+        }
+        return r;
+
+
+    }
+
+    @Override
+    public Return<Wall> uPrivateEventRemoveMuteEntryToWall(final HumanId operator__, final HumanId mutee, final long privateEventId__) {
+
+        Return<Wall> r;
+        try {
+            r = new ReturnImpl<Wall>(crudWallLocal_
+                    .doNTxURemoveMuteEntry(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId(),
+                                    mutee.getObj()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<Wall>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
+        }
+        return r;
+
+
+    }
+
+    @Override
     public Return<Wall> uPrivateEventClearWall(HumanId operator__, long privateEventId__) {
 
         Return<Wall> r;

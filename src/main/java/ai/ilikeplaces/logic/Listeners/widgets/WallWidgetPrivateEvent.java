@@ -46,7 +46,6 @@ public class WallWidgetPrivateEvent extends WallWidget {
     private static final String WALL_ENTRY = "wall_entry=";
     private static final String WALL_ENTRY_FROM_EMAIL_RECEIVED = "Wall entry from email received!";
     private static final String DERIVED_FROM_EMAIL = "DERIVED FROM EMAIL:{}";
-    private static final String WALL_SUBMIT_WIDGET = "wall_submit_widget";
     private static final String ENTERS_TEXT = " enters text:";
     private static final String CATEGORY = "category";
     private static final String LOCATION = "location";
@@ -73,6 +72,10 @@ public class WallWidgetPrivateEvent extends WallWidget {
         final String wall_entry_consumed = request.getServletRequest().getParameter(WALL_ENTRY_CONSUMED);
         Loggers.DEBUG.debug(WALL_ENTRY + (wall_entry != null ? wall_entry : NULL));
 
+
+        final Return<Wall> aReturn = DB.getHumanCrudPrivateEventLocal(true).
+                rPrivateEventReadWall(humanId, privateEventId);
+
         /**
          * If null, this means we have to check on if the wall entry parameter is available and update.
          * If not null, this means the wall entry has been consumed(we set it to true)
@@ -87,8 +90,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
             final StringBuilder b = new StringBuilder("");
 
 
-            for (final Msg msg : DB.getHumanCrudPrivateEventLocal(true).
-                    rPrivateEventReadWall(humanId, privateEventId).returnValueBadly().getWallMsgs()) {//For the purpose of emailing the users the update
+            for (final Msg msg : aReturn.returnValueBadly().getWallMsgs()) {//For the purpose of emailing the users the update
                 b.append(
                         new UserProperty(
                                 request,
@@ -105,16 +107,15 @@ public class WallWidgetPrivateEvent extends WallWidget {
             }
 
             final boolean loadWallPageAfterAnEmailWallSubmit = false;
-            
-            if(loadWallPageAfterAnEmailWallSubmit){
+
+            if (loadWallPageAfterAnEmailWallSubmit) {
                 itsNatDocument_.addCodeToSend(JSCodeToSend.refreshPageWith(WALL_ENTRY_CONSUMED_STATUES));//
-            }else{
+            } else {
                 itsNatDocument_.addCodeToSend(JSCodeToSend.ClosePage);//
             }
 
         } else {//Moves on with the wall without refresh
-            for (final Msg msg : DB.getHumanCrudPrivateEventLocal(true).
-                    rPrivateEventReadWall(humanId, privateEventId).returnValueBadly().getWallMsgs()) {
+            for (final Msg msg : aReturn.returnValueBadly().getWallMsgs()) {
                 new UserProperty(request, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
                     protected void init(final Object... initArgs) {
                         $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
@@ -123,7 +124,11 @@ public class WallWidgetPrivateEvent extends WallWidget {
             }
         }
 
-
+        if (aReturn.returnValueBadly().getWallMutes().contains(humanId)) {
+            $$(Controller.Page.wallMute).setTextContent(LISTEN);
+        }else{
+            $$(Controller.Page.wallMute).setTextContent(MUTE);
+        }
     }
 
 
@@ -133,6 +138,9 @@ public class WallWidgetPrivateEvent extends WallWidget {
     protected void fetchToEmail(final Object... args) {
         try {
             final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + WALL_SUBIT_FROM_EMAIL);
+            
+            displayBlock($$(ORGANIZE_SECTION, document));
+
 
             $$(CATEGORY, document).setAttribute(MarkupTag.INPUT.value(), Integer.toString(Controller.Page.DocOrganizeModeEvent));
             $$(LOCATION, document).setAttribute(MarkupTag.INPUT.value(), args[0].toString());
@@ -194,7 +202,9 @@ public class WallWidgetPrivateEvent extends WallWidget {
                             }
                             final PrivateEvent pe = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(myhumanId.getObj(), myprivateEventId).returnValue();
                             for (final HumansPrivateEvent hpe : pe.getPrivateEventViewers()) {
-                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), pe.getPrivateEventName(), fetchToEmail + b.toString());
+                                if (!wall.getWallMutes().contains(hpe)) {
+                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), pe.getPrivateEventName(), fetchToEmail + b.toString());
+                                }
                             }
                         } else {
                             $$(Controller.Page.wallNotice).setTextContent(r.returnMsg());
@@ -210,5 +220,33 @@ public class WallWidgetPrivateEvent extends WallWidget {
                 super.finalize();
             }
         }, false);
+
+
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.wallMute), EventType.CLICK.toString(), new EventListener() {
+
+            private HumanId myhumanId = humanId;
+            private Long myprivateEventId = privateEventId;
+
+            @Override
+            public void handleEvent(final Event evt_) {
+
+                if (DB.getHumanCrudPrivateEventLocal(true).rPrivateEventReadWall(myhumanId, myprivateEventId).returnValueBadly().getWallMutes().contains(myhumanId)) {
+                    DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveMuteEntryToWall(myhumanId, myhumanId, myprivateEventId);
+                    $$(evt_).setTextContent(MUTE);
+
+                } else {
+                    DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddMuteEntryToWall(myhumanId, myhumanId, myprivateEventId);
+                    $$(evt_).setTextContent(LISTEN);
+                }
+            }
+
+
+            @Override
+            public void finalize() throws Throwable {
+                Loggers.finalized(this.getClass().getName());
+                super.finalize();
+            }
+        }, false);
+
     }
 }

@@ -24,6 +24,7 @@ public class Wall implements Clearance {
     public Long clearance = 0L;
     public String wallContent = null;
     public List<Msg> wallMsgs = null;
+    public List<Mute> wallMutes = null;
     public Integer wallType = null;
     public String wallMetadata = null;
 
@@ -71,6 +72,18 @@ public class Wall implements Clearance {
 
     public void setWallMsgs(final List<Msg> wallMsgs) {
         this.wallMsgs = wallMsgs;
+    }
+
+    @UNIDIRECTIONAL
+    @OneToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE},
+            fetch = FetchType.EAGER)
+    public List<Mute> getWallMutes() {
+        return wallMutes;
+    }
+
+    public void setWallMutes(final List<Mute> wallMutes) {
+        this.wallMutes = wallMutes;
     }
 
     @Override

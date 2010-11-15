@@ -57,13 +57,13 @@
 			Java
 		</plugin>
 		<plugin>
-			GoodPractices
-		</plugin>
-		<plugin>
 			CodeGeneration
 		</plugin>
+		<plugin>
+			GoodPractices
+		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sat Jun 19 12:17:07 IST 2010'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sat Nov 13 23:26:41 IST 2010'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.28.1(6) revised on $Date: 2007-05-12 08:08:08 +0200 (Sat, 12 May 2007) $ </XMI.exporterVersion>
@@ -10367,7 +10367,7 @@ case, and ideally, a green one.</text>
     <path name="Fig48.2"
       description="org.tigris.gef.presentation.FigPoly"
       fill="1"
-      fillcolor="178 178 178"
+      fillcolor="white"
       stroke="1"
       strokecolor="black"
     >
@@ -10387,6 +10387,7 @@ case, and ideally, a green one.</text>
          fillcolor="white"
          stroke="0"
          strokecolor="black"
+         visibility="0"
     >
       <private>
       </private>
