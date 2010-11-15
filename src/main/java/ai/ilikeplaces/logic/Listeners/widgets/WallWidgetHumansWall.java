@@ -121,11 +121,11 @@ public class WallWidgetHumansWall extends WallWidget {
                                 }.fetchToEmail);
                             }
 
-                            final HumansNetPeople hnp = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(myrequestedProfile);
+                            final HumansNetPeople hnps = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(myrequestedProfile);
 
-                            for (final HumansNetPeople hpe : hnp.getHumansNetPeoples()) {
-                                if (!wall.getWallMutes().contains(hnp)) {
-                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), hnp.getDisplayName(), fetchToEmail + b.toString());
+                            for (final HumansNetPeople hpe : hnps.getHumansNetPeoples()) {
+                                if (!wall.getWallMutes().contains(hpe)) {
+                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), hnps.getDisplayName(), fetchToEmail + b.toString());
                                 }
                             }
                         } else {
