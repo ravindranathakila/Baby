@@ -1,10 +1,25 @@
 <map version="0.8.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node BACKGROUND_COLOR="#00cc66" CREATED="1289573930062" ID="Freemind_Link_1993118448" MODIFIED="1289626782687" TEXT="I&apos;m in, &#xa;now what?">
+<node BACKGROUND_COLOR="#00cc66" CREATED="1289573930062" ID="Freemind_Link_1993118448" MODIFIED="1289868737859" TEXT="I&apos;m in, &#xa;now what?">
 <hook NAME="accessories/plugins/NodeNote.properties">
-<text>Use Jackie Chan English. Makes understand concept easy. Hokay?&#xa;This should show all use cases.&#xa;Use pull marketing. Makes marketing easy. What is pull marketing? Market only something wanted. If they don&apos;t want, try make them want. Simple. Hokay?&#xa;To use pull marketing in diagram, use want/get to grow nodes. Make wants nodes(give more importance). Make gets chains. Gives can have &quot;get&quot; as the explanatory word. Nothing else.&#xa;Remember, if a want gives u a headache hor disturb, then that is the good want. Needs fixing. Hokay? Pay more attention this wants.&#xa;Remember that not all nodes are marketable. Some simplify things but not directly marketable. Instead, prevents stagnation.&#xa;A want section can describe only things given by its previous fork. No new &quot;I see&quot; or &quot;notice&quot; component can be specified.&#xa;&#xa;get gone = browser sends/application sends</text>
+<text>Use Jackie Chan English. Makes understand concept easy. Hokay?&#xa;This should show all use cases.&#xa;Use pull marketing. Makes marketing easy. What is pull marketing? Market only something wanted. If they don&apos;t want, try make them want. Simple. Hokay?&#xa;To use pull marketing in diagram, use want/get to grow nodes. Make wants nodes(give more importance). Make gets chains. Gives can have &quot;get&quot; as the explanatory word. Nothing else.&#xa;Remeber that gets can be negative. Some nodes can even have phrases like &quot;i get a doubt why I need to forward this to a friend&quot;.&#xa;Remember, if a want gives u a headache hor disturb, then that is the good want. Needs fixing. Hokay? Pay more attention this wants.&#xa;Remember that not all nodes are marketable. Some simplify things but not directly marketable. Instead, prevents stagnation.&#xa;A want section can describe only things given by its previous fork. No new &quot;I see&quot; or &quot;notice&quot; component can be specified.&#xa;&#xa;get gone = browser sends/application sends&#xa;&#xa;want + why want&#xa;get + why get&#xa;&#xa;You&apos;ve gotto make em &quot;want&quot; with what you&apos;ve &quot;got&quot;. So for a given want, all gots should be already there given.</text>
 </hook>
-<node CREATED="1289574105546" ID="Freemind_Link_1444820136" MODIFIED="1289574109921" POSITION="left" TEXT="I go downtown page"/>
+<node CREATED="1289574105546" ID="Freemind_Link_1444820136" MODIFIED="1289867512828" POSITION="left" TEXT="I go downtown/home page,&#xa;and wonder what this website is.&#xa;now what?">
+<node CREATED="1289867136406" ID="_" MODIFIED="1289868133625" TEXT="I get &#xa;&quot;@DOWNTOWN ONLY REAL WORLD&#xa; ENTERTAINMENT HAPPENS!&quot;"/>
+<node CREATED="1289867205687" ID="Freemind_Link_834303980" MODIFIED="1289868097984" TEXT="I get &#xa;a seach box with a location, &#xa;and wonder what it is. now what?">
+<node CREATED="1289867892203" ID="Freemind_Link_441218523" MODIFIED="1289868073406" TEXT="I get &#xa;&quot;ENTER A PLACE TO SEE IF ITS GOT HOTSPOTS. &#xa;YOU CAN ALSO CREATE YOUR OWN&quot;"/>
+</node>
+<node CREATED="1289867216312" HGAP="145" ID="Freemind_Link_427262298" MODIFIED="1289868454843" TEXT="I get &#xa;a seach button saying &quot;find hotspots&quot;, &#xa;and wonder what it is and what hotspots are. now what?" VSHIFT="5">
+<node CREATED="1289867931437" ID="Freemind_Link_258628386" MODIFIED="1289868087531" TEXT="I get &#xa;&quot;A HOTSPOT IS A LIVELY &#xa;ENTERTAINMENT SPOT&quot;"/>
+</node>
+<node CREATED="1289867235812" HGAP="165" ID="Freemind_Link_1953782720" MODIFIED="1289868462109" TEXT="I get &#xa;a map of a world,&#xa; and wonder what it is. now what?" VSHIFT="-48">
+<arrowlink DESTINATION="Freemind_Link_258628386" ENDARROW="Default" ENDINCLINATION="610;0;" ID="Freemind_Arrow_Link_974605817" STARTARROW="None" STARTINCLINATION="610;0;"/>
+<arrowlink DESTINATION="Freemind_Link_441218523" ENDARROW="Default" ENDINCLINATION="641;0;" ID="Freemind_Arrow_Link_902644907" STARTARROW="None" STARTINCLINATION="641;0;"/>
+</node>
+<node CREATED="1289868201750" HGAP="433" ID="Freemind_Link_1186152170" MODIFIED="1289868509859" STYLE="bubble" TEXT="I want &#xa;to experiment and see if a location DOES &#xa;contain hotspots as the site says.&#xa;I enter a location in the search box. &#xa;I hit enter but it does not work.&#xa;I &quot;click&quot; the &quot;FIND HOTSPOT&quot; button." VSHIFT="-39">
+<node CREATED="1289868511484" ID="Freemind_Link_1751359988" MODIFIED="1289868569375" STYLE="fork" TEXT="I get&#xa;A map of the location"/>
+</node>
+</node>
 <node CREATED="1289573988109" HGAP="291" ID="Freemind_Link_1687042404" MODIFIED="1289646673250" POSITION="right" TEXT="I go home page" VSHIFT="32">
 <node CREATED="1289574124406" FOLDED="true" ID="Freemind_Link_292432303" MODIFIED="1289620430109" STYLE="bubble" TEXT="I see search box, &#xa;i what to do something, do i?&#xa; if so what do i do?">
 <node CREATED="1289620321312" ID="Freemind_Link_1754743000" MODIFIED="1289620321312" STYLE="fork" TEXT=""/>
