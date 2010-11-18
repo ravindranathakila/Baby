@@ -5,7 +5,7 @@
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type"></meta>
         <meta id="mainMetaDesc" name="Description" content="Discover and Have Fun in Places!"></meta>
         <title id="AarrrTitle">
-            WHERE'S THE FUN?
+            Down&darr;Town
         </title>
         <link rel="icon" type="image/ico" href="/favicon.ico"/>
         <!-- Framework CSS -->
@@ -80,48 +80,62 @@
     <body style="background-color:#325b6e;"><!--chosen-->
         <div id="Main_display" class="container" itsnat:nocache="true" style="display:block;">
             <div class="span-24 last" style="background-color:#325b6e;">
-                <div class="span-24 last center" style="height:20px;">
+                <div class="span-24 last center" style="height:5px;">
                     &nbsp;
                 </div>
-                <div class="span-24 last center vtip" style="height:120px;" title="GD LUK N HV FUN!">
+                <div class="span-24 last center vtip" style="height:54px;" title="DOWN TOWN IS A COLLECTION OF REAL WORLD HOTSPOTS">
+                    <span style="font-size:54px;font-family: Impact, Charcoal, sans-serif;" class="center">AT</span>
+                </div>
+                <div class="span-24 last center vtip" style="height:120px;" title="DOWN TOWN IS A COLLECTION OF REAL WORLD HOTSPOTS">
                     <span style="font-size:108px;font-family: Impact, Charcoal, sans-serif;" class="center">&nbsp;&nbsp;&nbsp;&nbsp;DOWN&darr;TOWN</span>
                     <span style="font-size:10px;"><img src="http://www.ilikeplaces.com/favicon.png" alt="i"/>likeplaces.com</span>
                 </div>
                 <div class="span-24 last center">
-                    <div class="span-24 last center vtip" title="WHERE'S THE FUN? FIND OUT! ENTER THE PLACE HERE FIRST">
-                        <input class="span-12 prepend-6 append-6 last center"
+                    <span style="font-size:36px;font-family: Impact, Charcoal, sans-serif;" class="center vtip" title="THIS IS WHERE THE HOT AND TRENDY REAL WORLD SPOTS ARE MARKED!">
+                        YOU CAN FIND WAYS TO SOCIALIZE IN REAL LIFE!
+                    </span>
+                </div>
+                <hr/>
+                <div class="span-24 last center">
+                    <div class="span-24 last center">
+                        <span style="font-size:36px;font-family: Impact, Charcoal, sans-serif;color:#892e40;">
+                            &clubs;
+                        </span>
+                        <input class="span-12 prepend-6 append-6 last center vtip"
                                id="seachbox"
-                               style="background:#f7c05c;border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;color:#ff1493;font:18px arial,sans-serif bold;height:30px;margin:0;padding:5px 8px 0 6px;vertical-align:top" value="las vegas, united states"
-                                onfocus="javascript:initialize_gmap_scripts();"
-                                onblur=""
+                               style="background:#f7c05c;border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;color:#ff1493;font-size:30px;font-family: Impact, Charcoal, sans-serif;height:34px;margin:0;padding:5px 8px 0 6px;vertical-align:top;" value="las vegas, united states"
+                               onfocus="javascript:initialize_gmap_scripts();"
                                 />
+                        <span style="font-size:36px;font-family: Impact, Charcoal, sans-serif;">
+                            &crarr;&nbsp;&nbsp;
+                        </span>
                     </div>
                     <div class="span-24 last center vtip" style="height:15px">
                         &nbsp;
                     </div>
                     <div class="span-24 last center">
-                        <div class="span-10 center vtip">
+                        <div class="span-9 center vtip">
                             &nbsp;
                         </div>
-                        <div class="span-4 center vtip"  title="Enter place and click to find hotspots. Zoom in for clearer view.">
+                        <div class="span-6 center vtip"  title="Enter place and click to find hotspots. Zoom in for clearer view.">
                             <input class="last center"
                                    onclick="javascript: try{searchbox = document.getElementById('seachbox');new google.maps.Geocoder().geocode({address:searchbox.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){alert('You might want to zoom in for a clearer view!');map.setCenter(geocoderResult[0].geometry.location);map.setZoom(10);}else{alert('No find '+searchbox.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
-                                   style="font-family: impact; font-size: 18px; background-color: transparent;border-width: thin;border-style: solid;"
-                                   type="submit" value="Find Hotspots&nbsp"/>
+                                   style="font-family: impact; font-size:28px; background-color: transparent;border-width: thin;border-style: solid;"
+                                   type="submit" value="&nbsp;&nbsp;MAP HOTSPOTS&nbsp;&nbsp;&nbsp;&nbsp;"/>
                         </div>
-                        <div class="span-10 last center vtip">
+                        <div class="span-9 last center vtip">
                             &nbsp;
                         </div>
                     </div>
                 </div>
-                <div class="span-24 last vtip" style="height:20px;">
+                <div class="span-24 last vtip" style="height:15px;">
                     &nbsp;
                 </div>
-                <div class="span-24 last vtip" title="fun places map!">
+                <div class="span-24 last vtip" title="HOTSPOT HEAT MAP" >
                     <div class="span-5">
                         &nbsp;
                     </div>
-                    <div class="span-14" title="fun places map!" id="AarrrDownTownHeatMap" style="">
+                    <div class="span-14" id="AarrrDownTownHeatMap" style="">
 
                      </div>
                      <div class="span-5 last">
