@@ -56,7 +56,7 @@ function initialize_DownTownHeatMap_map(){
         position: myLatlng,
         map: map,
         title:"Is it here? if so, click on this marker!!!",
-        icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=Point%20this%20Marker|14|000|glyphish_map-marker|16|bb77ee|892e40"
+        icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=MARK%20HOTSPOT|9|000|glyphish_map-marker|16|bb77ee|892e40"
     });
 
 
@@ -186,15 +186,6 @@ function initialize_gmap_scripts(){
     }
 }
 </script>
-
-    <div class="span-14 last center">
-        <div class="span-7 center">
-            <input type="text" id="DownTownHeatMapWOEID" value="0,0" readonly="readonly"/>
-        </div>
-        <div class="span-7 last center">
-            <input type="text" id="DownTownHeatMapBB" value="0,0" readonly="readonly"/>
-        </div>
-    </div>
     <div class="span-14 last" style="overflow:hidden;" id="DownTownHeatMap_load_click">
         <div class="span-14" title="fun places map!" style="cursor:pointer;">
             <div class="span-14 last">
@@ -211,6 +202,14 @@ function initialize_gmap_scripts(){
     </div>
     <div class="span-14 last" style="overflow:hidden;display:none;" id="DownTownHeatMap_map_wrapper">
         <div id="DownTownHeatMap_map" class="vtip" title="<i>Double-click to Zoom<br/>Links open in new tabs</i>" style="height:400px;font-size:12px;">
+        </div>
+    </div>
+    <div class="span-14 last center">
+        <div class="span-7 center">
+            <input type="text" id="DownTownHeatMapWOEID" value="0,0" readonly="readonly"/>
+        </div>
+        <div class="span-7 last center">
+            <input type="text" id="DownTownHeatMapBB" value="0,0" readonly="readonly"/>
         </div>
     </div>
     <hr class="blank"/>
