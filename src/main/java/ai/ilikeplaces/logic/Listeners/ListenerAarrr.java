@@ -5,6 +5,7 @@ import ai.ilikeplaces.logic.Listeners.widgets.DownTownHeatMap;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractListener;
+import ai.ilikeplaces.util.Loggers;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -47,6 +48,7 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
 
                 new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
 
+                sl.complete(Loggers.LEVEL.SERVER_STATUS, Loggers.DONE);
             }
 
             /**
