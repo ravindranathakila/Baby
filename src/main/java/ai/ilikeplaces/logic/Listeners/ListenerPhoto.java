@@ -1,12 +1,16 @@
 package ai.ilikeplaces.logic.Listeners;
 
+import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.logic.Listeners.widgets.Photo$Description;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
+import ai.ilikeplaces.util.EventType;
+import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Return;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
@@ -15,6 +19,9 @@ import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
 import java.util.List;
@@ -59,11 +66,37 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
 
                         for (final PrivatePhoto privatePhoto : r.returnValue()) {
                             new Photo$Description(request__, $(Controller.Page.Skeleton_center_content)) {
+
+                                final HumanId myhumanId = new HumanId(getUsername());
+                                final PrivatePhoto myprivatePhoto = privatePhoto;
+
                                 @Override
                                 protected void init(final Object... initArgs) {
                                     final String imageURL = RBGet.globalConfig.getString("ALBUM_PHOTOS") + privatePhoto.getPrivatePhotoURLPath();
                                     $$(pd_photo_permalink).setAttribute("href", imageURL);
                                     $$(pd_photo).setAttribute("src", imageURL);
+                                }
+
+                                @Override
+                                protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
+                                    itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.pd_photo_delete), EventType.CLICK.toString(), new EventListener() {
+
+                                        final HumanId mymyhumanId = new HumanId(getUsername());
+
+                                        @TODO(task = "Expecting itsnat does not serialize these values. Bulky. Verify with Jose.")
+                                        final PrivatePhoto mymyprivatePhoto = privatePhoto;
+
+                                        @Override
+                                        public void handleEvent(final Event evt_) {
+                                            DB.getHumanCRUDPrivatePhotoLocal(true).dPrivatePhoto(mymyhumanId, mymyprivatePhoto.getPrivatePhotoId());
+                                        }
+
+                                        @Override
+                                        public void finalize() throws Throwable {
+                                            Loggers.finalized(this.getClass().getName());
+                                            super.finalize();
+                                        }
+                                    }, false);
                                 }
                             };
                         }

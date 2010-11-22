@@ -77,7 +77,6 @@ public class SubdomainForward implements Filter {
                 sl.complete(Loggers.DONE);
             } else {
                 filterChain.doFilter(request, servletResponse);
-                sl.trash();
             }
         } catch (final Throwable e) {
             sl.multiComplete(new Loggers.LEVEL[]{Loggers.LEVEL.DEBUG, Loggers.LEVEL.ERROR}, Loggers.FAILED);

@@ -663,6 +663,41 @@
 </node>
 </node>
 </node>
+<node BACKGROUND_COLOR="#0066cc" COLOR="#ffffff" CREATED="1290173397671" FOLDED="true" ID="Freemind_Link_1969704607" MODIFIED="1290173528390" POSITION="right" TEXT="BAKCBONE">
+<font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
+<node CREATED="1290230087937" ID="Freemind_Link_1044396462" MODIFIED="1290230174953" TEXT="STANDUP">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>What are you standing up for?</text>
+</hook>
+</node>
+<node CREATED="1290230094687" ID="Freemind_Link_1803998399" MODIFIED="1290230098906" TEXT="SUPPORTERS">
+<node CREATED="1290173953515" ID="Freemind_Link_1802116634" MODIFIED="1290221296937" TEXT="EXTERNAL SUPPORT">
+<node CREATED="1290221298843" ID="Freemind_Link_858514061" MODIFIED="1290221309296" TEXT="You&apos;re with the community">
+<node CREATED="1290221309796" ID="Freemind_Link_182883347" MODIFIED="1290221313968" TEXT="Support from OpenEJB"/>
+<node CREATED="1290221314625" ID="Freemind_Link_393470304" MODIFIED="1290221323437" TEXT="Support from ItsNat"/>
+<node CREATED="1290221324203" ID="Freemind_Link_679126911" MODIFIED="1290221331046" TEXT="Support from Blueprintcss"/>
+<node CREATED="1290221332046" ID="Freemind_Link_677923500" MODIFIED="1290221339640" TEXT="Support from jQuery"/>
+<node CREATED="1290221340703" ID="Freemind_Link_629477804" MODIFIED="1290221374203" TEXT="Support from OpenJPA"/>
+<node CREATED="1290221374828" ID="Freemind_Link_1806409365" MODIFIED="1290221384031" TEXT="Support from Oval"/>
+<node CREATED="1290221384531" ID="Freemind_Link_1087773019" MODIFIED="1290221399796" TEXT="Support from Idea IntellJ Community Edition"/>
+<node CREATED="1290221437187" ID="Freemind_Link_1611836156" MODIFIED="1290221444437" TEXT="Support from Derby"/>
+<node CREATED="1290221457031" ID="Freemind_Link_1622873652" MODIFIED="1290221463078" TEXT="Support from Logback"/>
+<node CREATED="1290221481312" ID="Freemind_Link_302399119" MODIFIED="1290221488093" TEXT="Support from SLF4J"/>
+</node>
+<node CREATED="1290221540500" ID="Freemind_Link_1143701603" MODIFIED="1290221551078" TEXT="You run the 37 Signals Philosophy">
+<node CREATED="1290173842625" ID="Freemind_Link_884334773" MODIFIED="1290173899562" TEXT="37: Real Worlds:Place Full Of Failures And Nothing Works"/>
+</node>
+</node>
+</node>
+<node CREATED="1290230099625" ID="Freemind_Link_260058942" MODIFIED="1290230104187" TEXT="OPPOSITION">
+<node CREATED="1290173918265" FOLDED="true" ID="Freemind_Link_924080486" MODIFIED="1290230130625" TEXT="PSYCHOLOGICAL">
+<node CREATED="1290173497609" HGAP="23" ID="Freemind_Link_1669448363" MODIFIED="1290173763890" TEXT="&gt;FEAR" VSHIFT="26"/>
+<node CREATED="1290173553796" ID="Freemind_Link_163482757" MODIFIED="1290173604218" TEXT="&gt;HUMULIATION"/>
+<node CREATED="1290173557984" ID="Freemind_Link_74820190" MODIFIED="1290173607187" TEXT="&gt;EMBARRASSMENT"/>
+<node CREATED="1290173565265" ID="Freemind_Link_1514577173" MODIFIED="1290173611671" TEXT="&gt;FAILURE"/>
+</node>
+</node>
+</node>
 <node BACKGROUND_COLOR="#cc0000" COLOR="#ffffff" CREATED="1283695985941" FOLDED="true" ID="Freemind_Link_1290727434" MODIFIED="1283872257796" POSITION="right" TEXT="FOCUS">
 <font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
 <icon BUILTIN="ksmiletris"/>
@@ -933,6 +968,10 @@
 <icon BUILTIN="flag"/>
 <icon BUILTIN="button_ok"/>
 </node>
+<node CREATED="1290128164062" ID="Freemind_Link_477286948" MODIFIED="1290128184781" TEXT="TODO: remove self from email update">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+</node>
 </node>
 </node>
 <node CREATED="1288494976062" ID="Freemind_Link_883921747" MODIFIED="1288505500703" TEXT="See a map of the event location">
@@ -947,8 +986,9 @@
 <node CREATED="1288495040046" ID="Freemind_Link_1216857146" MODIFIED="1289574578890" TEXT="(Upload)Share photos of event">
 <node CREATED="1289574580609" ID="Freemind_Link_103327350" MODIFIED="1289574591828" TEXT="TODO:SE:Remove photos">
 <icon BUILTIN="flag"/>
-<node CREATED="1289574626062" ID="Freemind_Link_417645007" MODIFIED="1289574646390" TEXT="TODO:photoname_thump.jpg">
+<node CREATED="1289574626062" ID="Freemind_Link_417645007" MODIFIED="1290128225031" TEXT="TODO:photoname_thump.jpg">
 <icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
 </node>
 </node>
 </node>
@@ -966,6 +1006,10 @@
 <node CREATED="1289573762328" ID="Freemind_Link_1308896135" MODIFIED="1289573792015" TEXT="Uploading Several Photos Will Spam Members">
 <icon BUILTIN="clanbomber"/>
 </node>
+</node>
+<node CREATED="1290128194078" ID="Freemind_Link_709032160" MODIFIED="1290128201343" TEXT="TODO: remove self from email update">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
 </node>
 </node>
 <node CREATED="1288506345625" ID="Freemind_Link_1982919547" MODIFIED="1289574391312" TEXT="TODO: Event Name as Header">
@@ -1012,9 +1056,6 @@
 <node CREATED="1289102022661" ID="Freemind_Link_1346535151" MODIFIED="1289102046485" TEXT="TODO:Mail queueing or trying mechanism">
 <icon BUILTIN="flag"/>
 </node>
-<node CREATED="1289102149989" ID="Freemind_Link_1880544995" MODIFIED="1289102162345" TEXT="TODO:Osgi startup">
-<icon BUILTIN="flag"/>
-</node>
 </node>
 <node CREATED="1288421834390" ID="Freemind_Link_1220495101" MODIFIED="1288422171531" TEXT="OPTIMIZATION/LOAD TEST FREEZE">
 <icon BUILTIN="full-5"/>
@@ -1040,19 +1081,8 @@
 <arrowlink DESTINATION="Freemind_Link_374011926" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Freemind_Arrow_Link_447360971" STARTARROW="None" STARTINCLINATION="0;0;"/>
 <font BOLD="true" NAME="Comic Sans MS" SIZE="14"/>
 <icon BUILTIN="flag"/>
-<node CREATED="1289101790160" ID="Freemind_Link_698262843" MODIFIED="1289101812611" TEXT="Freeze">
-<node CREATED="1289101825873" ID="Freemind_Link_847716500" MODIFIED="1289101865970" TEXT="2010-11-07">
-<node CREATED="1289102164499" ID="Freemind_Link_730065184" MODIFIED="1289573643859" TEXT="Complete Marketing Freeze">
-<arrowlink DESTINATION="Freemind_Link_635591026" ENDARROW="Default" ENDINCLINATION="776;0;" ID="Freemind_Arrow_Link_367957169" STARTARROW="None" STARTINCLINATION="776;0;"/>
-<arrowlink DESTINATION="Freemind_Link_1798050489" ENDARROW="Default" ENDINCLINATION="780;0;" ID="Freemind_Arrow_Link_1360630555" STARTARROW="None" STARTINCLINATION="780;0;"/>
-<arrowlink DESTINATION="Freemind_Link_1982919547" ENDARROW="Default" ENDINCLINATION="744;0;" ID="Freemind_Arrow_Link_726215153" STARTARROW="None" STARTINCLINATION="744;0;"/>
-<arrowlink DESTINATION="Freemind_Link_675679815" ENDARROW="Default" ENDINCLINATION="521;0;" ID="Freemind_Arrow_Link_748341540" STARTARROW="None" STARTINCLINATION="521;0;"/>
 </node>
-</node>
-</node>
-<node CREATED="1289101817884" ID="Freemind_Link_999512085" MODIFIED="1289101820365" TEXT="Osgi"/>
-</node>
-<node CREATED="1284106510102" ID="Freemind_Link_1687377836" MODIFIED="1284107539812" POSITION="left" TEXT="Distractions">
+<node CREATED="1284106510102" FOLDED="true" ID="Freemind_Link_1687377836" MODIFIED="1284107539812" POSITION="left" TEXT="Distractions">
 <node CREATED="1284106515588" ID="Freemind_Link_276492500" MODIFIED="1284106703251" TEXT="Static Map for Location Pages">
 <icon BUILTIN="full-1"/>
 </node>
@@ -1064,6 +1094,50 @@
 </node>
 <node CREATED="1284108220528" ID="Freemind_Link_796314945" MODIFIED="1284108238830" TEXT="Static map image after providing latlong data">
 <icon BUILTIN="full-2"/>
+</node>
+</node>
+<node CREATED="1290226890156" ID="Freemind_Link_493529642" MODIFIED="1290226899765" POSITION="left" TEXT="SUMMARIZING READINGS">
+<node CREATED="1290226910703" ID="Freemind_Link_1757451953" LINK="http://techzinglive.com/page/169/techzing-34-central-desktop-relentless-execution" MODIFIED="1290229079984" TEXT="Central Desktop / Relentless Execution">
+<node CREATED="1290226939203" ID="Freemind_Link_585690306" MODIFIED="1290226946781" TEXT="Free user verison trippled signup">
+<node CREATED="1290226989281" ID="Freemind_Link_615483894" MODIFIED="1290227010078" TEXT="Just enough to get them influenced. 25mb."/>
+<node CREATED="1290227099718" ID="Freemind_Link_851341022" MODIFIED="1290227157203" TEXT="Pricing = What could I put on a credit card that &#xa;I&apos;m not gonna think about of getting IT approval."/>
+<node CREATED="1290227161968" ID="Freemind_Link_1103392017" MODIFIED="1290227554750" TEXT="Automated marketing to get them to convert.&#xa;2. Things that drove this.&#xa;1&gt; If there are going to have a thousands of users, things have to be automated.&#xa;2&gt; What are all of the things that we can do to promote inside the app and when they are coming into the app and then the emails that they receive that will automatically move them from this free version to a paid version, any paid version. First 30 days, will have more freedom and after 30, goes down to a very strict plan. This enables the user to do a full evaluation and make a business decision."/>
+</node>
+<node CREATED="1290227746000" ID="Freemind_Link_103166733" MODIFIED="1290227759062" TEXT="Nobody cares after launching">
+<node CREATED="1290227759921" ID="Freemind_Link_1951325313" MODIFIED="1290227768109" TEXT="Its ok if you launch and nobody cares"/>
+<node CREATED="1290227770437" ID="Freemind_Link_848332190" MODIFIED="1290227790140" TEXT="Talk to your customers and find out the problems">
+<node CREATED="1290227793437" ID="Freemind_Link_975161514" MODIFIED="1290227836015" TEXT="The bigger the problem, &#xa;the bigger the pain, &#xa;the more they will pay you for it.">
+<font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
+</node>
+</node>
+<node CREATED="1290227922781" ID="Freemind_Link_1207145599" MODIFIED="1290228041593" TEXT="that&apos;s the part of beuty of being an entreprenuer.&#xa;Unbridel optimism that you are able to than spite of you know, &#xa;everything against you.">
+<font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
+</node>
+</node>
+<node CREATED="1290228092031" ID="Freemind_Link_511315595" MODIFIED="1290228164390" TEXT="#1 Relentlessness of pursuit">
+<font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
+</node>
+<node CREATED="1290228486343" ID="Freemind_Link_1202623722" MODIFIED="1290228794984" TEXT="We don&apos;t follow competitor features">
+<font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
+<node CREATED="1290228499812" ID="Freemind_Link_371649275" MODIFIED="1290228588625" TEXT="If the customer wants the feature badly, we&apos;ll build it."/>
+<node CREATED="1290228525500" ID="Freemind_Link_1244945873" MODIFIED="1290228782906" TEXT="End of the day its an execusion game">
+<font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
+<node CREATED="1290228654609" ID="Freemind_Link_1896159576" MODIFIED="1290228661234" TEXT="Its the execusion of what you are doing"/>
+<node CREATED="1290228685750" ID="Freemind_Link_1800670204" MODIFIED="1290228689734" TEXT="Completeness"/>
+<node CREATED="1290228690484" ID="Freemind_Link_1807697093" MODIFIED="1290228696906" TEXT="Talking to customers"/>
+</node>
+<node CREATED="1290228601515" ID="Freemind_Link_573310130" MODIFIED="1290228796937" TEXT="its a long running marathon">
+<font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
+</node>
+<node CREATED="1290228614031" ID="Freemind_Link_1975055672" MODIFIED="1290228641984" TEXT="You can be way down in the rank and still have a profitable business"/>
+</node>
+<node CREATED="1290228822437" ID="Freemind_Link_779622551" MODIFIED="1290228840312" TEXT="Not overwhelming the users with features">
+<node CREATED="1290228841187" ID="Freemind_Link_1420134352" MODIFIED="1290228845265" TEXT="Wizards"/>
+<node CREATED="1290228846140" ID="Freemind_Link_256918005" MODIFIED="1290228851421" TEXT="Ask the user questions">
+<node CREATED="1290228851796" ID="Freemind_Link_220323219" MODIFIED="1290228860171" TEXT="Do yo what to create a project? etc. etc."/>
+</node>
+</node>
+<node CREATED="1290228957250" ID="Freemind_Link_721080538" MODIFIED="1290228975625" TEXT="We were techcrunched only after 3 years only when we got funding."/>
 </node>
 </node>
 </node>

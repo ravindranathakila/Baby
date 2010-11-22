@@ -614,7 +614,9 @@ Controller.Page.friendAddDisplayNameLabel
                 Controller.Page.close,
                 Controller.Page.pd_photo_permalink,
                 Controller.Page.pd_photo,
-                Controller.Page.pd_photo_description) {
+                Controller.Page.pd_photo_description,
+                Controller.Page.pd_photo_delete
+                ) {
 
             @Override
             public String getURL() {
@@ -954,6 +956,7 @@ Controller.Page.friendAddDisplayNameLabel
         final static public String pd_photo_permalink = "pd_photo_permalink";
         final static public String pd_photo = "pd_photo";
         final static public String pd_photo_description = "pd_photo_description";
+        final static public String pd_photo_delete = "pd_photo_delete";
 
 
         /*Aarrr Page*/
