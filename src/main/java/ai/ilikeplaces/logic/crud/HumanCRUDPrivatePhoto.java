@@ -6,9 +6,12 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
+import ai.ilikeplaces.exception.NoPrivilegesException;
 import ai.ilikeplaces.logic.crud.unit.CPrivatePhotoLocal;
+import ai.ilikeplaces.logic.crud.unit.DPrivatePhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.RPrivatePhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.UPrivatePhotoLocal;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +29,7 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@CONVENTION(convention = "do all the possible needful9setters etc) before going into the transaction, via an intermediate method. saves resources. " +
+@CONVENTION(convention = "do all the possible needful setters etc) before going into the transaction, via an intermediate method. saves resources. " +
         "why not let the caller do this? lets do the hard work. give the guy a break! besides, we can enforce him to give us required fields. this also " +
         "facilitates setting granular role permissions.")
 @Interceptors({DBOffilne.class, ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
@@ -34,12 +37,21 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
 
     @EJB
     private CPrivatePhotoLocal cPrivatePhotoLocal_;
+
     @EJB
     private UPrivatePhotoLocal uPrivatePhotoLocal_;
+
     @EJB
     private RPrivatePhotoLocal rPrivatePhotoLocal_;
+
+    @EJB
+    private DPrivatePhotoLocal dPrivatePhotoLocal_;
+
     protected static final String FIND_ALL_PHOTOS_BY_HUMAN_FAILED = "Find all photos by human FAILED!";
     protected static final String FIND_ALL_PHOTOS_BY_HUMAN_SUCCESSFUL = "Find all photos by human Successful!";
+    private static final String DELETE_PRIVATE_PHOTO_SUCCESSFUL = "Delete PrivatePhoto Successful!";
+    private static final String DELETE_PRIVATE_PHOTO_FAILED = "Delete PrivatePhoto FAILED!";
+    private static final String DELETE_PHOTO_WITH_ID = "delete photo with id:";
 
     public HumanCRUDPrivatePhoto() {
         logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", HumanCRUDPrivatePhoto.class, this.hashCode());
@@ -70,10 +82,11 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
     @FIXME(issue = "When adding a location, there cannot be two equal location names such that super locations are equal too. Please update specific CRUD service. Also His As, My As.")
     @Override
     public Return<PrivatePhoto> addPrivatePhotoAlbum(final long publicPhotoId, final long albumId) {
-        Return<PrivatePhoto> r;
-        r = new ReturnImpl<PrivatePhoto>(null, "Add photo to album Successful!");
-
-        return r;
+//        Return<PrivatePhoto> r;
+//        r = new ReturnImpl<PrivatePhoto>(null, "Add photo to album Successful!");
+//
+//        return r;
+        throw ExceptionCache.METHOD_NOT_IMPLEMENTED;
     }
 
     @Override
@@ -85,6 +98,38 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<List<PrivatePhoto>>(t, FIND_ALL_PHOTOS_BY_HUMAN_FAILED, true);
         }
+        return r;
+    }
+
+    /**
+     * Proper demonstration of using unit classes and role/authorization based classes.
+     * <p/>
+     * Check roles/authorizations here.
+     * <p/>
+     * Call units based on the roles/authorizaions.
+     *
+     * @param humanId
+     * @param privatePhotoId
+     * @return
+     */
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<Boolean> dPrivatePhoto(final HumanId humanId, final long privatePhotoId) {
+        final Return<Boolean> r;
+        boolean isHumansPhoto = false;
+        for (final PrivatePhoto privatePhoto : rPrivatePhoto(humanId.getHumanId()).returnValue()) {
+            if (privatePhoto.getPrivatePhotoId() == privatePhotoId) {
+                isHumansPhoto = true;
+                break;
+            }
+        }
+
+        if (!isHumansPhoto) {
+            r = new ReturnImpl<Boolean>(new NoPrivilegesException(humanId.getHumanId(), DELETE_PHOTO_WITH_ID + privatePhotoId), DELETE_PRIVATE_PHOTO_FAILED, true);
+        } else {
+            r = new ReturnImpl<Boolean>(dPrivatePhotoLocal_.doNTxDPrivatePhoto(privatePhotoId), DELETE_PRIVATE_PHOTO_SUCCESSFUL);
+        }
+
         return r;
     }
 

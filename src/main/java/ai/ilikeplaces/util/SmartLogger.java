@@ -1,6 +1,7 @@
 package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.TODO;
 
 import static ai.ilikeplaces.util.Loggers.LEVEL;
 
@@ -22,13 +23,21 @@ import static ai.ilikeplaces.util.Loggers.LEVEL;
  * The status messages goes as "Stopping SASL.... [FAILED]"... "Stopping MySQL... [done]".
  * This got me thinking, logging is not about just notifying. It is about reporting a process.
  * Hence, this smart logger is to facilitate a start and time out, completion or delayed completion
- * of a process
+ * of a process *
  * Created by IntelliJ IDEA.
  * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: May 29, 2010
  * Time: 8:28:17 PM
  */
 
+@TODO(task = "Well there is something I noticed recently. Unless something goes wrong, logs are useful only for analytics. " +
+        "Hence, if we could implement a logger that logs an entire sequence of monitored events upon an exception, that'd be really cool! " +
+        "FOr example, a user logs in and does A, and B, and while doing C, he gets a server error/or not. " +
+        "If C threw an exception, both A and B get logged. If C didn't, nothing gets logged. " +
+        "This approach will dramatically reduce log entries. It has a memory penalty. " +
+        "But then again, this already can be done by a new complete method. Lets see. " +
+        "Hmmm.... Logging levels can be tuned to gain this feature so maybe this TODO is absurd! :D " +
+        "Yes, it is!")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class SmartLogger extends Thread {
 
@@ -39,8 +48,6 @@ final public class SmartLogger extends Thread {
 
     boolean logged = false;
 
-    boolean discarded = false;
-
     /*The following string constants might look odd but we do not want any delays in a logger. Macro optimization!!*/
     private static final String CAUSE_UNRESPONSIVE_IN_MILLIS = "{} <= cause UNRESPONSIVE in millis:";
     private static final String SORRY_I_FAILED_TO_LOG_THIS_MESSAGE = "SORRY! I FAILED TO LOG THIS MESSAGE:";
@@ -50,8 +57,6 @@ final public class SmartLogger extends Thread {
     private static final String COLON = ":";
     private static final String EMPTY = "";
     private static final String PIPE = "|";
-    protected static final String CALL_TO_A_DISCARDED_LOGGER = "Call to a discarded logger!";
-    protected static final String LOGGER_DISCARDED_TWICE = "Logger Discarded Twice";
 
     /**
      * Leaving optional parameters as null will simply ignore them.
@@ -94,6 +99,7 @@ final public class SmartLogger extends Thread {
         });
 
         start();
+        setPriority(Thread.NORM_PRIORITY);//Should we set this to Min? Hmmm.. then all method calls should be checked for asynchronosity
     }
 
     @Override
@@ -101,25 +107,13 @@ final public class SmartLogger extends Thread {
         try {
             if (sleep != 0) {//Sleep 0 avoids timeout. This is when this object will wait till task "complete"
                 Thread.sleep(sleep);
-                if (!status() && !discarded) {
+                if (!status()) {
                     Loggers.log(level, CAUSE_UNRESPONSIVE_IN_MILLIS + sleep, logmsg);
                 }
             }
         } catch (final InterruptedException e) {
             Loggers.log(LEVEL.ERROR, SORRY_I_FAILED_TO_LOG_THIS_MESSAGE + logmsg, e);
         }
-    }
-
-    /**
-     * Discards this logger and ignores all future logging
-     *
-     * @return discard status
-     */
-    public boolean trash() {
-        if (discarded ? discarded : !(discarded = true)) {
-            Loggers.WARN.warn(LOGGER_DISCARDED_TWICE);
-        }
-        return discarded;
     }
 
     private synchronized boolean status() {
@@ -153,11 +147,6 @@ final public class SmartLogger extends Thread {
     }
 
     public void appendToLogMSG(final String stringToBeAppended) {
-        if (discarded) {
-            Loggers.WARN.warn(CALL_TO_A_DISCARDED_LOGGER);
-            return;
-        }
-
         logmsg += PIPE + stringToBeAppended;
     }
 
@@ -174,21 +163,14 @@ final public class SmartLogger extends Thread {
      * @param completeStatus Throwable type needed in case of ERROR
      */
     public void complete(final LEVEL completeLevel, final Object completeStatus) {
-        if (trash()) {
-            return;
-        }
         if (!status()) {
             Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
         } else {
             Loggers.log(completeLevel, Loggers.EMBED + CAUSE_RECOVERED_WITH_STATUS + COLON + completeStatus + timeTaken(), logmsg);
         }
-        clearLog();
     }
 
     public void multiComplete(final LEVEL[] completeLevels, final Object completeStatus) {
-        if (trash()) {
-            return;
-        }
         if (!status()) {
             for (final LEVEL completeLevel : completeLevels) {
                 Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
@@ -198,22 +180,13 @@ final public class SmartLogger extends Thread {
                 Loggers.log(completeLevel, Loggers.EMBED + CAUSE_RECOVERED_WITH_STATUS + COLON + completeStatus + timeTaken(), logmsg);
             }
         }
-        clearLog();
     }
 
     public void complete(final String completeStatus) {
-        if (trash()) {
-            return;
-        }
         if (!status()) {
             Loggers.log(level, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
         } else {
             Loggers.log(level, Loggers.EMBED + CAUSE_RECOVERED_WITH_STATUS + completeStatus + COLON + timeTaken(), logmsg);
         }
-        clearLog();
-    }
-
-    private void clearLog(){
-        logmsg = "";
     }
 }
