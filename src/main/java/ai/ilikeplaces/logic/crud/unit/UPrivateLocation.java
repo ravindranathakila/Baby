@@ -54,8 +54,8 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public PrivateLocation doUPrivateLocationAddOwner(final String adder, final long privateLocationId__, final HumansFriend addeee) throws NoPrivilegesException, DBFetchDataException {
 
-        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addeee.getHumanId())) {
-            throw new NotFriendsException(adder, addeee.getHumanId());
+        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(addeee.getHumanId(), adder)) {
+            throw new NotFriendsException(addeee.getHumanId(), adder);
         }
 
         final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__).refresh();
@@ -96,8 +96,8 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public PrivateLocation doUPrivateLocationRemoveOwner(final String remover, final long privateLocationId__, final HumansFriend removee) throws NoPrivilegesException, DBFetchDataException {
 
-        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removee.getHumanId())) {
-            throw new NotFriendsException(remover, removee.getHumanId());
+        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(removee.getHumanId(), remover)) {
+            throw new NotFriendsException(removee.getHumanId(), remover);
         }
 
         final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__).refresh();
@@ -179,8 +179,8 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public PrivateLocation doUPrivateLocationAddViewer(final String adder, final long privateLocationId__, final String addeee) throws NoPrivilegesException, DBFetchDataException {
-        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addeee)) {
-            throw new NotFriendsException(adder, addeee);
+        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(addeee, adder)) {
+            throw new NotFriendsException(addeee, adder);
         }
 
         final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__).refresh();
@@ -222,8 +222,8 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public PrivateLocation doUPrivateLocationRemoveViewer(final String remover, final long privateLocationId__, final HumansFriend removeee) throws DBDishonourCheckedException, DBFetchDataException {
 
-        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removeee.getHumanId())) {
-            throw new NotFriendsException(remover, removeee.getHumanId());
+        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(removeee.getHumanId(), remover)) {
+            throw new NotFriendsException(removeee.getHumanId(), remover);
         }
 
         final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__).refresh();

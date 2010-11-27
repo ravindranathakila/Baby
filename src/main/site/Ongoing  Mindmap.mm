@@ -931,7 +931,7 @@
 <hook NAME="accessories/plugins/NodeNote.properties">
 <text>Unless you freeze the product as &quot;marketable&quot;, you cannot do ANY freezing.</text>
 </hook>
-<node CREATED="1288493873906" ID="Freemind_Link_1602200353" MODIFIED="1288493992343" TEXT="Search for a list of hotspots">
+<node CREATED="1288493873906" FOLDED="true" ID="Freemind_Link_1602200353" MODIFIED="1288493992343" TEXT="Search for a list of hotspots">
 <node CREATED="1288494009296" ID="Freemind_Link_487003763" MODIFIED="1288494025578" TEXT="A search box for easy map navigation"/>
 <node CREATED="1288494026281" ID="Freemind_Link_1809855193" MODIFIED="1288494051421" TEXT="An event based hotspot heat map">
 <node CREATED="1288494241734" ID="Freemind_Link_860375365" MODIFIED="1288537475218" TEXT="TODO zoom break on 4&lt;5">
@@ -951,19 +951,29 @@
 <node CREATED="1288494752125" ID="Freemind_Link_1845246042" MODIFIED="1288494767093" TEXT="Create personal events based on location">
 <node CREATED="1288494769250" ID="Freemind_Link_1358764859" MODIFIED="1288494942437" TEXT="Specify other owners to it"/>
 <node CREATED="1288494943015" ID="Freemind_Link_1997054608" MODIFIED="1288494949640" TEXT="Specify other viewss to it">
-<node CREATED="1289574440312" ID="Freemind_Link_1302493726" MODIFIED="1289574504656" TEXT="TODO:SE:Remove oneself from an event">
+<node CREATED="1289574440312" ID="Freemind_Link_1302493726" MODIFIED="1290558945265" TEXT="TODO:SE:Remove oneself from an event">
 <icon BUILTIN="flag"/>
+<icon BUILTIN="button_cancel"/>
+<node CREATED="1290558888906" ID="Freemind_Link_1139220300" MODIFIED="1290558930515" TEXT="Taking a viral approach. Anybody with your email can add you. Will introduce &quot;spammer&quot; later.">
+<icon BUILTIN="clanbomber"/>
+</node>
+<node CREATED="1290559770937" ID="Freemind_Link_1162223897" MODIFIED="1290559775453" TEXT="Can mute wall"/>
 </node>
 </node>
 <node CREATED="1288494950187" ID="Freemind_Link_486328416" MODIFIED="1288494954984" TEXT="Specify other invites to it">
-<node CREATED="1289574440312" ID="Freemind_Link_1444033085" MODIFIED="1289574507968" TEXT="TODO:SE:Remove oneself from an event">
+<node CREATED="1289574440312" ID="Freemind_Link_1444033085" MODIFIED="1290558945250" TEXT="TODO:SE:Remove oneself from an event">
 <icon BUILTIN="flag"/>
+<icon BUILTIN="button_cancel"/>
+<node CREATED="1290558893484" ID="Freemind_Link_438451048" MODIFIED="1290558935953" TEXT="Taking a viral approach. Anybody with your email can add you. Will introduce &quot;spammer&quot; later.">
+<icon BUILTIN="clanbomber"/>
+</node>
+<node CREATED="1290559777906" ID="Freemind_Link_1470697142" MODIFIED="1290559782406" TEXT="Can mute wall"/>
 </node>
 </node>
-<node CREATED="1288494957750" ID="Freemind_Link_796263707" MODIFIED="1289574560281" TEXT="Wall">
+<node CREATED="1288494957750" FOLDED="true" ID="Freemind_Link_796263707" MODIFIED="1289574560281" TEXT="Wall">
 <node CREATED="1288495017437" ID="Freemind_Link_1165287616" MODIFIED="1288495021078" TEXT="Event collaboration"/>
 <node CREATED="1288495022187" ID="Freemind_Link_476419257" MODIFIED="1288495026828" TEXT="Just talk"/>
-<node CREATED="1288505455328" ID="Freemind_Link_100061593" MODIFIED="1288505467984" TEXT="Email Conversation">
+<node CREATED="1288505455328" FOLDED="true" ID="Freemind_Link_100061593" MODIFIED="1288505467984" TEXT="Email Conversation">
 <node CREATED="1288505468890" ID="Freemind_Link_798420819" MODIFIED="1288537488968" TEXT="TODO: close on update">
 <icon BUILTIN="flag"/>
 <icon BUILTIN="button_ok"/>
@@ -974,7 +984,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1288494976062" ID="Freemind_Link_883921747" MODIFIED="1288505500703" TEXT="See a map of the event location">
+<node CREATED="1288494976062" FOLDED="true" ID="Freemind_Link_883921747" MODIFIED="1288505500703" TEXT="See a map of the event location">
 <node CREATED="1288494987984" ID="Freemind_Link_1043652536" MODIFIED="1288495001140" TEXT="Map helps people find the place"/>
 <node CREATED="1288495003125" ID="Freemind_Link_1736837459" MODIFIED="1288495010796" TEXT="Maps gives the place better identty"/>
 <node CREATED="1288505501953" ID="Freemind_Link_1504477530" MODIFIED="1288537492125" TEXT="TODO: private event view map">
@@ -982,10 +992,11 @@
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1288495037421" ID="Freemind_Link_91009859" MODIFIED="1288495039562" TEXT="Album">
+<node CREATED="1288495037421" FOLDED="true" ID="Freemind_Link_91009859" MODIFIED="1288495039562" TEXT="Album">
 <node CREATED="1288495040046" ID="Freemind_Link_1216857146" MODIFIED="1289574578890" TEXT="(Upload)Share photos of event">
-<node CREATED="1289574580609" ID="Freemind_Link_103327350" MODIFIED="1289574591828" TEXT="TODO:SE:Remove photos">
+<node CREATED="1289574580609" ID="Freemind_Link_103327350" MODIFIED="1290438847750" TEXT="TODO:SE:Remove photos">
 <icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
 <node CREATED="1289574626062" ID="Freemind_Link_417645007" MODIFIED="1290128225031" TEXT="TODO:photoname_thump.jpg">
 <icon BUILTIN="flag"/>
 <icon BUILTIN="button_ok"/>
@@ -1012,7 +1023,7 @@
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1288506345625" ID="Freemind_Link_1982919547" MODIFIED="1289574391312" TEXT="TODO: Event Name as Header">
+<node CREATED="1288506345625" ID="Freemind_Link_1982919547" MODIFIED="1290439515843" TEXT="TODO: Event Name as Header">
 <icon BUILTIN="flag"/>
 <icon BUILTIN="button_ok"/>
 </node>
@@ -1023,7 +1034,7 @@
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1288507314546" ID="Freemind_Link_1436401670" MODIFIED="1288507322015" TEXT="Sidebar connections">
+<node CREATED="1288507314546" FOLDED="true" ID="Freemind_Link_1436401670" MODIFIED="1288507322015" TEXT="Sidebar connections">
 <node CREATED="1288507322703" ID="Freemind_Link_255638645" MODIFIED="1288537483875" TEXT="TODO: implement">
 <icon BUILTIN="flag"/>
 <icon BUILTIN="button_ok"/>
@@ -1064,7 +1075,7 @@
 <icon BUILTIN="full-6"/>
 </node>
 </node>
-<node CREATED="1288415685656" FOLDED="true" ID="Freemind_Link_1137422245" MODIFIED="1288421666187" TEXT="SKEPTIC">
+<node CREATED="1288415685656" ID="Freemind_Link_1137422245" MODIFIED="1288421666187" TEXT="SKEPTIC">
 <font NAME="Comic Sans MS" SIZE="14"/>
 <node CREATED="1275630483843" ID="Freemind_Link_811522395" MODIFIED="1275630513796" TEXT="NAVIGATION">
 <node CREATED="1275630514281" ID="Freemind_Link_1575097980" MODIFIED="1275630520437" TEXT="Fix Sidebar Links"/>

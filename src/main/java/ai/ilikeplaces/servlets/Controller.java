@@ -74,10 +74,10 @@ final public class
 
 
         UserPropertySidebar("ai/ilikeplaces/widgets/UserProperty_sidebar.xhtml",
-                     Controller.Page.user_property_sidebar_profile_photo,
-                     Controller.Page.user_property_sidebar_name,
-                     Controller.Page.user_property_sidebar_widget,
-                     Controller.Page.user_property_sidebar_content
+                            Controller.Page.user_property_sidebar_profile_photo,
+                            Controller.Page.user_property_sidebar_name,
+                            Controller.Page.user_property_sidebar_widget,
+                            Controller.Page.user_property_sidebar_content
 
         ) {
             @Override
@@ -387,6 +387,16 @@ Controller.Page.friendAddDisplayNameLabel
                 return DocShare;
             }},
 
+        GeoBusiness(null) {
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "page/_geobusiness";
+            }
+
+            @Override
+            public String toString() {
+                return DocGeoBusiness;
+            }},
+
         Profile(null,
                 Controller.Page.ProfilePhotoChange
         ) {
@@ -616,7 +626,7 @@ Controller.Page.friendAddDisplayNameLabel
                 Controller.Page.pd_photo,
                 Controller.Page.pd_photo_description,
                 Controller.Page.pd_photo_delete
-                ) {
+        ) {
 
             @Override
             public String getURL() {
@@ -816,8 +826,8 @@ Controller.Page.friendAddDisplayNameLabel
         /*DownTownHeatMap Page*/
         final static public String DocDownTownHeatMap = "DocDownTownHeatMap";
         /*DownTownHeatMap IDs*/
-        final static public String DownTownHeatMapWOEID =  "DownTownHeatMapWOEID";
-        final static public String DownTownHeatMapBB =  "DownTownHeatMapBB";
+        final static public String DownTownHeatMapWOEID = "DownTownHeatMapWOEID";
+        final static public String DownTownHeatMapBB = "DownTownHeatMapBB";
 
         /*FindFriend Page*/
         final static public String DocFindFriend = "DocFindFriend";
@@ -876,6 +886,9 @@ Controller.Page.friendAddDisplayNameLabel
 
         /*Share Page*/
         final static public String DocShare = "DocShare";
+
+        /*GeoBusiness Page*/
+        final static public String DocGeoBusiness = "DocGeoBusiness";
 
         /*Organize Page*/
         final static public String DocOrganize = "DocOrganize";
@@ -1083,6 +1096,7 @@ Controller.Page.friendAddDisplayNameLabel
     final PageFace i = Page.I;
     final PageFace activate = Page.Activate;
     final PageFace share = Page.Share;
+    final PageFace geoBusiness = Page.GeoBusiness;
     final PageFace photos = Page.Photos;
 
     final PageFace findFriendWidget = Page.FindFriend;
@@ -1183,6 +1197,9 @@ Controller.Page.friendAddDisplayNameLabel
             inhs__.registerItsNatDocumentTemplate(activate.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerActivate());
 
             inhs__.registerItsNatDocumentTemplate(share.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerShare());
+
+            inhs__.registerItsNatDocumentTemplate(geoBusiness.toString(), "text/html", new TemplateSourceGeoBusiness()).addItsNatServletRequestListener(new ListenerGeoBusiness());
+
         }
 
         registerDocumentFragmentTemplatesAKAWidgets:
@@ -1344,6 +1361,9 @@ Controller.Page.friendAddDisplayNameLabel
                 } else if (isSharePage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocShare);/*Framework specific*/
                     Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0019"));
+                } else if (isGeoBusinessPage(URL__)) {
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocGeoBusiness);/*Framework specific*/
+                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0020"));
                 } else {/*Divert to home page*/
                     Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
                     request__.getServletRequest().setAttribute("location", "");
@@ -1433,6 +1453,10 @@ Controller.Page.friendAddDisplayNameLabel
 
     static private boolean isSharePage(final String URL_) {
         return (URL_.startsWith("_share"));
+    }
+
+    static private boolean isGeoBusinessPage(final String URL_) {
+        return (URL_.startsWith("_geobusiness"));
     }
 
     static private boolean isSignOut(final String URL_) {
