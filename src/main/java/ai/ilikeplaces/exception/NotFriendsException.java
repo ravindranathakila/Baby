@@ -9,7 +9,7 @@ import ai.ilikeplaces.doc.License;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-final public class NotFriendsException extends RuntimeException {
+final public class NotFriendsException extends AbstractEjbApplicationRuntimeException {
 
     final static private String MSG = "\nSORRY! I ENCOUNTERED AN OPERATION WHICH REQUIRES TWO USERS TO BE FRIEND AND FOUND THEY AREN'T FRIENDS ANYMORE.\n";
 

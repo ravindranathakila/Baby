@@ -1,12 +1,14 @@
 package ai.ilikeplaces.servlets.filters;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.logic.Listeners.TemplateSourceGeoBusiness;
+import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.Parameter;
 import ai.ilikeplaces.util.SmartLogger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
 
@@ -53,10 +55,10 @@ public class SubdomainForward implements Filter {
     @Override
     public void doFilter(final ServletRequest request, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
 
-        if (!ON) {
-            filterChain.doFilter(request, servletResponse);
-            return;
-        }
+//        if (!ON) {
+//            filterChain.doFilter(request, servletResponse);
+//            return;
+//        }
 
         final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.DEBUG, PROCESSING_SUBDOMAIN_FORWARD, 100, null, true);
         try {
@@ -65,19 +67,35 @@ public class SubdomainForward implements Filter {
             sl.appendToLogMSG(REQUESTED_PATH + unformattedurl);
 
             final String domain = new URI(unformattedurl).getHost();
-            final String[] domainArr = domain.split(".");
-            String subdomain = EMPTY;
-            for (int i = 0; i < domainArr.length - 2/*Disregards co.uk, co.in, us nd goes for com, org type length 3*/; i++) {
-                subdomain += domainArr[i];
+
+            if (domain.endsWith("ilikeplaces.com") || domain.contains("localhost:8080")) {//Normal request on our website. Just forward.
+                filterChain.doFilter(request, servletResponse);
+            } else {
+                sl.appendToLogMSG("Domain Forward mapping to " + domain);
+                request.getRequestDispatcher(new Parameter(Controller.Page.GeoBusiness.getURL()).append(TemplateSourceGeoBusiness.DOMAIN, domain, true).get()).forward(request, servletResponse);
             }
 
-            if (!subdomain.toLowerCase().equals(WWW) && !subdomain.toLowerCase().equals(EMPTY)) {
-                sl.appendToLogMSG(REDIRECTING_USER_TO + subdomain);
-                ((HttpServletResponse) servletResponse).sendRedirect(SUBDOMAIN_PAGE_FORMAT + subdomain);
-                sl.complete(Loggers.DONE);
-            } else {
-                filterChain.doFilter(request, servletResponse);
-            }
+//            if(domain.endsWith(".GeoBusiness.ilikeplaces.com")){//Do this strict checks. We don't need somebody exploiting these stuff as bugs :-/
+//               final String[] temp = domain.split(".GeoBusiness.ilikeplaces.com"); //Escape regesx
+//            }else{
+//                //Not a subdomain forward. drop drop drop. Be very strict
+//            }
+//
+//
+
+//            final String[] domainArr = domain.split(".");
+//            String subdomain = EMPTY;
+//            for (int i = 0; i < domainArr.length - 2/*Disregards co.uk, co.in, us nd goes for com, org type length 3*/; i++) {
+//                subdomain += domainArr[i];
+//            }
+//
+//            if (!subdomain.toLowerCase().equals(WWW) && !subdomain.toLowerCase().equals(EMPTY)) {
+//                sl.appendToLogMSG(REDIRECTING_USER_TO + subdomain);
+//                ((HttpServletResponse) servletResponse).sendRedirect(SUBDOMAIN_PAGE_FORMAT + subdomain);
+//                sl.complete(Loggers.DONE);
+//            } else {
+//                filterChain.doFilter(request, servletResponse);
+//            }
         } catch (final Throwable e) {
             sl.multiComplete(new Loggers.LEVEL[]{Loggers.LEVEL.DEBUG, Loggers.LEVEL.ERROR}, Loggers.FAILED);
             filterChain.doFilter(request, servletResponse);

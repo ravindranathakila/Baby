@@ -28,4 +28,5 @@ public class ExceptionCache {
     final static public RuntimeException CDN_FILE_UPLOAD_FAILED = new RuntimeException("SORRY! FILE UPLOAD TO CDN FAILED.");
     final static public RuntimeException FILE_SIZE_EXCEPTION = new RuntimeException("SORRY! FILE SIZE TOO BIG.");
     final static public IllegalAccessError MULTIPLE_INITS = new IllegalAccessError("MULTIPLE INITIALIZATIONS DETECTED.");
+    final static public IllegalAccessError ILLEGAL_ACCESS_ERROR = new IllegalAccessError("ILLEGAL ACCESS DETECTED.");
 }

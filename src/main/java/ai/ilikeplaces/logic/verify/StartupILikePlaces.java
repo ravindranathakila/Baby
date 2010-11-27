@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
+import ai.ilikeplaces.util.Hail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -130,6 +131,7 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         System.out.println("********* START UP CHECK DONE ILIKEPLACES");
         System.out.println("********* ********* ********* ********* *********");
         System.out.println("");
+        System.out.println(Hail.honour());
     }
 
     final static Logger logger = LoggerFactory.getLogger(StartupILikePlaces.class);
