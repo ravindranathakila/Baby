@@ -182,11 +182,19 @@ final public class SmartLogger extends Thread {
         }
     }
 
+    /**
+     *
+     * @param completeStatus Complete status or null if you want to drop all further logging
+     */
     public void complete(final String completeStatus) {
         if (!status()) {
-            Loggers.log(level, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+            if (completeStatus != null) {
+                Loggers.log(level, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+            }
         } else {
-            Loggers.log(level, Loggers.EMBED + CAUSE_RECOVERED_WITH_STATUS + completeStatus + COLON + timeTaken(), logmsg);
+            if (completeStatus != null) {
+                Loggers.log(level, Loggers.EMBED + CAUSE_RECOVERED_WITH_STATUS + completeStatus + COLON + timeTaken(), logmsg);
+            }
         }
     }
 }
