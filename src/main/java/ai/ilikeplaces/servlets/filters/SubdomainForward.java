@@ -60,7 +60,7 @@ public class SubdomainForward implements Filter {
 //            return;
 //        }
 
-        final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.DEBUG, PROCESSING_SUBDOMAIN_FORWARD, 100, null, true);
+        final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.DEBUG, null, 100, null, true);
         try {
             final String unformattedurl = ((HttpServletRequest) request).getRequestURL().toString();
 
@@ -68,11 +68,13 @@ public class SubdomainForward implements Filter {
 
             final String domain = new URI(unformattedurl).getHost();
 
-            if (domain.endsWith("ilikeplaces.com") || domain.contains("localhost:8080")) {//Normal request on our website. Just forward.
+            if (domain.endsWith("ilikeplaces.com") || domain.contains("localhost")) {//Normal request on our website. Just forward.
                 filterChain.doFilter(request, servletResponse);
+                sl.complete(PROCESSING_SUBDOMAIN_FORWARD + " " + Loggers.DONE);
             } else {
                 sl.appendToLogMSG("Domain Forward mapping to " + domain);
                 request.getRequestDispatcher(new Parameter(Controller.Page.GeoBusiness.getURL()).append(TemplateSourceGeoBusiness.DOMAIN, domain, true).get()).forward(request, servletResponse);
+                sl.complete(null);
             }
 
 //            if(domain.endsWith(".GeoBusiness.ilikeplaces.com")){//Do this strict checks. We don't need somebody exploiting these stuff as bugs :-/

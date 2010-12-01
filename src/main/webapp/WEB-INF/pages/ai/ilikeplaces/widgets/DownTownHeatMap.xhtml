@@ -14,6 +14,41 @@
 <div class="span-14 last" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
 
 <script type="text/javascript">
+
+
+ var stylez = [
+    {
+      featureType: "road",
+      elementType: "geometry",
+      stylers: [
+        { hue: "#00ff00" },
+        { saturation: 100 }
+      ]
+    },
+    {
+      featureType: "landscape",
+      elementType: "geometry",
+      stylers: [
+        { hue: "#000000" },
+        { saturation: 75 },
+        { lightness: -100}
+      ]
+    },{
+      featureType: "road.local",
+      elementType: "all",
+      stylers: [
+        { hue: "#f6ff00" },
+        { saturation: 50 },
+        { gamma: 0.7 }
+      ]
+    }
+ ];
+
+
+
+
+
+
 markerIcon = "http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=1|14|000|glyphish_map-marker|16|4bf202|892e40";
 
 focusLat = 0;
@@ -34,14 +69,18 @@ function clearHotSpots(){
 
 function initialize_DownTownHeatMap_map(){
 
+ var DWN_TWN_ID = 'dwntwn';
+
     myLatlng = new google.maps.LatLng(focusLat,focusLng);
     var myOptions = {
         zoom: 2,
         center: myLatlng,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        mapTypeId: DWN_TWN_ID,
         mapTypeControlOptions:{
             style:google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-            position:google.maps.ControlPosition.TOP_LEFT
+            position:google.maps.ControlPosition.TOP_LEFT,
+            mapTypeIds: [google.maps.MapTypeId.ROADMAP, DWN_TWN_ID, google.maps.MapTypeId.SATELLITE]
+
         },
         navigationControlOptions:{
             style:google.maps.NavigationControlStyle.SMALL,
@@ -52,11 +91,20 @@ function initialize_DownTownHeatMap_map(){
 
     map = new google.maps.Map(document.getElementById("DownTownHeatMap_map"), myOptions);
 
+   var styledMapOptions = {
+    name: "DownTown"
+  };
+
+    var dwntwnMapTyp = new google.maps.StyledMapType(stylez, styledMapOptions);
+
+    map.mapTypes.set(DWN_TWN_ID, dwntwnMapTyp);
+
+
     placeMarker = new google.maps.Marker({
         position: myLatlng,
         map: map,
         title:"Is it here? if so, click on this marker!!!",
-        icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=MARK%20HOTSPOT|9|000|glyphish_map-marker|16|bb77ee|892e40"
+        icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=MARK%20HOTSPOT|11|aaa|glyphish_map-marker|16|bb77ee|bb77ee"
     });
 
 
@@ -123,7 +171,7 @@ function initialize_DownTownHeatMap_map(){
         var myOptions;
         if(map.getZoom()>19){
             myOptions = {
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                 //mapTypeId: google.maps.MapTypeId.ROADMAP,
                 draggable:true//TODO, set to false
             };
             map.setOptions(myOptions);
@@ -141,7 +189,7 @@ function initialize_DownTownHeatMap_map(){
     });
 
     google.maps.event.addListener(map, 'dragend', function() {
-        if(map.getZoom()>16){
+        if(map.getZoom()>10){
             var curr = DownTownHeatMapBBUpdate(
                 map.getBounds().getSouthWest().lat(),
                 map.getBounds().getSouthWest().lng(),
@@ -154,7 +202,7 @@ function initialize_DownTownHeatMap_map(){
     });
 
     google.maps.event.addListener(map, 'zoom_changed', function() {
-        if(map.getZoom()>16){
+        if(map.getZoom()>10){
             var curr = DownTownHeatMapBBUpdate(
                 map.getBounds().getSouthWest().lat(),
                 map.getBounds().getSouthWest().lng(),
@@ -173,7 +221,7 @@ function initialize_DownTownHeatMap_map(){
 
 initialize_gmap_scripts_done = false;
 
-function initialize_gmap_scripts(){
+function initialize_gmap_scripts(){//wise any changes also to initialize_gmap_scripts_transparently
     if(!initialize_gmap_scripts_done){
         document.getElementById("DownTownHeatMap_load_click").style.display = "none";
         document.getElementById("DownTownHeatMap_map_wrapper").style.display = "block";
@@ -181,9 +229,23 @@ function initialize_gmap_scripts(){
         scripts.type = "text/javascript";
         scripts.src = "http://maps.google.com/maps/api/js?sensor=false&callback=initialize_DownTownHeatMap_map";
         document.body.appendChild(scripts);
-        //alert("Hold on to ur seat tight! Down Town is loading the heat map...");
         initialize_gmap_scripts_done = true;
+    }else{
+        //map already loaded
     }
+
+}
+
+function initialize_gmap_scripts_transparently(){//wise any changes also to initialize_gmap_scripts
+    if(!initialize_gmap_scripts_done){
+        var scripts = document.createElement("script");
+        scripts.type = "text/javascript";
+        scripts.src = "http://maps.google.com/maps/api/js?sensor=false&callback=initialize_DownTownHeatMap_map";
+        document.body.appendChild(scripts);
+    }else{
+        //map already loaded
+    }
+
 }
 </script>
     <div class="span-14 last" style="overflow:hidden;" id="DownTownHeatMap_load_click">

@@ -21,6 +21,7 @@ public class TemplateSourceGeoBusiness implements TemplateSource {
     public static final String ILIKEPLACES_COM = "ilikeplaces.com";
     public static final String LOCALHOST_8080 = "localhost:8080";
     public static final String WWW_ILIKEPLACES_COM = "www.ilikeplaces.com";
+    public static final String SLASH = "/";
 
     public static enum TemplateSourceGeoBusinessType {
         FullyImplementedHTML() {
@@ -30,7 +31,7 @@ public class TemplateSourceGeoBusiness implements TemplateSource {
              */
             @Override
             public String toString() {
-                return "http://www.ilikeplaces.com/cdn/FullyImplementedHTML/";
+                return "http:" + SLASH + "/www.ilikeplaces.com/cdn/FullyImplementedHTML/";
             }},
 
         PiratesAttackingUsPirates() {
@@ -74,7 +75,7 @@ public class TemplateSourceGeoBusiness implements TemplateSource {
 
                 switch (type) {
                     case FullyImplementedHTML:
-                        url = new URL(type.toString().replace(WWW_ILIKEPLACES_COM, LOCALHOST_8080) + domain + HTML);
+                        url = new URL(type.toString().replace(WWW_ILIKEPLACES_COM, LOCALHOST_8080) + domain + SLASH + domain + HTML);
                         URLConnection conn = url.openConnection();
                         HttpServletRequest httpRequest = (HttpServletRequest) itsNatServletRequest.getServletRequest();
                         String userAgent = httpRequest.getHeader(USER_AGENT);

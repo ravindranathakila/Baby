@@ -74,26 +74,27 @@
            }
         </script>
     </head>
+    <body style="background:#ab702c;">
     <!--<body style="background-color:#99b3cc;">-->
     <!--<body style="background-color::#892e40;">-->
-    <!--<body style="background-color:#9999ff;"><!--chosen-->
-    <body style="background-color:#325b6e;"><!--chosen-->
+    <!--<body style="background-color:#9999ff;">-->
+    <!--<body style="background-color:#325b6e;">-->
         <div id="Main_display" class="container" itsnat:nocache="true" style="display:block;">
-            <div class="span-24 last" style="background-color:#325b6e;">
+            <div class="span-24 last" style="background-color:#ab702c;">
                 <div class="span-24 last center" style="height:5px;">
                     &nbsp;
                 </div>
-                <div class="span-24 last center vtip" style="height:54px;" title="DOWN TOWN IS A COLLECTION OF REAL WORLD HOTSPOTS">
-                    <span style="font-size:54px;font-family: Impact, Charcoal, sans-serif;" class="center">AT</span>
+                <div class="span-24 last center">
+                    <span style="font-size:32px;font-family: Impact, Charcoal, sans-serif;" class="center vtip" title="THIS IS WHERE THE HOT AND TRENDY REAL WORLD SPOTS ARE MARKED!">
+                        FIND WAYS TO SOCIALIZE IN REAL LIFE
+                    </span>
+                </div>
+                <div class="span-24 last center vtip" style="height:44px;" title="DOWN TOWN IS A COLLECTION OF REAL WORLD HOTSPOTS">
+                    <span style="font-size:44px;font-family: Impact, Charcoal, sans-serif;" class="center">AT</span>
                 </div>
                 <div class="span-24 last center vtip" style="height:120px;" title="DOWN TOWN IS A COLLECTION OF REAL WORLD HOTSPOTS">
                     <span style="font-size:108px;font-family: Impact, Charcoal, sans-serif;" class="center">&nbsp;&nbsp;&nbsp;&nbsp;DOWN&darr;TOWN</span>
                     <span style="font-size:10px;"><img src="http://www.ilikeplaces.com/favicon.png" alt="i"/>likeplaces.com</span>
-                </div>
-                <div class="span-24 last center">
-                    <span style="font-size:36px;font-family: Impact, Charcoal, sans-serif;" class="center vtip" title="THIS IS WHERE THE HOT AND TRENDY REAL WORLD SPOTS ARE MARKED!">
-                        YOU CAN FIND WAYS TO SOCIALIZE IN REAL LIFE!
-                    </span>
                 </div>
                 <hr/>
                 <div class="span-24 last center">
@@ -151,6 +152,21 @@
         <script type="text/javascript" src="/js/miniquarry/vtip.js"></script>
         <script type="text/javascript">
             vtip();
+        </script>
+        <script type="text/javascript">
+            try{
+               setTimeout("initialize_gmap_scripts_transparently()", 7000);
+            }catch(err){
+                if(confirm("You internet connection seems to be flaky. Reload web page?")){
+                    try{
+                        setTimeout("initialize_gmap_scripts_transparently()", 7000);
+                    }catch(err){
+                        alert("Sorry, Still could not load required stuff.");
+                    }
+                }else{
+                    alert("Ok. Not reloading. However things might not work!");
+                }
+            }
         </script>
     </body>
 </html>
