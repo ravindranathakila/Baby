@@ -2,7 +2,8 @@
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
 <node CREATED="1266111255046" ID="Freemind_Link_1364723499" MODIFIED="1283702725295" STYLE="bubble" TEXT="Hibernate">
 <hook NAME="accessories/plugins/CreationModificationPlugin_new.properties"/>
-<node CREATED="1266112497203" FOLDED="true" ID="Freemind_Link_98693104" MODIFIED="1270054292968" POSITION="left" TEXT="Postponed(1 week rule)">
+<node CREATED="1266112497203" FOLDED="true" ID="Freemind_Link_98693104" MODIFIED="1291212324296" POSITION="left" TEXT="Postponed(1 week rule)">
+<font NAME="Comic Sans MS" SIZE="9"/>
 <icon BUILTIN="messagebox_warning"/>
 <node CREATED="1266112516093" ID="Freemind_Link_170625570" MODIFIED="1266112615062" TEXT="Uplaoding Multiple files&#xa;Bookmarked:file upload, chosen, "/>
 <node CREATED="1266115325609" ID="Freemind_Link_17826912" MODIFIED="1266115330921" TEXT="Custorm Cursor Types"/>
@@ -299,7 +300,7 @@
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1266122484171" ID="Freemind_Link_762634471" MODIFIED="1266168961000" TEXT="Deploy and check">
+<node COLOR="#338800" CREATED="1266122484171" ID="Freemind_Link_762634471" MODIFIED="1291212091515" TEXT="Deploy and check">
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
@@ -926,26 +927,23 @@
 <icon BUILTIN="pencil"/>
 <node CREATED="1288415653343" ID="Freemind_Link_540547344" MODIFIED="1288423654031" TEXT="FREEZER">
 <icon BUILTIN="desktop_new"/>
-<node CREATED="1288421673765" ID="Freemind_Link_1507643800" MODIFIED="1288422805046" TEXT="MARKETABILITY FREEZE">
+<node CREATED="1288421673765" FOLDED="true" ID="Freemind_Link_1507643800" MODIFIED="1288422805046" TEXT="MARKETABILITY FREEZE">
 <icon BUILTIN="full-1"/>
 <hook NAME="accessories/plugins/NodeNote.properties">
 <text>Unless you freeze the product as &quot;marketable&quot;, you cannot do ANY freezing.</text>
 </hook>
-<node CREATED="1288493873906" FOLDED="true" ID="Freemind_Link_1602200353" MODIFIED="1288493992343" TEXT="Search for a list of hotspots">
-<node CREATED="1288494009296" ID="Freemind_Link_487003763" MODIFIED="1288494025578" TEXT="A search box for easy map navigation"/>
-<node CREATED="1288494026281" ID="Freemind_Link_1809855193" MODIFIED="1288494051421" TEXT="An event based hotspot heat map">
-<node CREATED="1288494241734" ID="Freemind_Link_860375365" MODIFIED="1288537475218" TEXT="TODO zoom break on 4&lt;5">
-<icon BUILTIN="flag"/>
-<icon BUILTIN="button_ok"/>
-</node>
-</node>
-</node>
 <node CREATED="1288494134890" ID="Freemind_Link_1722996598" MODIFIED="1288494424984" TEXT="Create personal locations based on hh">
 <edge WIDTH="thin"/>
 <node CREATED="1288494499906" ID="Freemind_Link_1464782037" MODIFIED="1288494525531" TEXT="Specify other owners to it"/>
 <node CREATED="1288494514015" ID="Freemind_Link_1160306731" MODIFIED="1288494721937" TEXT="Specify other viewers to it">
-<node CREATED="1289574440312" ID="Freemind_Link_1875120660" MODIFIED="1289574501484" TEXT="TODO:SE:Remove oneself from a location">
+<node CREATED="1289574440312" ID="Freemind_Link_1875120660" MODIFIED="1291212224984" TEXT="TODO:SE:Remove oneself from a location">
 <icon BUILTIN="flag"/>
+<icon BUILTIN="button_cancel"/>
+<node CREATED="1291212186218" ID="Freemind_Link_644459776" MODIFIED="1291212324312" TEXT="This can be done via mute. Spamming possible through repeated add/remove">
+<arrowlink DESTINATION="Freemind_Link_98693104" ENDARROW="Default" ENDINCLINATION="1885;0;" ID="Freemind_Arrow_Link_1348588572" STARTARROW="None" STARTINCLINATION="1885;0;"/>
+<font NAME="Comic Sans MS" SIZE="10"/>
+<icon BUILTIN="clanbomber"/>
+</node>
 </node>
 </node>
 <node CREATED="1288494752125" ID="Freemind_Link_1845246042" MODIFIED="1288494767093" TEXT="Create personal events based on location">
@@ -970,10 +968,10 @@
 <node CREATED="1290559777906" ID="Freemind_Link_1470697142" MODIFIED="1290559782406" TEXT="Can mute wall"/>
 </node>
 </node>
-<node CREATED="1288494957750" FOLDED="true" ID="Freemind_Link_796263707" MODIFIED="1289574560281" TEXT="Wall">
+<node CREATED="1288494957750" ID="Freemind_Link_796263707" MODIFIED="1289574560281" TEXT="Wall">
 <node CREATED="1288495017437" ID="Freemind_Link_1165287616" MODIFIED="1288495021078" TEXT="Event collaboration"/>
 <node CREATED="1288495022187" ID="Freemind_Link_476419257" MODIFIED="1288495026828" TEXT="Just talk"/>
-<node CREATED="1288505455328" FOLDED="true" ID="Freemind_Link_100061593" MODIFIED="1288505467984" TEXT="Email Conversation">
+<node CREATED="1288505455328" ID="Freemind_Link_100061593" MODIFIED="1288505467984" TEXT="Email Conversation">
 <node CREATED="1288505468890" ID="Freemind_Link_798420819" MODIFIED="1288537488968" TEXT="TODO: close on update">
 <icon BUILTIN="flag"/>
 <icon BUILTIN="button_ok"/>
@@ -984,7 +982,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1288494976062" FOLDED="true" ID="Freemind_Link_883921747" MODIFIED="1288505500703" TEXT="See a map of the event location">
+<node CREATED="1288494976062" ID="Freemind_Link_883921747" MODIFIED="1288505500703" TEXT="See a map of the event location">
 <node CREATED="1288494987984" ID="Freemind_Link_1043652536" MODIFIED="1288495001140" TEXT="Map helps people find the place"/>
 <node CREATED="1288495003125" ID="Freemind_Link_1736837459" MODIFIED="1288495010796" TEXT="Maps gives the place better identty"/>
 <node CREATED="1288505501953" ID="Freemind_Link_1504477530" MODIFIED="1288537492125" TEXT="TODO: private event view map">
@@ -992,7 +990,7 @@
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1288495037421" FOLDED="true" ID="Freemind_Link_91009859" MODIFIED="1288495039562" TEXT="Album">
+<node CREATED="1288495037421" ID="Freemind_Link_91009859" MODIFIED="1288495039562" TEXT="Album">
 <node CREATED="1288495040046" ID="Freemind_Link_1216857146" MODIFIED="1289574578890" TEXT="(Upload)Share photos of event">
 <node CREATED="1289574580609" ID="Freemind_Link_103327350" MODIFIED="1290438847750" TEXT="TODO:SE:Remove photos">
 <icon BUILTIN="flag"/>
@@ -1034,10 +1032,19 @@
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1288507314546" FOLDED="true" ID="Freemind_Link_1436401670" MODIFIED="1288507322015" TEXT="Sidebar connections">
+<node CREATED="1288507314546" ID="Freemind_Link_1436401670" MODIFIED="1288507322015" TEXT="Sidebar connections">
 <node CREATED="1288507322703" ID="Freemind_Link_255638645" MODIFIED="1288537483875" TEXT="TODO: implement">
 <icon BUILTIN="flag"/>
 <icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1288493873906" ID="Freemind_Link_1602200353" MODIFIED="1288493992343" TEXT="Search for a list of hotspots">
+<node CREATED="1288494009296" ID="Freemind_Link_487003763" MODIFIED="1288494025578" TEXT="A search box for easy map navigation"/>
+<node CREATED="1288494026281" ID="Freemind_Link_1809855193" MODIFIED="1288494051421" TEXT="An event based hotspot heat map">
+<node CREATED="1288494241734" ID="Freemind_Link_860375365" MODIFIED="1288537475218" TEXT="TODO zoom break on 4&lt;5">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+</node>
 </node>
 </node>
 </node>
@@ -1083,7 +1090,77 @@
 </node>
 </node>
 </node>
-<node CREATED="1266112839468" FOLDED="true" ID="Freemind_Link_674125175" MODIFIED="1266112859718" POSITION="right" TEXT="Side fixing">
+<node CREATED="1291212117250" ID="Freemind_Link_1414706278" MODIFIED="1291212142656" POSITION="right" TEXT="Staging">
+<icon BUILTIN="kaddressbook"/>
+<node CREATED="1291212602703" ID="Freemind_Link_1737407813" MODIFIED="1291214185046" TEXT="Set tomcat compression">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>    &lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;&#xa;               connectionTimeout=&quot;20000&quot;&#xa;               redirectPort=&quot;8443&quot;&#xa;               compression=&quot;on&quot;&#xa;&#x9;&#x9;&#x9;   compressionMinSize=&quot;1024&quot;&#xa;               compressableMimeType=&quot;text/html,text/javascript,text/css,text/xhtml&quot;/&gt;</text>
+</hook>
+</node>
+<node CREATED="1291212604468" ID="Freemind_Link_59226303" MODIFIED="1291214185046" TEXT="Set tomcat character encoding">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>    &lt;Connector port=&quot;8080&quot; maxHttpHeaderSize=&quot;8192&quot;&#xa;     maxThreads=&quot;150&quot; minSpareThreads=&quot;25&quot; maxSpareThreads=&quot;75&quot;&#xa;     enableLookups=&quot;false&quot; redirectPort=&quot;8443&quot; acceptCount=&quot;100&quot;&#xa;     connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot;&#xa;     compression=&quot;on&quot;&#xa;     compressionMinSize=&quot;128&quot;&#xa;     noCompressionUserAgents=&quot;gozilla, traviata&quot; &#xa;     compressableMimeType=&quot;text/html,text/xml,text/plain,text/css,text/ javascript,application/x-javascript,application/javascript&quot;&#xa;     URIEncoding=&quot;UTF-8&quot;&#xa;    /&gt;</text>
+</hook>
+</node>
+<node CREATED="1291212637531" ID="Freemind_Link_469647367" MODIFIED="1291214185046" TEXT="Compare local(non cdn) and Header Expires Filter in WEB.XML">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291212646750" ID="Freemind_Link_1477242506" MODIFIED="1291214185046" TEXT=" Add cloudfiles.properties and log4j.properties to tomcat lib">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291212671046" ID="Freemind_Link_490713279" MODIFIED="1291214185031" TEXT="check whether globalconfig should be put in tomcat lib and diff it with new one">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291212681453" ID="Freemind_Link_1323247436" MODIFIED="1291214185031" TEXT="disable disqus developer mode">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291212713812" ID="Freemind_Link_215516192" MODIFIED="1291214185031" TEXT="check if access is prevented to openejb, and roles defined">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>&lt;?xml version=&apos;1.0&apos; encoding=&apos;utf-8&apos;?&gt;&#xa;&lt;tomcat-users&gt;&#xa;  &lt;role rolename=&quot;ilp&quot;/&gt;&#xa;  &lt;user username=&quot;ilikeplaces_admin&quot; password=&quot;sumo_is_a_780_game&quot; roles=&quot;ilp&quot;/&gt;&#xa;&lt;/tomcat-users&gt;&#xa;&#xa;&#xa; &lt;!-- Define a Security Constraint on this Application --&gt;&#xa;  &lt;security-constraint&gt;&#xa;    &lt;web-resource-collection&gt;&#xa;      &lt;web-resource-name&gt;OpenEJB Application&lt;/web-resource-name&gt;&#xa;      &lt;url-pattern&gt;/*&lt;/url-pattern&gt;&#xa;    &lt;/web-resource-collection&gt;&#xa;    &lt;auth-constraint&gt;&#xa;      &lt;role-name&gt;ilp&lt;/role-name&gt;&#xa;    &lt;/auth-constraint&gt;&#xa;  &lt;/security-constraint&gt;&#xa;&#xa;  &lt;!-- Define the Login Configuration for this Application --&gt;&#xa;  &lt;login-config&gt;&#xa;    &lt;auth-method&gt;BASIC&lt;/auth-method&gt;&#xa;    &lt;realm-name&gt;Application&lt;/realm-name&gt;&#xa;  &lt;/login-config&gt;&#xa;&#xa;  &lt;!-- Security roles referenced by this web application --&gt;&#xa;  &lt;security-role&gt;&#xa;    &lt;description&gt;&#xa;      The role that is required to log in to the OpenEJB Application&#xa;    &lt;/description&gt;&#xa;    &lt;role-name&gt;ilp&lt;/role-name&gt;&#xa;  &lt;/security-role&gt;&#xa;&lt;/web-app&gt;&#xa;</text>
+</hook>
+</node>
+<node CREATED="1291213930125" ID="Freemind_Link_1485504866" MODIFIED="1291214185031" TEXT="Upload latest sources">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291214174406" ID="Freemind_Link_932887219" MODIFIED="1291214193171" TEXT="Backup existing database">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>1. Backup existing database&#xa;CALL SYSCS_UTIL.SYSCS_FREEZE_DATABASE(); &#xa;Backup ilp directory&#xa;CALL SYSCS_UTIL.SYSCS_UNFREEZE_DATABASE();</text>
+</hook>
+</node>
+<node CREATED="1291214117578" ID="Freemind_Link_804394739" MODIFIED="1291214185015" TEXT="Upload war">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291214130437" ID="Freemind_Link_1454121737" MODIFIED="1291214185015" TEXT="Compare and copy config.properties as GlobalConfig.properties">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291216191734" ID="Freemind_Link_1627016185" MODIFIED="1291216210234" TEXT="Backup Users!">
+<icon BUILTIN="flag"/>
+</node>
+<node CREATED="1291216110437" ID="Freemind_Link_1160336191" MODIFIED="1291216111562" TEXT="Remove existing database"/>
+<node CREATED="1291216112625" ID="Freemind_Link_426396135" MODIFIED="1291216119328" TEXT="Startup new app so that the tables are generated"/>
+<node CREATED="1291216120531" ID="Freemind_Link_1808227689" MODIFIED="1291216126000" TEXT="Stop new app"/>
+<node CREATED="1291213950796" ID="Freemind_Link_1942704877" MODIFIED="1291216167953" TEXT="importing geo data to derby. Tab character, should be copied off something like notepad and pasted ">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>CALL SYSCS_UTIL.SYSCS_IMPORT_DATA (&apos;ILP&apos;,&apos;LOCATION&apos;,&apos;LOCATIONID,LOCATIONNAME,LOCATIONINFO,LOCATIONSUPERSET_LOCATIONID&apos;,&apos;1,3,3,6&apos;, &apos;/root/downloads/ygd/7.5.2/geoplanet_places_7.5.2.tsv&apos;, &apos;&#x9;&apos;,&apos;&quot;&apos;,&apos;UTF-8&apos;, 1)&#xa;&#xa;SYSCS_UTIL.SYSCS_IMPORT_TABLE (IN schemaName VARCHAR(128),&#xa;IN tableName VARCHAR(128), IN fileName VARCHAR(32672),&#xa;&#xa;IN columnDelimiter CHAR(1), IN characterDelimiter  CHAR(1),&#xa;IN codeset VARCHAR(128), IN replace SMALLINT)&#xa;&#xa;No Result is returned from the procedure.&#xa;To import data from a file to a subset of columns in a table, use the SYSCS_UTIL.SYSCS_IMPORT_DATA procedure.&#xa;To import data to subset of columns in a table, you specify insertColumns on the table into which data will be imported and/or specify columnIndexes to import data fields from a file to columns in a table.&#xa;The procedure definition is:&#xa;SYSCS_UTIL.SYSCS_IMPORT_DATA (IN schemaName VARCHAR(128),&#xa;IN tableName VARCHAR(128), IN insertColumns VARCHAR(32672),&#xa;IN columnIndexes VARCHAR(32672), IN fileName VARCHAR(32672),&#xa;IN columnDelimiter CHAR(1), IN characterDelimiter  CHAR(1),&#xa;IN codeset VARCHAR(128), IN replace SMALLINT)&#xa;&#xa;&#xa;CALL SYSCS_UTIL.SYSCS_IMPORT_DATA (&apos;ILPIMP&apos;,&apos;LOCATION&apos;,&apos;LOCATIONID,LOCATIONNAME,LOCATIONSUPERSET_LOCATIONID&apos;,&apos;1,3,6&apos;, &apos;/root/downloads/ygd/7.5.2/geoplanet_places_7.5.2.tsv&apos;, &apos;&#x9;&apos;,&apos;&quot;&apos;,&apos;UTF-8&apos;, 1)&#xa;&#xa;1. Create a sample database&#xa;&#xa;2. Create Tables for Import(Use intellij DBHelper)&#xa;CREATE TABLE  ILPIMP.LOCATION (&#xa;LOCATIONID BIGINT,&#xa;CLEARANCE BIGINT,&#xa;LOCATIONGEO1 VARCHAR(63),&#xa;LOCATIONGEO2 VARCHAR(63),&#xa;LOCATIONINFO VARCHAR(1000),&#xa;LOCATIONNAME VARCHAR(255),&#xa;LOCATIONSUPERSET_LOCATIONID BIGINT&#xa;, PRIMARY KEY (LOCATIONID)&#xa;);&#xa;&#xa;2. Do a sample import and verity import works with the TSV&#xa;</text>
+</hook>
+</node>
+</node>
+<node CREATED="1266112839468" FOLDED="true" ID="Freemind_Link_674125175" MODIFIED="1291216108484" POSITION="right" TEXT="Side fixing">
+<font NAME="Comic Sans MS" SIZE="14"/>
 <icon BUILTIN="clanbomber"/>
 <node CREATED="1275247786984" ID="Freemind_Link_841143219" MODIFIED="1275247834859" TEXT="Startup and Shutdown mails"/>
 <node CREATED="1270054635078" ID="Freemind_Link_408918916" MODIFIED="1281967604656" TEXT="JSP forward or deny on OpenEJB"/>
@@ -1107,7 +1184,7 @@
 <icon BUILTIN="full-2"/>
 </node>
 </node>
-<node CREATED="1290226890156" ID="Freemind_Link_493529642" MODIFIED="1290226899765" POSITION="left" TEXT="SUMMARIZING READINGS">
+<node CREATED="1290226890156" FOLDED="true" ID="Freemind_Link_493529642" MODIFIED="1290226899765" POSITION="left" TEXT="SUMMARIZING READINGS">
 <node CREATED="1290226910703" ID="Freemind_Link_1757451953" LINK="http://techzinglive.com/page/169/techzing-34-central-desktop-relentless-execution" MODIFIED="1290229079984" TEXT="Central Desktop / Relentless Execution">
 <node CREATED="1290226939203" ID="Freemind_Link_585690306" MODIFIED="1290226946781" TEXT="Free user verison trippled signup">
 <node CREATED="1290226989281" ID="Freemind_Link_615483894" MODIFIED="1290227010078" TEXT="Just enough to get them influenced. 25mb."/>

@@ -41,6 +41,34 @@
 </tomcat-users>
 
 
+ <!-- Define a Security Constraint on this Application -->
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>OpenEJB Application</web-resource-name>
+      <url-pattern>/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>ilp</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <!-- Define the Login Configuration for this Application -->
+  <login-config>
+    <auth-method>BASIC</auth-method>
+    <realm-name>Application</realm-name>
+  </login-config>
+
+  <!-- Security roles referenced by this web application -->
+  <security-role>
+    <description>
+      The role that is required to log in to the OpenEJB Application
+    </description>
+    <role-name>ilp</role-name>
+  </security-role>
+</web-app>
+
+
+
  # upload sources
 
  # importing geo data to derby. Tab character, should be copied off something like notepad and pasted   
@@ -94,7 +122,7 @@ CALL SYSCS_UTIL.SYSCS_UNFREEZE_DATABASE();
 3. Compare and copy config.properties as GlobalConfig.properties
 
 2. Remove existing database
-3. Startup new app so that the ables are generated
+3. Startup new app so that the tables are generated
 4. Stop new app
 
 5. Import data

@@ -53,7 +53,8 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
      * Initializes your document here by appending fragments.
      * <p/>
      * If/when you are overriding this method, remember to call super.init(with required params)  so that,
-     * the template is initialized.
+     * the template is initialized. You have the flexibility as to when to call this method when doing so. i.e. Either
+     * after you're done with your own init work, or before doing it, or in the middle!
      *
      * @param itsNatHTMLDocument__
      * @param hTMLDocument__

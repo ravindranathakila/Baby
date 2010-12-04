@@ -12,6 +12,8 @@ import java.io.InputStream;
 import java.net.*;
 
 public class TemplateSourceGeoBusiness implements TemplateSource {
+// ------------------------------ FIELDS ------------------------------
+
     public static final String DOMAIN = "domain";
     public static final String USER_AGENT = "User-Agent";
     public static final String HTML = ".html";
@@ -23,35 +25,10 @@ public class TemplateSourceGeoBusiness implements TemplateSource {
     public static final String WWW_ILIKEPLACES_COM = "www.ilikeplaces.com";
     public static final String SLASH = "/";
 
-    public static enum TemplateSourceGeoBusinessType {
-        FullyImplementedHTML() {
+// ------------------------ INTERFACE METHODS ------------------------
 
-            /**
-             * @return the url BASE, starting with http: if web based, or file: if local. use base/www.exampledomain.co.uk.html format
-             */
-            @Override
-            public String toString() {
-                return "http:" + SLASH + "/www.ilikeplaces.com/cdn/FullyImplementedHTML/";
-            }},
 
-        PiratesAttackingUsPirates() {
-
-            /**
-             * @return the url of this template, starting with http: if web based, or file: if local.
-             */
-            @Override
-            public String toString() {
-                throw ExceptionCache.UNSUPPORTED_OPERATION_EXCEPTION;//This should be the url of the pirate caught page
-            }};
-
-        /**
-         * @return the url of this template, starting with http: if web based, or file: if local.
-         */
-        @Override
-        public String toString() {
-            return super.toString();
-        }
-    }
+// --------------------- Interface TemplateSource ---------------------
 
     @Override
     public boolean isMustReload(final ItsNatServletRequest itsNatServletRequest, final ItsNatServletResponse response) {
@@ -60,7 +37,6 @@ public class TemplateSourceGeoBusiness implements TemplateSource {
 
     @Override
     public InputStream getInputStream(final ItsNatServletRequest itsNatServletRequest, final ItsNatServletResponse response) {
-
         final String domain;
         final InputStream returnVal;
 
@@ -75,7 +51,7 @@ public class TemplateSourceGeoBusiness implements TemplateSource {
 
                 switch (type) {
                     case FullyImplementedHTML:
-                        url = new URL(type.toString().replace(WWW_ILIKEPLACES_COM, LOCALHOST_8080) + domain + SLASH + domain + HTML);
+                        url = new URL(type.toString().replace(WWW_ILIKEPLACES_COM, WWW_ILIKEPLACES_COM) + domain + SLASH + domain + HTML);
                         URLConnection conn = url.openConnection();
                         HttpServletRequest httpRequest = (HttpServletRequest) itsNatServletRequest.getServletRequest();
                         String userAgent = httpRequest.getHeader(USER_AGENT);
@@ -100,5 +76,35 @@ public class TemplateSourceGeoBusiness implements TemplateSource {
         }
 
         return returnVal;
+    }
+
+// -------------------------- ENUMERATIONS --------------------------
+
+    public static enum TemplateSourceGeoBusinessType {
+        FullyImplementedHTML() {
+            /**
+             * @return the url BASE, starting with http: if web based, or file: if local. use base/www.exampledomain.co.uk.html format
+             */
+            @Override
+            public String toString() {
+                return "http:" + SLASH + "/www.ilikeplaces.com/cdn/FullyImplementedHTML/";
+            }},
+
+        PiratesAttackingUsPirates() {
+            /**
+             * @return the url of this template, starting with http: if web based, or file: if local.
+             */
+            @Override
+            public String toString() {
+                throw ExceptionCache.UNSUPPORTED_OPERATION_EXCEPTION;//This should be the url of the pirate caught page
+            }};
+
+        /**
+         * @return the url of this template, starting with http: if web based, or file: if local.
+         */
+        @Override
+        public String toString() {
+            return super.toString();
+        }
     }
 }
