@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
@@ -26,22 +25,33 @@ import javax.ejb.TransactionAttributeType;
 @NOTE(note = "SEE CRUDSERVICE WHERE TO SUPPORT READ AND DIRTY READ, THE TX TYPE IS SUPPORTS.")
 @Stateless
 public class UHumansNetPeople extends AbstractSLBCallbacks implements UHumansNetPeopleLocal {
+// ------------------------------ FIELDS ------------------------------
+
+    final static Logger logger = LoggerFactory.getLogger(UHumansNetPeople.class);
+
+
+    @EJB
+    private RHumansNetPeopleLocal rHumansNetPeopleLocal_;
 
     @EJB
     private CrudServiceLocal<HumansNetPeople> crudServiceLocal_;
 
-    @EJB
-    private RHumansNetPeopleLocal rHumansNetPeopleLocal_;
+// --------------------------- CONSTRUCTORS ---------------------------
 
     public UHumansNetPeople() {
         logger.debug(RBGet.logMsgs.getString("common.Constructor.Init"), UHumansNetPeople.class, this.hashCode());
     }
 
+// ------------------------ INTERFACE METHODS ------------------------
+
+
+// --------------------- Interface UHumansNetPeopleLocal ---------------------
+
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @WARNING(warning = "ADD will not work if you remove transaction as entities will be unmanaged.")
     public boolean doNTxAddHumansNetPeople(final String adderHumanId, final String addeeHumanId) {
-        if(adderHumanId.equals(addeeHumanId)){
+        if (adderHumanId.equals(addeeHumanId)) {
             throw new DBDishonourException("SORRY! ADDING SELF IS NOT SUPPORTED!");
         }
         final HumansNetPeople adder = rHumansNetPeopleLocal_.doRHumansNetPeople(adderHumanId);
@@ -75,7 +85,7 @@ public class UHumansNetPeople extends AbstractSLBCallbacks implements UHumansNet
     public boolean doNTxIsHumansNetPeople(final String checker, final String checkeee) {
         final HumansNetPeople cker = rHumansNetPeopleLocal_.doRHumansNetPeople(checker);
         final HumansNetPeople ckeee = rHumansNetPeopleLocal_.doRHumansNetPeople(checkeee);
-        Loggers.DEBUG.debug("Is friend:"+cker.getHumansNetPeoples().contains(ckeee));
+        Loggers.DEBUG.debug("Is friend:" + cker.getHumansNetPeoples().contains(ckeee));
         return cker.getHumansNetPeoples().contains(ckeee);
     }
 
@@ -84,10 +94,7 @@ public class UHumansNetPeople extends AbstractSLBCallbacks implements UHumansNet
     public boolean doDirtyIsHumansNetPeople(final String adderHumanId, final String addeeHumanId) {
         final HumansNetPeople adder = rHumansNetPeopleLocal_.doRHumansNetPeople(adderHumanId);
         final HumansNetPeople addee = rHumansNetPeopleLocal_.doRHumansNetPeople(addeeHumanId);
-        Loggers.DEBUG.debug("Is friend:"+adder.getHumansNetPeoples().contains(addee));
+        Loggers.DEBUG.debug("Is friend:" + adder.getHumansNetPeoples().contains(addee));
         return adder.getHumansNetPeoples().contains(addee);
     }
-
-    final static Logger logger = LoggerFactory.getLogger(UHumansNetPeople.class);
-
 }

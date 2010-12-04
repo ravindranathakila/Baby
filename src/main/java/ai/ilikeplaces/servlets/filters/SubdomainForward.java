@@ -70,11 +70,11 @@ public class SubdomainForward implements Filter {
 
             if (domain.endsWith("ilikeplaces.com") || domain.contains("localhost")) {//Normal request on our website. Just forward.
                 filterChain.doFilter(request, servletResponse);
-                sl.complete(PROCESSING_SUBDOMAIN_FORWARD + " " + Loggers.DONE);
+                sl.complete(null);
             } else {
                 sl.appendToLogMSG("Domain Forward mapping to " + domain);
                 request.getRequestDispatcher(new Parameter(Controller.Page.GeoBusiness.getURL()).append(TemplateSourceGeoBusiness.DOMAIN, domain, true).get()).forward(request, servletResponse);
-                sl.complete(null);
+                sl.complete(PROCESSING_SUBDOMAIN_FORWARD + " " + Loggers.DONE);
             }
 
 //            if(domain.endsWith(".GeoBusiness.ilikeplaces.com")){//Do this strict checks. We don't need somebody exploiting these stuff as bugs :-/

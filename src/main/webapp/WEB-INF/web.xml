@@ -251,10 +251,6 @@
         <filter-name>SubdomainForward</filter-name>
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
-        <init-param>
-            <param-name>ON</param-name>
-            <param-value>false</param-value>
-        </init-param>
     </filter-mapping>
 
     <!--###################### END OF FILTER MAPPINGS ####################################-->
@@ -279,32 +275,5 @@
     <!--<error-page>-->
     <!--<exception-type>java.lang.Throwable</exception-type>-->
     <!--<location>/</location>-->
-    <!--</error-page>-->
-
-
-  <!-- Define a Security Constraint on this Application -->
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>OpenEJB Application</web-resource-name>
-      <url-pattern>/openejb/*</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>ilp</role-name>
-    </auth-constraint>
-  </security-constraint>
-
-  <!-- Define the Login Configuration for this Application -->
-  <login-config>
-    <auth-method>BASIC</auth-method>
-    <realm-name>Application</realm-name>
-  </login-config>
-
-  <!-- Security roles referenced by this web application -->
-  <security-role>
-    <description>
-      The role that is required to log in to the OpenEJB Application
-    </description>
-    <role-name>ilp</role-name>
-  </security-role>
-    
+    <!--</error-page>-->    
 </web-app>

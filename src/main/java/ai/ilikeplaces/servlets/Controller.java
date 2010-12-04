@@ -2,6 +2,7 @@ package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.logic.Listeners.*;
+import ai.ilikeplaces.logic.Listeners.templates.TemplateGeneric;
 import ai.ilikeplaces.logic.Listeners.widgets.ListenerShare;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidget;
 import ai.ilikeplaces.rbs.RBGet;
@@ -29,13 +30,78 @@ import java.util.*;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class
         Controller extends HttpServletWrapper {
+// ------------------------------ FIELDS ------------------------------
+
+    public static final String LOCATION_HUB = "/page/Earth_of_Earth?WOEID=1";
+    public static final String WEB_INF_PAGES = "WEB-INF/pages/";
+
+    /**
+     * This Map is static as Id's in html documents should be universally identical, i.e. as htmldocname_elementId
+     */
+    public final static Map<String, String> GlobalHTMLIdRegistry = new IdentityHashMap<String, String>();
+
+    /**
+     * Retrievable list of all element Ids by Page
+     */
+    public final static Map<PageFace, HashSet<String>> GlobalPageIdRegistry = new IdentityHashMap<PageFace, HashSet<String>>();
+    public static String REAL_PATH;//Weak implementation but suffices
 
     private final static Map<PageFace, String> PrettyURLMap_ = new IdentityHashMap<PageFace, String>();//Please read javadoc before making any changes to this implementation
     final static private Logger staticLogger = LoggerFactory.getLogger(Controller.class.getName());
     private static final String ITSNAT_DOC_NAME = "itsnat_doc_name";
-    public static final String LOCATION_HUB = "/page/Earth_of_Earth?WOEID=1";
-    public static String REAL_PATH;//Weak implementation but suffices
-    public static final String WEB_INF_PAGES = "WEB-INF/pages/";
+
+    final PageFace locationMain = Page.LocationMain;
+    final PageFace aarrr = Page.Aarrr;
+//    final PageFace photoCRUD = Page.PhotoCRUD;
+    final PageFace photo$Description = Page.Photo$Description;
+    final PageFace signInOn = Page.SignInOn;
+
+    final PageFace privateLocationCreate = Page.PrivateLocationCreate;
+    final PageFace privateLocationView = Page.PrivateLocationView;
+    final PageFace privateLocationDelete = Page.PrivateLocationDelete;
+
+    final PageFace privateEventCreate = Page.PrivateEventCreate;
+    final PageFace privateEventView = Page.PrivateEventView;
+    final PageFace privateEventDelete = Page.PrivateEventDelete;
+
+    final PageFace wOIEDGrabber = Page.WOEIDGrabber;
+
+    final PageFace downTownHeatMap = Page.DownTownHeatMap;
+
+    final PageFace skeleton = Page.Skeleton;
+    final PageFace organize = Page.Organize;
+    final PageFace findFriend = Page.Friends;
+    final PageFace book = Page.Bookings;
+    final PageFace profile = Page.Profile;
+    final PageFace i = Page.I;
+    final PageFace activate = Page.Activate;
+    final PageFace share = Page.Share;
+    final PageFace geoBusiness = Page.GeoBusiness;
+    final PageFace photos = Page.Photos;
+
+    final PageFace findFriendWidget = Page.FindFriend;
+    final PageFace friendAdd = Page.FriendAdd;
+    final PageFace friendDelete = Page.FriendDelete;
+    final PageFace friendList = Page.FriendList;
+
+    final PageFace genericButton = Page.GenericButton;
+
+    final PageFace templateGeneric = Page.TemplateGeneric;
+
+    final PageFace displayName = Page.DisplayName;
+
+    final PageFace wallHanlder = Page.WallHandler;
+
+    final PageFace passwordChange = Page.PasswordChange;
+    final PageFace forgotPasswordChange = Page.ForgotPasswordChange;
+    final PageFace profileWidget = Page.ProfileWidget;
+
+    final PageFace album = Page.Album;
+
+    final PageFace userProperty = Page.UserProperty;
+    final PageFace userPropertySidebar = Page.UserPropertySidebar;
+
+// -------------------------- ENUMERATIONS --------------------------
 
     @NOTE(note = "Inner Enums are static. Therefore, the lists shall be populated only once.")
     public enum Page implements PageFace {
@@ -50,6 +116,7 @@ final public class
             public String toString() {
                 return DocAlbum;
             }
+
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -66,6 +133,7 @@ final public class
             public String toString() {
                 return DocUserProperty;
             }
+
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -84,6 +152,7 @@ final public class
             public String toString() {
                 return DocUserPropertySidebar;
             }
+
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -101,6 +170,7 @@ final public class
             public String toString() {
                 return DocProfileWidget;
             }
+
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -119,6 +189,7 @@ final public class
             public String toString() {
                 return DocForgotPasswordChange;
             }
+
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -135,6 +206,7 @@ final public class
             public String toString() {
                 return DocPasswordChange;
             }
+
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -150,6 +222,7 @@ final public class
             public String toString() {
                 return DocWall;
             }
+
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -160,6 +233,7 @@ final public class
             public String toString() {
                 return DocDisplayName;
             }
+
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -170,7 +244,6 @@ final public class
                            Controller.Page.privateEventCreateSave,
                            Controller.Page.privateEventCreateNotice
         ) {
-
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -193,7 +266,6 @@ final public class
                          Controller.Page.privateEventViewAlbum,
                          Controller.Page.privateEventViewLocationMap
         ) {
-
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -218,7 +290,6 @@ final public class
                            Controller.Page.privateEventDeleteAlbum,
                            Controller.Page.privateEventDeleteLocationMap
         ) {
-
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -233,7 +304,6 @@ final public class
         WOEIDGrabber("ai/ilikeplaces/widgets/WOEIDGrabber.xhtml",
                      Controller.Page.WOEIDGrabberWOEID
         ) {
-
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -249,7 +319,6 @@ final public class
                         Controller.Page.DownTownHeatMapWOEID,
                         Controller.Page.DownTownHeatMapBB
         ) {
-
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -266,7 +335,6 @@ final public class
                    Controller.Page.friendFindSearchResults,
                    Controller.Page.friendFindSearchInvites
         ) {
-
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -279,13 +347,12 @@ final public class
 
         FriendAdd("ai/ilikeplaces/widgets/friend/friend_add.xhtml",
                   Controller.Page.friendAddAddButton,
-//                Controller.Page.friendAddBirthYearLabel,
-//                Controller.Page.friendAddFirstNameLabel,
-//                Controller.Page.friendAddLastNameLabel,
-//                Controller.Page.friendAddLocationLabel
-Controller.Page.friendAddDisplayNameLabel
+                  // Controller.Page.friendAddBirthYearLabel,
+                  // Controller.Page.friendAddFirstNameLabel,
+                  // Controller.Page.friendAddLastNameLabel,
+                  // Controller.Page.friendAddLocationLabel
+                  Controller.Page.friendAddDisplayNameLabel
         ) {
-
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -304,7 +371,6 @@ Controller.Page.friendAddDisplayNameLabel
 //                Controller.Page.friendDeleteLastNameLabel,
 //                Controller.Page.friendDeleteLocationLabel
         ) {
-
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -319,7 +385,6 @@ Controller.Page.friendAddDisplayNameLabel
                    Controller.Page.FriendListList
 
         ) {
-
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -337,7 +402,6 @@ Controller.Page.friendAddDisplayNameLabel
                       Controller.Page.GenericButtonWidth
 
         ) {
-
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -350,7 +414,6 @@ Controller.Page.friendAddDisplayNameLabel
 
         Organize(null
         ) {
-
             @Override
             public String getURL() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "page/_org";
@@ -363,7 +426,6 @@ Controller.Page.friendAddDisplayNameLabel
 
         Activate(null
         ) {
-
             @Override
             public String getURL() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "page/_activate";
@@ -376,7 +438,6 @@ Controller.Page.friendAddDisplayNameLabel
 
         Share(null
         ) {
-
             @Override
             public String getURL() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "page/_share";
@@ -397,10 +458,19 @@ Controller.Page.friendAddDisplayNameLabel
                 return DocGeoBusiness;
             }},
 
+        TemplateGeneric(null) {
+            public String getURL() {
+                return RBGet.getGlobalConfigKey("AppRoot") + "page/_public";
+            }
+
+            @Override
+            public String toString() {
+                return DocPublic;
+            }},
+
         Profile(null,
                 Controller.Page.ProfilePhotoChange
         ) {
-
             @Override
             public String getURL() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "page/_profile";
@@ -412,7 +482,6 @@ Controller.Page.friendAddDisplayNameLabel
             }},
 
         I(null) {
-
             @Override
             public String getURL() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "page/_i";
@@ -424,7 +493,6 @@ Controller.Page.friendAddDisplayNameLabel
             }},
 
         Photos(null) {
-
             @Override
             public String getURL() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "page/_me";
@@ -437,7 +505,6 @@ Controller.Page.friendAddDisplayNameLabel
 
         Friends(null
         ) {
-
             @Override
             public String getURL() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "page/_friends";
@@ -449,7 +516,6 @@ Controller.Page.friendAddDisplayNameLabel
             }},
         Bookings(null
         ) {
-
             @Override
             public String getURL() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "page/_book";
@@ -486,7 +552,6 @@ Controller.Page.friendAddDisplayNameLabel
                  Controller.Page.Skeleton_othersidebar_wall_link
 
         ) {
-
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -506,7 +571,6 @@ Controller.Page.friendAddDisplayNameLabel
                               Controller.Page.PrivateLocaionCreateCTitle,
                               Controller.Page.PrivateLocaionCreateCIntro
         ) {
-
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -526,7 +590,6 @@ Controller.Page.friendAddDisplayNameLabel
                             Controller.Page.privateLocationViewLink,
                             Controller.Page.privateLocationViewEventList
         ) {
-
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -547,7 +610,6 @@ Controller.Page.friendAddDisplayNameLabel
                               Controller.Page.privateLocationDeleteVisitors,
                               Controller.Page.privateLocationDeleteEventList
         ) {
-
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -564,6 +626,7 @@ Controller.Page.friendAddDisplayNameLabel
             public String getURL() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "";
             }
+
             @Override
             public String toString() {
                 return "";
@@ -598,6 +661,7 @@ Controller.Page.friendAddDisplayNameLabel
             public String getURL() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "page/main";
             }
+
             @Override
             public String toString() {
                 return DocLocation;
@@ -627,7 +691,6 @@ Controller.Page.friendAddDisplayNameLabel
                 Controller.Page.pd_photo_description,
                 Controller.Page.pd_photo_delete
         ) {
-
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -640,7 +703,6 @@ Controller.Page.friendAddDisplayNameLabel
         },
         PhotoUpload(
                 "ai/ilikeplaces/widgets/PhotoUpload.xhtml") {
-
             @Override
             public String getURL() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "page/main";
@@ -657,6 +719,7 @@ Controller.Page.friendAddDisplayNameLabel
             public String getURL() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "signup";
             }
+
             @Override
             public String toString() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "signup";
@@ -668,6 +731,7 @@ Controller.Page.friendAddDisplayNameLabel
             public String getURL() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "login";
             }
+
             @Override
             public String toString() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "login";
@@ -704,6 +768,7 @@ Controller.Page.friendAddDisplayNameLabel
             public String getURL() {
                 return RBGet.getGlobalConfigKey("AppRoot") + "page/main";
             }
+
             @Override
             public String toString() {
                 return "DocSignInOn";
@@ -890,6 +955,9 @@ Controller.Page.friendAddDisplayNameLabel
         /*GeoBusiness Page*/
         final static public String DocGeoBusiness = "DocGeoBusiness";
 
+        /*TemplateGeneric Pages*/
+        final static public String DocPublic = "DocPublic";
+
         /*Organize Page*/
         final static public String DocOrganize = "DocOrganize";
         /*Organize Attributes*/
@@ -1070,54 +1138,10 @@ Controller.Page.friendAddDisplayNameLabel
         abstract public String getURL();
     }
 
-    final PageFace locationMain = Page.LocationMain;
-    final PageFace aarrr = Page.Aarrr;
-//    final PageFace photoCRUD = Page.PhotoCRUD;
-    final PageFace photo$Description = Page.Photo$Description;
-    final PageFace signInOn = Page.SignInOn;
+// ------------------------ INTERFACE METHODS ------------------------
 
-    final PageFace privateLocationCreate = Page.PrivateLocationCreate;
-    final PageFace privateLocationView = Page.PrivateLocationView;
-    final PageFace privateLocationDelete = Page.PrivateLocationDelete;
 
-    final PageFace privateEventCreate = Page.PrivateEventCreate;
-    final PageFace privateEventView = Page.PrivateEventView;
-    final PageFace privateEventDelete = Page.PrivateEventDelete;
-
-    final PageFace wOIEDGrabber = Page.WOEIDGrabber;
-
-    final PageFace downTownHeatMap = Page.DownTownHeatMap;
-
-    final PageFace skeleton = Page.Skeleton;
-    final PageFace organize = Page.Organize;
-    final PageFace findFriend = Page.Friends;
-    final PageFace book = Page.Bookings;
-    final PageFace profile = Page.Profile;
-    final PageFace i = Page.I;
-    final PageFace activate = Page.Activate;
-    final PageFace share = Page.Share;
-    final PageFace geoBusiness = Page.GeoBusiness;
-    final PageFace photos = Page.Photos;
-
-    final PageFace findFriendWidget = Page.FindFriend;
-    final PageFace friendAdd = Page.FriendAdd;
-    final PageFace friendDelete = Page.FriendDelete;
-    final PageFace friendList = Page.FriendList;
-
-    final PageFace genericButton = Page.GenericButton;
-
-    final PageFace displayName = Page.DisplayName;
-
-    final PageFace wallHanlder = Page.WallHandler;
-
-    final PageFace passwordChange = Page.PasswordChange;
-    final PageFace forgotPasswordChange = Page.ForgotPasswordChange;
-    final PageFace profileWidget = Page.ProfileWidget;
-
-    final PageFace album = Page.Album;
-
-    final PageFace userProperty = Page.UserProperty;
-    final PageFace userPropertySidebar = Page.UserPropertySidebar;
+// --------------------- Interface Servlet ---------------------
 
     /**
      * @param serveletConfig__
@@ -1125,7 +1149,6 @@ Controller.Page.friendAddDisplayNameLabel
      */
     @Override
     public void init(final ServletConfig serveletConfig__) throws ServletException {
-
         super.init(serveletConfig__);
 
         final ItsNatHttpServlet inhs__ = getItsNatHttpServlet();
@@ -1153,10 +1176,8 @@ Controller.Page.friendAddDisplayNameLabel
 
         /*Add a listner to convert pretty urls to proper urls*/
         inhs__.addItsNatServletRequestListener(new ItsNatServletRequestListener() {
-
             @Override
             public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
-
                 final ItsNatDocument itsNatDocument__ = request__.getItsNatDocument();
                 /*if(itsNatDocument != null && ((HttpServletRequest) request__.getServletRequest()).getPathInfo().contains("itsnat_doc_name")){
                 throw new java.lang.RuntimeException("INVALID URL");//This code does not seem to work, please verify.
@@ -1200,6 +1221,7 @@ Controller.Page.friendAddDisplayNameLabel
 
             inhs__.registerItsNatDocumentTemplate(geoBusiness.toString(), "text/html", new TemplateSourceGeoBusiness()).addItsNatServletRequestListener(new ListenerGeoBusiness());
 
+            inhs__.registerItsNatDocumentTemplate(templateGeneric.toString(), "text/html", new TemplateGeneric(true));
         }
 
         registerDocumentFragmentTemplatesAKAWidgets:
@@ -1254,6 +1276,17 @@ Controller.Page.friendAddDisplayNameLabel
         }
     }
 
+// ------------------------ CANONICAL METHODS ------------------------
+
+
+// -------------------------- STATIC METHODS --------------------------
+
+    private final static void PutAllPageElementIdsByPage(final PageFace page__, final String... ids__) {
+        final HashSet<String> ids_ = new HashSet<String>();
+        ids_.addAll(Arrays.asList(ids__));
+        GlobalPageIdRegistry.put(page__, ids_);
+    }
+
     /**
      * Some nested widgets have no access to the request. instead of passing the request along the widget chain,
      * we store it in the users session.
@@ -1264,7 +1297,6 @@ Controller.Page.friendAddDisplayNameLabel
      * @param request__
      */
     private static void parameterResolver(final ItsNatServletRequest request__) {
-
         wallEntryRelated:
         {
             final String wall_entry = request__.getServletRequest().getParameter(WallWidget.PARAM_WALL_ENTRY);
@@ -1275,7 +1307,6 @@ Controller.Page.friendAddDisplayNameLabel
 
         others:
         {
-
         }
     }
 
@@ -1364,6 +1395,9 @@ Controller.Page.friendAddDisplayNameLabel
                 } else if (isGeoBusinessPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocGeoBusiness);/*Framework specific*/
                     Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0020"));
+                } else if (isTemplateGenericPage(URL__)) {
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocPublic);/*Framework specific*/
+                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0021"));
                 } else {/*Divert to home page*/
                     Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
                     request__.getServletRequest().setAttribute("location", "");
@@ -1393,47 +1427,13 @@ Controller.Page.friendAddDisplayNameLabel
         return URL__.length() == 0;
     }
 
-    /**
-     * Check if the place contains any odd/special characters that are not valid
-     * Also check if the url is of itsnat?docblablabla format with "?"
-     *
-     * @param URL__
-     * @return boolean
-     */
-    @FIXME(issue = "Location should not contain underscores")
-    static private boolean isCorrectLocationFormat(final String URL__) {
-        /*"_" (underscore) check first is vital as the photo and me urls might have "/"*/
-        return !(URL__.startsWith("_") || URL__.contains(","));
-    }
-
     static private boolean isNonLocationPage(final String URL_) {
         return (URL_.startsWith("_") || URL_.startsWith("#"));
     }
 
-    static private boolean isActivatePage(final String URL_) {
-        return (URL_.startsWith("_activate"));
+    static private boolean isSignOut(final String URL_) {
+        return (URL_.equals("_so"));
     }
-
-    static private boolean isBookingsPage(final String URL_) {
-        return (URL_.startsWith("_book"));
-    }
-
-    static private boolean isIPage(final String URL_) {
-        return (URL_.startsWith("_i"));
-    }
-
-    static private boolean isFriendsPage(final String URL_) {
-        return (URL_.startsWith("_friends"));
-    }
-
-    static private boolean isHumanPage(final String URL_) {
-        return (URL_.startsWith("_me"));
-    }
-
-    static private boolean isOrganizePage(final String URL_) {
-        return (URL_.startsWith("_org"));
-    }
-
 
     static private boolean isPhotoPage(final String URL_) {
         return (URL_.startsWith("_photo_") && URL_.split("_").length == 4);
@@ -1447,8 +1447,32 @@ Controller.Page.friendAddDisplayNameLabel
         return URL_.replace("_photo_", "").split("_")[1];
     }
 
+    static private boolean isHumanPage(final String URL_) {
+        return (URL_.startsWith("_me"));
+    }
+
+    static private boolean isOrganizePage(final String URL_) {
+        return (URL_.startsWith("_org"));
+    }
+
+    static private boolean isFriendsPage(final String URL_) {
+        return (URL_.startsWith("_friends"));
+    }
+
+    static private boolean isBookingsPage(final String URL_) {
+        return (URL_.startsWith("_book"));
+    }
+
     static private boolean isProfilePage(final String URL_) {
         return (URL_.startsWith("_profile"));
+    }
+
+    static private boolean isIPage(final String URL_) {
+        return (URL_.startsWith("_i"));
+    }
+
+    static private boolean isActivatePage(final String URL_) {
+        return (URL_.startsWith("_activate"));
     }
 
     static private boolean isSharePage(final String URL_) {
@@ -1459,14 +1483,22 @@ Controller.Page.friendAddDisplayNameLabel
         return (URL_.startsWith("_geobusiness"));
     }
 
-    static private boolean isSignOut(final String URL_) {
-        return (URL_.equals("_so"));
+    static private boolean isTemplateGenericPage(final String URL_) {
+        return (URL_.startsWith("_public"));
     }
 
     /**
-     * This Map is static as Id's in html documents should be universally identical, i.e. as htmldocname_elementId
+     * Check if the place contains any odd/special characters that are not valid
+     * Also check if the url is of itsnat?docblablabla format with "?"
+     *
+     * @param URL__
+     * @return boolean
      */
-    public final static Map<String, String> GlobalHTMLIdRegistry = new IdentityHashMap<String, String>();
+    @FIXME(issue = "Location should not contain underscores")
+    static private boolean isCorrectLocationFormat(final String URL__) {
+        /*"_" (underscore) check first is vital as the photo and me urls might have "/"*/
+        return !(URL__.startsWith("_") || URL__.contains(","));
+    }
 
     /**
      * Register all your document keys before using. Accepts variable argument length.
@@ -1486,16 +1518,5 @@ Controller.Page.friendAddDisplayNameLabel
                 throw new SecurityException(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0011" + id_));
             }
         }
-    }
-
-    /**
-     * Retrievable list of all element Ids by Page
-     */
-    public final static Map<PageFace, HashSet<String>> GlobalPageIdRegistry = new IdentityHashMap<PageFace, HashSet<String>>();
-
-    private final static void PutAllPageElementIdsByPage(final PageFace page__, final String... ids__) {
-        final HashSet<String> ids_ = new HashSet<String>();
-        ids_.addAll(Arrays.asList(ids__));
-        GlobalPageIdRegistry.put(page__, ids_);
     }
 }
