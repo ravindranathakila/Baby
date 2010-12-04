@@ -18,71 +18,131 @@
         </layout>
     </appender>
 
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>../logs/ilp.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%-4level|%thread|%date|%logger:%line>%msg%n%n</Pattern>
         </layout>
     </appender>
 
-    <appender name="FILE_LOGIC" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE_LOGIC" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>../logs/ilp_logic.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_logic.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%-4level|%thread|%date|%logger:%line>%msg%n%n</Pattern>
         </layout>
     </appender>
 
-    <appender name="FILE_EXCEPTION" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE_EXCEPTION" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>../logs/ilp_exception.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_exception.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%thread|%date|%logger:%line>%msg%n%n</Pattern>
         </layout>
     </appender>
 
-    <appender name="FILE_USER_EXCEPTION" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE_USER_EXCEPTION" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>../logs/ilp_user_exception.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_user_exception.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%thread|%date|%logger:%line>%msg%n%n</Pattern>
         </layout>
     </appender>
 
-    <appender name="FILE_DEBUG" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE_DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>../logs/ilp_debug.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_debug.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%thread|%date|%logger:%line>%msg%n%n</Pattern>
         </layout>
     </appender>
 
-    <appender name="FILE_INFO" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>../logs/ilp_info.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_info.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%thread|%date|%logger:%line>%msg%n%n</Pattern>
         </layout>
     </appender>
 
-    <appender name="FILE_SERV" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE_SERV" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>../logs/ilp_serv.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_serv.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%thread|%date|%logger:%line>%msg%n%n</Pattern>
         </layout>
     </appender>
 
-    <appender name="FILE_USER" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE_USER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>../logs/ilp_user.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_user.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%-4level|%date>%msg%n</Pattern>
         </layout>
     </appender>
 
-    <appender name="FILE_NON_USER" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE_NON_USER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>../logs/ilp_non_user.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_non_user.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%-4level|%thread|%date>%msg%n</Pattern>
         </layout>
     </appender>
 
-    <appender name="FILE_SERVER_STATUS" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE_SERVER_STATUS" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>../logs/ilp_server_status.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_server_status.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%-4level|%thread|%date>%msg%n</Pattern>
         </layout>
