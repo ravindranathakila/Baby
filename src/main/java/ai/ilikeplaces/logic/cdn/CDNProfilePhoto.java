@@ -42,54 +42,35 @@ import java.util.Map;
 @Stateless
 @Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class})
 public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
+// ------------------------------ FIELDS ------------------------------
 
     public static final String CONTAINER = "PROFILE_PHOTOS";
-    private static final String LOADING_IMAGE_AS_BUFFERED_IMAGE = "Loading Image As Buffered Image";
-    private static final String SCALING_IMAGE = "Scaling Image";
-    private static final String SAVING_SCALED_IMAGE = "Saving Scaled Image";
-    private static final String UPLOADING_IMAGE = "Uploading Image";
+    public static final String NAMING_EXCEPTION = "Naming Exception";
     private static final String DELETING_OLD_PROFILE_IMAGE = "Deleting Old Profile Image";
     private static final String DELETING_OLD_PROFILE_IMAGE_FAILED_BUT_PROCEEDING_REASON_FOR_FAILURE = "Deleting Old Profile Image Failed, But Proceeding. Reason for Failure:";
+    private static final String LOADING_IMAGE_AS_BUFFERED_IMAGE = "Loading Image As Buffered Image";
+    private static final String LOGIN_FAILED_DESTROYING_SESSION_BEAN = "Login Failed. Destroying Session Bean!";
+    private static final String LOGIN_TO_RACKSPACE_CLOUD = "Login to rackspace cloud";
+    private static final String NO_LOGIN = "No Login!";
+    private static final String PLEASE_LOGIN = "Please login!";
+    private static final String POSTERIZING = "Posterizing";
+    private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_FAILURE_IN_DELETION_OF_OLD_PROFILE_IMAGE = "Profile Photo Upload Failed Due Failure In Deletion Of Old Profile Image!";
     private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_CACHING_ISSUES = "Profile Photo Upload Failed Due To Caching Issues!";
     private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES = "Profile Photo Upload Failed Due To I/O Issues!";
-    private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_FAILURE_IN_DELETION_OF_OLD_PROFILE_IMAGE = "Profile Photo Upload Failed Due Failure In Deletion Of Old Profile Image!";
     private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_IMAGE_MANIPULATION_ISSUES = "Profile Photo Upload Failed Due To Image Manipulation Issues!";
     private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_RENAMING_ISSUES = "Profile Photo Upload Failed Due To Renaming Issues!";
     private static final String PROFILE_PHOTO_UPLOAD_SUCCESSFUL = "Profile Photo Upload Successful.";
-    private static final String POSTERIZING = "Posterizing";
-    private static final String SAVING_POSTERIZED_IMAGE = "Saving Posterized Image";
-    private static final String LOGIN_TO_RACKSPACE_CLOUD = "Login to rackspace cloud";
-    private static final String LOGIN_FAILED_DESTROYING_SESSION_BEAN = "Login Failed. Destroying Session Bean!";
-    private static final String UPLOADING_PROFILE_PHOTO = "Uploading Profile Photo";
     private static final String RENAME_ERROR = "Rename Error";
-    private static final String PLEASE_LOGIN = "Please login!";
-    private static final String NO_LOGIN = "No Login!";
+    private static final String SAVING_POSTERIZED_IMAGE = "Saving Posterized Image";
+    private static final String SAVING_SCALED_IMAGE = "Saving Scaled Image";
+    private static final String SCALING_IMAGE = "Scaling Image";
+    private static final String UPLOADING_IMAGE = "Uploading Image";
+    private static final String UPLOADING_PROFILE_PHOTO = "Uploading Profile Photo";
 
-    public static CDNProfilePhotoLocal getProfilePhotoCDNLocal() {
-        isOK();
-        CDNProfilePhotoLocal h = null;
-        try {
-            h = (CDNProfilePhotoLocal) Context_.lookup(CDNProfilePhotoLocal.NAME);
-        } catch (NamingException ex) {
-            Loggers.EXCEPTION.error("Naming Exception", ex);
-        }
-        return h != null ? h : (CDNProfilePhotoLocal) LogNull.logThrow();
-    }
+// ------------------------ INTERFACE METHODS ------------------------
 
-    @PostConstruct
-    public void postConstruct() {
-        final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, LOGIN_TO_RACKSPACE_CLOUD, 60000, null, true);
-        final boolean status = doLogin();
-        if (status) {
-            sl.complete(Loggers.DONE);
 
-        } else {
-            sl.appendToLogMSG(LOGIN_FAILED_DESTROYING_SESSION_BEAN);
-            sl.complete(Loggers.FAILED);
-            throw LOGIN_EXCEPTION;
-        }
-    }
-
+// --------------------- Interface FileUploadListenerFace ---------------------
 
     @Override
     public Return<File> run(File file, final Map parameterMap, final String userFileExtension, final HttpSession session) {
@@ -163,7 +144,6 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
                 } catch (final Exception e) {
                     r = new ReturnImpl<File>(e, PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_IMAGE_MANIPULATION_ISSUES, true);
                 }
-
             }
         } catch (final IOException e) {
             r = new ReturnImpl<File>(e, PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_RENAMING_ISSUES, true);
@@ -171,26 +151,10 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
         return r;
     }
 
-    /**
-     * http://www.javalobby.org/articles/ultimate-image/
-     * <p/>
-     * Saves a BufferedImage to the given file, pathname must not have any
-     * periods "." in it except for the one before the format, i.e. C:/images/fooimage.png
-     * <p/>
-     *
-     * @param img
-     * @param ref
-     */
-    public static void saveImage(final BufferedImage img, final File ref) throws IOException {
-        try {
-            //final String format = (ref.endsWith(".png")) ? "png" : "jpg";
-            //ImageIO.write(img, format, new File(ref));
-            ImageIO.write(img, ref.getName().substring(ref.getName().lastIndexOf(".") + 1), ref);
-        } catch (final IOException e) {
-            Loggers.EXCEPTION.error(Loggers.EMBED, e);
-            throw e;
-        }
-    }
+// ------------------------ CANONICAL METHODS ------------------------
+
+
+// -------------------------- STATIC METHODS --------------------------
 
     /**
      * http://www.javalobby.org/articles/ultimate-image/
@@ -235,6 +199,39 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
         return dimg;
     }
 
+    public static CDNProfilePhotoLocal getProfilePhotoCDNLocal() {
+        isOK();
+        CDNProfilePhotoLocal h = null;
+        try {
+            h = (CDNProfilePhotoLocal) Context_.lookup(CDNProfilePhotoLocal.NAME);
+        } catch (NamingException ex) {
+            Loggers.EXCEPTION.error(NAMING_EXCEPTION, ex);
+        }
+        return h != null ? h : (CDNProfilePhotoLocal) LogNull.logThrow();
+    }
+
+    /**
+     * http://www.javalobby.org/articles/ultimate-image/
+     * <p/>
+     * Saves a BufferedImage to the given file, pathname must not have any
+     * periods "." in it except for the one before the format, i.e. C:/images/fooimage.png
+     * <p/>
+     *
+     * @param img
+     * @param ref
+     */
+    public static void saveImage(final BufferedImage img, final File ref) throws IOException {
+        try {
+            //final String format = (ref.endsWith(".png")) ? "png" : "jpg";
+            //ImageIO.write(img, format, new File(ref));
+            ImageIO.write(img, ref.getName().substring(ref.getName().lastIndexOf(".") + 1), ref);
+        } catch (final IOException e) {
+            Loggers.EXCEPTION.error(Loggers.EMBED, e);
+            throw e;
+        }
+    }
+
+// -------------------------- OTHER METHODS --------------------------
 
     //Use the LookupOp class from the Java 2D API along
     // with three separate data arrays to process the
@@ -274,6 +271,20 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
         // destination for the processed image.
         return filterObject.filter(theImage, null);
     }//end processImageForThePage
+
+    @PostConstruct
+    public void postConstruct() {
+        final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, LOGIN_TO_RACKSPACE_CLOUD, 60000, null, true);
+        final boolean status = doLogin();
+        if (status) {
+            sl.complete(Loggers.DONE);
+        } else {
+            sl.appendToLogMSG(LOGIN_FAILED_DESTROYING_SESSION_BEAN);
+            sl.complete(Loggers.FAILED);
+            throw LOGIN_EXCEPTION;
+        }
+    }
+
     //-----------------------------------------------------//
 
 

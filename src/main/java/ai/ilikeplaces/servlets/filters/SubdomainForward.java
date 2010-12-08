@@ -46,19 +46,24 @@ public class SubdomainForward implements Filter {
     protected static boolean ON = false;
     protected static final String PROCESSING_SUBDOMAIN_FORWARD = "Processing Subdomain Forward";
     protected static final String EMPTY = "";
+    public static final String ON_PARAMETER_IN_WEB_DOT_XML = "ON";
+    public static final String ILIKEPLACES_COM = "ilikeplaces.com";
+    public static final String LOCALHOST = "localhost";
+    public static final String DOMAIN_FORWARD_MAPPING_TO = "Domain Forward mapping to ";
+    public static final String SPACE = " ";
 
     @Override
     public void init(final FilterConfig filterConfig) throws ServletException {
-        ON = Boolean.getBoolean(filterConfig.getInitParameter("ON"));
+        ON = Boolean.valueOf(filterConfig.getInitParameter(ON_PARAMETER_IN_WEB_DOT_XML));
     }
 
     @Override
     public void doFilter(final ServletRequest request, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
 
-//        if (!ON) {
-//            filterChain.doFilter(request, servletResponse);
-//            return;
-//        }
+        if (!ON) {
+            filterChain.doFilter(request, servletResponse);
+            return;
+        }
 
         final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.DEBUG, null, 100, null, true);
         try {
@@ -68,13 +73,13 @@ public class SubdomainForward implements Filter {
 
             final String domain = new URI(unformattedurl).getHost();
 
-            if (domain.endsWith("ilikeplaces.com") || domain.contains("localhost")) {//Normal request on our website. Just forward.
+            if (domain.endsWith(ILIKEPLACES_COM) || domain.contains(LOCALHOST)) {//Normal request on our website. Just forward.
                 filterChain.doFilter(request, servletResponse);
                 sl.complete(null);
             } else {
-                sl.appendToLogMSG("Domain Forward mapping to " + domain);
+                sl.appendToLogMSG(DOMAIN_FORWARD_MAPPING_TO + domain);
                 request.getRequestDispatcher(new Parameter(Controller.Page.GeoBusiness.getURL()).append(TemplateSourceGeoBusiness.DOMAIN, domain, true).get()).forward(request, servletResponse);
-                sl.complete(PROCESSING_SUBDOMAIN_FORWARD + " " + Loggers.DONE);
+                sl.complete(PROCESSING_SUBDOMAIN_FORWARD + SPACE + Loggers.DONE);
             }
 
 //            if(domain.endsWith(".GeoBusiness.ilikeplaces.com")){//Do this strict checks. We don't need somebody exploiting these stuff as bugs :-/
