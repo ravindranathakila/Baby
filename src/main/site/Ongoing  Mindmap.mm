@@ -739,7 +739,7 @@
 </node>
 </node>
 </node>
-<node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" FOLDED="true" ID="Freemind_Link_1303374308" MODIFIED="1283778680546" POSITION="right" TEXT="Lab">
+<node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" ID="Freemind_Link_1303374308" MODIFIED="1283778680546" POSITION="right" TEXT="Lab">
 <icon BUILTIN="wizard"/>
 <node CREATED="1283778655218" FOLDED="true" ID="Freemind_Link_1143795250" MODIFIED="1283779225796" TEXT="Guide">
 <icon BUILTIN="help"/>
@@ -775,10 +775,106 @@
 <node CREATED="1284651235765" ID="Freemind_Link_995976715" MODIFIED="1285777908494" TEXT="WOEID Guide Sites">
 <icon BUILTIN="full-1"/>
 </node>
+<node CREATED="1291768251093" ID="Freemind_Link_1732572843" MODIFIED="1291814734062" TEXT="WOEID Pages">
+<icon BUILTIN="full-1"/>
+<node CREATED="1291768464718" ID="Freemind_Link_1707288247" MODIFIED="1291814737671" TEXT="Is this a trustworthy place to book online?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1291815710000" ID="Freemind_Link_1629495136" MODIFIED="1291815735156" TEXT="Outbound links to other travel sites as challenge">
+<icon BUILTIN="full-3"/>
 </node>
-<node CREATED="1283871927859" ID="Freemind_Link_504513171" MODIFIED="1283871940437" TEXT="Sell">
+<node CREATED="1291815753250" ID="Freemind_Link_491455885" MODIFIED="1291815769375" TEXT="Up-front disclosure of &quot;how to book&quot;">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1291815790984" ID="Freemind_Link_324275203" MODIFIED="1291815823234" TEXT="If a signup is required, we&apos;ll tell &#xa;what the email is used for.">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1291815991625" ID="Freemind_Link_1255830249" MODIFIED="1291816012359" TEXT="Privacy Policy">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1291816000171" ID="Freemind_Link_571607566" MODIFIED="1291816012359" TEXT="Very Minimalist Simplicity">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1291816033312" ID="Freemind_Link_868588863" MODIFIED="1291816059281" TEXT="Links to &quot;internet safety&quot; articles">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1291817550718" ID="Freemind_Link_1910550505" MODIFIED="1291817564218" TEXT="Make each WOEID page look like a &quot;site&quot;">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1291817565578" ID="Freemind_Link_1643312823" MODIFIED="1291817578546" TEXT="Provide subdomain support to gain URL trust">
+<icon BUILTIN="full-3"/>
+</node>
+</node>
+<node CREATED="1291768635984" ID="Freemind_Link_95246313" MODIFIED="1291814737625" TEXT="I don&apos;t want a middle man website. Is this one?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1291816192140" ID="Freemind_Link_1478742119" MODIFIED="1291816201078" TEXT="Veriy Minimalist Simplicity">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1291816208578" ID="Freemind_Link_226391082" MODIFIED="1291816227546" TEXT="Refined Search Result">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1291816216093" ID="Freemind_Link_1602304605" MODIFIED="1291816538406" TEXT="Site Headers/Footers in EAN pages">
+<icon BUILTIN="full-3"/>
+</node>
+</node>
+<node CREATED="1291814753656" ID="Freemind_Link_1692783814" MODIFIED="1291814855531" TEXT="Am I getting the cheapest rate?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1291816540890" ID="Freemind_Link_319438014" MODIFIED="1291816565687" TEXT="Clearly and repetitively display &quot;loweest price guranteed&quot;">
+<icon BUILTIN="full-3"/>
+</node>
+</node>
+<node CREATED="1291814859250" ID="Freemind_Link_309997201" MODIFIED="1291814883296" TEXT="Is the booking process confusing, time consuming?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1291816591328" ID="Freemind_Link_1787173957" MODIFIED="1291816611687" TEXT="Fewer clicks to final booking page">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1291816630734" ID="Freemind_Link_1458430690" MODIFIED="1291816648046" TEXT="Help in EAN header/footer on how to book">
+<icon BUILTIN="full-3"/>
+</node>
+</node>
+<node CREATED="1291814999328" ID="Freemind_Link_1848867494" MODIFIED="1291815069828" TEXT="I need to book a flight ticket to x. Can I?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1291817446437" ID="Freemind_Link_787656688" MODIFIED="1291817527156" TEXT="Single click through">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1291817493593" ID="Freemind_Link_1293930770" MODIFIED="1291817527156" TEXT="Single click to form reveal">
+<icon BUILTIN="full-3"/>
+</node>
+</node>
+<node CREATED="1291815017890" ID="Freemind_Link_1169124999" MODIFIED="1291815069843" TEXT="I need to book a botel at x. Can I?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1291817468937" ID="Freemind_Link_1948099491" MODIFIED="1291817527156" TEXT="Single click through">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1291817509953" ID="Freemind_Link_434858099" MODIFIED="1291817527156" TEXT="Single click to form reveal">
+<icon BUILTIN="full-3"/>
+</node>
+</node>
+<node CREATED="1291815030750" ID="Freemind_Link_1446910927" MODIFIED="1291815069828" TEXT="I need to book a cruise for x. Can I?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1291817473671" ID="Freemind_Link_1066314811" MODIFIED="1291817527156" TEXT="Single click through">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1291817511718" ID="Freemind_Link_996336629" MODIFIED="1291817527140" TEXT="Single click to form reveal">
+<icon BUILTIN="full-3"/>
+</node>
+</node>
+<node CREATED="1291815056687" ID="Freemind_Link_702215683" MODIFIED="1291815069828" TEXT="I need to hire a car at x. Can I?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1291817478968" ID="Freemind_Link_477670324" MODIFIED="1291817527140" TEXT="Single click through">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1291817513640" ID="Freemind_Link_1069759550" MODIFIED="1291817527140" TEXT="Single click to form reveal">
+<icon BUILTIN="full-3"/>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1283871927859" FOLDED="true" ID="Freemind_Link_504513171" MODIFIED="1291817174968" TEXT="Sell">
 <icon BUILTIN="bell"/>
-<node CREATED="1283778806593" ID="Freemind_Link_991036540" MODIFIED="1283778870015" TEXT="Fun Map">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>Zeroeth Rule of Marketing: Give them what they want.&#xa;Zeroeth Rule of PR: Its personal.</text>
+</hook>
+<node CREATED="1283778806593" FOLDED="true" ID="Freemind_Link_991036540" MODIFIED="1283778870015" TEXT="Fun Map">
 <icon BUILTIN="full-1"/>
 <node CREATED="1283778817171" ID="Freemind_Link_832808578" MODIFIED="1283779022984" TEXT="How do I find where to have fun at this place?">
 <icon BUILTIN="full-2"/>
@@ -868,7 +964,6 @@
 </node>
 </node>
 </node>
-<node CREATED="1284993034015" ID="Freemind_Link_693571932" MODIFIED="1284993039546" TEXT="Page Turner"/>
 </node>
 <node CREATED="1283703158802" FOLDED="true" ID="Freemind_Link_640830008" MODIFIED="1289573580515" POSITION="right" TEXT="Marketing">
 <font NAME="Comic Sans MS" SIZE="14"/>
@@ -898,7 +993,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1289010479826" FOLDED="true" ID="Freemind_Link_452188577" MODIFIED="1289010481653" TEXT="Deception">
+<node CREATED="1289010479826" ID="Freemind_Link_452188577" MODIFIED="1289010481653" TEXT="Deception">
 <node CREATED="1286620028609" ID="Freemind_Link_1155133426" MODIFIED="1286620041578" TEXT="Rules make the game interesting">
 <node CREATED="1289012922548" ID="Freemind_Link_941219317" MODIFIED="1289012927298" TEXT="Hyber Words">
 <node CREATED="1289012941580" ID="Freemind_Link_1632147330" MODIFIED="1289012965659" TEXT="I just got robbed"/>
@@ -923,7 +1018,7 @@
 <node CREATED="1275556363515" ID="Freemind_Link_1449575583" MODIFIED="1275556376046" TEXT="50 sites on google bookarks"/>
 </node>
 </node>
-<node CREATED="1283704339086" ID="Freemind_Link_386369610" MODIFIED="1283704377334" POSITION="right" TEXT="QA">
+<node CREATED="1283704339086" FOLDED="true" ID="Freemind_Link_386369610" MODIFIED="1283704377334" POSITION="right" TEXT="QA">
 <icon BUILTIN="pencil"/>
 <node CREATED="1288415653343" ID="Freemind_Link_540547344" MODIFIED="1288423654031" TEXT="FREEZER">
 <icon BUILTIN="desktop_new"/>
@@ -1090,7 +1185,8 @@
 </node>
 </node>
 </node>
-<node CREATED="1291212117250" ID="Freemind_Link_1414706278" MODIFIED="1291212142656" POSITION="right" TEXT="Staging">
+<node CREATED="1291212117250" FOLDED="true" ID="Freemind_Link_1414706278" MODIFIED="1291815705453" POSITION="right" TEXT="Staging">
+<font NAME="Comic Sans MS" SIZE="14"/>
 <icon BUILTIN="kaddressbook"/>
 <node CREATED="1291212602703" ID="Freemind_Link_1737407813" MODIFIED="1291214185046" TEXT="Set tomcat compression">
 <hook NAME="accessories/plugins/NodeNote.properties">
@@ -1122,40 +1218,55 @@
 <text/>
 </hook>
 </node>
-<node CREATED="1291212713812" ID="Freemind_Link_215516192" MODIFIED="1291214185031" TEXT="check if access is prevented to openejb, and roles defined">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>&lt;?xml version=&apos;1.0&apos; encoding=&apos;utf-8&apos;?&gt;&#xa;&lt;tomcat-users&gt;&#xa;  &lt;role rolename=&quot;ilp&quot;/&gt;&#xa;  &lt;user username=&quot;ilikeplaces_admin&quot; password=&quot;sumo_is_a_780_game&quot; roles=&quot;ilp&quot;/&gt;&#xa;&lt;/tomcat-users&gt;&#xa;&#xa;&#xa; &lt;!-- Define a Security Constraint on this Application --&gt;&#xa;  &lt;security-constraint&gt;&#xa;    &lt;web-resource-collection&gt;&#xa;      &lt;web-resource-name&gt;OpenEJB Application&lt;/web-resource-name&gt;&#xa;      &lt;url-pattern&gt;/*&lt;/url-pattern&gt;&#xa;    &lt;/web-resource-collection&gt;&#xa;    &lt;auth-constraint&gt;&#xa;      &lt;role-name&gt;ilp&lt;/role-name&gt;&#xa;    &lt;/auth-constraint&gt;&#xa;  &lt;/security-constraint&gt;&#xa;&#xa;  &lt;!-- Define the Login Configuration for this Application --&gt;&#xa;  &lt;login-config&gt;&#xa;    &lt;auth-method&gt;BASIC&lt;/auth-method&gt;&#xa;    &lt;realm-name&gt;Application&lt;/realm-name&gt;&#xa;  &lt;/login-config&gt;&#xa;&#xa;  &lt;!-- Security roles referenced by this web application --&gt;&#xa;  &lt;security-role&gt;&#xa;    &lt;description&gt;&#xa;      The role that is required to log in to the OpenEJB Application&#xa;    &lt;/description&gt;&#xa;    &lt;role-name&gt;ilp&lt;/role-name&gt;&#xa;  &lt;/security-role&gt;&#xa;&lt;/web-app&gt;&#xa;</text>
-</hook>
-</node>
-<node CREATED="1291213930125" ID="Freemind_Link_1485504866" MODIFIED="1291214185031" TEXT="Upload latest sources">
+<node CREATED="1291212713812" ID="Freemind_Link_215516192" MODIFIED="1291216237109" TEXT="check if access is prevented to openejb, and roles defined">
 <hook NAME="accessories/plugins/NodeNote.properties">
 <text/>
 </hook>
 </node>
-<node CREATED="1291214174406" ID="Freemind_Link_932887219" MODIFIED="1291214193171" TEXT="Backup existing database">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>1. Backup existing database&#xa;CALL SYSCS_UTIL.SYSCS_FREEZE_DATABASE(); &#xa;Backup ilp directory&#xa;CALL SYSCS_UTIL.SYSCS_UNFREEZE_DATABASE();</text>
-</hook>
-</node>
-<node CREATED="1291214117578" ID="Freemind_Link_804394739" MODIFIED="1291214185015" TEXT="Upload war">
+<node CREATED="1291213930125" ID="Freemind_Link_1485504866" MODIFIED="1291216237125" TEXT="Upload latest sources">
 <hook NAME="accessories/plugins/NodeNote.properties">
 <text/>
 </hook>
 </node>
-<node CREATED="1291214130437" ID="Freemind_Link_1454121737" MODIFIED="1291214185015" TEXT="Compare and copy config.properties as GlobalConfig.properties">
+<node CREATED="1291214174406" ID="Freemind_Link_932887219" MODIFIED="1291216237125" TEXT="Backup existing database">
 <hook NAME="accessories/plugins/NodeNote.properties">
 <text/>
 </hook>
 </node>
-<node CREATED="1291216191734" ID="Freemind_Link_1627016185" MODIFIED="1291216210234" TEXT="Backup Users!">
+<node CREATED="1291214117578" ID="Freemind_Link_804394739" MODIFIED="1291216237125" TEXT="Upload war">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291214130437" ID="Freemind_Link_1454121737" MODIFIED="1291216237125" TEXT="Compare and copy config.properties as GlobalConfig.properties">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291216191734" ID="Freemind_Link_1627016185" MODIFIED="1291216237125" TEXT="Backup Users!">
 <icon BUILTIN="flag"/>
-</node>
-<node CREATED="1291216110437" ID="Freemind_Link_1160336191" MODIFIED="1291216111562" TEXT="Remove existing database"/>
-<node CREATED="1291216112625" ID="Freemind_Link_426396135" MODIFIED="1291216119328" TEXT="Startup new app so that the tables are generated"/>
-<node CREATED="1291216120531" ID="Freemind_Link_1808227689" MODIFIED="1291216126000" TEXT="Stop new app"/>
-<node CREATED="1291213950796" ID="Freemind_Link_1942704877" MODIFIED="1291216167953" TEXT="importing geo data to derby. Tab character, should be copied off something like notepad and pasted ">
 <hook NAME="accessories/plugins/NodeNote.properties">
-<text>CALL SYSCS_UTIL.SYSCS_IMPORT_DATA (&apos;ILP&apos;,&apos;LOCATION&apos;,&apos;LOCATIONID,LOCATIONNAME,LOCATIONINFO,LOCATIONSUPERSET_LOCATIONID&apos;,&apos;1,3,3,6&apos;, &apos;/root/downloads/ygd/7.5.2/geoplanet_places_7.5.2.tsv&apos;, &apos;&#x9;&apos;,&apos;&quot;&apos;,&apos;UTF-8&apos;, 1)&#xa;&#xa;SYSCS_UTIL.SYSCS_IMPORT_TABLE (IN schemaName VARCHAR(128),&#xa;IN tableName VARCHAR(128), IN fileName VARCHAR(32672),&#xa;&#xa;IN columnDelimiter CHAR(1), IN characterDelimiter  CHAR(1),&#xa;IN codeset VARCHAR(128), IN replace SMALLINT)&#xa;&#xa;No Result is returned from the procedure.&#xa;To import data from a file to a subset of columns in a table, use the SYSCS_UTIL.SYSCS_IMPORT_DATA procedure.&#xa;To import data to subset of columns in a table, you specify insertColumns on the table into which data will be imported and/or specify columnIndexes to import data fields from a file to columns in a table.&#xa;The procedure definition is:&#xa;SYSCS_UTIL.SYSCS_IMPORT_DATA (IN schemaName VARCHAR(128),&#xa;IN tableName VARCHAR(128), IN insertColumns VARCHAR(32672),&#xa;IN columnIndexes VARCHAR(32672), IN fileName VARCHAR(32672),&#xa;IN columnDelimiter CHAR(1), IN characterDelimiter  CHAR(1),&#xa;IN codeset VARCHAR(128), IN replace SMALLINT)&#xa;&#xa;&#xa;CALL SYSCS_UTIL.SYSCS_IMPORT_DATA (&apos;ILPIMP&apos;,&apos;LOCATION&apos;,&apos;LOCATIONID,LOCATIONNAME,LOCATIONSUPERSET_LOCATIONID&apos;,&apos;1,3,6&apos;, &apos;/root/downloads/ygd/7.5.2/geoplanet_places_7.5.2.tsv&apos;, &apos;&#x9;&apos;,&apos;&quot;&apos;,&apos;UTF-8&apos;, 1)&#xa;&#xa;1. Create a sample database&#xa;&#xa;2. Create Tables for Import(Use intellij DBHelper)&#xa;CREATE TABLE  ILPIMP.LOCATION (&#xa;LOCATIONID BIGINT,&#xa;CLEARANCE BIGINT,&#xa;LOCATIONGEO1 VARCHAR(63),&#xa;LOCATIONGEO2 VARCHAR(63),&#xa;LOCATIONINFO VARCHAR(1000),&#xa;LOCATIONNAME VARCHAR(255),&#xa;LOCATIONSUPERSET_LOCATIONID BIGINT&#xa;, PRIMARY KEY (LOCATIONID)&#xa;);&#xa;&#xa;2. Do a sample import and verity import works with the TSV&#xa;</text>
+<text/>
+</hook>
+</node>
+<node CREATED="1291216110437" ID="Freemind_Link_1160336191" MODIFIED="1291216237125" TEXT="Remove existing database">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291216112625" ID="Freemind_Link_426396135" MODIFIED="1291216237125" TEXT="Startup new app so that the tables are generated">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291216120531" ID="Freemind_Link_1808227689" MODIFIED="1291216237125" TEXT="Stop new app">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291213950796" ID="Freemind_Link_1942704877" MODIFIED="1291216237125" TEXT="importing geo data to derby. Tab character, should be copied off something like notepad and pasted ">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
 </hook>
 </node>
 </node>

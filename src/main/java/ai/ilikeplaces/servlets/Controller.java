@@ -347,10 +347,6 @@ final public class
 
         FriendAdd("ai/ilikeplaces/widgets/friend/friend_add.xhtml",
                   Controller.Page.friendAddAddButton,
-                  // Controller.Page.friendAddBirthYearLabel,
-                  // Controller.Page.friendAddFirstNameLabel,
-                  // Controller.Page.friendAddLastNameLabel,
-                  // Controller.Page.friendAddLocationLabel
                   Controller.Page.friendAddDisplayNameLabel
         ) {
             @Override
@@ -366,10 +362,6 @@ final public class
         FriendDelete("ai/ilikeplaces/widgets/friend/friend_delete.xhtml",
                      Controller.Page.friendDeleteAddButton,
                      Controller.Page.friendDeleteDisplayNameLabel
-//                Controller.Page.friendDeleteBirthYearLabel,
-//                Controller.Page.friendDeleteFirstNameLabel,
-//                Controller.Page.friendDeleteLastNameLabel,
-//                Controller.Page.friendDeleteLocationLabel
         ) {
             @Override
             public String getURL() {
@@ -737,27 +729,6 @@ final public class
                 return RBGet.getGlobalConfigKey("AppRoot") + "login";
             }
         },
-//        PhotoCRUD(
-//                "ai/ilikeplaces/widgets/PhotoCRUD.xhtml",
-//                Controller.Page.pc_photo_title,
-//                Controller.Page.pc_close,
-//                Controller.Page.pc,
-//                Controller.Page.pc_photo,
-//                Controller.Page.pc_photo_permalink,
-//                Controller.Page.pc_photo_name,
-//                Controller.Page.pc_update_name,
-//                Controller.Page.pc_photo_description,
-//                Controller.Page.pc_delete,
-//                Controller.Page.pc_update_description) {
-//            @Override
-//            public String getURL() {
-//                return RBGet.getGlobalConfigKey("AppRoot") + "page/_me";
-//            }
-//            @Override
-//            public String toString() {
-//                return "me";
-//            }
-//        },
         SignInOn(
                 "ai/ilikeplaces/widgets/SignInOn.xhtml",
                 Controller.Page.signinon_login,
@@ -906,20 +877,12 @@ final public class
         final static public String DocFriendAdd = "DocFriendAdd";
         /*AddFriend IDs*/
         final static public String friendAddDisplayNameLabel = "friendAddDisplayNameLabel";
-//        final static public String friendAddFirstNameLabel = "friendAddFirstNameLabel";
-//        final static public String friendAddLastNameLabel = "friendAddLastNameLabel";
-//        final static public String friendAddBirthYearLabel = "friendAddBirthYearLabel";
-//        final static public String friendAddLocationLabel = "friendAddLocationLabel";
         final static public String friendAddAddButton = "friendAddAddButton";
 
         /*DeleteFriend Page*/
         final static public String DocFriendDelete = "DocFriendDelete";
         /*DeleteFriend IDs*/
         final static public String friendDeleteDisplayNameLabel = "friendDeleteDisplayNameLabel";
-//        final static public String friendDeleteFirstNameLabel = "friendDeleteFirstNameLabel";
-//        final static public String friendDeleteLastNameLabel = "friendDeleteLastNameLabel";
-//        final static public String friendDeleteBirthYearLabel = "friendDeleteBirthYearLabel";
-//        final static public String friendDeleteLocationLabel = "friendDeleteLocationLabel";
         final static public String friendDeleteAddButton = "friendDeleteDeleteButton";
 
         /*FriendList Page*/
@@ -1281,7 +1244,7 @@ final public class
 
 // -------------------------- STATIC METHODS --------------------------
 
-    private final static void PutAllPageElementIdsByPage(final PageFace page__, final String... ids__) {
+    private static void PutAllPageElementIdsByPage(final PageFace page__, final String... ids__) {
         final HashSet<String> ids_ = new HashSet<String>();
         ids_.addAll(Arrays.asList(ids__));
         GlobalPageIdRegistry.put(page__, ids_);

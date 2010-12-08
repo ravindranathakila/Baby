@@ -19,15 +19,23 @@ import java.util.Properties;
 import static ai.ilikeplaces.util.Loggers.EXCEPTION;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-abstract public class CDN extends AbstractSLBCallbacks {//This classes is designed to be used with stateless beans connecting to containers
+abstract public class CDN extends AbstractSLBCallbacks {
+// ------------------------------ FIELDS ------------------------------
+
+    public static final String CL0_UD_K3_Y = "CL0UD_K3Y";
+    public static final String LOADING_IMAGE_FROM = "Loading Image From:";
+    public static final String LOGGED_INTO_RACKSPACE = "Logged into Rackspace!";
+    public static final String LOGIN_INTO_RACKSPACE_FAILED = "Login into Rackspace FAILED!";
+    public static final String SORRY_MAIL_SESSION_BEAN_INITIALIZATION_FAILED = "SORRY! MAIL SESSION BEAN INITIALIZATION FAILED!";
+    public static final String U53_R_NAM3 = "U53R_NAM3";
+    protected static boolean OK_ = false;
+    protected static Context Context_ = null;
+    protected final static Properties P_ = new Properties();
+    protected final static String ICF = RBGet.globalConfig.getString("oejb.LICF");
+    private static final String LOGIN_FAILED = "LOGIN TO RACKSPACE FOR FILE UPLOAD FAILED. THIS EXCEPTION WILL DESTROY THIS INSTANCE";//This classes is designed to be used with stateless beans connecting to containers
+    protected static final RuntimeException LOGIN_EXCEPTION = new RuntimeException(LOGIN_FAILED);
 
     protected FilesClient client = null;
-    protected final static Properties P_ = new Properties();
-    protected static Context Context_ = null;
-    protected static boolean OK_ = false;
-    protected final static String ICF = RBGet.globalConfig.getString("oejb.LICF");
-    private static final String LOGIN_FAILED = "LOGIN TO RACKSPACE FOR FILE UPLOAD FAILED. THIS EXCEPTION WILL DESTROY THIS INSTANCE";
-    protected static final RuntimeException LOGIN_EXCEPTION = new RuntimeException(LOGIN_FAILED);
 
     static {
         try {
@@ -40,47 +48,23 @@ abstract public class CDN extends AbstractSLBCallbacks {//This classes is design
         }
     }
 
-    protected boolean doLogin() {
+// ------------------------ CANONICAL METHODS ------------------------
 
-        try {
-            client = new FilesClient("rakila", RBGet.globalConfig.getString("CL0UD_K3Y"), null);
-            boolean result = client.login();
 
-            if (result) {
-                Loggers.log(Loggers.LEVEL.SERVER_STATUS, Loggers.EMBED, "Logged into Rackspace!");
-            } else {
-                Loggers.log(Loggers.LEVEL.SERVER_STATUS, Loggers.EMBED, "Login into Rackspace FAILED!");
-            }
-
-            return result;
-        } catch (final IOException e) {
-            Loggers.log(Loggers.LEVEL.ERROR, Loggers.EMBED, e);
-            return false;
-        }
-    }
-
-    static public void isOK() {
-        if (!OK_) {
-            throw new IllegalStateException("SORRY! MAIL SESSION BEAN INITIALIZATION FAILED!");
-        }
-    }
+// -------------------------- STATIC METHODS --------------------------
 
     /**
      * http://www.javalobby.org/articles/ultimate-image/
-     * <p/>
-     * Saves a BufferedImage to the given file, pathname must not have any
-     * periods "." in it except for the one before the format, i.e. C:/images/fooimage.png
-     * <p/>
      *
-     * @param img
      * @param ref
+     * @return null or buffered image
+     * @throws Exception
      */
-    public static void saveImage(final BufferedImage img, final File ref) throws IOException {
+    public static BufferedImage loadImage(final File ref) throws Exception {
         try {
-            //final String format = (ref.endsWith(".png")) ? "png" : "jpg";
-            //ImageIO.write(img, format, new File(ref));
-            ImageIO.write(img, ref.getName().substring(ref.getName().lastIndexOf(".") + 1), ref);
-        } catch (final IOException e) {
+            Loggers.DEBUG.debug(LOADING_IMAGE_FROM + ref.getCanonicalPath());
+            return ImageIO.read(ref);
+        } catch (final Exception e) {
             EXCEPTION.error(Loggers.EMBED, e);
             throw e;
         }
@@ -131,23 +115,50 @@ abstract public class CDN extends AbstractSLBCallbacks {//This classes is design
 
     /**
      * http://www.javalobby.org/articles/ultimate-image/
+     * <p/>
+     * Saves a BufferedImage to the given file, pathname must not have any
+     * periods "." in it except for the one before the format, i.e. C:/images/fooimage.png
+     * <p/>
      *
+     * @param img
      * @param ref
-     * @return null or buffered image
-     * @throws Exception
      */
-    public static BufferedImage loadImage(final File ref) throws Exception {
+    public static void saveImage(final BufferedImage img, final File ref) throws IOException {
         try {
-            Loggers.DEBUG.debug("Loading Image From:" + ref.getCanonicalPath());
-            return ImageIO.read(ref);
-        } catch (final Exception e) {
+            //final String format = (ref.endsWith(".png")) ? "png" : "jpg";
+            //ImageIO.write(img, format, new File(ref));
+            ImageIO.write(img, ref.getName().substring(ref.getName().lastIndexOf(".") + 1), ref);
+        } catch (final IOException e) {
             EXCEPTION.error(Loggers.EMBED, e);
             throw e;
         }
     }
 
+    static public void isOK() {
+        if (!OK_) {
+            throw new IllegalStateException(SORRY_MAIL_SESSION_BEAN_INITIALIZATION_FAILED);
+        }
+    }
 
+// -------------------------- OTHER METHODS --------------------------
 
+    protected boolean doLogin() {
+        try {
+            client = new FilesClient(RBGet.globalConfig.getString(U53_R_NAM3), RBGet.globalConfig.getString(CL0_UD_K3_Y), null);
+            boolean result = client.login();
+
+            if (result) {
+                Loggers.log(Loggers.LEVEL.SERVER_STATUS, Loggers.EMBED, LOGGED_INTO_RACKSPACE);
+            } else {
+                Loggers.log(Loggers.LEVEL.SERVER_STATUS, Loggers.EMBED, LOGIN_INTO_RACKSPACE_FAILED);
+            }
+
+            return result;
+        } catch (final IOException e) {
+            Loggers.log(Loggers.LEVEL.ERROR, Loggers.EMBED, e);
+            return false;
+        }
+    }
 
 //    /**
 //     * http://www.javalobby.org/articles/ultimate-image/
