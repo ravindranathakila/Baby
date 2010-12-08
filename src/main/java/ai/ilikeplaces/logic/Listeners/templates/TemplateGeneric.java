@@ -18,9 +18,12 @@ public class TemplateGeneric implements TemplateSource {
 
     public static final String PAGE_NAME_PARAMETER_KEY = "name";
     public static final String HTML_DOT_EXTENSION = ".html";
-    private static final String PREVENT_INTRUTION_TO_OTHER_TEMPLATES_FOLDER = "public/";
+    public static final String ROOT = "/";
+    private static final String PREVENT_INTRUTION_TO_OTHER_TEMPLATES_FOLDER = "public" + ROOT;
 
     private final boolean mustReload;
+    public static final String SORRY_NO_SUCH_RESOURCE = "SORRY! NO SUCH RESOURCE.";
+    public static final String SORRY_GIVEN_RESOURCE_IS_NOT_VALID = "SORRY! GIVEN RESOURCE IS NOT VALID!";
 
 // --------------------------- CONSTRUCTORS ---------------------------
 
@@ -40,9 +43,8 @@ public class TemplateGeneric implements TemplateSource {
 
     @Override
     public InputStream getInputStream(final ItsNatServletRequest itsNatServletRequest, final ItsNatServletResponse response) {
-        final String domain;
 
-        final String realPath__ = itsNatServletRequest.getItsNatServlet().getItsNatServletContext().getServletContext().getRealPath("/");
+        final String realPath__ = itsNatServletRequest.getItsNatServlet().getItsNatServletContext().getServletContext().getRealPath(ROOT);
 
         /* Security measure to prevent access to ai.ilikeplaces. folders */
         final String pathPrefix__ = realPath__ + Controller.WEB_INF_PAGES + PREVENT_INTRUTION_TO_OTHER_TEMPLATES_FOLDER;
@@ -50,13 +52,14 @@ public class TemplateGeneric implements TemplateSource {
         final String pageName = itsNatServletRequest.getServletRequest().getParameter(PAGE_NAME_PARAMETER_KEY);
 
         InputStream requestedResource = null;
+
         try {
             requestedResource = new FileInputStream(pathPrefix__ + pageName + HTML_DOT_EXTENSION);
         } catch (FileNotFoundException e) {
-            Loggers.EXCEPTION.error("SORRY! NO SUCH RESOURCE.", e);
+            Loggers.EXCEPTION.error(SORRY_NO_SUCH_RESOURCE, e);
         }
 
-        return (InputStream) LogNull.logThrow(requestedResource,"SORRY! GIVEN RESOURCE IS NOT VALID!");
+        return (InputStream) LogNull.logThrow(requestedResource, SORRY_GIVEN_RESOURCE_IS_NOT_VALID);
     }
 
 // ------------------------ CANONICAL METHODS ------------------------
