@@ -779,11 +779,18 @@
 <icon BUILTIN="full-1"/>
 <node CREATED="1291768464718" ID="Freemind_Link_1707288247" MODIFIED="1291814737671" TEXT="Is this a trustworthy place to book online?">
 <icon BUILTIN="full-2"/>
-<node CREATED="1291815710000" ID="Freemind_Link_1629495136" MODIFIED="1291815735156" TEXT="Outbound links to other travel sites as challenge">
+<node CREATED="1291815710000" ID="Freemind_Link_1629495136" MODIFIED="1291855812281" TEXT="Outbound links to other travel sites as challenge">
 <icon BUILTIN="full-3"/>
+<icon BUILTIN="clanbomber"/>
+<node CREATED="1291856157906" ID="Freemind_Link_1536307481" MODIFIED="1291856268312" TEXT="Might loose customers">
+<icon BUILTIN="full-4"/>
+</node>
 </node>
 <node CREATED="1291815753250" ID="Freemind_Link_491455885" MODIFIED="1291815769375" TEXT="Up-front disclosure of &quot;how to book&quot;">
 <icon BUILTIN="full-3"/>
+<node CREATED="1291856084718" ID="Freemind_Link_1051171771" MODIFIED="1291856268296" TEXT="Simple steb by steb guide">
+<icon BUILTIN="full-4"/>
+</node>
 </node>
 <node CREATED="1291815790984" ID="Freemind_Link_324275203" MODIFIED="1291815823234" TEXT="If a signup is required, we&apos;ll tell &#xa;what the email is used for.">
 <icon BUILTIN="full-3"/>
@@ -793,6 +800,9 @@
 </node>
 <node CREATED="1291816000171" ID="Freemind_Link_571607566" MODIFIED="1291816012359" TEXT="Very Minimalist Simplicity">
 <icon BUILTIN="full-3"/>
+<node CREATED="1291856116218" ID="Freemind_Link_6134135" MODIFIED="1291856268281" TEXT="Leave only middle column visible&#xa;Make rest apear based on events">
+<icon BUILTIN="full-4"/>
+</node>
 </node>
 <node CREATED="1291816033312" ID="Freemind_Link_868588863" MODIFIED="1291816059281" TEXT="Links to &quot;internet safety&quot; articles">
 <icon BUILTIN="full-3"/>
