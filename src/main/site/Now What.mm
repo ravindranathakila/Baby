@@ -1,8 +1,8 @@
 <map version="0.8.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node BACKGROUND_COLOR="#00cc66" CREATED="1289573930062" ID="Freemind_Link_1993118448" MODIFIED="1289868737859" TEXT="I&apos;m in, &#xa;now what?">
+<node BACKGROUND_COLOR="#00cc66" CREATED="1289573930062" ID="Freemind_Link_1993118448" MODIFIED="1292421744171" TEXT="i want">
 <hook NAME="accessories/plugins/NodeNote.properties">
-<text>Use Jackie Chan English. Makes understand concept easy. Hokay?&#xa;This should show all use cases.&#xa;Use pull marketing. Makes marketing easy. What is pull marketing? Market only something wanted. If they don&apos;t want, try make them want. Simple. Hokay?&#xa;To use pull marketing in diagram, use want/get to grow nodes. Make wants nodes(give more importance). Make gets chains. Gives can have &quot;get&quot; as the explanatory word. Nothing else.&#xa;Remeber that gets can be negative. Some nodes can even have phrases like &quot;i get a doubt why I need to forward this to a friend&quot;.&#xa;Remember, if a want gives u a headache hor disturb, then that is the good want. Needs fixing. Hokay? Pay more attention this wants.&#xa;Remember that not all nodes are marketable. Some simplify things but not directly marketable. Instead, prevents stagnation.&#xa;A want section can describe only things given by its previous fork. No new &quot;I see&quot; or &quot;notice&quot; component can be specified.&#xa;&#xa;get gone = browser sends/application sends&#xa;&#xa;want + why want&#xa;get + why get&#xa;&#xa;You&apos;ve gotto make em &quot;want&quot; with what you&apos;ve &quot;got&quot;. So for a given want, all gots should be already there given.</text>
+<text>Use Jackie Chan English. Makes understand concept easy. Hokay?&#xa;This should show all use cases.&#xa;Use pull marketing. Makes marketing easy. What is pull marketing? Market only something wanted. If they don&apos;t want, try make them want. Simple. Hokay?&#xa;To use pull marketing in diagram, use want/get to grow nodes. Make wants nodes(give more importance). Make gets chains. Gives can have &quot;get&quot; as the explanatory word. Nothing else.&#xa;A want should mostly bring in money, and if not, minimally, happiness to the user.&#xa;Remeber that gets can be negative. Some nodes can even have phrases like &quot;i get a doubt why I need to forward this to a friend&quot;.&#xa;Remember, if a want gives u a headache hor disturb, then that is the good want. Needs fixing. Hokay? Pay more attention this wants.&#xa;Remember that not all nodes are marketable. Some simplify things but not directly marketable. Instead, prevents stagnation.&#xa;A want section can describe only things given by its previous fork. No new &quot;I see&quot; or &quot;notice&quot; component can be specified.&#xa;&#xa;get gone = browser sends/application sends&#xa;&#xa;want + why want&#xa;get + why get&#xa;&#xa;You&apos;ve gotto make em &quot;want&quot; with what you&apos;ve &quot;got&quot;. So for a given want, all gots should be already there given.</text>
 </hook>
 <node CREATED="1289574105546" ID="Freemind_Link_1444820136" MODIFIED="1289867512828" POSITION="left" TEXT="I go downtown/home page,&#xa;and wonder what this website is.&#xa;now what?">
 <node CREATED="1289867136406" ID="_" MODIFIED="1289868133625" TEXT="I get &#xa;&quot;@DOWNTOWN ONLY REAL WORLD&#xa; ENTERTAINMENT HAPPENS!&quot;"/>
@@ -20,8 +20,8 @@
 <node CREATED="1289868511484" ID="Freemind_Link_1751359988" MODIFIED="1289868569375" STYLE="fork" TEXT="I get&#xa;A map of the location"/>
 </node>
 </node>
-<node CREATED="1289573988109" HGAP="291" ID="Freemind_Link_1687042404" MODIFIED="1289646673250" POSITION="right" TEXT="I go home page" VSHIFT="32">
-<node CREATED="1289574124406" FOLDED="true" ID="Freemind_Link_292432303" MODIFIED="1289620430109" STYLE="bubble" TEXT="I see search box, &#xa;i what to do something, do i?&#xa; if so what do i do?">
+<node CREATED="1289573988109" FOLDED="true" HGAP="300" ID="Freemind_Link_1687042404" MODIFIED="1292421313390" POSITION="right" TEXT="I go home page" VSHIFT="28">
+<node CREATED="1289574124406" ID="Freemind_Link_292432303" MODIFIED="1289620430109" STYLE="bubble" TEXT="I see search box, &#xa;i what to do something, do i?&#xa; if so what do i do?">
 <node CREATED="1289620321312" ID="Freemind_Link_1754743000" MODIFIED="1289620321312" STYLE="fork" TEXT=""/>
 <node CREATED="1289620321312" ID="Freemind_Link_1951124893" MODIFIED="1289620321312" STYLE="fork" TEXT=""/>
 </node>
@@ -29,7 +29,7 @@
 <node CREATED="1289620321312" ID="Freemind_Link_321153483" MODIFIED="1289620321312" STYLE="fork" TEXT=""/>
 <node CREATED="1289620321312" ID="Freemind_Link_651565119" MODIFIED="1289620321312" STYLE="fork" TEXT=""/>
 </node>
-<node CREATED="1289574115421" FOLDED="true" ID="Freemind_Link_1238654914" MODIFIED="1289621079015" STYLE="bubble" TEXT="i see map,&#xa;i what to do something, do i?&#xa; if so what do i do?">
+<node CREATED="1289574115421" ID="Freemind_Link_1238654914" MODIFIED="1289621079015" STYLE="bubble" TEXT="i see map,&#xa;i what to do something, do i?&#xa; if so what do i do?">
 <node CREATED="1289620321312" FOLDED="true" ID="Freemind_Link_1677979916" MODIFIED="1289620321312" STYLE="fork" TEXT=""/>
 <node CREATED="1289620321312" FOLDED="true" ID="Freemind_Link_1328873307" MODIFIED="1289620321312" STYLE="fork" TEXT=""/>
 </node>
@@ -38,8 +38,8 @@
 <node CREATED="1289620321312" ID="Freemind_Link_1136022597" MODIFIED="1289620321312" STYLE="fork" TEXT=""/>
 </node>
 </node>
-<node CREATED="1289620553078" HGAP="284" ID="Freemind_Link_1854861962" MODIFIED="1289646690171" POSITION="right" TEXT="I get organize page" VSHIFT="-72">
-<node CREATED="1289620566687" HGAP="109" ID="Freemind_Link_1867038270" MODIFIED="1289646461531" STYLE="bubble" TEXT="I see create location,&#xa; i want to create a location, do i?" VSHIFT="-34">
+<node CREATED="1289620553078" FOLDED="true" HGAP="304" ID="Freemind_Link_1854861962" MODIFIED="1292421335187" POSITION="right" TEXT="I get organize page" VSHIFT="4">
+<node CREATED="1289620566687" FOLDED="true" HGAP="109" ID="Freemind_Link_1867038270" MODIFIED="1289646461531" STYLE="bubble" TEXT="I see create location,&#xa; i want to create a location, do i?" VSHIFT="-34">
 <node CREATED="1289620618031" ID="Freemind_Link_1995229372" MODIFIED="1289646483578" STYLE="fork" TEXT="I get a page with location i created" VSHIFT="-50">
 <node CREATED="1289620829593" ID="Freemind_Link_451903727" MODIFIED="1289621451890" STYLE="bubble" TEXT="I see create event,&#xa;I want to create event">
 <node CREATED="1289620830562" ID="Freemind_Link_154600273" MODIFIED="1289623944921" STYLE="fork" TEXT="I get a page with event i created">
@@ -76,7 +76,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1289622687062" HGAP="320" ID="Freemind_Link_618787317" MODIFIED="1289646598937" POSITION="right" TEXT="I get check email" VSHIFT="13">
+<node CREATED="1289622687062" FOLDED="true" HGAP="305" ID="Freemind_Link_618787317" MODIFIED="1292421340218" POSITION="right" TEXT="I get check email" VSHIFT="-11">
 <node CREATED="1289624020718" ID="Freemind_Link_1123408580" MODIFIED="1289646724203" STYLE="bubble" TEXT="I see an email that I was made an owner of a location, I want to know what this is all about" VSHIFT="-2"/>
 <node CREATED="1289624020718" ID="Freemind_Link_924141894" MODIFIED="1289646723625" STYLE="bubble" TEXT="I see an email that I was made an viewr of a location, I want to know what this is all about"/>
 <node CREATED="1289624034343" ID="Freemind_Link_1579652225" MODIFIED="1289646722984" STYLE="bubble" TEXT="I see an email that I was made an owner of an event, I want to know what this is all about"/>
@@ -93,6 +93,96 @@
 </hook>
 <node CREATED="1289626628796" ID="Freemind_Link_1761795511" MODIFIED="1289626644328" STYLE="fork" TEXT="I get the wall of the event">
 <node CREATED="1289626644687" ID="Freemind_Link_1898262384" MODIFIED="1289626673437" STYLE="bubble" TEXT="I notice an unsubscribe link&#xa;(as I was told to look for it in the mail)"/>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1292421251515" HGAP="305" ID="Freemind_Link_1427454624" MODIFIED="1292422150625" POSITION="right" STYLE="bubble" TEXT="I want to book a" VSHIFT="-27">
+<node CREATED="1292421809359" ID="Freemind_Link_1164378106" MODIFIED="1292422850734" TEXT="cheap">
+<node CREATED="1292421555296" ID="Freemind_Link_1686319502" MODIFIED="1292421942984" TEXT="hotel to hawaii">
+<node CREATED="1292421999796" ID="Freemind_Link_887291126" MODIFIED="1292422390562" TEXT="i google it">
+<font BOLD="true" ITALIC="true" NAME="Comic Sans MS" SIZE="12"/>
+<node CREATED="1292422125531" ID="Freemind_Link_335215284" MODIFIED="1292422202734" STYLE="fork" TEXT="i get result with">
+<node CREATED="1292422224109" ID="Freemind_Link_1395868645" MODIFIED="1292422230843" TEXT="title as">
+<node CREATED="1292422297453" ID="Freemind_Link_911729620" MODIFIED="1292422619687" TEXT="cheapest rates on hotels"/>
+</node>
+<node CREATED="1292422224109" ID="Freemind_Link_1618366004" MODIFIED="1292422417500" TEXT="description as">
+<node CREATED="1292422297453" ID="Freemind_Link_1789983076" MODIFIED="1292422619687" TEXT="cheapest rates on hotels"/>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1292421565218" ID="Freemind_Link_733706195" MODIFIED="1292421951531" TEXT="car at hawaii">
+<node CREATED="1292421999796" ID="Freemind_Link_1275666599" MODIFIED="1292422391109" TEXT="i google it">
+<font BOLD="true" ITALIC="true" NAME="Comic Sans MS" SIZE="12"/>
+<node CREATED="1292422125531" ID="Freemind_Link_1657638923" MODIFIED="1292422202734" STYLE="fork" TEXT="i get result with">
+<node CREATED="1292422224109" ID="Freemind_Link_1163273203" MODIFIED="1292422230843" TEXT="title as">
+<node CREATED="1292422297453" ID="Freemind_Link_799778463" MODIFIED="1292422795000" TEXT="best rates on hotels"/>
+</node>
+<node CREATED="1292422224109" ID="Freemind_Link_914542084" MODIFIED="1292422417500" TEXT="description as">
+<node CREATED="1292422297453" ID="Freemind_Link_355995259" MODIFIED="1292422801000" TEXT="best rates on hotels"/>
+</node>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1292422836421" ID="Freemind_Link_1229769578" MODIFIED="1292422839390" TEXT="last minute">
+<node CREATED="1292421558093" ID="Freemind_Link_1885159204" MODIFIED="1292421940140" TEXT="flight to hawaii">
+<node CREATED="1292421999796" ID="Freemind_Link_823107926" MODIFIED="1292422391109" TEXT="i google it">
+<font BOLD="true" ITALIC="true" NAME="Comic Sans MS" SIZE="12"/>
+<node CREATED="1292422125531" ID="Freemind_Link_1792991940" MODIFIED="1292422202734" STYLE="fork" TEXT="i get result with">
+<node CREATED="1292422224109" ID="Freemind_Link_203734462" MODIFIED="1292422230843" TEXT="title as">
+<node CREATED="1292422297453" ID="Freemind_Link_1413386630" MODIFIED="1292422780796" TEXT="last minute rates on flights"/>
+</node>
+<node CREATED="1292422224109" ID="Freemind_Link_1167286982" MODIFIED="1292422417500" TEXT="description as">
+<node CREATED="1292422297453" ID="Freemind_Link_1462872468" MODIFIED="1292422792015" TEXT="last minute rates on flights"/>
+</node>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1292421813437" ID="Freemind_Link_606133999" MODIFIED="1292422676578" TEXT="deal/package">
+<node CREATED="1292421555296" ID="Freemind_Link_955989236" MODIFIED="1292421942984" TEXT="hotel to hawaii">
+<node CREATED="1292421999796" ID="Freemind_Link_460732873" MODIFIED="1292422391109" TEXT="i google it">
+<font BOLD="true" ITALIC="true" NAME="Comic Sans MS" SIZE="12"/>
+<node CREATED="1292422125531" ID="Freemind_Link_211858623" MODIFIED="1292422202734" STYLE="fork" TEXT="i get result with">
+<node CREATED="1292422224109" ID="Freemind_Link_1569391368" MODIFIED="1292422230843" TEXT="title as">
+<node CREATED="1292422297453" ID="Freemind_Link_928487139" MODIFIED="1292422760906" TEXT="hotel deals, holiday packages"/>
+</node>
+<node CREATED="1292422224109" ID="Freemind_Link_29170065" MODIFIED="1292422417500" TEXT="description as">
+<node CREATED="1292422297453" ID="Freemind_Link_1909071111" MODIFIED="1292422760906" TEXT="hotel deals, holiday packages"/>
+</node>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1292421816265" ID="Freemind_Link_1014707200" MODIFIED="1292421818343" TEXT="luxury">
+<node CREATED="1292421555296" ID="Freemind_Link_1015796413" MODIFIED="1292421942984" TEXT="hotel to hawaii">
+<node CREATED="1292421999796" ID="Freemind_Link_804814853" MODIFIED="1292422391093" TEXT="i google it">
+<font BOLD="true" ITALIC="true" NAME="Comic Sans MS" SIZE="12"/>
+<node CREATED="1292422125531" ID="Freemind_Link_846504489" MODIFIED="1292422202734" STYLE="fork" TEXT="i get result with">
+<node CREATED="1292422224109" ID="Freemind_Link_737504285" MODIFIED="1292422230843" TEXT="title as">
+<node CREATED="1292422297453" ID="Freemind_Link_1139951299" MODIFIED="1292430040218" TEXT="luxury hotels"/>
+</node>
+<node CREATED="1292422224109" ID="Freemind_Link_1427839360" MODIFIED="1292422417500" TEXT="description as">
+<node CREATED="1292422297453" ID="Freemind_Link_526468952" MODIFIED="1292430040218" TEXT="luxury hotels"/>
+</node>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1292421821156" ID="Freemind_Link_38603777" MODIFIED="1292422884078" TEXT="safe and sound">
+<node CREATED="1292421555296" ID="Freemind_Link_1624982348" MODIFIED="1292422062421" TEXT="hotel to hawaii">
+<node CREATED="1292421999796" ID="Freemind_Link_173525740" MODIFIED="1292422391093" TEXT="i google it">
+<font BOLD="true" ITALIC="true" NAME="Comic Sans MS" SIZE="12"/>
+<node CREATED="1292422125531" ID="Freemind_Link_1718567164" MODIFIED="1292422202734" STYLE="fork" TEXT="i get result with">
+<node CREATED="1292422224109" ID="Freemind_Link_174475130" MODIFIED="1292422230843" TEXT="title as">
+<node CREATED="1292422297453" ID="Freemind_Link_803059803" MODIFIED="1292430085468" TEXT="compare rates, low price gurantee"/>
+</node>
+<node CREATED="1292422224109" ID="Freemind_Link_1260960472" MODIFIED="1292422417500" TEXT="description as">
+<node CREATED="1292422297453" ID="Freemind_Link_1721366524" MODIFIED="1292430085468" TEXT="compare rates, low price gurantee"/>
+</node>
+</node>
 </node>
 </node>
 </node>

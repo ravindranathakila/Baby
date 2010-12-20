@@ -5,18 +5,8 @@
 <node CREATED="1266112497203" FOLDED="true" ID="Freemind_Link_98693104" MODIFIED="1291212324296" POSITION="left" TEXT="Postponed(1 week rule)">
 <font NAME="Comic Sans MS" SIZE="9"/>
 <icon BUILTIN="messagebox_warning"/>
-<node CREATED="1266112516093" ID="Freemind_Link_170625570" MODIFIED="1266112615062" TEXT="Uplaoding Multiple files&#xa;Bookmarked:file upload, chosen, "/>
-<node CREATED="1266115325609" ID="Freemind_Link_17826912" MODIFIED="1266115330921" TEXT="Custorm Cursor Types"/>
-<node CREATED="1266115535703" ID="Freemind_Link_1093148969" MODIFIED="1266115549687" TEXT="Ajax loading of slow images e.g. favicons"/>
-<node CREATED="1266118307828" ID="Freemind_Link_964729034" MODIFIED="1266119412187" TEXT="Custom Button Widget Text Align"/>
-<node CREATED="1266122740093" ID="Freemind_Link_1877086563" MODIFIED="1266122745468" TEXT="CDN button paths">
-<node CREATED="1266122808515" ID="Freemind_Link_1310082128" MODIFIED="1266122828125" TEXT="This need not be supported exactly. One could just edit the html code">
-<icon BUILTIN="idea"/>
-</node>
-</node>
 <node CREATED="1266129921890" ID="Freemind_Link_1200968281" MODIFIED="1266129939078" TEXT="Add seperate logger for entities package"/>
 <node CREATED="1268153493859" ID="Freemind_Link_1654910886" MODIFIED="1268153515453" TEXT="Help Page for Local Email Client Configuration"/>
-<node CREATED="1268155605203" ID="Freemind_Link_1984656921" LINK="http://www.jcvs.org/jcvsweb/home" MODIFIED="1268155655734" TEXT="JCVS for webcvs browsing"/>
 <node CREATED="1268183919656" ID="Freemind_Link_186647667" MODIFIED="1268183942484" TEXT="Button value on friend add delete, when set to done, is halfcut"/>
 <node CREATED="1268192588984" ID="Freemind_Link_1278562060" MODIFIED="1268192612437" TEXT="IE and Chrome Just a Moment issue"/>
 <node CREATED="1268616385359" ID="Freemind_Link_417995690" MODIFIED="1268616406875" TEXT="Rethink Organize Intro"/>
@@ -36,7 +26,6 @@
 <node CREATED="1268589807625" ID="Freemind_Link_811456313" MODIFIED="1268589831406" TEXT="Free Gifts and Contests"/>
 <node CREATED="1268589832000" ID="Freemind_Link_436934043" MODIFIED="1268589837906" TEXT="Limited Beta Hype"/>
 <node CREATED="1268590336281" ID="Freemind_Link_929351708" MODIFIED="1268590350578" TEXT="ADHD 610"/>
-<node CREATED="1268590351296" ID="Freemind_Link_1984173885" MODIFIED="1268590362359" TEXT="Headbang Seeker"/>
 <node CREATED="1268590397796" ID="Freemind_Link_1292315699" MODIFIED="1268590407984" TEXT="Broadcast Presense to Peakock">
 <node CREATED="1268590436890" ID="Freemind_Link_318638564" MODIFIED="1268590454593" TEXT="Specially Useful so User things &quot;They are there where I am there&quot;"/>
 <node CREATED="1268590457562" ID="Freemind_Link_1865682415" MODIFIED="1268590461953" TEXT="Presense places">
@@ -65,7 +54,6 @@
 <node CREATED="1275556447374" ID="Freemind_Link_1779107926" MODIFIED="1275556452078" TEXT="VIRAL MAILS"/>
 <node CREATED="1275556454953" ID="Freemind_Link_853951639" MODIFIED="1275556466421" TEXT="CREATE A FORWARDING"/>
 </node>
-<node CREATED="1278952686031" ID="Freemind_Link_1806966059" MODIFIED="1278952710187" TEXT="UTILIZE ABSTRACT SKELETON LISTENER"/>
 <node CREATED="1278866070187" ID="Freemind_Link_308902812" MODIFIED="1278866097859" TEXT="Calculate a per user yearly CDN cost or per 1000 uers an operation cost"/>
 <node CREATED="1277967455359" ID="Freemind_Link_1378247028" MODIFIED="1277967461656" TEXT="PROGRESS BAR">
 <node CREATED="1277967462562" ID="Freemind_Link_1303508157" MODIFIED="1281966575062" TEXT="Add Shortcuts to other operations">
@@ -77,9 +65,6 @@
 <node CREATED="1278155841218" ID="Freemind_Link_1794919373" MODIFIED="1278155845609" TEXT="Integrity Tests"/>
 <node CREATED="1276077493102" ID="Freemind_Link_1360772434" MODIFIED="1281966635390" TEXT="Check friend add mail and profile">
 <icon BUILTIN="button_ok"/>
-</node>
-<node CREATED="1278275086562" ID="Freemind_Link_508879104" MODIFIED="1278275095515" TEXT="DERBY IMPORT">
-<node CREATED="1278275096484" ID="Freemind_Link_1026520123" MODIFIED="1278275103968" TEXT="FIX CHARACTER ENCODING ISSUE"/>
 </node>
 <node CREATED="1278408379421" ID="Freemind_Link_1759560003" MODIFIED="1278408389921" TEXT="SEARCH EAGER AND USE REFRESHDATA INSTEAD">
 <node CREATED="1278408456750" ID="Freemind_Link_1585396695" MODIFIED="1278408462953" TEXT="Update UML"/>
@@ -95,11 +80,6 @@
 <node CREATED="1283778886828" ID="Freemind_Link_1216764454" MODIFIED="1283779046765" TEXT="A given user may not have an event, &#xa;but knows what the fun places are.">
 <node CREATED="1283779049968" ID="Freemind_Link_1064352760" MODIFIED="1283779055187" TEXT="A localite of that area"/>
 <node CREATED="1283779055625" ID="Freemind_Link_1771226222" MODIFIED="1283779060640" TEXT="A travel guide"/>
-</node>
-<node CREATED="1283778835734" ID="Freemind_Link_1410928980" MODIFIED="1283872160515" TEXT="I see a map of fun places ranked by users">
-<node CREATED="1283778886828" ID="Freemind_Link_853110763" MODIFIED="1283779046765" TEXT="A given user may not have an event, &#xa;but knows what the fun places are.">
-<node CREATED="1283872146359" ID="Freemind_Link_1005452003" MODIFIED="1283872154484" TEXT="Check if this is always true"/>
-</node>
 </node>
 <node CREATED="1283778817171" ID="Freemind_Link_1302457204" MODIFIED="1283779022984" TEXT="How do I find where to have fun at this place?">
 <icon BUILTIN="full-2"/>
@@ -739,7 +719,7 @@
 </node>
 </node>
 </node>
-<node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" ID="Freemind_Link_1303374308" MODIFIED="1283778680546" POSITION="right" TEXT="Lab">
+<node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" FOLDED="true" ID="Freemind_Link_1303374308" MODIFIED="1283778680546" POSITION="right" TEXT="Lab">
 <icon BUILTIN="wizard"/>
 <node CREATED="1283778655218" FOLDED="true" ID="Freemind_Link_1143795250" MODIFIED="1283779225796" TEXT="Guide">
 <icon BUILTIN="help"/>
@@ -770,20 +750,32 @@
 </node>
 </node>
 </node>
-<node CREATED="1283778802578" ID="Freemind_Link_371419217" MODIFIED="1283871925359" TEXT="Spill">
+<node CREATED="1292142207656" ID="Freemind_Link_1398985645" MODIFIED="1292142222296" TEXT="Research">
+<icon BUILTIN="xmag"/>
+<node CREATED="1292142230953" ID="Freemind_Link_692725351" MODIFIED="1292142232875" TEXT="SEO">
+<node CREATED="1292142238000" ID="Freemind_Link_1219654546" MODIFIED="1292142244281" TEXT="Geo SEO"/>
+<node CREATED="1292142256125" ID="Freemind_Link_1988567756" MODIFIED="1292142276093" TEXT="Domains names in meta keyword tag">
+<node CREATED="1292142553890" ID="Freemind_Link_750359778" MODIFIED="1292142559906" TEXT="Doesn&apos;t seem to have a bad impact"/>
+</node>
+</node>
+</node>
+<node CREATED="1283778802578" FOLDED="true" ID="Freemind_Link_371419217" MODIFIED="1283871925359" TEXT="Spill">
 <icon BUILTIN="bookmark"/>
 <node CREATED="1284651235765" ID="Freemind_Link_995976715" MODIFIED="1285777908494" TEXT="WOEID Guide Sites">
 <icon BUILTIN="full-1"/>
 </node>
 <node CREATED="1291768251093" ID="Freemind_Link_1732572843" MODIFIED="1291814734062" TEXT="WOEID Pages">
 <icon BUILTIN="full-1"/>
+<node CREATED="1292167944812" ID="Freemind_Link_1772510762" MODIFIED="1292168208781" TEXT="basics">
+<icon BUILTIN="flag"/>
 <node CREATED="1291768464718" ID="Freemind_Link_1707288247" MODIFIED="1291814737671" TEXT="Is this a trustworthy place to book online?">
 <icon BUILTIN="full-2"/>
-<node CREATED="1291815710000" ID="Freemind_Link_1629495136" MODIFIED="1291855812281" TEXT="Outbound links to other travel sites as challenge">
+<node CREATED="1291815710000" FOLDED="true" ID="Freemind_Link_1629495136" MODIFIED="1292142944953" TEXT="Outbound links to other travel sites as challenge">
 <icon BUILTIN="full-3"/>
-<icon BUILTIN="clanbomber"/>
-<node CREATED="1291856157906" ID="Freemind_Link_1536307481" MODIFIED="1291856268312" TEXT="Might loose customers">
+<icon BUILTIN="button_cancel"/>
+<node CREATED="1291856157906" ID="Freemind_Link_1536307481" MODIFIED="1292142950875" TEXT="Might loose customers">
 <icon BUILTIN="full-4"/>
+<icon BUILTIN="clanbomber"/>
 </node>
 </node>
 <node CREATED="1291815753250" ID="Freemind_Link_491455885" MODIFIED="1291815769375" TEXT="Up-front disclosure of &quot;how to book&quot;">
@@ -810,20 +802,63 @@
 <node CREATED="1291817550718" ID="Freemind_Link_1910550505" MODIFIED="1291817564218" TEXT="Make each WOEID page look like a &quot;site&quot;">
 <icon BUILTIN="full-3"/>
 </node>
-<node CREATED="1291817565578" ID="Freemind_Link_1643312823" MODIFIED="1291817578546" TEXT="Provide subdomain support to gain URL trust">
+<node CREATED="1291817565578" FOLDED="true" ID="Freemind_Link_1643312823" MODIFIED="1292142944984" TEXT="Provide subdomain support to gain URL trust">
 <icon BUILTIN="full-3"/>
+<icon BUILTIN="button_cancel"/>
+<node CREATED="1292142826187" ID="Freemind_Link_518414479" MODIFIED="1292142950875" TEXT="subdomain keywords do not add to SEO">
+<icon BUILTIN="full-4"/>
+<icon BUILTIN="clanbomber"/>
 </node>
 </node>
-<node CREATED="1291768635984" ID="Freemind_Link_95246313" MODIFIED="1291814737625" TEXT="I don&apos;t want a middle man website. Is this one?">
+</node>
+<node CREATED="1292142657750" ID="Freemind_Link_780892583" MODIFIED="1292142677328" TEXT="I need to">
 <icon BUILTIN="full-2"/>
-<node CREATED="1291816192140" ID="Freemind_Link_1478742119" MODIFIED="1291816201078" TEXT="Veriy Minimalist Simplicity">
+<node CREATED="1291815017890" ID="Freemind_Link_1169124999" MODIFIED="1292142685453" TEXT="book a botel at x. Can I?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1291817468937" ID="Freemind_Link_1948099491" MODIFIED="1292142733640" TEXT="Single click through">
+<arrowlink DESTINATION="Freemind_Link_1104659142" ENDARROW="Default" ENDINCLINATION="224;0;" ID="Freemind_Arrow_Link_1366681465" STARTARROW="None" STARTINCLINATION="224;0;"/>
 <icon BUILTIN="full-3"/>
 </node>
-<node CREATED="1291816208578" ID="Freemind_Link_226391082" MODIFIED="1291816227546" TEXT="Refined Search Result">
+<node CREATED="1291817509953" ID="Freemind_Link_434858099" MODIFIED="1292142733625" TEXT="Single click to form reveal">
+<arrowlink DESTINATION="Freemind_Link_1104659142" ENDARROW="Default" ENDINCLINATION="224;0;" ID="Freemind_Arrow_Link_1230305697" STARTARROW="None" STARTINCLINATION="224;0;"/>
 <icon BUILTIN="full-3"/>
 </node>
-<node CREATED="1291816216093" ID="Freemind_Link_1602304605" MODIFIED="1291816538406" TEXT="Site Headers/Footers in EAN pages">
+</node>
+<node CREATED="1291815056687" ID="Freemind_Link_702215683" MODIFIED="1292142690031" TEXT="hire a car at x. Can I?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1291817478968" ID="Freemind_Link_477670324" MODIFIED="1292142733609" TEXT="Single click through">
+<arrowlink DESTINATION="Freemind_Link_1104659142" ENDARROW="Default" ENDINCLINATION="174;0;" ID="Freemind_Arrow_Link_285248639" STARTARROW="None" STARTINCLINATION="174;0;"/>
 <icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1291817513640" ID="Freemind_Link_1069759550" MODIFIED="1292142733593" TEXT="Single click to form reveal">
+<arrowlink DESTINATION="Freemind_Link_1104659142" ENDARROW="Default" ENDINCLINATION="178;0;" ID="Freemind_Arrow_Link_1458082380" STARTARROW="None" STARTINCLINATION="178;0;"/>
+<icon BUILTIN="full-3"/>
+</node>
+</node>
+<node CREATED="1291815030750" ID="Freemind_Link_1446910927" MODIFIED="1292142694250" TEXT="book a cruise for x. Can I?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1291817473671" ID="Freemind_Link_1066314811" MODIFIED="1292142733562" TEXT="Single click through">
+<arrowlink DESTINATION="Freemind_Link_1104659142" ENDARROW="Default" ENDINCLINATION="151;0;" ID="Freemind_Arrow_Link_1684075589" STARTARROW="None" STARTINCLINATION="151;0;"/>
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1291817511718" ID="Freemind_Link_996336629" MODIFIED="1292142733546" TEXT="Single click to form reveal">
+<arrowlink DESTINATION="Freemind_Link_1104659142" ENDARROW="Default" ENDINCLINATION="169;0;" ID="Freemind_Arrow_Link_1229337284" STARTARROW="None" STARTINCLINATION="169;0;"/>
+<icon BUILTIN="full-3"/>
+</node>
+</node>
+<node CREATED="1291814999328" ID="Freemind_Link_1848867494" MODIFIED="1292142697859" TEXT="book a flight ticket to x. Can I?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1291817446437" ID="Freemind_Link_787656688" MODIFIED="1292142733531" TEXT="Single click through">
+<arrowlink DESTINATION="Freemind_Link_1104659142" ENDARROW="Default" ENDINCLINATION="152;0;" ID="Freemind_Arrow_Link_1091727969" STARTARROW="None" STARTINCLINATION="152;0;"/>
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1291817493593" ID="Freemind_Link_1293930770" MODIFIED="1292142733500" TEXT="Single click to form reveal">
+<arrowlink DESTINATION="Freemind_Link_1104659142" ENDARROW="Default" ENDINCLINATION="183;0;" ID="Freemind_Arrow_Link_1624483716" STARTARROW="None" STARTINCLINATION="183;0;"/>
+<icon BUILTIN="full-3"/>
+</node>
+</node>
+<node CREATED="1292142628875" ID="Freemind_Link_1104659142" MODIFIED="1292142818265" TEXT="better integrate form, site is horrible">
+<icon BUILTIN="full-4"/>
 </node>
 </node>
 <node CREATED="1291814753656" ID="Freemind_Link_1692783814" MODIFIED="1291814855531" TEXT="Am I getting the cheapest rate?">
@@ -832,49 +867,45 @@
 <icon BUILTIN="full-3"/>
 </node>
 </node>
+<node CREATED="1292168180140" ID="Freemind_Link_1734487410" MODIFIED="1292168191328" TEXT="how do i find you?">
+<icon BUILTIN="full-2"/>
+<node CREATED="1292168194140" ID="Freemind_Link_242918976" MODIFIED="1292168218937" TEXT="basics">
+<node CREATED="1292168229250" ID="Freemind_Link_1093393086" MODIFIED="1292168236656" TEXT="great page title"/>
+<node CREATED="1292168239984" ID="Freemind_Link_665472971" MODIFIED="1292168245656" TEXT="geo taggged pages"/>
+</node>
+<node CREATED="1292168197625" ID="Freemind_Link_1901270704" MODIFIED="1292168222390" TEXT="non-basics">
+<node CREATED="1292168223015" ID="Freemind_Link_1636284849" MODIFIED="1292168228109" TEXT="twitter feed as seo"/>
+</node>
+</node>
+</node>
+<node CREATED="1292167954500" FOLDED="true" ID="Freemind_Link_194886594" MODIFIED="1292168215171" TEXT="non-basics">
+<node CREATED="1292143138765" ID="Freemind_Link_1310236465" MODIFIED="1292143163796" TEXT="I need the exitement of the destination">
+<icon BUILTIN="full-2"/>
+</node>
 <node CREATED="1291814859250" ID="Freemind_Link_309997201" MODIFIED="1291814883296" TEXT="Is the booking process confusing, time consuming?">
 <icon BUILTIN="full-2"/>
-<node CREATED="1291816591328" ID="Freemind_Link_1787173957" MODIFIED="1291816611687" TEXT="Fewer clicks to final booking page">
+<node CREATED="1291816591328" ID="Freemind_Link_1787173957" MODIFIED="1292142783468" TEXT="Fewer clicks to final booking page">
+<arrowlink DESTINATION="Freemind_Link_1104659142" ENDARROW="Default" ENDINCLINATION="319;0;" ID="Freemind_Arrow_Link_192430325" STARTARROW="None" STARTINCLINATION="319;0;"/>
 <icon BUILTIN="full-3"/>
 </node>
 <node CREATED="1291816630734" ID="Freemind_Link_1458430690" MODIFIED="1291816648046" TEXT="Help in EAN header/footer on how to book">
 <icon BUILTIN="full-3"/>
 </node>
 </node>
-<node CREATED="1291814999328" ID="Freemind_Link_1848867494" MODIFIED="1291815069828" TEXT="I need to book a flight ticket to x. Can I?">
+<node CREATED="1291768635984" ID="Freemind_Link_95246313" MODIFIED="1291814737625" TEXT="I don&apos;t want a middle man website. Is this one?">
 <icon BUILTIN="full-2"/>
-<node CREATED="1291817446437" ID="Freemind_Link_787656688" MODIFIED="1291817527156" TEXT="Single click through">
+<node CREATED="1291816192140" ID="Freemind_Link_1478742119" MODIFIED="1292142818281" TEXT="Veriy Minimalist Simplicity">
+<arrowlink DESTINATION="Freemind_Link_1104659142" ENDARROW="Default" ENDINCLINATION="382;0;" ID="Freemind_Arrow_Link_898384709" STARTARROW="None" STARTINCLINATION="382;0;"/>
 <icon BUILTIN="full-3"/>
 </node>
-<node CREATED="1291817493593" ID="Freemind_Link_1293930770" MODIFIED="1291817527156" TEXT="Single click to form reveal">
+<node CREATED="1291816208578" ID="Freemind_Link_226391082" MODIFIED="1292142812671" TEXT="Refined Search Result">
+<arrowlink DESTINATION="Freemind_Link_1104659142" ENDARROW="Default" ENDINCLINATION="348;0;" ID="Freemind_Arrow_Link_651262323" STARTARROW="None" STARTINCLINATION="348;0;"/>
 <icon BUILTIN="full-3"/>
 </node>
-</node>
-<node CREATED="1291815017890" ID="Freemind_Link_1169124999" MODIFIED="1291815069843" TEXT="I need to book a botel at x. Can I?">
-<icon BUILTIN="full-2"/>
-<node CREATED="1291817468937" ID="Freemind_Link_1948099491" MODIFIED="1291817527156" TEXT="Single click through">
+<node CREATED="1291816216093" ID="Freemind_Link_1602304605" MODIFIED="1292142801328" TEXT="Site Headers/Footers in EAN pages">
+<arrowlink DESTINATION="Freemind_Link_1104659142" ENDARROW="Default" ENDINCLINATION="361;0;" ID="Freemind_Arrow_Link_135955242" STARTARROW="None" STARTINCLINATION="361;0;"/>
 <icon BUILTIN="full-3"/>
 </node>
-<node CREATED="1291817509953" ID="Freemind_Link_434858099" MODIFIED="1291817527156" TEXT="Single click to form reveal">
-<icon BUILTIN="full-3"/>
-</node>
-</node>
-<node CREATED="1291815030750" ID="Freemind_Link_1446910927" MODIFIED="1291815069828" TEXT="I need to book a cruise for x. Can I?">
-<icon BUILTIN="full-2"/>
-<node CREATED="1291817473671" ID="Freemind_Link_1066314811" MODIFIED="1291817527156" TEXT="Single click through">
-<icon BUILTIN="full-3"/>
-</node>
-<node CREATED="1291817511718" ID="Freemind_Link_996336629" MODIFIED="1291817527140" TEXT="Single click to form reveal">
-<icon BUILTIN="full-3"/>
-</node>
-</node>
-<node CREATED="1291815056687" ID="Freemind_Link_702215683" MODIFIED="1291815069828" TEXT="I need to hire a car at x. Can I?">
-<icon BUILTIN="full-2"/>
-<node CREATED="1291817478968" ID="Freemind_Link_477670324" MODIFIED="1291817527140" TEXT="Single click through">
-<icon BUILTIN="full-3"/>
-</node>
-<node CREATED="1291817513640" ID="Freemind_Link_1069759550" MODIFIED="1291817527140" TEXT="Single click to form reveal">
-<icon BUILTIN="full-3"/>
 </node>
 </node>
 </node>
@@ -1187,13 +1218,6 @@
 <icon BUILTIN="full-6"/>
 </node>
 </node>
-<node CREATED="1288415685656" ID="Freemind_Link_1137422245" MODIFIED="1288421666187" TEXT="SKEPTIC">
-<font NAME="Comic Sans MS" SIZE="14"/>
-<node CREATED="1275630483843" ID="Freemind_Link_811522395" MODIFIED="1275630513796" TEXT="NAVIGATION">
-<node CREATED="1275630514281" ID="Freemind_Link_1575097980" MODIFIED="1275630520437" TEXT="Fix Sidebar Links"/>
-<node CREATED="1275630522781" ID="Freemind_Link_1615062004" MODIFIED="1275630539546" TEXT="Check These Linked Pages for Working"/>
-</node>
-</node>
 </node>
 <node CREATED="1291212117250" FOLDED="true" ID="Freemind_Link_1414706278" MODIFIED="1291815705453" POSITION="right" TEXT="Staging">
 <font NAME="Comic Sans MS" SIZE="14"/>
@@ -1347,6 +1371,113 @@
 </node>
 </node>
 <node CREATED="1290228957250" ID="Freemind_Link_721080538" MODIFIED="1290228975625" TEXT="We were techcrunched only after 3 years only when we got funding."/>
+</node>
+<node CREATED="1292247056843" FOLDED="true" ID="Freemind_Link_1351675742" LINK="http://sixrevisions.com/usabilityaccessibility/10-usability-tips-based-on-research-studies/" MODIFIED="1292247088562" TEXT="reading usability tips article">
+<icon BUILTIN="attach"/>
+<node CREATED="1292162900515" ID="Freemind_Link_1598187752" MODIFIED="1292249469828" TEXT="money|clear/finalized understanding of eye tracking on sites">
+<icon BUILTIN="password"/>
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1292162918203" ID="Freemind_Link_1147427056" MODIFIED="1292249469828" TEXT="1/2 hour|finalize eye-tracking valid design for ilikpleaces WOEID pages">
+<icon BUILTIN="clanbomber"/>
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1292247257250" FOLDED="true" ID="Freemind_Link_1696018331" MODIFIED="1292247263921" TEXT="notes">
+<icon BUILTIN="korn"/>
+<node CREATED="1292247333265" FOLDED="true" ID="Freemind_Link_363802844" MODIFIED="1292247376421" TEXT="&gt; Larger typo should have catch words (cheap flights) &#xa;&gt; Smaller type should have self-affirmation words (compare and buy)(this makes the user guess trust himself he made the right choice).">
+<icon BUILTIN="bookmark"/>
+<node CREATED="1292247307234" ID="Freemind_Link_1544401109" MODIFIED="1292247463531" TEXT="Smaller type encourages focused viewing behavior (that is, reading the words), while larger type promotes lighter scanning. In general, our testing found that people spent more time focused on small type than large type. Larger type resulted in more scanning of the page -- fewer words overall were fixated on -- as people looked around for words or phrases that captured their attention.">
+<icon BUILTIN="back"/>
+</node>
+</node>
+<node CREATED="1292247378078" FOLDED="true" ID="Freemind_Link_1059570213" MODIFIED="1292247470390" TEXT="On the average Web page, users have time to read at most 28% of the words during an average visit; 20% is more likely">
+<icon BUILTIN="bookmark"/>
+<node CREATED="1292247426796" ID="Freemind_Link_1805414143" MODIFIED="1292247458953" TEXT="&#x201c;Back button is now only the 3rd most-used feature on the Web. Clicking hypertext links remains the most-used feature, but clicking buttons (on the page) has now overtaken Back to become the second-most used feature. The reason for this change is the increased prevalence of applications and feature-rich Web pages that require users to click page buttons to access their functionality. &#x201c;  &#xa;&#xa;&#x201c;Of course, Back is still the user&apos;s lifeline and is so frequently used that supporting it remains a strong usability guideline. (Breaking Back was the #1 design mistake of 1999 and it&apos;s one of the top mistakes to this date.) &#x9; &#x201c;">
+<icon BUILTIN="back"/>
+</node>
+</node>
+<node CREATED="1292247496015" FOLDED="true" ID="Freemind_Link_1851757114" MODIFIED="1292247659609" TEXT="Bounce Rate Is Generally 40%">
+<icon BUILTIN="bookmark"/>
+<node CREATED="1292247507359" ID="Freemind_Link_1621384725" MODIFIED="1292247515703" TEXT="&#x201c;From this data, I removed the following records: 10,163 page views (17%) that lasted less than 4 seconds. In such brief &quot;visits,&quot; users clearly bounced right out without truly &quot;using&quot; the page. 2,615 page views (4%) that lasted more than 10 minutes. In these cases, users almost certainly left the browser open while doing something else. 1,558 page views (3%) with fewer than 20 words on them. Such pages are probably server errors or disrupted downloads.&#x201c;">
+<icon BUILTIN="back"/>
+</node>
+<node CREATED="1292247581328" ID="Freemind_Link_380874189" MODIFIED="1292247653890" TEXT="Average bounce rate of 80 sites who responded was 40.58%.  Read more: Typical Bounce Rates: Survey Results - Web Analytics, Behavioral Targeting and Optimization by Anil Batra http://webanalysis.blogspot.com/2008/03/typical-bounce-rates-survey-results.html#ixzz17zzbSbzd">
+<icon BUILTIN="back"/>
+</node>
+</node>
+<node CREATED="1292247753562" FOLDED="true" ID="Freemind_Link_1430765546" MODIFIED="1292248013187" TEXT="people spend some of their time understanding the page layout and navigation features, as well as looking at the images. Clearly, people don&apos;t read during every single second of a page visit.">
+<icon BUILTIN="bookmark"/>
+<node CREATED="1292247990250" ID="Freemind_Link_1083159403" MODIFIED="1292248004093" TEXT="http://www.useit.com/alertbox/percent-text-read.html">
+<icon BUILTIN="back"/>
+</node>
+</node>
+<node CREATED="1292247755812" FOLDED="true" ID="Freemind_Link_763204719" MODIFIED="1292248013187" TEXT="On an average visit, users read half the information only on those pages with 111 words or less.">
+<icon BUILTIN="bookmark"/>
+<node CREATED="1292247993765" ID="Freemind_Link_1089205912" MODIFIED="1292248004093" TEXT="http://www.useit.com/alertbox/percent-text-read.html">
+<icon BUILTIN="back"/>
+</node>
+</node>
+<node CREATED="1292247885296" FOLDED="true" ID="Freemind_Link_460889957" MODIFIED="1292248013171" TEXT="So, on average, users will have time to read 28% of the words if they devote all of their time to reading. More realistically, users will read about 20% of the text on the average page.">
+<icon BUILTIN="bookmark"/>
+<node CREATED="1292247995328" ID="Freemind_Link_194579977" MODIFIED="1292248004093" TEXT="http://www.useit.com/alertbox/percent-text-read.html">
+<icon BUILTIN="back"/>
+</node>
+</node>
+<node CREATED="1292248272093" ID="Freemind_Link_1812306882" MODIFIED="1292248302062" TEXT="Place all thrust content within 600px from left. Place reaches after that(such as help).">
+<icon BUILTIN="bookmark"/>
+</node>
+<node CREATED="1292248777093" ID="Freemind_Link_1487080955" LINK="http://sixrevisions.com/web_design/negative-space-in-webpage-layouts-a-guide/" MODIFIED="1292248800828" TEXT="Use negative space wiseley">
+<icon BUILTIN="bookmark"/>
+</node>
+<node CREATED="1292249418671" ID="Freemind_Link_1945776382" MODIFIED="1292249439875" TEXT="If things go wrong, provide an alternative. 404 with a search box, etc.">
+<icon BUILTIN="bookmark"/>
+</node>
+<node CREATED="1292249681046" ID="Freemind_Link_136882369" LINK="http://www.directcreative.com/blog/eye-tracking-websites" MODIFIED="1292249700156" TEXT="Also read">
+<icon BUILTIN="bookmark"/>
+<node CREATED="1292249702281" ID="Freemind_Link_1077957041" MODIFIED="1292249902437" TEXT="Headlines draw eyes before pictures">
+<icon BUILTIN="bookmark"/>
+</node>
+<node CREATED="1292249703375" ID="Freemind_Link_1633422331" MODIFIED="1292249902437" TEXT=" People scan the first couple words of a headline">
+<icon BUILTIN="bookmark"/>
+</node>
+<node CREATED="1292249703968" ID="Freemind_Link_1681803304" MODIFIED="1292249902421" TEXT="People scan the left side of a list of headlines">
+<icon BUILTIN="bookmark"/>
+</node>
+<node CREATED="1292249704218" ID="Freemind_Link_433352940" MODIFIED="1292249902421" TEXT="Your headline must grab attention in less than 1 second">
+<icon BUILTIN="bookmark"/>
+</node>
+<node CREATED="1292249704796" ID="Freemind_Link_62694290" MODIFIED="1292249902421" TEXT="Smaller type promotes closer reading">
+<icon BUILTIN="bookmark"/>
+</node>
+<node CREATED="1292249704953" ID="Freemind_Link_1303948078" MODIFIED="1292249902421" TEXT="Navigation at the top of the page works best">
+<icon BUILTIN="bookmark"/>
+</node>
+<node CREATED="1292249705125" ID="Freemind_Link_1608432898" MODIFIED="1292249902421" TEXT="Short paragraphs encourage reading">
+<icon BUILTIN="bookmark"/>
+</node>
+<node CREATED="1292249705609" ID="Freemind_Link_609057355" MODIFIED="1292249902406" TEXT="Introductory paragraphs enjoy high readership">
+<icon BUILTIN="bookmark"/>
+<node CREATED="1292249832406" ID="Freemind_Link_1720075193" MODIFIED="1292249836187" TEXT="Just to be clear, an intro paragraph is a content summary that appears after the headline and before the main text. It&#x2019;s common in some news writing. I&#x2019;ve also used it in print ads which are designed in the form of an article, often called an &#x201c;advertorial.&#x201d; The downside is that while intros get read, this study says they don&#x2019;t affect readership of the main text. Maybe they help improve comprehension. The study doesn&#x2019;t say.">
+<icon BUILTIN="back"/>
+</node>
+</node>
+<node CREATED="1292249705890" ID="Freemind_Link_1978630093" MODIFIED="1292249902406" TEXT="Ad placement in the top and left positions works best">
+<icon BUILTIN="bookmark"/>
+</node>
+<node CREATED="1292249868656" ID="Freemind_Link_1895707450" MODIFIED="1292249902406" TEXT="People notice ads placed close to popular content">
+<icon BUILTIN="bookmark"/>
+</node>
+<node CREATED="1292249884578" ID="Freemind_Link_1378311411" MODIFIED="1292249902406" TEXT="People read text ads more than graphic ads">
+<icon BUILTIN="bookmark"/>
+</node>
+<node CREATED="1292249895750" ID="Freemind_Link_240733085" MODIFIED="1292249902390" TEXT="Multimedia works better than text for unfamiliar or conceptual information">
+<icon BUILTIN="bookmark"/>
+</node>
+</node>
+</node>
+<node CREATED="1292247266437" ID="Freemind_Link_1356903006" MODIFIED="1292247269359" TEXT="todos">
+<icon BUILTIN="pencil"/>
+</node>
 </node>
 </node>
 </node>
