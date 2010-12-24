@@ -170,3 +170,23 @@ xmlns:geo=”http://www.w3.org/2003/01/geo/wgs84_pos#”
 <meta name=”geo.placename” content=”Boston”>
 <meta name=”geo.region”    content=”MA”>
 
+
+
+Popular search keywords  associated to a given location
+hawaii,paris,colombo
+
+<place> hotel
+hotel <place>
+weather in/for/null <place>
+<place> map
+map <place>
+
+
+Weather can be prompted from user
+
+Weather-Colombo:if you know the weather in colombo please write a review. If you know any link to the weather for colombo, please post it her.
+
+Post links to other related blogs. They will exchange traffic. They WILL. 20->80 boost as recommended by room with a view.
+
+
+Your own photos are geo tagged

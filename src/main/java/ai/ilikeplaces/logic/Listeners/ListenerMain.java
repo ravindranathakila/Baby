@@ -6,10 +6,12 @@ import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.modules.Modules;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.ygp.impl.Client;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -20,7 +22,9 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
+import where.yahooapis.com.v1.Place;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -52,10 +56,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String QUERIES_FOR_LOCATION = " queries for location ";
     private static final String OF = " of ";
     private static final String AI_ILIKEPLACES_RBS_GUI = "ai.ilikeplaces.rbs.GUI";
-    private static final String TRAVELING_TO = "Traveling to ";
-    private static final String RESERVE_A_FLIGHT_BOOK_A_HOTEL_AND_YOU_RE_ALL_SET = "? Reserve A Flight, Book A Hotel, and You're All Set!";
-    private static final String DO_A_FLIGHT_BOOKING_TO = "Do a flight booking to ";
-    private static final String AND_FIND_A_HOTEL_TO_STAY_HIRE_A_CAR_TO_TRAVEL_AROUND_CLICK_HERE_TO_CHECK_FOR_OFFERS = " and find a hotel to stay. Hire a car to travel around. Click here to check for offers.";
     private static final String PROFILE_PHOTOS = "PROFILE_PHOTOS";
     private static final String THIS_IS = "This is ";
     private static final String BACK_TO = "Back to";
@@ -71,6 +71,9 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String WIDTH = "width";
     private static final String PX = "110px;";
     private static final String UNLOADING_BODY_TIME_SPENT = "Unloading body. Time spent:";
+    private static final String WOEIDPAGE_TITLE = "woeidpage.title";
+    private static final String WOEIDPAGE_DESC = "woeidpage.desc";
+    private static final String COMMA = ",";
 
     /**
      * @param request__
@@ -92,7 +95,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
              */
             @Override
             @SuppressWarnings("unchecked")
-            @TODO(task = "If location is not available, it should be added through a widget(or fragment maybe?)")
+            @TODO(task = "If location is not available" + COMMA + " it should be added through a widget(or fragment maybe?)")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
 
                 checkUserSpentTime:
@@ -178,20 +181,19 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         try {
                             setMainTitle:
                             {
-                                $(mainTitle).setTextContent(TRAVELING_TO + location + RESERVE_A_FLIGHT_BOOK_A_HOTEL_AND_YOU_RE_ALL_SET);
+                                $(mainTitle).setTextContent(MessageFormat.format(gUI.getString(WOEIDPAGE_TITLE), location));
 
                             }
                             setMetaDescription:
                             {
-                                $(mainMetaDesc).setAttribute(MarkupTag.META.content(), DO_A_FLIGHT_BOOKING_TO + location + AND_FIND_A_HOTEL_TO_STAY_HIRE_A_CAR_TO_TRAVEL_AROUND_CLICK_HERE_TO_CHECK_FOR_OFFERS);
+                                $(mainMetaDesc).setAttribute(MarkupTag.META.content(), MessageFormat.format(gUI.getString(WOEIDPAGE_DESC), location));
                             }
                             setHotelsLink:
                             {
-                                $(Main_hotels_link).setAttribute(MarkupTag.A.href(), HTTP_TRAVEL_ILIKEPLACES_COM_INDEX_JSP_CID_317285_PAGE_NAME_HOT_SEARCH_SUBMITTED_TRUE_VALIDATE_CITY_TRUE_CITY + location.split(OF)[0].replace("/", SPACE));
+                                //$(Main_hotels_link).setAttribute(MarkupTag.A.href(), HTTP_TRAVEL_ILIKEPLACES_COM_INDEX_JSP_CID_317285_PAGE_NAME_HOT_SEARCH_SUBMITTED_TRUE_VALIDATE_CITY_TRUE_CITY + location.split(OF)[0].replace("/", SPACE));
                                 $(Main_loading_hotels_link).setAttribute(MarkupTag.A.href(), HTTP_TRAVEL_ILIKEPLACES_COM_INDEX_JSP_CID_317285_PAGE_NAME_HOT_SEARCH_SUBMITTED_TRUE_VALIDATE_CITY_TRUE_CITY + location.split(OF)[0].replace("/", SPACE));
                             }
-                        }
-                        catch (final Throwable t) {
+                        } catch (final Throwable t) {
                             Loggers.DEBUG.debug(t.getMessage());
                         }
                     }
@@ -231,15 +233,15 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 url = url == null ? null : RBGet.globalConfig.getString(PROFILE_PHOTOS) + url;
                                 if (url != null) {
                                     $(Main_profile_photo).setAttribute(MarkupTag.IMG.src(), url);
-//                                    displayBlock($(Main_profile_photo));
-//                                    displayNone($(Main_location_photo));
+                                    //displayBlock($(Main_profile_photo));
+                                    //displayNone($(Main_location_photo));
                                 } else {
-//                                    displayNone($(Main_profile_photo));
-//                                    displayBlock($(Main_location_photo));
+                                    //displayNone($(Main_profile_photo));
+                                    //displayBlock($(Main_location_photo));
                                 }
                             } else {
-//                                displayNone($(Main_profile_photo));
-//                                displayBlock($(Main_location_photo));
+                                //displayNone($(Main_profile_photo));
+                                //displayBlock($(Main_location_photo));
                             }
                         } catch (final Throwable t) {
                             EXCEPTION.error("{}", t);
@@ -259,6 +261,37 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                 if (r.returnStatus() == 0 && r.returnValue() != null) {
                     final Location existingLocation_ = r.returnValue();
+                    GEO:
+                    {
+                        if (existingLocation_.getLocationGeo1() == null || existingLocation_.getLocationGeo2() == null) {
+                            final Client ygpClient = Modules.getModules().getYahooGeoPlanetFactory().getInstance(RBGet.globalConfig.getString("where.yahooapis.com.v1.place"));
+                            final Place place = ygpClient.getPlace(existingLocation_.getLocationId().toString());
+                            existingLocation_.setLocationGeo1(Double.toString(place.getCoordinates().getY()));
+                            existingLocation_.setLocationGeo2(Double.toString(place.getCoordinates().getX()));
+
+                            new Thread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    DB.getHumanCRUDLocationLocal(true).doULocationLatLng(
+                                            new Obj<Long>(existingLocation_.getLocationId()),
+                                            new Obj<Double>(place.getCoordinates().getY()),
+                                            new Obj<Double>(place.getCoordinates().getX()));
+                                }
+                            }).run();
+                        }
+                    }
+
+                    SEO:
+                    {
+                        setMetaGEOData:
+                        {
+                            $(Main_ICBM).setAttribute(MarkupTag.META.content(), existingLocation_.getLocationGeo1() + COMMA + existingLocation_.getLocationGeo2());
+                            $(Main_geoposition).setAttribute(MarkupTag.META.content(), existingLocation_.getLocationGeo1() + COMMA + existingLocation_.getLocationGeo2());
+                            $(Main_geoplacename).setAttribute(MarkupTag.META.content(), existingLocation_.getLocationName());
+                            $(Main_georegion).setAttribute(MarkupTag.META.content(), existingLocation_.getLocationSuperSet().getLocationName());
+                        }
+                    }
 
                     showUploadFileLink:
                     {
@@ -317,7 +350,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             Loggers.EXCEPTION.error("", t);
                         }
 
-                    } 
+                    }
 
                     getAndDisplayAllThePhotos:
                     {
@@ -379,10 +412,10 @@ public class ListenerMain implements ItsNatServletRequestListener {
              */
             @Override
             protected void registerEventListeners
-                    (
-                            final ItsNatHTMLDocument itsNatHTMLDocument__,
-                            final HTMLDocument hTMLDocument__,
-                            final ItsNatDocument itsNatDocument__) {
+            (
+                    final ItsNatHTMLDocument itsNatHTMLDocument__,
+                    final HTMLDocument hTMLDocument__,
+                    final ItsNatDocument itsNatDocument__) {
 //                ItsNatDocument itsNatDoc = itsNatDocument__;
 //                Document docEvent = (Document) itsNatDoc;
 //
@@ -404,17 +437,17 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     link.setTextContent(TRAVEL_TO + location.getLocationName() + OF + location.getLocationSuperSet().getLocationName());
 
                     link.setAttribute(A.href(),
-                                      PAGE
-                                              + location.getLocationName()
-                                              + _OF_
-                                              + location.getLocationSuperSet().getLocationName()
-                                              + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
+                            PAGE
+                                    + location.getLocationName()
+                                    + _OF_
+                                    + location.getLocationSuperSet().getLocationName()
+                                    + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
 
                     link.setAttribute(A.alt(),
-                                      PAGE + location.getLocationName() + _OF_ + location.getLocationSuperSet().getLocationName());
+                            PAGE + location.getLocationName() + _OF_ + location.getLocationSuperSet().getLocationName());
 
                     link.setAttribute(A.title(),
-                                      CLICK_TO_EXPLORE + location.getLocationName() + OF + location.getLocationSuperSet().getLocationName());
+                            CLICK_TO_EXPLORE + location.getLocationName() + OF + location.getLocationSuperSet().getLocationName());
 
                     link.setAttribute(A.classs(), VTIP);
 
@@ -439,14 +472,14 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 final Element link = $(A);
                 link.setTextContent(TRAVEL_TO + location.getLocationName() + OF + location.getLocationSuperSet().getLocationName());
                 link.setAttribute(A.href(),
-                                  PAGE
-                                          + location.getLocationName()
-                                          + _OF_
-                                          + location.getLocationSuperSet().getLocationName()
-                                          + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
+                        PAGE
+                                + location.getLocationName()
+                                + _OF_
+                                + location.getLocationSuperSet().getLocationName()
+                                + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
 
                 link.setAttribute(A.alt(),
-                                  PAGE + location.getLocationName() + _OF_ + location.getLocationSuperSet().getLocationName());
+                        PAGE + location.getLocationName() + _OF_ + location.getLocationSuperSet().getLocationName());
                 return link;
             }
 
@@ -454,12 +487,12 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 final Element link = $(A);
                 link.setTextContent(location.getLocationName());
                 link.setAttribute(A.href(),
-                                  PAGE
-                                          + location.getLocationName()
-                                          + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
+                        PAGE
+                                + location.getLocationName()
+                                + Parameter.get(Location.WOEID, location.getWOEID().toString(), true));
 
                 link.setAttribute(A.alt(),
-                                  PAGE + location.getLocationName());
+                        PAGE + location.getLocationName());
                 return link;
             }
         };//Listener

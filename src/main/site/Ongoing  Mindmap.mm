@@ -1329,7 +1329,7 @@
 <icon BUILTIN="full-2"/>
 </node>
 </node>
-<node CREATED="1290226890156" FOLDED="true" ID="Freemind_Link_493529642" MODIFIED="1290226899765" POSITION="left" TEXT="SUMMARIZING READINGS">
+<node CREATED="1290226890156" ID="Freemind_Link_493529642" MODIFIED="1290226899765" POSITION="left" TEXT="SUMMARIZING READINGS">
 <node CREATED="1290226910703" ID="Freemind_Link_1757451953" LINK="http://techzinglive.com/page/169/techzing-34-central-desktop-relentless-execution" MODIFIED="1290229079984" TEXT="Central Desktop / Relentless Execution">
 <node CREATED="1290226939203" ID="Freemind_Link_585690306" MODIFIED="1290226946781" TEXT="Free user verison trippled signup">
 <node CREATED="1290226989281" ID="Freemind_Link_615483894" MODIFIED="1290227010078" TEXT="Just enough to get them influenced. 25mb."/>
@@ -1477,6 +1477,49 @@
 </node>
 <node CREATED="1292247266437" ID="Freemind_Link_1356903006" MODIFIED="1292247269359" TEXT="todos">
 <icon BUILTIN="pencil"/>
+</node>
+</node>
+<node CREATED="1293117703343" ID="Freemind_Link_1030940836" MODIFIED="1293117716453" TEXT="Room With A View">
+<node CREATED="1293117728781" ID="Freemind_Link_395799929" MODIFIED="1293117733984" TEXT="Design">
+<node CREATED="1293117742562" ID="Freemind_Link_1750154511" MODIFIED="1293117750421" TEXT="Process used to setup the blog and design it">
+<node CREATED="1293117751328" ID="Freemind_Link_1660503674" MODIFIED="1293117757531" TEXT="Keep things as simple as possible">
+<node CREATED="1293117764250" ID="Freemind_Link_1734420318" MODIFIED="1293117779250" TEXT="most blogs are overwhelming and want to browse more"/>
+<node CREATED="1293117780859" ID="Freemind_Link_143675999" MODIFIED="1293117786187" TEXT="most are too cluttered"/>
+</node>
+<node CREATED="1293117788234" ID="Freemind_Link_496064784" MODIFIED="1293117797656" TEXT="read many hotel blogs"/>
+<node CREATED="1293117799640" ID="Freemind_Link_1906229286" MODIFIED="1293117806359" TEXT="left things right at the content"/>
+<node CREATED="1293117809656" ID="Freemind_Link_1932111258" MODIFIED="1293117813343" TEXT="how long did it take?">
+<node CREATED="1293117817765" ID="Freemind_Link_593608429" MODIFIED="1293117823312" TEXT="homework before design">
+<node CREATED="1293117824140" ID="Freemind_Link_1357762991" MODIFIED="1293117829640" TEXT="what others are doing "/>
+<node CREATED="1293117831171" ID="Freemind_Link_1919965860" MODIFIED="1293117842453" TEXT="how can we seperate ourselves from others">
+<node CREATED="1293117842937" ID="Freemind_Link_1028068384" MODIFIED="1293117857578" TEXT="what were the differences made">
+<node CREATED="1293117895312" ID="Freemind_Link_439393576" MODIFIED="1293117902328" TEXT="incorporated full interactive page">
+<node CREATED="1293117906921" ID="Freemind_Link_996565672" MODIFIED="1293117956562" TEXT="bottom right social media, rss"/>
+<node CREATED="1293117917046" ID="Freemind_Link_1282024254" MODIFIED="1293117927812" TEXT="resources on the side, content on the left">
+<font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
+<node CREATED="1293117963468" ID="Freemind_Link_1359693029" MODIFIED="1293117973812" TEXT="when some one wanted to dig, go to corners"/>
+<node CREATED="1293117985687" ID="Freemind_Link_744464319" MODIFIED="1293117990062" TEXT="new and updated, on the left"/>
+</node>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1293118055625" ID="Freemind_Link_1789212009" MODIFIED="1293118061015" TEXT="goals and metrics for blogging">
+<node CREATED="1293118061593" ID="Freemind_Link_1354219152" MODIFIED="1293118069656" TEXT="wanted to stay away from that"/>
+<node CREATED="1293118071265" ID="Freemind_Link_921417481" MODIFIED="1293118086750" TEXT="60-70% of our blog is NOT hotel">
+<node CREATED="1293118117687" ID="Freemind_Link_689503224" MODIFIED="1293118125656" TEXT="how did u arrive on these values?">
+<node CREATED="1293118127187" ID="Freemind_Link_1183121473" MODIFIED="1293118135984" TEXT="put myself in the users shoes"/>
+<node CREATED="1293118136968" ID="Freemind_Link_1507081448" MODIFIED="1293118154187" TEXT="most blogs are about the hotel itself and whats so cool about it and what customers tell about it">
+<node CREATED="1293118541578" ID="Freemind_Link_302171859" MODIFIED="1293118545953" TEXT="biased opinion too"/>
+</node>
+</node>
+</node>
+<node CREATED="1293118087828" ID="Freemind_Link_159597635" MODIFIED="1293118477640" TEXT="wanted to be a &quot;resource&quot; for people about vancouver">
+<font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
+</node>
+</node>
+</node>
+</node>
 </node>
 </node>
 </node>

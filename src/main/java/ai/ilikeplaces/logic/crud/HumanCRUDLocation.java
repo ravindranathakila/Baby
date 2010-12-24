@@ -2,8 +2,8 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Location;
-import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.logic.crud.unit.RLocationLocal;
+import ai.ilikeplaces.logic.crud.unit.ULocationLocal;
 import ai.ilikeplaces.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +26,9 @@ public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUD
 
     @EJB
     private RLocationLocal rLocationLocal_;
+
+    @EJB
+    private ULocationLocal uLocationLocal_;
 
     public HumanCRUDLocation() {
         logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", HumanCRUDLocation.class, this.hashCode());
@@ -64,6 +67,12 @@ public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUD
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<Location> doDirtyRLocationsBySuperLocation(final Location locationSuperset) {
         return rLocationLocal_.doNTxRLocationsBySuperLocation(locationSuperset);
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Location doULocationLatLng(final RefObj<Long> locationId, final RefObj<Double> latitude, final RefObj<Double> longitude) {
+        return uLocationLocal_.doULocationLatLng(locationId.getObjectAsValid(), latitude.getObjectAsValid(), longitude.getObjectAsValid());
     }
 
     final static Logger logger = LoggerFactory.getLogger(HumanCRUDLocation.class);

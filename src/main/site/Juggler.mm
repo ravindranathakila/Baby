@@ -41,16 +41,22 @@
 </node>
 </node>
 </node>
-<node CREATED="1292840292005" FOLDED="true" ID="Freemind_Link_1909309964" MODIFIED="1292840296458" POSITION="left" TEXT="">
+<node CREATED="1292840292005" ID="Freemind_Link_1909309964" MODIFIED="1292840296458" POSITION="left" TEXT="">
 <icon BUILTIN="help"/>
 <node CREATED="1292840369786" ID="Freemind_Link_64773478" MODIFIED="1292840403520" TEXT="Release Every Weak"/>
-<node CREATED="1292840405739" FOLDED="true" ID="Freemind_Link_295665747" MODIFIED="1292840410207" TEXT="Two Release Types">
-<node CREATED="1292840411161" FOLDED="true" ID="Freemind_Link_1167439884" MODIFIED="1292840419411" TEXT="1. Code Release">
+<node CREATED="1292840405739" ID="Freemind_Link_295665747" MODIFIED="1292840410207" TEXT="Two Release Types">
+<node CREATED="1292840411161" ID="Freemind_Link_1167439884" MODIFIED="1292840419411" TEXT="1. Code Release">
 <node CREATED="1292840437067" ID="Freemind_Link_1544789483" MODIFIED="1292840445270" TEXT="Results in a deployment"/>
 </node>
-<node CREATED="1292840420614" FOLDED="true" ID="Freemind_Link_426466582" MODIFIED="1292840432832" TEXT="2. Research/Marketing/Advertising Release">
+<node CREATED="1292840420614" ID="Freemind_Link_426466582" MODIFIED="1292840432832" TEXT="2. Research/Marketing/Advertising Release">
 <node CREATED="1292840448004" ID="Freemind_Link_1154562411" MODIFIED="1292840452723" TEXT="Results in a Code Release"/>
 <node CREATED="1292840463973" ID="Freemind_Link_716254740" MODIFIED="1292840477536" TEXT="Should be immediately codable without confusion"/>
+</node>
+</node>
+<node CREATED="1293108908421" ID="Freemind_Link_712703875" MODIFIED="1293108914890" TEXT="How to juggle">
+<node CREATED="1293108915515" ID="Freemind_Link_1819428150" MODIFIED="1293108930203" TEXT="clearly these are problems">
+<node CREATED="1293108930703" ID="Freemind_Link_96374030" MODIFIED="1293108954343" TEXT="1. tasks do get juggled often"/>
+<node CREATED="1293108954875" ID="Freemind_Link_1858656720" MODIFIED="1293108982640" TEXT="2. cosmetic stuff are best fillers when tired"/>
 </node>
 </node>
 </node>

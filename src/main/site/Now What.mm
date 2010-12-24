@@ -102,7 +102,8 @@
 <node CREATED="1292421555296" ID="Freemind_Link_1686319502" MODIFIED="1292421942984" TEXT="hotel to hawaii">
 <node CREATED="1292421999796" ID="Freemind_Link_887291126" MODIFIED="1292422390562" TEXT="i google it">
 <font BOLD="true" ITALIC="true" NAME="Comic Sans MS" SIZE="12"/>
-<node CREATED="1292422125531" ID="Freemind_Link_335215284" MODIFIED="1292422202734" STYLE="fork" TEXT="i get result with">
+<node CREATED="1292422125531" ID="Freemind_Link_335215284" MODIFIED="1293109049828" STYLE="fork" TEXT="i get result with">
+<icon BUILTIN="clanbomber"/>
 <node CREATED="1292422224109" ID="Freemind_Link_1395868645" MODIFIED="1292422230843" TEXT="title as">
 <node CREATED="1292422297453" ID="Freemind_Link_911729620" MODIFIED="1292422619687" TEXT="cheapest rates on hotels"/>
 </node>
@@ -115,7 +116,8 @@
 <node CREATED="1292421565218" ID="Freemind_Link_733706195" MODIFIED="1292421951531" TEXT="car at hawaii">
 <node CREATED="1292421999796" ID="Freemind_Link_1275666599" MODIFIED="1292422391109" TEXT="i google it">
 <font BOLD="true" ITALIC="true" NAME="Comic Sans MS" SIZE="12"/>
-<node CREATED="1292422125531" ID="Freemind_Link_1657638923" MODIFIED="1292422202734" STYLE="fork" TEXT="i get result with">
+<node CREATED="1292422125531" ID="Freemind_Link_1657638923" MODIFIED="1293109049843" STYLE="fork" TEXT="i get result with">
+<icon BUILTIN="clanbomber"/>
 <node CREATED="1292422224109" ID="Freemind_Link_1163273203" MODIFIED="1292422230843" TEXT="title as">
 <node CREATED="1292422297453" ID="Freemind_Link_799778463" MODIFIED="1292422795000" TEXT="best rates on hotels"/>
 </node>
@@ -130,7 +132,8 @@
 <node CREATED="1292421558093" ID="Freemind_Link_1885159204" MODIFIED="1292421940140" TEXT="flight to hawaii">
 <node CREATED="1292421999796" ID="Freemind_Link_823107926" MODIFIED="1292422391109" TEXT="i google it">
 <font BOLD="true" ITALIC="true" NAME="Comic Sans MS" SIZE="12"/>
-<node CREATED="1292422125531" ID="Freemind_Link_1792991940" MODIFIED="1292422202734" STYLE="fork" TEXT="i get result with">
+<node CREATED="1292422125531" ID="Freemind_Link_1792991940" MODIFIED="1293109049828" STYLE="fork" TEXT="i get result with">
+<icon BUILTIN="clanbomber"/>
 <node CREATED="1292422224109" ID="Freemind_Link_203734462" MODIFIED="1292422230843" TEXT="title as">
 <node CREATED="1292422297453" ID="Freemind_Link_1413386630" MODIFIED="1292422780796" TEXT="last minute rates on flights"/>
 </node>
@@ -145,7 +148,8 @@
 <node CREATED="1292421555296" ID="Freemind_Link_955989236" MODIFIED="1292421942984" TEXT="hotel to hawaii">
 <node CREATED="1292421999796" ID="Freemind_Link_460732873" MODIFIED="1292422391109" TEXT="i google it">
 <font BOLD="true" ITALIC="true" NAME="Comic Sans MS" SIZE="12"/>
-<node CREATED="1292422125531" ID="Freemind_Link_211858623" MODIFIED="1292422202734" STYLE="fork" TEXT="i get result with">
+<node CREATED="1292422125531" ID="Freemind_Link_211858623" MODIFIED="1293109049828" STYLE="fork" TEXT="i get result with">
+<icon BUILTIN="clanbomber"/>
 <node CREATED="1292422224109" ID="Freemind_Link_1569391368" MODIFIED="1292422230843" TEXT="title as">
 <node CREATED="1292422297453" ID="Freemind_Link_928487139" MODIFIED="1292422760906" TEXT="hotel deals, holiday packages"/>
 </node>
@@ -160,7 +164,8 @@
 <node CREATED="1292421555296" ID="Freemind_Link_1015796413" MODIFIED="1292421942984" TEXT="hotel to hawaii">
 <node CREATED="1292421999796" ID="Freemind_Link_804814853" MODIFIED="1292422391093" TEXT="i google it">
 <font BOLD="true" ITALIC="true" NAME="Comic Sans MS" SIZE="12"/>
-<node CREATED="1292422125531" ID="Freemind_Link_846504489" MODIFIED="1292422202734" STYLE="fork" TEXT="i get result with">
+<node CREATED="1292422125531" ID="Freemind_Link_846504489" MODIFIED="1293109049828" STYLE="fork" TEXT="i get result with">
+<icon BUILTIN="clanbomber"/>
 <node CREATED="1292422224109" ID="Freemind_Link_737504285" MODIFIED="1292422230843" TEXT="title as">
 <node CREATED="1292422297453" ID="Freemind_Link_1139951299" MODIFIED="1292430040218" TEXT="luxury hotels"/>
 </node>
@@ -175,7 +180,8 @@
 <node CREATED="1292421555296" ID="Freemind_Link_1624982348" MODIFIED="1292422062421" TEXT="hotel to hawaii">
 <node CREATED="1292421999796" ID="Freemind_Link_173525740" MODIFIED="1292422391093" TEXT="i google it">
 <font BOLD="true" ITALIC="true" NAME="Comic Sans MS" SIZE="12"/>
-<node CREATED="1292422125531" ID="Freemind_Link_1718567164" MODIFIED="1292422202734" STYLE="fork" TEXT="i get result with">
+<node CREATED="1292422125531" ID="Freemind_Link_1718567164" MODIFIED="1293109049828" STYLE="fork" TEXT="i get result with">
+<icon BUILTIN="clanbomber"/>
 <node CREATED="1292422224109" ID="Freemind_Link_174475130" MODIFIED="1292422230843" TEXT="title as">
 <node CREATED="1292422297453" ID="Freemind_Link_803059803" MODIFIED="1292430085468" TEXT="compare rates, low price gurantee"/>
 </node>
@@ -184,6 +190,43 @@
 </node>
 </node>
 </node>
+</node>
+</node>
+<node CREATED="1293109081843" ID="Freemind_Link_1052262590" MODIFIED="1293109087031" TEXT="best">
+<node CREATED="1293109437812" ID="Freemind_Link_477169812" MODIFIED="1293109440343" TEXT="travel">
+<node CREATED="1293109177781" HGAP="32" ID="Freemind_Link_1010682385" MODIFIED="1293109199921" TEXT="rates" VSHIFT="11"/>
+<node CREATED="1293109204312" ID="Freemind_Link_1017445517" MODIFIED="1293109205781" TEXT="choices">
+<node CREATED="1293109289937" ID="Freemind_Link_166145300" MODIFIED="1293109381375" TEXT="+ gains trust because user can select">
+<icon BUILTIN="password"/>
+</node>
+<node CREATED="1293109334078" ID="Freemind_Link_194808330" MODIFIED="1293109384468" TEXT="+ gains engagement because user can select">
+<icon BUILTIN="password"/>
+</node>
+<node CREATED="1293109341453" ID="Freemind_Link_353144819" MODIFIED="1293109387765" TEXT="+ maintains site philosophy a bit">
+<icon BUILTIN="password"/>
+</node>
+<node CREATED="1293109456625" ID="Freemind_Link_1942618381" MODIFIED="1293109847281" TEXT="- conflicts with &quot;travel&quot;, use might confuse with destinations instead of c2hf">
+<icon BUILTIN="stop"/>
+<node CREATED="1293110009390" ID="Freemind_Link_911670907" MODIFIED="1293110023031" TEXT="solved if goes &quot;best travel choices to hawaii&quot;"/>
+<node CREATED="1293110025859" ID="Freemind_Link_1764949824" MODIFIED="1293110031296" TEXT="discover and have fun in places"/>
+</node>
+</node>
+<node CREATED="1293109200375" ID="Freemind_Link_1979041535" MODIFIED="1293109201484" TEXT="deals">
+<node CREATED="1293109391109" ID="Freemind_Link_195439580" MODIFIED="1293109855234" TEXT="- interferes with site philosohpy">
+<icon BUILTIN="stop"/>
+</node>
+<node CREATED="1293109255687" ID="Freemind_Link_998252642" MODIFIED="1293109376921" TEXT="+ a popular keyword which we just bombed">
+<icon BUILTIN="password"/>
+</node>
+<node CREATED="1293109411687" ID="Freemind_Link_586822587" MODIFIED="1293109424625" TEXT="+ has more hype">
+<icon BUILTIN="password"/>
+</node>
+</node>
+</node>
+<node CREATED="1293109089515" FOLDED="true" ID="Freemind_Link_1345389667" MODIFIED="1293109174343" TEXT="chosen to maintain" VSHIFT="38">
+<icon BUILTIN="password"/>
+<node CREATED="1293109110546" ID="Freemind_Link_1899092713" MODIFIED="1293109116515" TEXT="site/self pride"/>
+<node CREATED="1293109118484" ID="Freemind_Link_447638143" MODIFIED="1293109148640" TEXT="consistency with wiki content and philosophy"/>
 </node>
 </node>
 </node>

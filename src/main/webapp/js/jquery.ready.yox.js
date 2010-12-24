@@ -160,13 +160,13 @@ $(document).ready(function(){
 						markers:[{
 							latitude:y.place.centroid.latitude,
 							longitude:y.place.centroid.longitude,
-							html:"<div class='center'><sub>"
+							html:"<div class='center'><pre class='center' style='font-size:12px;color:purple;'>"
 							+getLocationName()
-							+"<br/><a href='http://www.tkqlhce.com/click-3813950-10486476' target='_blank'>Lonely Planet Guidebooks</a><img src='http://www.ftjcfx.com/image-3813950-10486476' width='1' height='1' border='0'/>"
+							+"<br/><a href='http://travel.ilikeplaces.com?cid=317285' target='_blank'  style='font-weight:strong;'>Best Travel Deals</a>"
 							+"<br/>Call with Discount Code:317285"
 							+"<br/>US and Canada: 1-800-780-5733"
 							+"<br/>Europe: 00-800-11-20-11-40"
-							+"</sub></div>",
+							+"</pre></div>",
 							popup:true
 						}]
 					}
@@ -174,81 +174,6 @@ $(document).ready(function(){
 					$("#ilp_progress_block").hide();
 					$("#ilp_main_content").show();
 				};
-				                           //'travel OR trip OR fun OR vacation amazing place -seo -book',
-									var twtrLocShort = getLocationName().split(' of ')[0].replace('/',' ');
-
-                                    var placeTRT = new TWTR.Widget({
-                                      version: 2,
-                                      type: 'search',
-                                      id: 'twitterplaceToSearch',
-                                      //search: 'travel OR trip OR fun OR vacation OR amazing OR place -seo -book near:' + getLocationName().split(' of ')[0].replace('/',' '),
-                                      search: 'travel OR trip OR holiday OR party OR celebrate OR fun OR vacation OR amazing OR place -seo -book geocode:' + y.place.centroid.latitude + ',' + y.place.centroid.longitude + ',1000mi',
-									  interval: 6000,
-                                      title: 'Whats happening...',
-                                      subject: twtrLocShort + '?!',
-                                      width: 'auto',
-                                      height: 120,
-                                      theme: {
-                                        shell: {
-                                          background: '#a9acf1',
-                                          color: '#ffffff'
-                                        },
-                                        tweets: {
-                                          background: '#fafafa',
-                                          color: '#444444',
-                                          links: '#1985b5'
-                                        }
-                                      },
-                                      features: {
-                                        scrollbar: false,
-                                        loop: true,
-                                        live: true,
-                                        hashtags: true,
-                                        timestamp: true,
-                                        avatars: true,
-                                        toptweets: true,
-                                        behavior: 'default'
-                                      }
-                                    });
-                                    //.render().start()
-                                    placeTRT.render().start();
-
-                                    var placeFRT = new TWTR.Widget({
-                                      version: 2,
-                                      type: 'search',
-                                      id: 'twitterplaceFromSearch',
-                                      //search: 'travel OR trip OR fun OR vacation OR amazing OR place -seo -book near:' + getLocationName().split(' of ')[0].replace('/',' '),
-                                      //search: twtrLocShort + ' travel OR ' + twtrLocShort + ' trip OR ' + twtrLocShort + ' holiday OR ' + twtrLocShort + ' party OR ' + twtrLocShort + ' celebrate OR ' + twtrLocShort + ' fun OR ' + twtrLocShort + ' vacation OR ' + twtrLocShort + ' amazing OR ' + twtrLocShort + ' place -seo -book',
-                                      search: '\"' + twtrLocShort + '\"' + ' -seo -book -estate -realestate',
-									  interval: 7000,
-                                      title: 'Who goes...',
-                                      subject: twtrLocShort + '?!',
-                                      width: 'auto',
-                                      height: 120,
-                                      theme: {
-                                        shell: {
-                                          background: '#a9acf1',
-                                          color: '#ffffff'
-                                        },
-                                        tweets: {
-                                          background: '#fafafa',
-                                          color: '#444444',
-                                          links: '#1985b5'
-                                        }
-                                      },
-                                      features: {
-                                        scrollbar: false,
-                                        loop: true,
-                                        live: true,
-                                        hashtags: true,
-                                        timestamp: true,
-                                        avatars: true,
-                                        toptweets: true,
-                                        behavior: 'default'
-                                      }
-                                    });
-                                    //.render().start()
-                                    placeFRT.render().start();
             }catch(err){
                 $("#map").hide();
                 alert(err);
