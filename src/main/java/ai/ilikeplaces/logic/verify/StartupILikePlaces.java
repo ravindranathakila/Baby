@@ -5,6 +5,11 @@ import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.Hail;
+import ai.ilikeplaces.ygd.conf.YahooGeoPlanetClientModule;
+import ai.ilikeplaces.ygp.impl.Client;
+import ai.ilikeplaces.ygp.impl.ClientFactory;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +28,8 @@ import javax.ejb.Startup;
 public class StartupILikePlaces implements StartupILikePlacesLocal {
 //    @EJB
 //    private HumanCRUDHumanLocal humanCRUDHumanLocal_;
+
+    public ClientFactory ygdClientFactory;
 
     public StartupILikePlaces() {
     }
@@ -132,6 +139,9 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         System.out.println("********* ********* ********* ********* *********");
         System.out.println("");
         System.out.println(Hail.honour());
+
+        final Injector ygpInjector = Guice.createInjector(new YahooGeoPlanetClientModule());
+        final ClientFactory ygpClientFactory = ygpInjector.getInstance(ClientFactory.class);
     }
 
     final static Logger logger = LoggerFactory.getLogger(StartupILikePlaces.class);

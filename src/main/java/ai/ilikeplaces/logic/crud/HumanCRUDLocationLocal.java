@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Location;
+import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
 
 import javax.ejb.Local;
@@ -27,4 +28,6 @@ public interface HumanCRUDLocationLocal {
     public List<Location> dirtyRLikeLocations(final String likeLocationName);
 
     public List<Location> doDirtyRLocationsBySuperLocation(final Location locationSuperset);
+
+    public Location doULocationLatLng(RefObj<Long> locationId, final RefObj<Double> latitude, final RefObj<Double> longitude);
 }
