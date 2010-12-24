@@ -629,12 +629,17 @@ final public class
                 Controller.Page.body,
                 Controller.Page.mainTitle,
                 Controller.Page.mainMetaDesc,
+                Controller.Page.Main_ICBM,
+                Controller.Page.Main_geoposition,
+                Controller.Page.Main_geoplacename,
+                Controller.Page.Main_georegion,
                 Controller.Page.Main_othersidebar_identity,
                 Controller.Page.Main_location_photo,
                 Controller.Page.Main_profile_photo,
                 Controller.Page.Main_othersidebar_profile_link,
                 Controller.Page.Main_othersidebar_upload_file_sh,
                 Controller.Page.Main_notice_sh,
+                Controller.Page.Main_loading_hotels_link,
                 Controller.Page.Main_hotels_link,
                 Controller.Page.Main_center_main,
                 Controller.Page.Main_notice,
@@ -1017,6 +1022,10 @@ final public class
         final static public String body = "body";
         final static public String mainTitle = "mainTitle";
         final static public String mainMetaDesc = "mainMetaDesc";
+        final static public String Main_ICBM = "Main_ICBM";
+        final static public String Main_geoposition = "Main_geoposition" ;
+        final static public String Main_geoplacename = "Main_geoplacename";
+        final static public String Main_georegion = "Main_georegion" ;
         final static public String Main_othersidebar_identity = "Main_othersidebar_identity";
         final static public String Main_location_photo = "Main_location_photo";
         final static public String Main_profile_photo = "Main_profile_photo";
