@@ -74,6 +74,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String WOEIDPAGE_TITLE = "woeidpage.title";
     private static final String WOEIDPAGE_DESC = "woeidpage.desc";
     private static final String COMMA = ",";
+    private static final String SIMPLE_LOCATION_NAME = "simpleLocationName";
 
     /**
      * @param request__
@@ -261,6 +262,11 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                 if (r.returnStatus() == 0 && r.returnValue() != null) {
                     final Location existingLocation_ = r.returnValue();
+
+                    doTextReplace:
+                    {
+                        $i18nize(SIMPLE_LOCATION_NAME, existingLocation_.getLocationName());
+                    }
                     GEO:
                     {
                         if (existingLocation_.getLocationGeo1() == null || existingLocation_.getLocationGeo2() == null) {

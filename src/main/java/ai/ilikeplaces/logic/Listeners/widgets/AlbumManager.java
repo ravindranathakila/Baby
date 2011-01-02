@@ -20,9 +20,7 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import static ai.ilikeplaces.servlets.Controller.Page.pd_photo;
 import static ai.ilikeplaces.servlets.Controller.Page.pd_photo_permalink;
@@ -66,7 +64,32 @@ public class AlbumManager extends AbstractWidgetListener {
                         protected void init(final Object... initArgs) {
                             final String imageURL = RBGet.globalConfig.getString("ALBUM_PHOTOS") + privatePhoto__.getPrivatePhotoURLPath();
                             $$(pd_photo_permalink).setAttribute("href", imageURL);
-                            $$(pd_photo).setAttribute("src", imageURL);
+                            $$(pd_photo).setAttribute("src", "_" + imageURL);
+                        }
+
+
+                        @Override
+                        protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
+
+                            itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.pd_photo), EventType.ONMOUSEOVER.toString(), new EventListener() {
+
+                                boolean imageLoaded = false;
+
+                                @Override
+                                public void handleEvent(final Event evt_) {
+                                    if (!imageLoaded) {
+                                        $$(evt_).setAttribute(MarkupTag.IMG.src(), $$(evt_).getAttribute(MarkupTag.IMG.src()).substring(1));
+                                        imageLoaded = true;//safety measure 1
+                                    }
+                                    remove(evt_.getTarget(), EventType.ONMOUSEOVER, this); //safety measure 2
+                                }
+
+                                @Override
+                                public void finalize() throws Throwable {
+                                    Loggers.finalized(this.getClass().getName());
+                                    super.finalize();
+                                }
+                            }, false);
                         }
                     };
                 }

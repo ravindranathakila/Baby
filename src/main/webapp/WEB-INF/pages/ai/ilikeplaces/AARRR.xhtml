@@ -20,6 +20,8 @@
              body{
                 font-family:impact;
                 font-size:11px;
+                color:#892e40;
+                background-color:black;
              }
             .lsb {
                 background: url('/images/fun search.png');
@@ -33,11 +35,6 @@
         </style>
 
         <style type="text/css">
-             body{
-                font-family:impact;
-                font-size:11px;
-             }
-
             .nav_link_img {
                 background-color:none;
                 height:25px;
@@ -74,13 +71,13 @@
            }
         </script>
     </head>
-    <body style="background:#ab702c;">
+    <body style="background:black;">
     <!--<body style="background-color:#99b3cc;">-->
     <!--<body style="background-color::#892e40;">-->
     <!--<body style="background-color:#9999ff;">-->
     <!--<body style="background-color:#325b6e;">-->
         <div id="Main_display" class="container" itsnat:nocache="true" style="display:block;">
-            <div class="span-24 last" style="background-color:#ab702c;">
+            <div class="span-24 last" style="background-color:black;">
                 <div class="span-24 last center" style="height:5px;">
                     &nbsp;
                 </div>
@@ -104,7 +101,8 @@
                         </span>
                         <input class="span-12 prepend-6 append-6 last center vtip"
                                id="seachbox"
-                               style="background:#f7c05c;border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;color:#ff1493;font-size:30px;font-family: Impact, Charcoal, sans-serif;height:34px;margin:0;padding:5px 8px 0 6px;vertical-align:top;" value="las vegas, united states"
+                               style="background:#f7c05c;border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;color:#ff1493;font-size:30px;font-family: Impact, Charcoal, sans-serif;height:34px;margin:0;padding:5px 8px 0 6px;vertical-align:top;"
+                               value="e.g. las vegas, united states"
                                onfocus="javascript:initialize_gmap_scripts();"
                                 />
                         <span style="font-size:36px;font-family: Impact, Charcoal, sans-serif;">
@@ -120,9 +118,9 @@
                         </div>
                         <div class="span-6 center vtip"  title="Enter place and click to find hotspots. Zoom in for clearer view.">
                             <input class="last center"
-                                   onclick="javascript: try{searchbox = document.getElementById('seachbox');new google.maps.Geocoder().geocode({address:searchbox.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){alert('You might want to zoom in for a clearer view!');map.setCenter(geocoderResult[0].geometry.location);map.setZoom(10);}else{alert('No find '+searchbox.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
-                                   style="font-family: impact; font-size:28px; background-color: transparent;border-width: thin;border-style: solid;"
-                                   type="submit" value="&nbsp;&nbsp;MAP HOTSPOTS&nbsp;&nbsp;&nbsp;&nbsp;"/>
+                                   onclick="javascript: try{searchbox = document.getElementById('seachbox');new google.maps.Geocoder().geocode({address:searchbox.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){alert('You might want to zoom in for a clearer view!');map.setCenter(geocoderResult[0].geometry.location); var llb = geocoderResult[0].geometry.viewport; map.fitBounds(llb);}else{alert('No find '+searchbox.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
+                                   style="font-family: impact; font-size:28px; background-color: transparent;border-width: thin;border-style: solid; color:#892e40;"
+                                   type="submit" value="&nbsp;Show me hotposts&nbsp;"/>
                         </div>
                         <div class="span-9 last center vtip">
                             &nbsp;

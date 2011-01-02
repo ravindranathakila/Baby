@@ -29,6 +29,13 @@ public enum EventType {
         public String toString() {
             return "onunload";
         }
+    },
+
+    ONMOUSEOVER() {
+        @Override
+        public String toString() {
+            return "mouseover";
+        }
     };
 
     public String toString() {
