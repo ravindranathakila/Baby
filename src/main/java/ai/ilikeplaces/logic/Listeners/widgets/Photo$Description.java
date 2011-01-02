@@ -41,19 +41,6 @@ abstract public class Photo$Description extends AbstractWidgetListener {
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(close), "click", new EventListener() {
-
-            @Override
-            public void handleEvent(final Event evt_) {
-                displayNone($$(close));
-            }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
-        }, false);
     }
 
     @Override

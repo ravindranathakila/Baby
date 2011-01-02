@@ -13,9 +13,14 @@ import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.itsnat.core.http.ItsNatHttpSession;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.html.HTMLDocument;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * @author Ravindranath Akila
@@ -72,7 +77,7 @@ public abstract class AbstractListener {
         final Object attribute__ = itsNatHttpSession.getAttribute(ServletLogin.HumanUser);
         this.sessionBoundBadRefWrapper =
                 attribute__ == null ?
-                null : (!((SessionBoundBadRefWrapper<HumanUserLocal>) attribute__).isAlive() ?
+                        null : (!((SessionBoundBadRefWrapper<HumanUserLocal>) attribute__).isAlive() ?
                         null : ((SessionBoundBadRefWrapper<HumanUserLocal>) attribute__));
 
         init(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument, initArgs);
@@ -177,7 +182,7 @@ public abstract class AbstractListener {
     }
 
 
-    private final Element getElementById(final String key__) {
+    private Element getElementById(final String key__) {
         final String elementId__ = GlobalHTMLIdRegistry_.get(key__);
         if (elementId__ == null) {
             throw new NullPointerException(
@@ -187,6 +192,78 @@ public abstract class AbstractListener {
         }
         final Element element__ = hTMLDocument_.getElementById(elementId__);
         return element__ != null ? element__ : (Element) LogNull.logThrow();
+    }
+
+
+    protected final List<Node> $getElementsByName(final String name) {
+        final NodeList nodes = (NodeList) LogNull.logThrow(hTMLDocument_.getElementsByName(name));
+        final List<Node> nodeList = new ArrayList<Node>(nodes.getLength());
+        for (int i = 0; i < nodes.getLength(); i++) {
+            nodeList.add(nodes.item(i));
+        }
+        return nodeList;
+    }
+
+    /**
+     * Supports "i18n" selector.
+     *
+     * @param name              name as defined in the tag(s). e.g. ' div name="example" ' would require "example".
+     * @param textToReplaceWith Text To Replace With
+     * @return The Modified Node List
+     */
+    protected final List<Node> $i18nize(final String name, final String textToReplaceWith) {
+        final List<Node> nodeList = $getElementsByName(name);
+        for (final Node node : nodeList) {
+            if (node.getTextContent().contains("#i18n")) {
+                node.setTextContent(node.getTextContent().replaceAll("#i18n", textToReplaceWith));
+            } else {
+                node.setTextContent(textToReplaceWith);
+            }
+        }
+        return nodeList;
+    }
+
+    /**
+     * @param name           name as defined in the tag(s). e.g. ' div name="example" ' would require "example".
+     * @param resourceBundle resourceBundle from which to fetch the value of key, key being the text content of the node
+     * @return The Modified Node List
+     */
+    protected final List<Node> $i18nize(final String name, final ResourceBundle resourceBundle) {
+        final List<Node> nodeList = $getElementsByName(name);
+        for (final Node node : nodeList) {
+            node.setTextContent(resourceBundle.getString(node.getTextContent()));
+        }
+        return nodeList;
+    }
+
+    /**
+     * @param names          names as defined in the tag(s). e.g. ' div name="example" ' would require "example".
+     * @param resourceBundle resourceBundle from which to fetch the value of key, key being the text content of the node
+     * @return The Modified Node List
+     */
+    protected final List<Node> $i18nize(final List<String> names, final ResourceBundle resourceBundle) {
+        final List<Node> allNodes = new ArrayList<Node>();
+        for (final String name : names) {
+            final List<Node> nodeList = $getElementsByName(name);
+            for (final Node node : nodeList) {
+                node.setTextContent(resourceBundle.getString(node.getTextContent()));
+            }
+            allNodes.addAll(nodeList);
+        }
+        return allNodes;
+    }
+
+    /**
+     * @param name         name as defined in the tag(s). e.g. ' div name="example" ' would require "example".
+     * @param i18nValueMap map from which to fetch the value of key, key being the text content of the node
+     * @return The Modified Node List
+     */
+    protected final List<Node> $i18nize(final String name, final Map<String, Object> i18nValueMap) {
+        final List<Node> nodeList = $getElementsByName(name);
+        for (final Node node : nodeList) {
+            node.setTextContent(i18nValueMap.get(node.getTextContent()).toString());
+        }
+        return nodeList;
     }
 
     protected final void displayBlock(final Element element__) {
@@ -212,8 +289,8 @@ public abstract class AbstractListener {
      */
     final protected String getUsername() {
         return sessionBoundBadRefWrapper != null ?
-               (sessionBoundBadRefWrapper.isAlive() ?
-                sessionBoundBadRefWrapper.boundInstance.getHumanUserId() : null) : null;
+                (sessionBoundBadRefWrapper.isAlive() ?
+                        sessionBoundBadRefWrapper.boundInstance.getHumanUserId() : null) : null;
     }
 
     /**
