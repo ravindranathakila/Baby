@@ -17,25 +17,20 @@
 }
 
 .nav_link {
-    background-color:#892e40;
-    color:#ffffff;
     height:25px;
     text-align:center;
     line-height:25px;
     font-size: 14px;
 } .nav_link:hover {
-    background-color: #fd78e1;
 }.nav_link a {
     vertical-align:middle;
     text-decoration: underline;
 } .nav_link a:link{
-    color:#ffffff;
 } .nav_link a:active{
     color: #0000ff;
 } .nav_link a:hover{
     color: #ffffff;
 } .nav_link a:visited{
-    color:#ffffff;
 } .nav_link img{
     width:100%;
 }
