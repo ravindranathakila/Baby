@@ -14,11 +14,13 @@
         <!--[if lt IE 8]><link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection"/><![endif]-->
 
         <link rel="stylesheet" type="text/css" href="/css/vtip.css" />
+        <link href='http://fonts.googleapis.com/css?family=Cuprum&subset=cyrillic,latin' rel='stylesheet' type='text/css' />
+
 
 
         <style type="text/css">
              body{
-                font-family:impact;
+                font-family:'Cuprum',impact;
                 font-size:11px;
                 color:#892e40;
                 background-color:black;
@@ -82,21 +84,21 @@
                     &nbsp;
                 </div>
                 <div class="span-24 last center">
-                    <span style="font-size:32px;font-family: Impact, Charcoal, sans-serif;" class="center vtip" title="THIS IS WHERE THE HOT AND TRENDY REAL WORLD SPOTS ARE MARKED!">
+                    <span style="font-size:32px;font-family: 'Cuprum', Impact, Charcoal, sans-serif;" class="center vtip" title="THIS IS WHERE THE HOT AND TRENDY REAL WORLD SPOTS ARE MARKED!">
                         FIND WAYS TO SOCIALIZE IN REAL LIFE
                     </span>
                 </div>
                 <div class="span-24 last center vtip" style="height:44px;" title="DOWN TOWN IS A COLLECTION OF REAL WORLD HOTSPOTS">
-                    <span style="font-size:44px;font-family: Impact, Charcoal, sans-serif;" class="center">AT</span>
+                    <span style="font-size:44px;font-family: 'Cuprum', Impact, Charcoal, sans-serif;" class="center">AT</span>
                 </div>
                 <div class="span-24 last center vtip" style="height:120px;" title="DOWN TOWN IS A COLLECTION OF REAL WORLD HOTSPOTS">
-                    <span style="font-size:108px;font-family: Impact, Charcoal, sans-serif;" class="center">&nbsp;&nbsp;&nbsp;&nbsp;DOWN&darr;TOWN</span>
+                    <span style="font-size:108px;font-family: 'Cuprum', Impact, Charcoal, sans-serif;" class="center">&nbsp;&nbsp;&nbsp;&nbsp;DOWN&darr;TOWN</span>
                     <span style="font-size:10px;"><img src="http://www.ilikeplaces.com/favicon.png" alt="i"/>likeplaces.com</span>
                 </div>
                 <hr/>
                 <div class="span-24 last center">
                     <div class="span-24 last center">
-                        <span style="font-size:36px;font-family: Impact, Charcoal, sans-serif;color:#892e40;">
+                        <span style="font-size:36px;font-family: 'Cuprum', Impact, Charcoal, sans-serif;color:#892e40;">
                             &clubs;
                         </span>
                         <input class="span-12 prepend-6 append-6 last center vtip"
@@ -105,7 +107,7 @@
                                value="e.g. las vegas, united states"
                                onfocus="javascript:initialize_gmap_scripts();"
                                 />
-                        <span style="font-size:36px;font-family: Impact, Charcoal, sans-serif;">
+                        <span style="font-size:36px;font-family: 'Cuprum', Impact, Charcoal, sans-serif;">
                             &crarr;&nbsp;&nbsp;
                         </span>
                     </div>
@@ -119,7 +121,7 @@
                         <div class="span-6 center vtip"  title="Enter place and click to find hotspots. Zoom in for clearer view.">
                             <input class="last center"
                                    onclick="javascript: try{searchbox = document.getElementById('seachbox');new google.maps.Geocoder().geocode({address:searchbox.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){alert('You might want to zoom in for a clearer view!');map.setCenter(geocoderResult[0].geometry.location); var llb = geocoderResult[0].geometry.viewport; map.fitBounds(llb);}else{alert('No find '+searchbox.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
-                                   style="font-family: impact; font-size:28px; background-color: transparent;border-width: thin;border-style: solid; color:#892e40;"
+                                   style="font-family: 'Cuprum', impact; font-size:28px; background-color: transparent;border-width: thin;border-style: solid; color:#892e40;"
                                    type="submit" value="&nbsp;Show me hotposts&nbsp;"/>
                         </div>
                         <div class="span-9 last center vtip">
@@ -166,5 +168,10 @@
                 }
             }
         </script>
+
+    <!-- KISSinsights for ilikeplaces.com -->
+    <script type="text/javascript">var _kiq = _kiq || [];</script>
+    <script type="text/javascript" src="//s3.amazonaws.com/ki.js/12777/2hV.js" async="true"></script>
+
     </body>
 </html>
