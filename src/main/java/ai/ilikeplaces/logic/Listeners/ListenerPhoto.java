@@ -74,7 +74,8 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
                                 protected void init(final Object... initArgs) {
                                     final String imageURL = RBGet.globalConfig.getString("ALBUM_PHOTOS") + privatePhoto.getPrivatePhotoURLPath();
                                     $$(pd_photo_permalink).setAttribute("href", imageURL);
-                                    $$(pd_photo).setAttribute("src", "_" + imageURL);
+                                    $$(pd_photo).setAttribute("src", "_");
+                                    $$(pd_photo).setAttribute("title", imageURL);
 
                                      displayBlock($$(Controller.Page.pd_photo_delete));
                                 }
@@ -107,7 +108,7 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
                                         @Override
                                         public void handleEvent(final Event evt_) {
                                             if (!imageLoaded) {
-                                                $$(evt_).setAttribute(MarkupTag.IMG.src(), $$(evt_).getAttribute(MarkupTag.IMG.src()).substring(1));
+                                                $$(evt_).setAttribute(MarkupTag.IMG.src(), $$(evt_).getAttribute(MarkupTag.DIV.title()));
                                                 imageLoaded = true;//safety measure 1
                                             }
                                             remove(evt_.getTarget(), EventType.ONMOUSEOVER, this); //safety measure 2

@@ -20,16 +20,39 @@
     <link rel="stylesheet" type="text/css" href="/nifty/niftyCorners.css"/>
     <!--<link rel="stylesheet" type="text/css" href="/cdn/js/niftyPrint.css" media="print"/>-->
     <link rel="stylesheet" type="text/css" href="/css/vtip.css"/>
+    <link rel="stylesheet" href="/css/theme/blur_attn.css" type="text/css"/>
     <link rel="stylesheet" href="/css/layout.css" type="text/css"/>
     <link rel="stylesheet" href="/css/buttons.css" type="text/css"/>
     <link rel="stylesheet" href="/css/FileUploadButton.css" type="text/css"/>
     <link rel="stylesheet" href="/css/impromptu.css" type="text/css"/>
+    <link href='http://fonts.googleapis.com/css?family=Cuprum&subset=cyrillic,latin' rel='stylesheet' type='text/css' />
+    <link  href="//fonts.googleapis.com/css?family=Rock+Salt:regular" rel="stylesheet" type="text/css" >
 
 
     <style type="text/css">
         body{
-        font-family:impact;
+        font-family:'Cuprum',impact;
         font-size:11px;
+        }
+
+        html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td  {
+ font-family: 'Rock Salt', serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  text-shadow: none;
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: 0em;
+  word-spacing: 0em;
+  line-height: 1.2;
+        }
+
+        .impact{
+            font-family:impact;
+        }
+        .Cuprum{
+            font-family:'Cuprum';
         }
 
         .nav_link_img {
@@ -59,10 +82,15 @@
 
 </head>
 <!--<body style="background:#2d2e4c;">-->
-<body style="background:#ab702c;">
+<!--<body style="background:#ab702c;">-->
 <!--<body style="background:#9999ff;">-->
 <!--<body style="background:#325b6e;">-->
 <!--<body style="background:#892e40;">-->
+<!--<body style="background:#330000;">-->
+<!--<body style="background:#666699;">-->
+<!--<body style="background:#aa5500;">-->
+<!--<body style="background:#0066ee;">-->
+<body class="intensity">
 <div id="monitorId"
      style="width: 320px; margin-left:350px; margin-top:5%; color:#000000; background:transparent; z-index:20; display:none; position:absolute;">
     <div class="ntyB" style="background:#808080;text-align:center;">
@@ -74,10 +102,10 @@
 </div>
 <div id="Skeleton_display" class="container" itsnat:nocache="true" style="display:block;">
 <div class="span-24 last">
-<div class="span-24 last height_5 bg_a9abf1 ntyST">
+<div class="span-24 last height_5 black_bg ntyST">
     &nbsp;
 </div>
-<div class="span-24 last height_40 bg_a9abf1">
+<div class="span-24 last height_40 black_bg">
     <div class="span-24 last inherit_height">
         <div class="span-10 inherit_height line_height_40 center">
                             <span class="ilp_title inherit_height inherit_line_height vtip"
@@ -87,13 +115,13 @@
                                   friends.
                                   U can also find hot places here such as travel spots etc.
                                   It is absolutely free!"
-                                  style="color:#dd55ee;font-size:22px;font-family:'impact';text-decoration:underline;font-weight:normal;">D O W N &nbsp;<b>&darr;</b>&nbsp; T O W N</span>
+                                  style="color:#dd55ee;font-size:22px;font-family:'Cuprum','impact';text-decoration:underline;font-weight:normal;">D O W N &nbsp;<b>&darr;</b>&nbsp; T O W N</span>
         </div>
         <div id="Skeleton_login_widget" class="span-14 last inherit_height">
         </div>
     </div>
 </div>
-<div class="span-24 last height_10 bg_a9abf1 ntyBot">
+<div class="span-24 last height_10 black_bg ntyBot">
     &nbsp;
 </div>
 
@@ -104,14 +132,14 @@
     <div class="span-24 last">
         <div class="span-5" id="Skeleton_othersidebar">
             <div class="span-5 last">
-                <div class="span-5 last bg_a9abf1" style="background-color:#6a3a67;">
+                <div class="span-5 last black_bg" style="background-color:#000000;">
                     <img class="span-5 last" id="Skeleton_profile_photo"
                          src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG"
                          width="100%"
                          alt="Profile Picture"/>
                 </div>
-                <div class="span-5 last center ntyBot bg_a9abf1 title_blend bold" style="background-color:#6a3a67;">
-                    <span id="Skeleton_othersidebar_identity"></span>
+                <div class="span-5 last center ntyBot black_bg white fg title_blend bold">
+                    <span id="Skeleton_othersidebar_identity" class="white_fg"></span>
                 </div>
             </div>
             <div class="span-5 last">
@@ -123,8 +151,8 @@
                         <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/chat_32.png" class="nav_link_img"
                              alt="Attributed to http://www.picol.org"/>
                     </div>
-                    <div class="span-4 last nav_link ntyS">
-                        <a id="Skeleton_othersidebar_wall_link" href="#" class="vtip"
+                    <div class="span-4 last nav_link intensity_3 hover ntyS">
+                        <a id="Skeleton_othersidebar_wall_link" href="#" class="intensity vtip"
                            title="Hi, click here to see your wall">
                             THE TALK
                         </a>
@@ -138,8 +166,8 @@
                         <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/group_half_32.png"
                              class="nav_link_img" alt="Attributed to http://www.picol.org"/>
                     </div>
-                    <div class="span-4 last nav_link ntyS">
-                        <a id="Skeleton_othersidebar_places_link" href="/page/_friends" class="vtip"
+                    <div class="span-4 last nav_link intensity_3 hover ntyS">
+                        <a id="Skeleton_othersidebar_places_link" href="/page/_friends" class="intensity vtip"
                            title="Hi, click  here to Manage/Invite your friends">
                             THE CONNECTIONS
                         </a>
@@ -153,8 +181,8 @@
                         <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/avatar_32.png" class="nav_link_img"
                              alt="Attributed to http://www.picol.org"/>
                     </div>
-                    <div class="span-4 last nav_link ntyS">
-                        <a id="Skeleton_othersidebar_profile_link" href="/page/_me" class="vtip"
+                    <div class="span-4 last nav_link intensity_3 hover ntyS">
+                        <a id="Skeleton_othersidebar_profile_link" href="/page/_me" class="intensity vtip"
                            title="Hi, click here to view your profile">
                             THE MANAGER
                         </a>
@@ -168,8 +196,8 @@
                         <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/image_32.png" class="nav_link_img"
                              alt="Attributed to http://www.picol.org"/>
                     </div>
-                    <div class="span-4 last nav_link ntyS">
-                        <a id="Skeleton_othersidebar_photo_manager_link" href="/page/_me">
+                    <div class="span-4 last nav_link intensity_3 hover ntyS">
+                        <a id="Skeleton_othersidebar_photo_manager_link" href="/page/_me" class="intensity">
                             THE SNAPS
                         </a>
                     </div>
@@ -182,8 +210,8 @@
                         <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/calendar_32.png"
                              class="nav_link_img" alt="Attributed to http://www.picol.org"/>
                     </div>
-                    <div class="span-4 last nav_link ntyS">
-                        <a id="Skeleton_othersidebar_organizer_link" href="/page/_org" class="vtip"
+                    <div class="span-4 last nav_link intensity_3 hover ntyS">
+                        <a id="Skeleton_othersidebar_organizer_link" href="/page/_org" class="intensity vtip"
                            title="Hi, click here to see your events">
                             THE EVENTS
                         </a>
@@ -200,13 +228,13 @@
                                     <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/upload_32.png"
                                          alt="Attributed to http://www.picol.org"/>
                                 </div>
-                                <div class="span-4 last nav_link ntyS">
+                                <div class="span-4 last nav_link intensity_0 ntyS">
                                     <a id="button1" href="#">Add Photos</a>
                                 </div>
                             </div>
                         </div>
                         <hr/>
-                        <div class="span-5 last bg_a9abf1 nty">
+                        <div class="span-5 last black_bg nty">
                             <div class="span-5 height_5">
                                 &nbsp;
                             </div>
@@ -232,14 +260,14 @@
                         <div class="span-3 last height_10">
                             &nbsp;
                         </div>
-                        <div class="span-3 last nav_link ntyS" style="background-color:#4d5726;">
-                            <a href="http://tinyurl.com/ilikeplaces-sources" target="_blank">Backstage</a>
+                        <div class="span-3 last nav_link intensity_7 hover ntyS">
+                            <a href="http://tinyurl.com/ilikeplaces-sources" target="_blank" class="layer">Backstage</a>
                         </div>
                         <div class="span-3 last height_10">
                             &nbsp;
                         </div>
-                        <div class="span-3 last nav_link ntyS" style="background-color:#4d5726;">
-                            <a href="/page/_public?name=foss" target="_blank">Pink Slip</a>
+                        <div class="span-3 last nav_link intensity_7 hover ntyS">
+                            <a href="/page/_public?name=foss" target="_blank" class="layer">Pink Slip</a>
                         </div>
                     </div>
                 </div>
