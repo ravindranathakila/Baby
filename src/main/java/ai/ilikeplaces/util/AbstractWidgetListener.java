@@ -289,7 +289,7 @@ public abstract class AbstractWidgetListener {
      *
      * @param jsToBeSentToClient JS To Be Sent To Client
      */
-    protected void sendJS(final String jsToBeSentToClient) {
+    protected void $$sendJS(final String jsToBeSentToClient) {
         itsNatDocument_.addCodeToSend("\n" + jsToBeSentToClient + "\n");
     }
 
@@ -300,10 +300,16 @@ public abstract class AbstractWidgetListener {
      *
      * @param jsStatementToBeSentToClient JS statement To Be Sent To Client
      */
-    protected void sendJSStmt(final String jsStatementToBeSentToClient) {
+    protected void $$sendJSStmt(final String jsStatementToBeSentToClient) {
         itsNatDocument_.addCodeToSend("\n" + jsStatementToBeSentToClient + (jsStatementToBeSentToClient.endsWith(";") ? "\n" : ";\n"));
     }
 
+
+    /**
+     *
+     * @param event Event of which the target is required
+     * @return Target Element of this Event
+     */
     protected Element $$(final Event event) {
         return (Element) event.getCurrentTarget();
     }
@@ -314,5 +320,9 @@ public abstract class AbstractWidgetListener {
     public void finalize() throws Throwable {
         Loggers.finalized(this.getClass().getName());
         super.finalize();
+    }
+
+    protected void $$asyn(final Runnable r){
+        new Thread(r).start();
     }
 }

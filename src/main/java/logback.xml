@@ -23,7 +23,7 @@
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>../logs/ilp.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>1</maxHistory>
+            <maxHistory>30</maxHistory>
         </rollingPolicy>
 
         <layout class="ch.qos.logback.classic.PatternLayout">

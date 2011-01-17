@@ -64,7 +64,7 @@ public class AlbumManager extends AbstractWidgetListener {
                         protected void init(final Object... initArgs) {
                             final String imageURL = RBGet.globalConfig.getString("ALBUM_PHOTOS") + privatePhoto__.getPrivatePhotoURLPath();
                             $$(pd_photo_permalink).setAttribute("href", imageURL);
-                            $$(pd_photo).setAttribute("src", "_");
+                            //$$(pd_photo).setAttribute("src", "_");
                             $$(pd_photo).setAttribute("title", imageURL);
 
                             displayBlock($$(Controller.Page.pd_photo_delete));

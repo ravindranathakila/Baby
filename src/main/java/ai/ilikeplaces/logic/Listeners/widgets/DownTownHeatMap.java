@@ -175,9 +175,9 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                                         + "), " +
                                         "title:'" + yaw.getCommonName() + "', " +
                                         "map: map, " +
-                                        "icon: 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=" + yaw.getHits() + "|14|000|glyphish_map-marker|16|4bf202|892e40'  }));");
+                                        "icon: getColoredMarkerWithIntensity(" + yaw.getHits() + ")  }));");
 
-                                sendJSStmt("google.maps.event.addListener(listOfHotSpots[0], 'click', function() {\n" +
+                                $$sendJSStmt("google.maps.event.addListener(listOfHotSpots[0], 'click', function() {\n" +
                                         JSCodeToSend.redirectPageWithURL(
                                                 new Parameter(Controller.Page.Organize.getURL())
                                                         .append(Controller.Page.DocOrganizeCategory, 143, true)
@@ -205,7 +205,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 //                                            "map: map, " +
 //                                            "icon: 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=" + hotspots.get(i).get(j).getHits() + "|14|000|glyphish_map-marker|16|4bf202|892e40'  }));");
 //
-//                                    sendJSStmt("google.maps.event.addListener(listOfHotSpots[0], 'click', function() {\n" +
+//                                    $$sendJSStmt("google.maps.event.addListener(listOfHotSpots[0], 'click', function() {\n" +
 //                                            JSCodeToSend.redirectPageWithURL(
 //                                                    new Parameter(Controller.Page.Organize.getURL())
 //                                                            .append(Controller.Page.DocOrganizeCategory, 143, true)

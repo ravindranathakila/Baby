@@ -89,11 +89,11 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                         setLink:
                         {
                             $$(GenericButtonLink).setAttribute(MarkupTag.A.href(),
-                                                               new Parameter(Organize.getURL())
-                                                                       .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
-                                                                       .append(DocOrganizeLocation, r.returnValue().getPrivateLocation().getPrivateLocationId())
-                                                                       .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
-                                                                       .get()
+                                    new Parameter(Organize.getURL())
+                                            .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
+                                            .append(DocOrganizeLocation, r.returnValue().getPrivateLocation().getPrivateLocationId())
+                                            .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
+                                            .get()
                             );
                         }
                         setImage:
@@ -112,14 +112,14 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                 gc.validateThrow();
 
                 $$(privateEventDeleteLocationMap).setAttribute(MarkupTag.IMG.src(),
-                                                               new Parameter("http://maps.google.com/maps/api/staticmap")
-                                                                       .append("sensor", "false", true)
-                                                                       .append("center", gc.toString())
-                                                                       .append("size", "230x250")
-                                                                       .append("format", "jpg")
-                                                                       .append("markers", "color:0x7fe2ff|label:S|path=fillcolor:0xAA000033|color:0xFFFFFF00|"
-                                                                               + gc.toString())
-                                                                       .get());
+                        new Parameter("http://maps.google.com/maps/api/staticmap")
+                                .append("sensor", "false", true)
+                                .append("center", gc.toString())
+                                .append("size", "230x250")
+                                .append("format", "jpg")
+                                .append("markers", "color:0x7fe2ff|label:S|path=fillcolor:0xAA000033|color:0xFFFFFF00|"
+                                        + gc.toString())
+                                .get());
             }
 
         } else {
@@ -136,19 +136,39 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
                 final HumanId myhumanId = humanId;
                 final Long myprivateEventId = privateEventId;
-                boolean confirm = false;
+                final Obj<Boolean> alertedUserWithConfirm = (Obj<Boolean>) new Obj<Boolean>().setObjAsValid(true);
 
                 @Override
                 public void handleEvent(final Event evt_) {
-                    Loggers.USER.info(myhumanId.getObj() + " clicked delete for private event " + myprivateEventId);
+                    if (!alertedUserWithConfirm.getObj()) {
+                        Loggers.USER.info(myhumanId.getObj() + " clicked delete for private event " + myprivateEventId);
+                        alertedUserWithConfirm.setObjAsValid(true);
+                        $$(evt_).setTextContent("Confirm delete within 5 secs!");
 
-                    final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dPrivateEvent(myhumanId, myprivateEventId);
-                    if (r.returnStatus() == 0) {
-                        Loggers.USER.info(humanId.getObj() + " clicked deleted private event " + r.returnValue());
-                        remove(evt_.getTarget(), EventType.CLICK, this);
-                        clear($$(privateEventDeleteNotice));
+                        $$asyn(new Runnable() {
+
+                            final Element e = $$(evt_);
+                            final RefObj<Boolean> t = alertedUserWithConfirm;
+
+                            @Override
+                            public void run() {
+                                ThreadSleep.sleep(5000);
+                                e.setTextContent("Delete");
+                                t.setObjAsValid(false);
+                            }
+                        });
+
+                        //$$sendJS(JSCodeToSend.refreshPageIn(8));// 5 + 3 seconds for network delay
                     } else {
-                        $$(privateEventDelete).setTextContent(r.returnMsg());
+                        Loggers.USER.info(myhumanId.getObj() + " clicked delete after confirmation for private event " + myprivateEventId);
+                        final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dPrivateEvent(myhumanId, myprivateEventId);
+                        if (r.returnStatus() == 0) {
+                            Loggers.USER.info(humanId.getObj() + " clicked deleted private event " + r.returnValue());
+                            remove(evt_.getTarget(), EventType.CLICK, this);
+                            clear($$(privateEventDeleteNotice));
+                        } else {
+                            $$(privateEventDelete).setTextContent(r.returnMsg());
+                        }
                     }
 
 
@@ -183,8 +203,8 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                             final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddOwnerWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, r.returnValue().getPrivateLocation().getPrivateLocationId());
                             if (returnVal.returnStatus() == 0) {
                                 SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
-                                                                                           humanId.getObj(),
-                                                                                           humanId.getObj() + HAS_ADDED_YOU_AS_AN_OWNER_OF + returnVal.returnValue().getPrivateEventName());
+                                        humanId.getObj(),
+                                        humanId.getObj() + HAS_ADDED_YOU_AS_AN_OWNER_OF + returnVal.returnValue().getPrivateEventName());
                             }
                             return returnVal;
 
@@ -201,8 +221,8 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                             final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveOwner(humanId, myprivateEventId, humansFriend);
                             if (returnVal.returnStatus() == 0) {
                                 SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
-                                                                                           humanId.getObj(),
-                                                                                           humanId.getObj() + HAS_REMOVED_YOU_AS_AN_OWNER_OF + returnVal.returnValue().getPrivateEventName());
+                                        humanId.getObj(),
+                                        humanId.getObj() + HAS_REMOVED_YOU_AS_AN_OWNER_OF + returnVal.returnValue().getPrivateEventName());
                             }
                             return returnVal;
 
@@ -227,8 +247,8 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                             final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddVisitorWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, r.returnValue().getPrivateLocation().getPrivateLocationId());
                             if (returnVal.returnStatus() == 0) {
                                 SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
-                                                                                           humanId.getObj(),
-                                                                                           humanId.getObj() + HAS_ADDED_YOU_AS_A_VISITOR_OF + returnVal.returnValue().getPrivateEventName());
+                                        humanId.getObj(),
+                                        humanId.getObj() + HAS_ADDED_YOU_AS_A_VISITOR_OF + returnVal.returnValue().getPrivateEventName());
                             }
                             return returnVal;
 
@@ -243,8 +263,8 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                             final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveVisitor(humanId, myprivateEventId, humansFriend);
                             if (returnVal.returnStatus() == 0) {
                                 SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
-                                                                                           humanId.getObj(),
-                                                                                           humanId.getObj() + HAS_REMOVED_YOU_AS_A_VISITOR_OF + returnVal.returnValue().getPrivateEventName());
+                                        humanId.getObj(),
+                                        humanId.getObj() + HAS_REMOVED_YOU_AS_A_VISITOR_OF + returnVal.returnValue().getPrivateEventName());
                             }
                             return returnVal;
 
@@ -268,8 +288,8 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                                 final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddInviteWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, r.returnValue().getPrivateLocation().getPrivateLocationId());
                                 if (returnVal.returnStatus() == 0) {
                                     SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
-                                                                                               humanId.getObj(),
-                                                                                               humanId.getObj() + HAS_INVITED_YOU_TO + returnVal.returnValue().getPrivateEventName());
+                                            humanId.getObj(),
+                                            humanId.getObj() + HAS_INVITED_YOU_TO + returnVal.returnValue().getPrivateEventName());
                                 }
                                 return returnVal;
 
@@ -285,8 +305,8 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                                 final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveInvite(humanId, myprivateEventId, humansFriend);
                                 if (returnVal.returnStatus() == 0) {
                                     SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
-                                                                                               humanId.getObj(),
-                                                                                               humanId.getObj() + HAS_CANCELLED_YOUR_INVITATION_TO + returnVal.returnValue().getPrivateEventName());
+                                            humanId.getObj(),
+                                            humanId.getObj() + HAS_CANCELLED_YOUR_INVITATION_TO + returnVal.returnValue().getPrivateEventName());
                                 }
                                 return returnVal;
                             }

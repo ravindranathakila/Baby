@@ -37,6 +37,19 @@ final public class JSCodeToSend {
     }
 
     /**
+     * Uses window.location.href = window.location.href + 'stringToBeAppended' after the given timeout.
+     * Uses setTimeout to timeout.
+     * Might turn out to be buggy if there are outer quotes. Verify with firebug for safety.
+     *
+     * @param timeout
+     * @return
+     */
+    public static String refreshPageIn(final int timeout) {
+        return "setTimeout('" + WINDOW_LOCATION_HREF_WINDOW_LOCATION_HREF + "'" + "," + timeout + ");\n";
+
+    }
+
+    /**
      * Uses window.location.href = 'urlTobeRedirectedTo';
      * Might turn out to be buggy if there are outer quotes. Verify with firebug for safety.
      *
