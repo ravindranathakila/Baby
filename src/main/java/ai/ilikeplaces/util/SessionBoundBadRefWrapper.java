@@ -136,6 +136,7 @@ final public class SessionBoundBadRefWrapper<T> implements HttpSessionBindingLis
     public void valueUnbound(HttpSessionBindingEvent event) {
         final Method m;
         try {
+            this.isAlive = false;
             m = boundInstance.getClass().getMethod("valueUnbound", new Class[]{HttpSessionBindingEvent.class});
             try {
                 m.invoke(boundInstance, event);

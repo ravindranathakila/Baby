@@ -13,6 +13,7 @@
 focusLat = 0;
 focusLng = 0;
 zoomLevel = 0;
+hintedZoomLevel = 17;
 
 function initialize_WOEIDGrabber_map(){
 
@@ -69,24 +70,6 @@ function initialize_WOEIDGrabber_map(){
                 infowindow.setContent("That's the place you selected!");
                 infowindow.setPosition(placeMarker.getPosition());
                 WOEIDGrabberWOEIDUpdate(map.getCenter().lat(), map.getCenter().lng()).focus();
-            }
-        }else{
-            alert("Zoom to Street Level! "+ (18-(map.getZoom())) + " levels more to go...");
-        }
-    });
-
-    google.maps.event.addListener(placeMarker, 'click', function() {
-        if(map.getZoom() > 10 ){
-            if(18 > map.getZoom()){
-                if(!confirm("Not yet in street level. " + (18 - map.getZoom()) + " more levels to go. Ingore and continue?")){
-                    return;
-                }
-            }
-
-            if(confirm("Here? Sure? Latitude,Longitude Value:" + map.getCenter().toString())){
-                infowindow.setContent("That's the place you selected!");
-                infowindow.setPosition(placeMarker.getPosition());
-                DownTownHeatMapWOEIDUpdate(map.getCenter().lat(), map.getCenter().lng()).focus();
             }
         }else{
             alert("Zoom to Street Level! "+ (18-(map.getZoom())) + " levels more to go...");
