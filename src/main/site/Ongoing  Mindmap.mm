@@ -149,9 +149,9 @@
 </node>
 </node>
 </node>
-<node CREATED="1266111290796" FOLDED="true" ID="Freemind_Link_650211779" MODIFIED="1266111515281" POSITION="left" STYLE="bubble" TEXT="Done">
+<node CREATED="1266111290796" ID="Freemind_Link_650211779" MODIFIED="1266111515281" POSITION="left" STYLE="bubble" TEXT="Done">
 <icon BUILTIN="button_ok"/>
-<node CREATED="1278155975953" FOLDED="true" ID="Freemind_Link_1352119735" MODIFIED="1278156014671" TEXT="I LIKE PLACES">
+<node CREATED="1278155975953" ID="Freemind_Link_1352119735" MODIFIED="1278156014671" TEXT="I LIKE PLACES">
 <node CREATED="1266130493234" FOLDED="true" ID="Freemind_Link_83930112" MODIFIED="1278155998343" TEXT="Undated">
 <icon BUILTIN="button_ok"/>
 <node CREATED="1266111285031" FOLDED="true" ID="_" MODIFIED="1266121552250" STYLE="bubble" TEXT="Design Button">
@@ -532,7 +532,7 @@
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1278156078593" ID="Freemind_Link_656779572" MODIFIED="1278156098968" TEXT="by 2010-07-03">
+<node CREATED="1278156078593" FOLDED="true" ID="Freemind_Link_656779572" MODIFIED="1278156098968" TEXT="by 2010-07-03">
 <node CREATED="1274537981781" ID="Freemind_Link_939734574" MODIFIED="1278155857687" TEXT="WALL">
 <icon BUILTIN="button_ok"/>
 <node CREATED="1274537987203" ID="Freemind_Link_766378904" MODIFIED="1274538007828" TEXT="Java">
@@ -564,7 +564,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1267383849390" ID="Freemind_Link_1191628612" MODIFIED="1281966398062" TEXT="by 2010-07-31">
+<node CREATED="1267383849390" FOLDED="true" ID="Freemind_Link_1191628612" MODIFIED="1281966398062" TEXT="by 2010-07-31">
 <node CREATED="1275630296515" ID="Freemind_Link_1463964379" MODIFIED="1276078103922" TEXT="SIGNUP EMAIL CONFIRMATION">
 <icon BUILTIN="button_ok"/>
 </node>
@@ -590,7 +590,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1281971400515" ID="Freemind_Link_288235989" MODIFIED="1281971408843" TEXT="by 2010-08-16">
+<node CREATED="1281971400515" FOLDED="true" ID="Freemind_Link_288235989" MODIFIED="1281971408843" TEXT="by 2010-08-16">
 <node CREATED="1270052741515" ID="Freemind_Link_75076387" MODIFIED="1281966711250" TEXT="ALBUM">
 <icon BUILTIN="button_ok"/>
 <node CREATED="1270054015703" ID="Freemind_Link_1091134624" MODIFIED="1270054239468" TEXT="Code ServletFileUplaods">
@@ -639,6 +639,38 @@
 <icon BUILTIN="button_ok"/>
 </node>
 <node CREATED="1283005710484" ID="Freemind_Link_651683932" MODIFIED="1283695709734" TEXT="Location photo onclick full screen">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1295361906640" FOLDED="true" ID="Freemind_Link_1686080696" MODIFIED="1295361917921" TEXT="by 2011-01-18">
+<node CREATED="1295069391140" ID="Freemind_Link_932535474" MODIFIED="1295071603546" TEXT="woeid default zoom level">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1295069437546" ID="Freemind_Link_1627703648" MODIFIED="1295071603796" TEXT="woeid multiple confirm bug">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1295070704984" ID="Freemind_Link_946423785" MODIFIED="1295071617359" TEXT="hand for downtown home on org page">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1295071585546" ID="Freemind_Link_929412906" MODIFIED="1295361870500" TEXT="space between talk and mute on empty wall">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1295067737718" ID="Freemind_Link_138237959" MODIFIED="1295274873187" TEXT="woeid hint on woeid box as text">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1295067701906" ID="Freemind_Link_1403533013" MODIFIED="1295359048296" TEXT="confirm delete or page refresh">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1295072256562" ID="Freemind_Link_256294415" MODIFIED="1295072505125" TEXT="ranked colored markers on down town map js support only">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1295269427140" ID="Freemind_Link_724803421" MODIFIED="1295270747734" TEXT="fix ie sidebar visibility">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1295272288578" ID="Freemind_Link_250547042" MODIFIED="1295274870218" TEXT="tackle ejb signout problem">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1295274875296" ID="Freemind_Link_1326970141" MODIFIED="1295356372640" TEXT="fix WOEID non focus validation problem">
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
@@ -1385,35 +1417,11 @@
 </node>
 <node CREATED="1295067676843" ID="Freemind_Link_882519224" MODIFIED="1295067689718" POSITION="right" TEXT="Next">
 <icon BUILTIN="forward"/>
-<node CREATED="1295067737718" ID="Freemind_Link_138237959" MODIFIED="1295274873187" TEXT="woeid hint on woeid box as text">
-<icon BUILTIN="button_ok"/>
-</node>
 <node CREATED="1295067693390" ID="Freemind_Link_643364005" MODIFIED="1295067701218" TEXT="location image on private location"/>
-<node CREATED="1295067701906" ID="Freemind_Link_1403533013" MODIFIED="1295067722468" TEXT="confirm delete or page refresh"/>
 <node CREATED="1295069300031" ID="Freemind_Link_1472902477" MODIFIED="1295069322078" TEXT="signed out mode engagement and help"/>
 <node CREATED="1295069326500" ID="Freemind_Link_1965639846" MODIFIED="1295069333765" TEXT="email confirmation activation message"/>
-<node CREATED="1295069391140" ID="Freemind_Link_932535474" MODIFIED="1295071603546" TEXT="woeid default zoom level">
-<icon BUILTIN="button_ok"/>
-</node>
-<node CREATED="1295069437546" ID="Freemind_Link_1627703648" MODIFIED="1295071603796" TEXT="woeid multiple confirm bug">
-<icon BUILTIN="button_ok"/>
-</node>
-<node CREATED="1295070704984" ID="Freemind_Link_946423785" MODIFIED="1295071617359" TEXT="hand for downtown home on org page">
-<icon BUILTIN="button_ok"/>
-</node>
-<node CREATED="1295071585546" ID="Freemind_Link_929412906" MODIFIED="1295071595843" TEXT="space between talk and mute on empty wall"/>
 <node CREATED="1295071724968" ID="Freemind_Link_1401312547" MODIFIED="1295071733437" TEXT="ajax image load placeholder"/>
-<node CREATED="1295072256562" ID="Freemind_Link_256294415" MODIFIED="1295072505125" TEXT="ranked colored markers on down town map js support only">
-<icon BUILTIN="button_ok"/>
-</node>
-<node CREATED="1295269427140" ID="Freemind_Link_724803421" MODIFIED="1295270747734" TEXT="fix ie sidebar visibility">
-<icon BUILTIN="button_ok"/>
-</node>
 <node CREATED="1295269441875" ID="Freemind_Link_707416621" MODIFIED="1295269446171" TEXT="fix logout button"/>
-<node CREATED="1295272288578" ID="Freemind_Link_250547042" MODIFIED="1295274870218" TEXT="tackle ejb signout problem">
-<icon BUILTIN="button_ok"/>
-</node>
-<node CREATED="1295274875296" ID="Freemind_Link_1326970141" MODIFIED="1295274885000" TEXT="fix WOEID non focus validation problem"/>
 </node>
 <node CREATED="1284106510102" FOLDED="true" ID="Freemind_Link_1687377836" MODIFIED="1295274734812" POSITION="left" TEXT="Distractions">
 <font NAME="Comic Sans MS" SIZE="9"/>

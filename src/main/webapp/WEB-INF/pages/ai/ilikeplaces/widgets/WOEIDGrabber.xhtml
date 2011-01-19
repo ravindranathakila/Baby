@@ -115,9 +115,10 @@ function initialize_gmap_scripts(){
             <div class="span-14 last">
                 <input type="text" id="WOEIDGrabberWOEID" value="0,0"/>
             </div>
-            <div class="span-14 cursor_link last" style="overflow:hidden;" onclick="javascript:initialize_gmap_scripts();"
-                 id="WOEIDGrabber_load_click">
-                Click here to find your place!
+            <div class="span-14 cursor_link last" style="overflow:hidden;" onclick="javascript:initialize_gmap_scripts();">
+                <div class="span-4 prepend-5 append-5 last center">
+                    <a href="#" class="btn" id="WOEIDGrabber_load_click">Click here to find your place!</a>
+                </div>
             </div>
             <div class="span-14 last" style="overflow:hidden;display:none;" id="WOEIDGrabber_map_wrapper">
                 <div id="WOEIDGrabber_map" class="vtip" title="<i>Double-click to Zoom<br/>Links open in new tabs</i>"

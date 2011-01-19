@@ -55,12 +55,15 @@ public class WOEIDGrabber extends AbstractWidgetListener {
         );
 
         final GeoCoord woehint = new GeoCoord().setObj(request.getServletRequest().getParameter(WOEHINT));
-        
+
         if (woehint.validate() == 0) {
             $$sendJSStmt("focusLat=" + woehint.getObjectAsValid().getLatitude());
             $$sendJSStmt("focusLng=" + woehint.getObjectAsValid().getLongitude());
             $$sendJSStmt("zoomLevel=hintedZoomLevel");
-            $$(Controller.Page.WOEIDGrabberWOEID).setAttribute(MarkupTag.INPUT.value(), woehint.toString());
+            {
+                $$(Controller.Page.WOEIDGrabberWOEID).setAttribute(MarkupTag.INPUT.value(), woehint.toString());
+                elementToUpdateWithWOEID.setAttribute(MarkupTag.INPUT.value(), woehint.toString());
+            }
         }
 
     }

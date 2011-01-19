@@ -126,8 +126,8 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         System.out.println("");
         System.out.println("SETTING PERSISTENCE LOGGING");
 
-        EntityLifeCycleListener.PRE_ACTIONS.setObj(true);
-        EntityLifeCycleListener.POST_ACTIONS.setObj(true);
+        EntityLifeCycleListener.PRE_ACTIONS.setObj(false);
+        EntityLifeCycleListener.POST_ACTIONS.setObj(false);
         
         System.out.println("DONE SETTING PERSISTENCE LOGGING");
 
