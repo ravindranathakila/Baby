@@ -136,29 +136,14 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
                 final HumanId myhumanId = humanId;
                 final Long myprivateEventId = privateEventId;
-                final Obj<Boolean> alertedUserWithConfirm = (Obj<Boolean>) new Obj<Boolean>().setObjAsValid(true);
+                final Obj<Boolean> alertedUserWithConfirm = (Obj<Boolean>) new Obj<Boolean>().setObjAsValid(false);
 
                 @Override
                 public void handleEvent(final Event evt_) {
                     if (!alertedUserWithConfirm.getObj()) {
                         Loggers.USER.info(myhumanId.getObj() + " clicked delete for private event " + myprivateEventId);
                         alertedUserWithConfirm.setObjAsValid(true);
-                        $$(evt_).setTextContent("Confirm delete within 5 secs!");
-
-                        $$asyn(new Runnable() {
-
-                            final Element e = $$(evt_);
-                            final RefObj<Boolean> t = alertedUserWithConfirm;
-
-                            @Override
-                            public void run() {
-                                ThreadSleep.sleep(5000);
-                                e.setTextContent("Delete");
-                                t.setObjAsValid(false);
-                            }
-                        });
-
-                        //$$sendJS(JSCodeToSend.refreshPageIn(8));// 5 + 3 seconds for network delay
+                        //$$(evt_).setTextContent("Confirm Delete!");
                     } else {
                         Loggers.USER.info(myhumanId.getObj() + " clicked delete after confirmation for private event " + myprivateEventId);
                         final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dPrivateEvent(myhumanId, myprivateEventId);
