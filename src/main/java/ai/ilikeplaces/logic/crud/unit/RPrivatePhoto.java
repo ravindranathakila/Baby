@@ -38,9 +38,14 @@ public class RPrivatePhoto implements RPrivatePhotoLocal {
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<PrivatePhoto> doRAllPrivatePhotos(final String humanId) throws DBDishonourCheckedException {
-
         return humansPrivatePhotoCrudServiceLocal_.findBadly(HumansPrivatePhoto.class, humanId).getPrivatePhotos();
     }
+
+
+    public PrivatePhoto doDirtyRPrivatePhoto(final String humanId, final Long privatePhotoId) throws DBDishonourCheckedException {
+        return privatePhotoCrudServiceLocal_.findBadly(PrivatePhoto.class, privatePhotoId);
+    }
+
 
     final static Logger logger = LoggerFactory.getLogger(RPrivatePhoto.class);
 }

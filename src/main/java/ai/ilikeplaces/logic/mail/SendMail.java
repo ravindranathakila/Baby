@@ -153,6 +153,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
 
             final MimeMessage message = new MimeMessage(mailSession);
             message.setSender(new InternetAddress(U_S_E_R_N_A_M_E));
+            message.setFrom(new InternetAddress(U_S_E_R_N_A_M_E));
 
             message.setSubject(simpleTextSubject);
             message.setContent(simpleTextBody, TEXT_PLAIN);
@@ -176,6 +177,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
 
             final MimeMessage message = new MimeMessage(mailSession);
             message.setSender(new InternetAddress(U_S_E_R_N_A_M_E));
+            message.setFrom(new InternetAddress(U_S_E_R_N_A_M_E));
 
             message.setSubject(simpleTextSubject);
 
@@ -283,6 +285,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
 
             final MimeMessage message = new MimeMessage(mailSession);
             message.setSender(new InternetAddress(U_S_E_R_N_A_M_E));
+            message.setFrom(new InternetAddress(U_S_E_R_N_A_M_E));
 
             message.setSubject(simpleTextSubject);
             message.setContent(htmlBody, TEXT_HTML);
@@ -324,6 +327,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
 
             final MimeMessage message = new MimeMessage(mailSession);
             message.setSender(new InternetAddress(U_S_E_R_N_A_M_E));
+            message.setFrom(new InternetAddress(U_S_E_R_N_A_M_E));
             message.setSubject(simpleTextSubject);
 
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recepientEmail));
@@ -362,6 +366,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
 
             final MimeMessage message = new MimeMessage(mailSession);
             message.setSender(new InternetAddress(U_S_E_R_N_A_M_E));
+            message.setFrom(new InternetAddress(U_S_E_R_N_A_M_E));
             message.setSubject(simpleTextSubject);
 
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recepientEmail));

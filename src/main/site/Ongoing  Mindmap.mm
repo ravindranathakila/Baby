@@ -151,8 +151,8 @@
 </node>
 <node CREATED="1266111290796" ID="Freemind_Link_650211779" MODIFIED="1266111515281" POSITION="left" STYLE="bubble" TEXT="Done">
 <icon BUILTIN="button_ok"/>
-<node CREATED="1278155975953" ID="Freemind_Link_1352119735" MODIFIED="1278156014671" TEXT="I LIKE PLACES">
-<node CREATED="1266130493234" FOLDED="true" ID="Freemind_Link_83930112" MODIFIED="1278155998343" TEXT="Undated">
+<node CREATED="1278155975953" FOLDED="true" ID="Freemind_Link_1352119735" MODIFIED="1278156014671" TEXT="I LIKE PLACES">
+<node CREATED="1266130493234" ID="Freemind_Link_83930112" MODIFIED="1278155998343" TEXT="Undated">
 <icon BUILTIN="button_ok"/>
 <node CREATED="1266111285031" FOLDED="true" ID="_" MODIFIED="1266121552250" STYLE="bubble" TEXT="Design Button">
 <icon BUILTIN="button_ok"/>
@@ -1414,6 +1414,14 @@
 <arrowlink DESTINATION="Freemind_Link_374011926" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Freemind_Arrow_Link_447360971" STARTARROW="None" STARTINCLINATION="0;0;"/>
 <font BOLD="true" NAME="Comic Sans MS" SIZE="14"/>
 <icon BUILTIN="flag"/>
+<node CREATED="1295620808796" ID="Freemind_Link_753522277" MODIFIED="1295620814062" TEXT="no user base">
+<node CREATED="1295620858468" ID="Freemind_Link_1608653334" MODIFIED="1295620866984" TEXT="some just use viral marketing and succeed"/>
+</node>
+<node CREATED="1295620814750" ID="Freemind_Link_1513662021" MODIFIED="1295620822656" TEXT="no profit">
+<node CREATED="1295620877515" ID="Freemind_Link_505481977" MODIFIED="1295620883765" TEXT="location based advertising is a solution"/>
+<node CREATED="1295620884265" ID="Freemind_Link_388804536" MODIFIED="1295620919437" TEXT="paid event publisher accounts is a solutin"/>
+</node>
+<node CREATED="1295620824234" ID="Freemind_Link_1315593715" MODIFIED="1295620836140" TEXT="no true value"/>
 </node>
 <node CREATED="1295067676843" ID="Freemind_Link_882519224" MODIFIED="1295067689718" POSITION="right" TEXT="Next">
 <icon BUILTIN="forward"/>
@@ -1422,6 +1430,17 @@
 <node CREATED="1295069326500" ID="Freemind_Link_1965639846" MODIFIED="1295069333765" TEXT="email confirmation activation message"/>
 <node CREATED="1295071724968" ID="Freemind_Link_1401312547" MODIFIED="1295071733437" TEXT="ajax image load placeholder"/>
 <node CREATED="1295269441875" ID="Freemind_Link_707416621" MODIFIED="1295269446171" TEXT="fix logout button"/>
+<node CREATED="1295621176578" ID="Freemind_Link_1332979126" MODIFIED="1295621190734" TEXT="Down Town as Page Title on Skeleton"/>
+<node CREATED="1295621373921" ID="Freemind_Link_172086848" MODIFIED="1295621383609" TEXT="Embed wall on image widget for comments"/>
+<node CREATED="1295621438359" ID="Freemind_Link_406424838" MODIFIED="1295621462265" TEXT="Implement a sulution something like bodyrox can use exactly"/>
+<node CREATED="1295677621064" ID="Freemind_Link_1700774768" MODIFIED="1295677674314" TEXT="Account activation page show on relevan time only"/>
+<node CREATED="1295677687955" ID="Freemind_Link_986674682" MODIFIED="1295677701346" TEXT="Set humanalive true when reactivating account"/>
+<node CREATED="1295677705674" ID="Freemind_Link_1903998903" MODIFIED="1295677723080" TEXT="Disable all operations during human non alive"/>
+<node CREATED="1295677811080" ID="Freemind_Link_678479953" MODIFIED="1295677836111" TEXT="ilikeplaces.com mails footer rackspace largest, and affiliate"/>
+<node CREATED="1295773433643" ID="Freemind_Link_1230409492" MODIFIED="1295773453412" TEXT="update password widget listener remove and notification color!"/>
+<node CREATED="1295774389089" ID="Freemind_Link_1277266803" MODIFIED="1295774401779" TEXT="existing asym friends in friends list"/>
+<node CREATED="1295774966622" ID="Freemind_Link_862744323" MODIFIED="1295774984372" TEXT="fix non activated human changing password to make human alive."/>
+<node CREATED="1295775006279" ID="Freemind_Link_1257735463" MODIFIED="1295775022232" TEXT="fix trailing dot problem on hash activation email"/>
 </node>
 <node CREATED="1284106510102" FOLDED="true" ID="Freemind_Link_1687377836" MODIFIED="1295274734812" POSITION="left" TEXT="Distractions">
 <font NAME="Comic Sans MS" SIZE="9"/>

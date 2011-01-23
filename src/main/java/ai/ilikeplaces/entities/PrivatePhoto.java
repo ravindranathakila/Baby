@@ -45,6 +45,8 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto> {
     public List<Album> albums;
     final static public String albumsCol = "albums";
 
+    public Wall privatePhotoWall;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getPrivatePhotoId() {
@@ -172,6 +174,16 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto> {
 
     public void setAlbums(List<Album> albums) {
         this.albums = albums;
+    }
+
+    @UNIDIRECTIONAL
+    @OneToOne(cascade = CascadeType.ALL)
+    public Wall getPrivatePhotoWall() {
+        return privatePhotoWall;
+    }
+
+    public void setPrivatePhotoWall(Wall privatePhotoWall) {
+        this.privatePhotoWall = privatePhotoWall;
     }
 
     @Override

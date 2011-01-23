@@ -51,7 +51,9 @@ public class WallWidgetHumansWall extends WallWidget {
 
         fetchToEmail();
 
-        for (final Msg msg : DB.getHumanCrudWallLocal(true).dirtyRWall(requestedProfile).returnValue().getWallMsgs()) {
+        final Wall wall = DB.getHumanCrudWallLocal(true).readWall(requestedProfile, new Obj<HumanId>(currUserAsVisitor)).returnValueBadly();
+
+        for (final Msg msg : wall.getWallMsgs()) {
             new UserProperty(request, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
                 protected void init(final Object... initArgs) {
                     $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
@@ -59,7 +61,7 @@ public class WallWidgetHumansWall extends WallWidget {
             };
         }
 
-        if (DB.getHumanCrudWallLocal(true).dirtyRWall(requestedProfile).returnValueBadly().getWallMutes().contains(currUserAsVisitor)) {
+        if (wall.getWallMutes().contains(currUserAsVisitor)) {
             $$(Controller.Page.wallMute).setTextContent(WallWidget.LISTEN);
         } else {
             $$(Controller.Page.wallMute).setTextContent(WallWidget.MUTE);
@@ -103,7 +105,7 @@ public class WallWidgetHumansWall extends WallWidget {
                 if (wallAppend.validate() == 0) {
                     if (!wallAppend.getObj().equals("")) {
 
-                        final Return<Wall> r = DB.getHumanCrudWallLocal(true).uNTxAddEntryToWall(myrequestedProfile, currUserAsVisitor, wallAppend.getObj());
+                        final Return<Wall> r = DB.getHumanCrudWallLocal(true).addEntryToWall(myrequestedProfile, currUserAsVisitor, new Obj<HumanId>(mycurrUserAsVisitor), wallAppend.getObj());
 
 
                         if (r.returnStatus() == 0) {
@@ -111,13 +113,13 @@ public class WallWidgetHumansWall extends WallWidget {
                             wallAppend.setObj("");
 
                             clear($$(Controller.Page.wallContent));
-                            final Wall wall = DB.getHumanCrudWallLocal(true).dirtyRWall(requestedProfile).returnValue();
+                            final Wall wall = DB.getHumanCrudWallLocal(true).readWall(requestedProfile, new Obj<HumanId>(currUserAsVisitor)).returnValue();
                             final StringBuilder b = new StringBuilder("");
                             for (final Msg msg : wall.getWallMsgs()) {
                                 b.append(new UserProperty(request,
-                                                          $$(Controller.Page.wallContent),
-                                                          ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
-                                                          new HumanId(msg.getMsgMetadata())) {
+                                        $$(Controller.Page.wallContent),
+                                        ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
+                                        new HumanId(msg.getMsgMetadata())) {
                                 }.fetchToEmail);
                             }
 
@@ -151,13 +153,13 @@ public class WallWidgetHumansWall extends WallWidget {
             @Override
             public void handleEvent(final Event evt_) {
 
-                if (DB.getHumanCrudWallLocal(true).dirtyRWall(myrequestedProfile).returnValueBadly().getWallMutes().contains(mycurrUserAsVisitor)) {
-                    if (DB.getHumanCrudWallLocal(true).uWallRemoveMuteEntryToWall(myrequestedProfile, mycurrUserAsVisitor).returnStatus() == 0) {
+                if (DB.getHumanCrudWallLocal(true).readWall(myrequestedProfile, new Obj<HumanId>(currUserAsVisitor)).returnValueBadly().getWallMutes().contains(mycurrUserAsVisitor)) {
+                    if (DB.getHumanCrudWallLocal(true).unmuteWall(myrequestedProfile, mycurrUserAsVisitor, new Obj<HumanId>(currUserAsVisitor)).returnStatus() == 0) {
                         $$(evt_).setTextContent(WallWidget.MUTE);
                     }
 
                 } else {
-                    if (DB.getHumanCrudWallLocal(true).uWallAddMuteEntryToWall(myrequestedProfile, mycurrUserAsVisitor).returnStatus() == 0) {
+                    if (DB.getHumanCrudWallLocal(true).muteWall(myrequestedProfile, mycurrUserAsVisitor, new Obj<HumanId>(currUserAsVisitor)).returnStatus() == 0) {
                         $$(evt_).setTextContent(WallWidget.LISTEN);
                     }
                 }

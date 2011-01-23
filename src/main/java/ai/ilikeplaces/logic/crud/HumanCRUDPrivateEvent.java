@@ -232,14 +232,13 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         return r;
     }
 
-    @Override
     public Return<Wall> uPrivateEventAddToWall(HumanId operator__, long privateEventId__, String contentToBeAppended) {
 
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
                     .doNTxUAppendToWall(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId(),
-                                        contentToBeAppended), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+                            contentToBeAppended), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
@@ -249,14 +248,14 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     }
 
     @Override
-    public Return<Wall> uPrivateEventAddEntryToWall(final HumanId operator__, final HumanId msgOwner__, final long privateEventId__, final String contentToBeAppended) {
+    public Return<Wall> addEntryToWall(final HumanId operator__, final HumanId msgOwner__, final Obj wallOwnerId__, final String contentToBeAppended) {
 
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doNTxUAddEntry(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId(),
-                                    msgOwner__.getObj(),
-                                    contentToBeAppended), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+                    .doNTxUAddEntry(dirtyRPrivateEventAsAny(operator__.getObj(), (Long) wallOwnerId__.getObjectAsValid()).returnValueBadly().getPrivateEventWall().getWallId(),
+                            msgOwner__.getObj(),
+                            contentToBeAppended), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
@@ -266,13 +265,13 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     }
 
     @Override
-    public Return<Wall> uPrivateEventAddMuteEntryToWall(final HumanId operator__, final HumanId mutee, final long privateEventId__) {
+    public Return<Wall> muteWall(final HumanId operator__, final HumanId mutee, final Obj wallOwnerId__) {
 
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doNTxUAddMuteEntry(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId(),
-                                    mutee.getObj()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+                    .doNTxUAddMuteEntry(dirtyRPrivateEventAsAny(operator__.getObj(), (Long) wallOwnerId__.getObjectAsValid()).returnValueBadly().getPrivateEventWall().getWallId(),
+                            mutee.getObj()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
@@ -282,13 +281,13 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     }
 
     @Override
-    public Return<Wall> uPrivateEventRemoveMuteEntryToWall(final HumanId operator__, final HumanId mutee, final long privateEventId__) {
+    public Return<Wall> unmuteWall(final HumanId operator__, final HumanId mutee, final Obj wallOwnerId__) {
 
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doNTxURemoveMuteEntry(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId(),
-                                    mutee.getObj()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+                    .doNTxURemoveMuteEntry(dirtyRPrivateEventAsAny(operator__.getObj(), (Long) wallOwnerId__.getObjectAsValid()).returnValueBadly().getPrivateEventWall().getWallId(),
+                            mutee.getObj()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
@@ -297,7 +296,6 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
 
     }
 
-    @Override
     public Return<Wall> uPrivateEventClearWall(HumanId operator__, long privateEventId__) {
 
         Return<Wall> r;
@@ -311,12 +309,12 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     }
 
     @Override
-    public Return<Wall> rPrivateEventReadWall(HumanId operator__, long privateEventId__) {
+    public Return<Wall> readWall(HumanId operator__, Obj wallOwnerId__) {
 
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doDirtyRWall(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId()), READ_WALL_SUCCESSFUL);
+                    .doDirtyRWall(dirtyRPrivateEventAsAny(operator__.getObj(), (Long) wallOwnerId__.getObjectAsValid()).returnValueBadly().getPrivateEventWall().getWallId()), READ_WALL_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, READ_WALL_FAILED, true);
         }

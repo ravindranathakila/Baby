@@ -5,12 +5,10 @@ import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.PrivatePhoto;
+import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.exception.NoPrivilegesException;
-import ai.ilikeplaces.logic.crud.unit.CPrivatePhotoLocal;
-import ai.ilikeplaces.logic.crud.unit.DPrivatePhotoLocal;
-import ai.ilikeplaces.logic.crud.unit.RPrivatePhotoLocal;
-import ai.ilikeplaces.logic.crud.unit.UPrivatePhotoLocal;
+import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.*;
 import org.slf4j.Logger;
@@ -35,6 +33,14 @@ import java.util.List;
 @Interceptors({DBOffilne.class, ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements HumanCRUDPrivatePhotoLocal {
 
+    private static final String WRITE_WALL_SUCCESSFUL = "Write Wall Successful!";
+    private static final String WRITE_WALL_FAILED = "Write Wall FAILED!";
+    private static final String MUTE_WALL_SUCCESSFUL = "Mute Wall Successful!";
+    private static final String MUTE_WALL_FAILED = "Mute Wall FAILED!";
+    private static final String UNMUTE_WALL_SUCCESSFUL = "Unmute Wall Successful!";
+    private static final String UNMUTE_WALL_FAILED = "Unmute Wall FAILED!";
+    private static final String READ_WALL_SUCCESSFUL = "Read Wall Successful!";
+    private static final String READ_WALL_FAILED = "Read Wall FAILED!";
     @EJB
     private CPrivatePhotoLocal cPrivatePhotoLocal_;
 
@@ -46,6 +52,9 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
 
     @EJB
     private DPrivatePhotoLocal dPrivatePhotoLocal_;
+
+    @EJB
+    private CRUDWallLocal crudWallLocal_;
 
     protected static final String FIND_ALL_PHOTOS_BY_HUMAN_FAILED = "Find all photos by human FAILED!";
     protected static final String FIND_ALL_PHOTOS_BY_HUMAN_SUCCESSFUL = "Find all photos by human Successful!";
@@ -71,32 +80,35 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
         Return<PrivatePhoto> r;
 
         r = new ReturnImpl<PrivatePhoto>(cPrivatePhotoLocal_.doNTxCPrivatePhotoLocal(humanId,
-                                                                                     new PrivatePhoto().
-                                                                                             setPrivatePhotoNameR(privatePhotoName)
-                                                                                             .setPrivatePhotoFilePathR(fileName)
-                                                                                             .setPrivatePhotoDescriptionR(privatePhotoDescription)
-                                                                                             .setPrivatePhotoURLPathR(privatePhotoURLPath)), "Create PrivatePhoto by human Successful!");
+                new PrivatePhoto().
+                        setPrivatePhotoNameR(privatePhotoName)
+                        .setPrivatePhotoFilePathR(fileName)
+                        .setPrivatePhotoDescriptionR(privatePhotoDescription)
+                        .setPrivatePhotoURLPathR(privatePhotoURLPath)), "Create PrivatePhoto by human Successful!");
         return r;
     }
 
-    @FIXME(issue = "When adding a location, there cannot be two equal location names such that super locations are equal too. Please update specific CRUD service. Also His As, My As.")
-    @Override
-    public Return<PrivatePhoto> addPrivatePhotoAlbum(final long publicPhotoId, final long albumId) {
-//        Return<PrivatePhoto> r;
-//        r = new ReturnImpl<PrivatePhoto>(null, "Add photo to album Successful!");
-//
-//        return r;
-        throw ExceptionCache.METHOD_NOT_IMPLEMENTED;
-    }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Return<List<PrivatePhoto>> rPrivatePhoto(final String humanId) {
+    public Return<List<PrivatePhoto>> rPrivatePhotos(final String humanId) {
         Return<List<PrivatePhoto>> r;
         try {
             return new ReturnImpl<List<PrivatePhoto>>(rPrivatePhotoLocal_.doRAllPrivatePhotos(humanId), FIND_ALL_PHOTOS_BY_HUMAN_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<List<PrivatePhoto>>(t, FIND_ALL_PHOTOS_BY_HUMAN_FAILED, true);
+        }
+        return r;
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<PrivatePhoto> rPrivatePhoto(final HumanId humanId, final Obj<Long> privatePhotoId) {
+        Return<PrivatePhoto> r;
+        try {
+            return new ReturnImpl<PrivatePhoto>(rPrivatePhotoLocal_.doDirtyRPrivatePhoto(humanId.getObjectAsValid(), privatePhotoId.getObjectAsValid()), FIND_ALL_PHOTOS_BY_HUMAN_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<PrivatePhoto>(t, FIND_ALL_PHOTOS_BY_HUMAN_FAILED, true);
         }
         return r;
     }
@@ -117,7 +129,7 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
     public Return<Boolean> dPrivatePhoto(final HumanId humanId, final long privatePhotoId) {
         final Return<Boolean> r;
         boolean isHumansPhoto = false;
-        for (final PrivatePhoto privatePhoto : rPrivatePhoto(humanId.getHumanId()).returnValue()) {
+        for (final PrivatePhoto privatePhoto : rPrivatePhotos(humanId.getHumanId()).returnValue()) {
             if (privatePhoto.getPrivatePhotoId() == privatePhotoId) {
                 isHumansPhoto = true;
                 break;
@@ -134,6 +146,70 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
     }
 
 
-    /*END OF NON TRANSACTIONAL METHODS*/
-    final static Logger logger = LoggerFactory.getLogger(HumanCRUDPrivatePhoto.class);
+    @Override
+    public Return<Wall> addEntryToWall(final HumanId operator__, final HumanId msgOwner__, final Obj wallOwnerId__, final String contentToBeAppended) {
+
+        Return<Wall> r;
+        try {
+            r = new ReturnImpl<Wall>(crudWallLocal_
+                    .doNTxUAddEntry(rPrivatePhoto(operator__, wallOwnerId__).returnValueBadly().getPrivatePhotoWall().getWallId(),
+                            msgOwner__.getObj(),
+                            contentToBeAppended), WRITE_WALL_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<Wall>(t, WRITE_WALL_FAILED, true);
+        }
+        return r;
+
+
+    }
+
+    @Override
+    public Return<Wall> muteWall(final HumanId operator__, final HumanId mutee, final Obj wallOwnerId__) {
+
+        Return<Wall> r;
+        try {
+            r = new ReturnImpl<Wall>(crudWallLocal_
+                    .doNTxUAddMuteEntry(rPrivatePhoto(operator__, wallOwnerId__).returnValueBadly().getPrivatePhotoWall().getWallId(),
+                            mutee.getObj()), MUTE_WALL_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<Wall>(t, MUTE_WALL_FAILED, true);
+        }
+        return r;
+
+
+    }
+
+    @Override
+    public Return<Wall> unmuteWall(final HumanId operator__, final HumanId mutee, final Obj wallOwnerId__) {
+
+        Return<Wall> r;
+        try {
+            r = new ReturnImpl<Wall>(crudWallLocal_
+                    .doNTxURemoveMuteEntry(rPrivatePhoto(operator__, wallOwnerId__).returnValueBadly().getPrivatePhotoWall().getWallId(),
+                            mutee.getObj()), UNMUTE_WALL_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<Wall>(t, UNMUTE_WALL_FAILED, true);
+        }
+        return r;
+
+
+    }
+
+
+    @Override
+    public Return<Wall> readWall(final HumanId operator__, final Obj wallOwnerId__) {
+
+        Return<Wall> r;
+        try {
+            r = new ReturnImpl<Wall>(crudWallLocal_
+                    .doDirtyRWall(rPrivatePhoto(operator__, wallOwnerId__).returnValueBadly().getPrivatePhotoWall().getWallId()), READ_WALL_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<Wall>(t, READ_WALL_FAILED, true);
+        }
+        return r;
+    }
+
+
+/*END OF NON TRANSACTIONAL METHODS*/
+final static Logger logger = LoggerFactory.getLogger(HumanCRUDPrivatePhoto.class);
 }
