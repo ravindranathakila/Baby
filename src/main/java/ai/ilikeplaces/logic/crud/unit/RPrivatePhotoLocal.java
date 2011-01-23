@@ -16,4 +16,6 @@ import java.util.List;
 public interface RPrivatePhotoLocal {
 
     public List<PrivatePhoto> doRAllPrivatePhotos(final String humanId) throws DBDishonourCheckedException;
+
+    public PrivatePhoto doDirtyRPrivatePhoto(final String humanId, final Long privatePhotoId) throws DBDishonourCheckedException;
 }

@@ -85,5 +85,10 @@ grouping currently means, a layer, and a specific layer, if to support only a gr
 
 }
 
+/*current indicates the related components for the current operation. e.g. navigation link of current page among other navigation links*/
+.current{
+
+}
+
 
 

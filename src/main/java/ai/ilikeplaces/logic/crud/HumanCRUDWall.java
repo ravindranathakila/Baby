@@ -47,7 +47,7 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Return<Wall> dirtyRWall(final HumanId humanId) {
+    public Return<Wall> readWall(final HumanId humanId, Obj wallOwnerId__) {
         Return<Wall> r;
         r = new ReturnImpl<Wall>(crudHumansWallLocal_.dirtyRHumansWall(humanId.getObj()).getWall(), READ_WALL_SUCCESSFUL);
         return r;
@@ -57,7 +57,7 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
     @WARNING(warning = "Please not that the underlaying rHumansWall method assumes transaction scope REQUIRED, which is used here.")
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Return<Wall> uNTxAddEntryToWall(final HumanId humanId__, final HumanId msgOwner__, final String contentToBeAppended) {
+    public Return<Wall> addEntryToWall(final HumanId humanId__, final HumanId msgOwner__, Obj wallOwnerId__, final String contentToBeAppended) {
         Return<Wall> r;
         try {
             final Wall wall = crudHumansWallLocal_.rHumansWall(humanId__.getObj()).getWall();
@@ -76,7 +76,7 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
     }
 
     @Override
-    public Return<Wall> uWallAddMuteEntryToWall(final HumanId operator__, final HumanId mutee) {
+    public Return<Wall> muteWall(final HumanId operator__, final HumanId mutee, Obj wallOwnerId__) {
 
         Return<Wall> r;
         try {
@@ -92,7 +92,7 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
     }
 
     @Override
-    public Return<Wall> uWallRemoveMuteEntryToWall(final HumanId operator__, final HumanId mutee) {
+    public Return<Wall> unmuteWall(final HumanId operator__, final HumanId mutee, Obj wallOwnerId__) {
 
         Return<Wall> r;
         try {

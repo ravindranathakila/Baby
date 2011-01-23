@@ -21,7 +21,7 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Local
-public interface HumanCRUDPrivateEventLocal {
+public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
 
     public static final String NAME = HumanCRUDPrivateEventLocal.class.getSimpleName();
 
@@ -59,19 +59,6 @@ public interface HumanCRUDPrivateEventLocal {
     public Return<PrivateEvent> uPrivateEventAddReject(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
     public Return<PrivateEvent> uPrivateEventRemoveReject(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
-
-
-    public Return<Wall> uPrivateEventAddToWall(final HumanId operator, final long privateEventId__, final String contentToBeAppended);
-
-    public Return<Wall> uPrivateEventAddEntryToWall(final HumanId operator, final HumanId msgOwner__, final long privateEventId__, final String contentToBeAppended);
-
-    public Return<Wall> uPrivateEventAddMuteEntryToWall(final HumanId operator, final HumanId mutee__, final long privateEventId__);
-
-    public Return<Wall> uPrivateEventRemoveMuteEntryToWall(final HumanId operator, final HumanId mutee__, final long privateEventId__);
-
-    public Return<Wall> uPrivateEventClearWall(final HumanId operator__, final long privateEventId__);
-
-    public Return<Wall> rPrivateEventReadWall(final HumanId operator__, final long privateEventId__);
 
 
     public Return<Boolean> dPrivateEvent(final HumanId operator__, final long privateEventId__);

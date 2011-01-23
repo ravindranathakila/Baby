@@ -66,7 +66,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
         final PrivateEvent pe = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(humanId.getObjectAsValid(), privateEventId).returnValueBadly();
 
         fetchToEmail(pe.getPrivateLocation().getPrivateLocationId(),
-                     pe.getPrivateEventId());
+                pe.getPrivateEventId());
 
         final String wall_entry = request.getServletRequest().getParameter(WallWidget.PARAM_WALL_ENTRY);
         final String wall_entry_consumed = request.getServletRequest().getParameter(WALL_ENTRY_CONSUMED);
@@ -74,7 +74,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
 
 
         final Return<Wall> aReturn = DB.getHumanCrudPrivateEventLocal(true).
-                rPrivateEventReadWall(humanId, privateEventId);
+                readWall(humanId, new Obj<Long>(privateEventId));
 
         /**
          * If null, this means we have to check on if the wall entry parameter is available and update.
@@ -82,10 +82,10 @@ public class WallWidgetPrivateEvent extends WallWidget {
          */
         if ((wall_entry_consumed == null || !wall_entry_consumed.equals(TRUE)) && wall_entry != null) {//This will refresh or close the page after actions
             Loggers.DEBUG.debug(WALL_ENTRY_FROM_EMAIL_RECEIVED);
-            final Return<Wall> r = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddEntryToWall(this.humanId,
-                                                                                                      this.humanId,
-                                                                                                      this.privateEventId,
-                                                                                                      new WallEntry().setObjAsValid(wall_entry).getObj());//Use of class scoped wall entry is not possible as it isn't initialized yet
+            final Return<Wall> r = DB.getHumanCrudPrivateEventLocal(true).addEntryToWall(this.humanId,
+                    this.humanId,
+                    new Obj<Long>(this.privateEventId),
+                    new WallEntry().setObjAsValid(wall_entry).getObj());//Use of class scoped wall entry is not possible as it isn't initialized yet
             Loggers.log(Loggers.LEVEL.DEBUG, DERIVED_FROM_EMAIL, r.returnMsg());
             final StringBuilder b = new StringBuilder("");
 
@@ -126,7 +126,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
 
         if (aReturn.returnValueBadly().getWallMutes().contains(humanId)) {
             $$(Controller.Page.wallMute).setTextContent(LISTEN);
-        }else{
+        } else {
             $$(Controller.Page.wallMute).setTextContent(MUTE);
         }
     }
@@ -138,7 +138,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
     protected void fetchToEmail(final Object... args) {
         try {
             final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + WALL_SUBIT_FROM_EMAIL);
-            
+
             displayBlock($$(ORGANIZE_SECTION, document));
 
 
@@ -177,10 +177,10 @@ public class WallWidgetPrivateEvent extends WallWidget {
                         Loggers.USER.info(myhumanId.getObj() + ENTERS_TEXT + wallAppend.getObj());
 
 
-                        final Return<Wall> r = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddEntryToWall(myhumanId,
-                                                                                                                  myhumanId,
-                                                                                                                  myprivateEventId,
-                                                                                                                  wallAppend.getObj());
+                        final Return<Wall> r = DB.getHumanCrudPrivateEventLocal(true).addEntryToWall(myhumanId,
+                                myhumanId,
+                                new Obj<Long>(myprivateEventId),
+                                wallAppend.getObj());
 
 
                         if (r.returnStatus() == 0) {
@@ -188,7 +188,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
                             wallAppend.setObj("");
 
                             clear($$(Controller.Page.wallContent));
-                            final Wall wall = (DB.getHumanCrudPrivateEventLocal(true).rPrivateEventReadWall(myhumanId, myprivateEventId).returnValueBadly());
+                            final Wall wall = (DB.getHumanCrudPrivateEventLocal(true).readWall(myhumanId, new Obj<Long>(myprivateEventId)).returnValueBadly());
                             final StringBuilder b = new StringBuilder("");
                             for (final Msg msg : wall.getWallMsgs()) {
                                 b.append(
@@ -230,12 +230,12 @@ public class WallWidgetPrivateEvent extends WallWidget {
             @Override
             public void handleEvent(final Event evt_) {
 
-                if (DB.getHumanCrudPrivateEventLocal(true).rPrivateEventReadWall(myhumanId, myprivateEventId).returnValueBadly().getWallMutes().contains(myhumanId)) {
-                    DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveMuteEntryToWall(myhumanId, myhumanId, myprivateEventId);
+                if (DB.getHumanCrudPrivateEventLocal(true).readWall(myhumanId, new Obj<Long>(myprivateEventId)).returnValueBadly().getWallMutes().contains(myhumanId)) {
+                    DB.getHumanCrudPrivateEventLocal(true).unmuteWall(myhumanId, myhumanId, new Obj<Long>(myprivateEventId));
                     $$(evt_).setTextContent(MUTE);
 
                 } else {
-                    DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddMuteEntryToWall(myhumanId, myhumanId, myprivateEventId);
+                    DB.getHumanCrudPrivateEventLocal(true).muteWall(myhumanId, myhumanId, new Obj<Long>(myprivateEventId));
                     $$(evt_).setTextContent(LISTEN);
                 }
             }

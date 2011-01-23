@@ -60,7 +60,7 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
 
                 if (super.getUsername() != null) {
 
-                    final Return<List<PrivatePhoto>> r = DB.getHumanCRUDPrivatePhotoLocal(true).rPrivatePhoto(getUsernameAsValid());
+                    final Return<List<PrivatePhoto>> r = DB.getHumanCRUDPrivatePhotoLocal(true).rPrivatePhotos(getUsernameAsValid());
 
                     if (r.returnStatus() == 0) {
 

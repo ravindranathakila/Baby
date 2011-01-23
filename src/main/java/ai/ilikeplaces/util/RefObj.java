@@ -10,9 +10,9 @@ import java.util.List;
 
 /**
  * This Class is a helper class to store user input values.
- * While the class also facilitates to the valdation framwork,
- * it also copies every reference to its own, enforcing secutiry
- * but at the compramize of a new reference created.
+ * While the class also facilitates to the validation framework,
+ * it also copies every reference to its own, enforcing security
+ * but at the compromise of a new reference created.
  * <p/>
  * <p/>
  * Created by IntelliJ IDEA.
