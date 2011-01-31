@@ -2,6 +2,7 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.exception.PendingEqualsMethodException;
+import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivatePhoto;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
@@ -14,6 +15,11 @@ import java.util.List;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@DOCUMENTATION(
+        LOGIC = @LOGIC(
+                SEE = @SEE(WallWidgetPrivatePhoto.class)
+        )
+)
 @Entity
 public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto> {
 
@@ -184,6 +190,11 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto> {
 
     public void setPrivatePhotoWall(Wall privatePhotoWall) {
         this.privatePhotoWall = privatePhotoWall;
+    }
+
+    public PrivatePhoto setPrivatePhotoWallR(Wall privatePhotoWall) {
+        this.privatePhotoWall = privatePhotoWall;
+        return this;
     }
 
     @Override

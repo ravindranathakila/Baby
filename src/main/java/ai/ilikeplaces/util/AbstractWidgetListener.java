@@ -1,5 +1,6 @@
 package ai.ilikeplaces.util;
 
+import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
@@ -34,10 +35,17 @@ import static ai.ilikeplaces.servlets.Controller.Page;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@DOCUMENTATION(
+        FIXME = @FIXME(issues = {"Nested widgets have issues registering themselves upon DOM events.",
+                "ItsNat html document fragment templates appear to be needed to only loaded once and then reused."}),
+        WARNING = @WARNING("If you want your variables initialized by the time you reach registereventlisteners, do the asignmen in init, NOT the implemented subclass constructer" +
+                "which runs as super, init, registereventlisteners and THEN the remainder of the constructer.")
+)
 public abstract class AbstractWidgetListener {
 
     protected final ItsNatDocument itsNatDocument_;
     private final HTMLDocument hTMLDocument_;
+    private final ItsNatHTMLDocument itsNatHTMLDocument_;
     private final Document document_;
     /**
      * As a widget may have many instances within a document, we register each
@@ -90,11 +98,21 @@ public abstract class AbstractWidgetListener {
         instanceId = InstanceCounter_++;
         page = page__;
         this.itsNatDocument_ = request__.getItsNatDocument();
-        final ItsNatHTMLDocument itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument_;
+        this.itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument_;
         this.hTMLDocument_ = itsNatHTMLDocument_.getHTMLDocument();
         this.document_ = itsNatDocument_.getDocument();
         final ItsNatServlet itsNatServlet_ = itsNatDocument_.getItsNatDocumentTemplate().getItsNatServlet();
         final ItsNatHTMLDocFragmentTemplate inhdft_ = (ItsNatHTMLDocFragmentTemplate) itsNatServlet_.getItsNatDocFragmentTemplate(page__.toString());
+
+        try {
+            if (!inhdft_.isOnLoadCacheStaticNodes()) {
+                inhdft_.setOnLoadCacheStaticNodes(false);
+                Loggers.DEBUG.debug("Set static for fragment to false");
+            }
+        } catch (final Exception e) {
+            Loggers.EXCEPTION.error("Possible is setting static mode for fragment.");
+        }
+
         LogNull.logThrow(inhdft_, NPE_1);//Do not remove unless performance degrade is evident.
         appendToElement__.appendChild(inhdft_.loadDocumentFragmentBody(itsNatDocument_));
 
@@ -182,7 +200,7 @@ public abstract class AbstractWidgetListener {
     /**
      * @return HashSet<String> widgetElements
      */
-    final protected Set<String> getWidgetElements() {
+    final Set<String> getWidgetElements() {
         return Controller.GlobalPageIdRegistry.get(page);
     }
 
@@ -275,7 +293,7 @@ public abstract class AbstractWidgetListener {
      * @param textToBeSet
      * @return elementToBeSetTextOf
      */
-    static protected Element $$setText(final Element elementToBeSetTextOf, final String textToBeSet) {
+    static Element $$setText(final Element elementToBeSetTextOf, final String textToBeSet) {
         try {
             ElementComposer.$ElementSetText(elementToBeSetTextOf, textToBeSet);
         } catch (final NullPointerException npe) {
@@ -306,7 +324,6 @@ public abstract class AbstractWidgetListener {
 
 
     /**
-     *
      * @param event Event of which the target is required
      * @return Target Element of this Event
      */
@@ -322,7 +339,14 @@ public abstract class AbstractWidgetListener {
         super.finalize();
     }
 
-    protected void $$asyn(final Runnable r){
+    void $$asyn(final Runnable r) {
         new Thread(r).start();
+    }
+
+
+    protected void  $$printDocumentElementIds() {
+        for (final String id : Controller.GlobalPageIdRegistry.get(page)) {
+            Loggers.DEBUG.debug(page.toString() + ":ids:" + document_.getElementById(id));
+        }
     }
 }

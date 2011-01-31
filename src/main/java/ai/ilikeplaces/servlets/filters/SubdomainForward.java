@@ -75,11 +75,11 @@ public class SubdomainForward implements Filter {
 
             if (domain.endsWith(ILIKEPLACES_COM) || domain.contains(LOCALHOST)) {//Normal request on our website. Just forward.
                 filterChain.doFilter(request, servletResponse);
-                sl.complete(null);
+                sl.complete(Loggers.LEVEL.DEBUG, "Simple Forward. Done.");
             } else {
                 sl.appendToLogMSG(DOMAIN_FORWARD_MAPPING_TO + domain);
                 request.getRequestDispatcher(new Parameter(Controller.Page.GeoBusiness.getURL()).append(TemplateSourceGeoBusiness.DOMAIN, domain, true).get()).forward(request, servletResponse);
-                sl.complete(PROCESSING_SUBDOMAIN_FORWARD + SPACE + Loggers.DONE);
+                sl.complete(Loggers.LEVEL.DEBUG, PROCESSING_SUBDOMAIN_FORWARD + SPACE + Loggers.DONE);
             }
 
 //            if(domain.endsWith(".GeoBusiness.ilikeplaces.com")){//Do this strict checks. We don't need somebody exploiting these stuff as bugs :-/

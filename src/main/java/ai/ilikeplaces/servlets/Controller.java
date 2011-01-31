@@ -681,12 +681,14 @@ final public class
         },
         Photo$Description(
                 "ai/ilikeplaces/widgets/Photo-Description.xhtml",
-                Controller.Page.pd,
+//                Controller.Page.pd,
                 Controller.Page.close,
                 Controller.Page.pd_photo_permalink,
                 Controller.Page.pd_photo,
                 Controller.Page.pd_photo_description,
-                Controller.Page.pd_photo_delete
+                Controller.Page.pd_photo_delete,
+                Controller.Page.pd_photo_wall,
+                Controller.Page.pd_photo_sequence_number
         ) {
             @Override
             public String getURL() {
@@ -1000,12 +1002,14 @@ final public class
         final static public String privateLocationDelete = "privateLocationDelete";
 
         /*Photo Descrition Specific IDs*/
-        final static public String pd = "pd";
+//        final static public String pd = "pd";
         final static public String close = "close";
         final static public String pd_photo_permalink = "pd_photo_permalink";
         final static public String pd_photo = "pd_photo";
         final static public String pd_photo_description = "pd_photo_description";
         final static public String pd_photo_delete = "pd_photo_delete";
+        final static public String pd_photo_wall = "pd_photo_wall";
+        final static public String pd_photo_sequence_number = "pd_photo_sequence_number";
 
 
         /*Aarrr Page*/

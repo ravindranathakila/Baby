@@ -14,5 +14,16 @@ import javax.ejb.Local;
 @Local
 public interface CPrivatePhotoLocal {
 
-    public PrivatePhoto doNTxCPrivatePhotoLocal(final String humanId, final PrivatePhoto privatePhoto);
+    @Deprecated
+    public PrivatePhoto doCPrivatePhotoLocal(final String humanId,
+                                             final PrivatePhoto privatePhoto);
+
+    public PrivatePhoto doCPrivatePhotoLocal(final String humanId, final String privatePhotoURLPath);
+
+    public PrivatePhoto doCPrivatePhotoLocal(final String humanId,
+                                             final String privatePhotoName,
+                                             final String fileName,
+                                             final String privatePhotoDescription,
+                                             final String privatePhotoURLPath
+    );
 }

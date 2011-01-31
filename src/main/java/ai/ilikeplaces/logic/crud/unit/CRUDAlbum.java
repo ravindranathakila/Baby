@@ -27,8 +27,11 @@ public class CRUDAlbum extends AbstractSLBCallbacks implements CRUDAlbumLocal {
     @EJB
     private CrudServiceLocal<Album> albumCrudServiceLocal_;
 
+    //@EJB
+    //private CrudServiceLocal<PrivatePhoto> privatePhotoCrudServiceLocal_;
+
     @EJB
-    private CrudServiceLocal<PrivatePhoto> privatePhotoCrudServiceLocal_;
+    private CPrivatePhotoLocal cPrivatePhotoLocal_;
 
     @EJB
     private RPrivateEventLocal rPrivateEventLocal_;
@@ -78,14 +81,15 @@ public class CRUDAlbum extends AbstractSLBCallbacks implements CRUDAlbumLocal {
         /**
          * Adding photo to users
          */
-        final PrivatePhoto MprivatePhoto__ = privatePhotoCrudServiceLocal_.create(new PrivatePhoto().setPrivatePhotoURLPathR(photoUrl));
+        final PrivatePhoto managedPrivatePhoto__ = cPrivatePhotoLocal_.doCPrivatePhotoLocal(humanId, photoUrl);
+
         final HumansPrivatePhoto MhumansPrivatePhoto__ = rHumanLocal_.doRHuman(humanId).getHumansPrivatePhoto();
         final List<PrivatePhoto> MprivatePhotos__ = MhumansPrivatePhoto__.getPrivatePhotos();//Eager
 
         WiringBothSides:
         {
-            MprivatePhotos__.add(MprivatePhoto__);
-            MprivatePhoto__.setHumansPrivatePhoto(MhumansPrivatePhoto__);
+            MprivatePhotos__.add(managedPrivatePhoto__);
+            managedPrivatePhoto__.setHumansPrivatePhoto(MhumansPrivatePhoto__);
         }
 
         ////////////////////////////////////////////////////////
@@ -94,8 +98,8 @@ public class CRUDAlbum extends AbstractSLBCallbacks implements CRUDAlbumLocal {
         final Album Malbum__ = albumCrudServiceLocal_.findBadly(Album.class, UalbumId__);
         WiringBothSides:
         {
-            Malbum__.getAlbumPhotos().add(MprivatePhoto__);
-            MprivatePhoto__.getAlbums().add(Malbum__);
+            Malbum__.getAlbumPhotos().add(managedPrivatePhoto__);
+            managedPrivatePhoto__.getAlbums().add(Malbum__);
         }
         return Malbum__;
 
