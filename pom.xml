@@ -18,7 +18,7 @@
         <dependency>
             <groupId>ai</groupId>
             <artifactId>ilikeplaces-doc</artifactId>
-            <version>1.0</version>
+            <version>2.0</version>
         </dependency>
         <dependency>
             <groupId>Java</groupId>
@@ -44,56 +44,56 @@
             <artifactId>ItsNat</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>D:/1/adimpression/itsnat/1.0/fw_dist/lib/ItsNat.jar</systemPath>
+            <systemPath>D:/1/adimpression/itsnat/1.1/fw_dist/lib/ItsNat.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>ItsNat1.0</groupId>
             <artifactId>nekohtml</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>D:/1/adimpression/itsnat/1.0/fw_dist/lib/nekohtml.jar</systemPath>
+            <systemPath>D:/1/adimpression/itsnat/1.1/fw_dist/lib/nekohtml.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>ItsNat1.0</groupId>
             <artifactId>serializer</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>D:/1/adimpression/itsnat/1.0/fw_dist/lib/serializer.jar</systemPath>
+            <systemPath>D:/1/adimpression/itsnat/1.1/fw_dist/lib/serializer.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>ItsNat1.0</groupId>
             <artifactId>xercesImpl</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>D:/1/adimpression/itsnat/1.0/fw_dist/lib/xercesImpl.jar</systemPath>
+            <systemPath>D:/1/adimpression/itsnat/1.1/fw_dist/lib/xercesImpl.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>ItsNat1.0</groupId>
             <artifactId>xml-apis</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>D:/1/adimpression/itsnat/1.0/fw_dist/lib/xml-apis.jar</systemPath>
+            <systemPath>D:/1/adimpression/itsnat/1.1/fw_dist/lib/xml-apis.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>ItsNat1.0</groupId>
             <artifactId>batik-dom</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>D:/1/adimpression/itsnat/1.0/fw_dist/lib/batik-dom.jar</systemPath>
+            <systemPath>D:/1/adimpression/itsnat/1.1/fw_dist/lib/batik-dom.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>ItsNat1.0</groupId>
             <artifactId>batik-util</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>D:/1/adimpression/itsnat/1.0/fw_dist/lib/batik-util.jar</systemPath>
+            <systemPath>D:/1/adimpression/itsnat/1.1/fw_dist/lib/batik-util.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>ItsNat1.0</groupId>
             <artifactId>batik-xml</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>D:/1/adimpression/itsnat/1.0/fw_dist/lib/batik-xml.jar</systemPath>
+            <systemPath>D:/1/adimpression/itsnat/1.1/fw_dist/lib/batik-xml.jar</systemPath>
         </dependency>
 
         <dependency>

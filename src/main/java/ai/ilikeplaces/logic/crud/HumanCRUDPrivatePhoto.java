@@ -1,9 +1,6 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.ilikeplaces.doc.CONVENTION;
-import ai.ilikeplaces.doc.FIXME;
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
@@ -27,9 +24,6 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@CONVENTION(convention = "do all the possible needful setters etc) before going into the transaction, via an intermediate method. saves resources. " +
-        "why not let the caller do this? lets do the hard work. give the guy a break! besides, we can enforce him to give us required fields. this also " +
-        "facilitates setting granular role permissions.")
 @Interceptors({DBOffilne.class, ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements HumanCRUDPrivatePhotoLocal {
 
@@ -69,22 +63,20 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @WARNING(warning = "transactional", warnings = {"These two Merge and Persist Each other. Do not update their fields after this block"})
     private boolean doHumanCPrivatePhoto(final String humanId, PrivatePhoto privatePhoto) throws javax.ejb.EJBTransactionRolledbackException {
-        cPrivatePhotoLocal_.doNTxCPrivatePhotoLocal(humanId, privatePhoto);
+        cPrivatePhotoLocal_.doCPrivatePhotoLocal(humanId, privatePhoto);
         return true;
     }
 
 
-    @FIXME(issue = "When adding a location, there cannot be two equal location names such that super locations are equal too. Please update specific CRUD service. Also His As, My As.")
     @Override
     public Return<PrivatePhoto> cPrivatePhoto(final String humanId, final String fileName, final String privatePhotoName, final String privatePhotoDescription, final String privatePhotoURLPath) {
         Return<PrivatePhoto> r;
-
-        r = new ReturnImpl<PrivatePhoto>(cPrivatePhotoLocal_.doNTxCPrivatePhotoLocal(humanId,
-                new PrivatePhoto().
-                        setPrivatePhotoNameR(privatePhotoName)
-                        .setPrivatePhotoFilePathR(fileName)
-                        .setPrivatePhotoDescriptionR(privatePhotoDescription)
-                        .setPrivatePhotoURLPathR(privatePhotoURLPath)), "Create PrivatePhoto by human Successful!");
+        r = new ReturnImpl<PrivatePhoto>(cPrivatePhotoLocal_.doCPrivatePhotoLocal(humanId,
+                privatePhotoName,
+                fileName,
+                privatePhotoDescription,
+                privatePhotoURLPath
+        ), "Create PrivatePhoto by human Successful!");
         return r;
     }
 
@@ -201,8 +193,10 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
 
         Return<Wall> r;
         try {
+            final PrivatePhoto privatePhoto = rPrivatePhoto(operator__, wallOwnerId__).returnValueBadly();
+            final Wall privatePhotoWall = privatePhoto.getPrivatePhotoWall();
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doDirtyRWall(rPrivatePhoto(operator__, wallOwnerId__).returnValueBadly().getPrivatePhotoWall().getWallId()), READ_WALL_SUCCESSFUL);
+                    .doDirtyRWall(privatePhotoWall.getWallId()), READ_WALL_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, READ_WALL_FAILED, true);
         }
@@ -210,6 +204,6 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
     }
 
 
-/*END OF NON TRANSACTIONAL METHODS*/
-final static Logger logger = LoggerFactory.getLogger(HumanCRUDPrivatePhoto.class);
+    /*END OF NON TRANSACTIONAL METHODS*/
+    final static Logger logger = LoggerFactory.getLogger(HumanCRUDPrivatePhoto.class);
 }

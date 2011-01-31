@@ -25,49 +25,176 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
 
     public static final String NAME = HumanCRUDPrivateEventLocal.class.getSimpleName();
 
+    /**
+     *
+     * @param humanId
+     * @param privateLocationId
+     * @param privateEventName
+     * @param privateEventInfo
+     * @param startDate
+     * @param endDate
+     * @return
+     */
     public Return<PrivateEvent> cPrivateEvent(final String humanId, final long privateLocationId, final String privateEventName, final String privateEventInfo, final String startDate, final String endDate);
 
+    /**
+     *
+     * @param humanId
+     * @param privateEventId
+     * @return
+     */
     public Return<PrivateEvent> dirtyRPrivateEventAsAny(final String humanId, final long privateEventId);
 
-
+    /**
+     *
+     * @param humanId
+     * @param privateEventId
+     * @return
+     */
     public Return<Boolean> dirtyRPrivateEventIsOwner(final HumanId humanId, final Long privateEventId);
 
+    /**
+     *
+     * @param humanId
+     * @param privateEventId
+     * @return
+     */
     public Return<Boolean> dirtyRPrivateEventIsViewer(final HumanId humanId, final Long privateEventId);
 
-
+    /**
+     *
+     * @param friend__
+     * @param privateEventId__
+     * @param owner
+     * @return
+     */
     public Return<PrivateEvent> uPrivateEventAddOwner(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
+    /**
+     *
+     * @param owner__
+     * @param privateEventId__
+     * @param friend__
+     * @param privateLocationId__
+     * @return
+     */
     public Return<PrivateEvent> uPrivateEventAddOwnerWithPrivateLocationCheck(final HumanId owner__, final long privateEventId__, final HumansFriend friend__, final long privateLocationId__);
 
+    /**
+     *
+     * @param friend__
+     * @param privateEventId__
+     * @param owner
+     * @return
+     */
     public Return<PrivateEvent> uPrivateEventRemoveOwner(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
-
+    /**
+     *
+     * @param friend__
+     * @param privateEventId__
+     * @param owner
+     * @return
+     */
     public Return<PrivateEvent> uPrivateEventAddVisitor(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
+    /**
+     *
+     * @param owner__
+     * @param privateEventId__
+     * @param friend__
+     * @param privateLocationId__
+     * @return
+     */
     public Return<PrivateEvent> uPrivateEventAddVisitorWithPrivateLocationCheck(final HumanId owner__, final long privateEventId__, final HumansFriend friend__, final long privateLocationId__);
 
+    /**
+     *
+     * @param friend__
+     * @param privateEventId__
+     * @param owner
+     * @return
+     */
     public Return<PrivateEvent> uPrivateEventRemoveVisitor(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
-
+    /**
+     *
+     * @param friend__
+     * @param privateEventId__
+     * @param owner
+     * @return
+     */
     public Return<PrivateEvent> uPrivateEventAddInvite(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
+    /**
+     *
+     * @param owner__
+     * @param privateEventId__
+     * @param friend__
+     * @param privateLocationId__
+     * @return
+     */
     public Return<PrivateEvent> uPrivateEventAddInviteWithPrivateLocationCheck(final HumanId owner__, final long privateEventId__, final HumansFriend friend__, final long privateLocationId__);
 
+    /**
+     *
+     * @param friend__
+     * @param privateEventId__
+     * @param owner
+     * @return
+     */
     public Return<PrivateEvent> uPrivateEventRemoveInvite(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
-
+    /**
+     *
+     * @param friend__
+     * @param privateEventId__
+     * @param owner
+     * @return
+     */
     public Return<PrivateEvent> uPrivateEventAddReject(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
+    /**
+     *
+     * @param friend__
+     * @param privateEventId__
+     * @param owner
+     * @return
+     */
     public Return<PrivateEvent> uPrivateEventRemoveReject(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
-
+    /**
+     *
+     * @param operator__
+     * @param privateEventId__
+     * @return
+     */
     public Return<Boolean> dPrivateEvent(final HumanId operator__, final long privateEventId__);
 
 
+    /**
+     *
+     * @param operator__
+     * @param privateEventId__
+     * @return
+     */
     public Return<Album> rPrivateEventReadAlbum(final HumanId operator__, final long privateEventId__);
 
+    /**
+     *
+     * @param operator__
+     * @param privateEventId__
+     * @param cdnFileName
+     * @return
+     */
     public Return<Album> uPrivateEventAddEntryToAlbum(final HumanId operator__, final long privateEventId__, final RefObj<String> cdnFileName);
 
+    /**
+     *
+     * @param operator__
+     * @param privateEventId__
+     * @return
+     */
     public Return<Album> uPrivateEventRemoveEntryFromAlbum(final HumanId operator__, final long privateEventId__);
 
 

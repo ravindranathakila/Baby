@@ -22,9 +22,6 @@ import org.w3c.dom.html.HTMLDocument;
 
 import java.util.Collections;
 
-import static ai.ilikeplaces.servlets.Controller.Page.pd_photo;
-import static ai.ilikeplaces.servlets.Controller.Page.pd_photo_permalink;
-
 
 /**
  * @author Ravindranath Akila
@@ -34,6 +31,7 @@ import static ai.ilikeplaces.servlets.Controller.Page.pd_photo_permalink;
 public class AlbumManager extends AbstractWidgetListener {
 
 
+    private static final String ALBUM__PHOTOS = "ALBUM_PHOTOS";
     final private Logger logger = LoggerFactory.getLogger(AlbumManager.class.getName());
     private HumanId humanId = null;
     private Long privateEventId;
@@ -57,17 +55,24 @@ public class AlbumManager extends AbstractWidgetListener {
             if (ra.returnStatus() == 0) {
                 final Album album = ra.returnValue();
 
+                Integer photoSequenceNumber = 1;
+
                 for (final PrivatePhoto privatePhoto__ : album.getAlbumPhotos()) {
-                    new Photo$Description(request, $$(Controller.Page.AlbumPhotos)) {
+                    new Photo$Description(request, $$(Controller.Page.AlbumPhotos), photoSequenceNumber) {
 
                         @Override
                         protected void init(final Object... initArgs) {
-                            final String imageURL = RBGet.globalConfig.getString("ALBUM_PHOTOS") + privatePhoto__.getPrivatePhotoURLPath();
-                            $$(pd_photo_permalink).setAttribute("href", imageURL);
-                            //$$(pd_photo).setAttribute("src", "_");
-                            $$(pd_photo).setAttribute("title", imageURL);
+                            final Integer photoSequenceNumber = (Integer) initArgs[0];
+                            final String imageURL = RBGet.globalConfig.getString(ALBUM__PHOTOS) + privatePhoto__.getPrivatePhotoURLPath();
+                            $$(Controller.Page.pd_photo_permalink).setAttribute(MarkupTag.A.href(), imageURL);
+
+                            $$(Controller.Page.pd_photo).setAttribute(MarkupTag.IMG.title(), imageURL);
+
+                            $$(Controller.Page.pd_photo_sequence_number).setTextContent(photoSequenceNumber.toString());
 
                             displayBlock($$(Controller.Page.pd_photo_delete));
+
+                            new WallWidgetPrivatePhoto(request, $$(Controller.Page.pd_photo_wall), humanId, privatePhoto__.getPrivatePhotoId());
                         }
 
 
@@ -146,7 +151,7 @@ public class AlbumManager extends AbstractWidgetListener {
                                             hi.getHuman().getDisplayName(),
                                             UserProperty.formatProfileUrl(hi.getUrl().getUrl(), true),
                                             UserProperty.formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()),
-                                            ElementComposer.compose($$(MarkupTag.IMG)).$ElementSetAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString("ALBUM_PHOTOS") + pp.getPrivatePhotoURLPath()).get()
+                                            ElementComposer.compose($$(MarkupTag.IMG)).$ElementSetAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(ALBUM__PHOTOS) + pp.getPrivatePhotoURLPath()).get()
                                     )
                             );
                         }

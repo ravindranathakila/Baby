@@ -1,7 +1,6 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc.*;
 
 import static ai.ilikeplaces.util.Loggers.LEVEL;
 
@@ -30,20 +29,42 @@ import static ai.ilikeplaces.util.Loggers.LEVEL;
  * Time: 8:28:17 PM
  */
 
-@TODO(task = "Well there is something I noticed recently. Unless something goes wrong, logs are useful only for analytics. " +
-        "Hence, if we could implement a logger that logs an entire sequence of monitored events upon an exception, that'd be really cool! " +
-        "FOr example, a user logs in and does A, and B, and while doing C, he gets a server error/or not. " +
-        "If C threw an exception, both A and B get logged. If C didn't, nothing gets logged. " +
-        "This approach will dramatically reduce log entries. It has a memory penalty. " +
-        "But then again, this already can be done by a new complete method. Lets see. " +
-        "Hmmm.... Logging levels can be tuned to gain this feature so maybe this TODO is absurd! :D " +
-        "Yes, it is!")
+
+@DOCUMENTATION(
+        LOGIC = @LOGIC(
+                @NOTE(
+                        {
+                                "scenario 1: no timeout. normal complete> sleep 0 , status false",
+                                "scenario 2: no timeout, 2 normal completes> sleep 0, status true",
+
+                                "scenario 3: with timeout, normal complete> sleep +ve, status false",
+                                "scenario 4: with timeout, 2 normal completes> sleep +ve, status true",
+                                "scenario 4: with timeout, recovered complete> sleep +ve, status true",
+                                "scenario 4: with timeout, 2 recovered completes> sleep +ve, status true",
+
+                                "summary 1: scenario 1 and 2 can be tracked by, sleep always 0, and if staus is true, throw an exception.",
+                                "summary 2:"
+                        }
+                )
+        ),
+        TODO = @TODO(task = "Well there is something I noticed recently. Unless something goes wrong, logs are useful only for analytics. " +
+                "Hence, if we could implement a logger that logs an entire sequence of monitored events upon an exception, that'd be really cool! " +
+                "FOr example, a user logs in and does A, and B, and while doing C, he gets a server error/or not. " +
+                "If C threw an exception, both A and B get logged. If C didn't, nothing gets logged. " +
+                "This approach will dramatically reduce log entries. It has a memory penalty. " +
+                "But then again, this already can be done by a new complete method. Lets see. " +
+                "Hmmm.... Logging levels can be tuned to gain this feature so maybe this TODO is absurd! :D " +
+                "Yes, it is!"),
+        WARNING = @WARNING("Do not user any java.lang.Objects classes. The SmartLogger should be extremely memory efficient.")
+)
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class SmartLogger extends Thread {
 
+    private static final String LOGGER_HAS_ALREADY_BEEN_COMPLETED = "Logger has already been completed!";
+    private static final String LOGGER_HAS_ALREADY_BEEN_COMPLETED_UNDER_TIMEOUT_LOGGING = "Logger has already been completed under timeout logging.";
     final Loggers.LEVEL level;
     String logmsg;
-    final long sleep;
+    long sleep;
     long starTime = -1;//WARNING: DO NOT change this default value as it is used in IF/TERNARY conditions.
 
     boolean logged = false;
@@ -109,6 +130,7 @@ final public class SmartLogger extends Thread {
                 Thread.sleep(sleep);
                 if (!status()) {
                     Loggers.log(level, CAUSE_UNRESPONSIVE_IN_MILLIS + sleep, logmsg);
+                    sleep = -1;//To track that sleep value was consumed once
                 }
             }
         } catch (final InterruptedException e) {
@@ -139,7 +161,7 @@ final public class SmartLogger extends Thread {
      * @param logLevel
      * @param logMessage
      * @param timeout
-     * @param startMsg_calcExecTime
+     * @param startMsg_calcExecTime calcExecTime is of unit milliseconds
      * @return
      */
     static public SmartLogger start(final LEVEL logLevel, final String logMessage, final long timeout, final Object... startMsg_calcExecTime) {
@@ -148,6 +170,10 @@ final public class SmartLogger extends Thread {
 
     public void appendToLogMSG(final String stringToBeAppended) {
         logmsg += PIPE + stringToBeAppended;
+    }
+
+    public void l(final String stringToBeAppended) {
+        appendToLogMSG(stringToBeAppended);
     }
 
     static public void complete(final SmartLogger smartLogger, final LEVEL completeLevel, final String completeStatus) {
@@ -163,37 +189,72 @@ final public class SmartLogger extends Thread {
      * @param completeStatus Throwable type needed in case of ERROR
      */
     public void complete(final LEVEL completeLevel, final Object completeStatus) {
-        if (!status()) {
-            Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
-        } else {
+        if (sleep == 0) {
+            if (!status()) {
+                Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+
+            } else { //this means with no timeout, the logger also was completed once. i.e. status=true. Hence error.
+                throw new RuntimeException(LOGGER_HAS_ALREADY_BEEN_COMPLETED);
+            }
+        } else if (sleep == -1) {//timeout happened //need to track if logging happens twice... or not... since this condition is triggered by us inside the new thread
             Loggers.log(completeLevel, Loggers.EMBED + CAUSE_RECOVERED_WITH_STATUS + COLON + completeStatus + timeTaken(), logmsg);
+        } else {
+            if (!status()) {
+                Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+
+            } else { //this means with no timeout, the logger also was completed once. i.e. status=true. Hence error.
+                throw new RuntimeException(LOGGER_HAS_ALREADY_BEEN_COMPLETED);
+            }
         }
     }
 
     public void multiComplete(final LEVEL[] completeLevels, final Object completeStatus) {
-        if (!status()) {
-            for (final LEVEL completeLevel : completeLevels) {
-                Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+        if (sleep == 0) {
+            if (!status()) {
+                for (final LEVEL completeLevel : completeLevels) {
+                    Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+                }
+            } else { //this means with no timeout, the logger also was completed once. i.e. status=true. Hence error.
+                throw new RuntimeException(LOGGER_HAS_ALREADY_BEEN_COMPLETED);
             }
-        } else {
+        } else if (sleep == -1) {//timeout happened //need to track if logging happens twice... or not... since this condition is triggered by us inside the new thread
             for (final LEVEL completeLevel : completeLevels) {
                 Loggers.log(completeLevel, Loggers.EMBED + CAUSE_RECOVERED_WITH_STATUS + COLON + completeStatus + timeTaken(), logmsg);
+            }
+        } else {
+            if (!status()) {
+                for (final LEVEL completeLevel : completeLevels) {
+                    Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+                }
+            } else { //this means with no timeout, the logger also was completed once. i.e. status=true. Hence error.
+                throw new RuntimeException(LOGGER_HAS_ALREADY_BEEN_COMPLETED);
             }
         }
     }
 
     /**
-     *
      * @param completeStatus Complete status or null if you want to drop all further logging
      */
     public void complete(final String completeStatus) {
-        if (!status()) {
-            if (completeStatus != null) {
-                Loggers.log(level, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+        if (sleep == 0) {
+            if (!status()) {
+                if (completeStatus != null) {
+                    Loggers.log(level, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+                }
+            } else { //this means with no timeout, the logger also was completed once. i.e. status=true. Hence error.
+                throw new RuntimeException(LOGGER_HAS_ALREADY_BEEN_COMPLETED);
             }
-        } else {
+        } else if (sleep == -1) {//timeout happened //need to track if logging happens twice... or not... since this condition is triggered by us inside the new thread
             if (completeStatus != null) {
                 Loggers.log(level, Loggers.EMBED + CAUSE_RECOVERED_WITH_STATUS + completeStatus + COLON + timeTaken(), logmsg);
+            }
+        } else {
+            if (!status()) {
+                if (completeStatus != null) {
+                    Loggers.log(level, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+                }
+            } else { //this means with no timeout, the logger also was completed once. i.e. status=true. Hence error.
+                throw new RuntimeException(LOGGER_HAS_ALREADY_BEEN_COMPLETED);
             }
         }
     }
