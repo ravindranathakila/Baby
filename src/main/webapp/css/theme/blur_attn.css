@@ -39,6 +39,8 @@ grouping currently means, a layer, and a specific layer, if to support only a gr
 */
 
 
+@import url("http://fonts.googleapis.com/css?family=Rock+Salt:regular");
+
 /* Copse, im fell, coda, corben, rock salt*/
 .cursor_link{
     cursor:pointer;

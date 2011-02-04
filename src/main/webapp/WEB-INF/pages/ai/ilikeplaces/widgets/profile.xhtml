@@ -13,7 +13,7 @@
     <hr class="space"/>
       <div class="span-14 last center list_style_type_none">
         <div class="span-14 last black_fg">
-            <span id="ProfileNotice" class="span-14 last red_fg bold"></span>
+            <span id="ProfileNotice" class="span-14 last fg_red bold"></span>
             <div class="span-14 last">&nbsp;</div>
         </div>
       </div>
@@ -23,23 +23,11 @@
             <div class="span-14 last">&nbsp;</div>
         </div>
         <div class="span-14 last black_fg">
-            <!--<script type="text/javascript">-->
-                <!--function profilePhotoUpload(){-->
-                    <!--$("#file_upload_form").onsubmit=function() {-->
-                        <!--$("#file_upload_form").target = "upload_target";-->
-                        <!--alert('but so');-->
-                    <!--}-->
-                    <!--$("#upload_target").onload=function() {-->
-                        <!--alert("Uploaded");-->
-                    <!--}-->
-                <!--}-->
-            <!--</script>-->
             <form id="file_upload_form" method="post" target="upload_target" enctype="multipart/form-data" action="/gfg?type=1">
                 <input name="file" id="file" size="27" type="file"/><br/><br/>
                 <input type="submit" name="action" value="Upload Photo To My Profile" class="bg_a9abf1"/><br/>
                 <input type="hidden" name="type" value="1"/>
             </form>
-            <!--<iframe id="upload_target" name="upload_target" src="" target="_blank" style="width:0;height:0;border:0px solid #fff;display:none;">-->
             <iframe id="upload_target" name="upload_target" src="" target="_blank" style="width:0;height:0;border:0px solid #fff;display:none;"
                     onload="javascript:
                   var reply = frames['upload_target'].document.getElementsByTagName('body')[0].innerHTML.toString().replace('{','').replace('}','');
