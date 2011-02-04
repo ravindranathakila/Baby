@@ -1,8 +1,10 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
+import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.logic.cdn.CDNAlbum;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -27,11 +29,17 @@ import java.util.Collections;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@OK
+@DOCUMENTATION(
+        WARNING = @WARNING("As of 2011-02-04 the private photo widget, if appended dynamically, will thow a javascript error on client side." +
+                "This issue was not fixed despite much effort.")
+)
 public class AlbumManager extends AbstractWidgetListener {
 
 
     private static final String ALBUM__PHOTOS = "ALBUM_PHOTOS";
+    private static final String BUTTONTEXT_EMAIL_FORWARDED = "buttontext.email.forwarded";
+    private static final String BUTTONTEXT_CLICK_TO_CONFIRM = "buttontext.click.to.confirm";
+    private static final String SLASH = "/";
     final private Logger logger = LoggerFactory.getLogger(AlbumManager.class.getName());
     private HumanId humanId = null;
     private Long privateEventId;
@@ -55,10 +63,10 @@ public class AlbumManager extends AbstractWidgetListener {
             if (ra.returnStatus() == 0) {
                 final Album album = ra.returnValue();
 
-                Integer photoSequenceNumber = 1;
+                int photoSequenceNumber = 1;
 
                 for (final PrivatePhoto privatePhoto__ : album.getAlbumPhotos()) {
-                    new Photo$Description(request, $$(Controller.Page.AlbumPhotos), photoSequenceNumber) {
+                    new Photo$Description(request, $$(Controller.Page.AlbumPhotos), photoSequenceNumber++) {
 
                         @Override
                         protected void init(final Object... initArgs) {
@@ -68,9 +76,12 @@ public class AlbumManager extends AbstractWidgetListener {
 
                             $$(Controller.Page.pd_photo).setAttribute(MarkupTag.IMG.title(), imageURL);
 
+                           /* final String photoThumbURL = imageURL.substring(0, imageURL.lastIndexOf(SLASH) + 1) + CDNAlbum.THUMBNAIL + imageURL.substring(imageURL.lastIndexOf(SLASH) + 1, photoURL.length());
+                            $$(Controller.Page.pd_photo).setAttribute(MarkupTag.IMG.src(), photoThumbURL);*/
+
                             $$(Controller.Page.pd_photo_sequence_number).setTextContent(photoSequenceNumber.toString());
 
-                            displayBlock($$(Controller.Page.pd_photo_delete));
+                            displayNone($$(Controller.Page.pd_photo_delete));
 
                             new WallWidgetPrivatePhoto(request, $$(Controller.Page.pd_photo_wall), humanId, privatePhoto__.getPrivatePhotoId());
                         }
@@ -86,7 +97,9 @@ public class AlbumManager extends AbstractWidgetListener {
                                 @Override
                                 public void handleEvent(final Event evt_) {
                                     if (!imageLoaded) {
+
                                         $$(evt_).setAttribute(MarkupTag.IMG.src(), $$(evt_).getAttribute(MarkupTag.DIV.title()));
+
                                         imageLoaded = true;//safety measure 1
                                     }
                                     remove(evt_.getTarget(), EventType.ONMOUSEOVER, this); //safety measure 2
@@ -173,10 +186,10 @@ public class AlbumManager extends AbstractWidgetListener {
 
                     remove(evt_.getTarget(), EventType.CLICK, this, false);
                     confirmed = false;
-                    $$(evt_).setTextContent("Forwarded!");
+                    $$(evt_).setTextContent(RBGet.gui().getString(BUTTONTEXT_EMAIL_FORWARDED));
                 } else {
                     confirmed = true;
-                    $$(evt_).setTextContent("Click to Confirm!");
+                    $$(evt_).setTextContent(RBGet.gui().getString(BUTTONTEXT_CLICK_TO_CONFIRM));
                 }
             }
 

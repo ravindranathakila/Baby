@@ -1,9 +1,6 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.DOCUMENTATION;
-import ai.ilikeplaces.doc.FIXME;
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.servlets.Controller;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServlet;
@@ -264,10 +261,21 @@ public abstract class AbstractWidgetListener {
     }
 
     /**
+     * Use {@link AbstractWidgetListener#$$clear(org.w3c.dom.Element)} instead
+     *
      * @param whoseChildrenRemoved
      * @return whoseChildrenRemoved
      */
+    @Deprecated
     final protected Element clear(final Element whoseChildrenRemoved) {
+        return $$clear(whoseChildrenRemoved);
+    }
+
+    /**
+     * @param whoseChildrenRemoved
+     * @return whoseChildrenRemoved
+     */
+    final protected Element $$clear(final Element whoseChildrenRemoved) {
         try {
             //whoseChildrenRemoved.normalize();//Clearing the air for text nodes
             while (whoseChildrenRemoved.hasChildNodes()) {

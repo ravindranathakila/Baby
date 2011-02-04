@@ -5,8 +5,10 @@ import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.ProfileUrl;
 import ai.ilikeplaces.servlets.Controller.Page;
-import ai.ilikeplaces.util.*;
-import org.itsnat.core.ItsNatDocument;
+import ai.ilikeplaces.util.AbstractWidgetListener;
+import ai.ilikeplaces.util.EventType;
+import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.MarkupTag;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -27,13 +29,15 @@ public class Profile extends AbstractWidgetListener {
 
 
     /**
-     * @param itsNatDocument__
+     * @param request__
      * @param appendToElement__
      * @param humanId
      */
-    public Profile(final ItsNatServletRequest request__,  final Element appendToElement__, final HumanId humanId) {
+    public Profile(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId) {
         super(
-                request__, Page.ProfileWidget, appendToElement__,
+                request__,
+                Page.ProfileWidget,
+                appendToElement__,
                 humanId
         );
     }
@@ -76,6 +80,7 @@ public class Profile extends AbstractWidgetListener {
             public void handleEvent(final Event evt_) {
                 if (myurl.validate() == 0) {
                     DB.getHumanCRUDHumanLocal(true).doUHumansPublicURL(myhumanId, myurl.getObj());
+                    $$clear($$(Page.ProfileNotice));
                 } else {
                     $$(Page.ProfileNotice).setTextContent(myurl.getViolationAsString());
                     myurl.setObj("");//Moving this before calling getviolations will throw an exception
@@ -92,8 +97,7 @@ public class Profile extends AbstractWidgetListener {
     }
 
     @Override
-    public void finalize
-            () throws Throwable {
+    public void finalize() throws Throwable {
         Loggers.finalized(this.getClass().getName());
         super.finalize();
     }

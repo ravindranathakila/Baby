@@ -765,9 +765,9 @@
 </node>
 </node>
 </node>
-<node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" FOLDED="true" ID="Freemind_Link_1303374308" MODIFIED="1283778680546" POSITION="right" TEXT="Lab">
+<node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" ID="Freemind_Link_1303374308" MODIFIED="1283778680546" POSITION="right" TEXT="Lab">
 <icon BUILTIN="wizard"/>
-<node CREATED="1283778655218" ID="Freemind_Link_1143795250" MODIFIED="1283779225796" TEXT="Guide">
+<node CREATED="1283778655218" FOLDED="true" ID="Freemind_Link_1143795250" MODIFIED="1283779225796" TEXT="Guide">
 <icon BUILTIN="help"/>
 <node CREATED="1283871999906" ID="Freemind_Link_1891457905" MODIFIED="1283872001937" TEXT="SPILL">
 <node CREATED="1283778709546" ID="Freemind_Link_1267112987" MODIFIED="1285777891181" TEXT="first level should be a clear name">
@@ -798,6 +798,18 @@
 </node>
 <node CREATED="1292142207656" ID="Freemind_Link_1398985645" MODIFIED="1292142222296" TEXT="Research">
 <icon BUILTIN="xmag"/>
+<node CREATED="1296739039673" ID="Freemind_Link_410080562" MODIFIED="1296739058761" TEXT="Topic:Advertisement Integration With Websites">
+<node CREATED="1296739060039" ID="Freemind_Link_1649830396" MODIFIED="1296739064542" TEXT="Size"/>
+<node CREATED="1296739065430" ID="Freemind_Link_1329406423" MODIFIED="1296739067363" TEXT="Position"/>
+<node CREATED="1296739067846" ID="Freemind_Link_544860435" MODIFIED="1296739081636" TEXT="Media:Text/Pic/Video"/>
+<node CREATED="1296739082711" ID="Freemind_Link_193742368" MODIFIED="1296739111570" TEXT="Ad Genre:Humorous/Violent/Gifting/Insulting"/>
+<node CREATED="1296739112754" ID="Freemind_Link_1830840284" MODIFIED="1296739126077" TEXT="Site Blend">
+<node CREATED="1296739138511" ID="Freemind_Link_1564468002" MODIFIED="1296739154109" TEXT="Should an add pretend to be the same LOOK as the site?">
+<node CREATED="1296739278172" ID="Freemind_Link_543421939" MODIFIED="1296739284314" TEXT="Better accidental clicking"/>
+</node>
+<node CREATED="1296739154717" ID="Freemind_Link_1493886441" MODIFIED="1296739175784" TEXT="Should an add be of same interests of site?"/>
+</node>
+</node>
 </node>
 <node CREATED="1283778802578" ID="Freemind_Link_371419217" MODIFIED="1283871925359" TEXT="Spill">
 <icon BUILTIN="bookmark"/>
@@ -808,6 +820,7 @@
 <node CREATED="1294982288400" ID="Freemind_Link_172440776" MODIFIED="1294982793926" TEXT="A business always has somethinga user wants.&#xa;We want our users to get socialized.&#xa;So we give them stuff they need to socialize.&#xa;This should be there in this business we help out.&#xa;Any other business, like a plumber, should be shielded.">
 <font NAME="Comic Sans MS" SIZE="12"/>
 <icon BUILTIN="full-3"/>
+<node CREATED="1296738008122" FOLDED="true" ID="Freemind_Link_802268249" MODIFIED="1296738011270" TEXT="e.g.">
 <node CREATED="1294982524842" ID="Freemind_Link_1639262699" MODIFIED="1294982563966" TEXT="e.g. McDonanlds has fast food, a cozy place to sit and talk, and probably TV"/>
 <node CREATED="1294982573419" ID="Freemind_Link_1493603680" MODIFIED="1294982590481" TEXT="e.g. A horse ranch gives horse rides"/>
 <node CREATED="1294982593746" ID="Freemind_Link_481602181" MODIFIED="1294982626479" TEXT="e.g. A sports show will have hiking gear and indoor sports tools"/>
@@ -816,11 +829,64 @@
 <node CREATED="1294982682883" ID="Freemind_Link_1509625307" MODIFIED="1294982717679" TEXT="e.g. A ticketing agency provides inbound/outbound tickets and tickets for flights within"/>
 <node CREATED="1294982726100" ID="Freemind_Link_434212511" MODIFIED="1294982739584" TEXT="e.g. A travel guide provides travel guidance"/>
 </node>
+<node CREATED="1296737897681" ID="Freemind_Link_730903474" MODIFIED="1296738589033" TEXT="The McDonalds Effect">
+<arrowlink DESTINATION="Freemind_Link_351936642" ENDARROW="Default" ENDINCLINATION="370;0;" ID="Freemind_Arrow_Link_5775604" STARTARROW="None" STARTINCLINATION="370;0;"/>
+<arrowlink DESTINATION="Freemind_Link_607777974" ENDARROW="Default" ENDINCLINATION="209;0;" ID="Freemind_Arrow_Link_974374000" STARTARROW="None" STARTINCLINATION="209;0;"/>
+<arrowlink DESTINATION="Freemind_Link_901271926" ENDARROW="Default" ENDINCLINATION="230;0;" ID="Freemind_Arrow_Link_670033678" STARTARROW="None" STARTINCLINATION="230;0;"/>
+<arrowlink DESTINATION="Freemind_Link_1268759545" ENDARROW="Default" ENDINCLINATION="409;0;" ID="Freemind_Arrow_Link_1598755605" STARTARROW="None" STARTINCLINATION="409;0;"/>
+</node>
+<node CREATED="1296737905815" ID="Freemind_Link_891812489" MODIFIED="1296738592586" TEXT="The Theatre Effect">
+<arrowlink DESTINATION="Freemind_Link_351936642" ENDARROW="Default" ENDINCLINATION="356;0;" ID="Freemind_Arrow_Link_1427159192" STARTARROW="None" STARTINCLINATION="356;0;"/>
+<arrowlink DESTINATION="Freemind_Link_1028013869" ENDARROW="Default" ENDINCLINATION="266;0;" ID="Freemind_Arrow_Link_1308528566" STARTARROW="None" STARTINCLINATION="266;0;"/>
+<arrowlink DESTINATION="Freemind_Link_901271926" ENDARROW="Default" ENDINCLINATION="218;0;" ID="Freemind_Arrow_Link_1371711634" STARTARROW="None" STARTINCLINATION="218;0;"/>
+<arrowlink DESTINATION="Freemind_Link_1268759545" ENDARROW="Default" ENDINCLINATION="393;0;" ID="Freemind_Arrow_Link_1665257014" STARTARROW="None" STARTINCLINATION="393;0;"/>
+</node>
+<node CREATED="1296737911627" ID="Freemind_Link_769382572" MODIFIED="1296738595780" TEXT="The Club Effect">
+<arrowlink DESTINATION="Freemind_Link_607777974" ENDARROW="Default" ENDINCLINATION="196;0;" ID="Freemind_Arrow_Link_1770814981" STARTARROW="None" STARTINCLINATION="196;0;"/>
+<arrowlink DESTINATION="Freemind_Link_901271926" ENDARROW="Default" ENDINCLINATION="212;0;" ID="Freemind_Arrow_Link_876266026" STARTARROW="None" STARTINCLINATION="212;0;"/>
+<arrowlink DESTINATION="Freemind_Link_10752901" ENDARROW="Default" ENDINCLINATION="357;0;" ID="Freemind_Arrow_Link_797742863" STARTARROW="None" STARTINCLINATION="357;0;"/>
+<arrowlink DESTINATION="Freemind_Link_1268759545" ENDARROW="Default" ENDINCLINATION="382;0;" ID="Freemind_Arrow_Link_18375653" STARTARROW="None" STARTINCLINATION="382;0;"/>
+</node>
+<node CREATED="1296737961861" ID="Freemind_Link_472514630" MODIFIED="1296738556201" TEXT="The Game Effect">
+<arrowlink DESTINATION="Freemind_Link_351936642" ENDARROW="Default" ENDINCLINATION="325;0;" ID="Freemind_Arrow_Link_1868795300" STARTARROW="None" STARTINCLINATION="325;0;"/>
+<arrowlink DESTINATION="Freemind_Link_1578588483" ENDARROW="Default" ENDINCLINATION="175;0;" ID="Freemind_Arrow_Link_6921814" STARTARROW="None" STARTINCLINATION="175;0;"/>
+<arrowlink DESTINATION="Freemind_Link_380118571" ENDARROW="Default" ENDINCLINATION="272;0;" ID="Freemind_Arrow_Link_745976569" STARTARROW="None" STARTINCLINATION="272;0;"/>
+</node>
+<node CREATED="1296737968810" ID="Freemind_Link_1361244318" MODIFIED="1296738601888" TEXT="The Holiday Effect">
+<arrowlink DESTINATION="Freemind_Link_1578588483" ENDARROW="Default" ENDINCLINATION="148;0;" ID="Freemind_Arrow_Link_403766009" STARTARROW="None" STARTINCLINATION="148;0;"/>
+<arrowlink DESTINATION="Freemind_Link_10752901" ENDARROW="Default" ENDINCLINATION="305;0;" ID="Freemind_Arrow_Link_1311821577" STARTARROW="None" STARTINCLINATION="305;0;"/>
+<arrowlink DESTINATION="Freemind_Link_1433862061" ENDARROW="Default" ENDINCLINATION="201;0;" ID="Freemind_Arrow_Link_23350433" STARTARROW="None" STARTINCLINATION="201;0;"/>
+</node>
+<node CREATED="1296738263976" ID="Freemind_Link_1196417440" MODIFIED="1296738265753" TEXT="Features">
+<node CREATED="1296738305892" ID="Freemind_Link_1040832070" MODIFIED="1296738309787" TEXT="Hz">
+<node CREATED="1296738183792" ID="Freemind_Link_607777974" MODIFIED="1296738439631" TEXT="Frequently Occurring"/>
+<node CREATED="1296738150665" ID="Freemind_Link_1578588483" MODIFIED="1296738391374" TEXT="Rarely Occurring"/>
+<node CREATED="1296738347075" ID="Freemind_Link_1028013869" MODIFIED="1296738374156" TEXT="Frequent or Rarely Occurring"/>
+</node>
+<node CREATED="1296738315568" ID="Freemind_Link_1746699467" MODIFIED="1296738320507" TEXT="Km">
+<node CREATED="1296738222606" ID="Freemind_Link_901271926" MODIFIED="1296738426371" TEXT="Close to Target User"/>
+<node CREATED="1296738208754" ID="Freemind_Link_1433862061" MODIFIED="1296738423628" TEXT="Distant from Target user"/>
+<node CREATED="1296738222606" ID="Freemind_Link_380118571" MODIFIED="1296738416321" TEXT="Close or Distant to Target User"/>
+</node>
+<node CREATED="1296738459888" ID="Freemind_Link_597111952" MODIFIED="1296738474925" TEXT="Attention Grab">
+<node CREATED="1296738478041" ID="Freemind_Link_351936642" MODIFIED="1296738582925" TEXT="P(Already Marketed)"/>
+<node CREATED="1296738496288" ID="Freemind_Link_10752901" MODIFIED="1296738578780" TEXT="P(Not Marketed)"/>
+<node CREATED="1296738511496" ID="Freemind_Link_1268759545" MODIFIED="1296738605597" TEXT="P(No Social Hype)"/>
+<node CREATED="1296738660618" ID="Freemind_Link_202051978" MODIFIED="1296738679862" TEXT="P() stands for probability">
+<icon BUILTIN="help"/>
+</node>
+</node>
+</node>
+</node>
 <node CREATED="1294983607839" ID="Freemind_Link_889814771" MODIFIED="1294983622605" TEXT="Where the hell they are. They can mark it on the map">
 <icon BUILTIN="full-3"/>
 </node>
-<node CREATED="1294984080793" ID="Freemind_Link_1153975610" MODIFIED="1294984120870" TEXT="Bid on areas for users">
+<node CREATED="1294984080793" ID="Freemind_Link_1153975610" MODIFIED="1296738976253" TEXT="Bid on areas for users">
 <arrowlink DESTINATION="Freemind_Link_1588467542" ENDARROW="Default" ENDINCLINATION="77;0;" ID="Freemind_Arrow_Link_1683457648" STARTARROW="None" STARTINCLINATION="77;0;"/>
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1296738981457" ID="Freemind_Link_29936845" MODIFIED="1296738993362" TEXT="Money!:)">
+<icon BUILTIN="full-3"/>
 </node>
 </node>
 <node CREATED="1294981988210" ID="Freemind_Link_666368752" MODIFIED="1294982201154" TEXT="Why would that business give what they have to us">
@@ -1007,17 +1073,20 @@
 </node>
 </node>
 </node>
+<node CREATED="1296738717291" ID="Freemind_Link_1846412680" MODIFIED="1296738727450" TEXT="My Home">
+<icon BUILTIN="full-1"/>
+</node>
 </node>
 <node CREATED="1283871927859" FOLDED="true" ID="Freemind_Link_504513171" MODIFIED="1291817174968" TEXT="Sell">
 <icon BUILTIN="bell"/>
 <hook NAME="accessories/plugins/NodeNote.properties">
 <text>Zeroeth Rule of Marketing: Give them what they want.&#xa;Zeroeth Rule of PR: Its personal.</text>
 </hook>
-<node CREATED="1283778806593" FOLDED="true" ID="Freemind_Link_991036540" MODIFIED="1283778870015" TEXT="Fun Map">
+<node CREATED="1283778806593" ID="Freemind_Link_991036540" MODIFIED="1283778870015" TEXT="Fun Map">
 <icon BUILTIN="full-1"/>
 <node CREATED="1283778817171" ID="Freemind_Link_832808578" MODIFIED="1283779022984" TEXT="How do I find where to have fun at this place?">
 <icon BUILTIN="full-2"/>
-<node COLOR="#338800" CREATED="1283778835734" FOLDED="true" ID="Freemind_Link_853743146" MODIFIED="1287019112830" TEXT="I see a map of fun places made by users. Contains Ranking and Pricing.">
+<node COLOR="#338800" CREATED="1283778835734" ID="Freemind_Link_853743146" MODIFIED="1287019112830" TEXT="I see a map of fun places made by users. Contains Ranking and Pricing.">
 <icon BUILTIN="full-3"/>
 <node CREATED="1283779122718" ID="Freemind_Link_1577448723" MODIFIED="1283779575187" TEXT="Who&apos;s involved?">
 <icon BUILTIN="full-4"/>
@@ -1410,7 +1479,7 @@
 <node CREATED="1275247786984" ID="Freemind_Link_841143219" MODIFIED="1275247834859" TEXT="Startup and Shutdown mails"/>
 <node CREATED="1270054635078" ID="Freemind_Link_408918916" MODIFIED="1281967604656" TEXT="JSP forward or deny on OpenEJB"/>
 </node>
-<node BACKGROUND_COLOR="#ffcc00" CREATED="1275667013786" ID="Freemind_Link_374011926" MODIFIED="1289101795496" POSITION="right" TEXT="ITPS">
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1275667013786" FOLDED="true" ID="Freemind_Link_374011926" MODIFIED="1289101795496" POSITION="right" TEXT="ITPS">
 <arrowlink DESTINATION="Freemind_Link_374011926" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Freemind_Arrow_Link_447360971" STARTARROW="None" STARTINCLINATION="0;0;"/>
 <font BOLD="true" NAME="Comic Sans MS" SIZE="14"/>
 <icon BUILTIN="flag"/>
@@ -1423,7 +1492,7 @@
 </node>
 <node CREATED="1295620824234" ID="Freemind_Link_1315593715" MODIFIED="1295620836140" TEXT="no true value"/>
 </node>
-<node CREATED="1295067676843" ID="Freemind_Link_882519224" MODIFIED="1295067689718" POSITION="right" TEXT="Next">
+<node CREATED="1295067676843" FOLDED="true" ID="Freemind_Link_882519224" MODIFIED="1295067689718" POSITION="right" TEXT="Next">
 <icon BUILTIN="forward"/>
 <node CREATED="1295067693390" ID="Freemind_Link_643364005" MODIFIED="1295067701218" TEXT="location image on private location"/>
 <node CREATED="1295069300031" ID="Freemind_Link_1472902477" MODIFIED="1295069322078" TEXT="signed out mode engagement and help"/>
@@ -1441,6 +1510,18 @@
 <node CREATED="1295774389089" ID="Freemind_Link_1277266803" MODIFIED="1295774401779" TEXT="existing asym friends in friends list"/>
 <node CREATED="1295774966622" ID="Freemind_Link_862744323" MODIFIED="1295774984372" TEXT="fix non activated human changing password to make human alive."/>
 <node CREATED="1295775006279" ID="Freemind_Link_1257735463" MODIFIED="1295775022232" TEXT="fix trailing dot problem on hash activation email"/>
+</node>
+<node BACKGROUND_COLOR="#663300" CREATED="1296794504162" ID="Freemind_Link_1669933885" MODIFIED="1296794606291" POSITION="right" TEXT="Ugly">
+<node CREATED="1296794612929" ID="Freemind_Link_1434250851" MODIFIED="1296794618614" TEXT="Display Name Change"/>
+<node CREATED="1296794619114" ID="Freemind_Link_357230110" MODIFIED="1296794644338" TEXT="Profile Link"/>
+<node CREATED="1296794646056" ID="Freemind_Link_1341234988" MODIFIED="1296794656927" TEXT="Confirmation Email"/>
+<node CREATED="1296794657379" ID="Freemind_Link_1691066408" MODIFIED="1296794673107" TEXT="Wall Widget Email"/>
+<node CREATED="1296794733457" ID="Freemind_Link_458923925" MODIFIED="1296794744796" TEXT="Photo Widge Top Links(delete, share etc.)"/>
+<node CREATED="1296797145482" ID="Freemind_Link_1706122338" MODIFIED="1296797155300" TEXT="Chrome tabs">
+<node CREATED="1296797156519" ID="Freemind_Link_459136616" MODIFIED="1296797159099" TEXT="colors"/>
+<node CREATED="1296797159834" ID="Freemind_Link_1877290676" MODIFIED="1296797161460" TEXT="links"/>
+<node COLOR="#ff0000" CREATED="1296797163179" ID="Freemind_Link_1298522029" MODIFIED="1296797213240" TEXT="design"/>
+</node>
 </node>
 <node CREATED="1284106510102" FOLDED="true" ID="Freemind_Link_1687377836" MODIFIED="1295274734812" POSITION="left" TEXT="Distractions">
 <font NAME="Comic Sans MS" SIZE="9"/>
