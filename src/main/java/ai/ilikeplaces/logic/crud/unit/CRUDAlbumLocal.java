@@ -4,8 +4,11 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 /**
  * @author Ravindranath Akila
@@ -22,7 +25,17 @@ public interface CRUDAlbumLocal {
      * @return
      * @throws DBDishonourCheckedException
      */
+    @Deprecated
     public Album doRAlbumByPrivateEvent(final String humanId, final long privateEventId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException;
 
 
+    /**
+     * @param humanId
+     * @param privateEventId by which to fetch the album
+     * @param refreshSpec
+     * @return
+     * @throws DBDishonourCheckedException
+     */
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Album doRAlbumByPrivateEvent(final String humanId, final long privateEventId, final RefreshSpec refreshSpec) throws DBDishonourCheckedException, DBFetchDataException;
 }

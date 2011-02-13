@@ -83,7 +83,7 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
 
                 if (name.validate(v) == 0) {
                     myprivateEventName.setObj(name.getObj());
-                    clear($$(privateEventCreateNotice));
+                    $$clear($$(privateEventCreateNotice));
                 } else {
                     $$(privateEventCreateNotice).setTextContent(name.getViolationAsString());
                 }
@@ -109,7 +109,7 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
 
                 if (info.validate(v) == 0) {
                     myprivateEventInfo.setObj(info.getObj());
-                    clear($$(privateEventCreateNotice));
+                    $$clear($$(privateEventCreateNotice));
                 } else {
                     $$(privateEventCreateNotice).setTextContent(info.getViolationAsString());
                 }

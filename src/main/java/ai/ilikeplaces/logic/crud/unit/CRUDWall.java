@@ -52,6 +52,7 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    @Deprecated
     public Wall doNTxUAppendToWall(long wallId, String contentToBeAppended) throws DBDishonourCheckedException {
         final Wall returnVal = crudServiceLocal_.findBadly(Wall.class, wallId);
         final int wallLength = returnVal.getWallContent().length();
@@ -66,8 +67,8 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Wall doNTxUAddEntry(long wallId, final String humanId, String contentToBeAppended) throws DBDishonourCheckedException {
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Wall doUAddEntry(long wallId, final String humanId, String contentToBeAppended) throws DBDishonourCheckedException {
         final Wall returnVal = crudServiceLocal_.findBadly(Wall.class, wallId);
         final Msg msg = new Msg();
 
@@ -81,8 +82,8 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Wall doNTxUAddMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException {
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Wall doUAddMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException {
         final Wall returnVal = crudServiceLocal_.findBadly(Wall.class, wallId);
 
         if(returnVal.getWallMutes().contains(new HumanId(mutee).getSelfAsValid())){
@@ -98,8 +99,8 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Wall doNTxURemoveMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException {
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Wall doURemoveMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException {
         final Wall returnVal = crudServiceLocal_.findBadly(Wall.class, wallId);
         final HumanId humanId = new HumanId(mutee).getSelfAsValid();
         final List<Mute> existing = new ArrayList<Mute>(2);//One for existing, other expecting duplicate entries.
@@ -116,7 +117,8 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
     }
 
     @Override
-    public Wall doNTxUClearWall(long wallId) throws DBDishonourCheckedException {
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Wall doUClearWall(long wallId) throws DBDishonourCheckedException {
         final Wall returnVal = crudServiceLocal_.findBadly(Wall.class, wallId);
         returnVal.setWallContent("");
         return returnVal;

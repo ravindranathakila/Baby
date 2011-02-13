@@ -1,7 +1,8 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
+import ai.ilikeplaces.util.ExceptionCache;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,47 +15,37 @@ import java.util.Date;
  *
  * @author Ravindranath Akila
  */
-
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@DOCUMENTATION(
+        FIXME = @FIXME("Performance Issue: " +
+                "Takes upto 16ms" +
+                "7087328  adimpression_ilikeplaces_war_1.6-SNAPSHOTPU  TRACE  [http-8080-3] openjpa.jdbc.SQL - <t 29370034, conn 0> executing prepstmnt 3799741 " +
+                "SELECT t1.humanId, t1.clearance, t1.humanAlive, t2.humanId, t2.displayName, t3.humanId, t3.clearance, t3.humanAlive, t0.humansIdentityDateOfBirth, t0.humansIdentityEmail, t0.humansIdentityFirstName, t0.humansIdentityGUIPreferences, t0.humansIdentityGenderCode, t0.humansIdentityLastName, t0.humansIdentityProfilePhoto, t4.url, t4.metadata, t4.type FROM HumansIdentity t0 " +
+                "LEFT OUTER JOIN Human t1 ON t0.humanId = t1.humanId " +
+                "LEFT OUTER JOIN Url t4 ON t0.URL_URL = t4.url " +
+                "LEFT OUTER JOIN HumansNet t2 ON t1.humanId = t2.humanId " +
+                "LEFT OUTER JOIN Human t3 ON t2.humanId = t3.humanId WHERE t0.humanId = ? [params=(String) home1003@ilikeplaces.com] " +
+                "Observed Problems:" +
+                "1. Too many joins.")
+)
 @Entity
 @EntityListeners(EntityLifeCycleListener.class)
 @NamedQueries({
         @NamedQuery(name = "FindPaginatedHumansByEmails",
-                query = "SELECT hi FROM HumansIdentity hi WHERE hi.humansIdentityEmail IN(:humansIdentityEmails)")})
+                query = "SELECT hi FROM HumansIdentity hi WHERE hi.humanId IN(:humansIdentityEmails)")})
 public class HumansIdentity implements HumanPkJoinFace, Serializable {
 
     final static public String FindPaginatedHumansByEmails = "FindPaginatedHumansByEmails";
     final static public String HumansIdentityEmails = "humansIdentityEmails";
+    private static final String HUMANS_IDENTITY = "HumansIdentity{";
+    private static final String HUMAN_ID = "humanId='";
+    private static final char CLOSING_BRACE = '}';
 
     public String humanId;
     public Human human;
-    public String humansIdentityEmail;
-    public Integer humansIdentityGenderCode;
     public Date humansIdentityDateOfBirth;
-    public String humansIdentityFirstName;
-    public String humansIdentityLastName;
-    public String humansIdentityGUIPreferences;
     public String humansIdentityProfilePhoto;
     public Url url;
-
-    public static enum GENDER {
-        Neutral,
-        Male,
-        Female;
-
-        final static public int getGenderCode(final GENDER gender) {
-            return getGenderCode(gender.toString());
-        }
-
-        final static public int getGenderCode(final String gender) {
-
-            if (gender.equals("Male")) return 1;
-            if (gender.equals("Female")) return 1;
-            if (gender.equals("Neutral")) return 1;
-
-            throw new IllegalArgumentException("SORRY! " + gender + " IS NOT A VALID ARGUMENT.");
-        }
-    }
 
     @Id
     public String getHumanId() {
@@ -75,39 +66,8 @@ public class HumansIdentity implements HumanPkJoinFace, Serializable {
         this.human = human;
     }
 
-    public String getHumansIdentityFirstName() {
-        return humansIdentityFirstName;
-    }
 
-    public void setHumansIdentityFirstName(String humansIdentityFirstName) {
-        this.humansIdentityFirstName = humansIdentityFirstName;
-    }
-
-    public String getHumansIdentityLastName() {
-        return humansIdentityLastName;
-    }
-
-    public void setHumansIdentityLastName(String humansIdentityLastName) {
-        this.humansIdentityLastName = humansIdentityLastName;
-    }
-
-    @Column(unique = true)
-    public String getHumansIdentityEmail() {
-        return humansIdentityEmail;
-    }
-
-    public void setHumansIdentityEmail(final String humansIdentityEmail) {
-        this.humansIdentityEmail = humansIdentityEmail;
-    }
-
-    public Integer getHumansIdentityGenderCode() {
-        return humansIdentityGenderCode;
-    }
-
-    public void setHumansIdentityGenderCode(final Integer humansIdentityGenderCode) {
-        this.humansIdentityGenderCode = humansIdentityGenderCode;
-    }
-
+    @Basic(fetch = FetchType.LAZY)
     @Temporal(javax.persistence.TemporalType.DATE)
     public Date getHumansIdentityDateOfBirth() {
         return humansIdentityDateOfBirth;
@@ -117,13 +77,6 @@ public class HumansIdentity implements HumanPkJoinFace, Serializable {
         this.humansIdentityDateOfBirth = humansIdentityDateOfBirth;
     }
 
-    public String getHumansIdentityGUIPreferences() {
-        return humansIdentityGUIPreferences;
-    }
-
-    public void setHumansIdentityGUIPreferences(final String humansIdentityGUIPreferences) {
-        this.humansIdentityGUIPreferences = humansIdentityGUIPreferences;
-    }
 
     public String getHumansIdentityProfilePhoto() {
         return humansIdentityProfilePhoto;
@@ -132,7 +85,7 @@ public class HumansIdentity implements HumanPkJoinFace, Serializable {
     public void setHumansIdentityProfilePhoto(final String humansIdentityProfilePhoto) {
         this.humansIdentityProfilePhoto = humansIdentityProfilePhoto;
     }
-    
+
 
     @OneToOne(cascade = {CascadeType.ALL})
     public Url getUrl() {
@@ -150,9 +103,8 @@ public class HumansIdentity implements HumanPkJoinFace, Serializable {
 
         final HumansIdentity that = (HumansIdentity) o;
 
-        if (humanId != null ? !humanId.equals(that.humanId) : that.humanId != null) return false;
+        return !(humanId != null ? !humanId.equals(that.humanId) : that.humanId != null);
 
-        return true;
     }
 
     @Override
@@ -162,10 +114,8 @@ public class HumansIdentity implements HumanPkJoinFace, Serializable {
 
     @Override
     public String toString() {
-        return "HumansIdentity{" +
-                "humanId='" + humanId + '\'' +
-                ", humansIdentityFirstName='" + humansIdentityFirstName + '\'' +
-                ", humansIdentityLastName='" + humansIdentityLastName + '\'' +
-                '}';
+        return HUMANS_IDENTITY +
+                HUMAN_ID + humanId + '\'' +
+                CLOSING_BRACE;
     }
 }

@@ -1077,7 +1077,7 @@
 <icon BUILTIN="full-1"/>
 </node>
 </node>
-<node CREATED="1283871927859" FOLDED="true" ID="Freemind_Link_504513171" MODIFIED="1291817174968" TEXT="Sell">
+<node CREATED="1283871927859" ID="Freemind_Link_504513171" MODIFIED="1291817174968" TEXT="Sell">
 <icon BUILTIN="bell"/>
 <hook NAME="accessories/plugins/NodeNote.properties">
 <text>Zeroeth Rule of Marketing: Give them what they want.&#xa;Zeroeth Rule of PR: Its personal.</text>
@@ -1171,6 +1171,7 @@
 </node>
 </node>
 </node>
+<node CREATED="1297184213796" ID="Freemind_Link_1993648582" MODIFIED="1297184225843" TEXT="Dates and Times in Wall Entries"/>
 </node>
 </node>
 <node CREATED="1283703158802" FOLDED="true" ID="Freemind_Link_640830008" MODIFIED="1289573580515" POSITION="right" TEXT="Marketing">
@@ -1522,6 +1523,8 @@
 <node CREATED="1296797159834" ID="Freemind_Link_1877290676" MODIFIED="1296797161460" TEXT="links"/>
 <node COLOR="#ff0000" CREATED="1296797163179" ID="Freemind_Link_1298522029" MODIFIED="1296797213240" TEXT="design"/>
 </node>
+<node CREATED="1297184170906" ID="Freemind_Link_1107279466" MODIFIED="1297184181953" TEXT="Deletion of Old Photo Periodic Cleanup"/>
+<node CREATED="1297184182515" ID="Freemind_Link_1286074776" MODIFIED="1297184191796" TEXT="Upon Fail Photo Upload, Refresh Page"/>
 </node>
 <node CREATED="1284106510102" FOLDED="true" ID="Freemind_Link_1687377836" MODIFIED="1295274734812" POSITION="left" TEXT="Distractions">
 <font NAME="Comic Sans MS" SIZE="9"/>

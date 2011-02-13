@@ -32,6 +32,18 @@ import java.util.List;
 @Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHumanLocal {
 
+    private static final String IDENTITY_READ_SUCCESSFUL = "Identity Read Successful.";
+    private static final String IDENTITY_READ_FAILED = "Identity Read FAILED!";
+    private static final String PROFILE_READ_FROM_URL_SUCCESSFUL = "Profile Read from URL Successful.";
+    private static final String AI_ILIKEPLACES_LOGIC_CRUD_HUMAN_CRUDHUMAN_0001 = "ai.ilikeplaces.logic.crud.HumanCRUDHuman.0001";
+    private static final String PROFILE_PHOTO_UPDATE_SUCCESSFUL = "Profile Photo Update Successful.";
+    private static final String PROFILE_PHOTO_UPDATE_FAILED = "Profile Photo Update FAILED!";
+    private static final String PROFILE_PHOTO_READ_SUCCESSFUL = "Profile Photo Read Successful.";
+    private static final String PROFILE_PHOTO_READ_FAILED = "Profile Photo Read FAILED!";
+    private static final String PROFILE_URL_UPDATE_SUCCESSFUL = "Profile URL Update Successful.";
+    private static final String PROFILE_URL_UPDATE_FAILED = "Profile URL Update FAILED!";
+    private static final String PROFILE_URL_READ_SUCCESSFUL = "Profile URL Read Successful.";
+    private static final String PROFILE_URL_READ_FAILED = "Profile URL Read FAILED!";
     @EJB
     private RHumanLocal rHumanLocal_;
 
@@ -281,9 +293,9 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     public Return<HumansIdentity> doUHumansProfilePhoto(final RefObj<String> humanId, final String url) {
         Return<HumansIdentity> r;
         try {
-            r = new ReturnImpl<HumansIdentity>(uHumansIdentityLocal_.doUHumansProfilePhoto(humanId.getObj(), url), "Profile Photo Update Successful.");
+            r = new ReturnImpl<HumansIdentity>(uHumansIdentityLocal_.doUHumansProfilePhoto(humanId.getObj(), url), PROFILE_PHOTO_UPDATE_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
-            r = new ReturnImpl<HumansIdentity>(t, "Profile Photo Update FAILED!", true);
+            r = new ReturnImpl<HumansIdentity>(t, PROFILE_PHOTO_UPDATE_FAILED, true);
         }
         return r;
 
@@ -293,9 +305,9 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     public Return<String> doDirtyRHumansProfilePhoto(final RefObj<String> humanId) {
         Return<String> r;
         try {
-            r = new ReturnImpl<String>(rHumansIdentityLocal_.doDirtyProfilePhoto(humanId.getObj()), "Profile Photo Read Successful.");
+            r = new ReturnImpl<String>(rHumansIdentityLocal_.doDirtyProfilePhoto(humanId.getObj()), PROFILE_PHOTO_READ_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
-            r = new ReturnImpl<String>(t, "Profile Photo Read FAILED!", true);
+            r = new ReturnImpl<String>(t, PROFILE_PHOTO_READ_FAILED, true);
         }
         return r;
 
@@ -306,9 +318,9 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     public Return<HumansIdentity> doUHumansPublicURL(final RefObj<String> humanId, final String url) {
         Return<HumansIdentity> r;
         try {
-            r = new ReturnImpl<HumansIdentity>(uHumansIdentityLocal_.doUHumansPublicURL(humanId.getObj(), url), "Profile URL Update Successful.");
+            r = new ReturnImpl<HumansIdentity>(uHumansIdentityLocal_.doUHumansPublicURL(humanId.getObj(), url), PROFILE_URL_UPDATE_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
-            r = new ReturnImpl<HumansIdentity>(t, "Profile URL Update FAILED!", true);
+            r = new ReturnImpl<HumansIdentity>(t, PROFILE_URL_UPDATE_FAILED, true);
         }
         return r;
 
@@ -318,9 +330,9 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     public Return<String> doDirtyRHumansPublicURL(final RefObj<String> humanId) {
         Return<String> r;
         try {
-            r = new ReturnImpl<String>(rHumansIdentityLocal_.doDirtyPublicURL(humanId.getObj()), "Profile URL Read Successful.");
+            r = new ReturnImpl<String>(rHumansIdentityLocal_.doDirtyPublicURL(humanId.getObj()), PROFILE_URL_READ_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
-            r = new ReturnImpl<String>(t, "Profile URL Read FAILED!", true);
+            r = new ReturnImpl<String>(t, PROFILE_URL_READ_FAILED, true);
         }
         return r;
 
@@ -330,9 +342,9 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     public Return<HumansIdentity> doDirtyRHumansIdentity(final RefObj<String> humanId) {
         Return<HumansIdentity> r;
         try {
-            r = new ReturnImpl<HumansIdentity>(rHumansIdentityLocal_.doDirtyRHumansIdentity(humanId.getObj()), "Identity Read Successful.");
+            r = new ReturnImpl<HumansIdentity>(rHumansIdentityLocal_.doDirtyRHumansIdentity(humanId.getObjectAsValid()), IDENTITY_READ_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
-            r = new ReturnImpl<HumansIdentity>(t, "Identity Read FAILED!", true);
+            r = new ReturnImpl<HumansIdentity>(t, IDENTITY_READ_FAILED, true);
         }
         return r;
 
@@ -341,7 +353,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Return<String> doDirtyProfileFromURL(final String url) {
         Return<String> r;
-        r = new ReturnImpl<String>(rHumansIdentityLocal_.doDirtyProfileFromURL(url), "Profile Read from URL Successful.");
+        r = new ReturnImpl<String>(rHumansIdentityLocal_.doDirtyProfileFromURL(url), PROFILE_READ_FROM_URL_SUCCESSFUL);
         return r;
 
     }
@@ -355,7 +367,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         Return<Boolean> r;
 
         if (doDirtyCheckHuman(humanId.getObjectAsValid()).returnValue()) {
-            throw new DBDishonourCheckedException(RBGet.logMsgs.getString("ai.ilikeplaces.logic.crud.HumanCRUDHuman.0001") + humanId);
+            throw new DBDishonourCheckedException(RBGet.logMsgs.getString(AI_ILIKEPLACES_LOGIC_CRUD_HUMAN_CRUDHUMAN_0001) + humanId);
         }
         final Human newUser = new Human();
         newUser.setHumanId(humanId.getObjectAsValid());
@@ -372,7 +384,6 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         {
             final HumansIdentity hid = new HumansIdentity();
             hid.setHumanId(newUser.getHumanId());
-            hid.setHumansIdentityEmail(email.getObj());
             hid.setUrl(new Url().setUrlR(humanId.getObj()).setMetadataR(humanId.getObj()));//Yes, the default url is his/her email
 
             newUser.setHumansIdentity(hid);

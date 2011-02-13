@@ -5,7 +5,11 @@ import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.HumansPrivatePhoto;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.exception.DBDishonourException;
+import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.util.jpa.RefreshException;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,15 +41,19 @@ public class RPrivatePhoto implements RPrivatePhotoLocal {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<PrivatePhoto> doRAllPrivatePhotos(final String humanId) throws DBDishonourCheckedException {
+    public List<PrivatePhoto> doDirtyRAllPrivatePhotos(final String humanId) throws DBDishonourCheckedException {
         return humansPrivatePhotoCrudServiceLocal_.findBadly(HumansPrivatePhoto.class, humanId).getPrivatePhotos();
     }
 
-
-    public PrivatePhoto doDirtyRPrivatePhoto(final String humanId, final Long privatePhotoId) throws DBDishonourCheckedException {
-        return privatePhotoCrudServiceLocal_.findBadly(PrivatePhoto.class, privatePhotoId);
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public PrivatePhoto doRPrivatePhoto(final String humanId, final Long privatePhotoId, final RefreshSpec refreshSpec) throws DBFetchDataException {
+        try {
+            return privatePhotoCrudServiceLocal_.findBadly(PrivatePhoto.class, privatePhotoId).refresh(refreshSpec);
+        } catch (final RefreshException e) {
+            throw new DBFetchDataException(e);
+        }
     }
-
 
     final static Logger logger = LoggerFactory.getLogger(RPrivatePhoto.class);
 }

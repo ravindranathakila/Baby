@@ -4,10 +4,10 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateEvent;
-import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -21,12 +21,11 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Local
-public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
+public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall {
 
     public static final String NAME = HumanCRUDPrivateEventLocal.class.getSimpleName();
 
     /**
-     *
      * @param humanId
      * @param privateLocationId
      * @param privateEventName
@@ -38,7 +37,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
     public Return<PrivateEvent> cPrivateEvent(final String humanId, final long privateLocationId, final String privateEventName, final String privateEventInfo, final String startDate, final String endDate);
 
     /**
-     *
      * @param humanId
      * @param privateEventId
      * @return
@@ -46,7 +44,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
     public Return<PrivateEvent> dirtyRPrivateEventAsAny(final String humanId, final long privateEventId);
 
     /**
-     *
      * @param humanId
      * @param privateEventId
      * @return
@@ -54,7 +51,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
     public Return<Boolean> dirtyRPrivateEventIsOwner(final HumanId humanId, final Long privateEventId);
 
     /**
-     *
      * @param humanId
      * @param privateEventId
      * @return
@@ -62,7 +58,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
     public Return<Boolean> dirtyRPrivateEventIsViewer(final HumanId humanId, final Long privateEventId);
 
     /**
-     *
      * @param friend__
      * @param privateEventId__
      * @param owner
@@ -71,7 +66,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
     public Return<PrivateEvent> uPrivateEventAddOwner(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
     /**
-     *
      * @param owner__
      * @param privateEventId__
      * @param friend__
@@ -81,7 +75,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
     public Return<PrivateEvent> uPrivateEventAddOwnerWithPrivateLocationCheck(final HumanId owner__, final long privateEventId__, final HumansFriend friend__, final long privateLocationId__);
 
     /**
-     *
      * @param friend__
      * @param privateEventId__
      * @param owner
@@ -90,7 +83,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
     public Return<PrivateEvent> uPrivateEventRemoveOwner(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
     /**
-     *
      * @param friend__
      * @param privateEventId__
      * @param owner
@@ -99,7 +91,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
     public Return<PrivateEvent> uPrivateEventAddVisitor(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
     /**
-     *
      * @param owner__
      * @param privateEventId__
      * @param friend__
@@ -109,7 +100,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
     public Return<PrivateEvent> uPrivateEventAddVisitorWithPrivateLocationCheck(final HumanId owner__, final long privateEventId__, final HumansFriend friend__, final long privateLocationId__);
 
     /**
-     *
      * @param friend__
      * @param privateEventId__
      * @param owner
@@ -118,7 +108,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
     public Return<PrivateEvent> uPrivateEventRemoveVisitor(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
     /**
-     *
      * @param friend__
      * @param privateEventId__
      * @param owner
@@ -127,7 +116,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
     public Return<PrivateEvent> uPrivateEventAddInvite(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
     /**
-     *
      * @param owner__
      * @param privateEventId__
      * @param friend__
@@ -137,7 +125,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
     public Return<PrivateEvent> uPrivateEventAddInviteWithPrivateLocationCheck(final HumanId owner__, final long privateEventId__, final HumansFriend friend__, final long privateLocationId__);
 
     /**
-     *
      * @param friend__
      * @param privateEventId__
      * @param owner
@@ -146,7 +133,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
     public Return<PrivateEvent> uPrivateEventRemoveInvite(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
     /**
-     *
      * @param friend__
      * @param privateEventId__
      * @param owner
@@ -155,7 +141,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
     public Return<PrivateEvent> uPrivateEventAddReject(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
     /**
-     *
      * @param friend__
      * @param privateEventId__
      * @param owner
@@ -164,7 +149,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
     public Return<PrivateEvent> uPrivateEventRemoveReject(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
     /**
-     *
      * @param operator__
      * @param privateEventId__
      * @return
@@ -173,15 +157,23 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
 
 
     /**
-     *
      * @param operator__
      * @param privateEventId__
      * @return
      */
+    @Deprecated
     public Return<Album> rPrivateEventReadAlbum(final HumanId operator__, final long privateEventId__);
 
     /**
      *
+     * @param operator__
+     * @param privateEventId__
+     * @param refreshSpec
+     * @return
+     */
+    public Return<Album> rPrivateEventReadAlbum(final HumanId operator__, final long privateEventId__, final RefreshSpec refreshSpec);
+
+    /**
      * @param operator__
      * @param privateEventId__
      * @param cdnFileName
@@ -190,7 +182,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall{
     public Return<Album> uPrivateEventAddEntryToAlbum(final HumanId operator__, final long privateEventId__, final RefObj<String> cdnFileName);
 
     /**
-     *
      * @param operator__
      * @param privateEventId__
      * @return

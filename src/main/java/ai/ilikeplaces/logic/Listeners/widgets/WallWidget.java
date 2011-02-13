@@ -45,7 +45,7 @@ abstract public class WallWidget extends AbstractWidgetListener {
                     wallAppend.setObj(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
                     if (wallAppend.validate() == 0) {
                         wallAppend.setObj(wallAppend.getObj());
-                        clear($$(Page.wallNotice));
+                        $$clear($$(Page.wallNotice));
                     } else {
                         $$(Page.wallNotice).setTextContent(wallAppend.getViolationAsString());
                         wallAppend.setObj("");

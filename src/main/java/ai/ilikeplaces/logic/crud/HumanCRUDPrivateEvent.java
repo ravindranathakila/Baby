@@ -10,6 +10,7 @@ import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -253,7 +254,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doNTxUAddEntry(dirtyRPrivateEventAsAny(operator__.getObj(), (Long) wallOwnerId__.getObjectAsValid()).returnValueBadly().getPrivateEventWall().getWallId(),
+                    .doUAddEntry(dirtyRPrivateEventAsAny(operator__.getObj(), (Long) wallOwnerId__.getObjectAsValid()).returnValueBadly().getPrivateEventWall().getWallId(),
                             msgOwner__.getObj(),
                             contentToBeAppended), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
@@ -270,7 +271,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doNTxUAddMuteEntry(dirtyRPrivateEventAsAny(operator__.getObj(), (Long) wallOwnerId__.getObjectAsValid()).returnValueBadly().getPrivateEventWall().getWallId(),
+                    .doUAddMuteEntry(dirtyRPrivateEventAsAny(operator__.getObj(), (Long) wallOwnerId__.getObjectAsValid()).returnValueBadly().getPrivateEventWall().getWallId(),
                             mutee.getObj()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
@@ -286,7 +287,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doNTxURemoveMuteEntry(dirtyRPrivateEventAsAny(operator__.getObj(), (Long) wallOwnerId__.getObjectAsValid()).returnValueBadly().getPrivateEventWall().getWallId(),
+                    .doURemoveMuteEntry(dirtyRPrivateEventAsAny(operator__.getObj(), (Long) wallOwnerId__.getObjectAsValid()).returnValueBadly().getPrivateEventWall().getWallId(),
                             mutee.getObj()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
@@ -301,7 +302,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doNTxUClearWall(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+                    .doUClearWall(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
@@ -309,7 +310,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     }
 
     @Override
-    public Return<Wall> readWall(HumanId operator__, Obj wallOwnerId__) {
+    public Return<Wall> readWall(HumanId operator__, Obj wallOwnerId__, RefreshSpec refreshSpec__) {
 
         Return<Wall> r;
         try {
@@ -371,10 +372,23 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     }
 
     @Override
+    @Deprecated
     public Return<Album> rPrivateEventReadAlbum(final HumanId operator__, final long privateEventId__) {
         Return<Album> r;
         try {
             r = new ReturnImpl<Album>(crudAlbumLocal_.doRAlbumByPrivateEvent(operator__.getObjectAsValid(), privateEventId__, true), READ_ALBUM_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<Album>(t, READ_ALBUM_FAILED, true);
+        }
+        return r;
+    }
+
+    @Override
+    @Deprecated
+    public Return<Album> rPrivateEventReadAlbum(final HumanId operator__, final long privateEventId__, final RefreshSpec refreshSpec) {
+        Return<Album> r;
+        try {
+            r = new ReturnImpl<Album>(crudAlbumLocal_.doRAlbumByPrivateEvent(operator__.getObjectAsValid(), privateEventId__, refreshSpec), READ_ALBUM_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Album>(t, READ_ALBUM_FAILED, true);
         }

@@ -6,6 +6,7 @@ import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
+import ai.ilikeplaces.util.jpa.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
-public class Album implements RefreshData<Album> {
+public class Album implements RefreshData<Album>, Refreshable<Album> {
 
     public Long albumId;
 
@@ -28,6 +29,8 @@ public class Album implements RefreshData<Album> {
 
     public String albumDescription;
 
+
+    @RefreshId("albumPhotos")
     public List<PrivatePhoto> albumPhotos;
 
     public List<HumansAlbum> albumOwners;
@@ -37,6 +40,8 @@ public class Album implements RefreshData<Album> {
     final static public String albumVisitorsCOL = "albumVisitors";
 
     public PrivateEvent albumPrivateEvent;
+
+    public static final Refresh<Album> REFRESH = new Refresh<Album>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -120,7 +125,7 @@ public class Album implements RefreshData<Album> {
 
 
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<HumansAlbum> getAlbumVisitors() {
         return albumVisitors;
     }
@@ -144,6 +149,12 @@ public class Album implements RefreshData<Album> {
         } catch (final Exception e) {
             throw new DBFetchDataException(e);
         }
+        return this;
+    }
+
+    @Override
+    public Album refresh(final RefreshSpec refreshSpec) throws RefreshException {
+        REFRESH.refresh(this, refreshSpec);
         return this;
     }
 }

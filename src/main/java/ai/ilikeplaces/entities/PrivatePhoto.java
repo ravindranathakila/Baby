@@ -3,6 +3,7 @@ package ai.ilikeplaces.entities;
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.exception.PendingEqualsMethodException;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivatePhoto;
+import ai.ilikeplaces.util.jpa.*;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
@@ -21,7 +22,7 @@ import java.util.List;
         )
 )
 @Entity
-public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto> {
+public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Refreshable<PrivatePhoto> {
 
     private static final long serialVersionUID = 1L;
     public Long privatePhotoId;
@@ -51,7 +52,10 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto> {
     public List<Album> albums;
     final static public String albumsCol = "albums";
 
+    @RefreshId("privatePhotoWall")
     public Wall privatePhotoWall;
+
+    private static final Refresh<PrivatePhoto> REFRESH = new Refresh<PrivatePhoto>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -183,7 +187,7 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto> {
     }
 
     @UNIDIRECTIONAL
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public Wall getPrivatePhotoWall() {
         return privatePhotoWall;
     }
@@ -258,5 +262,11 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto> {
     @Override
     public int compareTo(final PrivatePhoto toBeComparedWith) {
         return (int) (this.getPrivatePhotoId() - toBeComparedWith.getPrivatePhotoId());
+    }
+
+    @Override
+    public PrivatePhoto refresh(final RefreshSpec refreshSpec) throws RefreshException {
+        REFRESH.refresh(this, refreshSpec);
+        return this;
     }
 }
