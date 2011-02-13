@@ -126,8 +126,8 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         System.out.println("");
         System.out.println("SETTING PERSISTENCE LOGGING");
 
-        EntityLifeCycleListener.PRE_ACTIONS.setObj(false);
-        EntityLifeCycleListener.POST_ACTIONS.setObj(false);
+        EntityLifeCycleListener.PRE_ACTIONS.setObj(true);
+        EntityLifeCycleListener.POST_ACTIONS.setObj(true);
         
         System.out.println("DONE SETTING PERSISTENCE LOGGING");
 
@@ -139,10 +139,5 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         System.out.println("********* ********* ********* ********* *********");
         System.out.println("");
         System.out.println(Hail.honour());
-
-        final Injector ygpInjector = Guice.createInjector(new YahooGeoPlanetClientModule());
-        final ClientFactory ygpClientFactory = ygpInjector.getInstance(ClientFactory.class);
     }
-
-    final static Logger logger = LoggerFactory.getLogger(StartupILikePlaces.class);
 }

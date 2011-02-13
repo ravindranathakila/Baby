@@ -7,12 +7,7 @@
     <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
     <properties>
       <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
-      <!--property name="openjpa.ConnectionDriverName" value="org.apache.derby.jdbc.ClientDriver"/>
-            <property name="openjpa.ConnectionUserName" value="ilp"/>
-            <property name="openjpa.ConnectionPassword" value="ilp"/>
-            <property name="openjpa.ConnectionURL" value="jdbc:derby://localhost:1527/ilp"/-->
-      <!--<property name="openjpa.jdbc.UpdateManager" value="operation-order"/>-->
-      <property name="openjpa.Log" value="DefaultLevel=INFO, Runtime=INFO"/>
+      <property name="openjpa.Log" value="File=../logs/openjpa.log, DefaultLevel=TRACE, Runtime=TRACE, SQL=TRACE"/>
     </properties>
   </persistence-unit>
 </persistence>

@@ -8,6 +8,8 @@ import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import ai.ilikeplaces.util.jpa.RefreshException;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -115,9 +117,27 @@ public class CRUDAlbum extends AbstractSLBCallbacks implements CRUDAlbumLocal {
      */
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Deprecated
     public Album doRAlbumByPrivateEvent(final String humanId, final long privateEventId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException {
         return eager ?
                 rPrivateEventLocal_.doRPrivateEventAsSystem(privateEventId, false).getPrivateEventAlbum().refresh() :
                 rPrivateEventLocal_.doRPrivateEventAsSystem(privateEventId, false).getPrivateEventAlbum();
+    }
+
+    /**
+     * @param humanId
+     * @param privateEventId by which to fetch the album
+     * @param refreshSpec
+     * @return
+     * @throws DBDishonourCheckedException
+     */
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Album doRAlbumByPrivateEvent(final String humanId, final long privateEventId, final RefreshSpec refreshSpec) throws DBDishonourCheckedException, DBFetchDataException {
+        try {
+            return rPrivateEventLocal_.doRPrivateEventAsSystem(privateEventId, false).getPrivateEventAlbum().refresh(refreshSpec);
+        } catch (final RefreshException e) {
+            throw new DBFetchDataException(e);
+        }
     }
 }

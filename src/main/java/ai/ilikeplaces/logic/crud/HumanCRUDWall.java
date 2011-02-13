@@ -9,6 +9,7 @@ import ai.ilikeplaces.logic.crud.unit.CRUDHumansWallLocal;
 import ai.ilikeplaces.logic.crud.unit.CRUDWallLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -47,7 +48,7 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Return<Wall> readWall(final HumanId humanId, Obj wallOwnerId__) {
+    public Return<Wall> readWall(final HumanId humanId, Obj wallOwnerId__, RefreshSpec refreshSpec__) {
         Return<Wall> r;
         r = new ReturnImpl<Wall>(crudHumansWallLocal_.dirtyRHumansWall(humanId.getObj()).getWall(), READ_WALL_SUCCESSFUL);
         return r;
@@ -81,8 +82,8 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doNTxUAddMuteEntry(crudHumansWallLocal_.dirtyRHumansWallID(operator__.getHumanId()),
-                                           mutee.getObj()), UPDATE_WALL_SUBSCRIPTION_SUCCESSFUL);
+                    .doUAddMuteEntry(crudHumansWallLocal_.dirtyRHumansWallID(operator__.getHumanId()),
+                            mutee.getObj()), UPDATE_WALL_SUBSCRIPTION_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, UPDATE_WALL_SUBSCRIPTION_FALIED, true);
         }
@@ -97,8 +98,8 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doNTxURemoveMuteEntry(crudHumansWallLocal_.dirtyRHumansWallID(operator__.getHumanId()),
-                                           mutee.getObj()), UPDATE_WALL_SUBSCRIPTION_SUCCESSFUL);
+                    .doURemoveMuteEntry(crudHumansWallLocal_.dirtyRHumansWallID(operator__.getHumanId()),
+                            mutee.getObj()), UPDATE_WALL_SUBSCRIPTION_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, UPDATE_WALL_SUBSCRIPTION_FALIED, true);
         }

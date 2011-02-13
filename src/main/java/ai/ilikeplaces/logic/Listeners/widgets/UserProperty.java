@@ -27,6 +27,10 @@ import java.io.IOException;
 abstract public class UserProperty extends AbstractWidgetListener {
 
     private static final String USER_PROPERTY_EMAIL_XHTML = "ai/ilikeplaces/widgets/UserProperty_email.xhtml";
+    private static final String YIKES__SOMETHING__WENT__WRONG = "YIKES_SOMETHING_WENT_WRONG";
+    private static final String PROFILE__PHOTO__DEFAULT = "PROFILE_PHOTO_DEFAULT";
+    private static final String PROFILE__PHOTOS = "PROFILE_PHOTOS";
+    private static final String WEBSITE = "WEBSITE";
 
     /**
      * Shows the profile belonging to humanId
@@ -54,7 +58,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
             formatProfileUrl(ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl(), true),
             formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));*/
         } else {
-            final String error = RBGet.gui().getString("YIKES_SOMETHING_WENT_WRONG");
+            final String error = RBGet.gui().getString(YIKES__SOMETHING__WENT__WRONG);
             $$(Controller.Page.user_property_name).setTextContent(error);
         }
     }
@@ -84,9 +88,33 @@ abstract public class UserProperty extends AbstractWidgetListener {
                     formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()),
                     content); //http://blog.ilikeplaces.com/
         } else {
-            final String error = RBGet.gui().getString("YIKES_SOMETHING_WENT_WRONG");
+            final String error = RBGet.gui().getString(YIKES__SOMETHING__WENT__WRONG);
             $$(Controller.Page.user_property_name).setTextContent(error);
         }
+    }
+
+    /**
+     * Shows the profile belonging to humanId
+     *
+     * @param request__
+     * @param appendToElement__
+     * @param content
+     * @param humansIdentity
+     * @param params
+     */
+    public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final Element content, final HumansIdentity humansIdentity, final Object... params) {
+        super(request__, Page.UserProperty, appendToElement__, humansIdentity, params);
+        $$(Controller.Page.user_property_name).setTextContent(humansIdentity.getHuman().getDisplayName());
+        $$(Controller.Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + humansIdentity.getUrl().getUrl());
+        $$(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(humansIdentity.getHumansIdentityProfilePhoto()));
+        $$(Controller.Page.user_property_content).appendChild(content);
+
+        this.fetchToEmail(
+                humansIdentity.getHuman().getDisplayName(),
+                formatProfileUrl(ProfileRedirect.PROFILE_URL + humansIdentity.getUrl().getUrl(), true),
+                formatProfilePhotoUrl(humansIdentity.getHumansIdentityProfilePhoto()),
+                content); //http://blog.ilikeplaces.com/
+
     }
 
     /**
@@ -168,11 +196,11 @@ abstract public class UserProperty extends AbstractWidgetListener {
      */
     static public String formatProfilePhotoUrl(final String rawURLFromDB) {
         return rawURLFromDB == null || rawURLFromDB.isEmpty() ?
-               RBGet.globalConfig.getString("PROFILE_PHOTO_DEFAULT") :
-               RBGet.globalConfig.getString("PROFILE_PHOTOS") + rawURLFromDB;
+                RBGet.globalConfig.getString(PROFILE__PHOTO__DEFAULT) :
+                RBGet.globalConfig.getString(PROFILE__PHOTOS) + rawURLFromDB;
     }
 
     static public String formatProfileUrl(final String relativeURL, final boolean makeAbsolute) {
-        return makeAbsolute ? RBGet.globalConfig.getString("WEBSITE") + relativeURL : relativeURL;
+        return makeAbsolute ? RBGet.globalConfig.getString(WEBSITE) + relativeURL : relativeURL;
     }
 }

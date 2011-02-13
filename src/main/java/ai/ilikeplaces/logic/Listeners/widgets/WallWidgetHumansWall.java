@@ -9,6 +9,7 @@ import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Document;
@@ -32,6 +33,7 @@ import java.io.IOException;
 public class WallWidgetHumansWall extends WallWidget {
 
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
+    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec();
 
 
     HumanId requestedProfile;
@@ -51,7 +53,7 @@ public class WallWidgetHumansWall extends WallWidget {
 
         fetchToEmail();
 
-        final Wall wall = DB.getHumanCrudWallLocal(true).readWall(requestedProfile, new Obj<HumanId>(currUserAsVisitor)).returnValueBadly();
+        final Wall wall = DB.getHumanCrudWallLocal(true).readWall(requestedProfile, new Obj<HumanId>(currUserAsVisitor), REFRESH_SPEC).returnValueBadly();
 
         for (final Msg msg : wall.getWallMsgs()) {
             new UserProperty(request, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
@@ -113,7 +115,7 @@ public class WallWidgetHumansWall extends WallWidget {
                             wallAppend.setObj("");
 
                             clear($$(Controller.Page.wallContent));
-                            final Wall wall = DB.getHumanCrudWallLocal(true).readWall(requestedProfile, new Obj<HumanId>(currUserAsVisitor)).returnValue();
+                            final Wall wall = DB.getHumanCrudWallLocal(true).readWall(requestedProfile, new Obj<HumanId>(currUserAsVisitor), null).returnValue();
                             final StringBuilder b = new StringBuilder("");
                             for (final Msg msg : wall.getWallMsgs()) {
                                 b.append(new UserProperty(request,
@@ -153,7 +155,7 @@ public class WallWidgetHumansWall extends WallWidget {
             @Override
             public void handleEvent(final Event evt_) {
 
-                if (DB.getHumanCrudWallLocal(true).readWall(myrequestedProfile, new Obj<HumanId>(currUserAsVisitor)).returnValueBadly().getWallMutes().contains(mycurrUserAsVisitor)) {
+                if (DB.getHumanCrudWallLocal(true).readWall(myrequestedProfile, new Obj<HumanId>(currUserAsVisitor), null).returnValueBadly().getWallMutes().contains(mycurrUserAsVisitor)) {
                     if (DB.getHumanCrudWallLocal(true).unmuteWall(myrequestedProfile, mycurrUserAsVisitor, new Obj<HumanId>(currUserAsVisitor)).returnStatus() == 0) {
                         $$(evt_).setTextContent(WallWidget.MUTE);
                     }

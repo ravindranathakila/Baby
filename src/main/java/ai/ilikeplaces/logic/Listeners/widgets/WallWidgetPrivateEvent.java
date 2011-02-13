@@ -12,6 +12,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.WallEntry;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Document;
@@ -36,6 +37,7 @@ import java.io.IOException;
 public class WallWidgetPrivateEvent extends WallWidget {
 
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
+    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec();
 
     HumanId humanId;
     Long privateEventId = null;
@@ -74,7 +76,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
 
 
         final Return<Wall> aReturn = DB.getHumanCrudPrivateEventLocal(true).
-                readWall(humanId, new Obj<Long>(privateEventId));
+                readWall(humanId, new Obj<Long>(privateEventId), REFRESH_SPEC);
 
         /**
          * If null, this means we have to check on if the wall entry parameter is available and update.
@@ -188,7 +190,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
                             wallAppend.setObj("");
 
                             clear($$(Controller.Page.wallContent));
-                            final Wall wall = (DB.getHumanCrudPrivateEventLocal(true).readWall(myhumanId, new Obj<Long>(myprivateEventId)).returnValueBadly());
+                            final Wall wall = (DB.getHumanCrudPrivateEventLocal(true).readWall(myhumanId, new Obj<Long>(myprivateEventId), REFRESH_SPEC).returnValueBadly());
                             final StringBuilder b = new StringBuilder("");
                             for (final Msg msg : wall.getWallMsgs()) {
                                 b.append(
@@ -230,7 +232,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
             @Override
             public void handleEvent(final Event evt_) {
 
-                if (DB.getHumanCrudPrivateEventLocal(true).readWall(myhumanId, new Obj<Long>(myprivateEventId)).returnValueBadly().getWallMutes().contains(myhumanId)) {
+                if (DB.getHumanCrudPrivateEventLocal(true).readWall(myhumanId, new Obj<Long>(myprivateEventId), REFRESH_SPEC).returnValueBadly().getWallMutes().contains(myhumanId)) {
                     DB.getHumanCrudPrivateEventLocal(true).unmuteWall(myhumanId, myhumanId, new Obj<Long>(myprivateEventId));
                     $$(evt_).setTextContent(MUTE);
 

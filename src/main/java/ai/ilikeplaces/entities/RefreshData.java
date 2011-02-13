@@ -18,5 +18,6 @@ public interface RefreshData<T>{
      * @throws DBFetchDataException in case the entity fails to refresh something inside it
      * @return T
      */
+    @Deprecated
     public T refresh() throws DBFetchDataException;
 }

@@ -4,12 +4,14 @@ import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.LOGIC;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
@@ -17,6 +19,10 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -38,15 +44,22 @@ import org.w3c.dom.html.HTMLDocument;
 public class WallWidgetPrivatePhoto extends WallWidget {
 
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
+    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec();
 
     HumanId humanId;
+
     Long privatePhotoId = null;
+
+    Map<String, HumansIdentity> wallProspects;
+
+
     private static final String NULL = "null";
     private static final String WALL_ENTRY = "wall_entry=";
     private static final String ENTERS_TEXT = " enters text:";
 
-    public WallWidgetPrivatePhoto(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId, final long privatePhotoId__) {
-        super(request__, appendToElement__, humanId, privatePhotoId__);
+
+    public WallWidgetPrivatePhoto(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId, final long privatePhotoId__, final List<HumansIdentity> wallProspects) {
+        super(request__, appendToElement__, humanId, privatePhotoId__, wallProspects);
     }
 
     /**
@@ -56,13 +69,18 @@ public class WallWidgetPrivatePhoto extends WallWidget {
     protected void init(final Object... initArgs) {
         this.humanId = ((HumanId) initArgs[0]).getSelfAsValid();
         this.privatePhotoId = (Long) initArgs[1];
+        List<HumansIdentity> listOfProspects = (List<HumansIdentity>) initArgs[2];
+        wallProspects = new HashMap<String, HumansIdentity>(listOfProspects.size());
+        for (final HumansIdentity humansIdentity : listOfProspects) {
+            wallProspects.put(humansIdentity.getHumanId(), humansIdentity);
+        }
 
         final String wall_entry = request.getServletRequest().getParameter(WallWidget.PARAM_WALL_ENTRY);
         Loggers.DEBUG.debug(WALL_ENTRY + (wall_entry != null ? wall_entry : NULL));
 
 
         final Return<Wall> aReturn = DB.getHumanCRUDPrivatePhotoLocal(true).
-                readWall(humanId, (Obj) new Obj<Long>(privatePhotoId).getSelfAsValid());
+                readWall(humanId, (Obj) new Obj<Long>(privatePhotoId).getSelfAsValid(), REFRESH_SPEC);
 
         final Wall wall = aReturn.returnValueBadly();
 
@@ -73,7 +91,7 @@ public class WallWidgetPrivatePhoto extends WallWidget {
                             request,
                             $$(Controller.Page.wallContent),
                             ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
-                            new HumanId(msg.getMsgMetadata())) {
+                            wallProspects.get(msg.getMsgMetadata())) {
                     }.fetchToEmail
             );
         }
@@ -115,7 +133,7 @@ public class WallWidgetPrivatePhoto extends WallWidget {
                             wallAppend.setObj("");
 
                             clear($$(Controller.Page.wallContent));
-                            final Wall wall = (DB.getHumanCRUDPrivatePhotoLocal(true).readWall(myhumanId, (Obj) new Obj<Long>(myprivatePhotoId).getSelfAsValid()).returnValueBadly());
+                            final Wall wall = (DB.getHumanCRUDPrivatePhotoLocal(true).readWall(myhumanId, (Obj) new Obj<Long>(myprivatePhotoId).getSelfAsValid(), REFRESH_SPEC).returnValueBadly());
                             final StringBuilder b = new StringBuilder("");
                             for (final Msg msg : wall.getWallMsgs()) {
                                 b.append(
@@ -151,7 +169,7 @@ public class WallWidgetPrivatePhoto extends WallWidget {
             @Override
             public void handleEvent(final Event evt_) {
 
-                if (DB.getHumanCRUDPrivatePhotoLocal(true).readWall(myhumanId, (Obj) new Obj<Long>(myprivatePhotoId).getSelfAsValid()).returnValueBadly().getWallMutes().contains(myhumanId)) {
+                if (DB.getHumanCRUDPrivatePhotoLocal(true).readWall(myhumanId, (Obj) new Obj<Long>(myprivatePhotoId).getSelfAsValid(), REFRESH_SPEC).returnValueBadly().getWallMutes().contains(myhumanId)) {
                     DB.getHumanCRUDPrivatePhotoLocal(true).unmuteWall(myhumanId, myhumanId, (Obj) new Obj<Long>(myprivatePhotoId).getSelfAsValid());
                     $$(evt_).setTextContent(MUTE);
 

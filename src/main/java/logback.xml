@@ -172,7 +172,7 @@
             <appender-ref ref="FILE_EXCEPTION" />
     </logger>
 
-    <logger name="USER_EXCEPTION" level="debug">
+    <logger name="USER_EXCEPTION" level="error">
             <appender-ref ref="FILE_USER_EXCEPTION" />
     </logger>
 

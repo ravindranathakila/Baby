@@ -76,9 +76,8 @@ public class Url implements Serializable {
 
         final Url url1 = (Url) o;
 
-        if (url != null ? !url.equals(url1.url) : url1.url != null) return false;
+        return !(url != null ? !url.equals(url1.url) : url1.url != null);
 
-        return true;
     }
 
     @Override

@@ -4,6 +4,7 @@ import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.Obj;
 import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,5 +19,5 @@ public interface GeneralCRUDWall {
 
     public Return<Wall> unmuteWall(final HumanId operator, final HumanId mutee__, final Obj wallOwnerId__);
 
-    public Return<Wall> readWall(final HumanId operator__, final Obj wallOwnerId__);
+    public Return<Wall> readWall(final HumanId operator__, final Obj wallOwnerId__, RefreshSpec refreshSpec__);
 }

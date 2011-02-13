@@ -8,6 +8,7 @@ import ai.ilikeplaces.exception.NoPrivilegesException;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,6 +57,8 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
     private static final String DELETE_PRIVATE_PHOTO_FAILED = "Delete PrivatePhoto FAILED!";
     private static final String DELETE_PHOTO_WITH_ID = "delete photo with id:";
 
+    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("privatePhotoWall");
+
     public HumanCRUDPrivatePhoto() {
         logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", HumanCRUDPrivatePhoto.class, this.hashCode());
     }
@@ -86,7 +89,7 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
     public Return<List<PrivatePhoto>> rPrivatePhotos(final String humanId) {
         Return<List<PrivatePhoto>> r;
         try {
-            return new ReturnImpl<List<PrivatePhoto>>(rPrivatePhotoLocal_.doRAllPrivatePhotos(humanId), FIND_ALL_PHOTOS_BY_HUMAN_SUCCESSFUL);
+            return new ReturnImpl<List<PrivatePhoto>>(rPrivatePhotoLocal_.doDirtyRAllPrivatePhotos(humanId), FIND_ALL_PHOTOS_BY_HUMAN_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<List<PrivatePhoto>>(t, FIND_ALL_PHOTOS_BY_HUMAN_FAILED, true);
         }
@@ -95,10 +98,10 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Return<PrivatePhoto> rPrivatePhoto(final HumanId humanId, final Obj<Long> privatePhotoId) {
+    public Return<PrivatePhoto> rPrivatePhoto(final HumanId humanId, final Obj<Long> privatePhotoId, final RefreshSpec refreshSpec) {
         Return<PrivatePhoto> r;
         try {
-            return new ReturnImpl<PrivatePhoto>(rPrivatePhotoLocal_.doDirtyRPrivatePhoto(humanId.getObjectAsValid(), privatePhotoId.getObjectAsValid()), FIND_ALL_PHOTOS_BY_HUMAN_SUCCESSFUL);
+            return new ReturnImpl<PrivatePhoto>(rPrivatePhotoLocal_.doRPrivatePhoto(humanId.getObjectAsValid(), privatePhotoId.getObjectAsValid(), refreshSpec), FIND_ALL_PHOTOS_BY_HUMAN_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivatePhoto>(t, FIND_ALL_PHOTOS_BY_HUMAN_FAILED, true);
         }
@@ -144,10 +147,10 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doNTxUAddEntry(rPrivatePhoto(operator__, wallOwnerId__).returnValueBadly().getPrivatePhotoWall().getWallId(),
+                    .doUAddEntry(rPrivatePhoto(operator__, wallOwnerId__, REFRESH_SPEC).returnValueBadly().getPrivatePhotoWall().getWallId(),
                             msgOwner__.getObj(),
                             contentToBeAppended), WRITE_WALL_SUCCESSFUL);
-        } catch (final AbstractEjbApplicationException t) {
+        } catch (final Throwable t) {
             r = new ReturnImpl<Wall>(t, WRITE_WALL_FAILED, true);
         }
         return r;
@@ -161,9 +164,9 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doNTxUAddMuteEntry(rPrivatePhoto(operator__, wallOwnerId__).returnValueBadly().getPrivatePhotoWall().getWallId(),
+                    .doUAddMuteEntry(rPrivatePhoto(operator__, wallOwnerId__, REFRESH_SPEC).returnValueBadly().getPrivatePhotoWall().getWallId(),
                             mutee.getObj()), MUTE_WALL_SUCCESSFUL);
-        } catch (final AbstractEjbApplicationException t) {
+        } catch (final Throwable t) {
             r = new ReturnImpl<Wall>(t, MUTE_WALL_FAILED, true);
         }
         return r;
@@ -177,9 +180,9 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doNTxURemoveMuteEntry(rPrivatePhoto(operator__, wallOwnerId__).returnValueBadly().getPrivatePhotoWall().getWallId(),
+                    .doURemoveMuteEntry(rPrivatePhoto(operator__, wallOwnerId__, REFRESH_SPEC).returnValueBadly().getPrivatePhotoWall().getWallId(),
                             mutee.getObj()), UNMUTE_WALL_SUCCESSFUL);
-        } catch (final AbstractEjbApplicationException t) {
+        } catch (final Throwable t) {
             r = new ReturnImpl<Wall>(t, UNMUTE_WALL_FAILED, true);
         }
         return r;
@@ -189,15 +192,15 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
 
 
     @Override
-    public Return<Wall> readWall(final HumanId operator__, final Obj wallOwnerId__) {
+    public Return<Wall> readWall(final HumanId operator__, final Obj wallOwnerId__, RefreshSpec refreshSpec__) {
 
         Return<Wall> r;
         try {
-            final PrivatePhoto privatePhoto = rPrivatePhoto(operator__, wallOwnerId__).returnValueBadly();
+            final PrivatePhoto privatePhoto = rPrivatePhoto(operator__, wallOwnerId__, REFRESH_SPEC).returnValueBadly();
             final Wall privatePhotoWall = privatePhoto.getPrivatePhotoWall();
             r = new ReturnImpl<Wall>(crudWallLocal_
                     .doDirtyRWall(privatePhotoWall.getWallId()), READ_WALL_SUCCESSFUL);
-        } catch (final AbstractEjbApplicationException t) {
+        } catch (final Throwable t) {
             r = new ReturnImpl<Wall>(t, READ_WALL_FAILED, true);
         }
         return r;

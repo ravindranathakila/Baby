@@ -6,6 +6,10 @@ import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
+import ai.ilikeplaces.util.jpa.Refresh;
+import ai.ilikeplaces.util.jpa.RefreshException;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
+import ai.ilikeplaces.util.jpa.Refreshable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,13 +27,13 @@ import java.util.List;
 @EntityListeners(EntityLifeCycleListener.class)
 @NamedQueries({
         @NamedQuery(name = "FindAllPrivateLocationsByName",
-                    query = "SELECT loc FROM PrivateLocation loc WHERE loc.privateLocationName = :privateLocationName"),
+                query = "SELECT loc FROM PrivateLocation loc WHERE loc.privateLocationName = :privateLocationName"),
         @NamedQuery(name = "FindAllPrivateLocationNamesByLikeName",
-                    query = "SELECT loc.privateLocationName FROM PrivateLocation loc WHERE UPPER(loc.privateLocationName) LIKE :privateLocationName"),
+                query = "SELECT loc.privateLocationName FROM PrivateLocation loc WHERE UPPER(loc.privateLocationName) LIKE :privateLocationName"),
         @NamedQuery(name = "FindAllPrivateLocationsByBounds",
-                    query = "SELECT loc FROM PrivateLocation loc WHERE (loc.privateLocationLatitude BETWEEN " + ":" + PrivateLocation.PrivateLocationLatitudeSouth + " AND " + ":" + PrivateLocation.PrivateLocationLatitudeNorth + ") AND (loc.privateLocationLongitude BETWEEN " + ":" + PrivateLocation.PrivateLocationLongitudeWest + " AND " + ":" + PrivateLocation.PrivateLocationLongitudeEast + ")")})
+                query = "SELECT loc FROM PrivateLocation loc WHERE (loc.privateLocationLatitude BETWEEN " + ":" + PrivateLocation.PrivateLocationLatitudeSouth + " AND " + ":" + PrivateLocation.PrivateLocationLatitudeNorth + ") AND (loc.privateLocationLongitude BETWEEN " + ":" + PrivateLocation.PrivateLocationLongitudeWest + " AND " + ":" + PrivateLocation.PrivateLocationLongitudeEast + ")")})
 //                           select *   FROM ilp.privatelocation WHERE (    privatelocationlatitude BETWEEN                                 40                         AND                                   50                      ) AND (    privatelocationlongitude between                                 -75                        and                               -7                          )
-public class PrivateLocation implements Serializable, RefreshData<PrivateLocation> {
+public class PrivateLocation implements Serializable, RefreshData<PrivateLocation>, Refreshable<PrivateLocation> {
 
     final static Logger logger = LoggerFactory.getLogger(PrivateLocation.class.getName());
 
@@ -69,6 +73,7 @@ public class PrivateLocation implements Serializable, RefreshData<PrivateLocatio
     private static final String LONGITUDE = ", longitude=";
     private static final char CLOSECURL = '}';
 
+    private static final Refresh<PrivateLocation> REFRESH = new Refresh<PrivateLocation>();
 
     /**
      * @return privateLocationId
@@ -196,6 +201,12 @@ public class PrivateLocation implements Serializable, RefreshData<PrivateLocatio
         this.getPrivateEvents().size();
         this.getPrivateLocationOwners().size();
         this.getPrivateLocationViewers().size();
+        return this;
+    }
+
+    @Override
+    public PrivateLocation refresh(final RefreshSpec refreshSpec) throws RefreshException {
+        REFRESH.refresh(this, refreshSpec);
         return this;
     }
 }

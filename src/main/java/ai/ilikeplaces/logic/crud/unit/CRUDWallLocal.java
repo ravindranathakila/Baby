@@ -30,6 +30,7 @@ public interface CRUDWallLocal {
      * @param contentToBeAppended
      * @return Wall
      */
+    @Deprecated
     public Wall doNTxUAppendToWall(final long wallId, final String contentToBeAppended) throws DBDishonourCheckedException;
 
     /**
@@ -37,25 +38,25 @@ public interface CRUDWallLocal {
      * @param contentToBeAppended
      * @return Wall
      */
-    public Wall doNTxUAddEntry(long wallId, final String humanId, String contentToBeAppended) throws DBDishonourCheckedException;
+    public Wall doUAddEntry(long wallId, final String humanId, String contentToBeAppended) throws DBDishonourCheckedException;
 
     /**
      * @param wallId
      * @return Wall
      */
-    public Wall doNTxUAddMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException;
+    public Wall doUAddMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException;
 
     /**
      * @param wallId
      * @return Wall
      */
-    public Wall doNTxURemoveMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException;
+    public Wall doURemoveMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException;
 
     /**
      * @param wallId
      * @return Wall
      */
-    public Wall doNTxUClearWall(final long wallId) throws DBDishonourCheckedException;
+    public Wall doUClearWall(final long wallId) throws DBDishonourCheckedException;
 
     /**
      * @param wallId

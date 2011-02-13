@@ -3,6 +3,8 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.exception.DBFetchDataException;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
 @Local
 public interface RPrivatePhotoLocal {
 
-    public List<PrivatePhoto> doRAllPrivatePhotos(final String humanId) throws DBDishonourCheckedException;
+    public List<PrivatePhoto> doDirtyRAllPrivatePhotos(final String humanId) throws DBDishonourCheckedException;
 
-    public PrivatePhoto doDirtyRPrivatePhoto(final String humanId, final Long privatePhotoId) throws DBDishonourCheckedException;
+    public PrivatePhoto doRPrivatePhoto(final String humanId, final Long privatePhotoId, RefreshSpec refreshSpec) throws DBFetchDataException;
 }

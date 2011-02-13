@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.Listeners.widgets.privateevent;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.HumansPrivateEvent;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.logic.Listeners.widgets.AlbumManager;
@@ -59,6 +60,7 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
         final HumanId humanId = new HumanId((String) initArgs[0]);
         final long privateEventId = (Long) initArgs[1];
 
+        @WARNING("Underlying widgets expect a fully refreshed PrivateEvent with respect to owners, visitors and viewers")
         final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(humanId.getObjectAsValid(), privateEventId);
 
 
@@ -94,7 +96,7 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
             };
             if ((Boolean) initArgs[2]) {
                 new WallWidgetPrivateEvent(request, $$(Page.privateEventViewWall), humanId, r.returnValue().getPrivateEventId());
-                new AlbumManager(request, $$(Controller.Page.privateEventViewAlbum), humanId, r.returnValue().getPrivateEventId());
+                new AlbumManager(request, $$(Controller.Page.privateEventViewAlbum), humanId, r.returnValue());
                 
                 final GeoCoord gc = new GeoCoord();
                 gc.setObj(r.returnValue().getPrivateLocation().getPrivateLocationLatitude() + "," + r.returnValue().getPrivateLocation().getPrivateLocationLongitude());
