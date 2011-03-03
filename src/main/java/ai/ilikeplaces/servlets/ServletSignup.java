@@ -204,15 +204,16 @@ final public class ServletSignup extends HttpServlet {
                     throw r.returnError();
                 } else {
                     try {
+                        final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                                .append(ServletLogin.Username, username, true)
+                                .append(ServletLogin.Password,
+                                        DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(request__.getParameter(Username)))
+                                                .returnValue()
+                                                .getHumanAuthenticationHash())
+                                .get();
                         final String mail = MessageFormat.format(gUI.getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
-                                .replace("activationURL",
-                                        new Parameter("http://www.ilikeplaces.com/" + "activate")
-                                                .append(ServletLogin.Username, username, true)
-                                                .append(ServletLogin.Password,
-                                                        DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(request__.getParameter(Username)))
-                                                                .returnValue()
-                                                                .getHumanAuthenticationHash())
-                                                .get());
+                                .replace("activationURL", "<a href='" +
+                                        activationURL + "' >" + activationURL + "</a>");
                         SendMail.getSendMailLocal().sendAsSimpleText(
                                 username,
                                 gUI.getString("SIGNUP_HEADER"),

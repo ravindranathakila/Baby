@@ -104,7 +104,7 @@ public class SubdomainForward implements Filter {
 //                filterChain.doFilter(request, servletResponse);
 //            }
         } catch (final Throwable e) {
-            sl.multiComplete(new Loggers.LEVEL[]{Loggers.LEVEL.DEBUG, Loggers.LEVEL.ERROR}, Loggers.FAILED);
+            sl.multiComplete(new Loggers.LEVEL[]{Loggers.LEVEL.DEBUG, Loggers.LEVEL.ERROR}, e.getMessage());
             filterChain.doFilter(request, servletResponse);
         }
     }

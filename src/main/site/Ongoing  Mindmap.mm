@@ -765,21 +765,25 @@
 </node>
 </node>
 </node>
-<node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" ID="Freemind_Link_1303374308" MODIFIED="1283778680546" POSITION="right" TEXT="Lab">
+<node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" ID="Freemind_Link_1303374308" MODIFIED="1297919547171" POSITION="right" TEXT="Lab">
 <icon BUILTIN="wizard"/>
-<node CREATED="1283778655218" FOLDED="true" ID="Freemind_Link_1143795250" MODIFIED="1283779225796" TEXT="Guide">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>Lab is where all the innovative solutions spring up. On the contrary that a things should be markatable, most stuff start on the wizardry lab.&#xa;Put your idea here, first on SPILL. Then try to shift it to SELL.&#xa;Move it back and forth, and well, its simple, coz THATS IT! You can cross check it with the Marketing section criteria and Focus section criteria. &#xa;Then shift it to QA.</text>
+</hook>
+<node CREATED="1283778655218" ID="Freemind_Link_1143795250" MODIFIED="1283779225796" TEXT="Guide">
 <icon BUILTIN="help"/>
-<node CREATED="1283871999906" ID="Freemind_Link_1891457905" MODIFIED="1283872001937" TEXT="SPILL">
+<node CREATED="1283871999906" ID="Freemind_Link_1891457905" MODIFIED="1297920194500" TEXT="SPILL">
+<icon BUILTIN="help"/>
 <node CREATED="1283778709546" ID="Freemind_Link_1267112987" MODIFIED="1285777891181" TEXT="first level should be a clear name">
 <icon BUILTIN="help"/>
 </node>
-<node CREATED="1283778731421" ID="Freemind_Link_72849697" MODIFIED="1285777894797" TEXT="second level should be a clear problem people face">
+<node CREATED="1283778731421" ID="Freemind_Link_72849697" MODIFIED="1297920093031" TEXT="second level should be a clear problem people face(BEAST)">
 <icon BUILTIN="help"/>
 <node CREATED="1285122159453" ID="Freemind_Link_698135352" MODIFIED="1285122185046" TEXT="A topic can have serveral problems. More the worse!">
 <icon BUILTIN="clanbomber"/>
 </node>
 </node>
-<node CREATED="1283778741140" ID="Freemind_Link_929868034" MODIFIED="1294982226481" TEXT="third level should be a clear answer">
+<node CREATED="1283778741140" ID="Freemind_Link_929868034" MODIFIED="1297920102812" TEXT="third level should be a clear answer(HOW TO SLAY THE BEAST)">
 <icon BUILTIN="help"/>
 </node>
 <node CREATED="1283778760218" ID="Freemind_Link_1421236166" MODIFIED="1294982236324" TEXT="fouth level should be a clear solution">
@@ -789,16 +793,20 @@
 <icon BUILTIN="help"/>
 </node>
 </node>
-<node CREATED="1283872008593" ID="Freemind_Link_236959404" MODIFIED="1283872010218" TEXT="SELL">
-<node CREATED="1283872171218" ID="Freemind_Link_1566316578" MODIFIED="1283872192046" TEXT="Remove Remove Remove. Stripe Down Everything!"/>
-<node CREATED="1283872201750" ID="Freemind_Link_1046609847" MODIFIED="1283872257796" TEXT="Recheck FOCUS">
+<node CREATED="1283872008593" ID="Freemind_Link_236959404" MODIFIED="1297920194484" TEXT="SELL">
+<icon BUILTIN="help"/>
+<node CREATED="1283872171218" ID="Freemind_Link_1566316578" MODIFIED="1297920194484" TEXT="Remove Remove Remove. Stripe Down Everything!">
+<icon BUILTIN="help"/>
+</node>
+<node CREATED="1283872201750" ID="Freemind_Link_1046609847" MODIFIED="1297920194484" TEXT="Recheck FOCUS">
 <arrowlink DESTINATION="Freemind_Link_1290727434" ENDARROW="Default" ENDINCLINATION="307;0;" ID="Freemind_Arrow_Link_966682086" STARTARROW="None" STARTINCLINATION="307;0;"/>
+<icon BUILTIN="help"/>
 </node>
 </node>
 </node>
 <node CREATED="1292142207656" ID="Freemind_Link_1398985645" MODIFIED="1292142222296" TEXT="Research">
 <icon BUILTIN="xmag"/>
-<node CREATED="1296739039673" ID="Freemind_Link_410080562" MODIFIED="1296739058761" TEXT="Topic:Advertisement Integration With Websites">
+<node CREATED="1296739039673" FOLDED="true" ID="Freemind_Link_410080562" MODIFIED="1296739058761" TEXT="Topic:Advertisement Integration With Websites">
 <node CREATED="1296739060039" ID="Freemind_Link_1649830396" MODIFIED="1296739064542" TEXT="Size"/>
 <node CREATED="1296739065430" ID="Freemind_Link_1329406423" MODIFIED="1296739067363" TEXT="Position"/>
 <node CREATED="1296739067846" ID="Freemind_Link_544860435" MODIFIED="1296739081636" TEXT="Media:Text/Pic/Video"/>
@@ -810,10 +818,21 @@
 <node CREATED="1296739154717" ID="Freemind_Link_1493886441" MODIFIED="1296739175784" TEXT="Should an add be of same interests of site?"/>
 </node>
 </node>
+<node CREATED="1297860986562" ID="Freemind_Link_497848911" MODIFIED="1297861001765" TEXT="Topic:Importance Of Privacy Policy and Terms Of Services">
+<node CREATED="1297861679421" FOLDED="true" ID="Freemind_Link_1832883947" LINK="http://ezinearticles.com/?Privacy-Policy-and-Its-Importance-For-Online-Businesses&amp;id=4768149" MODIFIED="1297861705515" TEXT="ezine article on importance and protection of owner">
+<node CREATED="1297861692640" ID="Freemind_Link_1258499414" MODIFIED="1297861733765" TEXT="Privacy policy is often ignored by the visitors and users who are signing up with some online service (just like any other document stating the terms and conditions of the agreement). Does that mean you should discount putting one in place, for the reason that people are not paying any attention? Definitely not, because more than the visitors, it is going to protect the website owner (i.e. you) in case some problem arises. Privacy policy is a document that explains how the website collects, uses or disseminates the visitor&apos;s private information. People are often careless when checking in boxes that states &quot;I agree with the terms and conditions&quot; (because of the length of the document and also because they are not aware of the consequences). However, the trend is changing as the issue of privacy has recently been raised by many bloggers. In addition to that, legal documents like privacy policy and refund policy speaks volume about the professionalism and sincerity of the online businesses. As the average client gets more and more informed, absence of such documents will start to play an important role in the decision making process of the customers.&#xa;&#xa;Writing down a privacy policy is quite simple; it usually talks about the use of their email address (for example if you&apos;ll be using them to send unsolicited emails in the future or not) or cookies. Privacy policy becomes more important if you are collecting the customers&apos; credit card information along with their address and telephone numbers. Now, they&apos;ve every right to know about the procedure and company&apos;s policy regarding the use and privacy of this information.&#xa;&#xa;Privacy policy usually starts from couple of lines regarding company&apos;s views about the privacy of customers. Even though the visitors provide most of this information willingly (filling out some online form), sometimes this information can be collected by means they aren&apos;t aware of (e.g. cookies), therefore, you must make it clear as to what information would you obtain and how&apos;re you going to secure this information, for example the database, which contains this information, must be guarded against all kinds of hacking attacks. Your website must feature your contact details so that the visitors can contact and inquire if they have some specific issues regarding their privacy. Make sure that you are strictly following your policy, because if this policy has been violated in any way, the user will get a very strong case against you and your company.&#xa;&#xa;"/>
+</node>
+</node>
+<node CREATED="1297861086500" FOLDED="true" ID="Freemind_Link_1503179991" MODIFIED="1297861108625" TEXT="Topic:Privacy Policy and Terms Of Services How To">
+<node CREATED="1297861109421" ID="Freemind_Link_906771372" LINK="http://www.etrust.org/guidance/privacy_policy.html" MODIFIED="1297861158546" TEXT="Key Components of a Privacy Policy eTrust">
+<node CREATED="1297861176171" ID="Freemind_Link_848398174" MODIFIED="1297861196671" TEXT="A privacy policy is one of the most important documents on any website. It details your company&apos;s views and procedures on the information collected from visitors.&#xa;&#xa;Although a privacy policy is technically a legal document, great effort should be made to craft a document that is both accurate and easy to understand, obscuring hidden clauses in reams of text is not acceptable.&#xa;&#xa;The main sections are as follows:&#xa;&#xa;Introduction: This section can tell your visitor a little about your organization, and any special information or functions that your website has. If your website has special conditions for collecting information from children (under 16 etc), you should state them clearly in this section.&#xa;&#xa;Information Collected: Visitors have a right to know what information you are collecting. It may be obvious that you are collecting personal details by asking them to complete a form, but you should make it clear. You should also include information logged by your servers, such as hostnames and IP addresses.&#xa;&#xa;Method of Collection: This details the methods you use to collect the information. Is it all automated? Do the forms visitors fill in collect other information, such as the original referrer? All of these questions will help you build a detailed description of how you collect information.&#xa;&#xa;Storage of Information: How is the information stored? If you store information in a database and are located in the UK you may need to register with the government regarding the data protection act. If your servers are in the EU you will need to ask permission to transmit data outside the union, even if it stays within your company. Visitors have a right to know that you will make every effort to store their personal information in a safe and secure environment.&#xa;&#xa;Contact details: Its important to be as transparent as possible, and allow users to contact you if they have a query. You should feature both an email address (or online form), as well as a real world address where a user can write to."/>
+</node>
+<node CREATED="1297861818921" ID="Freemind_Link_249347868" LINK="http://www.godaddy.com/Domains/certified-domains.aspx" MODIFIED="1297861851828" TEXT="Go Daddy Certified Domain"/>
+</node>
 </node>
 <node CREATED="1283778802578" ID="Freemind_Link_371419217" MODIFIED="1283871925359" TEXT="Spill">
 <icon BUILTIN="bookmark"/>
-<node CREATED="1284651235765" ID="Freemind_Link_995976715" MODIFIED="1294982059801" TEXT="Location Based Business Interaction">
+<node CREATED="1284651235765" FOLDED="true" ID="Freemind_Link_995976715" MODIFIED="1294982059801" TEXT="Location Based Business Interaction">
 <icon BUILTIN="full-1"/>
 <node CREATED="1294981972961" ID="Freemind_Link_1233960596" MODIFIED="1294982201138" TEXT="What does a business have that we can make use of">
 <icon BUILTIN="full-2"/>
@@ -853,9 +872,9 @@
 <arrowlink DESTINATION="Freemind_Link_380118571" ENDARROW="Default" ENDINCLINATION="272;0;" ID="Freemind_Arrow_Link_745976569" STARTARROW="None" STARTINCLINATION="272;0;"/>
 </node>
 <node CREATED="1296737968810" ID="Freemind_Link_1361244318" MODIFIED="1296738601888" TEXT="The Holiday Effect">
+<arrowlink DESTINATION="Freemind_Link_1433862061" ENDARROW="Default" ENDINCLINATION="201;0;" ID="Freemind_Arrow_Link_23350433" STARTARROW="None" STARTINCLINATION="201;0;"/>
 <arrowlink DESTINATION="Freemind_Link_1578588483" ENDARROW="Default" ENDINCLINATION="148;0;" ID="Freemind_Arrow_Link_403766009" STARTARROW="None" STARTINCLINATION="148;0;"/>
 <arrowlink DESTINATION="Freemind_Link_10752901" ENDARROW="Default" ENDINCLINATION="305;0;" ID="Freemind_Arrow_Link_1311821577" STARTARROW="None" STARTINCLINATION="305;0;"/>
-<arrowlink DESTINATION="Freemind_Link_1433862061" ENDARROW="Default" ENDINCLINATION="201;0;" ID="Freemind_Arrow_Link_23350433" STARTARROW="None" STARTINCLINATION="201;0;"/>
 </node>
 <node CREATED="1296738263976" ID="Freemind_Link_1196417440" MODIFIED="1296738265753" TEXT="Features">
 <node CREATED="1296738305892" ID="Freemind_Link_1040832070" MODIFIED="1296738309787" TEXT="Hz">
@@ -930,7 +949,7 @@
 </node>
 <node CREATED="1291768251093" FOLDED="true" ID="Freemind_Link_1732572843" MODIFIED="1291814734062" TEXT="WOEID Pages">
 <icon BUILTIN="full-1"/>
-<node CREATED="1292167944812" ID="Freemind_Link_1772510762" MODIFIED="1292168208781" TEXT="basics">
+<node CREATED="1292167944812" FOLDED="true" ID="Freemind_Link_1772510762" MODIFIED="1292168208781" TEXT="basics">
 <icon BUILTIN="flag"/>
 <node CREATED="1291768464718" ID="Freemind_Link_1707288247" MODIFIED="1291814737671" TEXT="Is this a trustworthy place to book online?">
 <icon BUILTIN="full-2"/>
@@ -1073,16 +1092,21 @@
 </node>
 </node>
 </node>
-<node CREATED="1296738717291" ID="Freemind_Link_1846412680" MODIFIED="1296738727450" TEXT="My Home">
+<node CREATED="1296738717291" ID="Freemind_Link_1846412680" MODIFIED="1297776794625" TEXT="My Home">
+<arrowlink DESTINATION="Freemind_Link_1846412680" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Freemind_Arrow_Link_995728103" STARTARROW="None" STARTINCLINATION="0;0;"/>
+<icon BUILTIN="full-1"/>
+<node CREATED="1297860944031" ID="Freemind_Link_1776853537" MODIFIED="1297860946500" TEXT="My Own Home"/>
+</node>
+<node CREATED="1297860928218" ID="Freemind_Link_1058108355" MODIFIED="1297860936234" TEXT="Location Checkin">
 <icon BUILTIN="full-1"/>
 </node>
 </node>
-<node CREATED="1283871927859" ID="Freemind_Link_504513171" MODIFIED="1291817174968" TEXT="Sell">
+<node CREATED="1283871927859" FOLDED="true" ID="Freemind_Link_504513171" MODIFIED="1291817174968" TEXT="Sell">
 <icon BUILTIN="bell"/>
 <hook NAME="accessories/plugins/NodeNote.properties">
 <text>Zeroeth Rule of Marketing: Give them what they want.&#xa;Zeroeth Rule of PR: Its personal.</text>
 </hook>
-<node CREATED="1283778806593" ID="Freemind_Link_991036540" MODIFIED="1283778870015" TEXT="Fun Map">
+<node CREATED="1283778806593" FOLDED="true" ID="Freemind_Link_991036540" MODIFIED="1283778870015" TEXT="Fun Map">
 <icon BUILTIN="full-1"/>
 <node CREATED="1283778817171" ID="Freemind_Link_832808578" MODIFIED="1283779022984" TEXT="How do I find where to have fun at this place?">
 <icon BUILTIN="full-2"/>
@@ -1172,6 +1196,287 @@
 </node>
 </node>
 <node CREATED="1297184213796" ID="Freemind_Link_1993648582" MODIFIED="1297184225843" TEXT="Dates and Times in Wall Entries"/>
+<node CREATED="1297780639781" ID="Freemind_Link_295470412" MODIFIED="1297780646796" TEXT="Slay the Monster">
+<node CREATED="1297780647859" ID="Freemind_Link_630121394" MODIFIED="1297780654875" TEXT="Collect the Reward">
+<node CREATED="1297780655593" ID="Freemind_Link_1057860380" MODIFIED="1297780660421" TEXT="Tell the Story"/>
+</node>
+</node>
+<node CREATED="1297781460031" ID="Freemind_Link_1175706884" MODIFIED="1297781481593" TEXT="OMG What Just Happened">
+<node CREATED="1297781483765" ID="Freemind_Link_1137423159" MODIFIED="1297781489937" TEXT="Tell My Story"/>
+</node>
+<node CREATED="1299097679609" ID="Freemind_Link_106235468" MODIFIED="1299097694468" TEXT="I don&apos;t know what that is, but sure looks something cool!">
+<node CREATED="1297781483765" ID="Freemind_Link_351119703" MODIFIED="1299097707062" TEXT="Coupon Box"/>
+<node CREATED="1299097707812" ID="Freemind_Link_1089595284" MODIFIED="1299097712828" TEXT="Invitation Code Box"/>
+<node CREATED="1299097714984" ID="Freemind_Link_882812236" MODIFIED="1299097718859" TEXT="Discount Code Box"/>
+<node CREATED="1299097721765" ID="Freemind_Link_801920310" MODIFIED="1299097725890" TEXT="Unlock Box"/>
+<node CREATED="1299097740625" ID="Freemind_Link_1524411708" MODIFIED="1299097756875" TEXT="Unlock Enterprise Bla Bla Bla"/>
+</node>
+<node CREATED="1299097775953" ID="Freemind_Link_1291810068" MODIFIED="1299097792125" TEXT="Sell By Products">
+<node CREATED="1297781483765" ID="Freemind_Link_1926243226" MODIFIED="1299097844078" TEXT="Release Privacy Policy Under CC Modifiable Commercially Usable And Request Link Back To Website"/>
+</node>
+</node>
+<node CREATED="1297921271359" ID="Freemind_Link_642182478" MODIFIED="1297921351406" TEXT="D&amp;D">
+<icon BUILTIN="password"/>
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>Slay the beast, Grab the reward, Tell the story</text>
+</hook>
+<node CREATED="1297860960718" ID="Freemind_Link_1660226477" MODIFIED="1297919566812" TEXT="Legal Credibility">
+<icon BUILTIN="full-1"/>
+</node>
+<node BACKGROUND_COLOR="#663300" COLOR="#ffffff" CREATED="1297881848375" ID="Freemind_Link_627582035" MODIFIED="1297925707640" TEXT="The Beast!">
+<node BACKGROUND_COLOR="#663300" COLOR="#ffffff" CREATED="1297881848375" ID="Freemind_Link_1840256455" MODIFIED="1297925707453" TEXT="Unfortunately, this time the beast was us!"/>
+<node BACKGROUND_COLOR="#663300" COLOR="#ffffff" CREATED="1297881848375" ID="Freemind_Link_1157607150" MODIFIED="1297925707640" TEXT="iLikePlaces.com neither had a Privacy Policy nor Terms of Services. This was simply crazy."/>
+<node BACKGROUND_COLOR="#663300" COLOR="#ffffff" CREATED="1297881848375" ID="Freemind_Link_336422878" MODIFIED="1297925707640" TEXT="The grand users had FUD in providing their email address to signup. Some feared using their common password with us!"/>
+<node BACKGROUND_COLOR="#663300" COLOR="#ffffff" CREATED="1297881848375" ID="Freemind_Link_1889644953" MODIFIED="1297925707453" TEXT="The grand users had FUD in social exposure through the website because well, WE could as well be terrorist without a PP and ToS"/>
+</node>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297920025843" ID="Freemind_Link_1954215867" MODIFIED="1297923397140" TEXT="The Slay!">
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297923675203" ID="Freemind_Link_218027695" MODIFIED="1297926236031" TEXT="We had to help our users to get over this FUD"/>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297923699234" ID="Freemind_Link_1976937697" MODIFIED="1297924194718" TEXT="Okay, there were several options."/>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297923707484" ID="Freemind_Link_729638738" MODIFIED="1297924194703" TEXT="Some were damn expensive, but well, would definitely work"/>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297923722796" ID="Freemind_Link_1924214801" LINK="http://www.truste.com/privacy_seals_and_services/small_medium_business_privacy/privacy-plans.html" MODIFIED="1297924194703" TEXT="Truste privacy certificate was an option, but well, we got smarter."/>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297924044625" FOLDED="true" ID="Freemind_Link_499659509" MODIFIED="1297924299203" TEXT="We figured, hey, lets find out if we ARE giving users the privacy they want!">
+<node CREATED="1298034443156" ID="Freemind_Link_292480879" MODIFIED="1298034727687" TEXT="user friend information"/>
+<node CREATED="1298034728265" ID="Freemind_Link_885989975" MODIFIED="1298034735156" TEXT="user comments of friends"/>
+<node CREATED="1298034735781" ID="Freemind_Link_1853717490" MODIFIED="1298034741203" TEXT="user comments on self"/>
+<node CREATED="1298034741718" ID="Freemind_Link_171866574" MODIFIED="1298034748421" TEXT="user comments on events"/>
+<node CREATED="1298034749015" ID="Freemind_Link_464262264" MODIFIED="1298034752296" TEXT="user comments on photos"/>
+</node>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297924044625" FOLDED="true" ID="Freemind_Link_645540170" MODIFIED="1297924331656" TEXT="and well, what are our service terms?">
+<node CREATED="1298034338234" ID="Freemind_Link_1541164299" MODIFIED="1298034341312" TEXT="don&apos;t spam"/>
+<node CREATED="1298034341843" ID="Freemind_Link_192611748" MODIFIED="1298034351140" TEXT="reasonable personal usage"/>
+<node CREATED="1298034352218" ID="Freemind_Link_1199662424" MODIFIED="1298034371281" TEXT="fair usage for business promotion"/>
+</node>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297924494687" ID="Freemind_Link_556452227" MODIFIED="1297924685437" TEXT="Once we got that straight, we looked for help on how to put them in order"/>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297924523468" FOLDED="true" ID="Freemind_Link_1577386590" LINK="http://www.etrust.org/guidance/privacy_policy.html" MODIFIED="1297924685453" TEXT="We found this">
+<node CREATED="1298125687515" ID="Freemind_Link_1532820605" MODIFIED="1298125709968" TEXT="Facebook Instant Personalization&#xa;&#xa;A privacy policy is one of the most important documents on any website. It details your company&apos;s views and procedures on the information collected from visitors.&#xa;&#xa;Although a privacy policy is technically a legal document, great effort should be made to craft a document that is both accurate and easy to understand, obscuring hidden clauses in reams of text is not acceptable.&#xa;&#xa;The main sections are as follows:&#xa;&#xa;Introduction: This section can tell your visitor a little about your organization, and any special information or functions that your website has. If your website has special conditions for collecting information from children (under 16 etc), you should state them clearly in this section.&#xa;&#xa;Information Collected: Visitors have a right to know what information you are collecting. It may be obvious that you are collecting personal details by asking them to complete a form, but you should make it clear. You should also include information logged by your servers, such as hostnames and IP addresses.&#xa;&#xa;Method of Collection: This details the methods you use to collect the information. Is it all automated? Do the forms visitors fill in collect other information, such as the original referrer? All of these questions will help you build a detailed description of how you collect information.&#xa;&#xa;Storage of Information: How is the information stored? If you store information in a database and are located in the UK you may need to register with the government regarding the data protection act. If your servers are in the EU you will need to ask permission to transmit data outside the union, even if it stays within your company. Visitors have a right to know that you will make every effort to store their personal information in a safe and secure environment.&#xa;&#xa;Contact details: Its important to be as transparent as possible, and allow users to contact you if they have a query. You should feature both an email address (or online form), as well as a real world address where a user can write to.&#xa;"/>
+</node>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297924716250" ID="Freemind_Link_1295230818" MODIFIED="1298125764312" TEXT="We organized our Privacy Policy">
+<node CREATED="1298467191794" ID="Freemind_Link_1226759761" MODIFIED="1298467198075" TEXT="What the privacy policy is for">
+<node CREATED="1298467198669" ID="Freemind_Link_663110788" MODIFIED="1298467207559" TEXT="Our Privacy Policy is designed to assist you in understanding how we collect, use and safeguard the personal information you provide to us and to assist you in making informed decisions when using our site."/>
+</node>
+<node CREATED="1298125846484" FOLDED="true" ID="Freemind_Link_132565798" MODIFIED="1298125863265" TEXT="Introduction">
+<node CREATED="1298125931078" ID="Freemind_Link_112407444" MODIFIED="1298126593281" TEXT="Adimpression is an innovative advertising company. It strictly, deviates from traditional spammer advertising companies. Spamming is, overload of advertisements, whether relevant or irrelevant. Most advertising companies are spammers. When you see an advertisement not relevant to what is on your mind, we consider it spamming. Adimpression clearly deviates from that.&#xa;&#xa;Each product of Adimpression focuses on advertising to our grand users. Adimpression does so only when relevant, and in most occassions, when needed. Even the real social network Down Town adheres to this principle.  Ideally, you would see many services offered at Down Town are most relevant. A service becomes an advertisement, when it is given when not relevant. An advertisement becomes a service, when provided at the exact time. Adimpression provide you services just at the right time."/>
+</node>
+<node CREATED="1298467055218" ID="Freemind_Link_752536710" MODIFIED="1298467101264" TEXT="How Information Collected Is Used For Intent of Site"/>
+<node CREATED="1298125850171" FOLDED="true" ID="Freemind_Link_1204086876" MODIFIED="1298214777625" TEXT="Information Collected and How It Is Used">
+<node CREATED="1298126595812" ID="Freemind_Link_1914498752" MODIFIED="1298126724328" TEXT="Adimpression collects information from you while using its services. This information is used both by you and Adimpression for various purposes, including, but not limited to, "/>
+<node CREATED="1298214828609" ID="Freemind_Link_1070686584" MODIFIED="1298214894718" TEXT="very computer connected to the Internet is provided with a domain name (e.g. someispname.net) and an IP Address (e.g. 192.164.13.145). When a visitor requests a page from within the Hathaway Law Firm website, our Web Servers automatically identify and log the HTTP request that is made to our Web Server. By itself, this information reveals nothing personal about you. In fact, the only information that we automatically gather and log is as follows:&#xa;&#xa;&#x2022;&#x9;The IP Address of the Site that may have Referred you.&#xa;&#x2022;&#x9;Your IP Address&#xa;&#x2022;&#x9;The Web Page that you may have linked to us from, if any.&#xa;&#x2022;&#x9;The Product Identifier for Version and Make of Browser (e.g. Internet Explorer&#xae;)&#xa;&#x2022;&#x9;The Operating System platform that you may be running (e.g. Macintosh&#xae; or Windows&#xae;)&#xa;&#x2022;&#x9;Search Words or Terms that are passed from a Search Engine (e.g. Google&#xae; or Yahoo!&#xae;)&#xa;&#x2022;&#x9;Information readily available and stored in your Adobe&#xae; Flash System.Capabilities Object.&#xa;There is absolutely nothing special about the information just described, and the practice of collecting this data has been generally standardized by virtually every Web Server on the Internet today.&#xa;&#xa;The purpose for this information is actually two-fold. One, Hathaway Law Firm has found it advantageous to examine visitor traffic in its aggregate, so that we can ensure maximum compatibility for the various Browsers and Operating Systems that visit our site. Additionally, as any business should attest, it is our desire to generate greater amounts of visitor traffic. By analyzing visitation patterns, referring URLs and Search Engine terms, we can strategically enhance our exposure on the Internet.&#xa;&#xa;What about Cookies?&#xa;&#xa;Cookies are small pieces of data that are transferred to your computer&apos;s hard drive through your Web browser from our Web Server. A cookie cannot read data from your hard disk or read cookie files that may have been created from other sites. The Hathaway Law Firm website utilizes cookies as a means of providing personalization features to our visitors. For example, we utilize cookies to remember settings (music preferences, language settings, etc.) that you may have made at our website.&#xa;&#xa;You can choose whether to accept cookies by changing the settings of your browser. Typically, by accessing the browser&apos;s help feature you can obtain information on how to prevent your browser from accepting all cookies or to notify you when a cookie is being sent. If you choose not to accept these cookies, your experience at our website and other websites may be diminished and some features may not work as intended.&#xa;&#xa;What other information does Hathaway Law Firm request?&#xa;We may also request your e-mail address or mailing address for the purposes of conducting a survey, adding you to our mailing list, or by your request to have someone contact you for additional information. Whenever we request the identity of a visitor, we will clearly indicate the purpose of the inquiry before the information is requested. We maintain a strict &#x201c;No Spam or UCE&#x201d; policy that means we do not intend to sell, rent, or otherwise give your e-mail address to a third-party, without your consent.&#xa;&#xa;In addition, Hathaway Law Firm will not send you e-mail that you have not agreed to receive. If you are a member of our Mailing List, you will be contacted with announcements, news, portfolio additions, and new products or services. You have the option of &#x201c;Unsubscribing&#x201d; from out Mailing List at any time, thereby disabling any further such e-mail communication from being sent to you. If you wish to have specific communications with a member of the Hathaway Law Firm staff, you will be required to provide specific information that will be routed to the appropriate contact within Hathaway Law Firm.&#xa;&#xa;Hathaway Law Firm will only disclose your personal information or any of its log file information when required by law or in the good-faith belief that such actions are necessary to:&#xa;&#xa;&#x2022;&#x9;Conform to the edicts of the law or comply with a legal process served on Hathaway Law Firm.&#xa;&#x2022;&#x9;Protect and defend the rights or property of Hathaway Law Firm, or visitors of Hathaway Law Firm.&#xa;&#x2022;&#x9;Identify persons who may be violating the law, the legal notice, or the rights of third parties.&#xa;&#x2022;&#x9;Cooperate with the investigations of purported unlawful activities.&#xa;Hathaway Law Firm uses reasonable precautions to keep the information disclosed to us secure. Hathaway Law Firm reserves the right to transfer information in connection with the sale of all or part of Hathaway Law Firm capital stock or assets to any third party. Furthermore, we are not responsible for any breach of security or for any actions of any third parties that receive the information. Hathaway Law Firm also provides &#x201c;links&#x201d; to a wide variety of other web sites on the Internet. We are not responsible for their Privacy Policies or how those web sites manage information about their users. We strongly urge you to check with those web sites to determine their privacy policy.&#xa;&#xa;Any changes to this Privacy Policy will be posted on this page so that you are always aware of the information that we collect, how we use it, and under what circumstances we disclose it."/>
+</node>
+<node CREATED="1298125851328" ID="Freemind_Link_1816652902" MODIFIED="1298125882859" TEXT="Method of Collection"/>
+<node CREATED="1298125852093" ID="Freemind_Link_1759516832" MODIFIED="1298125891078" TEXT="Storage of Information"/>
+<node CREATED="1298125852343" ID="Freemind_Link_1610589416" MODIFIED="1298125899484" TEXT="Contact details"/>
+<node CREATED="1298214729234" ID="Freemind_Link_1946169523" MODIFIED="1298214737296" TEXT="Commitment to Protecting Privacy">
+<node CREATED="1298214756250" ID="Freemind_Link_1870970904" MODIFIED="1298214757078" TEXT="Hathaway Law Firm is committed to protecting your privacy. That is why we have adopted this Privacy Policy. This Privacy Policy is intended to describe how your personal information is processed and used, and we will make every effort to ensure that our activities keep within the spirit of this Privacy Policy. Please note that by visiting and using hathawaylawfirm.com, or any other website owned and operated by Hathaway Law Firm, LLC, you are accepting the practices described in this Privacy Policy."/>
+</node>
+<node CREATED="1298214919968" ID="Freemind_Link_151549377" MODIFIED="1299099605203" TEXT="Who the website is for and usage disclaimer">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1298214925093" ID="Freemind_Link_630456437" MODIFIED="1299099605187" TEXT="This website is for social network users. By using it you assume the risk of both online and real life socializing for which iLikePlaces.com shall not be responsible.">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1298214983359" ID="Freemind_Link_1310104664" MODIFIED="1299099523468" TEXT="Application of Privacy Policy">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1298214991156" ID="Freemind_Link_409535247" MODIFIED="1299099523484" TEXT="This policy is only for information collected through iLikePlaces.com website through the internet.&#xa;">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1298215051578" ID="Freemind_Link_551556777" MODIFIED="1299099012906" TEXT="Security Measures To Gurantee Protection Of Information">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1299098046031" ID="Freemind_Link_1326840217" MODIFIED="1299099012984" TEXT="Keeping Abreast With Information Protection Practices">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1299097888500" ID="Freemind_Link_1231066565" MODIFIED="1299099012968" TEXT="iLIkePlaces.com keeps in its best interests the latest information protection practices.">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1299098017687" ID="Freemind_Link_507285683" MODIFIED="1299099012968" TEXT="Internal Access">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1299097903328" ID="Freemind_Link_1765163003" MODIFIED="1299099012953" TEXT="iLikePlaces.com limits employee access to your information stored at iLikePlaces.com and only highly authorized persons can do so, but this is rare too.">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1298561163483" ID="Freemind_Link_144372156" MODIFIED="1299099012953" TEXT="Sharing Information with Outside Parties">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1299097977593" ID="Freemind_Link_1285452445" MODIFIED="1299099012953" TEXT="iLikePlaces.com will not share information with outside parties without your consent. ">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1299098748562" ID="Freemind_Link_636360611" MODIFIED="1299099012937" TEXT="Gurantee of Information Safety">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1298215082390" ID="Freemind_Link_687149793" MODIFIED="1299099012968" TEXT="iLIkePlaces.com adheres to standard information protection practices. iLikePlaces.com cannot guarantee that this protects ALL your information stored at iLikePlaces.com from unlawful access including errors occurred.">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+</node>
+<node CREATED="1298215116375" ID="Freemind_Link_707563812" MODIFIED="1299097588109" TEXT="3rd Party Sites">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1298215123625" ID="Freemind_Link_1862174993" MODIFIED="1299099248781" TEXT="iLikePlaces.com is not responsible for the privacy practices of 3rd party sites connected or related to iLikePlaces.com. iLikePlaces.com encourages that you read the privacy policy of these respective 3rd party sites before any interaction with or in relation to them.">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1298215140640" FOLDED="true" ID="Freemind_Link_863582967" MODIFIED="1298645888947" TEXT="Reservation of Right to Change">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1298215151140" ID="Freemind_Link_1515813075" MODIFIED="1298645888931" TEXT="Adimpression reserves the right, at its discretion, to chane this policy at any time. If Adimpression changes this privacy policy it will post the updated version of that policy here. Your continued use of this site means that you accept the changes.">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1298467244512" ID="Freemind_Link_556441512" MODIFIED="1299099421671" TEXT="Notice of New Services and Changes ">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1299099364468" ID="Freemind_Link_618912" MODIFIED="1299099421640" TEXT="iLikePlaces.com holds the right to change this document from time to time and you are advice to periodically check it for changes.">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1298467276620" ID="Freemind_Link_568735662" MODIFIED="1299099303984" TEXT="Legally Compelled Disclosure of Information ">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1299097997062" ID="Freemind_Link_1210466528" MODIFIED="1299099012953" TEXT="iLikePlaces.com may have to disclose your information when legally compelled, by law.">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1298561071543" FOLDED="true" ID="Freemind_Link_1216991958" MODIFIED="1298645703352" TEXT="Session Maintainance, Brower Cache and Local Data">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1298561083620" ID="Freemind_Link_310241939" MODIFIED="1298644964457" TEXT="About Cookies">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1298644583425" ID="Freemind_Link_419699859" MODIFIED="1299099269656" TEXT="Cookies(not the delicious type) are an internet standard of maintaining state of users with the help of their browsers.">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1298644617819" ID="Freemind_Link_392094475" MODIFIED="1299099269640" TEXT="You can find a easy-to-understand description of cookies here http://www.howstuffworks.com/cookie.htm">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1298644454448" ID="Freemind_Link_1701260957" MODIFIED="1299099269640" TEXT="iLikePlaces.com uses cookies to track you for operations ONLY WITHIN iLikePlaces.com.">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1298644494091" ID="Freemind_Link_1276490839" MODIFIED="1299099269640" TEXT="More precise of cookies(not the delicious type) can be found at http://datatracker.ietf.org/doc/rfc2964/">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1298644136113" ID="Freemind_Link_1406454297" MODIFIED="1298645405238" TEXT="Browser Cache">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1298645021430" ID="Freemind_Link_1938342472" MODIFIED="1299099269625" TEXT="Browser Cache is a temporary data storage maintained by browsers.">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1298645137331" ID="Freemind_Link_815102084" MODIFIED="1299099269625" TEXT="Browser Cache can usually be disabled, and is a sole browser feature, and iLikePlaces.com has nothing to do with this.">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1298645044385" ID="Freemind_Link_1070479047" MODIFIED="1299099269609" TEXT="iLikePlaces.com data can be cached on your browser&apos;s cache depnding on your browsers settings and support.">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1298645079638" ID="Freemind_Link_126207276" MODIFIED="1299099269593" TEXT="iLikePlaces.com does not require that the browser you use has a cache facility.">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1298645101656" ID="Freemind_Link_1967907494" MODIFIED="1299099269593" TEXT="iLikePlaces.com bears no responsibility over the data your browser caches.">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1298645428147" ID="Freemind_Link_691943344" MODIFIED="1298645679399" TEXT="Your own PC">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1298645436734" ID="Freemind_Link_1838061265" MODIFIED="1299099269562" TEXT="A computer might contain various hardware and software.">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1298645453176" ID="Freemind_Link_1984409095" MODIFIED="1299099269562" TEXT="Among these are display devices, input devices and storage devices.">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1298645476381" ID="Freemind_Link_361118124" MODIFIED="1299099269578" TEXT="Unless used by a browser, iLikePlaces.com does NOT interact with your storage.">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1298645502594" ID="Freemind_Link_944936770" MODIFIED="1299099269578" TEXT="In other words, iLikePlaces.com has no access to, and will not access, your data on your computer except cookies, without your conscent.">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+</node>
+<node CREATED="1298214780843" FOLDED="true" ID="Freemind_Link_531686208" MODIFIED="1298214785109" TEXT="Sources">
+<node CREATED="1298214789437" ID="Freemind_Link_1605802100" MODIFIED="1298214790515" TEXT="http://www.hathawaylawfirm.com/privacy.html"/>
+<node CREATED="1298214943500" ID="Freemind_Link_1929490329" MODIFIED="1298214944390" TEXT="http://www.mcguirewoods.com/our_firm/disclaimer/"/>
+<node CREATED="1298215009437" ID="Freemind_Link_1990191935" MODIFIED="1298215010109" TEXT="http://www.winston.com/index.cfm?contentID=175"/>
+<node CREATED="1298467029688" ID="Freemind_Link_150359948" MODIFIED="1298467030985" TEXT="http://www.foley.com/legal.aspx"/>
+</node>
+</node>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297925191687" FOLDED="true" ID="Freemind_Link_809728438" MODIFIED="1298214000156" TEXT="We organized our Terms of Services">
+<node CREATED="1298467706799" ID="Freemind_Link_717778923" MODIFIED="1298467710299" TEXT="Updated Date"/>
+<node CREATED="1298214177375" FOLDED="true" ID="Freemind_Link_870639877" MODIFIED="1298214183781" TEXT="Links to 3rd Party Sites">
+<node CREATED="1298214289250" ID="Freemind_Link_687374456" MODIFIED="1298214301375" TEXT="If you use any links on the Website to websites not maintained by Latham &amp; Watkins, you will leave Latham &amp; Watkins website. The linked sites are not under the control of Latham &amp; Watkins and Latham &amp; Watkins is not responsible for the contents of any linked site or any link contained on a linked site. Latham &amp; Watkins provides these links to you only as a convenience and the inclusion of any link does not imply recommendation, approval or endorsement by Latham &amp; Watkins of the site."/>
+</node>
+<node CREATED="1298467055218" ID="Freemind_Link_1878158184" MODIFIED="1298467101264" TEXT="How Information Collected Is Used For Intent of Site"/>
+<node CREATED="1298214191468" FOLDED="true" ID="Freemind_Link_1855502386" MODIFIED="1298214195453" TEXT="Copyright">
+<node CREATED="1298214276250" ID="Freemind_Link_1042703276" MODIFIED="1298214279156" TEXT="Latham &amp; Watkins claims a copyright in its works presented at this Web site. Latham &amp; Watkins authorizes you to view, copy, download and print Latham &amp; Watkins documents on this Web site, subject to the following conditions:&#xa;&#xa;The documents may be used solely for personal, noncommercial and informational purposes.&#xa;The documents may not be modified.&#xa;The following copyright notice and permission notice must appear in each document: &quot;&#xa9; Copyright 2011 Latham &amp; Watkins LLP and Affiliates. All rights reserved. Latham &amp; Watkins documents available from this Web site are protected by the copyright laws of the United States and international treaties. All use subject to Conditions of Use set forth at http:/www.lw.com/conditionsofuse.asp&quot;&#xa;"/>
+</node>
+<node CREATED="1298214243484" FOLDED="true" ID="Freemind_Link_208990196" MODIFIED="1298214246484" TEXT="User Conduct">
+<node CREATED="1298214259937" ID="Freemind_Link_142649232" MODIFIED="1298214269687" TEXT="You agree that you will not use the Website for any illegal purpose. In addition, you agree that:&#xa;&#xa;you will not harvest, collect, or otherwise use contact information made available on the Website for the purpose of sending unsolicited improper communications, including without limitation, unsolicited bulk email (collectively, &quot;spam&quot;) and that you will not use any Latham &amp; Watkins communications facility to deliver or attempt to deliver spam;&#xa;you will not attempt to gain unauthorized access to the Website or the servers and network associated with the Website;&#xa;you will not circumvent or attempt to circumvent any security or access control technology implemented on the Website, or the servers and network associated with the Website;&#xa;you will not use the Website in any manner designed to degrade the performance or functioning of the Website, including, without limitation, launching Denial-of-Service (&quot;DoS&quot;) attacks against the Website.&#xa;"/>
+</node>
+<node CREATED="1298214327500" FOLDED="true" ID="Freemind_Link_830706374" MODIFIED="1298214335953" TEXT="Commercial Use of Site Materials and Screen Shots">
+<node CREATED="1298214343671" ID="Freemind_Link_1721137405" MODIFIED="1298214346609" TEXT="Reproduction, copying or redistribution of materials on the Latham &amp; Watkins web site for commercial purposes is prohibited without the express written permission of Latham &amp; Watkins. To obtain permission to copy portions of this site, please send email to webmaster@lw.com and provide the following information in the body of the email:&#xa;&#xa;the Latham &amp; Watkins content you wish to use&#xa;where and how it will be used (for example, a book cover, magazine article, a brochure)&#xa;where and how copies will be distributed and to what audience&#xa;how many copies will be produced and distributed&#xa;when you intend to publish&#xa;what other non-Latham &amp; Watkins materials will be associated with the Latham &amp; Watkins content&#xa;your name, title, company, address, email address and phone number&#xa;We will evaluate your request and advise you as soon as possible. Latham &amp; Watkins reserves the right to refuse permission to copy, distribute, broadcast or publish any of its copyrighted material, including text and images on our Web site."/>
+</node>
+<node CREATED="1298214376984" FOLDED="true" ID="Freemind_Link_1465200380" MODIFIED="1298214377843" TEXT="Service Marks">
+<node CREATED="1298214386140" ID="Freemind_Link_1247976471" MODIFIED="1298214388953" TEXT="Latham &amp; Watkins service marks identify Latham &amp; Watkins products and services and let the public know the source of those products and services. You may make fair use of our service marks in advertising and promotional materials, and in referencing our products and services (for example, in a magazine article) without our permission, provided you follow standard trademark usage practices and provide proper attribution. Other uses require our written permission. If you are in doubt as to whether you need our permission for a specific type of use, please ask us.&#xa;&#xa;&#xa;You may not use Latham &amp; Watkins logos or &quot;design&quot; service marks (as opposed to our service marks consisting solely of words) under any circumstances without our prior written authorization.&#xa;&#xa;&#xa;In addition, you may not use Latham &amp; Watkins service marks, whether design or word marks, in the following ways:&#xa;&#xa;in a non-Latham &amp; Watkins service name or publication title;&#xa;in, as, or as part of, your own service or trademarks;&#xa;to identify products or services that are not Latham &amp; Watkins&apos;;&#xa;in a manner likely to cause confusion;&#xa;in a manner that implies inaccurately that we sponsor or endorse, or are otherwise connected with, your own activities, products and services;&#xa;as hidden or embedded text in web pages in an effort to cause a search of Latham &amp; Watkins marks to result in a hit on a page not maintained by Latham &amp; Watkins in a manner disparaging of Latham &amp; Watkins;"/>
+</node>
+<node CREATED="1298214398640" FOLDED="true" ID="Freemind_Link_1964681644" MODIFIED="1298214399984" TEXT="Jurisdiction; Choice of Law ">
+<node CREATED="1298214406609" ID="Freemind_Link_1333254778" MODIFIED="1298214407390" TEXT="This Agreement and your use of the Web site shall be governed by the laws of California, without regard to its conflict of laws provisions.   "/>
+</node>
+<node CREATED="1298214413328" FOLDED="true" ID="Freemind_Link_265492471" MODIFIED="1298214414125" TEXT="Severability">
+<node CREATED="1298214417875" ID="Freemind_Link_1467131784" MODIFIED="1298214418750" TEXT="If any provision of this Agreement is found to be void or unenforceable, such provision shall be severed and all other provisions shall remain in force.  "/>
+</node>
+<node CREATED="1298218584328" ID="Freemind_Link_978957485" MODIFIED="1298218603375" TEXT="Intelectual Property Publication Prohibition"/>
+<node CREATED="1298214455046" FOLDED="true" ID="Freemind_Link_1925850718" MODIFIED="1298214458859" TEXT="Sources">
+<node CREATED="1298214459546" ID="Freemind_Link_1956016002" MODIFIED="1298214460781" TEXT="http://www.lw.com/Disclosures.aspx?page=ConditionsOfUse"/>
+<node CREATED="1298467029688" ID="Freemind_Link_263363043" MODIFIED="1298467030985" TEXT="http://www.foley.com/legal.aspx"/>
+<node CREATED="1298467382931" ID="Freemind_Link_294170223" MODIFIED="1298467383759" TEXT="http://www.seyfarth.com/index.cfm/fuseaction/info.terms_of_use/terms_of_use.cfm"/>
+</node>
+<node CREATED="1298467257418" MODIFIED="1298467257418" TEXT="Notice of New Services and Changes"/>
+<node CREATED="1298467272605" ID="Freemind_Link_1958351193" MODIFIED="1298467274667" TEXT="Legally Compelled Disclosure of Information "/>
+<node CREATED="1298467348760" FOLDED="true" ID="Freemind_Link_921592337" MODIFIED="1298467358306" TEXT="Site&apos;s Intelectual Property Protection">
+<node CREATED="1298467358838" MODIFIED="1298467358838" TEXT="The entirety of the content in this site is a collective work owned by Seyfarth and is protected by U.S. and international copyright laws. Copyright 2011 Seyfarth Shaw LLP. All rights reserved. All elements comprising this site, including without limitation, the text, site design, logos, graphics, icons and images, as well as the selection, assembly and arrangement thereof are the sole property of Seyfarth or its licensors, and are protected by U.S. and international copyright laws. All software used in this site is the property of Seyfarth or its licensors, and such software is also protected by U.S. and international copyright laws. Permission is granted to electronically display and electronically copy and print hard copy portions of this site for your own non-commercial use. Any other use, including the reproduction, modification, distribution, transmission, republication, display or performance of any content of this site is strictly prohibited."/>
+<node CREATED="1298467358853" MODIFIED="1298467358853" TEXT="The trademarks, service marks, trade names, trade dress, logos, designs, and sounds associated with the site are owned by Seyfarth or its licensors. Without limiting the foregoing, ONE MINUTE MEMO&#xae;, TRADEMARKVIEW&#xae;, SEYFARTH SHAW AT WORK&#xae; and SEYFARTH SHAW are trademarks or registered trademarks of Seyfarth."/>
+</node>
+<node CREATED="1298467391634" FOLDED="true" ID="Freemind_Link_1020074514" MODIFIED="1298467392368" TEXT="Disclaimer of warranty ">
+<node CREATED="1298467399259" ID="Freemind_Link_494236620" MODIFIED="1298467400384" TEXT="THE SITE, ITS CONTENTS AND THE SERVICES AVAILABLE ON THE SITE ARE PROVIDED ON AN &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; BASIS WITHOUT REPRESENTATION OR WARRANTY OF ANY KIND. SEYFARTH EXPRESSLY DISCLAIMS ALL REPRESENTATIONS AND WARRANTIES, EXPRESS OR IMPLIED, OF ANY KIND WITH RESPECT TO THE SITE, ITS USES AND THE SERVICES OFFERED ON THE SITE, INCLUDING BUT NOT LIMITED TO WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, TITLE, ACCURACY AND FREEDOM FROM COMPUTER VIRUSES OR OTHER HARMFUL COMPONENTS. Some states do not allow the disclaimer or limitation of warranties, so the disclaimers set forth above may not apply to you."/>
+</node>
+<node CREATED="1298467428305" FOLDED="true" ID="Freemind_Link_453303266" MODIFIED="1298467429102" TEXT="Limitation of liability ">
+<node CREATED="1298467435180" ID="Freemind_Link_1271901299" MODIFIED="1298467435914" TEXT="IN NO EVENT SHALL SEYFARTH, ITS PARTNERS, OFFICERS, EMPLOYEES, AGENTS, REPRESENTATIVES, SUPPLIERS OR CONTENT OR SERVICE PROVIDERS BE LIABLE FOR DAMAGES OF ANY KIND, INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT, COMPENSATORY, SPECIAL, INCIDENTAL, PUNITIVE AND CONSEQUENTIAL DAMAGES EVEN IF MADE AWARE OF THE POSSIBILITY OF SUCH DAMAGES, WHETHER IN AN ACTION UNDER CONTRACT, NEGLIGENCE OR OTHER THEORY, ARISING OUT OF OR IN CONNECTION WITH THE USE, INABILITY TO USE OR PERFORMANCE OF THE SITE AND/OR ANY CONTENT, MATERIALS OR SERVICES AVAILABLE AT THE SITE. Some states do not allow the disclaimer or limitation of damages, so the disclaimers set forth above may not apply to you."/>
+</node>
+<node CREATED="1298467478585" FOLDED="true" ID="Freemind_Link_963749570" MODIFIED="1298467479726" TEXT="Use of passwords ">
+<node CREATED="1298467487366" ID="Freemind_Link_1195669212" MODIFIED="1298467488210" TEXT="Access to certain portions of this site (for example, accessing the TRADEMARKVIEW&#xae; services), may involve the use of a unique user name and/or password. You are solely responsible for maintaining the security of such user names and passwords, and will promptly notify us if you believe such security has been compromised. You will not use the user names and/or passwords of any third party without such party&#x2019;s express prior consent. You will not misrepresent your identity or any other information when communicating with Seyfarth through the site."/>
+</node>
+<node CREATED="1298467543928" FOLDED="true" ID="Freemind_Link_1005813626" MODIFIED="1298467555865" TEXT="Communications with Adimpression">
+<node CREATED="1298467566302" ID="Freemind_Link_725675378" MODIFIED="1298467567271" TEXT="By sending Seyfarth any ideas, comments, suggestions, questions or other material, you grant Seyfarth an unrestricted, royalty-free, worldwide, irrevocable license to use, reproduce, display, perform, modify, transmit and distribute such material in any manner, including in connection with Seyfarth&#x2019;s business, and you also agree that Seyfarth is free to use any ideas, concepts, know-how or techniques that you send us for any purpose.  You agree that no comments or other information submitted by you to Seyfarth will violate any personal or proprietary right of any third party (including, without limitation, copyright and trademark rights). You agree that no comments or other information submitted by you to Seyfarth will be libellous, obscene, harassing, abusive or otherwise unlawful. You agree that you shall remain solely liable for the contents of any comments or other information submitted by you to Seyfarth."/>
+</node>
+<node CREATED="1298467612067" FOLDED="true" ID="Freemind_Link_1485296522" MODIFIED="1298467613004" TEXT="Indemnity">
+<node CREATED="1298467617160" ID="Freemind_Link_258789451" MODIFIED="1298467617801" TEXT="You agree to indemnify, defend, and hold harmless Seyfarth, its partners, officers, employees, agents, representatives, suppliers and content and service providers from and against all losses, expenses, damages and costs, including reasonable attorneys fees, resulting from any violation of these terms and conditions or any activity related to your account with Seyfarth (including negligent or wrongful conduct) by you or any other person accessing the site using your Internet account, Seyfarth site user name or account password."/>
+</node>
+<node CREATED="1298467637332" FOLDED="true" ID="Freemind_Link_486069357" MODIFIED="1298467638347" TEXT="Applicable law ">
+<node CREATED="1298467644644" ID="Freemind_Link_34159322" MODIFIED="1298467645441" TEXT="Your use of the site shall be governed by the laws of the State of Illinois without regard to its choice of law principles. You agree to submit to the personal jurisdiction of the state and federal courts located in Cook County, Illinois with respect to any legal proceedings arising out of these terms and conditions or your use of the Seyfarth site.  "/>
+</node>
+<node CREATED="1298467652144" FOLDED="true" ID="Freemind_Link_1378928749" MODIFIED="1298467652972" TEXT="Changes to the site ">
+<node CREATED="1298467664503" ID="Freemind_Link_1862279472" MODIFIED="1298467665362" TEXT="Seyfarth reserves the right to make additions, deletions or modifications to the site and those services offered at the site at any time without prior notice to you."/>
+</node>
+<node CREATED="1298467672425" FOLDED="true" ID="Freemind_Link_1112811244" MODIFIED="1298467673284" TEXT="About these terms and conditions ">
+<node CREATED="1298467687252" ID="Freemind_Link_1936804999" MODIFIED="1298467688112" TEXT="These terms and conditions were posted on the date set forth above. Seyfarth reserves the right to change, alter or modify these terms and conditions for any reason at any time. When we do so, changes in these terms and conditions will be posted on our site and will be effective immediately. If you are a regular visitor to this site, we recommend that you check these terms and conditions on a regular basis."/>
+</node>
+</node>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297925191687" FOLDED="true" ID="Freemind_Link_1642499863" MODIFIED="1298214507453" TEXT="We organized our disclaimer">
+<node CREATED="1298214527953" ID="Freemind_Link_836370393" MODIFIED="1298214534500" TEXT="Not Advice">
+<node CREATED="1298214535656" ID="Freemind_Link_373187150" MODIFIED="1298214538140" TEXT="The information contained in the Skadden, Arps, Slate, Meagher &amp; Flom LLP and Affiliates (collectively &quot;Skadden, Arps&quot; or the &quot;firm&quot;) website is provided for informational purposes only, and should not be construed as legal advice on any subject matter."/>
+</node>
+<node CREATED="1298214567640" ID="Freemind_Link_1800744821" MODIFIED="1298214571328" TEXT="Acting Upon">
+<node CREATED="1298214576312" ID="Freemind_Link_1099727893" MODIFIED="1298214578062" TEXT="No recipients of content from this site, clients or otherwise, should act or refrain from acting on the basis of any content included in the site without seeking the appropriate legal or other professional advice on the particular facts and circumstances at issue from an attorney licensed in the recipient&apos;s state. The content of this website contains general information and may not reflect current legal developments, verdicts or settlements. Skadden, Arps expressly disclaims all liability in respect to actions taken or not taken based on any or all the contents of this site."/>
+</node>
+<node CREATED="1298214591984" ID="Freemind_Link_1906680659" MODIFIED="1298214606984" TEXT="Unsecure Information and Non-Confidentiality Of Information Sent">
+<node CREATED="1298214607421" ID="Freemind_Link_583242543" MODIFIED="1298214609828" TEXT="Any information sent to Skadden, Arps via Internet e-mail or through the Skadden Web site is not secure and is done so on a non-confidential basis. The transmission of the Skadden site, in part or in whole, and/or communication with Skadden, Arps via Internet e-mail through this site does not constitute or create an attorney-client relationship between Skadden, Arps and any recipients."/>
+</node>
+<node CREATED="1298214618156" ID="Freemind_Link_11198649" MODIFIED="1298214624031" TEXT="3rd Party Content">
+<node CREATED="1298214624453" ID="Freemind_Link_38343627" MODIFIED="1298214625625" TEXT="The firm does not necessarily endorse, and is not responsible for, any third-party content that may be accessed through this website."/>
+</node>
+<node CREATED="1298214635937" ID="Freemind_Link_1565992685" MODIFIED="1298214640390" TEXT="Sources">
+<node CREATED="1298214640937" ID="Freemind_Link_1397231665" MODIFIED="1298214641703" TEXT="http://www.skadden.com/index.cfm?ContentID=11"/>
+</node>
+</node>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297924716250" ID="Freemind_Link_433674794" MODIFIED="1297925371468" TEXT="Okay, we still felt out grand users were freaking out. Hmmm some were nail biting. Some knuckle gnawing. Our PP and ToS was just not enough!"/>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297924809984" ID="Freemind_Link_1315988133" MODIFIED="1297925371484" TEXT="So once again, we set out find more security"/>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297924837218" ID="Freemind_Link_1032648688" LINK="http://www.reputation.com" MODIFIED="1297925371484" TEXT="This time we found THIS"/>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297924850046" ID="Freemind_Link_108772354" LINK="http://www.reputation.com/faq/" MODIFIED="1297925371484" TEXT="and we also grabbed this off for our grand users!"/>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297925110390" ID="Freemind_Link_386642255" MODIFIED="1297925371484" TEXT="By now our grand users had chewed most of their nails off. Knuckles red."/>
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297925191687" ID="Freemind_Link_816292859" MODIFIED="1297925371468" TEXT="But our latest reassuaring stopped them there. Our grand users were confident now about their privacy."/>
+</node>
+<node BACKGROUND_COLOR="#cc0000" CREATED="1297920031187" ID="Freemind_Link_1500452852" MODIFIED="1297923405515" TEXT="The Reward!">
+<node BACKGROUND_COLOR="#cc0000" CREATED="1297920031187" ID="Freemind_Link_1921501723" MODIFIED="1298034312171" TEXT="Our grand users by now loved our ToS. Though strict, it was pretty point blank and humble."/>
+</node>
 </node>
 </node>
 <node CREATED="1283703158802" FOLDED="true" ID="Freemind_Link_640830008" MODIFIED="1289573580515" POSITION="right" TEXT="Marketing">
@@ -1231,7 +1536,7 @@
 </node>
 <node CREATED="1283704339086" FOLDED="true" ID="Freemind_Link_386369610" MODIFIED="1283704377334" POSITION="right" TEXT="QA">
 <icon BUILTIN="pencil"/>
-<node CREATED="1288415653343" ID="Freemind_Link_540547344" MODIFIED="1288423654031" TEXT="FREEZER">
+<node CREATED="1288415653343" FOLDED="true" ID="Freemind_Link_540547344" MODIFIED="1288423654031" TEXT="FREEZER">
 <icon BUILTIN="desktop_new"/>
 <node CREATED="1288421673765" FOLDED="true" ID="Freemind_Link_1507643800" MODIFIED="1288422805046" TEXT="MARKETABILITY FREEZE">
 <icon BUILTIN="full-1"/>
@@ -1474,15 +1779,15 @@
 </hook>
 </node>
 </node>
-<node CREATED="1266112839468" FOLDED="true" ID="Freemind_Link_674125175" MODIFIED="1291216108484" POSITION="right" TEXT="Side fixing">
+<node CREATED="1266112839468" ID="Freemind_Link_674125175" MODIFIED="1291216108484" POSITION="right" TEXT="Side fixing">
 <font NAME="Comic Sans MS" SIZE="14"/>
 <icon BUILTIN="clanbomber"/>
 <node CREATED="1275247786984" ID="Freemind_Link_841143219" MODIFIED="1275247834859" TEXT="Startup and Shutdown mails"/>
 <node CREATED="1270054635078" ID="Freemind_Link_408918916" MODIFIED="1281967604656" TEXT="JSP forward or deny on OpenEJB"/>
 </node>
-<node BACKGROUND_COLOR="#ffcc00" CREATED="1275667013786" FOLDED="true" ID="Freemind_Link_374011926" MODIFIED="1289101795496" POSITION="right" TEXT="ITPS">
+<node CREATED="1275667013786" FOLDED="true" ID="Freemind_Link_374011926" MODIFIED="1297919306265" POSITION="right" TEXT="ITPS">
 <arrowlink DESTINATION="Freemind_Link_374011926" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Freemind_Arrow_Link_447360971" STARTARROW="None" STARTINCLINATION="0;0;"/>
-<font BOLD="true" NAME="Comic Sans MS" SIZE="14"/>
+<font NAME="Comic Sans MS" SIZE="14"/>
 <icon BUILTIN="flag"/>
 <node CREATED="1295620808796" ID="Freemind_Link_753522277" MODIFIED="1295620814062" TEXT="no user base">
 <node CREATED="1295620858468" ID="Freemind_Link_1608653334" MODIFIED="1295620866984" TEXT="some just use viral marketing and succeed"/>
@@ -1512,7 +1817,7 @@
 <node CREATED="1295774966622" ID="Freemind_Link_862744323" MODIFIED="1295774984372" TEXT="fix non activated human changing password to make human alive."/>
 <node CREATED="1295775006279" ID="Freemind_Link_1257735463" MODIFIED="1295775022232" TEXT="fix trailing dot problem on hash activation email"/>
 </node>
-<node BACKGROUND_COLOR="#663300" CREATED="1296794504162" ID="Freemind_Link_1669933885" MODIFIED="1296794606291" POSITION="right" TEXT="Ugly">
+<node BACKGROUND_COLOR="#663300" CREATED="1296794504162" FOLDED="true" ID="Freemind_Link_1669933885" MODIFIED="1296794606291" POSITION="right" TEXT="Ugly">
 <node CREATED="1296794612929" ID="Freemind_Link_1434250851" MODIFIED="1296794618614" TEXT="Display Name Change"/>
 <node CREATED="1296794619114" ID="Freemind_Link_357230110" MODIFIED="1296794644338" TEXT="Profile Link"/>
 <node CREATED="1296794646056" ID="Freemind_Link_1341234988" MODIFIED="1296794656927" TEXT="Confirmation Email"/>

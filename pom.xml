@@ -4,9 +4,17 @@
     <groupId>ai</groupId>
     <artifactId>ilikeplaces-main</artifactId>
     <packaging>war</packaging>
-    <version>1.61-SNAPSHOT</version>
+    <version>1.6180-SNAPSHOT</version>
     <name>ilikeplaces JEE6 Webapp</name>
     <url>http://maven.apache.org</url>
+
+
+    <scm>
+        <connection>scm:cvs:ext:vergy@67.23.18.146:22/home/vergy/servint/cvsroot:ilikeplaces</connection>
+        <developerConnection>scm:cvs:ext:vergy@67.23.18.146:22/home/vergy/servint/cvsroot:ilikeplaces</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
     <dependencies>
         <!--dependency>
             <groupId>Java</groupId>
@@ -350,7 +358,7 @@
                 <version>1.0-beta-3</version>
                 <configuration>
                     <!--revisionOnScmFailure>NON_SCM_MODE</revisionOnScmFailure-->
-                    <format>BOT ILIKEPLACES REINC-1.618.{0,date,yyyy.MM.dd.HH.mm.ss}</format>
+                    <format>BOT ILIKEPLACES REINC-1.6180.{0,date,yyyy.MM.dd.HH.mm.ss}</format>
                     <items>
                         <item>timestamp</item>
                     </items>
