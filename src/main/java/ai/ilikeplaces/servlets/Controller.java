@@ -52,7 +52,7 @@ final public class
 
     final PageFace locationMain = Page.LocationMain;
     final PageFace aarrr = Page.Aarrr;
-//    final PageFace photoCRUD = Page.PhotoCRUD;
+    //    final PageFace photoCRUD = Page.PhotoCRUD;
     final PageFace photo$Description = Page.Photo$Description;
     final PageFace signInOn = Page.SignInOn;
 
@@ -78,6 +78,7 @@ final public class
     final PageFace share = Page.Share;
     final PageFace geoBusiness = Page.GeoBusiness;
     final PageFace photos = Page.Photos;
+    final PageFace legal = Page.Legal;
 
     final PageFace findFriendWidget = Page.FindFriend;
     final PageFace friendAdd = Page.FriendAdd;
@@ -101,16 +102,45 @@ final public class
     final PageFace userProperty = Page.UserProperty;
     final PageFace userPropertySidebar = Page.UserPropertySidebar;
 
+    final PageFace termsOfServices = Page.TermsOfServices;
+    final PageFace privacyPolicy = Page.PrivacyPolicy;
+
 // -------------------------- ENUMERATIONS --------------------------
 
     @NOTE(note = "Inner Enums are static. Therefore, the lists shall be populated only once.")
     public enum Page implements PageFace {
+        TermsOfServices("ai/ilikeplaces/widgets/legal/terms_of_services.xhtml"
+        ) {
+            @Override
+            public String toString() {
+                return DocTermsOfServices;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+        PrivacyPolicy("ai/ilikeplaces/widgets/legal/privacy_policy.xhtml"
+        ) {
+            @Override
+            public String toString() {
+                return DocPrivacyPolicy;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
+
         Album("ai/ilikeplaces/widgets/Album.xhtml",
-              Controller.Page.AlbumNotice,
-              Controller.Page.AlbumPivateEventId,
-              Controller.Page.AlbumOwner,
-              Controller.Page.AlbumForward,
-              Controller.Page.AlbumPhotos
+                Controller.Page.AlbumNotice,
+                Controller.Page.AlbumPivateEventId,
+                Controller.Page.AlbumOwner,
+                Controller.Page.AlbumForward,
+                Controller.Page.AlbumPhotos
         ) {
             @Override
             public String toString() {
@@ -123,10 +153,10 @@ final public class
             }
         },
         UserProperty("ai/ilikeplaces/widgets/UserProperty.xhtml",
-                     Controller.Page.user_property_profile_photo,
-                     Controller.Page.user_property_name,
-                     Controller.Page.user_property_widget,
-                     Controller.Page.user_property_content
+                Controller.Page.user_property_profile_photo,
+                Controller.Page.user_property_name,
+                Controller.Page.user_property_widget,
+                Controller.Page.user_property_content
 
         ) {
             @Override
@@ -142,10 +172,10 @@ final public class
 
 
         UserPropertySidebar("ai/ilikeplaces/widgets/UserProperty_sidebar.xhtml",
-                            Controller.Page.user_property_sidebar_profile_photo,
-                            Controller.Page.user_property_sidebar_name,
-                            Controller.Page.user_property_sidebar_widget,
-                            Controller.Page.user_property_sidebar_content
+                Controller.Page.user_property_sidebar_profile_photo,
+                Controller.Page.user_property_sidebar_name,
+                Controller.Page.user_property_sidebar_widget,
+                Controller.Page.user_property_sidebar_content
 
         ) {
             @Override
@@ -161,10 +191,10 @@ final public class
 
 
         ProfileWidget("ai/ilikeplaces/widgets/profile.xhtml",
-                      Controller.Page.ProfileNotice,
-                      Controller.Page.ProfileURLChange,
-                      Controller.Page.ProfileURL,
-                      Controller.Page.ProfileURLUpdate
+                Controller.Page.ProfileNotice,
+                Controller.Page.ProfileURLChange,
+                Controller.Page.ProfileURL,
+                Controller.Page.ProfileURLUpdate
         ) {
             @Override
             public String toString() {
@@ -174,16 +204,17 @@ final public class
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }},
+            }
+        },
         ForgotPasswordChange("ai/ilikeplaces/widgets/password.xhtml",
-                             Controller.Page.ProfileForgotPasswordWidget,
-                             Controller.Page.ProfileForgotPasswordNotice,
-                             Controller.Page.ProfileForgotPasswordEmailAddress,
-                             Controller.Page.ProfileForgotPasswordCodeMail,
-                             Controller.Page.ProfileForgotPasswordEmailedCode,
-                             Controller.Page.ProfileForgotPasswordNew,
-                             Controller.Page.ProfileForgotPasswordNewConfirm,
-                             Controller.Page.ProfileForgotPasswordSave
+                Controller.Page.ProfileForgotPasswordWidget,
+                Controller.Page.ProfileForgotPasswordNotice,
+                Controller.Page.ProfileForgotPasswordEmailAddress,
+                Controller.Page.ProfileForgotPasswordCodeMail,
+                Controller.Page.ProfileForgotPasswordEmailedCode,
+                Controller.Page.ProfileForgotPasswordNew,
+                Controller.Page.ProfileForgotPasswordNewConfirm,
+                Controller.Page.ProfileForgotPasswordSave
         ) {
             @Override
             public String toString() {
@@ -193,14 +224,15 @@ final public class
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }},
+            }
+        },
         PasswordChange("ai/ilikeplaces/widgets/password.xhtml",
-                       Controller.Page.ProfilePasswordWidget,
-                       Controller.Page.ProfilePasswordNotice,
-                       Controller.Page.ProfilePasswordCurrent,
-                       Controller.Page.ProfilePasswordNewConfirm,
-                       Controller.Page.ProfilePasswordNew,
-                       Controller.Page.ProfilePasswordSave
+                Controller.Page.ProfilePasswordWidget,
+                Controller.Page.ProfilePasswordNotice,
+                Controller.Page.ProfilePasswordCurrent,
+                Controller.Page.ProfilePasswordNewConfirm,
+                Controller.Page.ProfilePasswordNew,
+                Controller.Page.ProfilePasswordSave
         ) {
             @Override
             public String toString() {
@@ -210,13 +242,14 @@ final public class
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }},
+            }
+        },
         WallHandler("ai/ilikeplaces/widgets/wall.xhtml",
-                    Controller.Page.wallContent,
-                    Controller.Page.wallAppend,
-                    Controller.Page.wallSubmit,
-                    Controller.Page.wallNotice,
-                    Controller.Page.wallMute
+                Controller.Page.wallContent,
+                Controller.Page.wallAppend,
+                Controller.Page.wallSubmit,
+                Controller.Page.wallNotice,
+                Controller.Page.wallMute
         ) {
             @Override
             public String toString() {
@@ -226,9 +259,10 @@ final public class
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }},
+            }
+        },
         DisplayName("ai/ilikeplaces/widgets/DisplayName.xhtml",
-                    Controller.Page.DisplayNameDisplay) {
+                Controller.Page.DisplayNameDisplay) {
             @Override
             public String toString() {
                 return DocDisplayName;
@@ -237,12 +271,13 @@ final public class
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }},
+            }
+        },
         PrivateEventCreate("ai/ilikeplaces/widgets/privateevent/private_event_create.xhtml",
-                           Controller.Page.privateEventCreateName,
-                           Controller.Page.privateEventCreateInfo,
-                           Controller.Page.privateEventCreateSave,
-                           Controller.Page.privateEventCreateNotice
+                Controller.Page.privateEventCreateName,
+                Controller.Page.privateEventCreateInfo,
+                Controller.Page.privateEventCreateSave,
+                Controller.Page.privateEventCreateNotice
         ) {
             @Override
             public String getURL() {
@@ -252,19 +287,20 @@ final public class
             @Override
             public String toString() {
                 return DocPrivateEventCreate;
-            }},
+            }
+        },
 
         PrivateEventView("ai/ilikeplaces/widgets/privateevent/private_event_view.xhtml",
-                         Controller.Page.privateEventViewNotice,
-                         Controller.Page.privateEventViewName,
-                         Controller.Page.privateEventViewInfo,
-                         Controller.Page.privateEventViewOwners,
-                         Controller.Page.privateEventViewVisitors,
-                         Controller.Page.privateEventViewInvites,
-                         Controller.Page.privateEventViewLink,
-                         Controller.Page.privateEventViewWall,
-                         Controller.Page.privateEventViewAlbum,
-                         Controller.Page.privateEventViewLocationMap
+                Controller.Page.privateEventViewNotice,
+                Controller.Page.privateEventViewName,
+                Controller.Page.privateEventViewInfo,
+                Controller.Page.privateEventViewOwners,
+                Controller.Page.privateEventViewVisitors,
+                Controller.Page.privateEventViewInvites,
+                Controller.Page.privateEventViewLink,
+                Controller.Page.privateEventViewWall,
+                Controller.Page.privateEventViewAlbum,
+                Controller.Page.privateEventViewLocationMap
         ) {
             @Override
             public String getURL() {
@@ -274,21 +310,22 @@ final public class
             @Override
             public String toString() {
                 return DocPrivateEventView;
-            }},
+            }
+        },
 
 
         PrivateEventDelete("ai/ilikeplaces/widgets/privateevent/private_event_delete.xhtml",
-                           Controller.Page.privateEventDeleteName,
-                           Controller.Page.privateEventDeleteInfo,
-                           Controller.Page.privateEventDeleteNotice,
-                           Controller.Page.privateEventDelete,
-                           Controller.Page.privateEventDeleteLink,
-                           Controller.Page.privateEventDeleteOwners,
-                           Controller.Page.privateEventDeleteVisitors,
-                           Controller.Page.privateEventDeleteInvitees,
-                           Controller.Page.privateEventDeleteWall,
-                           Controller.Page.privateEventDeleteAlbum,
-                           Controller.Page.privateEventDeleteLocationMap
+                Controller.Page.privateEventDeleteName,
+                Controller.Page.privateEventDeleteInfo,
+                Controller.Page.privateEventDeleteNotice,
+                Controller.Page.privateEventDelete,
+                Controller.Page.privateEventDeleteLink,
+                Controller.Page.privateEventDeleteOwners,
+                Controller.Page.privateEventDeleteVisitors,
+                Controller.Page.privateEventDeleteInvitees,
+                Controller.Page.privateEventDeleteWall,
+                Controller.Page.privateEventDeleteAlbum,
+                Controller.Page.privateEventDeleteLocationMap
         ) {
             @Override
             public String getURL() {
@@ -298,11 +335,12 @@ final public class
             @Override
             public String toString() {
                 return DocPrivateEventDelete;
-            }},
+            }
+        },
 
 
         WOEIDGrabber("ai/ilikeplaces/widgets/WOEIDGrabber.xhtml",
-                     Controller.Page.WOEIDGrabberWOEID
+                Controller.Page.WOEIDGrabberWOEID
         ) {
             @Override
             public String getURL() {
@@ -312,12 +350,13 @@ final public class
             @Override
             public String toString() {
                 return DocWOEIDGrabber;
-            }},
+            }
+        },
 
 
         DownTownHeatMap("ai/ilikeplaces/widgets/DownTownHeatMap.xhtml",
-                        Controller.Page.DownTownHeatMapWOEID,
-                        Controller.Page.DownTownHeatMapBB
+                Controller.Page.DownTownHeatMapWOEID,
+                Controller.Page.DownTownHeatMapBB
         ) {
             @Override
             public String getURL() {
@@ -327,13 +366,14 @@ final public class
             @Override
             public String toString() {
                 return DocDownTownHeatMap;
-            }},
+            }
+        },
 
         FindFriend("ai/ilikeplaces/widgets/friend/friend_find.xhtml",
-                   Controller.Page.friendFindSearchTextInput,
-                   Controller.Page.friendFindSearchButtonInput,
-                   Controller.Page.friendFindSearchResults,
-                   Controller.Page.friendFindSearchInvites
+                Controller.Page.friendFindSearchTextInput,
+                Controller.Page.friendFindSearchButtonInput,
+                Controller.Page.friendFindSearchResults,
+                Controller.Page.friendFindSearchInvites
         ) {
             @Override
             public String getURL() {
@@ -343,11 +383,12 @@ final public class
             @Override
             public String toString() {
                 return DocFindFriend;
-            }},
+            }
+        },
 
         FriendAdd("ai/ilikeplaces/widgets/friend/friend_add.xhtml",
-                  Controller.Page.friendAddAddButton,
-                  Controller.Page.friendAddDisplayNameLabel
+                Controller.Page.friendAddAddButton,
+                Controller.Page.friendAddDisplayNameLabel
         ) {
             @Override
             public String getURL() {
@@ -357,11 +398,12 @@ final public class
             @Override
             public String toString() {
                 return DocFriendAdd;
-            }},
+            }
+        },
 
         FriendDelete("ai/ilikeplaces/widgets/friend/friend_delete.xhtml",
-                     Controller.Page.friendDeleteAddButton,
-                     Controller.Page.friendDeleteDisplayNameLabel
+                Controller.Page.friendDeleteAddButton,
+                Controller.Page.friendDeleteDisplayNameLabel
         ) {
             @Override
             public String getURL() {
@@ -371,10 +413,11 @@ final public class
             @Override
             public String toString() {
                 return DocFriendDelete;
-            }},
+            }
+        },
 
         FriendList("ai/ilikeplaces/widgets/friend/friend_list.xhtml",
-                   Controller.Page.FriendListList
+                Controller.Page.FriendListList
 
         ) {
             @Override
@@ -385,13 +428,14 @@ final public class
             @Override
             public String toString() {
                 return DocFriendList;
-            }},
+            }
+        },
 
         GenericButton("ai/ilikeplaces/widgets/button.xhtml",
-                      Controller.Page.GenericButtonLink,
-                      Controller.Page.GenericButtonText,
-                      Controller.Page.GenericButtonImage,
-                      Controller.Page.GenericButtonWidth
+                Controller.Page.GenericButtonLink,
+                Controller.Page.GenericButtonText,
+                Controller.Page.GenericButtonImage,
+                Controller.Page.GenericButtonWidth
 
         ) {
             @Override
@@ -402,146 +446,170 @@ final public class
             @Override
             public String toString() {
                 return DocGenericButton;
-            }},
+            }
+        },
 
         Organize(null
         ) {
             @Override
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "page/_org";
+                return APP_ROOT + "page/_org";
             }
 
             @Override
             public String toString() {
                 return DocOrganize;
-            }},
+            }
+        },
+
+        Legal(null
+        ) {
+            @Override
+            public String getURL() {
+                return APP_ROOT + "page/_legal";
+            }
+
+            @Override
+            public String toString() {
+                return DocLegal;
+            }
+        },
 
         Activate(null
         ) {
             @Override
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "page/_activate";
+                return APP_ROOT + "page/_activate";
             }
 
             @Override
             public String toString() {
                 return DocActivate;
-            }},
+            }
+        },
 
         Share(null
         ) {
             @Override
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "page/_share";
+                return APP_ROOT + "page/_share";
             }
 
             @Override
             public String toString() {
                 return DocShare;
-            }},
+            }
+        },
 
         GeoBusiness(null) {
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "page/_geobusiness";
+                return APP_ROOT + "page/_geobusiness";
             }
 
             @Override
             public String toString() {
                 return DocGeoBusiness;
-            }},
+            }
+        },
 
         TemplateGeneric(null) {
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "page/_public";
+                return APP_ROOT + "page/_public";
             }
 
             @Override
             public String toString() {
                 return DocPublic;
-            }},
+            }
+        },
 
         Profile(null,
                 Controller.Page.ProfilePhotoChange
         ) {
             @Override
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "page/_profile";
+                return APP_ROOT + "page/_profile";
             }
 
             @Override
             public String toString() {
                 return DocProfile;
-            }},
+            }
+        },
 
         I(null) {
             @Override
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "page/_i";
+                return APP_ROOT + "page/_i";
             }
 
             @Override
             public String toString() {
                 return DocI;
-            }},
+            }
+        },
 
         Photos(null) {
             @Override
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "page/_me";
+                return APP_ROOT + "page/_me";
             }
 
             @Override
             public String toString() {
                 return DocPhotos;
-            }},
+            }
+        },
 
         Friends(null
         ) {
             @Override
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "page/_friends";
+                return APP_ROOT + "page/_friends";
             }
 
             @Override
             public String toString() {
                 return DocFriends;
-            }},
+            }
+        },
         Bookings(null
         ) {
             @Override
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "page/_book";
+                return APP_ROOT + "page/_book";
             }
 
             @Override
             public String toString() {
                 return DocBook;
-            }},
+            }
+        },
 
         Skeleton("ai/ilikeplaces/Skeleton.xhtml",
-                 Controller.Page.skeletonTitle,
-                 Controller.Page.SkeletonCPageTitle,
-                 Controller.Page.SkeletonCPageIntro,
-                 Controller.Page.SkeletonCPageNotice,
-                 Controller.Page.Skeleton_center,
-                 Controller.Page.Skeleton_center_content,
-                 Controller.Page.Skeleton_center_skeleton,
-                 Controller.Page.Skeleton_file_list,
-                 Controller.Page.Skeleton_left_column,
-                 Controller.Page.Skeleton_login_widget,
-                 Controller.Page.Skeleton_notice,
-                 Controller.Page.Skeleton_notice_sh,
-                 Controller.Page.Skeleton_othersidebar,
-                 Controller.Page.Skeleton_profile_photo,
-                 Controller.Page.Skeleton_othersidebar_identity,
-                 Controller.Page.Skeleton_othersidebar_organizer_link,
-                 Controller.Page.Skeleton_othersidebar_photo_manager_link,
-                 Controller.Page.Skeleton_othersidebar_places_link,
-                 Controller.Page.Skeleton_othersidebar_profile_link,
-                 Controller.Page.Skeleton_othersidebar_upload_file_sh,
-                 Controller.Page.Skeleton_right_column,
-                 Controller.Page.Skeleton_sidebar,
-                 Controller.Page.Skeleton_othersidebar_wall_link
+                Controller.Page.skeletonTitle,
+                Controller.Page.SkeletonCPageTitle,
+                Controller.Page.SkeletonCPageIntro,
+                Controller.Page.SkeletonCPageNotice,
+                Controller.Page.Skeleton_center,
+                Controller.Page.Skeleton_center_content,
+                Controller.Page.Skeleton_center_skeleton,
+                Controller.Page.Skeleton_file_list,
+                Controller.Page.Skeleton_left_column,
+                Controller.Page.Skeleton_login_widget,
+                Controller.Page.Skeleton_notice,
+                Controller.Page.Skeleton_notice_sh,
+                Controller.Page.Skeleton_othersidebar,
+                Controller.Page.Skeleton_profile_photo,
+                Controller.Page.Skeleton_othersidebar_identity,
+                Controller.Page.Skeleton_othersidebar_organizer_link,
+                Controller.Page.Skeleton_othersidebar_photo_manager_link,
+                Controller.Page.Skeleton_othersidebar_places_link,
+                Controller.Page.Skeleton_othersidebar_profile_link,
+                Controller.Page.Skeleton_othersidebar_upload_file_sh,
+                Controller.Page.Skeleton_right_column,
+                Controller.Page.Skeleton_sidebar,
+                Controller.Page.Skeleton_othersidebar_wall_link
 
         ) {
             @Override
@@ -552,16 +620,17 @@ final public class
             @Override
             public String toString() {
                 return DocSkeleton;
-            }},
+            }
+        },
         PrivateLocationCreate("ai/ilikeplaces/widgets/privatelocation/private_location_create.xhtml",
-                              Controller.Page.privateLocationCreateName,
-                              Controller.Page.privateLocationCreateInfo,
-                              Controller.Page.privateLocationCreateWOEID,
-                              Controller.Page.privateLocationCreateWOEIDGrabber,
-                              Controller.Page.privateLocationCreateSave,
-                              Controller.Page.PrivateLocationCreateCNotice,
-                              Controller.Page.PrivateLocaionCreateCTitle,
-                              Controller.Page.PrivateLocaionCreateCIntro
+                Controller.Page.privateLocationCreateName,
+                Controller.Page.privateLocationCreateInfo,
+                Controller.Page.privateLocationCreateWOEID,
+                Controller.Page.privateLocationCreateWOEIDGrabber,
+                Controller.Page.privateLocationCreateSave,
+                Controller.Page.PrivateLocationCreateCNotice,
+                Controller.Page.PrivateLocaionCreateCTitle,
+                Controller.Page.PrivateLocaionCreateCIntro
         ) {
             @Override
             public String getURL() {
@@ -571,16 +640,17 @@ final public class
             @Override
             public String toString() {
                 return DocPrivateLocationCreate;
-            }},
+            }
+        },
 
         PrivateLocationView("ai/ilikeplaces/widgets/privatelocation/private_location_view.xhtml",
-                            Controller.Page.privateLocationViewNotice,
-                            Controller.Page.privateLocationViewName,
-                            Controller.Page.privateLocationViewInfo,
-                            Controller.Page.privateLocationViewOwners,
-                            Controller.Page.privateLocationViewVisitors,
-                            Controller.Page.privateLocationViewLink,
-                            Controller.Page.privateLocationViewEventList
+                Controller.Page.privateLocationViewNotice,
+                Controller.Page.privateLocationViewName,
+                Controller.Page.privateLocationViewInfo,
+                Controller.Page.privateLocationViewOwners,
+                Controller.Page.privateLocationViewVisitors,
+                Controller.Page.privateLocationViewLink,
+                Controller.Page.privateLocationViewEventList
         ) {
             @Override
             public String getURL() {
@@ -590,17 +660,18 @@ final public class
             @Override
             public String toString() {
                 return DocPrivateLocationView;
-            }},
+            }
+        },
 
 
         PrivateLocationDelete("ai/ilikeplaces/widgets/privatelocation/private_location_delete.xhtml",
-                              Controller.Page.privateLocationDeleteName,
-                              Controller.Page.privateLocationDeleteInfo,
-                              Controller.Page.privateLocationDeleteNotice,
-                              Controller.Page.privateLocationDelete,
-                              Controller.Page.privateLocationDeleteOwners,
-                              Controller.Page.privateLocationDeleteVisitors,
-                              Controller.Page.privateLocationDeleteEventList
+                Controller.Page.privateLocationDeleteName,
+                Controller.Page.privateLocationDeleteInfo,
+                Controller.Page.privateLocationDeleteNotice,
+                Controller.Page.privateLocationDelete,
+                Controller.Page.privateLocationDeleteOwners,
+                Controller.Page.privateLocationDeleteVisitors,
+                Controller.Page.privateLocationDeleteEventList
         ) {
             @Override
             public String getURL() {
@@ -610,13 +681,14 @@ final public class
             @Override
             public String toString() {
                 return DocPrivateLocationDelete;
-            }},
+            }
+        },
 
         home(
                 null) {
             @Override
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "";
+                return APP_ROOT + "";
             }
 
             @Override
@@ -656,7 +728,7 @@ final public class
                 Controller.Page.Main_flickr) {
             @Override
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "page/main";
+                return APP_ROOT + "page/main";
             }
 
             @Override
@@ -671,7 +743,7 @@ final public class
         ) {
             @Override
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "page/";
+                return APP_ROOT + "page/";
             }
 
             @Override
@@ -704,7 +776,7 @@ final public class
                 "ai/ilikeplaces/widgets/PhotoUpload.xhtml") {
             @Override
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "page/main";
+                return APP_ROOT + "page/main";
             }
 
             @Override
@@ -716,24 +788,24 @@ final public class
                 null) {
             @Override
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "signup";
+                return APP_ROOT + "signup";
             }
 
             @Override
             public String toString() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "signup";
+                return APP_ROOT + "signup";
             }
         },
         login(
                 null) {
             @Override
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "login";
+                return APP_ROOT + "login";
             }
 
             @Override
             public String toString() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "login";
+                return APP_ROOT + "login";
             }
         },
         SignInOn(
@@ -744,7 +816,7 @@ final public class
         ) {
             @Override
             public String getURL() {
-                return RBGet.getGlobalConfigKey("AppRoot") + "page/main";
+                return APP_ROOT + "page/main";
             }
 
             @Override
@@ -752,6 +824,16 @@ final public class
                 return "DocSignInOn";
             }
         };
+        private static final String APP_ROOT = RBGet.getGlobalConfigKey("AppRoot");
+
+        /*TermsOfServices Page*/
+        final static public String DocTermsOfServices = "DocTermsOfServices";
+        /*DocTermsOfServices IDs*/
+
+        /*PrivacyPolicy Page*/
+        final static public String DocPrivacyPolicy = "DocPrivacyPolicy";
+        /*PrivacyPolicy IDs*/
+
 
         /*Album Page*/
         final static public String DocAlbum = "DocAlbum";
@@ -925,6 +1007,9 @@ final public class
         /*GeoBusiness Page*/
         final static public String DocGeoBusiness = "DocGeoBusiness";
 
+        /*GeoBusiness Page*/
+        final static public String DocLegal = "DocLegal";
+
         /*TemplateGeneric Pages*/
         final static public String DocPublic = "DocPublic";
 
@@ -1027,9 +1112,9 @@ final public class
         final static public String mainTitle = "mainTitle";
         final static public String mainMetaDesc = "mainMetaDesc";
         final static public String Main_ICBM = "Main_ICBM";
-        final static public String Main_geoposition = "Main_geoposition" ;
+        final static public String Main_geoposition = "Main_geoposition";
         final static public String Main_geoplacename = "Main_geoplacename";
-        final static public String Main_georegion = "Main_georegion" ;
+        final static public String Main_georegion = "Main_georegion";
         final static public String Main_othersidebar_identity = "Main_othersidebar_identity";
         final static public String Main_location_photo = "Main_location_photo";
         final static public String Main_profile_photo = "Main_profile_photo";
@@ -1135,7 +1220,7 @@ final public class
         itsNatServletConfig.setClientErrorMode(ClientErrorMode.SHOW_SERVER_AND_CLIENT_ERRORS);
         itsNatServletConfig.setLoadScriptInline(true);
         itsNatServletConfig.setUseGZip(UseGZip.MARKUP);
-        //itsNatServletConfig.setDefaultSyncMode(SyncMode.SYNC);
+        itsNatServletConfig.setCommMode(CommMode.XHR_SYNC);
         itsNatServletConfig.setAutoCleanEventListeners(true);
         itsNatServletConfig.setDefaultEncoding("UTF-8");
         itsNatServletConfig.setReferrerEnabled(true);
@@ -1195,6 +1280,8 @@ final public class
 
             inhs__.registerItsNatDocumentTemplate(share.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerShare());
 
+            inhs__.registerItsNatDocumentTemplate(legal.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerLegal());
+
             inhs__.registerItsNatDocumentTemplate(geoBusiness.toString(), "text/html", new TemplateSourceGeoBusiness()).addItsNatServletRequestListener(new ListenerGeoBusiness());
 
             inhs__.registerItsNatDocumentTemplate(templateGeneric.toString(), "text/html", new TemplateGeneric(true));
@@ -1249,6 +1336,10 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(userProperty.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(userProperty));
 
             inhs__.registerItsNatDocFragmentTemplate(userPropertySidebar.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(userPropertySidebar));
+
+            inhs__.registerItsNatDocFragmentTemplate(termsOfServices.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(termsOfServices));
+
+            inhs__.registerItsNatDocFragmentTemplate(privacyPolicy.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privacyPolicy));
         }
     }
 
@@ -1302,8 +1393,8 @@ final public class
             Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
             Loggers.INFO.info(((HttpServletRequest) request__.getServletRequest()).getRequestURL().toString()
                     + (((HttpServletRequest) request__.getServletRequest()).getQueryString() != null
-                       ? ((HttpServletRequest) request__.getServletRequest()).getQueryString()
-                       : ""));
+                    ? ((HttpServletRequest) request__.getServletRequest()).getQueryString()
+                    : ""));
             request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
 
 //            final ItsNatHttpSession itsNatHttpSession = (ItsNatHttpSession) request__.getItsNatSession();
@@ -1338,44 +1429,47 @@ final public class
                     request__.getServletRequest().setAttribute(RBGet.globalConfig.getString("HttpSessionAttr.location"), getPhotoLocation(URL__));
                     request__.getServletRequest().setAttribute("photoURL", getPhotoURL(URL__));
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, "photo");/*Framework specific*/
-                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0005") + getPhotoLocation(URL__));
-                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0006") + getPhotoURL(URL__));
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0005") + getPhotoLocation(URL__));
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0006") + getPhotoURL(URL__));
                 } else if (isHumanPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocPhotos);/*Framework specific*/
-                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0007"));
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0007"));
                 } else if (isOrganizePage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocOrganize);/*Framework specific*/
                     request__.getServletRequest().setAttribute(Page.DocOrganizeCategory, request__.getServletRequest().getParameter(Page.DocOrganizeCategory));
                     request__.getServletRequest().setAttribute(Page.DocOrganizeLocation, request__.getServletRequest().getParameter(Page.DocOrganizeLocation));
                     request__.getServletRequest().setAttribute(Page.DocOrganizeEvent, request__.getServletRequest().getParameter(Page.DocOrganizeEvent));
                     request__.getServletRequest().setAttribute(Page.DocOrganizeAlbum, request__.getServletRequest().getParameter(Page.DocOrganizeAlbum));
-                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0013"));
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0013"));
                 } else if (isFriendsPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocFriends);/*Framework specific*/
-                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0014"));
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0014"));
                 } else if (isBookingsPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocBook);/*Framework specific*/
-                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0015"));
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0015"));
                 } else if (isProfilePage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocProfile);/*Framework specific*/
-                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0016"));
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0016"));
                 } else if (isIPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocI);/*Framework specific*/
-                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0017"));
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0017"));
                 } else if (isActivatePage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocActivate);/*Framework specific*/
-                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0018"));
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0018"));
                 } else if (isSharePage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocShare);/*Framework specific*/
-                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0019"));
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0019"));
                 } else if (isGeoBusinessPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocGeoBusiness);/*Framework specific*/
-                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0020"));
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0020"));
                 } else if (isTemplateGenericPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocPublic);/*Framework specific*/
-                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0021"));
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0021"));
+                } else if (isLegalPage(URL__)) {
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocLegal);/*Framework specific*/
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0022"));
                 } else {/*Divert to home page*/
-                    Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
                     request__.getServletRequest().setAttribute("location", "");
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
                 }
@@ -1461,6 +1555,10 @@ final public class
 
     static private boolean isTemplateGenericPage(final String URL_) {
         return (URL_.startsWith("_public"));
+    }
+
+    static private boolean isLegalPage(final String URL_) {
+        return (URL_.startsWith("_legal"));
     }
 
     /**

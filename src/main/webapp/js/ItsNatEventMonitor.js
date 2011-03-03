@@ -31,6 +31,7 @@ function EventMonitor()
             //this.monitor.style.pixelLeft = event.clientY;
             //this.monitor.style.display = "block";
             $('#monitorId').show();
+            alert(evt.pageX + "," + evt.pageY);
         }
 
         this.count++;

@@ -33,12 +33,15 @@ import static ai.ilikeplaces.util.Loggers.EXCEPTION;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class AbstractSkeletonListener extends AbstractListener {
 
-    public static final String DISCOVER_AND_HAVE_FUN_IN_PLACES = "Discover and Have Fun in Places! ";
+    public static final String TITLE = "who goes there...?! ";
     private static final String NO_LOGIN = "NoLogin";
     private static final String BN = "bn";
     private static final String PROFILE_PHOTOS = "PROFILE_PHOTOS";
     private static final String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004 = "ai.ilikeplaces.logic.Listeners.ListenerMain.0004";
     protected static final ResourceBundle GUI = RBGet.gui();
+    private static final String CODENAME = "codename:";
+    private static final String CODENAME_KEY = "codename";
+    private static final String SPACE = " ";
     boolean initStatus = false;
     private static final String TALK = "Talk!";
 
@@ -71,7 +74,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
 
         final ItsNatServletRequest request__ = (ItsNatServletRequest) initArgs[0];
 
-        itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor);
+        //itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor);
 
         layoutNeededForAllPages:
         {
@@ -90,18 +93,18 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                     setMainTitle:
                     {
                         $(skeletonTitle).setTextContent(
-                                DISCOVER_AND_HAVE_FUN_IN_PLACES +
-                                        RBGet.globalConfig.getString(BN));
-
+                                TITLE
+                                        + CODENAME + RBGet.globalConfig.getString(CODENAME_KEY)
+                                        + SPACE + RBGet.globalConfig.getString(BN));
                     }
                     setMetaDescription:
                     {
                         $(skeletonTitle).setAttribute(MarkupTag.META.namee(),
-                                                      DISCOVER_AND_HAVE_FUN_IN_PLACES +
-                                                              RBGet.globalConfig.getString(BN));
+                                TITLE
+                                        + CODENAME + RBGet.globalConfig.getString(CODENAME_KEY)
+                                        + SPACE + RBGet.globalConfig.getString(BN));
                     }
-                }
-                catch (final Throwable t) {
+                } catch (final Throwable t) {
                     Loggers.DEBUG.debug(t.getMessage());
                 }
             }
@@ -213,18 +216,17 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
             setMainTitle:
             {
                 $(skeletonTitle).setTextContent(
-                        DISCOVER_AND_HAVE_FUN_IN_PLACES +
+                        TITLE +
                                 RBGet.globalConfig.getString(BN));
 
             }
             setMetaDescription:
             {
                 $(skeletonTitle).setAttribute(MarkupTag.META.namee(),
-                                              DISCOVER_AND_HAVE_FUN_IN_PLACES +
-                                                      RBGet.globalConfig.getString(BN));
+                        TITLE +
+                                RBGet.globalConfig.getString(BN));
             }
-        }
-        catch (final Throwable t) {
+        } catch (final Throwable t) {
             Loggers.DEBUG.debug(t.getMessage());
         }
     }
