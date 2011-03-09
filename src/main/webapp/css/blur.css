@@ -90,5 +90,10 @@ grouping currently means, a layer, and a specific layer, if to support only a gr
 
 }
 
+.positive{
+	color:#119900;
+}
 
-
+.negative{
+	color:#aa0000;
+}

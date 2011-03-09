@@ -1100,6 +1100,12 @@
 <node CREATED="1297860928218" ID="Freemind_Link_1058108355" MODIFIED="1297860936234" TEXT="Location Checkin">
 <icon BUILTIN="full-1"/>
 </node>
+<node CREATED="1299391829843" ID="Freemind_Link_359466581" MODIFIED="1299391872781" TEXT="SEO">
+<icon BUILTIN="full-1"/>
+<node CREATED="1299391608218" ID="Freemind_Link_1514905939" MODIFIED="1299391819843" TEXT="Dates in H1 tags appear on google (as did for Yala Park Safari for 16.10.2010 )">
+<icon BUILTIN="full-1"/>
+</node>
+</node>
 </node>
 <node CREATED="1283871927859" FOLDED="true" ID="Freemind_Link_504513171" MODIFIED="1291817174968" TEXT="Sell">
 <icon BUILTIN="bell"/>
@@ -1223,7 +1229,10 @@
 <node CREATED="1297860960718" ID="Freemind_Link_1660226477" MODIFIED="1297919566812" TEXT="Legal Credibility">
 <icon BUILTIN="full-1"/>
 </node>
-<node BACKGROUND_COLOR="#663300" COLOR="#ffffff" CREATED="1297881848375" ID="Freemind_Link_627582035" MODIFIED="1297925707640" TEXT="The Beast!">
+<node CREATED="1299391806000" ID="Freemind_Link_1891444777" MODIFIED="1299391819859" TEXT="The American Homeowner">
+<icon BUILTIN="full-1"/>
+</node>
+<node BACKGROUND_COLOR="#663300" COLOR="#ffffff" CREATED="1297881848375" FOLDED="true" ID="Freemind_Link_627582035" MODIFIED="1297925707640" TEXT="The Beast!">
 <node BACKGROUND_COLOR="#663300" COLOR="#ffffff" CREATED="1297881848375" ID="Freemind_Link_1840256455" MODIFIED="1297925707453" TEXT="Unfortunately, this time the beast was us!"/>
 <node BACKGROUND_COLOR="#663300" COLOR="#ffffff" CREATED="1297881848375" ID="Freemind_Link_1157607150" MODIFIED="1297925707640" TEXT="iLikePlaces.com neither had a Privacy Policy nor Terms of Services. This was simply crazy."/>
 <node BACKGROUND_COLOR="#663300" COLOR="#ffffff" CREATED="1297881848375" ID="Freemind_Link_336422878" MODIFIED="1297925707640" TEXT="The grand users had FUD in providing their email address to signup. Some feared using their common password with us!"/>
@@ -1251,22 +1260,35 @@
 <node CREATED="1298125687515" ID="Freemind_Link_1532820605" MODIFIED="1298125709968" TEXT="Facebook Instant Personalization&#xa;&#xa;A privacy policy is one of the most important documents on any website. It details your company&apos;s views and procedures on the information collected from visitors.&#xa;&#xa;Although a privacy policy is technically a legal document, great effort should be made to craft a document that is both accurate and easy to understand, obscuring hidden clauses in reams of text is not acceptable.&#xa;&#xa;The main sections are as follows:&#xa;&#xa;Introduction: This section can tell your visitor a little about your organization, and any special information or functions that your website has. If your website has special conditions for collecting information from children (under 16 etc), you should state them clearly in this section.&#xa;&#xa;Information Collected: Visitors have a right to know what information you are collecting. It may be obvious that you are collecting personal details by asking them to complete a form, but you should make it clear. You should also include information logged by your servers, such as hostnames and IP addresses.&#xa;&#xa;Method of Collection: This details the methods you use to collect the information. Is it all automated? Do the forms visitors fill in collect other information, such as the original referrer? All of these questions will help you build a detailed description of how you collect information.&#xa;&#xa;Storage of Information: How is the information stored? If you store information in a database and are located in the UK you may need to register with the government regarding the data protection act. If your servers are in the EU you will need to ask permission to transmit data outside the union, even if it stays within your company. Visitors have a right to know that you will make every effort to store their personal information in a safe and secure environment.&#xa;&#xa;Contact details: Its important to be as transparent as possible, and allow users to contact you if they have a query. You should feature both an email address (or online form), as well as a real world address where a user can write to.&#xa;"/>
 </node>
 <node BACKGROUND_COLOR="#ffcc00" CREATED="1297924716250" ID="Freemind_Link_1295230818" MODIFIED="1298125764312" TEXT="We organized our Privacy Policy">
-<node CREATED="1298467191794" ID="Freemind_Link_1226759761" MODIFIED="1298467198075" TEXT="What the privacy policy is for">
-<node CREATED="1298467198669" ID="Freemind_Link_663110788" MODIFIED="1298467207559" TEXT="Our Privacy Policy is designed to assist you in understanding how we collect, use and safeguard the personal information you provide to us and to assist you in making informed decisions when using our site."/>
+<node CREATED="1298467191794" ID="Freemind_Link_1226759761" MODIFIED="1299386904750" TEXT="What the privacy policy is for">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1298467198669" ID="Freemind_Link_663110788" MODIFIED="1299387026078" TEXT="This Privacy Policy is to assist you in understanding how this site collects, uses and safeguards your information provided to this site and to assist you in making informed decisions when using this site.">
+<icon BUILTIN="button_ok"/>
 </node>
-<node CREATED="1298125846484" FOLDED="true" ID="Freemind_Link_132565798" MODIFIED="1298125863265" TEXT="Introduction">
-<node CREATED="1298125931078" ID="Freemind_Link_112407444" MODIFIED="1298126593281" TEXT="Adimpression is an innovative advertising company. It strictly, deviates from traditional spammer advertising companies. Spamming is, overload of advertisements, whether relevant or irrelevant. Most advertising companies are spammers. When you see an advertisement not relevant to what is on your mind, we consider it spamming. Adimpression clearly deviates from that.&#xa;&#xa;Each product of Adimpression focuses on advertising to our grand users. Adimpression does so only when relevant, and in most occassions, when needed. Even the real social network Down Town adheres to this principle.  Ideally, you would see many services offered at Down Town are most relevant. A service becomes an advertisement, when it is given when not relevant. An advertisement becomes a service, when provided at the exact time. Adimpression provide you services just at the right time."/>
 </node>
-<node CREATED="1298467055218" ID="Freemind_Link_752536710" MODIFIED="1298467101264" TEXT="How Information Collected Is Used For Intent of Site"/>
-<node CREATED="1298125850171" FOLDED="true" ID="Freemind_Link_1204086876" MODIFIED="1298214777625" TEXT="Information Collected and How It Is Used">
-<node CREATED="1298126595812" ID="Freemind_Link_1914498752" MODIFIED="1298126724328" TEXT="Adimpression collects information from you while using its services. This information is used both by you and Adimpression for various purposes, including, but not limited to, "/>
-<node CREATED="1298214828609" ID="Freemind_Link_1070686584" MODIFIED="1298214894718" TEXT="very computer connected to the Internet is provided with a domain name (e.g. someispname.net) and an IP Address (e.g. 192.164.13.145). When a visitor requests a page from within the Hathaway Law Firm website, our Web Servers automatically identify and log the HTTP request that is made to our Web Server. By itself, this information reveals nothing personal about you. In fact, the only information that we automatically gather and log is as follows:&#xa;&#xa;&#x2022;&#x9;The IP Address of the Site that may have Referred you.&#xa;&#x2022;&#x9;Your IP Address&#xa;&#x2022;&#x9;The Web Page that you may have linked to us from, if any.&#xa;&#x2022;&#x9;The Product Identifier for Version and Make of Browser (e.g. Internet Explorer&#xae;)&#xa;&#x2022;&#x9;The Operating System platform that you may be running (e.g. Macintosh&#xae; or Windows&#xae;)&#xa;&#x2022;&#x9;Search Words or Terms that are passed from a Search Engine (e.g. Google&#xae; or Yahoo!&#xae;)&#xa;&#x2022;&#x9;Information readily available and stored in your Adobe&#xae; Flash System.Capabilities Object.&#xa;There is absolutely nothing special about the information just described, and the practice of collecting this data has been generally standardized by virtually every Web Server on the Internet today.&#xa;&#xa;The purpose for this information is actually two-fold. One, Hathaway Law Firm has found it advantageous to examine visitor traffic in its aggregate, so that we can ensure maximum compatibility for the various Browsers and Operating Systems that visit our site. Additionally, as any business should attest, it is our desire to generate greater amounts of visitor traffic. By analyzing visitation patterns, referring URLs and Search Engine terms, we can strategically enhance our exposure on the Internet.&#xa;&#xa;What about Cookies?&#xa;&#xa;Cookies are small pieces of data that are transferred to your computer&apos;s hard drive through your Web browser from our Web Server. A cookie cannot read data from your hard disk or read cookie files that may have been created from other sites. The Hathaway Law Firm website utilizes cookies as a means of providing personalization features to our visitors. For example, we utilize cookies to remember settings (music preferences, language settings, etc.) that you may have made at our website.&#xa;&#xa;You can choose whether to accept cookies by changing the settings of your browser. Typically, by accessing the browser&apos;s help feature you can obtain information on how to prevent your browser from accepting all cookies or to notify you when a cookie is being sent. If you choose not to accept these cookies, your experience at our website and other websites may be diminished and some features may not work as intended.&#xa;&#xa;What other information does Hathaway Law Firm request?&#xa;We may also request your e-mail address or mailing address for the purposes of conducting a survey, adding you to our mailing list, or by your request to have someone contact you for additional information. Whenever we request the identity of a visitor, we will clearly indicate the purpose of the inquiry before the information is requested. We maintain a strict &#x201c;No Spam or UCE&#x201d; policy that means we do not intend to sell, rent, or otherwise give your e-mail address to a third-party, without your consent.&#xa;&#xa;In addition, Hathaway Law Firm will not send you e-mail that you have not agreed to receive. If you are a member of our Mailing List, you will be contacted with announcements, news, portfolio additions, and new products or services. You have the option of &#x201c;Unsubscribing&#x201d; from out Mailing List at any time, thereby disabling any further such e-mail communication from being sent to you. If you wish to have specific communications with a member of the Hathaway Law Firm staff, you will be required to provide specific information that will be routed to the appropriate contact within Hathaway Law Firm.&#xa;&#xa;Hathaway Law Firm will only disclose your personal information or any of its log file information when required by law or in the good-faith belief that such actions are necessary to:&#xa;&#xa;&#x2022;&#x9;Conform to the edicts of the law or comply with a legal process served on Hathaway Law Firm.&#xa;&#x2022;&#x9;Protect and defend the rights or property of Hathaway Law Firm, or visitors of Hathaway Law Firm.&#xa;&#x2022;&#x9;Identify persons who may be violating the law, the legal notice, or the rights of third parties.&#xa;&#x2022;&#x9;Cooperate with the investigations of purported unlawful activities.&#xa;Hathaway Law Firm uses reasonable precautions to keep the information disclosed to us secure. Hathaway Law Firm reserves the right to transfer information in connection with the sale of all or part of Hathaway Law Firm capital stock or assets to any third party. Furthermore, we are not responsible for any breach of security or for any actions of any third parties that receive the information. Hathaway Law Firm also provides &#x201c;links&#x201d; to a wide variety of other web sites on the Internet. We are not responsible for their Privacy Policies or how those web sites manage information about their users. We strongly urge you to check with those web sites to determine their privacy policy.&#xa;&#xa;Any changes to this Privacy Policy will be posted on this page so that you are always aware of the information that we collect, how we use it, and under what circumstances we disclose it."/>
+<node CREATED="1298125846484" ID="Freemind_Link_132565798" MODIFIED="1299387195671" TEXT="Introduction">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1298125931078" ID="Freemind_Link_112407444" MODIFIED="1299387320812" TEXT="Adimpression is an innovative advertising company. It strictly, deviates from traditional spammers. Spamming is, overload of advertisements, whether relevant or irrelevant. When you see an advertisement not relevant to what is on your mind, a little too often, we consider it spamming. Adimpression clearly deviates from that.&#xa;&#xa;Each product /service of Adimpression focuses on catering  to our grand users. Adimpression does so, with advertisements, only when relevant, and in most occassions, when needed. Even the real social network &quot;Down Town&quot; adheres to this principle.  Ideally, you would see many services offered at Down Town are most relevant. A service becomes an advertisement, if it is served when not relevant. An advertisement becomes a service, when provided at the exact time. Adimpression provides you with relevant services, just at that right time.">
+<icon BUILTIN="button_ok"/>
 </node>
-<node CREATED="1298125851328" ID="Freemind_Link_1816652902" MODIFIED="1298125882859" TEXT="Method of Collection"/>
-<node CREATED="1298125852093" ID="Freemind_Link_1759516832" MODIFIED="1298125891078" TEXT="Storage of Information"/>
-<node CREATED="1298125852343" ID="Freemind_Link_1610589416" MODIFIED="1298125899484" TEXT="Contact details"/>
-<node CREATED="1298214729234" ID="Freemind_Link_1946169523" MODIFIED="1298214737296" TEXT="Commitment to Protecting Privacy">
-<node CREATED="1298214756250" ID="Freemind_Link_1870970904" MODIFIED="1298214757078" TEXT="Hathaway Law Firm is committed to protecting your privacy. That is why we have adopted this Privacy Policy. This Privacy Policy is intended to describe how your personal information is processed and used, and we will make every effort to ensure that our activities keep within the spirit of this Privacy Policy. Please note that by visiting and using hathawaylawfirm.com, or any other website owned and operated by Hathaway Law Firm, LLC, you are accepting the practices described in this Privacy Policy."/>
+</node>
+<node CREATED="1298125852093" ID="Freemind_Link_1759516832" MODIFIED="1299393072203" TEXT="Storage of Information">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1299386186875" ID="Freemind_Link_1730961227" MODIFIED="1299393072218" TEXT="Your data is located at The Rackspace Cloud (http://www.rackspacecloud.com/). How big is Rackspace? &quot;Rackspace&apos;s platform is 60% larger than Google&apos;s.&quot; &#x2014;Erik Suppiger, Signal Hill Analyst, Dow Jones Newswires">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1298125852343" ID="Freemind_Link_1610589416" MODIFIED="1299392916328" TEXT="Contact details">
+<icon BUILTIN="button_ok"/>
+<node COLOR="#000000" CREATED="1299392385703" ID="Freemind_Link_543852619" MODIFIED="1299393056437" TEXT="We hate crammed up lego box offices. We also hate to poop where we eat - in other words, that, would be, poluting the environment. Our office is located in a serene location of Sri Lanka, a beutiful Island in the indian ocean. You can come visit us there, but we&apos;ve got nothing much to show of our own, except the heavenly scenery! Our office here, is only for the basic official and legal needs. Most of our employees work from home, adviced to take long vacations and are asked to be constantly happy(or else our products would fail in their core principles, wouldn&apos;t they?). &#xa;&#xa;If you&apos;re going to pay us a visit, just let us know before hand. As we are still a startup, there&apos;s only so much we can be hospitable. So please bring your money with you :) And lets party!">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1298214729234" ID="Freemind_Link_1946169523" MODIFIED="1299412533859" TEXT="Commitment to Protecting Privacy">
+<icon BUILTIN="button_ok"/>
+<node CREATED="1298214756250" ID="Freemind_Link_1870970904" MODIFIED="1299412533875" TEXT="Adimpression is well committed to protecting your privacy. If Adimpression had a head, your privacy would always be lingering on the back of it. That is also why this privacy policy is more vivid and descriptive than other privacy policies. It attempts to explain things so that you can actually understand the legal yada yada. &#xa;&#xa;This Privacy Policy is intended to describe how your personal information is processed and used ny iLikePlaces.com. By using iLikePlaces.com you accept these policies described.">
+<icon BUILTIN="button_ok"/>
+</node>
 </node>
 <node CREATED="1298214919968" ID="Freemind_Link_151549377" MODIFIED="1299099605203" TEXT="Who the website is for and usage disclaimer">
 <icon BUILTIN="button_ok"/>
@@ -1319,13 +1341,13 @@
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1298467244512" ID="Freemind_Link_556441512" MODIFIED="1299099421671" TEXT="Notice of New Services and Changes ">
+<node CREATED="1298467244512" FOLDED="true" ID="Freemind_Link_556441512" MODIFIED="1299099421671" TEXT="Notice of New Services and Changes ">
 <icon BUILTIN="button_ok"/>
 <node CREATED="1299099364468" ID="Freemind_Link_618912" MODIFIED="1299099421640" TEXT="iLikePlaces.com holds the right to change this document from time to time and you are advice to periodically check it for changes.">
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1298467276620" ID="Freemind_Link_568735662" MODIFIED="1299099303984" TEXT="Legally Compelled Disclosure of Information ">
+<node CREATED="1298467276620" FOLDED="true" ID="Freemind_Link_568735662" MODIFIED="1299099303984" TEXT="Legally Compelled Disclosure of Information ">
 <icon BUILTIN="button_ok"/>
 <node CREATED="1299097997062" ID="Freemind_Link_1210466528" MODIFIED="1299099012953" TEXT="iLikePlaces.com may have to disclose your information when legally compelled, by law.">
 <icon BUILTIN="button_ok"/>
@@ -1333,7 +1355,7 @@
 </node>
 <node CREATED="1298561071543" FOLDED="true" ID="Freemind_Link_1216991958" MODIFIED="1298645703352" TEXT="Session Maintainance, Brower Cache and Local Data">
 <icon BUILTIN="button_ok"/>
-<node CREATED="1298561083620" ID="Freemind_Link_310241939" MODIFIED="1298644964457" TEXT="About Cookies">
+<node CREATED="1298561083620" FOLDED="true" ID="Freemind_Link_310241939" MODIFIED="1298644964457" TEXT="About Cookies">
 <icon BUILTIN="button_ok"/>
 <node CREATED="1298644583425" ID="Freemind_Link_419699859" MODIFIED="1299099269656" TEXT="Cookies(not the delicious type) are an internet standard of maintaining state of users with the help of their browsers.">
 <icon BUILTIN="button_ok"/>
@@ -1344,11 +1366,11 @@
 <node CREATED="1298644454448" ID="Freemind_Link_1701260957" MODIFIED="1299099269640" TEXT="iLikePlaces.com uses cookies to track you for operations ONLY WITHIN iLikePlaces.com.">
 <icon BUILTIN="button_ok"/>
 </node>
-<node CREATED="1298644494091" ID="Freemind_Link_1276490839" MODIFIED="1299099269640" TEXT="More precise of cookies(not the delicious type) can be found at http://datatracker.ietf.org/doc/rfc2964/">
+<node CREATED="1298644494091" ID="Freemind_Link_1276490839" MODIFIED="1299412598078" TEXT="More precise explanation of cookies(not the delicious type) can be found at http://datatracker.ietf.org/doc/rfc2964/">
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1298644136113" ID="Freemind_Link_1406454297" MODIFIED="1298645405238" TEXT="Browser Cache">
+<node CREATED="1298644136113" FOLDED="true" ID="Freemind_Link_1406454297" MODIFIED="1298645405238" TEXT="Browser Cache">
 <icon BUILTIN="button_ok"/>
 <node CREATED="1298645021430" ID="Freemind_Link_1938342472" MODIFIED="1299099269625" TEXT="Browser Cache is a temporary data storage maintained by browsers.">
 <icon BUILTIN="button_ok"/>
@@ -1366,7 +1388,7 @@
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1298645428147" ID="Freemind_Link_691943344" MODIFIED="1298645679399" TEXT="Your own PC">
+<node CREATED="1298645428147" FOLDED="true" ID="Freemind_Link_691943344" MODIFIED="1298645679399" TEXT="Your own PC">
 <icon BUILTIN="button_ok"/>
 <node CREATED="1298645436734" ID="Freemind_Link_1838061265" MODIFIED="1299099269562" TEXT="A computer might contain various hardware and software.">
 <icon BUILTIN="button_ok"/>
@@ -1388,6 +1410,11 @@
 <node CREATED="1298215009437" ID="Freemind_Link_1990191935" MODIFIED="1298215010109" TEXT="http://www.winston.com/index.cfm?contentID=175"/>
 <node CREATED="1298467029688" ID="Freemind_Link_150359948" MODIFIED="1298467030985" TEXT="http://www.foley.com/legal.aspx"/>
 </node>
+<node CREATED="1298125850171" FOLDED="true" ID="Freemind_Link_1204086876" MODIFIED="1299596790328" TEXT="Information Collected and How It Is Used For Intent of Site">
+<node CREATED="1298126595812" ID="Freemind_Link_1914498752" MODIFIED="1298126724328" TEXT="Adimpression collects information from you while using its services. This information is used both by you and Adimpression for various purposes, including, but not limited to, "/>
+<node CREATED="1298214828609" ID="Freemind_Link_1070686584" MODIFIED="1298214894718" TEXT="very computer connected to the Internet is provided with a domain name (e.g. someispname.net) and an IP Address (e.g. 192.164.13.145). When a visitor requests a page from within the Hathaway Law Firm website, our Web Servers automatically identify and log the HTTP request that is made to our Web Server. By itself, this information reveals nothing personal about you. In fact, the only information that we automatically gather and log is as follows:&#xa;&#xa;&#x2022;&#x9;The IP Address of the Site that may have Referred you.&#xa;&#x2022;&#x9;Your IP Address&#xa;&#x2022;&#x9;The Web Page that you may have linked to us from, if any.&#xa;&#x2022;&#x9;The Product Identifier for Version and Make of Browser (e.g. Internet Explorer&#xae;)&#xa;&#x2022;&#x9;The Operating System platform that you may be running (e.g. Macintosh&#xae; or Windows&#xae;)&#xa;&#x2022;&#x9;Search Words or Terms that are passed from a Search Engine (e.g. Google&#xae; or Yahoo!&#xae;)&#xa;&#x2022;&#x9;Information readily available and stored in your Adobe&#xae; Flash System.Capabilities Object.&#xa;There is absolutely nothing special about the information just described, and the practice of collecting this data has been generally standardized by virtually every Web Server on the Internet today.&#xa;&#xa;The purpose for this information is actually two-fold. One, Hathaway Law Firm has found it advantageous to examine visitor traffic in its aggregate, so that we can ensure maximum compatibility for the various Browsers and Operating Systems that visit our site. Additionally, as any business should attest, it is our desire to generate greater amounts of visitor traffic. By analyzing visitation patterns, referring URLs and Search Engine terms, we can strategically enhance our exposure on the Internet.&#xa;&#xa;What about Cookies?&#xa;&#xa;Cookies are small pieces of data that are transferred to your computer&apos;s hard drive through your Web browser from our Web Server. A cookie cannot read data from your hard disk or read cookie files that may have been created from other sites. The Hathaway Law Firm website utilizes cookies as a means of providing personalization features to our visitors. For example, we utilize cookies to remember settings (music preferences, language settings, etc.) that you may have made at our website.&#xa;&#xa;You can choose whether to accept cookies by changing the settings of your browser. Typically, by accessing the browser&apos;s help feature you can obtain information on how to prevent your browser from accepting all cookies or to notify you when a cookie is being sent. If you choose not to accept these cookies, your experience at our website and other websites may be diminished and some features may not work as intended.&#xa;&#xa;What other information does Hathaway Law Firm request?&#xa;We may also request your e-mail address or mailing address for the purposes of conducting a survey, adding you to our mailing list, or by your request to have someone contact you for additional information. Whenever we request the identity of a visitor, we will clearly indicate the purpose of the inquiry before the information is requested. We maintain a strict &#x201c;No Spam or UCE&#x201d; policy that means we do not intend to sell, rent, or otherwise give your e-mail address to a third-party, without your consent.&#xa;&#xa;In addition, Hathaway Law Firm will not send you e-mail that you have not agreed to receive. If you are a member of our Mailing List, you will be contacted with announcements, news, portfolio additions, and new products or services. You have the option of &#x201c;Unsubscribing&#x201d; from out Mailing List at any time, thereby disabling any further such e-mail communication from being sent to you. If you wish to have specific communications with a member of the Hathaway Law Firm staff, you will be required to provide specific information that will be routed to the appropriate contact within Hathaway Law Firm.&#xa;&#xa;Hathaway Law Firm will only disclose your personal information or any of its log file information when required by law or in the good-faith belief that such actions are necessary to:&#xa;&#xa;&#x2022;&#x9;Conform to the edicts of the law or comply with a legal process served on Hathaway Law Firm.&#xa;&#x2022;&#x9;Protect and defend the rights or property of Hathaway Law Firm, or visitors of Hathaway Law Firm.&#xa;&#x2022;&#x9;Identify persons who may be violating the law, the legal notice, or the rights of third parties.&#xa;&#x2022;&#x9;Cooperate with the investigations of purported unlawful activities.&#xa;Hathaway Law Firm uses reasonable precautions to keep the information disclosed to us secure. Hathaway Law Firm reserves the right to transfer information in connection with the sale of all or part of Hathaway Law Firm capital stock or assets to any third party. Furthermore, we are not responsible for any breach of security or for any actions of any third parties that receive the information. Hathaway Law Firm also provides &#x201c;links&#x201d; to a wide variety of other web sites on the Internet. We are not responsible for their Privacy Policies or how those web sites manage information about their users. We strongly urge you to check with those web sites to determine their privacy policy.&#xa;&#xa;Any changes to this Privacy Policy will be posted on this page so that you are always aware of the information that we collect, how we use it, and under what circumstances we disclose it."/>
+</node>
+<node CREATED="1298125851328" ID="Freemind_Link_1816652902" MODIFIED="1298125882859" TEXT="Method of Collection"/>
 </node>
 <node BACKGROUND_COLOR="#ffcc00" CREATED="1297925191687" FOLDED="true" ID="Freemind_Link_809728438" MODIFIED="1298214000156" TEXT="We organized our Terms of Services">
 <node CREATED="1298467706799" ID="Freemind_Link_717778923" MODIFIED="1298467710299" TEXT="Updated Date"/>
@@ -1474,12 +1501,12 @@
 <node BACKGROUND_COLOR="#ffcc00" CREATED="1297925110390" ID="Freemind_Link_386642255" MODIFIED="1297925371484" TEXT="By now our grand users had chewed most of their nails off. Knuckles red."/>
 <node BACKGROUND_COLOR="#ffcc00" CREATED="1297925191687" ID="Freemind_Link_816292859" MODIFIED="1297925371468" TEXT="But our latest reassuaring stopped them there. Our grand users were confident now about their privacy."/>
 </node>
-<node BACKGROUND_COLOR="#cc0000" CREATED="1297920031187" ID="Freemind_Link_1500452852" MODIFIED="1297923405515" TEXT="The Reward!">
+<node BACKGROUND_COLOR="#cc0000" CREATED="1297920031187" FOLDED="true" ID="Freemind_Link_1500452852" MODIFIED="1297923405515" TEXT="The Reward!">
 <node BACKGROUND_COLOR="#cc0000" CREATED="1297920031187" ID="Freemind_Link_1921501723" MODIFIED="1298034312171" TEXT="Our grand users by now loved our ToS. Though strict, it was pretty point blank and humble."/>
 </node>
 </node>
 </node>
-<node CREATED="1283703158802" FOLDED="true" ID="Freemind_Link_640830008" MODIFIED="1289573580515" POSITION="right" TEXT="Marketing">
+<node CREATED="1283703158802" ID="Freemind_Link_640830008" MODIFIED="1289573580515" POSITION="right" TEXT="Marketing">
 <font NAME="Comic Sans MS" SIZE="14"/>
 <icon BUILTIN="bell"/>
 <node CREATED="1289010658744" ID="Freemind_Link_1999101897" MODIFIED="1289010663868" TEXT="GUIDE">
@@ -1534,7 +1561,7 @@
 <node CREATED="1275556363515" ID="Freemind_Link_1449575583" MODIFIED="1275556376046" TEXT="50 sites on google bookarks"/>
 </node>
 </node>
-<node CREATED="1283704339086" FOLDED="true" ID="Freemind_Link_386369610" MODIFIED="1283704377334" POSITION="right" TEXT="QA">
+<node CREATED="1283704339086" ID="Freemind_Link_386369610" MODIFIED="1283704377334" POSITION="right" TEXT="QA">
 <icon BUILTIN="pencil"/>
 <node CREATED="1288415653343" FOLDED="true" ID="Freemind_Link_540547344" MODIFIED="1288423654031" TEXT="FREEZER">
 <icon BUILTIN="desktop_new"/>

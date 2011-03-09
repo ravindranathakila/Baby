@@ -8,7 +8,6 @@ import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
-import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
@@ -33,6 +32,8 @@ import java.util.Set;
 public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>, RETURN_TYPE> extends AbstractWidgetListener {
 
 
+    private static final String NEGATIVE = "negative";
+    private static final String POSITIVE = "positive";
     final private Logger logger = LoggerFactory.getLogger(MemberHandler.class.getName());
     final static public String Added = " is added";
     final static public String Removed = " is not added";
@@ -90,10 +91,14 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
 //            $$(Controller.Page.FriendListList).appendChild(li);
 
             final Element li = $$(MarkupTag.DIV);
-            li.setAttribute(MarkupTag.DIV.classs(),"vtip");
-            li.setAttribute(MarkupTag.DIV.style(),"cursor:pointer;");
-            li.setAttribute(MarkupTag.DIV.title(),"Click to Toggle Subscription");
-            li.setTextContent(possibility.getHuman().getDisplayName() + (existAll.contains(possibility.getHumanId()) ? Added : Removed));
+            li.setAttribute(MarkupTag.DIV.classs(), "vtip");
+            li.setAttribute(MarkupTag.DIV.style(), "cursor:pointer;");
+            li.setAttribute(MarkupTag.DIV.title(), "Click to Toggle Subscription");
+            final boolean isExists = existAll.contains(possibility.getHumanId());
+            li.setTextContent(possibility.getHuman().getDisplayName() + (isExists ? Added : Removed));
+
+            final String existingClasses = "" + li.getAttribute(MarkupTag.GENERIC.classs());
+            li.setAttribute(MarkupTag.GENERIC.classs(), existingClasses + " " + (isExists ? POSITIVE : NEGATIVE));
 
             $$(Controller.Page.FriendListList).appendChild(li);
 
@@ -114,12 +119,16 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
                         final Return r = (Return) saveAdd.save(new HumanId(m.getHumanId()).getSelfAsValid(), possibility);
                         if (r.returnStatus() == 0) {
                             ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getHuman().getDisplayName() + Added);
+                            final String existingClasses = "" + $$(evt_).getAttribute(MarkupTag.GENERIC.classs());
+                            $$(evt_).setAttribute(MarkupTag.GENERIC.classs(), existingClasses.replace(NEGATIVE, "") + " " + POSITIVE);
                         }
                     } else {
                         @WARNING(warning = "Assuming return type to be Return. Check Save as it is generic.")
                         final Return r = (Return) saveRemove.save(new HumanId(m.getHumanId()).getSelfAsValid(), possibility);
                         if (r.returnStatus() == 0) {
                             ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getHuman().getDisplayName() + Removed);
+                            final String existingClasses = "" + $$(evt_).getAttribute(MarkupTag.GENERIC.classs());
+                            $$(evt_).setAttribute(MarkupTag.GENERIC.classs(), existingClasses.replace(POSITIVE, "") + " " + NEGATIVE);
                         }
                     }
                 }

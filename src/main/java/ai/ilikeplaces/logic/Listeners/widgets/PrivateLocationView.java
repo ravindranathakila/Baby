@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
@@ -99,6 +100,24 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
                                         )
                                         .get());
                     }
+            }
+
+
+            SetLocationMap:
+            {
+                final GeoCoord gc = new GeoCoord();
+                gc.setObj(r.returnValue().getPrivateLocationLatitude() + "," + r.returnValue().getPrivateLocationLongitude());
+                gc.validateThrow();
+
+                $$(privateLocationViewLocationMap).setAttribute(MarkupTag.IMG.src(),
+                        new Parameter("http://maps.google.com/maps/api/staticmap")
+                                .append("sensor", "false", true)
+                                .append("center", gc.toString())
+                                .append("size", "230x250")
+                                .append("format", "jpg")
+                                .append("markers", "color:0x7fe2ff|label:S|path=fillcolor:0xAA000033|color:0xFFFFFF00|"
+                                        + gc.toString())
+                                .get());
             }
         } else {
             LoggerFactory.getLogger(PrivateLocationView.class.getName()).debug("Error");

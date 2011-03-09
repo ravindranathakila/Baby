@@ -9,6 +9,7 @@ import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
+import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
@@ -86,6 +87,23 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
                     }
                 }
             }
+
+            SetLocationMap:
+            {
+                final GeoCoord gc = new GeoCoord();
+                gc.setObj(r.returnValue().getPrivateLocationLatitude() + "," + r.returnValue().getPrivateLocationLongitude());
+                gc.validateThrow();
+
+                $$(privateLocationDeleteLocationMap).setAttribute(MarkupTag.IMG.src(),
+                        new Parameter("http://maps.google.com/maps/api/staticmap")
+                                .append("sensor", "false", true)
+                                .append("center", gc.toString())
+                                .append("size", "230x250")
+                                .append("format", "jpg")
+                                .append("markers", "color:0x7fe2ff|label:S|path=fillcolor:0xAA000033|color:0xFFFFFF00|"
+                                        + gc.toString())
+                                .get());
+            }
         } else {
             $$(privateLocationDeleteNotice).setTextContent(r.returnMsg());
         }
@@ -145,8 +163,8 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
                             final Return<PrivateLocation> returnVal = DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationAddOwner(humanId, myprivateLocationId, humansFriend);
                             if (returnVal.returnStatus() == 0) {
                                 SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
-                                                                                           humanId.getObj(),
-                                                                                           humanId.getObj() + HAS_ADDED_YOU_AS_AN_OWNER_OF + returnVal.returnValue().getPrivateLocationName());
+                                        humanId.getObj(),
+                                        humanId.getObj() + HAS_ADDED_YOU_AS_AN_OWNER_OF + returnVal.returnValue().getPrivateLocationName());
                             }
                             return returnVal;
                         }
@@ -160,8 +178,8 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
                             final Return<PrivateLocation> returnVal = DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationRemoveOwner(humanId, myprivateLocationId, humansFriend);
                             if (returnVal.returnStatus() == 0) {
                                 SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
-                                                                                           humanId.getObj(),
-                                                                                           humanId.getObj() + HAS_REMOVED_YOU_AS_AN_OWNER_OF + returnVal.returnValue().getPrivateLocationName());
+                                        humanId.getObj(),
+                                        humanId.getObj() + HAS_REMOVED_YOU_AS_AN_OWNER_OF + returnVal.returnValue().getPrivateLocationName());
                             }
 
                             return returnVal;
@@ -186,8 +204,8 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
                             final Return<PrivateLocation> returnVal = DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationAddVisitor(humanId, myprivateLocationId, humansFriend);
                             if (returnVal.returnStatus() == 0) {
                                 SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
-                                                                                           humanId.getObj(),
-                                                                                           humanId.getObj() + HAS_ADDED_YOU_AS_AN_VISITOR_OF + returnVal.returnValue().getPrivateLocationName());
+                                        humanId.getObj(),
+                                        humanId.getObj() + HAS_ADDED_YOU_AS_AN_VISITOR_OF + returnVal.returnValue().getPrivateLocationName());
                             }
                             return returnVal;
 
@@ -203,8 +221,8 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
                             final Return<PrivateLocation> returnVal = DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationRemoveVisitor(humanId, myprivateLocationId, humansFriend);
                             if (returnVal.returnStatus() == 0) {
                                 SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
-                                                                                           humanId.getObj(),
-                                                                                           humanId.getObj() + HAS_REMOVED_YOU_AS_AN_VISITOR_OF + returnVal.returnValue().getPrivateLocationName());
+                                        humanId.getObj(),
+                                        humanId.getObj() + HAS_REMOVED_YOU_AS_AN_VISITOR_OF + returnVal.returnValue().getPrivateLocationName());
                             }
                             return returnVal;
 
