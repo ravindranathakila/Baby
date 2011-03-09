@@ -154,6 +154,24 @@
             vtip();
         </script>
         <script type="text/javascript">
+
+            function gup( name ){//thank you lobo235, http://www.netlobo.com/url_query_string_javascript.html
+              name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+              var regexS = "[\\?&]"+name+"=([^&#]*)";
+              var regex = new RegExp( regexS );
+              var results = regex.exec( window.location.href );
+              if( results == null )
+                return "";
+              else
+                return results[1];
+            }
+
+            if(gup("latitude") !="" && gup("longitude") != ""){
+              initialize_gmap_scripts();
+              map.setCenter(gup("latitude"),gup("longitude"));
+            }
+        </script>
+        <script type="text/javascript">
             try{
                setTimeout("initialize_gmap_scripts_transparently()", 7000);
             }catch(err){

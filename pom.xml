@@ -8,13 +8,6 @@
     <name>ilikeplaces JEE6 Webapp</name>
     <url>http://maven.apache.org</url>
 
-
-    <scm>
-        <connection>scm:cvs:ext:vergy@67.23.18.146:22/home/vergy/servint/cvsroot:ilikeplaces</connection>
-        <developerConnection>scm:cvs:ext:vergy@67.23.18.146:22/home/vergy/servint/cvsroot:ilikeplaces</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
-
     <dependencies>
         <!--dependency>
             <groupId>Java</groupId>
@@ -306,6 +299,7 @@
                     <include>**/*.xml</include>
                 </includes>
             </resource>
+            <!--Required to include java files as distribution AGPLv3-->
             <!--<resource>-->
             <!--<directory>src/main/java</directory>-->
             <!--<includes>-->
@@ -372,7 +366,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
         <finalName>ROOT</finalName>
     </build>

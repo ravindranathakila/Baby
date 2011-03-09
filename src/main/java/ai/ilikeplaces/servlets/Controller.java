@@ -647,6 +647,7 @@ final public class
                 Controller.Page.privateLocationViewNotice,
                 Controller.Page.privateLocationViewName,
                 Controller.Page.privateLocationViewInfo,
+                Controller.Page.privateLocationViewLocationMap,
                 Controller.Page.privateLocationViewOwners,
                 Controller.Page.privateLocationViewVisitors,
                 Controller.Page.privateLocationViewLink,
@@ -667,6 +668,7 @@ final public class
         PrivateLocationDelete("ai/ilikeplaces/widgets/privatelocation/private_location_delete.xhtml",
                 Controller.Page.privateLocationDeleteName,
                 Controller.Page.privateLocationDeleteInfo,
+                Controller.Page.privateLocationDeleteLocationMap,
                 Controller.Page.privateLocationDeleteNotice,
                 Controller.Page.privateLocationDelete,
                 Controller.Page.privateLocationDeleteOwners,
@@ -1061,6 +1063,7 @@ final public class
         final static public String privateLocationViewNotice = "privateLocationViewNotice";
         final static public String privateLocationViewName = "privateLocationViewName";
         final static public String privateLocationViewInfo = "privateLocationViewInfo";
+        final static public String privateLocationViewLocationMap = "privateLocationViewLocationMap";
         final static public String privateLocationViewOwners = "privateLocationViewOwners";
         final static public String privateLocationViewVisitors = "privateLocationViewVisitor";
         final static public String privateLocationViewLink = "privateLocationViewLink";
@@ -1083,6 +1086,7 @@ final public class
         /*Private Location Create IDs*/
         final static public String privateLocationDeleteName = "privateLocationDeleteName";
         final static public String privateLocationDeleteInfo = "privateLocationDeleteInfo";
+        final static public String privateLocationDeleteLocationMap = "privateLocationDeleteLocationMap";
         final static public String privateLocationDeleteNotice = "privateLocationDeleteNotice";
         final static public String privateLocationDelete = "privateLocationDelete";
 
