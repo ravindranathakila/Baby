@@ -1,6 +1,6 @@
 <map version="0.8.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node CREATED="1299394012234" ID="Freemind_Link_988220771" MODIFIED="1299394019640" STYLE="bubble" TEXT="Events">
+<node CREATED="1299394012234" ID="Freemind_Link_988220771" MODIFIED="1299938994700" STYLE="bubble" TEXT="Events(Party, Event, Gathering)">
 <node CREATED="1299394105546" ID="_" MODIFIED="1299394126515" POSITION="right" STYLE="bubble" TEXT="List of Events">
 <node CREATED="1299394281062" ID="Freemind_Link_451405211" MODIFIED="1299394289125" STYLE="bubble" TEXT="Christmas"/>
 <node CREATED="1299394289906" ID="Freemind_Link_976665012" MODIFIED="1299395988765" STYLE="bubble" TEXT="Thanksgiving">
@@ -42,6 +42,108 @@
 <node CREATED="1299396004796" ID="Freemind_Link_274194196" MODIFIED="1299396099703" TEXT="http://momitforward.com/tips-for-a-stress-free-thanksgiving-dinner"/>
 </node>
 </node>
+</node>
+<node CREATED="1299761323906" ID="Freemind_Link_1770925216" MODIFIED="1299761327609" POSITION="right" TEXT="Cherishing"/>
+<node CREATED="1299761370140" FOLDED="true" ID="Freemind_Link_1355221918" MODIFIED="1299939051763" POSITION="left" TEXT="Types of Events">
+<node CREATED="1299939053201" FOLDED="true" ID="Freemind_Link_1197377035" LINK="http://www.google.com/search?hl=en&amp;q=define%3Aceremony&amp;btnG=Search" MODIFIED="1299939745432" TEXT="Ceremony">
+<node CREATED="1299939731729" ID="Freemind_Link_1140289876" MODIFIED="1299939737213" TEXT="a formal event performed on a special occasion; &quot;a ceremony commemorating Pearl Harbor&quot;&#xa;any activity that is performed in an especially solemn elaborate or formal way; &quot;the ceremony of smelling the cork and tasting the wine&quot;; &quot;he makes a ceremony of addressing his golf ball&quot;; &quot;he disposed of it without ceremony&quot;&#xa;the proper or conventional behavior on some solemn occasion; &quot;an inaugural ceremony&quot;&#xa;wordnetweb.princeton.edu/perl/webwn">
+<icon BUILTIN="help"/>
+</node>
+</node>
+<node CREATED="1299939058295" FOLDED="true" ID="Freemind_Link_1632106153" LINK="http://www.google.com/search?hl=en&amp;q=define%3Acompetition&amp;btnG=Search" MODIFIED="1299939703650" TEXT="Competition">
+<node CREATED="1299939676853" ID="Freemind_Link_1959940915" MODIFIED="1299939694337" TEXT="contest: an occasion on which a winner is selected from among two or more contestants&#xa;the act of competing as for profit or a prize; &quot;the teams were in fierce contention for first place&quot;&#xa;rival: the contestant you hope to defeat; &quot;he had respect for his rivals&quot;; &quot;he wanted to know what the competition was doing&quot;&#xa;wordnetweb.princeton.edu/perl/webwn&#xa;Competition is a contest between individuals, groups, nations, animals, etc. for territory, a niche, or a location of resources... It arises whenever two or more parties strive for a goal which cannot be shared. ...&#xa;en.wikipedia.org/wiki/Competition&#xa;">
+<icon BUILTIN="help"/>
+</node>
+</node>
+<node CREATED="1299939067076" FOLDED="true" ID="Freemind_Link_1263287905" LINK="http://www.google.com/search?hl=en&amp;q=define%3Aconvention&amp;btnG=Search" MODIFIED="1299939623258" TEXT="Convention">
+<node CREATED="1299939611242" ID="Freemind_Link_68985331" MODIFIED="1299939629320" TEXT="a large formal assembly; &quot;political convention&quot;">
+<icon BUILTIN="help"/>
+</node>
+</node>
+<node CREATED="1299939072529" FOLDED="true" ID="Freemind_Link_576603737" LINK="http://www.google.com/search?hl=en&amp;q=define%3Ahappening&amp;btnG=Search" MODIFIED="1299939569538" TEXT="Happening">
+<node CREATED="1299939528662" ID="Freemind_Link_1897827304" MODIFIED="1299939544647" TEXT="an event that happens&#xa;wordnetweb.princeton.edu/perl/webwn&#xa;A happening is a performance, event or situation meant to be considered as an art. Happenings take place anywhere (from basements to studio lofts and even street alley ways), are often multi-disciplinary, with a nonlinear narrative and the active participation of the audience. ...&#xa;en.wikipedia.org/wiki/Happening&#xa;something that happens; a spontaneous or improvised event, especially one that involves audience participation; taking place; trendy, up-to-the-minute; A term that became popular during the middle-to-late 1960s to denote an event with multiple cultural components, such as a graphic arts ...&#xa;en.wiktionary.org/wiki/happening">
+<icon BUILTIN="help"/>
+</node>
+</node>
+<node CREATED="1299939080654" FOLDED="true" ID="Freemind_Link_943889911" LINK="http://www.google.com/search?hl=en&amp;q=define%3Afestival&amp;btnG=Search" MODIFIED="1299939451208" TEXT="Festival">
+<node CREATED="1299939433426" ID="Freemind_Link_1563646684" MODIFIED="1299939440207" TEXT="a day or period of time set aside for feasting and celebration&#xa;an organized series of acts and performances (usually in one place); &quot;a drama festival&quot;&#xa;wordnetweb.princeton.edu/perl/webwn&#xa;A festival is an event, usually and ordinarily staged by a local community, which centers on some unique aspect of that community.&#xa;en.wikipedia.org/wiki/Festival">
+<icon BUILTIN="help"/>
+</node>
+</node>
+<node CREATED="1299939085592" FOLDED="true" ID="Freemind_Link_1665700609" LINK="http://www.google.com/search?hl=en&amp;q=define%3Amedia+event&amp;btnG=Search" MODIFIED="1299939401722" TEXT="Media Event">
+<node CREATED="1299939386081" ID="Freemind_Link_1218867810" MODIFIED="1299939393378" TEXT="A media event, as loosely defined by evolving modern usage, is an occasion or happening, spontaneous or planned, that attracts prominent coverage by mass media organizations, particularly television news and newspapers in both print and Internet editions. ...&#xa;en.wikipedia.org/wiki/Media_event">
+<icon BUILTIN="help"/>
+</node>
+</node>
+<node CREATED="1299939090889" FOLDED="true" ID="Freemind_Link_852822297" LINK="http://www.google.com/search?hl=hl&amp;source=source&amp;q=define%3Aparty" MODIFIED="1299939297470" TEXT="Party">
+<node CREATED="1299939331440" ID="Freemind_Link_1455767314" MODIFIED="1299939353096" TEXT="a group of people gathered together for pleasure; &quot;she joined the party after dinner&quot;&#xa;a band of people associated temporarily in some activity; &quot;they organized a party to search for food&quot;; &quot;the company of cooks walked into the kitchen&quot;&#xa;an occasion on which people can assemble for social interaction and entertainment; &quot;he planned a party to celebrate Bastille Day&quot;&#xa;have or participate in a party; &quot;The students were partying all night before the exam&quot;&#xa;A party is a gathering of people who have been invited by a host for the purposes of socializing, conversation, and recreation. A party will typically feature food and beverages, and often music and dancing as well.&#xa;en.wikipedia.org/wiki/Party">
+<icon BUILTIN="help"/>
+</node>
+</node>
+<node CREATED="1299939094186" FOLDED="true" ID="Freemind_Link_223246041" LINK="http://www.google.com/search?hl=hl&amp;source=source&amp;q=define%3Afestival" MODIFIED="1299939221813" TEXT="Sporting Event">
+<node CREATED="1299939243250" ID="Freemind_Link_1986275859" MODIFIED="1299939357737" TEXT="a day or period of time set aside for feasting and celebration&#xa;an organized series of acts and performances (usually in one place); &quot;a drama festival&quot;&#xa;wordnetweb.princeton.edu/perl/webwn&#xa;A festival is an event, usually and ordinarily staged by a local community, which centers on some unique aspect of that community.&#xa;en.wikipedia.org/wiki/Festival">
+<icon BUILTIN="help"/>
+</node>
+</node>
+</node>
+<node CREATED="1299939778433" ID="Freemind_Link_713844382" MODIFIED="1299939786605" POSITION="right" TEXT="Why do People Socialize">
+<node CREATED="1299939907154" ID="Freemind_Link_1727666624" MODIFIED="1299939911356" TEXT="Primary Socialization">
+<node CREATED="1299939923824" ID="Freemind_Link_408506079" MODIFIED="1299939924918" TEXT="Primary socialization occurs when a child learns the attitudes, values and actions appropriate to individuals as members of a particular culture. For example if a child saw his/her mother expressing a discriminatory opinion about a minority group, then that child may think this behavior is acceptable and could continue to have this opinion about minority groups."/>
+</node>
+<node CREATED="1299939934168" ID="Freemind_Link_1599593492" MODIFIED="1299939943355" TEXT="Secondary socialization">
+<node CREATED="1299939957135" ID="Freemind_Link_630363043" MODIFIED="1299939958151" TEXT="Secondary socialization refers to the process of learning what is appropriate behavior as a member of a smaller group within the larger society. It is usually associated with teenagers and adults, and involves smaller changes than those occurring in primary socialization. eg. entering a new profession, relocating to a new environment or society."/>
+</node>
+<node CREATED="1299939965697" ID="Freemind_Link_1751781811" MODIFIED="1299939966681" TEXT="Developmental socialization">
+<node CREATED="1299939972931" ID="Freemind_Link_868145593" MODIFIED="1299939973665" TEXT="Developmental socialization is the process of learning behavior in a social institution or developing your social skills."/>
+</node>
+<node CREATED="1299939980931" ID="Freemind_Link_1688622133" MODIFIED="1299939981727" TEXT="Anticipatory socialization">
+<node CREATED="1299939987211" ID="Freemind_Link_963274619" MODIFIED="1299939987915" TEXT="Anticipatory socialization refers to the processes of socialization in which a person &quot;rehearses&quot; for future positions, occupations, and social relationships."/>
+</node>
+<node CREATED="1299939993024" ID="Freemind_Link_202239604" MODIFIED="1299940024053" TEXT="Resocialization">
+<icon BUILTIN="full-1"/>
+<node CREATED="1299940019256" ID="Freemind_Link_183768615" MODIFIED="1299940020288" TEXT="Resocialization refers to the process of discarding former behavior patterns and reflexes accepting new ones as part of a transition in one&apos;s life. This occurs throughout the human life cycle (Schaefer &amp; Lamm, 1992: 113). Resocialization can be an intense experience, with the individual experiencing a sharp break with their past, and needing to learn and be exposed to radically different norms and values. An example might be the experience of a young man or woman leaving home to join the military, or a religious convert internalizing the beliefs and rituals of a new faith. An extreme example would be the process by which a transsexual learns to function socially in a dramatically altered gender role."/>
+</node>
+<node CREATED="1299940038912" ID="Freemind_Link_1870016144" MODIFIED="1299940040568" TEXT="Organizational socialization">
+<node CREATED="1299940059379" ID="Freemind_Link_732341242" MODIFIED="1299940068504" TEXT="Organizational socialization is the process whereby an employee learning the knowledge and skills necessary to assume his or her organizational role. As newcomers become socialized, they learn about the organization and its history, values, jargon, culture, and procedures. They also learn about their work group, the specific people they work with on a daily basis, their own role in the organization, the skills needed to do their job, and both formal procedures and informal norms. Socialization functions as a control system in that newcomers learn to internalize and obey organizational values and practices."/>
+</node>
+</node>
+<node CREATED="1299940523931" ID="Freemind_Link_1093415480" MODIFIED="1299942855977" POSITION="left" TEXT="The Binding Theory of Socializing &#xa9;">
+<icon BUILTIN="flag"/>
+<node CREATED="1299942538764" ID="Freemind_Link_1921074050" MODIFIED="1299942571623" TEXT="The Binding Jump &#xa9;">
+<node CREATED="1299942739166" ID="Freemind_Link_503557190" MODIFIED="1299942767213" TEXT="Somebody, among the usually reluctant, jumps at publicizing the binding event"/>
+<node CREATED="1299944422340" ID="Freemind_Link_355908672" MODIFIED="1299944436933" TEXT="HOW DO WE PROMOTE THE BINDING JUMP?">
+<icon BUILTIN="flag"/>
+</node>
+<node CREATED="1299951314268" ID="Freemind_Link_500588799" MODIFIED="1299951331534" TEXT="WHAT CAUSES RELUCTANCE TO A BINDING JUMP?">
+<icon BUILTIN="flag"/>
+</node>
+</node>
+<node CREATED="1299942618762" ID="Freemind_Link_801945999" MODIFIED="1299942623903" TEXT="The Binding Reason &#xa9;">
+<node CREATED="1299942770353" ID="Freemind_Link_299677467" MODIFIED="1299943731564" TEXT="The binding event includes a binding reason"/>
+<node CREATED="1299943745017" ID="Freemind_Link_1890840717" MODIFIED="1299943802170" TEXT="The Binding Reasons should be a generally accepted one among the binding entities. It also preferably should be energetic enough to get others to follow jump."/>
+</node>
+<node CREATED="1299942790650" ID="Freemind_Link_998946379" MODIFIED="1299942799415" TEXT="The Binding Entity &#xa9;">
+<node CREATED="1299942770353" ID="Freemind_Link_1525507803" MODIFIED="1299942831649" TEXT="The binding event includes binding entities"/>
+<node CREATED="1299943811669" ID="Freemind_Link_499095376" MODIFIED="1299943840386" TEXT="The Binding Entities should be non-conflicting ones."/>
+</node>
+<node CREATED="1299942626622" ID="Freemind_Link_1687085161" MODIFIED="1299942846758" TEXT="The Binding Reception &#xa9;">
+<node CREATED="1299942680980" ID="Freemind_Link_350439122" MODIFIED="1299942692636" TEXT="The Acceptance Of Binding Reason">
+<node CREATED="1299942705120" ID="Freemind_Link_947641405" MODIFIED="1299942712683" TEXT="Do I like this reason?"/>
+</node>
+<node CREATED="1299942693245" ID="Freemind_Link_1075422234" MODIFIED="1299942702448" TEXT="The Acceptance Of Bonding Entities">
+<node CREATED="1299942713745" ID="Freemind_Link_1323941038" MODIFIED="1299942726073" TEXT="Do I like these people? Do I like the media sponsors?"/>
+</node>
+</node>
+</node>
+<node CREATED="1299942445313" FOLDED="true" ID="Freemind_Link_849243470" MODIFIED="1299942451109" POSITION="left" TEXT="Conflict Theory">
+<node CREATED="1299942451578" ID="Freemind_Link_257202913" MODIFIED="1299942454547" TEXT="http://en.wikipedia.org/wiki/Conflict_theory"/>
+<node CREATED="1299942461969" ID="Freemind_Link_1565492248" LINK="http://en.wikipedia.org/wiki/Critical_theory" MODIFIED="1299942461969" TEXT="Critical theory"/>
+<node CREATED="1299942461969" LINK="http://en.wikipedia.org/wiki/Feminist_theory" MODIFIED="1299942461969" TEXT="Feminist theory"/>
+<node CREATED="1299942461984" LINK="http://en.wikipedia.org/wiki/Postmodernism" MODIFIED="1299942461984" TEXT="Postmodern theory"/>
+<node CREATED="1299942461984" LINK="http://en.wikipedia.org/wiki/Post-structuralism" MODIFIED="1299942461984" TEXT="Post-structural theory"/>
+<node CREATED="1299942461984" LINK="http://en.wikipedia.org/wiki/Postcolonial_theory" MODIFIED="1299942461984" TEXT="Postcolonial theory"/>
+<node CREATED="1299942461984" LINK="http://en.wikipedia.org/wiki/Queer_theory" MODIFIED="1299942461984" TEXT="Queer theory"/>
+<node CREATED="1299942462000" LINK="http://en.wikipedia.org/wiki/World-systems_approach" MODIFIED="1299942462000" TEXT="World systems theory"/>
 </node>
 </node>
 </map>

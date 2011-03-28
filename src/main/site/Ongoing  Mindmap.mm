@@ -1238,7 +1238,7 @@
 <node BACKGROUND_COLOR="#663300" COLOR="#ffffff" CREATED="1297881848375" ID="Freemind_Link_336422878" MODIFIED="1297925707640" TEXT="The grand users had FUD in providing their email address to signup. Some feared using their common password with us!"/>
 <node BACKGROUND_COLOR="#663300" COLOR="#ffffff" CREATED="1297881848375" ID="Freemind_Link_1889644953" MODIFIED="1297925707453" TEXT="The grand users had FUD in social exposure through the website because well, WE could as well be terrorist without a PP and ToS"/>
 </node>
-<node BACKGROUND_COLOR="#ffcc00" CREATED="1297920025843" ID="Freemind_Link_1954215867" MODIFIED="1297923397140" TEXT="The Slay!">
+<node BACKGROUND_COLOR="#ffcc00" CREATED="1297920025843" FOLDED="true" ID="Freemind_Link_1954215867" MODIFIED="1297923397140" TEXT="The Slay!">
 <node BACKGROUND_COLOR="#ffcc00" CREATED="1297923675203" ID="Freemind_Link_218027695" MODIFIED="1297926236031" TEXT="We had to help our users to get over this FUD"/>
 <node BACKGROUND_COLOR="#ffcc00" CREATED="1297923699234" ID="Freemind_Link_1976937697" MODIFIED="1297924194718" TEXT="Okay, there were several options."/>
 <node BACKGROUND_COLOR="#ffcc00" CREATED="1297923707484" ID="Freemind_Link_729638738" MODIFIED="1297924194703" TEXT="Some were damn expensive, but well, would definitely work"/>
@@ -1506,7 +1506,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1283703158802" ID="Freemind_Link_640830008" MODIFIED="1289573580515" POSITION="right" TEXT="Marketing">
+<node CREATED="1283703158802" FOLDED="true" ID="Freemind_Link_640830008" MODIFIED="1289573580515" POSITION="right" TEXT="Marketing">
 <font NAME="Comic Sans MS" SIZE="14"/>
 <icon BUILTIN="bell"/>
 <node CREATED="1289010658744" ID="Freemind_Link_1999101897" MODIFIED="1289010663868" TEXT="GUIDE">
@@ -1812,7 +1812,7 @@
 <node CREATED="1275247786984" ID="Freemind_Link_841143219" MODIFIED="1275247834859" TEXT="Startup and Shutdown mails"/>
 <node CREATED="1270054635078" ID="Freemind_Link_408918916" MODIFIED="1281967604656" TEXT="JSP forward or deny on OpenEJB"/>
 </node>
-<node CREATED="1275667013786" FOLDED="true" ID="Freemind_Link_374011926" MODIFIED="1297919306265" POSITION="right" TEXT="ITPS">
+<node CREATED="1275667013786" ID="Freemind_Link_374011926" MODIFIED="1297919306265" POSITION="right" TEXT="ITPS">
 <arrowlink DESTINATION="Freemind_Link_374011926" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Freemind_Arrow_Link_447360971" STARTARROW="None" STARTINCLINATION="0;0;"/>
 <font NAME="Comic Sans MS" SIZE="14"/>
 <icon BUILTIN="flag"/>
@@ -1844,7 +1844,7 @@
 <node CREATED="1295774966622" ID="Freemind_Link_862744323" MODIFIED="1295774984372" TEXT="fix non activated human changing password to make human alive."/>
 <node CREATED="1295775006279" ID="Freemind_Link_1257735463" MODIFIED="1295775022232" TEXT="fix trailing dot problem on hash activation email"/>
 </node>
-<node BACKGROUND_COLOR="#663300" CREATED="1296794504162" FOLDED="true" ID="Freemind_Link_1669933885" MODIFIED="1296794606291" POSITION="right" TEXT="Ugly">
+<node BACKGROUND_COLOR="#663300" CREATED="1296794504162" ID="Freemind_Link_1669933885" MODIFIED="1296794606291" POSITION="right" TEXT="Ugly">
 <node CREATED="1296794612929" ID="Freemind_Link_1434250851" MODIFIED="1296794618614" TEXT="Display Name Change"/>
 <node CREATED="1296794619114" ID="Freemind_Link_357230110" MODIFIED="1296794644338" TEXT="Profile Link"/>
 <node CREATED="1296794646056" ID="Freemind_Link_1341234988" MODIFIED="1296794656927" TEXT="Confirmation Email"/>
@@ -2065,6 +2065,36 @@
 </node>
 </node>
 </node>
+</node>
+</node>
+<node CREATED="1301193485481" FOLDED="true" ID="Freemind_Link_170773314" MODIFIED="1301193636519" POSITION="left" TEXT="7 Software Chakra">
+<node CREATED="1301193506841" ID="Freemind_Link_1641665550" MODIFIED="1301193511560" TEXT="Propoganda">
+<node CREATED="1301193811506" ID="Freemind_Link_1234264780" MODIFIED="1301193843501" TEXT="a wise man is a books man"/>
+</node>
+<node CREATED="1301193513451" ID="Freemind_Link_13138168" MODIFIED="1301193518248" TEXT="Presentation">
+<node CREATED="1301193792756" ID="Freemind_Link_119696827" MODIFIED="1301193808065" TEXT="ios ui, java fx and other usability stuff"/>
+</node>
+<node CREATED="1301193519451" ID="Freemind_Link_1737351096" MODIFIED="1301193527248" TEXT="Functionality">
+<node CREATED="1301193756305" ID="Freemind_Link_1003785945" MODIFIED="1301193769633" TEXT="publisher publishes book"/>
+</node>
+<node CREATED="1301193528905" ID="Freemind_Link_915658905" MODIFIED="1301193531889" TEXT="Logic">
+<node CREATED="1301193731022" ID="Freemind_Link_918391527" MODIFIED="1301193736460" TEXT="author writes book"/>
+<node CREATED="1301193746523" ID="Freemind_Link_1335402452" MODIFIED="1301193752961" TEXT="publisher publishes book"/>
+<node CREATED="1301193741632" ID="Freemind_Link_281442678" MODIFIED="1301193745382" TEXT="author sells book"/>
+</node>
+<node CREATED="1301193533827" ID="Freemind_Link_1870668604" MODIFIED="1301193550437" TEXT="Associations">
+<node CREATED="1301193689724" ID="Freemind_Link_840909689" MODIFIED="1301193704240" TEXT="book - author"/>
+<node CREATED="1301193705928" ID="Freemind_Link_304690396" MODIFIED="1301193711584" TEXT="patient - doctor"/>
+<node CREATED="1301193714397" ID="Freemind_Link_343198863" MODIFIED="1301193723803" TEXT="song - artist - album"/>
+</node>
+<node CREATED="1301193552062" ID="Freemind_Link_1835728528" MODIFIED="1301193554031" TEXT="Data">
+<node CREATED="1301193659988" ID="Freemind_Link_1343101583" MODIFIED="1301193667254" TEXT="books"/>
+<node CREATED="1301193669082" ID="Freemind_Link_258519435" MODIFIED="1301193671786" TEXT="audio"/>
+<node CREATED="1301193673254" ID="Freemind_Link_1017375947" MODIFIED="1301193687677" TEXT="healthcare"/>
+</node>
+<node CREATED="1301193616487" ID="Freemind_Link_406011536" MODIFIED="1301193628346" TEXT="Operating Base">
+<node CREATED="1301193637831" ID="Freemind_Link_1913141314" MODIFIED="1301193644847" TEXT="iphone, ios"/>
+<node CREATED="1301193645972" ID="Freemind_Link_150634481" MODIFIED="1301193655644" TEXT="cluster, linux"/>
 </node>
 </node>
 </node>

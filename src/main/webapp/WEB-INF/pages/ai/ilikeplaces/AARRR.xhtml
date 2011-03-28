@@ -73,13 +73,13 @@
            }
         </script>
     </head>
-    <body style="background:black;">
+    <body style="background-color:#221100;">
     <!--<body style="background-color:#99b3cc;">-->
     <!--<body style="background-color::#892e40;">-->
     <!--<body style="background-color:#9999ff;">-->
     <!--<body style="background-color:#325b6e;">-->
         <div id="Main_display" class="container" itsnat:nocache="true" style="display:block;">
-            <div class="span-24 last" style="background-color:black;">
+            <div class="span-24 last" style="background-color:#221100;">
                 <div class="span-24 last center" style="height:5px;">
                     &nbsp;
                 </div>
@@ -92,7 +92,7 @@
                     <span style="font-size:44px;font-family: 'Cuprum', Impact, Charcoal, sans-serif;" class="center">AT</span>
                 </div>
                 <div class="span-24 last center vtip" style="height:120px;" title="DOWN TOWN IS A COLLECTION OF REAL WORLD HOTSPOTS">
-                    <span style="font-size:108px;font-family: 'Cuprum', Impact, Charcoal, sans-serif;" class="center">&nbsp;&nbsp;&nbsp;&nbsp;DOWN&darr;TOWN</span>
+                    <span style="font-size:108px;font-family: 'Cuprum', Impact, Charcoal, sans-serif;" class="center">&nbsp;&nbsp;DOWN&darr;TOWN</span>
                     <span style="font-size:10px;"><img src="http://www.ilikeplaces.com/favicon.png" alt="i"/>likeplaces.com</span>
                 </div>
                 <hr/>
@@ -106,6 +106,7 @@
                                style="background:#f7c05c;border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;color:#ff1493;font-size:30px;font-family: Impact, Charcoal, sans-serif;height:34px;margin:0;padding:5px 8px 0 6px;vertical-align:top;"
                                value="e.g. las vegas, united states"
                                onfocus="javascript:initialize_gmap_scripts();"
+                               tabindex="1"
                                 />
                         <span style="font-size:36px;font-family: 'Cuprum', Impact, Charcoal, sans-serif;">
                             &crarr;&nbsp;&nbsp;
@@ -121,8 +122,9 @@
                         <div class="span-6 center vtip"  title="Enter place and click to find hotspots. Zoom in for clearer view.">
                             <input class="last center"
                                    onclick="javascript: try{searchbox = document.getElementById('seachbox');new google.maps.Geocoder().geocode({address:searchbox.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){alert('You might want to zoom in for a clearer view!');map.setCenter(geocoderResult[0].geometry.location); var llb = geocoderResult[0].geometry.viewport; map.fitBounds(llb);}else{alert('No find '+searchbox.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
-                                   style="font-family: 'Cuprum', impact; font-size:28px; background-color: transparent;border-width: thin;border-style: solid; color:#892e40;"
-                                   type="submit" value="&nbsp;Show me hotposts&nbsp;"/>
+                                   style="font-family: 'Cuprum', impact; font-size:28px; background-color: transparent;border-width: 1px;border-style: solid; color:#892e40; cursor:pointer;"
+                                   type="submit" value="&nbsp;Search Hotspots&nbsp;"
+                                   tabindex="2" />
                         </div>
                         <div class="span-9 last center vtip">
                             &nbsp;
@@ -155,21 +157,50 @@
         </script>
         <script type="text/javascript">
 
-            function gup( name ){//thank you lobo235, http://www.netlobo.com/url_query_string_javascript.html
-              name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-              var regexS = "[\\?&]"+name+"=([^&#]*)";
-              var regex = new RegExp( regexS );
-              var results = regex.exec( window.location.href );
-              if( results == null )
-                return "";
-              else
-                return results[1];
-            }
+           function gup( name ){//thank you lobo235, http://www.netlobo.com/url_query_string_javascript.html
+             name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+             var regexS = "[\\?&]"+name+"=([^&#]*)";
+             var regex = new RegExp( regexS );
+             var results = regex.exec( window.location.href );
+             if( results == null )
+               return "";
+             else
+               return results[1];
+           }
 
-            if(gup("latitude") !="" && gup("longitude") != ""){
-              initialize_gmap_scripts();
-              map.setCenter(gup("latitude"),gup("longitude"));
-            }
+           function focusMapWithLatLng(){
+               try{
+                   if(gup("latitude") != "" && gup("longitude") != ""){
+                     initialize_gmap_scripts();
+                     map.setCenter(new google.maps.LatLng(gup("latitude"),gup("longitude")));
+                     clearInterval(focusMapWithLatLngLoop);
+                     if(gup("type") != ""){
+                       var type = gup("type");
+                       if(type == "building"){
+                           map.setZoom(17);
+                       }
+                       else if(type == "area"){
+                           map.setZoom(15);
+                       }
+                       else if(type == "town"){
+                           map.setZoom(13);
+                       }
+                       else if(type == "city"){
+                           map.setZoom(11);
+                       }else{
+                           map.setZoom(10);
+                       }
+                     }
+                   }else{
+                       clearInterval(focusMapWithLatLngLoop);
+                   }
+               }catch(err){
+                   //alert(err);//debug
+               }
+           }
+
+           focusMapWithLatLngLoop = setInterval("focusMapWithLatLng()", 1000);
+
         </script>
         <script type="text/javascript">
             try{
@@ -187,9 +218,7 @@
             }
         </script>
 
-    <!-- KISSinsights for ilikeplaces.com -->
-    <script type="text/javascript">var _kiq = _kiq || [];</script>
-    <script type="text/javascript" src="//s3.amazonaws.com/ki.js/12777/2hV.js" async="true"></script>
+    <script type="text/javascript" src="/js/jquery-impromptu.2.7.min.js"></script>
 
     </body>
 </html>
