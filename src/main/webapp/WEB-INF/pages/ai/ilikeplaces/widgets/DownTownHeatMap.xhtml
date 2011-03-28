@@ -78,7 +78,7 @@ function initialize_DownTownHeatMap_map(){
     var myOptions = {
         zoom: 2,
         center: myLatlng,
-        mapTypeId: DWN_TWN_ID,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
         mapTypeControlOptions:{
             style:google.maps.MapTypeControlStyle.DROPDOWN_MENU,
             position:google.maps.ControlPosition.TOP_LEFT,
@@ -191,29 +191,26 @@ function initialize_DownTownHeatMap_map(){
         infowindow.setPosition(placeMarker.getPosition());
     });
 
-    google.maps.event.addListener(map, 'dragend', function() {
-        if(map.getZoom()>10){
-            var curr = DownTownHeatMapBBUpdate(
+    function listenerCallOnDownTownHeatMapBBUpdate(){
+             var curr = DownTownHeatMapBBUpdate(
                 map.getBounds().getSouthWest().lat(),
                 map.getBounds().getSouthWest().lng(),
                 map.getBounds().getNorthEast().lat(),
                 map.getBounds().getNorthEast().lng());
+            clearHotSpots();
             curr.focus();
             curr.blur();
-            clearHotSpots();
+    }
+
+    google.maps.event.addListener(map, 'dragend', function() {
+        if(map.getZoom()>10){
+            listenerCallOnDownTownHeatMapBBUpdate();
         }
     });
 
     google.maps.event.addListener(map, 'zoom_changed', function() {
         if(map.getZoom()>10){
-            var curr = DownTownHeatMapBBUpdate(
-                map.getBounds().getSouthWest().lat(),
-                map.getBounds().getSouthWest().lng(),
-                map.getBounds().getNorthEast().lat(),
-                map.getBounds().getNorthEast().lng());
-            curr.focus();
-            curr.blur();
-            clearHotSpots();
+            listenerCallOnDownTownHeatMapBBUpdate();
         }
     });
 
