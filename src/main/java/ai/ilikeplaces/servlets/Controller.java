@@ -1224,7 +1224,7 @@ final public class
         itsNatServletConfig.setClientErrorMode(ClientErrorMode.SHOW_SERVER_AND_CLIENT_ERRORS);
         itsNatServletConfig.setLoadScriptInline(true);
         itsNatServletConfig.setUseGZip(UseGZip.MARKUP);
-        itsNatServletConfig.setCommMode(CommMode.XHR_SYNC);
+        itsNatServletConfig.setCommMode(CommMode.XHR_ASYNC_HOLD);
         itsNatServletConfig.setAutoCleanEventListeners(true);
         itsNatServletConfig.setDefaultEncoding("UTF-8");
         itsNatServletConfig.setReferrerEnabled(true);
