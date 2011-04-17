@@ -152,7 +152,7 @@ public class AlbumManager extends AbstractWidgetListener {
             final Return<Boolean> ro = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventIsOwner(humanId, privateEvent.getPrivateEventId());
             if (ro.returnStatus() == 0) {
                 if (ro.returnValue()) {//owner
-                    $$(Controller.Page.AlbumPivateEventId).setAttribute(MarkupTag.INPUT.value(), privateEvent.toString());
+                    $$(Controller.Page.AlbumPivateEventId).setAttribute(MarkupTag.INPUT.value(), privateEvent.getPrivateEventId().toString());
                     displayBlock($$(Controller.Page.AlbumOwner));
                     //show hide operations
                 }
