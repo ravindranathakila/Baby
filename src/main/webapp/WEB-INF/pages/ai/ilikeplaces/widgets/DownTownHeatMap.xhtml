@@ -67,7 +67,27 @@ function clearHotSpots(){
 }
 
 function getColoredMarkerWithIntensity(intensity){
-    return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|000|glyphish_map-marker|16|4bf202|892e40';
+    if(Math.log(intensity)/Math.log(10) < 1 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|000|glyphish_map-marker|16|00b7fa|892e40';
+    }
+    if(Math.log(intensity)/Math.log(10) < 2 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|000|glyphish_map-marker|16|f94c7d|892e40';
+    }
+    if(Math.log(intensity)/Math.log(10) < 3 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|000|glyphish_map-marker|16|f9c405|892e40';
+    }
+    if(Math.log(intensity)/Math.log(10) < 4 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|000|glyphish_map-marker|16|fb150f|892e40';
+    }
+    if(Math.log(intensity)/Math.log(10) < 5 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|000|glyphish_map-marker|16|f8f509|892e40';
+    }
+    if(Math.log(intensity)/Math.log(10) < 6 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|000|glyphish_map-marker|16|009d00|892e40';
+    }
+    if(Math.log(intensity)/Math.log(10) >= 6 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|000|glyphish_map-marker|16|004fa1|892e40';
+    }
 }
 
 function initialize_DownTownHeatMap_map(){
