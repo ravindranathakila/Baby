@@ -9,26 +9,65 @@
         </title>
         <link rel="icon" type="image/ico" href="/favicon.ico"/>
         <!-- Framework CSS -->
-        <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection"/>
-        <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"/>
-        <!--[if lt IE 8]><link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection"/><![endif]-->
 
         <link rel="stylesheet" type="text/css" href="/css/vtip.css" />
         <link rel="stylesheet" href="/css/impromptu.css" type="text/css"/>
         <link href='http://fonts.googleapis.com/css?family=Cuprum&subset=cyrillic,latin' rel='stylesheet' type='text/css' />
-
-
+        <link rel="stylesheet" href="/css/theme/blur_attn.css" type="text/css"/>
 
         <style type="text/css">
-             body{
+            body{
                 font-family:'Cuprum',impact;
                 font-size:11px;
-                color:#892e40;
-                background-color:black;
-             }
-        </style>
+            }
+            div.jqi{
+                width: 50%;
+                position: absolute;
+                background-color: #FD78E1;
+                border: solid 1px #FD78E1;
+                border-radius: 10px;
+                -moz-border-radius: 10px;
+                -webkit-border-radius: 10px;
+                padding: 7px;
+            }
 
-        <style type="text/css">
+        div.jqi .jqiclose{
+            position: absolute;
+            top: 4px; right: -2px;
+            width: 18px;
+            cursor: default;
+            color: #bbbbbb;
+            font-weight: bold;
+        }
+        div.jqi .jqimessage{
+            padding: 10px;
+            line-height: 20px;
+            color: #444444;
+        }
+        div.jqi .jqibuttons{
+            text-align: right;
+            padding: 5px 0 5px 0;
+            border: solid 1px #eeeeee;
+            background-color: #FD78E1;
+        }
+        div.jqi button{
+            padding: 3px 10px;
+            margin: 0 10px;
+            background-color: #2F6073;
+            border: solid 1px #f4f4f4;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        div.jqi button:hover{
+            background-color: #728A8C;
+        }
+        div.jqi button.jqidefaultbutton{
+            background-color: #BF5E26;
+        }
+        .jqiwarning .jqi .jqibuttons{
+            background-color: #BF5E26;
+        }
             .nav_link_img {
                 background-color:none;
                 height:25px;
@@ -66,87 +105,58 @@
         </script>
     </head>
     <body style="background-color:#ffffff;">
+    <div itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
         <div id="Main_display" class="container" itsnat:nocache="true" style="display:block;">
-            <div class="span-24 last" style="background-color:#ffffff;">
-                <div class="span-24 last center" style="height:5px;">
+            <div class="by" style="background-color:#ffffff;">
+                <div class="by center" style="height:5px;">
                     &nbsp;
                 </div>
-                <div class="span-24 last center vtip" style="height:32px;" title="DOWN TOWN IS A COLLECTION OF REAL WORLD HOTSPOTS">
-                    <span style="font-size:32px;font-family: 'Cuprum', Impact, Charcoal, sans-serif;color:#777777;;" class="center">Become Socially Rich!</span>
-                </div>
-                <div class="span-24 last center vtip" style="height:100px;" title="down&darr;town - of the socially rich - by the socially rich - for the socially rich">
-                    <span style="font-size:90px;font-family: 'Cuprum', Impact, Charcoal, sans-serif;" class="center">&nbsp;&nbsp;DOWN&darr;TOWN</span>
-                    <span style="font-size:10px;color:#777777;"><img src="http://www.ilikeplaces.com/favicon.png" alt="i"/>likeplaces.com</span>
-                </div>
-                <div class="span-24 last center">
-                    <span style="font-size:27px;font-family: 'Cuprum', Impact, Charcoal, sans-serif;color:#777777;" class="center vtip">
-                        is for managing your social life (<a href="/page/_org">login/FREE signup</a>)
-                    </span>
-                    <span style="font-size:36px;font-family: 'Cuprum', Impact, Charcoal, sans-serif;" class="center vtip" >
-                         &rdquo;
-                    </span>
-                </div>
-                <hr/>
-                <div class="span-24 last center">
-                    <div class="span-24 last center">
-                        <span style="font-size:36px;font-family: 'Cuprum', Impact, Charcoal, sans-serif;color:#892e40;">
-                            &clubs;
-                        </span>
-                        <input class="span-12 prepend-6 append-6 last center vtip"
-                               id="seachbox"
-                               style="background:#f7c05c;border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;color:#ff1493;font-size:30px;font-family: Impact, Charcoal, sans-serif;height:34px;margin:0;padding:5px 8px 0 6px;vertical-align:top;"
-                               value="e.g. las vegas, united states"
-                               onfocus="javascript:initialize_gmap_scripts();this.value='';"
-                               tabindex="1"
-                               onchange="javascript:document.getElementById('searchButton').click();"
-                                />
-                        <span style="font-size:36px;font-family: 'Cuprum', Impact, Charcoal, sans-serif;">
-                            &crarr;&nbsp;&nbsp;
-                        </span>
+                <div class="by vtip" title="HOTSPOT HEAT MAP" >
+                    <div class="by" id="AarrrDownTownHeatMap" style="">
                     </div>
-                    <div class="span-24 last center vtip" style="height:15px">
-                        &nbsp;
-                    </div>
-                    <div class="span-24 last center">
-                        <div class="span-5 tsal center vtip">
-                            &nbsp;
-                        </div>
-                        <div class="span-14 tsal center vtip"  title="Enter place and click to find hotspots. Zoom in for clearer view.">
-                            <input class="last center bold"
-                                   id="searchButton"
-                                   onclick="javascript: try{searchbox = document.getElementById('seachbox');new google.maps.Geocoder().geocode({address:searchbox.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){if(!(zoomInHint = !zoomInHint)){alert('You might want to zoom in for a clearer view!');}map.setCenter(geocoderResult[0].geometry.location); var llb = geocoderResult[0].geometry.viewport; map.fitBounds(llb);}else{alert('No find '+searchbox.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
-                                   style="font-family: 'Cuprum', impact; font-size:28px; background-color: #ee5500;
-border: 3px #ee5500 outset;
-padding: 2 2px;
-color: #f7c05c; cursor:pointer;"
-                                   type="submit" value="Find Socially Rich Places"
-                                   tabindex="2" />
-                        </div>
-                        <div class="span-5 last center vtip">
-                            &nbsp;
-                        </div>
-                    </div>
-                </div>
-                <div class="span-24 last center bold vtip" style="height:15px;">
-                    &darr;
-                </div>
-                <div class="span-24 last vtip" title="HOTSPOT HEAT MAP" >
-                    <div class="span-5">
-                        &nbsp;
-                    </div>
-                    <div class="span-14" id="AarrrDownTownHeatMap" style="">
-
-                     </div>
-                     <div class="span-5 last">
-                         &nbsp;
-                    </div>
-                    <div class="span-24 last" style="display:none;">
+                    <div class="by" style="display:none;">
                         <input type="hidden" id="AarrrWOEID" value=""/>
                      </div>
                 </div>
             </div>
         </div>
+        <div style="display:none;">
+            <div id="impromptuLoginForm">
+                    <div class="use100 layer_2 center">
+                        <span style="font-size:16px;">Welcome to Down&darr;Town I Like Places!</span><br/>
+                        <span style="font-size:13px;">Down Town helps you find socially rich places<br/>
+                        such as theares and clubs<br/>
+                        </span>
+                        <span style="font-size:11px;">Zoom in to street level to view socially rich places<br/></span>
+                        <span style="font-size:14px;">Any specific place on your mind?<br/></span>
+                        <div class="use50 use25p use25a">
+                            <input class="vtip use100"
+                               id="seachbox"
+                               style="background:#f7c05c;border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;color:#ff1493;font-size:14px;font-family: Impact, Charcoal, sans-serif;height:24px;vertical-align:top;"
+                               value="e.g. las vegas, united states"
+                               onfocus="javascript:initialize_gmap_scripts();this.value='';"
+                               tabindex="1"
+                               onchange="javascript:document.getElementById('searchButton').click();$.prompt.close();"
+                                />
+                            <div class="use100" style="height:4px;">&nbsp;</div>
+                            <input class="bold use100"
+                                       id="searchButton"
+                                       onclick="javascript: try{$.prompt.close(); searchbox = document.getElementById('seachbox');new google.maps.Geocoder().geocode({address:searchbox.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){if(!(zoomInHint = !zoomInHint)){}map.setCenter(geocoderResult[0].geometry.location); var llb = geocoderResult[0].geometry.viewport; map.fitBounds(llb);}else{alert('No find '+searchbox.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
+                                       style="height:24px; font-family: 'Cuprum', impact; font-size:14px; background-color: #ee5500;border: 1px #ee5500 outset;color: #f7c05c;padding:5px 8px 0 6px; cursor:pointer;"
+                                       type="submit" value="Find Socially Rich Places"
+                                       tabindex="2" />
+                            <br/>
+                        </div>
+                        Returning? Login here><br/>
+                        New? Signup while it's free!><br/>
+
+
+                    </div>
+            </div>
+        </div>
+    </div>
         <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="/js/jquery-impromptu.2.7.min.js"></script>
         <script type="text/javascript" src="/js/miniquarry/vtip.js"></script>
         <script type="text/javascript">
             vtip();
@@ -204,6 +214,7 @@ color: #f7c05c; cursor:pointer;"
             try{
                setTimeout("initialize_gmap_scripts_transparently()", 7000);
             }catch(err){
+                alert(err);
                 if(confirm("You internet connection seems to be flaky. Reload web page?")){
                     try{
                         setTimeout("initialize_gmap_scripts_transparently()", 7000);
@@ -215,8 +226,14 @@ color: #f7c05c; cursor:pointer;"
                 }
             }
         </script>
+        <script type="text/javascript">
+        $(document).ready(function(){
+            var txt = $('#impromptuLoginForm').html();
+            $('#impromptuLoginForm').remove();
+            $.prompt(txt);
+        });
+        </script>
 
-    <script type="text/javascript" src="/js/jquery-impromptu.2.7.min.js"></script>
 
     </body>
 </html>

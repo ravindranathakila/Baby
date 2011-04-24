@@ -134,6 +134,9 @@
 <node CREATED="1299942713745" ID="Freemind_Link_1323941038" MODIFIED="1299942726073" TEXT="Do I like these people? Do I like the media sponsors?"/>
 </node>
 </node>
+<node CREATED="1303394597957" ID="Freemind_Link_587370948" MODIFIED="1303394603363" TEXT="The Binding Manager"/>
+<node CREATED="1303394597957" ID="Freemind_Link_952232730" MODIFIED="1303394614503" TEXT="The Binding Host"/>
+<node CREATED="1303394597957" ID="Freemind_Link_997494471" MODIFIED="1303394626878" TEXT="The Binding Place"/>
 </node>
 <node CREATED="1299942445313" FOLDED="true" ID="Freemind_Link_849243470" MODIFIED="1299942451109" POSITION="left" TEXT="Conflict Theory">
 <node CREATED="1299942451578" ID="Freemind_Link_257202913" MODIFIED="1299942454547" TEXT="http://en.wikipedia.org/wiki/Conflict_theory"/>

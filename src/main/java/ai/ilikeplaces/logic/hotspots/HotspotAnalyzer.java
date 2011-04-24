@@ -79,7 +79,7 @@ public class HotspotAnalyzer {
         final double width = widthEnd - widthStart;
         final double height = heightEnd - heightStart;
 
-        blockWH = new double[]{width / 5, height / 4};
+        blockWH = new double[]{width / 8, height / 8};
 
 //        arrayWSize = (int) Math.ceil(width / blockWH[0]);
 //        arrayHSize = (int) Math.ceil(height / blockWH[1]);
