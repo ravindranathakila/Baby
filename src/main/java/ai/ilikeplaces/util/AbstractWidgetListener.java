@@ -5,8 +5,8 @@ import ai.ilikeplaces.servlets.Controller;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServlet;
 import org.itsnat.core.ItsNatServletRequest;
-import org.itsnat.core.html.ItsNatHTMLDocFragmentTemplate;
 import org.itsnat.core.html.ItsNatHTMLDocument;
+import org.itsnat.core.tmpl.ItsNatHTMLDocFragmentTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -101,6 +101,7 @@ public abstract class AbstractWidgetListener {
         final ItsNatServlet itsNatServlet_ = itsNatDocument_.getItsNatDocumentTemplate().getItsNatServlet();
         final ItsNatHTMLDocFragmentTemplate inhdft_ = (ItsNatHTMLDocFragmentTemplate) itsNatServlet_.getItsNatDocFragmentTemplate(page__.toString());
 
+        //@todo needs to be removed.
         try {
             if (!inhdft_.isOnLoadCacheStaticNodes()) {
                 inhdft_.setOnLoadCacheStaticNodes(false);
