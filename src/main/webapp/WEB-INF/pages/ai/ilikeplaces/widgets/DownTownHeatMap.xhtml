@@ -53,6 +53,7 @@ markerIcon = "http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&c
 
 focusLat = 0;
 focusLng = 0;
+zoom = 5;
 
 listOfHotSpots = new Array();
 
@@ -90,6 +91,11 @@ function getColoredMarkerWithIntensity(intensity){
     }
 }
 
+
+function zoomMap(){
+    map.setZoom(zoom);
+}
+
 function initialize_DownTownHeatMap_map(){
 
  var DWN_TWN_ID = 'dwntwn';
@@ -122,6 +128,10 @@ function initialize_DownTownHeatMap_map(){
 
     map.mapTypes.set(DWN_TWN_ID, dwntwnMapTyp);
 
+    initialGmapLoadListener = google.maps.event.addListener(map, 'bounds_changed', function() {
+        setTimeout("zoomMap()",10);
+        google.maps.event.removeListener(initialGmapLoadListener);
+    });
 
     placeMarker = new google.maps.Marker({
         position: myLatlng,
@@ -295,14 +305,11 @@ function initialize_gmap_scripts_transparently(){//wise any changes also to init
             <span class="by center">Geo Coordinates: </span>
             <input type="text" class="by center" id="DownTownHeatMapWOEID" value="0,0" readonly="readonly" style="background-color:transparent;border:none;font-family: Impact, Charcoal, sans-serif;"/>
         </div>
-        <div class="by2 last center">
+        <div class="by2 center">
             <span class="by center">Bounding Box: </span>
             <input type="text" class="by center" id="DownTownHeatMapBB" value="0,0" readonly="readonly" style="background-color:transparent;border:none;font-family: Impact, Charcoal, sans-serif;"/>
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    initialize_gmap_scripts();
-</script>
 </body>
 </html>

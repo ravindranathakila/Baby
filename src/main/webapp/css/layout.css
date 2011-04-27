@@ -674,3 +674,30 @@
     float:left;
 }
 
+.use125{
+    width:12.5%;
+    position:relative;
+    float:left;
+}.use125p{
+    padding-left:12.5%;
+    position:relative;
+    float:left;
+}.use125a{
+    padding-right:12.5%;
+    position:relative;
+    float:left;
+}
+.use333{
+    width:33.333%;
+    position:relative;
+    float:left;
+}.use333p{
+    padding-left:33.333%;
+    position:relative;
+    float:left;
+}.use333a{
+    padding-right:33.333%;
+    position:relative;
+    float:left;
+}
+

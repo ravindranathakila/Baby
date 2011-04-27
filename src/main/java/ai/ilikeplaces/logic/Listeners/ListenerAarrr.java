@@ -37,6 +37,7 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
 
         new AbstractListener(request__) {
+//        new AbstractSkeletonListener(request__) {
 
             /**
              * Intialize your document here by appending fragments
@@ -47,6 +48,7 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
                 final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
 
                 new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
+//                new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
 
                 sl.complete(Loggers.LEVEL.SERVER_STATUS, Loggers.DONE);
             }

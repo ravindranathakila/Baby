@@ -1,7 +1,7 @@
 <!--?xml version="1.0" encoding="UTF-8"?-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">
-    <head>
+    <head itsnat:nocache="true">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type"></meta>
         <meta id="mainMetaDesc" name="Description" content="Discover and Have Fun in Places!"></meta>
         <title id="AarrrTitle">
@@ -11,7 +11,9 @@
         <!-- Framework CSS -->
 
         <link rel="stylesheet" type="text/css" href="/css/vtip.css" />
+        <link rel="stylesheet" type="text/css" href="/css/buttons.css" />
         <link rel="stylesheet" href="/css/impromptu.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/layout.css" type="text/css"/>
         <link href='http://fonts.googleapis.com/css?family=Cuprum&subset=cyrillic,latin' rel='stylesheet' type='text/css' />
         <link rel="stylesheet" href="/css/theme/blur_attn.css" type="text/css"/>
 
@@ -23,7 +25,7 @@
             div.jqi{
                 width: 50%;
                 position: absolute;
-                background-color: #FD78E1;
+                background-color: #ffffff;
                 border: solid 1px #FD78E1;
                 border-radius: 10px;
                 -moz-border-radius: 10px;
@@ -47,26 +49,26 @@
         div.jqi .jqibuttons{
             text-align: right;
             padding: 5px 0 5px 0;
-            border: solid 1px #eeeeee;
-            background-color: #FD78E1;
+            border: solid 1px #FD78E1;
+            background-color: #ffffff;
         }
         div.jqi button{
             padding: 3px 10px;
             margin: 0 10px;
-            background-color: #2F6073;
+            background-color: #FD78E1;
             border: solid 1px #f4f4f4;
             color: #ffffff;
             font-weight: bold;
             font-size: 12px;
         }
         div.jqi button:hover{
-            background-color: #728A8C;
+            background-color: #FD78E1;
         }
         div.jqi button.jqidefaultbutton{
-            background-color: #BF5E26;
+            background-color: #FD78E1;
         }
         .jqiwarning .jqi .jqibuttons{
-            background-color: #BF5E26;
+            background-color: #FD78E1;
         }
             .nav_link_img {
                 background-color:none;
@@ -86,7 +88,6 @@
              color:transparent;
              }
         </style>
-        <link rel="stylesheet" href="/css/layout.css" type="text/css"/>
         <script type="text/javascript">
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', 'UA-13297277-1']);
@@ -107,6 +108,51 @@
     <body style="background-color:#ffffff;">
     <div itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
         <div id="Main_display" class="container" itsnat:nocache="true" style="display:block;">
+            <div class="by">
+
+                <div class="by">
+                    <div class="by4">
+                        <div class="use20 center">
+                            <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/calendar_32.png"
+                                 class="nav_link_img" alt="Attributed to http://www.picol.org"/>
+                        </div>
+                        <div class="use80 last nav_link intensity_3 hover ntyS">
+                            <a id="Skeleton_othersidebar_organizer_link" href="/page/_org" class="intensity vtip"
+                               title="Hi, click here to see your events">THE EVENTS</a>
+                        </div>
+                    </div>
+                    <div class="by4">
+                        <div class="use20 center">
+                            <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/group_half_32.png"
+                                 class="nav_link_img" alt="Attributed to http://www.picol.org"/>
+                        </div>
+                        <div class="use80 last nav_link intensity_3 hover ntyS">
+                            <a id="Skeleton_othersidebar_places_link" href="/page/_friends" class="intensity vtip"
+                               title="Hi, click  here to Manage/Invite your friends">THE CONNECTIONS</a>
+                        </div>
+                    </div>
+                    <div class="by4">
+                        <div class="use20 center">
+                            <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/avatar_32.png" class="nav_link_img"
+                                 alt="Attributed to http://www.picol.org"/>
+                        </div>
+                        <div class="use80 last nav_link intensity_3 hover ntyS">
+                            <a id="Skeleton_othersidebar_profile_link" href="/page/_me" class="intensity vtip"
+                               title="Hi, click here to view your profile">THE MANAGER</a>
+                        </div>
+                    </div>
+                    <div class="by4">
+                        <div class="use20 center">
+                            <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/image_32.png" class="nav_link_img"
+                                 alt="Attributed to http://www.picol.org"/>
+                        </div>
+                        <div class="use80 last nav_link intensity_3 hover ntyS">
+                            <a id="Skeleton_othersidebar_photo_manager_link" href="/page/_me" class="intensity">THE SNAPS</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             <div class="by" style="background-color:#ffffff;">
                 <div class="by center" style="height:5px;">
                     &nbsp;
@@ -120,41 +166,69 @@
                 </div>
             </div>
         </div>
-        <div style="display:none;">
-            <div id="impromptuLoginForm">
-                    <div class="use100 layer_2 center">
-                        <span style="font-size:16px;">Welcome to Down&darr;Town I Like Places!</span><br/>
-                        <span style="font-size:13px;">Down Town helps you find socially rich places<br/>
-                        such as theares and clubs<br/>
-                        </span>
-                        <span style="font-size:11px;">Zoom in to street level to view socially rich places<br/></span>
-                        <span style="font-size:14px;">Any specific place on your mind?<br/></span>
-                        <div class="use50 use25p use25a">
-                            <input class="vtip use100"
-                               id="seachbox"
-                               style="background:#f7c05c;border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;color:#ff1493;font-size:14px;font-family: Impact, Charcoal, sans-serif;height:24px;vertical-align:top;"
-                               value="e.g. las vegas, united states"
-                               onfocus="javascript:initialize_gmap_scripts();this.value='';"
-                               tabindex="1"
-                               onchange="javascript:document.getElementById('searchButton').click();$.prompt.close();"
-                                />
-                            <div class="use100" style="height:4px;">&nbsp;</div>
-                            <input class="bold use100"
-                                       id="searchButton"
-                                       onclick="javascript: try{$.prompt.close(); searchbox = document.getElementById('seachbox');new google.maps.Geocoder().geocode({address:searchbox.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){if(!(zoomInHint = !zoomInHint)){}map.setCenter(geocoderResult[0].geometry.location); var llb = geocoderResult[0].geometry.viewport; map.fitBounds(llb);}else{alert('No find '+searchbox.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
-                                       style="height:24px; font-family: 'Cuprum', impact; font-size:14px; background-color: #ee5500;border: 1px #ee5500 outset;color: #f7c05c;padding:5px 8px 0 6px; cursor:pointer;"
-                                       type="submit" value="Find Socially Rich Places"
-                                       tabindex="2" />
-                            <br/>
+    </div>
+
+    <div style="display:none;">
+        <div id="impromptuLoginForm">
+                <div class="use100 center" style="background-color:#ffffff;">
+                    <span style="font-size:16px;" class="intensity">Welcome to Down&darr;Town I Like Places!</span><br/>
+                    <div class="use100" style="height:10px;">&nbsp;</div>
+                    <span style="font-size:11px;" class="layer_4">
+                        Down&darr;Town helps you to<br/>
+                        plan events/meet-ups/outings and become social<br/>
+                    </span>
+                    <div class="use100" style="height:5px;">&nbsp;</div>
+                    <span style="font-size:9px;" class="layer_1">
+                        Zoom to street level and mark your event's place<br/>
+                    </span>
+                    <span style="font-size:9px;" class="layer_1">
+                        e.g. Home, Theatre, Park, Club, Ground<br/>
+                    </span>
+                    <div class="use100" style="height:5px;">&nbsp;</div>
+                    <span style="font-size:12px;" class="layer_3">Any specific place on your mind?<br/></span>
+                    <div class="use100" style="height:5px;">&nbsp;</div>
+                    <div class="use50 use25p use25a">
+                        <div class="use100">
+                        <input class="vtip use100 center layer_2"
+                           id="seachbox"
+                           style="border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;font-size:14px;height:24px;vertical-align:top;"
+                           value="e.g. las vegas, united states"
+                           onfocus="javascript:initialize_gmap_scripts();this.value='';"
+                           tabindex="1"
+                           onchange="javascript:document.getElementById('searchButton').click();$.prompt.close();"
+                            />
                         </div>
-                        Returning? Login here><br/>
-                        New? Signup while it's free!><br/>
-
-
+                        <div class="use100" style="height:10px;">&nbsp;</div>
+                        <div class="use30 use35p use35a">
+                        <input class="bold use100 intensity_1"
+                                   id="searchButton"
+                                   onclick="javascript: try{$.prompt.close(); searchbox = document.getElementById('seachbox');new google.maps.Geocoder().geocode({address:searchbox.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){if(!(zoomInHint = !zoomInHint)){}map.setCenter(geocoderResult[0].geometry.location); var llb = geocoderResult[0].geometry.viewport; map.fitBounds(llb);}else{alert('No find '+searchbox.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
+                                   style="height:23px; font-size:10px; border: 1px #ee5500 outset;cursor:pointer;"
+                                   type="submit" value="Search"
+                                   tabindex="2" />
+                         </div>
+                        <br/>
                     </div>
-            </div>
+                    <div class="use100" style="height:20px;">&nbsp;</div>
+                    <div class="use100">
+                        <hr/>
+                        <div class="use15 center">&nbsp;</div>
+                        <div class="use35 center right">
+                             <a href="/page/_org" class="btn" style="background-color:#11cc00; color:#ffff11;">Login to Down&darr;Town</a>
+                        </div>
+                        <div class="use35 center left">
+                             <a href="/signup" class="btn" style="background-color:#ffff11; color:#11cc00;">&nbsp;&nbsp;Sign up - it's free!&nbsp;&nbsp;</a>
+                        </div>
+                        <div class="use15 center">&nbsp;</div>
+                        <hr/>
+                     </div>
+                    <div class="use30 use70a"><sub><i>(Ctrl-F to Bring This Back)</i></sub></div>
+
+
+                </div>
         </div>
     </div>
+
         <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
         <script type="text/javascript" src="/js/jquery-impromptu.2.7.min.js"></script>
         <script type="text/javascript" src="/js/miniquarry/vtip.js"></script>
@@ -231,6 +305,29 @@
             var txt = $('#impromptuLoginForm').html();
             $('#impromptuLoginForm').remove();
             $.prompt(txt);
+
+            focusLat=36.11464603272065;
+            focusLng=-115.17281600000001;
+            zoom=12;
+
+            initialize_gmap_scripts();
+
+            $(document).keyup(function(event){
+                var ckup=event.keyCode?event.keyCode:event.which?event.which:event.charCode;
+                if(ckup==17)isCtrl=false;
+            }).keydown(function(event){
+                var ckdp=event.keyCode?event.keyCode:event.which?event.which:event.charCode;
+                if(ckdp==17)isCtrl=true;
+                if(ckdp==70&&isCtrl==true){
+                    try{
+                        $.prompt.close();
+                    }catch(err){
+                        //ignoring
+                    }
+                    $.prompt(txt);
+                    return false;
+                }
+            });
         });
         </script>
 

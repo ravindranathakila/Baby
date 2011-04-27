@@ -44,7 +44,7 @@ public class CDNAlbum extends CDN implements CDNAlbumLocal {
     private static final String ALBUM_PIVATE_EVENT_ID = "AlbumPivateEventId";
     private static final String ALBUM_PHOTO_UPLOAD_FAILED_DUE_TO_CACHING_ISSUES = "Album Photo Upload Failed Due To Caching Issues!";
     private static final String ALBUM_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES = "Album Photo Upload Failed Due To I/O Issues!";
-    private static final String ALBUM_PHOTO_UPLOAD_FAILED_DUE_FAILURE_IN_DELETION_OF_OLD_ALBUM_IMAGE = "Album Photo Upload Failed Due Failure In Deletion Of Old Album Image!";
+    private static final String ALBUM_PHOTO_UPLOAD_FAILED = "Album Photo Upload Failed";
     private static final String ALBUM_PHOTO_UPLOAD_FAILED_DUE_TO_IMAGE_MANIPULATION_ISSUES = "Album Photo Upload Failed Due To Image Manipulation Issues!";
     private static final String ALBUM_PHOTO_UPLOAD_FAILED_DUE_TO_RENAMING_ISSUES = "Album Photo Upload Failed Due To Renaming Issues!";
     private static final String ALBUM_PHOTO_UPLOAD_SUCCESSFUL = "Album Photo Upload Successful.";
@@ -148,7 +148,7 @@ public class CDNAlbum extends CDN implements CDNAlbumLocal {
                         r = new ReturnImpl<File>(e, ALBUM_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES, true);
                     }
                 } catch (final RuntimeException e) {//This is for the deleteObject's returnBadly from DB return
-                    r = new ReturnImpl<File>(e, ALBUM_PHOTO_UPLOAD_FAILED_DUE_FAILURE_IN_DELETION_OF_OLD_ALBUM_IMAGE, true);
+                    r = new ReturnImpl<File>(e, ALBUM_PHOTO_UPLOAD_FAILED, true);
                 } catch (final Exception e) {
                     r = new ReturnImpl<File>(e, ALBUM_PHOTO_UPLOAD_FAILED_DUE_TO_IMAGE_MANIPULATION_ISSUES, true);
                 }
