@@ -54,7 +54,7 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
     private static final String NO_LOGIN = "No Login!";
     private static final String PLEASE_LOGIN = "Please login!";
     private static final String POSTERIZING = "Posterizing";
-    private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_FAILURE_IN_DELETION_OF_OLD_PROFILE_IMAGE = "Profile Photo Upload Failed Due Failure In Deletion Of Old Profile Image!";
+    private static final String PROFILE_PHOTO_UPLOAD_FAILED = "Profile Photo Upload Failed!";
     private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_CACHING_ISSUES = "Profile Photo Upload Failed Due To Caching Issues!";
     private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES = "Profile Photo Upload Failed Due To I/O Issues!";
     private static final String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_IMAGE_MANIPULATION_ISSUES = "Profile Photo Upload Failed Due To Image Manipulation Issues!";
@@ -140,7 +140,7 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
                         r = new ReturnImpl<File>(e, PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES, true);
                     }
                 } catch (final RuntimeException e) {//This is for the deleteObject's returnBadly from DB return
-                    r = new ReturnImpl<File>(e, PROFILE_PHOTO_UPLOAD_FAILED_DUE_FAILURE_IN_DELETION_OF_OLD_PROFILE_IMAGE, true);
+                    r = new ReturnImpl<File>(e, PROFILE_PHOTO_UPLOAD_FAILED, true);
                 } catch (final Exception e) {
                     r = new ReturnImpl<File>(e, PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_IMAGE_MANIPULATION_ISSUES, true);
                 }
