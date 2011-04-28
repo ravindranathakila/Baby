@@ -168,7 +168,7 @@ function initialize_DownTownHeatMap_map(){
         }
     };
 
-    google.maps.event.addListener(placeMarker, 'click', function() {
+    alertWithPlaceMarkBox = function(){
         if(map.getZoom() > 10 ){
             if(18 > map.getZoom()){
                 if(!confirm("Not yet in street level. " + (18 - map.getZoom()) + " more levels to go. Ingore and continue?")){
@@ -186,6 +186,34 @@ function initialize_DownTownHeatMap_map(){
         }else{
             alert("Zoom to Street Level! "+ (18-(map.getZoom())) + " levels more to go...");
         }
+    };
+
+    google.maps.event.addListener(placeMarker, 'click', function() {
+        alertWithPlaceMarkBox();
+    });
+
+    runIfNotDblClick = function(event){
+        if(singleClick){
+            map.setCenter(currentSingleClickEvent.latLng);
+            setTimeout("alertWithPlaceMarkBox()",500);
+        }
+    };
+
+    clearSingleClick = function(fun){
+        singleClick = false;
+    };
+
+    singleClick = false;
+    currentSingleClickEvent = undefined;
+
+    google.maps.event.addListener(map, 'click', function(event) {// duh! :-( google map zoom on double click!
+        singleClick = true;
+        currentSingleClickEvent = event;
+        setTimeout("runIfNotDblClick()", 500);
+    });
+
+    google.maps.event.addListener(map, 'dblclick', function(event) {// duh! :-( google map zoom on double click!
+         clearSingleClick();
     });
 
     google.maps.event.addListener(map, 'center_changed', function() {
