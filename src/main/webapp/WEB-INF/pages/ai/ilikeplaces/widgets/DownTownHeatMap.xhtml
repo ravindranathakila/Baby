@@ -176,7 +176,7 @@ function initialize_DownTownHeatMap_map(){
                 }
             }
 
-            if(confirm("Here? Sure? Latitude,Longitude Value:" + map.getCenter().toString())){
+            if(confirm("We don't want your friends to end up next doors do we... \nMark this as exact place of event?")){
                 infowindow.setContent("That's the place you selected!");
                 map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
                 infowindow.setPosition(placeMarker.getPosition());
