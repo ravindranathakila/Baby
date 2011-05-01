@@ -676,95 +676,6 @@
 </node>
 </node>
 </node>
-<node BACKGROUND_COLOR="#0066cc" COLOR="#ffffff" CREATED="1290173397671" FOLDED="true" ID="Freemind_Link_1969704607" MODIFIED="1290173528390" POSITION="right" TEXT="BAKCBONE">
-<font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
-<node CREATED="1290230087937" ID="Freemind_Link_1044396462" MODIFIED="1290230174953" TEXT="STANDUP">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>What are you standing up for?</text>
-</hook>
-</node>
-<node CREATED="1290230094687" ID="Freemind_Link_1803998399" MODIFIED="1290230098906" TEXT="SUPPORTERS">
-<node CREATED="1290173953515" ID="Freemind_Link_1802116634" MODIFIED="1290221296937" TEXT="EXTERNAL SUPPORT">
-<node CREATED="1290221298843" FOLDED="true" ID="Freemind_Link_858514061" MODIFIED="1290221309296" TEXT="You&apos;re with the community">
-<node CREATED="1290221309796" ID="Freemind_Link_182883347" MODIFIED="1290221313968" TEXT="Support from OpenEJB"/>
-<node CREATED="1290221314625" ID="Freemind_Link_393470304" MODIFIED="1290221323437" TEXT="Support from ItsNat"/>
-<node CREATED="1290221324203" ID="Freemind_Link_679126911" MODIFIED="1290221331046" TEXT="Support from Blueprintcss"/>
-<node CREATED="1290221332046" ID="Freemind_Link_677923500" MODIFIED="1290221339640" TEXT="Support from jQuery"/>
-<node CREATED="1290221340703" ID="Freemind_Link_629477804" MODIFIED="1290221374203" TEXT="Support from OpenJPA"/>
-<node CREATED="1290221374828" ID="Freemind_Link_1806409365" MODIFIED="1290221384031" TEXT="Support from Oval"/>
-<node CREATED="1290221384531" ID="Freemind_Link_1087773019" MODIFIED="1290221399796" TEXT="Support from Idea IntellJ Community Edition"/>
-<node CREATED="1290221437187" ID="Freemind_Link_1611836156" MODIFIED="1290221444437" TEXT="Support from Derby"/>
-<node CREATED="1290221457031" ID="Freemind_Link_1622873652" MODIFIED="1290221463078" TEXT="Support from Logback"/>
-<node CREATED="1290221481312" ID="Freemind_Link_302399119" MODIFIED="1290221488093" TEXT="Support from SLF4J"/>
-</node>
-<node CREATED="1290221540500" ID="Freemind_Link_1143701603" MODIFIED="1290221551078" TEXT="You run the 37 Signals Philosophy">
-<node CREATED="1290173842625" ID="Freemind_Link_884334773" MODIFIED="1290173899562" TEXT="37: Real Worlds:Place Full Of Failures And Nothing Works"/>
-</node>
-</node>
-</node>
-<node CREATED="1290230099625" ID="Freemind_Link_260058942" MODIFIED="1290230104187" TEXT="OPPOSITION">
-<node CREATED="1290173918265" FOLDED="true" ID="Freemind_Link_924080486" MODIFIED="1290230130625" TEXT="PSYCHOLOGICAL">
-<node CREATED="1290173497609" HGAP="23" ID="Freemind_Link_1669448363" MODIFIED="1290173763890" TEXT="&gt;FEAR" VSHIFT="26"/>
-<node CREATED="1290173553796" ID="Freemind_Link_163482757" MODIFIED="1290173604218" TEXT="&gt;HUMULIATION"/>
-<node CREATED="1290173557984" ID="Freemind_Link_74820190" MODIFIED="1290173607187" TEXT="&gt;EMBARRASSMENT"/>
-<node CREATED="1290173565265" ID="Freemind_Link_1514577173" MODIFIED="1290173611671" TEXT="&gt;FAILURE"/>
-</node>
-</node>
-<node CREATED="1294979625451" ID="Freemind_Link_1489784997" MODIFIED="1294979628686" TEXT="IN THEORY">
-<node CREATED="1294979629217" ID="Freemind_Link_1210335321" MODIFIED="1294979708954" TEXT="TUCKMAN&apos;S STAGES">
-<node CREATED="1294979660827" ID="Freemind_Link_1839610591" MODIFIED="1294979663953" TEXT="FORMING"/>
-<node CREATED="1294979664421" ID="Freemind_Link_117091545" MODIFIED="1294979668234" TEXT="STORMING"/>
-<node CREATED="1294979668890" ID="Freemind_Link_1106285658" MODIFIED="1294979689985" TEXT="NORMING"/>
-<node CREATED="1294979673890" ID="Freemind_Link_960165167" MODIFIED="1294979676719" TEXT="PERFORMING"/>
-</node>
-<node CREATED="1294979717376" ID="Freemind_Link_1228950304" MODIFIED="1294979824740" TEXT="DOWN TOWNS MISATTRIBUTION PARADOX">
-<node CREATED="1294979851038" ID="Freemind_Link_1453665066" MODIFIED="1294979863398" TEXT="IF PEOPLE HATE YOU YOU THINK THEY HATE THE PRODUCT">
-<node CREATED="1294979825553" ID="Freemind_Link_1199206760" MODIFIED="1294979850241" TEXT="YOU FEEL COMPELLED TO BE THE PRODUCT AND VICE VERSA"/>
-<node CREATED="1294979863882" ID="Freemind_Link_729781905" MODIFIED="1294979871976" TEXT="IF PEOPLE HATE THE PRODUCT YOU THINK THEY HATE YOU"/>
-</node>
-</node>
-</node>
-</node>
-<node BACKGROUND_COLOR="#cc0000" COLOR="#ffffff" CREATED="1283695985941" FOLDED="true" ID="Freemind_Link_1290727434" MODIFIED="1283872257796" POSITION="right" TEXT="FOCUS">
-<font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
-<icon BUILTIN="ksmiletris"/>
-<node CREATED="1283696103180" ID="Freemind_Link_187413455" MODIFIED="1283704465660" TEXT="1st Time Experience">
-<node CREATED="1283702493670" ID="Freemind_Link_735119548" MODIFIED="1283702663030" TEXT="Useful">
-<arrowlink DESTINATION="Freemind_Link_1388025006" ENDARROW="Default" ENDINCLINATION="152;0;" ID="Freemind_Arrow_Link_977531318" STARTARROW="None" STARTINCLINATION="152;0;"/>
-</node>
-<node CREATED="1283696193199" ID="Freemind_Link_649016232" MODIFIED="1283702489608" TEXT="Fast"/>
-<node CREATED="1283704466847" ID="Freemind_Link_257352169" MODIFIED="1283704486768" TEXT="Practical">
-<arrowlink DESTINATION="Freemind_Link_1388025006" ENDARROW="Default" ENDINCLINATION="154;0;" ID="Freemind_Arrow_Link_529331154" STARTARROW="None" STARTINCLINATION="154;0;"/>
-</node>
-<node CREATED="1283702490170" ID="Freemind_Link_1879633110" MODIFIED="1283702689874" TEXT="Attractive">
-<arrowlink DESTINATION="Freemind_Link_1388025006" ENDARROW="Default" ENDINCLINATION="157;0;" ID="Freemind_Arrow_Link_1494181713" STARTARROW="None" STARTINCLINATION="157;0;"/>
-</node>
-</node>
-<node CREATED="1283702522967" ID="Freemind_Link_1388025006" MODIFIED="1283704486768" TEXT="Fun Map"/>
-<node CREATED="1283702949642" ID="Freemind_Link_339679164" MODIFIED="1283702961845" TEXT="Email Intro">
-<node CREATED="1283702969080" ID="Freemind_Link_1672305503" MODIFIED="1283703045800" TEXT="Bookmarks and Help Email">
-<node CREATED="1283703049597" ID="Freemind_Link_1712974284" MODIFIED="1283703080504" TEXT="Places and Events Intro"/>
-<node CREATED="1283703090066" ID="Freemind_Link_34457799" MODIFIED="1283703224178" TEXT="Places and Events Help"/>
-<node CREATED="1283703225413" ID="Freemind_Link_790559746" MODIFIED="1283703238085" TEXT="Public Places Intro"/>
-<node CREATED="1283703242960" ID="Freemind_Link_984471606" MODIFIED="1283703248023" TEXT="Public Places Help"/>
-<node CREATED="1283703251429" ID="Freemind_Link_82503060" MODIFIED="1283703270867" TEXT="Bookmarks for Hotels, Flights, Cars and Cruises"/>
-</node>
-</node>
-</node>
-<node CREATED="1277979649390" FOLDED="true" ID="Freemind_Link_242564620" MODIFIED="1283704394740" POSITION="right" TEXT="BLOG">
-<icon BUILTIN="Mail"/>
-<node CREATED="1277999161031" ID="Freemind_Link_601044398" MODIFIED="1277999163109" TEXT="TAG">
-<node CREATED="1277979653453" ID="Freemind_Link_624513466" MODIFIED="1277999183015" TEXT="FEATURES">
-<node CREATED="1277979666750" ID="Freemind_Link_771089732" MODIFIED="1277979703796" TEXT="LOCATION LIST FILTER"/>
-<node CREATED="1278154956734" ID="Freemind_Link_1931009767" MODIFIED="1278154971765" TEXT="PRETTY PROFILE URL"/>
-</node>
-<node CREATED="1278911520140" ID="Freemind_Link_1844724895" MODIFIED="1278911524187" TEXT="DOWNLOADS">
-<node CREATED="1278911525000" ID="Freemind_Link_184600473" MODIFIED="1278911535953" TEXT="SUMMARIZE WIDGET">
-<node CREATED="1278911544609" ID="Freemind_Link_1244282502" MODIFIED="1278911567750" TEXT="Add visit I LIKE PLACES"/>
-</node>
-</node>
-</node>
-</node>
 <node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" FOLDED="true" ID="Freemind_Link_1303374308" MODIFIED="1297919547171" POSITION="right" TEXT="Lab">
 <icon BUILTIN="wizard"/>
 <hook NAME="accessories/plugins/NodeNote.properties">
@@ -1506,304 +1417,10 @@
 </node>
 </node>
 </node>
-<node CREATED="1283703158802" FOLDED="true" ID="Freemind_Link_640830008" MODIFIED="1289573580515" POSITION="right" TEXT="Marketing">
-<font NAME="Comic Sans MS" SIZE="14"/>
-<icon BUILTIN="bell"/>
-<node CREATED="1289010658744" ID="Freemind_Link_1999101897" MODIFIED="1289010663868" TEXT="GUIDE">
-<icon BUILTIN="help"/>
-<node CREATED="1289010668102" ID="Freemind_Link_1280564673" MODIFIED="1289010673273" TEXT="Inception">
-<node CREATED="1289010674023" ID="Freemind_Link_1823484800" MODIFIED="1289010707582" TEXT="The act of snapping the subject&apos;s attention"/>
-</node>
-<node CREATED="1289012978175" ID="Freemind_Link_845177365" MODIFIED="1289012981253" TEXT="Deception">
-<node CREATED="1289010740532" ID="Freemind_Link_1436190554" MODIFIED="1289010770872" TEXT="The action by the subject by which he spreads his deception"/>
-</node>
-<node CREATED="1289012981738" ID="Freemind_Link_1091601485" MODIFIED="1294980237554" TEXT="Infusion">
-<node CREATED="1289010710144" ID="Freemind_Link_1437503295" MODIFIED="1289010738875" TEXT="The act of retaining the subject&apos;s attention">
-<node CREATED="1294981194506" ID="Freemind_Link_1817130650" MODIFIED="1294981210629" TEXT="This will only be easy with true value products"/>
-</node>
-</node>
-</node>
-<node CREATED="1283703177927" FOLDED="true" ID="Freemind_Link_1817341781" MODIFIED="1283703202084" TEXT="Checklist">
-<node CREATED="1285778293411" ID="Freemind_Link_1030747214" MODIFIED="1286031836875" TEXT="Are you being dumb? No? BE DUMB!"/>
-<node CREATED="1283703161521" ID="Freemind_Link_63383641" MODIFIED="1283703168865" TEXT="Does it do what it says?"/>
-<node CREATED="1283703169490" ID="Freemind_Link_499084225" MODIFIED="1283703174943" TEXT="Does it say what is does?"/>
-</node>
-<node CREATED="1289010405006" FOLDED="true" ID="Freemind_Link_1694440250" MODIFIED="1289010479138" TEXT="Inception">
-<node CREATED="1289010825100" ID="Freemind_Link_112206367" MODIFIED="1289010840552" TEXT="Inception thu social sites">
-<node CREATED="1289010799494" ID="Freemind_Link_1483011254" MODIFIED="1289010974514" TEXT="OnlyWire submission"/>
-<node CREATED="1289012914173" ID="Freemind_Link_1477421608" MODIFIED="1289012920486" TEXT="Grab Words">
-<node CREATED="1289012935596" ID="Freemind_Link_538999889" MODIFIED="1289012941158" TEXT="OMG!"/>
-</node>
-</node>
-</node>
-<node CREATED="1289010479826" ID="Freemind_Link_452188577" MODIFIED="1289010481653" TEXT="Deception">
-<node CREATED="1286620028609" ID="Freemind_Link_1155133426" MODIFIED="1286620041578" TEXT="Rules make the game interesting">
-<node CREATED="1289012922548" ID="Freemind_Link_941219317" MODIFIED="1294980260398" TEXT="Hyper Words">
-<node CREATED="1289012941580" ID="Freemind_Link_1632147330" MODIFIED="1289012965659" TEXT="I just got robbed"/>
-</node>
-</node>
-</node>
-<node CREATED="1289010597860" ID="Freemind_Link_1689932969" MODIFIED="1294980226928" TEXT="Infusion"/>
-<node CREATED="1289013173634" ID="Freemind_Link_477801137" MODIFIED="1289013175572" TEXT="TODOs">
-<node CREATED="1289013178135" ID="Freemind_Link_917995578" MODIFIED="1289013186635" TEXT="Sign up for all social networks under a different username"/>
-</node>
-<node CREATED="1289567662906" ID="Freemind_Link_492559131" MODIFIED="1289567673250" TEXT="Use Cases">
-<icon BUILTIN="ksmiletris"/>
-<node CREATED="1289567691343" ID="Freemind_Link_1829373110" MODIFIED="1289567725312" TEXT="Each Use Case Is A Marketable One. If Not, Get Rid Of IT!">
-<icon BUILTIN="help"/>
-</node>
-<node CREATED="1289567745921" ID="Freemind_Link_973070027" MODIFIED="1289567758843" TEXT="View Home Page Hotspot Heat Map"/>
-</node>
-</node>
 <node BACKGROUND_COLOR="#ffff00" CREATED="1266112502968" FOLDED="true" ID="Freemind_Link_102406912" MODIFIED="1283702881594" POSITION="left" TEXT="Abandonned">
 <icon BUILTIN="button_cancel"/>
 <node CREATED="1275556343203" ID="Freemind_Link_373425608" MODIFIED="1275556361531" TEXT="PRESS RELEASE SUBMISSIONS">
 <node CREATED="1275556363515" ID="Freemind_Link_1449575583" MODIFIED="1275556376046" TEXT="50 sites on google bookarks"/>
-</node>
-</node>
-<node CREATED="1283704339086" ID="Freemind_Link_386369610" MODIFIED="1283704377334" POSITION="right" TEXT="QA">
-<icon BUILTIN="pencil"/>
-<node CREATED="1288415653343" FOLDED="true" ID="Freemind_Link_540547344" MODIFIED="1288423654031" TEXT="FREEZER">
-<icon BUILTIN="desktop_new"/>
-<node CREATED="1288421673765" FOLDED="true" ID="Freemind_Link_1507643800" MODIFIED="1288422805046" TEXT="MARKETABILITY FREEZE">
-<icon BUILTIN="full-1"/>
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>Unless you freeze the product as &quot;marketable&quot;, you cannot do ANY freezing.</text>
-</hook>
-<node CREATED="1288494134890" ID="Freemind_Link_1722996598" MODIFIED="1288494424984" TEXT="Create personal locations based on hh">
-<edge WIDTH="thin"/>
-<node CREATED="1288494499906" ID="Freemind_Link_1464782037" MODIFIED="1288494525531" TEXT="Specify other owners to it"/>
-<node CREATED="1288494514015" ID="Freemind_Link_1160306731" MODIFIED="1288494721937" TEXT="Specify other viewers to it">
-<node CREATED="1289574440312" ID="Freemind_Link_1875120660" MODIFIED="1291212224984" TEXT="TODO:SE:Remove oneself from a location">
-<icon BUILTIN="flag"/>
-<icon BUILTIN="button_cancel"/>
-<node CREATED="1291212186218" ID="Freemind_Link_644459776" MODIFIED="1291212324312" TEXT="This can be done via mute. Spamming possible through repeated add/remove">
-<arrowlink DESTINATION="Freemind_Link_98693104" ENDARROW="Default" ENDINCLINATION="1885;0;" ID="Freemind_Arrow_Link_1348588572" STARTARROW="None" STARTINCLINATION="1885;0;"/>
-<font NAME="Comic Sans MS" SIZE="10"/>
-<icon BUILTIN="clanbomber"/>
-</node>
-</node>
-</node>
-<node CREATED="1288494752125" ID="Freemind_Link_1845246042" MODIFIED="1288494767093" TEXT="Create personal events based on location">
-<node CREATED="1288494769250" ID="Freemind_Link_1358764859" MODIFIED="1288494942437" TEXT="Specify other owners to it"/>
-<node CREATED="1288494943015" ID="Freemind_Link_1997054608" MODIFIED="1288494949640" TEXT="Specify other viewss to it">
-<node CREATED="1289574440312" ID="Freemind_Link_1302493726" MODIFIED="1290558945265" TEXT="TODO:SE:Remove oneself from an event">
-<icon BUILTIN="flag"/>
-<icon BUILTIN="button_cancel"/>
-<node CREATED="1290558888906" ID="Freemind_Link_1139220300" MODIFIED="1290558930515" TEXT="Taking a viral approach. Anybody with your email can add you. Will introduce &quot;spammer&quot; later.">
-<icon BUILTIN="clanbomber"/>
-</node>
-<node CREATED="1290559770937" ID="Freemind_Link_1162223897" MODIFIED="1290559775453" TEXT="Can mute wall"/>
-</node>
-</node>
-<node CREATED="1288494950187" ID="Freemind_Link_486328416" MODIFIED="1288494954984" TEXT="Specify other invites to it">
-<node CREATED="1289574440312" ID="Freemind_Link_1444033085" MODIFIED="1290558945250" TEXT="TODO:SE:Remove oneself from an event">
-<icon BUILTIN="flag"/>
-<icon BUILTIN="button_cancel"/>
-<node CREATED="1290558893484" ID="Freemind_Link_438451048" MODIFIED="1290558935953" TEXT="Taking a viral approach. Anybody with your email can add you. Will introduce &quot;spammer&quot; later.">
-<icon BUILTIN="clanbomber"/>
-</node>
-<node CREATED="1290559777906" ID="Freemind_Link_1470697142" MODIFIED="1290559782406" TEXT="Can mute wall"/>
-</node>
-</node>
-<node CREATED="1288494957750" ID="Freemind_Link_796263707" MODIFIED="1289574560281" TEXT="Wall">
-<node CREATED="1288495017437" ID="Freemind_Link_1165287616" MODIFIED="1288495021078" TEXT="Event collaboration"/>
-<node CREATED="1288495022187" ID="Freemind_Link_476419257" MODIFIED="1288495026828" TEXT="Just talk"/>
-<node CREATED="1288505455328" ID="Freemind_Link_100061593" MODIFIED="1288505467984" TEXT="Email Conversation">
-<node CREATED="1288505468890" ID="Freemind_Link_798420819" MODIFIED="1288537488968" TEXT="TODO: close on update">
-<icon BUILTIN="flag"/>
-<icon BUILTIN="button_ok"/>
-</node>
-<node CREATED="1290128164062" ID="Freemind_Link_477286948" MODIFIED="1290128184781" TEXT="TODO: remove self from email update">
-<icon BUILTIN="flag"/>
-<icon BUILTIN="button_ok"/>
-</node>
-</node>
-</node>
-<node CREATED="1288494976062" ID="Freemind_Link_883921747" MODIFIED="1288505500703" TEXT="See a map of the event location">
-<node CREATED="1288494987984" ID="Freemind_Link_1043652536" MODIFIED="1288495001140" TEXT="Map helps people find the place"/>
-<node CREATED="1288495003125" ID="Freemind_Link_1736837459" MODIFIED="1288495010796" TEXT="Maps gives the place better identty"/>
-<node CREATED="1288505501953" ID="Freemind_Link_1504477530" MODIFIED="1288537492125" TEXT="TODO: private event view map">
-<icon BUILTIN="flag"/>
-<icon BUILTIN="button_ok"/>
-</node>
-</node>
-<node CREATED="1288495037421" ID="Freemind_Link_91009859" MODIFIED="1288495039562" TEXT="Album">
-<node CREATED="1288495040046" ID="Freemind_Link_1216857146" MODIFIED="1289574578890" TEXT="(Upload)Share photos of event">
-<node CREATED="1289574580609" ID="Freemind_Link_103327350" MODIFIED="1290438847750" TEXT="TODO:SE:Remove photos">
-<icon BUILTIN="flag"/>
-<icon BUILTIN="button_ok"/>
-<node CREATED="1289574626062" ID="Freemind_Link_417645007" MODIFIED="1290128225031" TEXT="TODO:photoname_thump.jpg">
-<icon BUILTIN="flag"/>
-<icon BUILTIN="button_ok"/>
-</node>
-</node>
-</node>
-<node CREATED="1288495050328" ID="Freemind_Link_368622347" MODIFIED="1289574560296" TEXT="Discuss photos of event">
-<arrowlink DESTINATION="Freemind_Link_796263707" ENDARROW="Default" ENDINCLINATION="225;0;" ID="Freemind_Arrow_Link_317934661" STARTARROW="None" STARTINCLINATION="225;0;"/>
-</node>
-<node CREATED="1288495118515" ID="Freemind_Link_1513470069" MODIFIED="1288495124656" TEXT="Further share photos of event"/>
-<node CREATED="1288495058250" ID="Freemind_Link_1798050489" MODIFIED="1289573802703" TEXT="TODO:Email forwards">
-<icon BUILTIN="flag"/>
-<icon BUILTIN="button_ok"/>
-</node>
-<node CREATED="1289101997604" ID="Freemind_Link_635591026" MODIFIED="1289573788625" TEXT="TODO:Email on attatch">
-<icon BUILTIN="flag"/>
-<icon BUILTIN="button_cancel"/>
-<node CREATED="1289573762328" ID="Freemind_Link_1308896135" MODIFIED="1289573792015" TEXT="Uploading Several Photos Will Spam Members">
-<icon BUILTIN="clanbomber"/>
-</node>
-</node>
-<node CREATED="1290128194078" ID="Freemind_Link_709032160" MODIFIED="1290128201343" TEXT="TODO: remove self from email update">
-<icon BUILTIN="flag"/>
-<icon BUILTIN="button_ok"/>
-</node>
-</node>
-<node CREATED="1288506345625" ID="Freemind_Link_1982919547" MODIFIED="1290439515843" TEXT="TODO: Event Name as Header">
-<icon BUILTIN="flag"/>
-<icon BUILTIN="button_ok"/>
-</node>
-</node>
-<node CREATED="1288506383718" ID="Freemind_Link_675679815" MODIFIED="1289574391296" TEXT="TODO: Location Name as Header">
-<arrowlink DESTINATION="Freemind_Link_675679815" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Freemind_Arrow_Link_1478457679" STARTARROW="None" STARTINCLINATION="0;0;"/>
-<icon BUILTIN="flag"/>
-<icon BUILTIN="button_ok"/>
-</node>
-</node>
-<node CREATED="1288507314546" ID="Freemind_Link_1436401670" MODIFIED="1288507322015" TEXT="Sidebar connections">
-<node CREATED="1288507322703" ID="Freemind_Link_255638645" MODIFIED="1288537483875" TEXT="TODO: implement">
-<icon BUILTIN="flag"/>
-<icon BUILTIN="button_ok"/>
-</node>
-</node>
-<node CREATED="1288493873906" ID="Freemind_Link_1602200353" MODIFIED="1288493992343" TEXT="Search for a list of hotspots">
-<node CREATED="1288494009296" ID="Freemind_Link_487003763" MODIFIED="1288494025578" TEXT="A search box for easy map navigation"/>
-<node CREATED="1288494026281" ID="Freemind_Link_1809855193" MODIFIED="1288494051421" TEXT="An event based hotspot heat map">
-<node CREATED="1288494241734" ID="Freemind_Link_860375365" MODIFIED="1288537475218" TEXT="TODO zoom break on 4&lt;5">
-<icon BUILTIN="flag"/>
-<icon BUILTIN="button_ok"/>
-</node>
-</node>
-</node>
-</node>
-<node CREATED="1288415702156" ID="Freemind_Link_57901070" MODIFIED="1288422854234" TEXT="FEATURE FREEZE">
-<icon BUILTIN="full-2"/>
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>After a marketing freeze, it becomes clear what features are to be added, removed now, and then freeze features.</text>
-</hook>
-</node>
-<node CREATED="1288421879843" ID="Freemind_Link_891692060" MODIFIED="1288422884843" TEXT="GUI FREEZE">
-<icon BUILTIN="full-3"/>
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>GUI freeze is where you know for sure the look and feel is ok. This can be done only after the features are frozen.</text>
-</hook>
-<node CREATED="1288421982656" ID="Freemind_Link_694091115" MODIFIED="1288422274187" TEXT="LOOK FREEZE">
-<icon BUILTIN="full-1"/>
-</node>
-<node CREATED="1288421996140" ID="Freemind_Link_1210620995" MODIFIED="1288422277515" TEXT="FEEL(USABILITY) FREEZE">
-<icon BUILTIN="full-2"/>
-</node>
-</node>
-<node CREATED="1288415723171" ID="Freemind_Link_264841006" MODIFIED="1288422973234" TEXT="GOF FREEZE">
-<icon BUILTIN="full-4"/>
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>GOF is to do with all the design pattern freezes you can do to the code. This is the core place of the freeze. &#xa;If you got here freezing the ones before this freeze, you&apos;ve done most of of your freeze.</text>
-</hook>
-<node CREATED="1289102022661" ID="Freemind_Link_1346535151" MODIFIED="1289102046485" TEXT="TODO:Mail queueing or trying mechanism">
-<icon BUILTIN="flag"/>
-</node>
-</node>
-<node CREATED="1288421834390" ID="Freemind_Link_1220495101" MODIFIED="1288422171531" TEXT="OPTIMIZATION/LOAD TEST FREEZE">
-<icon BUILTIN="full-5"/>
-</node>
-<node CREATED="1288421842125" ID="Freemind_Link_761289785" MODIFIED="1288422192375" TEXT="TEST/BUG FIX FREEZE">
-<icon BUILTIN="full-6"/>
-</node>
-</node>
-</node>
-<node CREATED="1291212117250" FOLDED="true" ID="Freemind_Link_1414706278" MODIFIED="1291815705453" POSITION="right" TEXT="Staging">
-<font NAME="Comic Sans MS" SIZE="14"/>
-<icon BUILTIN="kaddressbook"/>
-<node CREATED="1291212602703" ID="Freemind_Link_1737407813" MODIFIED="1291214185046" TEXT="Set tomcat compression">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>    &lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;&#xa;               connectionTimeout=&quot;20000&quot;&#xa;               redirectPort=&quot;8443&quot;&#xa;               compression=&quot;on&quot;&#xa;&#x9;&#x9;&#x9;   compressionMinSize=&quot;1024&quot;&#xa;               compressableMimeType=&quot;text/html,text/javascript,text/css,text/xhtml&quot;/&gt;</text>
-</hook>
-</node>
-<node CREATED="1291212604468" ID="Freemind_Link_59226303" MODIFIED="1291214185046" TEXT="Set tomcat character encoding">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>    &lt;Connector port=&quot;8080&quot; maxHttpHeaderSize=&quot;8192&quot;&#xa;     maxThreads=&quot;150&quot; minSpareThreads=&quot;25&quot; maxSpareThreads=&quot;75&quot;&#xa;     enableLookups=&quot;false&quot; redirectPort=&quot;8443&quot; acceptCount=&quot;100&quot;&#xa;     connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot;&#xa;     compression=&quot;on&quot;&#xa;     compressionMinSize=&quot;128&quot;&#xa;     noCompressionUserAgents=&quot;gozilla, traviata&quot; &#xa;     compressableMimeType=&quot;text/html,text/xml,text/plain,text/css,text/ javascript,application/x-javascript,application/javascript&quot;&#xa;     URIEncoding=&quot;UTF-8&quot;&#xa;    /&gt;</text>
-</hook>
-</node>
-<node CREATED="1291212637531" ID="Freemind_Link_469647367" MODIFIED="1291214185046" TEXT="Compare local(non cdn) and Header Expires Filter in WEB.XML">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
-</node>
-<node CREATED="1291212646750" ID="Freemind_Link_1477242506" MODIFIED="1291214185046" TEXT=" Add cloudfiles.properties and log4j.properties to tomcat lib">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
-</node>
-<node CREATED="1291212671046" ID="Freemind_Link_490713279" MODIFIED="1291214185031" TEXT="check whether globalconfig should be put in tomcat lib and diff it with new one">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
-</node>
-<node CREATED="1291212681453" ID="Freemind_Link_1323247436" MODIFIED="1291214185031" TEXT="disable disqus developer mode">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
-</node>
-<node CREATED="1291212713812" ID="Freemind_Link_215516192" MODIFIED="1291216237109" TEXT="check if access is prevented to openejb, and roles defined">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
-</node>
-<node CREATED="1291213930125" ID="Freemind_Link_1485504866" MODIFIED="1291216237125" TEXT="Upload latest sources">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
-</node>
-<node CREATED="1291214174406" ID="Freemind_Link_932887219" MODIFIED="1291216237125" TEXT="Backup existing database">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
-</node>
-<node CREATED="1291214117578" ID="Freemind_Link_804394739" MODIFIED="1291216237125" TEXT="Upload war">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
-</node>
-<node CREATED="1291214130437" ID="Freemind_Link_1454121737" MODIFIED="1291216237125" TEXT="Compare and copy config.properties as GlobalConfig.properties">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
-</node>
-<node CREATED="1291216191734" ID="Freemind_Link_1627016185" MODIFIED="1291216237125" TEXT="Backup Users!">
-<icon BUILTIN="flag"/>
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
-</node>
-<node CREATED="1291216110437" ID="Freemind_Link_1160336191" MODIFIED="1291216237125" TEXT="Remove existing database">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
-</node>
-<node CREATED="1291216112625" ID="Freemind_Link_426396135" MODIFIED="1291216237125" TEXT="Startup new app so that the tables are generated">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
-</node>
-<node CREATED="1291216120531" ID="Freemind_Link_1808227689" MODIFIED="1291216237125" TEXT="Stop new app">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
-</node>
-<node CREATED="1291213950796" ID="Freemind_Link_1942704877" MODIFIED="1291216237125" TEXT="importing geo data to derby. Tab character, should be copied off something like notepad and pasted ">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
 </node>
 </node>
 <node CREATED="1266112839468" FOLDED="true" ID="Freemind_Link_674125175" MODIFIED="1291216108484" POSITION="right" TEXT="Side fixing">
@@ -1811,19 +1428,6 @@
 <icon BUILTIN="clanbomber"/>
 <node CREATED="1275247786984" ID="Freemind_Link_841143219" MODIFIED="1275247834859" TEXT="Startup and Shutdown mails"/>
 <node CREATED="1270054635078" ID="Freemind_Link_408918916" MODIFIED="1281967604656" TEXT="JSP forward or deny on OpenEJB"/>
-</node>
-<node CREATED="1275667013786" FOLDED="true" ID="Freemind_Link_374011926" MODIFIED="1297919306265" POSITION="right" TEXT="ITPS">
-<arrowlink DESTINATION="Freemind_Link_374011926" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Freemind_Arrow_Link_447360971" STARTARROW="None" STARTINCLINATION="0;0;"/>
-<font NAME="Comic Sans MS" SIZE="14"/>
-<icon BUILTIN="flag"/>
-<node CREATED="1295620808796" ID="Freemind_Link_753522277" MODIFIED="1295620814062" TEXT="no user base">
-<node CREATED="1295620858468" ID="Freemind_Link_1608653334" MODIFIED="1295620866984" TEXT="some just use viral marketing and succeed"/>
-</node>
-<node CREATED="1295620814750" ID="Freemind_Link_1513662021" MODIFIED="1295620822656" TEXT="no profit">
-<node CREATED="1295620877515" ID="Freemind_Link_505481977" MODIFIED="1295620883765" TEXT="location based advertising is a solution"/>
-<node CREATED="1295620884265" ID="Freemind_Link_388804536" MODIFIED="1295620919437" TEXT="paid event publisher accounts is a solutin"/>
-</node>
-<node CREATED="1295620824234" ID="Freemind_Link_1315593715" MODIFIED="1295620836140" TEXT="no true value"/>
 </node>
 <node CREATED="1295067676843" FOLDED="true" ID="Freemind_Link_882519224" MODIFIED="1295067689718" POSITION="right" TEXT="Next">
 <icon BUILTIN="forward"/>
@@ -1850,7 +1454,7 @@
 <node CREATED="1296794646056" ID="Freemind_Link_1341234988" MODIFIED="1296794656927" TEXT="Confirmation Email"/>
 <node CREATED="1296794657379" ID="Freemind_Link_1691066408" MODIFIED="1296794673107" TEXT="Wall Widget Email"/>
 <node CREATED="1296794733457" ID="Freemind_Link_458923925" MODIFIED="1302181043750" TEXT="Photo Widget Top Links(delete, share etc.)"/>
-<node CREATED="1296797145482" FOLDED="true" ID="Freemind_Link_1706122338" MODIFIED="1296797155300" TEXT="Chrome tabs">
+<node CREATED="1296797145482" ID="Freemind_Link_1706122338" MODIFIED="1296797155300" TEXT="Chrome tabs">
 <node CREATED="1296797156519" ID="Freemind_Link_459136616" MODIFIED="1296797159099" TEXT="colors"/>
 <node CREATED="1296797159834" ID="Freemind_Link_1877290676" MODIFIED="1296797161460" TEXT="links"/>
 <node COLOR="#ff0000" CREATED="1296797163179" ID="Freemind_Link_1298522029" MODIFIED="1296797213240" TEXT="design"/>
@@ -2074,6 +1678,8 @@
 <node CREATED="1303531931950" ID="Freemind_Link_112184728" MODIFIED="1303531953185" TEXT="Why Actions Layer">
 <node CREATED="1303531953778" ID="Freemind_Link_583950210" MODIFIED="1303531988451" TEXT="Why would a user want to perform this action? (run on every element)"/>
 </node>
+<node CREATED="1304082815461" ID="Freemind_Link_1744728588" MODIFIED="1304082824700" TEXT="Sensory Integration Layer"/>
+<node CREATED="1304082826076" ID="Freemind_Link_1382937693" MODIFIED="1304082847946" TEXT="Synchronous Gratification Layer"/>
 </node>
 <node CREATED="1301193513451" FOLDED="true" ID="Freemind_Link_13138168" MODIFIED="1303624638417" TEXT="Presentation Layer">
 <node CREATED="1303531664542" ID="Freemind_Link_917523325" MODIFIED="1303531674980" TEXT="Turn Problems Into Profit Layer">
@@ -2110,6 +1716,527 @@
 <node CREATED="1303623920022" ID="Freemind_Link_109627665" MODIFIED="1303623931993" TEXT="Authentications"/>
 <node CREATED="1303623933369" ID="Freemind_Link_1610763807" MODIFIED="1303623959187" TEXT="File System Permissions On Processes and Users"/>
 <node CREATED="1303624739505" ID="Freemind_Link_1052380455" MODIFIED="1303624760526" TEXT="e.g. This is what people call data center architecture"/>
+</node>
+</node>
+<node BACKGROUND_COLOR="#0066cc" COLOR="#ffffff" CREATED="1290173397671" FOLDED="true" ID="Freemind_Link_1969704607" MODIFIED="1290173528390" POSITION="left" TEXT="BAKCBONE">
+<font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
+<node CREATED="1290230087937" ID="Freemind_Link_1044396462" MODIFIED="1290230174953" TEXT="STANDUP">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>What are you standing up for?</text>
+</hook>
+</node>
+<node CREATED="1290230094687" ID="Freemind_Link_1803998399" MODIFIED="1290230098906" TEXT="SUPPORTERS">
+<node CREATED="1290173953515" ID="Freemind_Link_1802116634" MODIFIED="1290221296937" TEXT="EXTERNAL SUPPORT">
+<node CREATED="1290221298843" FOLDED="true" ID="Freemind_Link_858514061" MODIFIED="1290221309296" TEXT="You&apos;re with the community">
+<node CREATED="1290221309796" ID="Freemind_Link_182883347" MODIFIED="1290221313968" TEXT="Support from OpenEJB"/>
+<node CREATED="1290221314625" ID="Freemind_Link_393470304" MODIFIED="1290221323437" TEXT="Support from ItsNat"/>
+<node CREATED="1290221324203" ID="Freemind_Link_679126911" MODIFIED="1290221331046" TEXT="Support from Blueprintcss"/>
+<node CREATED="1290221332046" ID="Freemind_Link_677923500" MODIFIED="1290221339640" TEXT="Support from jQuery"/>
+<node CREATED="1290221340703" ID="Freemind_Link_629477804" MODIFIED="1290221374203" TEXT="Support from OpenJPA"/>
+<node CREATED="1290221374828" ID="Freemind_Link_1806409365" MODIFIED="1290221384031" TEXT="Support from Oval"/>
+<node CREATED="1290221384531" ID="Freemind_Link_1087773019" MODIFIED="1290221399796" TEXT="Support from Idea IntellJ Community Edition"/>
+<node CREATED="1290221437187" ID="Freemind_Link_1611836156" MODIFIED="1290221444437" TEXT="Support from Derby"/>
+<node CREATED="1290221457031" ID="Freemind_Link_1622873652" MODIFIED="1290221463078" TEXT="Support from Logback"/>
+<node CREATED="1290221481312" ID="Freemind_Link_302399119" MODIFIED="1290221488093" TEXT="Support from SLF4J"/>
+</node>
+<node CREATED="1290221540500" ID="Freemind_Link_1143701603" MODIFIED="1290221551078" TEXT="You run the 37 Signals Philosophy">
+<node CREATED="1290173842625" ID="Freemind_Link_884334773" MODIFIED="1290173899562" TEXT="37: Real Worlds:Place Full Of Failures And Nothing Works"/>
+</node>
+</node>
+</node>
+<node CREATED="1290230099625" ID="Freemind_Link_260058942" MODIFIED="1290230104187" TEXT="OPPOSITION">
+<node CREATED="1290173918265" FOLDED="true" ID="Freemind_Link_924080486" MODIFIED="1290230130625" TEXT="PSYCHOLOGICAL">
+<node CREATED="1290173497609" HGAP="23" ID="Freemind_Link_1669448363" MODIFIED="1290173763890" TEXT="&gt;FEAR" VSHIFT="26"/>
+<node CREATED="1290173553796" ID="Freemind_Link_163482757" MODIFIED="1290173604218" TEXT="&gt;HUMULIATION"/>
+<node CREATED="1290173557984" ID="Freemind_Link_74820190" MODIFIED="1290173607187" TEXT="&gt;EMBARRASSMENT"/>
+<node CREATED="1290173565265" ID="Freemind_Link_1514577173" MODIFIED="1290173611671" TEXT="&gt;FAILURE"/>
+</node>
+</node>
+<node CREATED="1294979625451" ID="Freemind_Link_1489784997" MODIFIED="1294979628686" TEXT="IN THEORY">
+<node CREATED="1294979629217" ID="Freemind_Link_1210335321" MODIFIED="1294979708954" TEXT="TUCKMAN&apos;S STAGES">
+<node CREATED="1294979660827" ID="Freemind_Link_1839610591" MODIFIED="1294979663953" TEXT="FORMING"/>
+<node CREATED="1294979664421" ID="Freemind_Link_117091545" MODIFIED="1294979668234" TEXT="STORMING"/>
+<node CREATED="1294979668890" ID="Freemind_Link_1106285658" MODIFIED="1294979689985" TEXT="NORMING"/>
+<node CREATED="1294979673890" ID="Freemind_Link_960165167" MODIFIED="1294979676719" TEXT="PERFORMING"/>
+</node>
+<node CREATED="1294979717376" ID="Freemind_Link_1228950304" MODIFIED="1294979824740" TEXT="DOWN TOWNS MISATTRIBUTION PARADOX">
+<node CREATED="1294979851038" ID="Freemind_Link_1453665066" MODIFIED="1294979863398" TEXT="IF PEOPLE HATE YOU YOU THINK THEY HATE THE PRODUCT">
+<node CREATED="1294979825553" ID="Freemind_Link_1199206760" MODIFIED="1294979850241" TEXT="YOU FEEL COMPELLED TO BE THE PRODUCT AND VICE VERSA"/>
+<node CREATED="1294979863882" ID="Freemind_Link_729781905" MODIFIED="1294979871976" TEXT="IF PEOPLE HATE THE PRODUCT YOU THINK THEY HATE YOU"/>
+</node>
+</node>
+</node>
+</node>
+<node BACKGROUND_COLOR="#cc0000" COLOR="#ffffff" CREATED="1283695985941" FOLDED="true" ID="Freemind_Link_1290727434" MODIFIED="1283872257796" POSITION="left" TEXT="FOCUS">
+<font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
+<icon BUILTIN="ksmiletris"/>
+<node CREATED="1283696103180" ID="Freemind_Link_187413455" MODIFIED="1283704465660" TEXT="1st Time Experience">
+<node CREATED="1283702493670" ID="Freemind_Link_735119548" MODIFIED="1283702663030" TEXT="Useful">
+<arrowlink DESTINATION="Freemind_Link_1388025006" ENDARROW="Default" ENDINCLINATION="152;0;" ID="Freemind_Arrow_Link_977531318" STARTARROW="None" STARTINCLINATION="152;0;"/>
+</node>
+<node CREATED="1283696193199" ID="Freemind_Link_649016232" MODIFIED="1283702489608" TEXT="Fast"/>
+<node CREATED="1283704466847" ID="Freemind_Link_257352169" MODIFIED="1283704486768" TEXT="Practical">
+<arrowlink DESTINATION="Freemind_Link_1388025006" ENDARROW="Default" ENDINCLINATION="154;0;" ID="Freemind_Arrow_Link_529331154" STARTARROW="None" STARTINCLINATION="154;0;"/>
+</node>
+<node CREATED="1283702490170" ID="Freemind_Link_1879633110" MODIFIED="1283702689874" TEXT="Attractive">
+<arrowlink DESTINATION="Freemind_Link_1388025006" ENDARROW="Default" ENDINCLINATION="157;0;" ID="Freemind_Arrow_Link_1494181713" STARTARROW="None" STARTINCLINATION="157;0;"/>
+</node>
+</node>
+<node CREATED="1283702522967" ID="Freemind_Link_1388025006" MODIFIED="1283704486768" TEXT="Fun Map"/>
+<node CREATED="1283702949642" ID="Freemind_Link_339679164" MODIFIED="1283702961845" TEXT="Email Intro">
+<node CREATED="1283702969080" ID="Freemind_Link_1672305503" MODIFIED="1283703045800" TEXT="Bookmarks and Help Email">
+<node CREATED="1283703049597" ID="Freemind_Link_1712974284" MODIFIED="1283703080504" TEXT="Places and Events Intro"/>
+<node CREATED="1283703090066" ID="Freemind_Link_34457799" MODIFIED="1283703224178" TEXT="Places and Events Help"/>
+<node CREATED="1283703225413" ID="Freemind_Link_790559746" MODIFIED="1283703238085" TEXT="Public Places Intro"/>
+<node CREATED="1283703242960" ID="Freemind_Link_984471606" MODIFIED="1283703248023" TEXT="Public Places Help"/>
+<node CREATED="1283703251429" ID="Freemind_Link_82503060" MODIFIED="1283703270867" TEXT="Bookmarks for Hotels, Flights, Cars and Cruises"/>
+</node>
+</node>
+</node>
+<node CREATED="1277979649390" FOLDED="true" ID="Freemind_Link_242564620" MODIFIED="1283704394740" POSITION="left" TEXT="BLOG">
+<icon BUILTIN="Mail"/>
+<node CREATED="1277999161031" ID="Freemind_Link_601044398" MODIFIED="1277999163109" TEXT="TAG">
+<node CREATED="1277979653453" ID="Freemind_Link_624513466" MODIFIED="1277999183015" TEXT="FEATURES">
+<node CREATED="1277979666750" ID="Freemind_Link_771089732" MODIFIED="1277979703796" TEXT="LOCATION LIST FILTER"/>
+<node CREATED="1278154956734" ID="Freemind_Link_1931009767" MODIFIED="1278154971765" TEXT="PRETTY PROFILE URL"/>
+</node>
+<node CREATED="1278911520140" ID="Freemind_Link_1844724895" MODIFIED="1278911524187" TEXT="DOWNLOADS">
+<node CREATED="1278911525000" ID="Freemind_Link_184600473" MODIFIED="1278911535953" TEXT="SUMMARIZE WIDGET">
+<node CREATED="1278911544609" ID="Freemind_Link_1244282502" MODIFIED="1278911567750" TEXT="Add visit I LIKE PLACES"/>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1283703158802" FOLDED="true" ID="Freemind_Link_640830008" MODIFIED="1289573580515" POSITION="left" TEXT="Marketing">
+<font NAME="Comic Sans MS" SIZE="14"/>
+<icon BUILTIN="bell"/>
+<node CREATED="1289010658744" ID="Freemind_Link_1999101897" MODIFIED="1289010663868" TEXT="GUIDE">
+<icon BUILTIN="help"/>
+<node CREATED="1289010668102" ID="Freemind_Link_1280564673" MODIFIED="1289010673273" TEXT="Inception">
+<node CREATED="1289010674023" ID="Freemind_Link_1823484800" MODIFIED="1289010707582" TEXT="The act of snapping the subject&apos;s attention"/>
+</node>
+<node CREATED="1289012978175" ID="Freemind_Link_845177365" MODIFIED="1289012981253" TEXT="Deception">
+<node CREATED="1289010740532" ID="Freemind_Link_1436190554" MODIFIED="1289010770872" TEXT="The action by the subject by which he spreads his deception"/>
+</node>
+<node CREATED="1289012981738" ID="Freemind_Link_1091601485" MODIFIED="1294980237554" TEXT="Infusion">
+<node CREATED="1289010710144" ID="Freemind_Link_1437503295" MODIFIED="1289010738875" TEXT="The act of retaining the subject&apos;s attention">
+<node CREATED="1294981194506" ID="Freemind_Link_1817130650" MODIFIED="1294981210629" TEXT="This will only be easy with true value products"/>
+</node>
+</node>
+</node>
+<node CREATED="1283703177927" FOLDED="true" ID="Freemind_Link_1817341781" MODIFIED="1283703202084" TEXT="Checklist">
+<node CREATED="1285778293411" ID="Freemind_Link_1030747214" MODIFIED="1286031836875" TEXT="Are you being dumb? No? BE DUMB!"/>
+<node CREATED="1283703161521" ID="Freemind_Link_63383641" MODIFIED="1283703168865" TEXT="Does it do what it says?"/>
+<node CREATED="1283703169490" ID="Freemind_Link_499084225" MODIFIED="1283703174943" TEXT="Does it say what is does?"/>
+</node>
+<node CREATED="1289010405006" FOLDED="true" ID="Freemind_Link_1694440250" MODIFIED="1289010479138" TEXT="Inception">
+<node CREATED="1289010825100" ID="Freemind_Link_112206367" MODIFIED="1289010840552" TEXT="Inception thu social sites">
+<node CREATED="1289010799494" ID="Freemind_Link_1483011254" MODIFIED="1289010974514" TEXT="OnlyWire submission"/>
+<node CREATED="1289012914173" ID="Freemind_Link_1477421608" MODIFIED="1289012920486" TEXT="Grab Words">
+<node CREATED="1289012935596" ID="Freemind_Link_538999889" MODIFIED="1289012941158" TEXT="OMG!"/>
+</node>
+</node>
+</node>
+<node CREATED="1289010479826" ID="Freemind_Link_452188577" MODIFIED="1289010481653" TEXT="Deception">
+<node CREATED="1286620028609" ID="Freemind_Link_1155133426" MODIFIED="1286620041578" TEXT="Rules make the game interesting">
+<node CREATED="1289012922548" ID="Freemind_Link_941219317" MODIFIED="1294980260398" TEXT="Hyper Words">
+<node CREATED="1289012941580" ID="Freemind_Link_1632147330" MODIFIED="1289012965659" TEXT="I just got robbed"/>
+</node>
+</node>
+</node>
+<node CREATED="1289010597860" ID="Freemind_Link_1689932969" MODIFIED="1294980226928" TEXT="Infusion"/>
+<node CREATED="1289013173634" ID="Freemind_Link_477801137" MODIFIED="1289013175572" TEXT="TODOs">
+<node CREATED="1289013178135" ID="Freemind_Link_917995578" MODIFIED="1289013186635" TEXT="Sign up for all social networks under a different username"/>
+</node>
+<node CREATED="1289567662906" ID="Freemind_Link_492559131" MODIFIED="1289567673250" TEXT="Use Cases">
+<icon BUILTIN="ksmiletris"/>
+<node CREATED="1289567691343" ID="Freemind_Link_1829373110" MODIFIED="1289567725312" TEXT="Each Use Case Is A Marketable One. If Not, Get Rid Of IT!">
+<icon BUILTIN="help"/>
+</node>
+<node CREATED="1289567745921" ID="Freemind_Link_973070027" MODIFIED="1289567758843" TEXT="View Home Page Hotspot Heat Map"/>
+</node>
+</node>
+<node CREATED="1283704339086" FOLDED="true" ID="Freemind_Link_386369610" MODIFIED="1283704377334" POSITION="left" TEXT="QA">
+<icon BUILTIN="pencil"/>
+<node CREATED="1288415653343" FOLDED="true" ID="Freemind_Link_540547344" MODIFIED="1288423654031" TEXT="FREEZER">
+<icon BUILTIN="desktop_new"/>
+<node CREATED="1288421673765" FOLDED="true" ID="Freemind_Link_1507643800" MODIFIED="1288422805046" TEXT="MARKETABILITY FREEZE">
+<icon BUILTIN="full-1"/>
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>Unless you freeze the product as &quot;marketable&quot;, you cannot do ANY freezing.</text>
+</hook>
+<node CREATED="1288494134890" ID="Freemind_Link_1722996598" MODIFIED="1288494424984" TEXT="Create personal locations based on hh">
+<edge WIDTH="thin"/>
+<node CREATED="1288494499906" ID="Freemind_Link_1464782037" MODIFIED="1288494525531" TEXT="Specify other owners to it"/>
+<node CREATED="1288494514015" ID="Freemind_Link_1160306731" MODIFIED="1288494721937" TEXT="Specify other viewers to it">
+<node CREATED="1289574440312" ID="Freemind_Link_1875120660" MODIFIED="1291212224984" TEXT="TODO:SE:Remove oneself from a location">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_cancel"/>
+<node CREATED="1291212186218" ID="Freemind_Link_644459776" MODIFIED="1291212324312" TEXT="This can be done via mute. Spamming possible through repeated add/remove">
+<arrowlink DESTINATION="Freemind_Link_98693104" ENDARROW="Default" ENDINCLINATION="1885;0;" ID="Freemind_Arrow_Link_1348588572" STARTARROW="None" STARTINCLINATION="1885;0;"/>
+<font NAME="Comic Sans MS" SIZE="10"/>
+<icon BUILTIN="clanbomber"/>
+</node>
+</node>
+</node>
+<node CREATED="1288494752125" ID="Freemind_Link_1845246042" MODIFIED="1288494767093" TEXT="Create personal events based on location">
+<node CREATED="1288494769250" ID="Freemind_Link_1358764859" MODIFIED="1288494942437" TEXT="Specify other owners to it"/>
+<node CREATED="1288494943015" ID="Freemind_Link_1997054608" MODIFIED="1288494949640" TEXT="Specify other viewss to it">
+<node CREATED="1289574440312" ID="Freemind_Link_1302493726" MODIFIED="1290558945265" TEXT="TODO:SE:Remove oneself from an event">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_cancel"/>
+<node CREATED="1290558888906" ID="Freemind_Link_1139220300" MODIFIED="1290558930515" TEXT="Taking a viral approach. Anybody with your email can add you. Will introduce &quot;spammer&quot; later.">
+<icon BUILTIN="clanbomber"/>
+</node>
+<node CREATED="1290559770937" ID="Freemind_Link_1162223897" MODIFIED="1290559775453" TEXT="Can mute wall"/>
+</node>
+</node>
+<node CREATED="1288494950187" ID="Freemind_Link_486328416" MODIFIED="1288494954984" TEXT="Specify other invites to it">
+<node CREATED="1289574440312" ID="Freemind_Link_1444033085" MODIFIED="1290558945250" TEXT="TODO:SE:Remove oneself from an event">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_cancel"/>
+<node CREATED="1290558893484" ID="Freemind_Link_438451048" MODIFIED="1290558935953" TEXT="Taking a viral approach. Anybody with your email can add you. Will introduce &quot;spammer&quot; later.">
+<icon BUILTIN="clanbomber"/>
+</node>
+<node CREATED="1290559777906" ID="Freemind_Link_1470697142" MODIFIED="1290559782406" TEXT="Can mute wall"/>
+</node>
+</node>
+<node CREATED="1288494957750" ID="Freemind_Link_796263707" MODIFIED="1289574560281" TEXT="Wall">
+<node CREATED="1288495017437" ID="Freemind_Link_1165287616" MODIFIED="1288495021078" TEXT="Event collaboration"/>
+<node CREATED="1288495022187" ID="Freemind_Link_476419257" MODIFIED="1288495026828" TEXT="Just talk"/>
+<node CREATED="1288505455328" ID="Freemind_Link_100061593" MODIFIED="1288505467984" TEXT="Email Conversation">
+<node CREATED="1288505468890" ID="Freemind_Link_798420819" MODIFIED="1288537488968" TEXT="TODO: close on update">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1290128164062" ID="Freemind_Link_477286948" MODIFIED="1290128184781" TEXT="TODO: remove self from email update">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+</node>
+<node CREATED="1288494976062" ID="Freemind_Link_883921747" MODIFIED="1288505500703" TEXT="See a map of the event location">
+<node CREATED="1288494987984" ID="Freemind_Link_1043652536" MODIFIED="1288495001140" TEXT="Map helps people find the place"/>
+<node CREATED="1288495003125" ID="Freemind_Link_1736837459" MODIFIED="1288495010796" TEXT="Maps gives the place better identty"/>
+<node CREATED="1288505501953" ID="Freemind_Link_1504477530" MODIFIED="1288537492125" TEXT="TODO: private event view map">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1288495037421" ID="Freemind_Link_91009859" MODIFIED="1288495039562" TEXT="Album">
+<node CREATED="1288495040046" ID="Freemind_Link_1216857146" MODIFIED="1289574578890" TEXT="(Upload)Share photos of event">
+<node CREATED="1289574580609" ID="Freemind_Link_103327350" MODIFIED="1290438847750" TEXT="TODO:SE:Remove photos">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+<node CREATED="1289574626062" ID="Freemind_Link_417645007" MODIFIED="1290128225031" TEXT="TODO:photoname_thump.jpg">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+</node>
+<node CREATED="1288495050328" ID="Freemind_Link_368622347" MODIFIED="1289574560296" TEXT="Discuss photos of event">
+<arrowlink DESTINATION="Freemind_Link_796263707" ENDARROW="Default" ENDINCLINATION="225;0;" ID="Freemind_Arrow_Link_317934661" STARTARROW="None" STARTINCLINATION="225;0;"/>
+</node>
+<node CREATED="1288495118515" ID="Freemind_Link_1513470069" MODIFIED="1288495124656" TEXT="Further share photos of event"/>
+<node CREATED="1288495058250" ID="Freemind_Link_1798050489" MODIFIED="1289573802703" TEXT="TODO:Email forwards">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1289101997604" ID="Freemind_Link_635591026" MODIFIED="1289573788625" TEXT="TODO:Email on attatch">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_cancel"/>
+<node CREATED="1289573762328" ID="Freemind_Link_1308896135" MODIFIED="1289573792015" TEXT="Uploading Several Photos Will Spam Members">
+<icon BUILTIN="clanbomber"/>
+</node>
+</node>
+<node CREATED="1290128194078" ID="Freemind_Link_709032160" MODIFIED="1290128201343" TEXT="TODO: remove self from email update">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1288506345625" ID="Freemind_Link_1982919547" MODIFIED="1290439515843" TEXT="TODO: Event Name as Header">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1288506383718" ID="Freemind_Link_675679815" MODIFIED="1289574391296" TEXT="TODO: Location Name as Header">
+<arrowlink DESTINATION="Freemind_Link_675679815" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Freemind_Arrow_Link_1478457679" STARTARROW="None" STARTINCLINATION="0;0;"/>
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1288507314546" ID="Freemind_Link_1436401670" MODIFIED="1288507322015" TEXT="Sidebar connections">
+<node CREATED="1288507322703" ID="Freemind_Link_255638645" MODIFIED="1288537483875" TEXT="TODO: implement">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node CREATED="1288493873906" ID="Freemind_Link_1602200353" MODIFIED="1288493992343" TEXT="Search for a list of hotspots">
+<node CREATED="1288494009296" ID="Freemind_Link_487003763" MODIFIED="1288494025578" TEXT="A search box for easy map navigation"/>
+<node CREATED="1288494026281" ID="Freemind_Link_1809855193" MODIFIED="1288494051421" TEXT="An event based hotspot heat map">
+<node CREATED="1288494241734" ID="Freemind_Link_860375365" MODIFIED="1288537475218" TEXT="TODO zoom break on 4&lt;5">
+<icon BUILTIN="flag"/>
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1288415702156" ID="Freemind_Link_57901070" MODIFIED="1288422854234" TEXT="FEATURE FREEZE">
+<icon BUILTIN="full-2"/>
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>After a marketing freeze, it becomes clear what features are to be added, removed now, and then freeze features.</text>
+</hook>
+</node>
+<node CREATED="1288421879843" ID="Freemind_Link_891692060" MODIFIED="1288422884843" TEXT="GUI FREEZE">
+<icon BUILTIN="full-3"/>
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>GUI freeze is where you know for sure the look and feel is ok. This can be done only after the features are frozen.</text>
+</hook>
+<node CREATED="1288421982656" ID="Freemind_Link_694091115" MODIFIED="1288422274187" TEXT="LOOK FREEZE">
+<icon BUILTIN="full-1"/>
+</node>
+<node CREATED="1288421996140" ID="Freemind_Link_1210620995" MODIFIED="1288422277515" TEXT="FEEL(USABILITY) FREEZE">
+<icon BUILTIN="full-2"/>
+</node>
+</node>
+<node CREATED="1288415723171" ID="Freemind_Link_264841006" MODIFIED="1288422973234" TEXT="GOF FREEZE">
+<icon BUILTIN="full-4"/>
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>GOF is to do with all the design pattern freezes you can do to the code. This is the core place of the freeze. &#xa;If you got here freezing the ones before this freeze, you&apos;ve done most of of your freeze.</text>
+</hook>
+<node CREATED="1289102022661" ID="Freemind_Link_1346535151" MODIFIED="1289102046485" TEXT="TODO:Mail queueing or trying mechanism">
+<icon BUILTIN="flag"/>
+</node>
+</node>
+<node CREATED="1288421834390" ID="Freemind_Link_1220495101" MODIFIED="1288422171531" TEXT="OPTIMIZATION/LOAD TEST FREEZE">
+<icon BUILTIN="full-5"/>
+</node>
+<node CREATED="1288421842125" ID="Freemind_Link_761289785" MODIFIED="1288422192375" TEXT="TEST/BUG FIX FREEZE">
+<icon BUILTIN="full-6"/>
+</node>
+</node>
+</node>
+<node CREATED="1291212117250" FOLDED="true" ID="Freemind_Link_1414706278" MODIFIED="1291815705453" POSITION="left" TEXT="Staging">
+<font NAME="Comic Sans MS" SIZE="14"/>
+<icon BUILTIN="kaddressbook"/>
+<node CREATED="1291212602703" ID="Freemind_Link_1737407813" MODIFIED="1291214185046" TEXT="Set tomcat compression">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>    &lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;&#xa;               connectionTimeout=&quot;20000&quot;&#xa;               redirectPort=&quot;8443&quot;&#xa;               compression=&quot;on&quot;&#xa;&#x9;&#x9;&#x9;   compressionMinSize=&quot;1024&quot;&#xa;               compressableMimeType=&quot;text/html,text/javascript,text/css,text/xhtml&quot;/&gt;</text>
+</hook>
+</node>
+<node CREATED="1291212604468" ID="Freemind_Link_59226303" MODIFIED="1291214185046" TEXT="Set tomcat character encoding">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text>    &lt;Connector port=&quot;8080&quot; maxHttpHeaderSize=&quot;8192&quot;&#xa;     maxThreads=&quot;150&quot; minSpareThreads=&quot;25&quot; maxSpareThreads=&quot;75&quot;&#xa;     enableLookups=&quot;false&quot; redirectPort=&quot;8443&quot; acceptCount=&quot;100&quot;&#xa;     connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot;&#xa;     compression=&quot;on&quot;&#xa;     compressionMinSize=&quot;128&quot;&#xa;     noCompressionUserAgents=&quot;gozilla, traviata&quot; &#xa;     compressableMimeType=&quot;text/html,text/xml,text/plain,text/css,text/ javascript,application/x-javascript,application/javascript&quot;&#xa;     URIEncoding=&quot;UTF-8&quot;&#xa;    /&gt;</text>
+</hook>
+</node>
+<node CREATED="1291212637531" ID="Freemind_Link_469647367" MODIFIED="1291214185046" TEXT="Compare local(non cdn) and Header Expires Filter in WEB.XML">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291212646750" ID="Freemind_Link_1477242506" MODIFIED="1291214185046" TEXT=" Add cloudfiles.properties and log4j.properties to tomcat lib">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291212671046" ID="Freemind_Link_490713279" MODIFIED="1291214185031" TEXT="check whether globalconfig should be put in tomcat lib and diff it with new one">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291212681453" ID="Freemind_Link_1323247436" MODIFIED="1291214185031" TEXT="disable disqus developer mode">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291212713812" ID="Freemind_Link_215516192" MODIFIED="1291216237109" TEXT="check if access is prevented to openejb, and roles defined">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291213930125" ID="Freemind_Link_1485504866" MODIFIED="1291216237125" TEXT="Upload latest sources">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291214174406" ID="Freemind_Link_932887219" MODIFIED="1291216237125" TEXT="Backup existing database">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291214117578" ID="Freemind_Link_804394739" MODIFIED="1291216237125" TEXT="Upload war">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291214130437" ID="Freemind_Link_1454121737" MODIFIED="1291216237125" TEXT="Compare and copy config.properties as GlobalConfig.properties">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291216191734" ID="Freemind_Link_1627016185" MODIFIED="1291216237125" TEXT="Backup Users!">
+<icon BUILTIN="flag"/>
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291216110437" ID="Freemind_Link_1160336191" MODIFIED="1291216237125" TEXT="Remove existing database">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291216112625" ID="Freemind_Link_426396135" MODIFIED="1291216237125" TEXT="Startup new app so that the tables are generated">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291216120531" ID="Freemind_Link_1808227689" MODIFIED="1291216237125" TEXT="Stop new app">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+<node CREATED="1291213950796" ID="Freemind_Link_1942704877" MODIFIED="1291216237125" TEXT="importing geo data to derby. Tab character, should be copied off something like notepad and pasted ">
+<hook NAME="accessories/plugins/NodeNote.properties">
+<text/>
+</hook>
+</node>
+</node>
+<node CREATED="1275667013786" FOLDED="true" ID="Freemind_Link_374011926" MODIFIED="1297919306265" POSITION="left" TEXT="ITPS">
+<arrowlink DESTINATION="Freemind_Link_374011926" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Freemind_Arrow_Link_447360971" STARTARROW="None" STARTINCLINATION="0;0;"/>
+<font NAME="Comic Sans MS" SIZE="14"/>
+<icon BUILTIN="flag"/>
+<node CREATED="1295620808796" ID="Freemind_Link_753522277" MODIFIED="1295620814062" TEXT="no user base">
+<node CREATED="1295620858468" ID="Freemind_Link_1608653334" MODIFIED="1295620866984" TEXT="some just use viral marketing and succeed"/>
+</node>
+<node CREATED="1295620814750" ID="Freemind_Link_1513662021" MODIFIED="1295620822656" TEXT="no profit">
+<node CREATED="1295620877515" ID="Freemind_Link_505481977" MODIFIED="1295620883765" TEXT="location based advertising is a solution"/>
+<node CREATED="1295620884265" ID="Freemind_Link_388804536" MODIFIED="1295620919437" TEXT="paid event publisher accounts is a solutin"/>
+</node>
+<node CREATED="1295620824234" ID="Freemind_Link_1315593715" MODIFIED="1295620836140" TEXT="no true value"/>
+</node>
+<node CREATED="1304083298723" ID="Freemind_Link_952164884" MODIFIED="1304083309436" POSITION="right" TEXT="Components">
+<node CREATED="1304083310654" ID="Freemind_Link_598402749" MODIFIED="1304084101057" TEXT="DT">
+<node CREATED="1304083359191" ID="Freemind_Link_1151798084" MODIFIED="1304083365735" TEXT="Top 4 Links">
+<node CREATED="1304083472617" ID="Freemind_Link_1180104827" MODIFIED="1304083474069" TEXT="P"/>
+<node CREATED="1304083475459" ID="Freemind_Link_1019394070" MODIFIED="1304083476677" TEXT="L"/>
+</node>
+<node CREATED="1304083366281" ID="Freemind_Link_1209574675" MODIFIED="1304083375839" TEXT="Map in General">
+<node CREATED="1304083431669" ID="Freemind_Link_1712835916" MODIFIED="1304083437838" TEXT="P"/>
+</node>
+<node CREATED="1304083376370" FOLDED="true" ID="Freemind_Link_741267441" MODIFIED="1304084878051" TEXT="Map">
+<node CREATED="1304083490311" ID="Freemind_Link_1969345566" MODIFIED="1304083936501" TEXT="Center Marker Icon">
+<node CREATED="1304083497822" ID="Freemind_Link_800716369" MODIFIED="1304083498541" TEXT="P">
+<node CREATED="1304083765028" ID="Freemind_Link_1051068064" MODIFIED="1304083766527" TEXT="Header"/>
+<node CREATED="1304083767230" ID="Freemind_Link_139021802" MODIFIED="1304083768729" TEXT="Color"/>
+</node>
+<node CREATED="1304083505397" ID="Freemind_Link_1529441527" MODIFIED="1304083506615" TEXT="L">
+<node CREATED="1304083775772" ID="Freemind_Link_944204951" MODIFIED="1304083778255" TEXT="Click"/>
+<node CREATED="1304083779114" ID="Freemind_Link_1815634952" MODIFIED="1304083789936" TEXT="User Points"/>
+<node CREATED="1304083790546" ID="Freemind_Link_370979953" MODIFIED="1304083798495" TEXT="User Map Click Centralize"/>
+</node>
+</node>
+<node CREATED="1304083938359" ID="Freemind_Link_159800501" MODIFIED="1304083948104" TEXT="Center Marker Info Window">
+<node CREATED="1304083951525" ID="Freemind_Link_723846515" MODIFIED="1304083952618" TEXT="P">
+<node CREATED="1304083953383" ID="Freemind_Link_760861192" MODIFIED="1304083957490" TEXT="Font"/>
+<node CREATED="1304083958115" ID="Freemind_Link_1399708180" MODIFIED="1304083959770" TEXT="Color"/>
+<node CREATED="1304083960598" ID="Freemind_Link_1032222820" MODIFIED="1304083966954" TEXT="Background Color"/>
+<node CREATED="1304083967360" ID="Freemind_Link_1012052777" MODIFIED="1304083971748" TEXT="Width and Height"/>
+</node>
+<node CREATED="1304083973638" ID="Freemind_Link_1247417906" MODIFIED="1304083974356" TEXT="L">
+<node CREATED="1304083980431" ID="Freemind_Link_360738215" MODIFIED="1304083986194" TEXT="Vicinity Info"/>
+<node CREATED="1304083986694" ID="Freemind_Link_1221592432" MODIFIED="1304083991504" TEXT="User Operation Instructions">
+<node CREATED="1304083992503" ID="Freemind_Link_1252990747" MODIFIED="1304083997188" TEXT="Zoom more"/>
+<node CREATED="1304083997797" ID="Freemind_Link_734047310" MODIFIED="1304084002092" TEXT="Why zoom"/>
+<node CREATED="1304084002732" ID="Freemind_Link_328459939" MODIFIED="1304084007246" TEXT="What to do after zoom"/>
+</node>
+</node>
+</node>
+<node CREATED="1304083512752" ID="Freemind_Link_1515241960" MODIFIED="1304083516032" TEXT="Zoom">
+<node CREATED="1304083516406" ID="Freemind_Link_1101214298" MODIFIED="1304083517109" TEXT="L"/>
+</node>
+<node CREATED="1304083521669" ID="Freemind_Link_1353179186" MODIFIED="1304083523731" TEXT="Drag">
+<node CREATED="1304083525230" ID="Freemind_Link_1017804352" MODIFIED="1304083525933" TEXT="L"/>
+</node>
+<node CREATED="1304083528025" ID="Freemind_Link_1107618248" MODIFIED="1304083533335" TEXT="Hot Spots">
+<node CREATED="1304083534850" ID="Freemind_Link_702858689" MODIFIED="1304083535912" TEXT="P">
+<node CREATED="1304083724283" ID="Freemind_Link_1740661453" MODIFIED="1304083726579" TEXT="Icon">
+<node CREATED="1304083727094" ID="Freemind_Link_824354975" MODIFIED="1304083730093" TEXT="Header"/>
+<node CREATED="1304083735433" ID="Freemind_Link_86413952" MODIFIED="1304083737448" TEXT="Color"/>
+</node>
+</node>
+<node CREATED="1304083536443" ID="Freemind_Link_838383150" MODIFIED="1304083537099" TEXT="L">
+<node CREATED="1304083755204" ID="Freemind_Link_799292937" MODIFIED="1304083756516" TEXT="Click"/>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1304083320695" ID="Freemind_Link_1955403394" MODIFIED="1304083337046" TEXT="Organize">
+<node CREATED="1304084074664" ID="Freemind_Link_246825445" MODIFIED="1304084077803" TEXT="Default Mode">
+<node CREATED="1304083573314" ID="Freemind_Link_587406619" MODIFIED="1304083597677" TEXT="Place">
+<node CREATED="1304083601487" ID="Freemind_Link_1039733229" MODIFIED="1304084854130" TEXT="Create Place">
+<node CREATED="1304083608125" ID="Freemind_Link_1868072154" MODIFIED="1304083609171" TEXT="P">
+<node CREATED="1304083670124" ID="Freemind_Link_1026261457" MODIFIED="1304083674965" TEXT="Elements"/>
+<node CREATED="1304083678229" ID="Freemind_Link_15354159" MODIFIED="1304083682102" TEXT="Error Messages"/>
+<node CREATED="1304083682617" ID="Freemind_Link_151396299" MODIFIED="1304083687911" TEXT="Success Messages"/>
+</node>
+<node CREATED="1304083609702" ID="Freemind_Link_654854990" MODIFIED="1304083610467" TEXT="L">
+<node CREATED="1304083618525" ID="Freemind_Link_1082022605" MODIFIED="1304083624538" TEXT="Fill Form and Submit"/>
+</node>
+<node CREATED="1304084140427" ID="Freemind_Link_1887047133" MODIFIED="1304084874939" TEXT="Map">
+<arrowlink COLOR="#b0b0b0" DESTINATION="Freemind_Link_741267441" ENDARROW="Default" ENDINCLINATION="430;0;" ID="Freemind_Arrow_Link_293447140" STARTARROW="None" STARTINCLINATION="430;0;"/>
+</node>
+</node>
+<node CREATED="1304083603752" ID="Freemind_Link_1774977057" MODIFIED="1304083833539" TEXT="View Place">
+<node CREATED="1304083606141" ID="Freemind_Link_874950803" MODIFIED="1304083606860" TEXT="P">
+<node CREATED="1304083625740" ID="Freemind_Link_1535564265" MODIFIED="1304083696610" TEXT="Elements"/>
+</node>
+<node CREATED="1304083616339" ID="Freemind_Link_1655744802" MODIFIED="1304083617135" TEXT="L">
+<node CREATED="1304083635204" ID="Freemind_Link_822937646" MODIFIED="1304083638874" TEXT="Click Map"/>
+<node CREATED="1304083640420" ID="Freemind_Link_1428060396" MODIFIED="1304083645449" TEXT="Click Link"/>
+</node>
+</node>
+</node>
+<node CREATED="1304083580576" ID="Freemind_Link_1056550786" MODIFIED="1304083601191" TEXT="Event">
+<node CREATED="1304083834663" ID="Freemind_Link_1420785226" MODIFIED="1304083842222" TEXT="View Event">
+<node CREATED="1304083883763" ID="Freemind_Link_468934274" MODIFIED="1304083884715" TEXT="P">
+<node CREATED="1304083885309" ID="Freemind_Link_406606286" MODIFIED="1304083888604" TEXT="Link Element"/>
+</node>
+<node CREATED="1304083892274" ID="Freemind_Link_1849621949" MODIFIED="1304083893258" TEXT="L">
+<node CREATED="1304083893680" ID="Freemind_Link_1908430132" MODIFIED="1304083896975" TEXT="Click Link"/>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1304084083691" ID="Freemind_Link_971450124" MODIFIED="1304084154654" TEXT="From DT Map Mode">
+<arrowlink DESTINATION="Freemind_Link_1039733229" ENDARROW="Default" ENDINCLINATION="227;0;" ID="Freemind_Arrow_Link_1891470158" STARTARROW="None" STARTINCLINATION="227;0;"/>
+</node>
+<node CREATED="1304084217325" ID="Freemind_Link_1061908620" MODIFIED="1304084854130" TEXT="Create Place Mode">
+<node CREATED="1304083601487" ID="Freemind_Link_667405027" MODIFIED="1304084854130" TEXT="Create Place">
+<node CREATED="1304083608125" ID="Freemind_Link_276061423" MODIFIED="1304083609171" TEXT="P">
+<node CREATED="1304083670124" ID="Freemind_Link_1264850345" MODIFIED="1304083674965" TEXT="Elements"/>
+<node CREATED="1304083678229" ID="Freemind_Link_997691980" MODIFIED="1304083682102" TEXT="Error Messages"/>
+<node CREATED="1304083682617" ID="Freemind_Link_178910513" MODIFIED="1304083687911" TEXT="Success Messages"/>
+</node>
+<node CREATED="1304083609702" ID="Freemind_Link_1382385126" MODIFIED="1304083610467" TEXT="L">
+<node CREATED="1304083618525" ID="Freemind_Link_1293965732" MODIFIED="1304083624538" TEXT="Fill Form and Submit"/>
+</node>
+<node CREATED="1304084140427" ID="Freemind_Link_561449364" MODIFIED="1304084184561" TEXT="Map">
+<arrowlink DESTINATION="Freemind_Link_741267441" ENDARROW="Default" ENDINCLINATION="430;0;" ID="Freemind_Arrow_Link_54415535" STARTARROW="None" STARTINCLINATION="430;0;"/>
+</node>
+</node>
+</node>
+<node CREATED="1304084227336" ID="Freemind_Link_1813691691" MODIFIED="1304084230881" TEXT="View Place Mode">
+<node CREATED="1304084237830" ID="Freemind_Link_688247677" MODIFIED="1304084243437" TEXT="Create Place"/>
+</node>
+</node>
+<node CREATED="1304083324709" ID="Freemind_Link_168672157" MODIFIED="1304083339920" TEXT="Talk"/>
+<node CREATED="1304083346229" ID="Freemind_Link_1113471932" MODIFIED="1304083349025" TEXT="Friends"/>
+<node CREATED="1304083355459" ID="Freemind_Link_3014702" MODIFIED="1304083357270" TEXT="Manager"/>
+<node CREATED="1304084900330" ID="Freemind_Link_498567004" MODIFIED="1304084902034" TEXT="Snaps"/>
+<node CREATED="1304083453533" ID="Freemind_Link_1661297516" MODIFIED="1304083469384" TEXT="help">
+<icon BUILTIN="help"/>
+<node CREATED="1304083440134" ID="Freemind_Link_1072662791" MODIFIED="1304083445428" TEXT="P=Physical"/>
+<node CREATED="1304083446005" ID="Freemind_Link_180541999" MODIFIED="1304083451643" TEXT="L=Logical"/>
 </node>
 </node>
 </node>

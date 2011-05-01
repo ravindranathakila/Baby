@@ -171,16 +171,16 @@
     <div style="display:none;">
         <div id="impromptuLoginForm">
                 <div class="use100 center" style="background-color:#ffffff;">
-                    <span style="font-size:16px;" class="intensity">Welcome to Down&darr;Town I Like Places!</span><br/>
+                    <span style="font-size:16px;" class="intensity">Welcome to Down&darr;Town <img src="http://www.ilikeplaces.com/favicon.png" alt="I"/> Like Places!</span><br/>
                     <div class="use100" style="height:10px;">&nbsp;</div>
                     <span style="font-size:11px;" class="layer_4">
                         Down&darr;Town helps you to<br/>
-                        plan events/meet-ups/outings and become social<br/>
+                        plan events/trips/outings and get social<br/>
                     </span>
                     <div class="use100" style="height:5px;">&nbsp;</div>
                     <span style="font-size:9px;" class="layer_1">
                         Zoom to street level and mark your event's place<br/>
-                        That way your we can give your friends road directions!<br/>
+                        That way we can give your friends road directions!<br/>
                     </span>
                     <span style="font-size:9px;" class="layer_1">
                         e.g. Home, Theatre, Park, Club, Ground<br/>
@@ -303,14 +303,31 @@
             }
         </script>
         <script type="text/javascript">
+
         $(document).ready(function(){
             var txt = $('#impromptuLoginForm').html();
             $('#impromptuLoginForm').remove();
             $.prompt(txt);
 
-            focusLat=36.11464603272065;
-            focusLng=-115.17281600000001;
-            zoom=12;
+            focusLat=36.11464603272065;//L.A.
+            focusLng=-115.17281600000001;//L.A.
+            zoom=12;//Setting default zoom in case ip based settings fail
+
+            try{//Attempting to geo locate the user based on ip
+                // Build the URL to query
+                var url = 'http://www.geoplugin.net/json.gp?jsoncallback=?';
+                // Utilize the JSONP API
+                $.getJSON(url, function(data){
+                        focusLng = data.geoplugin_longitude;
+                        focusLat = data.geoplugin_latitude;
+                        zoom = data.geoplugin_city != null ? 11 : (data.geoplugin_region != null ? 9 : (data.geoplugin_countryName ? 6 : 2 ) );
+                        document.getElementById('seachbox').value = (data.geoplugin_city != null ? data.geoplugin_city + ',': '')
+                                                                    + (data.geoplugin_region != null ? data.geoplugin_region + ',' : '')
+                                                                    + (data.geoplugin_countryName != null ? data.geoplugin_countryName : '');
+                });
+            }catch(err){
+                alert(err);
+            }
 
             initialize_gmap_scripts();
 
@@ -331,8 +348,6 @@
                 }
             });
         });
-        </script>
-
-
+    </script>
     </body>
 </html>

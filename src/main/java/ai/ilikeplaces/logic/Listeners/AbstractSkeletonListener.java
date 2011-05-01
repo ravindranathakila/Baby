@@ -178,6 +178,18 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
 
                 }
             }
+            signinupActionNotice:
+            {
+                try {
+                    if (getUsername() == null) {
+                        $(Controller.Page.SkeletonCPageNotice).setTextContent(
+                                "Hmmmm... You have not logged in from above. If you don't have an account, enter your email and a password and hit sign up instead of sign in.");
+                    }
+                } catch (final Throwable t) {
+                    EXCEPTION.error("{}", t);
+
+                }
+            }
         }
     }
 
