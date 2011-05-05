@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 public class Trim {
 
     private Trim() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", Trim.class, this.hashCode());
     }
 
     final static Logger logger = LoggerFactory.getLogger(Trim.class);
