@@ -30,7 +30,6 @@ public class UHumansIdentity extends AbstractSLBCallbacks implements UHumansIden
     public static final DBDishonourCheckedException DB_DISHONOUR_CHECKED_EXCEPTION = new DBDishonourCheckedException("Updating to same value is absurd");
 
     public UHumansIdentity() {
-        INFO.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", UHumansIdentity.class, this.hashCode());
     }
 
 

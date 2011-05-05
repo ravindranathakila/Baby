@@ -36,7 +36,6 @@ public class RHumansIdentity extends AbstractSLBCallbacks implements RHumansIden
     private CrudServiceLocal<Url> urlCrudServiceLocal;
 
     public RHumansIdentity() {
-        logger.debug(RBGet.logMsgs.getString("common.Constructor.Init"), RHumansIdentity.class, this.hashCode());
     }
 
 

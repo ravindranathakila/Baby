@@ -25,7 +25,6 @@ public class ULocation extends AbstractSLBCallbacks implements ULocationLocal {
     private CrudServiceLocal<Location> crudServiceLocation_;
 
     public ULocation() {
-        Loggers.DEBUG.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", ULocation.class, this.hashCode());
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)

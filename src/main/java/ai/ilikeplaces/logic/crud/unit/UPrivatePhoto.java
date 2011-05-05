@@ -26,7 +26,6 @@ public class UPrivatePhoto implements UPrivatePhotoLocal {
     private CrudServiceLocal<Album> albumCrudServiceLocal_;
 
     public UPrivatePhoto() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", UPrivatePhoto.class, this.hashCode());
     }
 
     @Override

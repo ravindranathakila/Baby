@@ -32,7 +32,6 @@ public class DPublicPhoto implements DPublicPhotoLocal {
     private CrudServiceLocal<PublicPhoto> CrudServicePublicPhoto_;
 
     public DPublicPhoto() {
-        logger.debug(RBGet.logMsgs.getString("common.Constructor.Init"), DPublicPhoto.class, this.hashCode());
     }
 
     @Override

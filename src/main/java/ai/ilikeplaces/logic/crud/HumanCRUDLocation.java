@@ -31,7 +31,6 @@ public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUD
     private ULocationLocal uLocationLocal_;
 
     public HumanCRUDLocation() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", HumanCRUDLocation.class, this.hashCode());
     }
 
     @Override

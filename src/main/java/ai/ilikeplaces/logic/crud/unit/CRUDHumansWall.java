@@ -25,7 +25,6 @@ public class CRUDHumansWall extends AbstractSLBCallbacks implements CRUDHumansWa
     private CrudServiceLocal<HumansWall> humansWallCrudServiceLocal_;
 
     public CRUDHumansWall() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", CRUDHumansWall.class, this.hashCode());
     }
 
     final static Logger logger = LoggerFactory.getLogger(CRUDHumansWall.class);

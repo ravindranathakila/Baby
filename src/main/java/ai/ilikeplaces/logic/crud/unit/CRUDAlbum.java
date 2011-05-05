@@ -43,7 +43,6 @@ public class CRUDAlbum extends AbstractSLBCallbacks implements CRUDAlbumLocal {
 
 
     public CRUDAlbum() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", CRUDAlbum.class, this.hashCode());
     }
 
 

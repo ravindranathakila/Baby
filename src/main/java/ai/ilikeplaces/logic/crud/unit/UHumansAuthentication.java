@@ -34,7 +34,6 @@ public class UHumansAuthentication extends AbstractSLBCallbacks implements UHuma
     private SingletonHashingFace singletonHashingFace_;
 
     public UHumansAuthentication() {
-        logger.debug(RBGet.logMsgs.getString("common.Constructor.Init"), UHumansAuthentication.class, this.hashCode());
     }
 
 

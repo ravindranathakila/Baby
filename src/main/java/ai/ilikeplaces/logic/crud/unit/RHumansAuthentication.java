@@ -31,7 +31,6 @@ public class RHumansAuthentication extends AbstractSLBCallbacks implements RHuma
     private CrudServiceLocal<HumansAuthentication> humansAuthenticationCrudServiceLocal_;
 
     public RHumansAuthentication() {
-        logger.debug(RBGet.logMsgs.getString("common.Constructor.Init"), RHumansAuthentication.class, this.hashCode());
     }
 
 

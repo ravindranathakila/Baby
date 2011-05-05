@@ -31,7 +31,6 @@ public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
     private CrudServiceLocal<Location> crudServiceLocation_;
 
     public RLocation() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", RLocation.class, this.hashCode());
     }
 
     /**

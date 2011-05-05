@@ -24,7 +24,6 @@ public class DHuman extends AbstractSLBCallbacks implements DHumanLocal {
     private CrudServiceLocal<Human> crudServiceLocal_;
 
     public DHuman() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", DHuman.class, this.hashCode());
     }
 
     final static Logger logger = LoggerFactory.getLogger(DHuman.class);

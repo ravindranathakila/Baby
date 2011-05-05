@@ -39,7 +39,6 @@ public class UHumansNetPeople extends AbstractSLBCallbacks implements UHumansNet
 // --------------------------- CONSTRUCTORS ---------------------------
 
     public UHumansNetPeople() {
-        logger.debug(RBGet.logMsgs.getString("common.Constructor.Init"), UHumansNetPeople.class, this.hashCode());
     }
 
 // ------------------------ INTERFACE METHODS ------------------------

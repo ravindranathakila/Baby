@@ -27,7 +27,6 @@ public class RHumansNetPeople extends AbstractSLBCallbacks implements RHumansNet
     private CrudServiceLocal<HumansNetPeople> crudServiceLocal_;
 
     public RHumansNetPeople() {
-        logger.debug(RBGet.logMsgs.getString("common.Constructor.Init"), RHumansNetPeople.class, this.hashCode());
     }
 
     @Override
