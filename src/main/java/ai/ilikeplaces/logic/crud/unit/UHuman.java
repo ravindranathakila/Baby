@@ -24,7 +24,6 @@ public class UHuman extends AbstractSLBCallbacks implements UHumanLocal {
     private CrudServiceLocal<Human> crudServiceLocal_;
 
     public UHuman() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", UHuman.class, this.hashCode());
     }
 
     final static Logger logger = LoggerFactory.getLogger(UHuman.class);

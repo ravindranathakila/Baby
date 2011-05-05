@@ -26,7 +26,6 @@ public class CPrivatePhoto implements CPrivatePhotoLocal {
     private CrudServiceLocal<HumansPrivatePhoto> humansPrivatePhotoCrudServiceLocal_;
 
     public CPrivatePhoto() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", CPrivatePhoto.class, this.hashCode());
     }
 
     @Override

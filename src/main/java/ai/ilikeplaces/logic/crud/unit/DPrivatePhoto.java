@@ -23,7 +23,6 @@ public class DPrivatePhoto implements DPrivatePhotoLocal {
     private CrudServiceLocal<PrivatePhoto> privatePhotoCrudServiceLocal_;
 
     public DPrivatePhoto() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", DPrivatePhoto.class, this.hashCode());
     }
 
     @Override

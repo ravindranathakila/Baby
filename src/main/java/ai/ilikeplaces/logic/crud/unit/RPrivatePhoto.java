@@ -36,7 +36,6 @@ public class RPrivatePhoto implements RPrivatePhotoLocal {
     private CrudServiceLocal<HumansPrivatePhoto> humansPrivatePhotoCrudServiceLocal_;
 
     public RPrivatePhoto() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", RPrivatePhoto.class, this.hashCode());
     }
 
     @Override

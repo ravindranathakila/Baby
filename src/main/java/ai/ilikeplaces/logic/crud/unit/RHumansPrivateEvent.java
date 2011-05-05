@@ -30,7 +30,6 @@ public class RHumansPrivateEvent extends AbstractSLBCallbacks implements RHumans
     private CrudServiceLocal<HumansPrivateEvent> humansPrivateEventCrudServiceLocal_;
 
     public RHumansPrivateEvent() {
-        logger.debug(RBGet.logMsgs.getString("common.Constructor.Init"), RHumansPrivateEvent.class, this.hashCode());
     }
 
 

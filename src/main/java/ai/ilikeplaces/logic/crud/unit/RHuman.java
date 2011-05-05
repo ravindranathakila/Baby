@@ -29,7 +29,6 @@ public class RHuman extends AbstractSLBCallbacks implements RHumanLocal {
     private CrudServiceLocal<Human> crudServiceLocal_;
 
     public RHuman() {
-        logger.debug(RBGet.logMsgs.getString("common.Constructor.Init"), RHuman.class, this.hashCode());
     }
 
     @Override

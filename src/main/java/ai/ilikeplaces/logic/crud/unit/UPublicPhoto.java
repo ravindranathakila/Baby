@@ -30,7 +30,6 @@ public class UPublicPhoto implements UPublicPhotoLocal {
     private CrudServiceLocal<PublicPhoto> crudServicePublicPhoto_;
 
     public UPublicPhoto() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", UPublicPhoto.class, this.hashCode());
     }
 
     @Override

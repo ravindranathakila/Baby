@@ -40,7 +40,6 @@ final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements 
     private RPublicPhotoLocal rPublicPhotoLocal_;
 
     public HumanCRUDPublicPhoto() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", HumanCRUDPublicPhoto.class, this.hashCode());
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)

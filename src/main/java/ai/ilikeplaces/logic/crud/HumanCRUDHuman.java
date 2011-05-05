@@ -108,7 +108,6 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
 
 
     public HumanCRUDHuman() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", HumanCRUDHuman.class, this.hashCode());
     }
 
     @Override

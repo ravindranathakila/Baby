@@ -33,7 +33,6 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
     private CrudServiceLocal<Wall> crudServiceLocal_;
 
     public CRUDWall() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", CRUDWall.class, this.hashCode());
     }
 
     final static Logger logger = LoggerFactory.getLogger(CRUDWall.class);

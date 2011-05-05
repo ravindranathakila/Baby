@@ -31,7 +31,6 @@ public class RHumansPrivateLocation extends AbstractSLBCallbacks implements RHum
     private CrudServiceLocal<HumansPrivateLocation> humansPrivateLocationCrudServiceLocal_;
 
     public RHumansPrivateLocation() {
-        logger.debug(RBGet.logMsgs.getString("common.Constructor.Init"), RHumansPrivateLocation.class, this.hashCode());
     }
 
 

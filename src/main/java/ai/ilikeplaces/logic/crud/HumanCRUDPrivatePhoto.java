@@ -60,7 +60,6 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
     private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("privatePhotoWall");
 
     public HumanCRUDPrivatePhoto() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", HumanCRUDPrivatePhoto.class, this.hashCode());
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)

@@ -55,7 +55,6 @@ final public class DB implements DBLocal {
     }
 
     public DB() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", DB.class, this.hashCode());
     }
 
     @Override

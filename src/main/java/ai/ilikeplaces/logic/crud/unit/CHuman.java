@@ -24,7 +24,6 @@ public class CHuman extends AbstractSLBCallbacks implements CHumanLocal {
     private CrudServiceLocal<Human> crudServiceLocal_;
 
     public CHuman() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", CHuman.class, this.hashCode());
     }
 
     final static Logger logger = LoggerFactory.getLogger(CHuman.class);

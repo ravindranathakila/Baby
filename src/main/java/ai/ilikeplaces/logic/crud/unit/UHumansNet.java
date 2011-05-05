@@ -26,7 +26,6 @@ public class UHumansNet extends AbstractSLBCallbacks implements UHumansNetLocal 
     private CrudServiceLocal<HumansNet> humansNetCrudServiceLocal_;
 
     public UHumansNet() {
-        logger.debug("HELLO, I INSTANTIATED {} OF WHICH HASHCODE IS {}.", UHumansNet.class, this.hashCode());
     }
 
     final static Logger logger = LoggerFactory.getLogger(UHumansNet.class);
