@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.modules;
 
+import ai.ilikeplaces.disqus.conf.DisqusAPIClientModule;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.logic.modules.conf.JNDILookupModule;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
@@ -9,6 +10,7 @@ import ai.ilikeplaces.util.ParamValidator;
 import ai.ilikeplaces.util.jndi.impl.JNDILookupFactory;
 import ai.ilikeplaces.ygd.conf.YahooGeoPlanetClientModule;
 import ai.ilikeplaces.ygp.impl.ClientFactory;
+import com.disqus.api.impl.impl.DisqusAPIClient;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -39,12 +41,17 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
      */
     final static JNDILookupFactory jndiLookupFactory = jndiLookupFactoryInjector.getInstance(JNDILookupFactory.class);
 
-    private final ClientFactory yahooGeoPlanetFactory;
+    private final ai.ilikeplaces.ygp.impl.ClientFactory yahooGeoPlanetFactory;
+    private final com.disqus.api.impl.ClientFactory disqusApiFactory;
 
     public Modules() {
         {
             final Injector yahooGeoPlanetFactoryInjector = Guice.createInjector(new YahooGeoPlanetClientModule());
-            yahooGeoPlanetFactory = yahooGeoPlanetFactoryInjector.getInstance(ClientFactory.class);
+            yahooGeoPlanetFactory = yahooGeoPlanetFactoryInjector.getInstance(ai.ilikeplaces.ygp.impl.ClientFactory.class);
+        }
+        {
+            final Injector disqusApiFactoryInjector = Guice.createInjector(new DisqusAPIClientModule());
+            disqusApiFactory = disqusApiFactoryInjector.getInstance(com.disqus.api.impl.ClientFactory.class);
         }
     }
 
@@ -56,8 +63,12 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
         }
     }
 
-    public ClientFactory getYahooGeoPlanetFactory() {
+    public ai.ilikeplaces.ygp.impl.ClientFactory getYahooGeoPlanetFactory() {
         return yahooGeoPlanetFactory;
+    }
+
+    public com.disqus.api.impl.ClientFactory getDisqusAPIFactory() {
+        return disqusApiFactory;
     }
 
     @PostConstruct

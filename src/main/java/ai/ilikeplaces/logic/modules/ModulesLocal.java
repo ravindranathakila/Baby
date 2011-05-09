@@ -14,7 +14,9 @@ public interface ModulesLocal {
 
     public static final String NAME = ModulesLocal.class.getSimpleName();
 
-    public ClientFactory getYahooGeoPlanetFactory();
+    public ai.ilikeplaces.ygp.impl.ClientFactory getYahooGeoPlanetFactory();
+
+    public com.disqus.api.impl.ClientFactory getDisqusAPIFactory();
 
 
 }

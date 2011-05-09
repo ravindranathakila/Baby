@@ -276,6 +276,11 @@
             <version>1.0</version>
         </dependency>
         <dependency>
+            <groupId>api.disqus</groupId>
+            <artifactId>DisqusAPI-Client</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.google.code.facebookapi</groupId>
             <artifactId>facebook-java-api</artifactId>
             <version>3.0.4</version>
