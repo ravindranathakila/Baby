@@ -168,6 +168,33 @@ function initialize_DownTownHeatMap_map(){
      map.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById('mapCustomControlsSearchBox'));
 
 
+     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSNW'), 'click', function() {
+     map.panBy(-30, -30);
+     });
+     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSN'), 'click', function() {
+     map.panBy(0, -50);
+     });
+     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSNE'), 'click', function() {
+     map.panBy(30, -30);
+     });
+     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSW'), 'click', function() {
+     map.panBy(-50, 0);
+     });
+     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSZoom'), 'click', function() {
+     map.setZoom(map.getZoom()+1);
+     });
+     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSE'), 'click', function() {
+     map.panBy(50, 0);
+     });
+     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSSW'), 'click', function() {
+     map.panBy(-30, 30);
+     });
+     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSS'), 'click', function() {
+     map.panBy(0, +50);
+     });
+     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSSE'), 'click', function() {
+     map.panBy(30, 30);
+     });
      document.getElementById('mapCustomControlsNEWS').index = 1;
      map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(document.getElementById('mapCustomControlsNEWS'));
 
@@ -417,15 +444,15 @@ function initialize_gmap_scripts_transparently(){//wise any changes also to init
             </div>
             <div class="by">
                 <div class="by3">
-                    <div id="mapCustomControlsNEWW" class="btn blue by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;">
+                    <div id="mapCustomControlsNEWSW" class="btn blue by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;">
                         &larr;</div>
                 </div>
                 <div class="by3">
-                    <div id="mapCustomControlsNEWSZoom" class="btn blue by" style="font-size:24px;font-weight:bold;text-align:center;">
-                        &nbsp;</div>
+                    <div id="mapCustomControlsNEWSZoom" class="btn blue by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;">
+                        +</div>
                 </div>
                 <div class="by3">
-                    <div id="mapCustomControlsNEWE" class="btn blue by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;">
+                    <div id="mapCustomControlsNEWSE" class="btn blue by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;">
                         &rarr;</div>
                 </div>
             </div>
