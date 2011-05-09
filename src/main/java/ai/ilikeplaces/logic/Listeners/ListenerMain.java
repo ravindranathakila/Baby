@@ -12,23 +12,20 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.ygp.impl.Client;
+import ai.ilikeplaces.ygp.impl.ClientFactory;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.html.ItsNatHTMLDocument;
+import org.json.JSONObject;
 import org.w3c.dom.Element;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 import where.yahooapis.com.v1.Place;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 import static ai.ilikeplaces.util.Loggers.EXCEPTION;
@@ -75,6 +72,8 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String WOEIDPAGE_DESC = "woeidpage.desc";
     private static final String COMMA = ",";
     private static final String SIMPLE_LOCATION_NAME = "simpleLocationName";
+    private static final ClientFactory YAHOO_GEO_PLANET_FACTORY = Modules.getModules().getYahooGeoPlanetFactory();
+    private static final com.disqus.api.impl.ClientFactory DISQUS_API_FACTORY = Modules.getModules().getDisqusAPIFactory();
 
     /**
      * @param request__
@@ -99,25 +98,47 @@ public class ListenerMain implements ItsNatServletRequestListener {
             @TODO(task = "If location is not available" + COMMA + " it should be added through a widget(or fragment maybe?)")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
 
-                checkUserSpentTime:
-                {
-                    itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.body), EventType.UNLOAD.toString(), new EventListener() {
+                    DISQUS:
+                    {
+                        try {
+                            final com.disqus.api.impl.Client threads = DISQUS_API_FACTORY.getInstance("http://disqus.com/api/3.0/threads/");
+                            final com.disqus.api.impl.Client posts = DISQUS_API_FACTORY.getInstance("http://disqus.com/api/3.0/posts/");
 
-                        Obj<Long> timeSpent = new Obj<Long>(System.currentTimeMillis());
+                            final Map<String, String> threadParams = new HashMap<String, String>();
+                            threadParams.put("thread", "link:http://www.ilikeplaces.com"+((HttpServletRequest)request__.getServletRequest()).getRequestURI()+"?WOEID="+((HttpServletRequest)request__.getServletRequest()).getParameter("WOEID"));
+                            final JSONObject threadJsonObject = threads.get("list", threadParams);
+                            Loggers.DEBUG.debug(threadJsonObject.toString());
+                            Loggers.DEBUG.debug(threadJsonObject.getJSONArray("response").getJSONObject(0).get("id").toString());
 
-                        @Override
-                        public void handleEvent(final Event evt_) {
-                            Loggers.DEBUG.debug(UNLOADING_BODY_TIME_SPENT + (System.currentTimeMillis() - timeSpent.getObj()));
+                            final Map<String, String> postParams = new HashMap<String, String>();
+                            postParams.put("thread", threadJsonObject.getJSONArray("response").getJSONObject(0).get("id").toString());
+                            final JSONObject postJsonObject = posts.get("list", postParams);
+                            Loggers.DEBUG.debug(postJsonObject.toString());
+                            Loggers.DEBUG.debug(postJsonObject.getJSONArray("response").getJSONObject(0).toString());
+                            Loggers.DEBUG.debug(postJsonObject.getJSONArray("response").getJSONObject(0).get("raw_message").toString());
+                        } catch (final Throwable t) {
+                            Loggers.DEBUG.debug("Error in Fetching Disqus Threads:" + t.getMessage());
                         }
-
-                        @Override
-                        public void finalize() throws Throwable {
-                            Loggers.finalized(this.getClass().getName());
-                            super.finalize();
-                        }
-                    }, false);
-
-                }
+                    }
+//                checkUserSpentTime:
+//                {
+//                    itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.body), EventType.UNLOAD.toString(), new EventListener() {
+//
+//                        Obj<Long> timeSpent = new Obj<Long>(System.currentTimeMillis());
+//
+//                        @Override
+//                        public void handleEvent(final Event evt_) {
+//                            Loggers.DEBUG.debug(UNLOADING_BODY_TIME_SPENT + (System.currentTimeMillis() - timeSpent.getObj()));
+//                        }
+//
+//                        @Override
+//                        public void finalize() throws Throwable {
+//                            Loggers.finalized(this.getClass().getName());
+//                            super.finalize();
+//                        }
+//                    }, false);
+//
+//                }
 
 
                 //this.location = (String) request_.getServletRequest().getAttribute(RBGet.config.getString("HttpSessionAttr.location"));
@@ -270,7 +291,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     GEO:
                     {
                         if (existingLocation_.getLocationGeo1() == null || existingLocation_.getLocationGeo2() == null) {
-                            final Client ygpClient = Modules.getModules().getYahooGeoPlanetFactory().getInstance(RBGet.globalConfig.getString("where.yahooapis.com.v1.place"));
+                            final Client ygpClient = YAHOO_GEO_PLANET_FACTORY.getInstance(RBGet.globalConfig.getString("where.yahooapis.com.v1.place"));
                             final Place place = ygpClient.getPlace(existingLocation_.getLocationId().toString());
                             existingLocation_.setLocationGeo1(Double.toString(place.getCoordinates().getY()));
                             existingLocation_.setLocationGeo2(Double.toString(place.getCoordinates().getX()));

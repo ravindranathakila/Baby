@@ -51,6 +51,7 @@ public class Location implements Serializable, Clearance, Comparable<Location> {
     public String locationGeo2;
     public List<PublicPhoto> publicPhotos;
     public List<PrivateEvent> privateEvents;
+    public List<LongMsg> longMsgs;
     public static final String OF_SPACE = " of ";
     public static final String OF_SCORE = "_of_";
 
@@ -173,6 +174,17 @@ public class Location implements Serializable, Clearance, Comparable<Location> {
 
     public void setPrivateEvents(List<PrivateEvent> privateEvents) {
         this.privateEvents = privateEvents;
+    }
+
+    @UNIDIRECTIONAL
+    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.REMOVE},
+            fetch = FetchType.LAZY)
+    public List<LongMsg> getLongMsgs() {
+        return longMsgs;
+    }
+
+    public void setLongMsgs(List<LongMsg> longMsgs) {
+        this.longMsgs = longMsgs;
     }
 
     @Transient
