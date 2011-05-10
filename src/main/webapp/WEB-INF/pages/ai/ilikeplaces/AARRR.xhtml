@@ -137,7 +137,7 @@
                            value="e.g. las vegas, united states"
                            onfocus="javascript:initialize_gmap_scripts();this.value='';"
                            tabindex="1"
-                           onchange="javascript:document.getElementById('searchButton').click();$.prompt.close();"
+                           onchange="javascript:$('#searchButton').click();$.prompt.close();"
                             />
                         </div>
                         <div class="use100" style="height:10px;">&nbsp;</div>
@@ -156,11 +156,11 @@
                         <hr/>
                         <div class="use10 center">&nbsp;</div>
                         <div class="use35 center right">
-                             <a href="/page/_org" class="btn green layer_2" style="text-align:right;float:right;">Login to Down&darr;Town</a>
+                             <a href="/page/_org" class="btn blue layer_2" style="text-align:right;float:right;">Login to Down&darr;Town</a>
                         </div>
                         <div class="use10">or</div>
                         <div class="use35 center left">
-                             <a href="/signup" class="btn orange layer_2" style="text-align:left;float:left;">&nbsp;&nbsp;Sign up - it's free!&nbsp;&nbsp;</a>
+                             <a href="/signup" class="btn blue layer_2" style="text-align:left;float:left;">&nbsp;&nbsp;Sign up - it's free!&nbsp;&nbsp;</a>
                         </div>
                         <div class="use10 center">&nbsp;</div>
                         <hr/>
@@ -174,7 +174,7 @@
                 <div class="use100 center" style="background-color:#ffffff;">
                     <span style="font-size:16px;" class="intensity">By Marking Your Event's Place</span><br/>
                     <div class="use100" style="height:10px;">&nbsp;</div>
-                    <div><img src="/images/Travel_Directions 1.JPG" alt="loading..."/></div>
+                    <div><img src="/images/Travel_Directions 1.JPG" style="width:100%;" alt="loading..."/></div>
                     <span style="font-size:11px;" class="layer_4">
                         We can give your friends and family road directions to reach there!<br/>
                     </span>
@@ -279,7 +279,7 @@
             popup = {
                 state0: {
                     html: impromptuLoginForm,
-                    buttons: { "There's More;) - Take a Quick Tour?": true , "Show Map": false},
+                    buttons: { "Take a Quick Tour?": true , "Show Map": false},
                     focus: 1,
                     submit:function(v,m,f){
                         if(!v) return true;
