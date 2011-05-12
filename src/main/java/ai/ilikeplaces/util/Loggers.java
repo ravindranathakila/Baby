@@ -78,10 +78,19 @@ final public class Loggers {
      */
     final static public Logger NON_USER = LoggerFactory.getLogger("NON_USER");
 
+
     /**
-     * Exceptions in one logger is easy for monitoring
+     * Exceptions and Errors in one logger is easy for monitoring
      */
-    final static public Logger EXCEPTION = LoggerFactory.getLogger("EXCEPTION");
+    final static public Logger ERROR = LoggerFactory.getLogger("EXCEPTION");
+
+
+    /**
+     * Exceptions and Errors in one logger is easy for monitoring
+     * DO NOT ASSIGN THIS TO A NEW LOGGER. POINT TO {@link #ERROR ERROR} INSTEAD.
+     */
+    final static public Logger EXCEPTION = ERROR;
+
 
     /**
      * Log server status/performance logs here
