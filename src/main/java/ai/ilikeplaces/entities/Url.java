@@ -14,7 +14,6 @@ import java.io.Serializable;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-@EntityListeners(EntityLifeCycleListener.class)
 public class Url implements Serializable {
 
     public String url;

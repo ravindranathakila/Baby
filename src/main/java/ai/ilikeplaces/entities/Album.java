@@ -20,7 +20,6 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-@EntityListeners({EntityLifeCycleListener.class})
 public class Album implements RefreshData<Album>, Refreshable<Album> {
 
     public Long albumId;

@@ -29,7 +29,6 @@ import java.util.Date;
                 "1. Too many joins.")
 )
 @Entity
-@EntityListeners(EntityLifeCycleListener.class)
 @NamedQueries({
         @NamedQuery(name = "FindPaginatedHumansByEmails",
                 query = "SELECT hi FROM HumansIdentity hi WHERE hi.humanId IN(:humansIdentityEmails)")})

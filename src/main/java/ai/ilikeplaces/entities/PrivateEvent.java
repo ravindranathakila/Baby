@@ -18,7 +18,6 @@ import java.util.List;
 @CREATED_BY(who = {PrivateEvent.class},
             note = "We need to return this entity to the user for CRUD, hence cascade creation not possible.")
 @Entity
-@EntityListeners(EntityLifeCycleListener.class)
 public class PrivateEvent implements RefreshData<PrivateEvent> {
 
     public Long privateEventId;

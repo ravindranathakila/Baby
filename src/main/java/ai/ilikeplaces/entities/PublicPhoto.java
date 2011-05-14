@@ -12,9 +12,8 @@ import java.util.UUID;
  * @author Ravindranath Akila
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-@EntityListeners(EntityLifeCycleListener.class)
 @OK
 public class PublicPhoto implements Serializable {
 
