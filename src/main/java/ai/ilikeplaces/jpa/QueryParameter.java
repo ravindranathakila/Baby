@@ -26,6 +26,9 @@ final public class QueryParameter {
     }
 
     /**
+     *
+     * Use {@link #newInstance()} instead
+     *
      * @param name__
      * @param value__
      * @return QueryParameter
@@ -44,6 +47,7 @@ final public class QueryParameter {
     }
 
     /**
+     * Use {@link #add(String, Object)} instead
      * @param name__
      * @param value__
      * @return QueryParameter
