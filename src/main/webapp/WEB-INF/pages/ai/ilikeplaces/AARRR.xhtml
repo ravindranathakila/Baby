@@ -147,7 +147,7 @@
                                    onclick="javascript: try{$.prompt.close(); searchbox = document.getElementById('seachbox');new google.maps.Geocoder().geocode({address:searchbox.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){if(!(zoomInHint = !zoomInHint)){}map.setCenter(geocoderResult[0].geometry.location); var llb = geocoderResult[0].geometry.viewport; map.fitBounds(llb);}else{alert('No find '+searchbox.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
                                    style="font-size:12px;cursor:pointer;background-color;#FD78E1;border:1px;"
                                    tabindex="2"
-                                   href="">Search</a>
+                                   href="#">Search</a>
                          </div>
                         <br/>
                     </div>
@@ -244,8 +244,6 @@
                }
            }
 
-           focusMapWithLatLngLoop = setInterval("focusMapWithLatLng()", 1000);
-
            zoomInHint = true;
 
         </script>
@@ -282,9 +280,13 @@
                     buttons: { "Take a Quick Tour?": true , "Show Map": false},
                     focus: 1,
                     submit:function(v,m,f){
-                        if(!v) return true;
-                        else
+                        if(!v){
+                            focusMapWithLatLng();
+                            return true;
+                        }
+                        else{
                             $.prompt.goToState('state1');
+                        }
                         return false;
                     }
                 },
