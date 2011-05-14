@@ -15,7 +15,6 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-@EntityListeners({EntityLifeCycleListener.class})
 @NOTE(note = "Wall is initially a plain String. Each text is appended, hence non editable." +
         "A wall can be 'cleared' by a owner." +
         "This approach was taken to reduce TTM.")

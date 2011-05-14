@@ -19,7 +19,6 @@ import javax.persistence.*;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-@EntityListeners({EntityLifeCycleListener.class})
 public class LongMsg {
 
     public Long longMsgId;
@@ -71,7 +70,7 @@ public class LongMsg {
         this.longMsgContent = longMsgContent;
     }
 
-    @Column(length = 10240)
+    @Column(columnDefinition = "VARCHAR(10240)")
     public LongMsg setLongMsgContentR(final String longMsgContent) {
         this.longMsgContent = longMsgContent;
         return this;

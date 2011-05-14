@@ -24,7 +24,6 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-@EntityListeners(EntityLifeCycleListener.class)
 public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFace, HumansFriend, RefreshData<HumansPrivateLocation> {
 
     public String humanId;

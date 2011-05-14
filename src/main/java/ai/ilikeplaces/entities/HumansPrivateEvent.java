@@ -21,7 +21,6 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-@EntityListeners(EntityLifeCycleListener.class)
 public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace,HumansFriend, GetMailAddress {
 // ------------------------------ FIELDS ------------------------------
 

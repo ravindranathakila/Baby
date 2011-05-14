@@ -24,7 +24,6 @@ import java.util.List;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 @Entity
-@EntityListeners(EntityLifeCycleListener.class)
 @NamedQueries({
         @NamedQuery(name = "FindAllPrivateLocationsByName",
                 query = "SELECT loc FROM PrivateLocation loc WHERE loc.privateLocationName = :privateLocationName"),
