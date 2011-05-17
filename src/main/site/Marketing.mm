@@ -3,7 +3,7 @@
 <node CREATED="1304339998591" ID="Freemind_Link_647673425" MODIFIED="1304341080207" TEXT="Marketing">
 <font NAME="Comic Sans MS" SIZE="12"/>
 <node CREATED="1304603299475" ID="Freemind_Link_1783261531" MODIFIED="1304603303771" POSITION="right" TEXT="2011">
-<node CREATED="1304603326396" ID="Freemind_Link_1527518165" MODIFIED="1304689582242" TEXT="Executive Summary of Adimpression 2011">
+<node CREATED="1304603326396" FOLDED="true" ID="Freemind_Link_1527518165" MODIFIED="1304689582242" TEXT="Executive Summary of Adimpression 2011">
 <font BOLD="true" NAME="SansSerif" SIZE="18"/>
 <node CREATED="1304603337849" ID="Freemind_Link_992763483" MODIFIED="1304689575213" TEXT="We all started this with location based advertising.">
 <font BOLD="true" NAME="SansSerif" SIZE="16"/>
@@ -63,7 +63,7 @@
 <node CREATED="1304783089007" ID="Freemind_Link_1359848668" MODIFIED="1304826980632" TEXT="The Almost Flat Marketing List">
 <node CREATED="1304783100008" ID="Freemind_Link_146684658" MODIFIED="1304783106774" TEXT="Article Submissions">
 <node CREATED="1304783107070" ID="Freemind_Link_531488876" MODIFIED="1304783138634" TEXT="Make sure you submit to only your website related sites"/>
-<node CREATED="1304783139915" ID="Freemind_Link_771209674" MODIFIED="1304783146337" TEXT="Signup for all travel forums"/>
+<node CREATED="1304783139915" ID="Freemind_Link_771209674" MODIFIED="1305159853640" TEXT="Signup for all entertainment/travel/event forums"/>
 <node CREATED="1304783225887" ID="Freemind_Link_1766898548" MODIFIED="1304783231512" TEXT="Mix keywords"/>
 <node CREATED="1304783306764" ID="Freemind_Link_554993334" MODIFIED="1304783363125" TEXT="Keyword Rich Author Bio With Two Full HTTP Links to Your Site on anchor and one plain text"/>
 <node CREATED="1304783410002" ID="Freemind_Link_1318746775" MODIFIED="1304783415596" TEXT="500-800 words"/>
@@ -93,15 +93,18 @@
 <node CREATED="1304827707850" ID="Freemind_Link_1129386015" MODIFIED="1304827710819" TEXT="interaction?">
 <node CREATED="1304827713116" ID="Freemind_Link_975099546" MODIFIED="1304827719975" TEXT="RSS on Forum Available"/>
 </node>
+<node CREATED="1305119493141" ID="Freemind_Link_1962380191" MODIFIED="1305119496516" TEXT="rank">
+<node CREATED="1305119496938" ID="Freemind_Link_1362715288" MODIFIED="1305119512361" TEXT="PR 4">
+<icon BUILTIN="button_ok"/>
 </node>
-<node CREATED="1304830282996" ID="Freemind_Link_782487781" LINK="http://www.eventplanningforum.net/" MODIFIED="1304830290450" TEXT="http://www.eventplanningforum.net/">
-<node CREATED="1304830292529" ID="Freemind_Link_202768347" MODIFIED="1304830293623" TEXT="auth">
-<node CREATED="1304827415587" ID="Freemind_Link_1186467456" MODIFIED="1304827420133" TEXT="ravindranathakila@gmail.com"/>
-<node CREATED="1304827422290" ID="Freemind_Link_1946953760" MODIFIED="1304827426118" TEXT="teddy bear"/>
-<node CREATED="1304831285600" ID="Freemind_Link_1424986295" MODIFIED="1304831290913" TEXT="avaiting approval"/>
+<node CREATED="1305119502267" ID="Freemind_Link_975465056" MODIFIED="1305119730614" TEXT="AR 84000">
+<icon BUILTIN="button_ok"/>
 </node>
-<node CREATED="1304830816958" ID="Freemind_Link_74663706" MODIFIED="1304830893219" TEXT="bio">
-<node CREATED="1304830819428" ID="Freemind_Link_26757948" MODIFIED="1304830821053" TEXT="Eventy"/>
+</node>
+<node CREATED="1305128154001" ID="Freemind_Link_1717964405" MODIFIED="1305128158892" TEXT="engagement">
+<node CREATED="1305128159361" ID="Freemind_Link_1532906995" MODIFIED="1305128169830" TEXT="2011-05-11">
+<node CREATED="1305128170627" ID="Freemind_Link_1830005872" MODIFIED="1305128209533" TEXT="6"/>
+</node>
 </node>
 </node>
 <node CREATED="1304830430297" ID="Freemind_Link_1980693272" LINK="http://forums.about.com/ab-eventplan" MODIFIED="1304830477225" TEXT="http://forums.about.com/ab-eventplan">
@@ -118,16 +121,80 @@
 <node CREATED="1304831273598" ID="Freemind_Link_1571547604" MODIFIED="1304831279208" TEXT="Sorty by high interest etc."/>
 <node CREATED="1304831472312" ID="Freemind_Link_360910743" MODIFIED="1304831476063" TEXT="http://forums.about.com/n/pfx/forum.aspx?tsn=4&amp;nav=messages&amp;webtag=ab-eventplan&amp;tid=207"/>
 </node>
+<node CREATED="1305119753834" ID="Freemind_Link_559429277" MODIFIED="1305119755272" TEXT="rank">
+<node CREATED="1305119755694" ID="Freemind_Link_1589899885" MODIFIED="1305119759741" TEXT="PR 4"/>
+<node CREATED="1305119760179" ID="Freemind_Link_1869174312" MODIFIED="1305119762288" TEXT="AR 70"/>
 </node>
-<node CREATED="1304830587318" ID="Freemind_Link_430130717" MODIFIED="1304830592006" TEXT="www.eventeducation.com"/>
-<node CREATED="1304831452622" ID="Freemind_Link_150051005" MODIFIED="1304831455935" TEXT="http://www.funfilms.in/event-management/"/>
+</node>
+<node CREATED="1305119611073" ID="Freemind_Link_838253484" LINK="http://www.indeed.com/forum/job/event-planner.html" MODIFIED="1305157336901" TEXT="http://www.indeed.com/forum/job/event-planner.html">
+<font NAME="SansSerif" SIZE="12"/>
+<node CREATED="1305119613120" ID="Freemind_Link_1745551073" MODIFIED="1305119615557" TEXT="rank">
+<node CREATED="1305119615964" ID="Freemind_Link_1725437231" MODIFIED="1305119641091" TEXT="PR: 5"/>
+<node CREATED="1305119618839" ID="Freemind_Link_1856031421" MODIFIED="1305119646919" TEXT="AR: 397"/>
+</node>
+</node>
 <node CREATED="1304833125722" ID="Freemind_Link_665449830" MODIFIED="1304833126628" TEXT="http://eventplanning.about.com/od/eventplanningbasics/u/plan_an_event.htm"/>
+<node CREATED="1305119267341" FOLDED="true" ID="Freemind_Link_365613050" MODIFIED="1305119280029" TEXT="">
+<icon BUILTIN="clanbomber"/>
+<node CREATED="1304830282996" ID="Freemind_Link_782487781" LINK="http://www.eventplanningforum.net/" MODIFIED="1305119151691" TEXT="http://www.eventplanningforum.net/">
+<icon BUILTIN="clanbomber"/>
+<node CREATED="1304830292529" ID="Freemind_Link_202768347" MODIFIED="1304830293623" TEXT="auth">
+<node CREATED="1304827415587" ID="Freemind_Link_1186467456" MODIFIED="1304827420133" TEXT="ravindranathakila@gmail.com"/>
+<node CREATED="1304827422290" ID="Freemind_Link_1946953760" MODIFIED="1304827426118" TEXT="teddy bear"/>
+<node CREATED="1304831285600" ID="Freemind_Link_1424986295" MODIFIED="1304831290913" TEXT="avaiting approval"/>
+</node>
+<node CREATED="1304830816958" ID="Freemind_Link_74663706" MODIFIED="1304830893219" TEXT="bio">
+<node CREATED="1304830819428" ID="Freemind_Link_26757948" MODIFIED="1304830821053" TEXT="Eventy"/>
+</node>
+<node CREATED="1305119127304" ID="Freemind_Link_1405907151" MODIFIED="1305119151691" TEXT="rank">
+<icon BUILTIN="clanbomber"/>
+<node CREATED="1305119130118" ID="Freemind_Link_1537025378" MODIFIED="1305119151691" TEXT="PR 0">
+<icon BUILTIN="clanbomber"/>
+</node>
+<node CREATED="1305119133870" ID="Freemind_Link_858479741" MODIFIED="1305119151691" TEXT="AR 750,000">
+<icon BUILTIN="clanbomber"/>
+</node>
+</node>
+</node>
+</node>
 </node>
 <node CREATED="1304827559054" ID="Freemind_Link_863134497" MODIFIED="1304827644148" TEXT="Gmail Label: #eventy"/>
 </node>
+<node CREATED="1305207018125" ID="Freemind_Link_740893876" MODIFIED="1305207031312" TEXT="Sign Up and MadContent and go for articles"/>
+<node CREATED="1305207034890" ID="Freemind_Link_1144649936" MODIFIED="1305207038281" TEXT="Write an ebook"/>
+<node CREATED="1305209183281" ID="Freemind_Link_748605181" MODIFIED="1305209207296" TEXT="Mail to disqus mailing addresses offering something(godaddy)"/>
+</node>
+<node CREATED="1305157642432" ID="Freemind_Link_95196066" MODIFIED="1305157663964" TEXT="The Chosen Marketing Strategies">
+<node CREATED="1305157791557" ID="Freemind_Link_1850845909" MODIFIED="1305158999621" TEXT="Ridable Growth Waves?"/>
+<node CREATED="1305157802698" ID="Freemind_Link_101057068" MODIFIED="1305157836886" TEXT="Applicable Market Expansions?">
+<node CREATED="1305158720987" ID="Freemind_Link_852201880" MODIFIED="1305158724487" TEXT="Facebook Connect">
+<node CREATED="1305159199360" ID="Freemind_Link_767714098" MODIFIED="1305159202922" TEXT="Through Email and Site"/>
+</node>
+<node CREATED="1305158725002" ID="Freemind_Link_1400959180" MODIFIED="1305158727299" TEXT="OAuth">
+<node CREATED="1305159204079" ID="Freemind_Link_1532147181" MODIFIED="1305159209266" TEXT="Through Email and Site"/>
+</node>
+<node CREATED="1305158731549" ID="Freemind_Link_109788303" MODIFIED="1305158737050" TEXT="Twitter Connect">
+<node CREATED="1305159211438" ID="Freemind_Link_1048432531" MODIFIED="1305159215032" TEXT="Through Email and Site"/>
+</node>
+<node CREATED="1305158740487" ID="Freemind_Link_1040495307" MODIFIED="1305158743362" TEXT="Like Button">
+<node CREATED="1305159308737" ID="Freemind_Link_729944642" MODIFIED="1305159318112" TEXT="Like a Place(Instead of Plan an Event)"/>
 </node>
 </node>
-<node CREATED="1304603305990" FOLDED="true" ID="Freemind_Link_620714991" MODIFIED="1304604565950" TEXT="May">
+<node CREATED="1305157837276" ID="Freemind_Link_1057235459" MODIFIED="1305157863229" TEXT="Specializable Market Segment?">
+<node CREATED="1305158928009" ID="Freemind_Link_1213650609" MODIFIED="1305158948041" TEXT="Event Planning for General User"/>
+<node CREATED="1305158933118" ID="Freemind_Link_550232813" MODIFIED="1305158953791" TEXT="Event Promotion for Event Vendors"/>
+<node CREATED="1305158954228" ID="Freemind_Link_1020237828" MODIFIED="1305158963932" TEXT="Event Planning for Event Managers"/>
+</node>
+<node CREATED="1305157864011" ID="Freemind_Link_1657301140" MODIFIED="1305157884979" TEXT="Claimable Market Share?">
+<node CREATED="1305158453495" ID="Freemind_Link_1641665381" MODIFIED="1305158975932" TEXT="Largest Event Planning Site?"/>
+</node>
+<node CREATED="1305157885417" ID="Freemind_Link_1449849266" MODIFIED="1305158147917" TEXT="Standpoint Strategy?">
+<node CREATED="1305158431261" ID="Freemind_Link_822383871" MODIFIED="1305158990401" TEXT="It&apos;s Really Real World Social"/>
+</node>
+<node CREATED="1305159164078" ID="Freemind_Link_1369179674" MODIFIED="1305159168890" TEXT="Strategy Summar"/>
+</node>
+</node>
+<node CREATED="1304603305990" ID="Freemind_Link_620714991" MODIFIED="1304604565950" TEXT="May">
 <node CREATED="1304340068495" ID="Freemind_Link_84905687" MODIFIED="1304341080207" TEXT="20110502">
 <font NAME="Comic Sans MS" SIZE="12"/>
 <node BACKGROUND_COLOR="#009900" CREATED="1304340062667" FOLDED="true" ID="_" MODIFIED="1304343571926" TEXT="Alien Analysis">

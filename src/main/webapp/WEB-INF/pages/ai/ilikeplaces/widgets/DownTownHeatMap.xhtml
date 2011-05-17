@@ -23,7 +23,7 @@
     stylers: [
       { visibility: "on" },
       { hue: "#00e5ff" },
-      { saturation: -86 },
+      { saturation: -100 },
       { lightness: 40 }
     ]
   },{
@@ -31,7 +31,8 @@
     elementType: "geometry",
     stylers: [
       { visibility: "on" },
-      { hue: "#00ddff" },
+      { hue: "#aaaaaa" },
+      { saturation: -100 },
       { lightness: 71 }
     ]
   },{
@@ -39,8 +40,8 @@
     elementType: "geometry",
     stylers: [
       { visibility: "on" },
-      { lightness: -19 },
-      { saturation: 21 },
+      { lightness: -50 },
+      { saturation: -100 },
       { hue: "#00ffe6" }
     ]
   },{
@@ -48,14 +49,14 @@
     elementType: "geometry",
     stylers: [
       { hue: "#0022ff" },
-      { saturation: 69 }
+      { saturation: -100 }
     ]
   },{
     featureType: "poi",
     elementType: "geometry",
     stylers: [
       { hue: "#ffff00" },
-      { saturation: 100 },
+      { saturation: -100 },
       { visibility: "on" }
     ]
   }
@@ -446,49 +447,49 @@ function initialize_gmap_scripts_transparently(){//wise any changes also to init
         </div>
     </div>
     <div style="display:none;">
-        <div id="mapCustomControlsShowHide" style="width:120px;">
+        <div id="mapCustomControlsShowHide" style="width:180px;">
                     <div id="mapCustomControlsShowHideText" class="btn use100" style="font-size:18px;text-align:center;cursor:pointer;">Show Pics</div>&nbsp;
         </div>
-        <div id="mapCustomControlsNEWS" class="" style="width:102px;">
-            <div class="by" style="height:30px;">
-                <div class="by3" style="height:30px;">
+        <div id="mapCustomControlsNEWS" class="by5">
+            <div class="by" style="height:45px;">
+                <div class="by3" style="height:45px;">
                     <div id="mapCustomControlsNEWSNW" class="by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;">
                         <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/arrow_sans_upperleft_32.png" style="height:100%;" alt="&#8598;"/></div>
                 </div>
-                <div class="by3" style="height:30px;">
+                <div class="by3" style="height:45px;">
                     <div id="mapCustomControlsNEWSN" class="by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;">
                         <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/arrow_sans_up_32.png" style="height:100%;" alt="&uarr;"/></div>
                 </div>
-                <div class="by3" style="height:30px;">
+                <div class="by3" style="height:45px;">
                     <div id="mapCustomControlsNEWSNE" class="by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;">
                         <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/arrow_sans_upperright_32.png" style="height:100%;" alt="&#8599;"/></div>
                 </div>
             </div>
-            <div class="by" style="height:30px;">
-                <div class="by3" style="height:30px;">
+            <div class="by" style="height:45px;">
+                <div class="by3" style="height:45px;">
                     <div id="mapCustomControlsNEWSW" class="by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;">
                         <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/arrow_sans_left_32.png" style="height:100%;" alt="&larr;"/></div>
                 </div>
-                <div class="by3" style="height:30px;">
+                <div class="by3" style="height:45px;">
                     <div id="mapCustomControlsNEWSZoom" class="by" style="font-size:24px;font-weight:bold;text-align:center;">
                         &nbsp;</div>
                 </div>
-                <div class="by3" style="height:30px;">
+                <div class="by3" style="height:45px;">
                     <div id="mapCustomControlsNEWSE" class="by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;">
                         <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/arrow_sans_right_32.png" style="height:100%;" alt="&rarr;"/></div>
                 </div>
             </div>
-            <div class="by" style="height:30px;">
-                <div class="by3" style="height:30px;">
+            <div class="by" style="height:45px;">
+                <div class="by3" style="height:45px;">
                     <div id="mapCustomControlsNEWSSW" class="by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
                         <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/arrow_sans_lowerleft_32.png" style="height:100%;" alt="&#8601;"/></div>
                 </div>
-                <div class="by3" style="height:30px;">
+                <div class="by3" style="height:45px;">
 
                     <div id="mapCustomControlsNEWSS" class="by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
                         <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/arrow_sans_down_32.png" style="height:100%;" alt="&darr;"/></div>
                 </div>
-                <div class="by3" style="height:30px;">
+                <div class="by3" style="height:45px;">
                     <div id="mapCustomControlsNEWSSE" class="by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
                         <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/arrow_sans_lowerright_32.png" style="height:100%;" alt="&#8600;"/></div>
                 </div>
@@ -496,12 +497,12 @@ function initialize_gmap_scripts_transparently(){//wise any changes also to init
             </div>
             <div class="by" style="height:20px;">&nbsp;
             </div>
-            <div class="by" style="height:30px;">
-                <div class="by" style="height:30px;">
+            <div class="by" style="height:45px;">
+                <div class="by" style="height:45px;">
                     <div id="mapCustomControlsNEWSZoomIn" class="by2" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
-                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_in_32.png" alt="-"/></div>
+                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_in_32.png" style="height:100%;" alt="-"/></div>
                     <div id="mapCustomControlsNEWSZoomOut" class="by2" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
-                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_out_32.png" alt="-"/></div>
+                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_out_32.png" style="height:100%;" alt="-"/></div>
                 </div>
             </div>
         </div>

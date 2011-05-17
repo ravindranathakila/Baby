@@ -2,9 +2,12 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.Location;
+import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import ai.ilikeplaces.util.jpa.RefreshException;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -139,6 +142,15 @@ public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Location doDirtyRLocation(final long locationId) {
         return crudServiceLocation_.find(Location.class, locationId);
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Location doRLocation(final long locationId, final RefreshSpec refreshSpec) throws DBFetchDataException {
+        try {
+            return doRLocation(locationId).refresh(refreshSpec);
+        } catch (final RefreshException e) {
+            throw new DBFetchDataException(e);
+        }
     }
 
     @Override

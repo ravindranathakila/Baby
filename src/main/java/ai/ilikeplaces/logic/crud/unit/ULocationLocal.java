@@ -2,8 +2,11 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Location;
+import ai.ilikeplaces.exception.DBFetchDataException;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,4 +18,6 @@ import javax.ejb.Local;
 @Local
 public interface ULocationLocal {
     public Location doULocationLatLng(long locationId, final double latitude, final double longitude);
+
+    public Location doULocationPosts(final long locationId, final Map<String, String> posts, final RefreshSpec refreshSpec) throws DBFetchDataException;
 }

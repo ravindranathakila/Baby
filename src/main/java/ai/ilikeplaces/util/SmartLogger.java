@@ -2,6 +2,9 @@ package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.*;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import static ai.ilikeplaces.util.Loggers.LEVEL;
 
 /**
@@ -63,6 +66,7 @@ final public class SmartLogger extends Thread {
     private static final String LOGGER_HAS_ALREADY_BEEN_COMPLETED = "Logger has already been completed!";
     private static final String LOGGER_HAS_ALREADY_BEEN_COMPLETED_UNDER_TIMEOUT_LOGGING = "Logger has already been completed under timeout logging.";
     final Loggers.LEVEL level;
+    boolean recordedAtLeastOneError = false;
     String logmsg;
     long sleep;
     long starTime = -1;//WARNING: DO NOT change this default value as it is used in IF/TERNARY conditions.
@@ -172,8 +176,41 @@ final public class SmartLogger extends Thread {
         logmsg += PIPE + stringToBeAppended;
     }
 
+    private void appendToLogMSG(final String errorDescription , final Throwable t) {
+        logmsg += PIPE + errorDescription;
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        t.printStackTrace(pw);
+        pw.flush();
+        sw.flush();
+        sw.toString();
+        logmsg += PIPE + sw;
+        recordedAtLeastOneError = true;
+    }
+
+    /**
+     *
+     * @param stringToBeAppended
+     */
     public void l(final String stringToBeAppended) {
         appendToLogMSG(stringToBeAppended);
+    }
+
+    /**
+     *
+     * @param objectWithToStringOverridden
+     */
+    public void l(final Object objectWithToStringOverridden) {
+        appendToLogMSG(objectWithToStringOverridden.toString());
+    }
+
+    /**
+     *
+     * @param errorDescription
+     * @param throwableErrorToBeLogged
+     */
+    public void l(final String errorDescription, final Throwable throwableErrorToBeLogged) {
+        appendToLogMSG(errorDescription, throwableErrorToBeLogged);
     }
 
     static public void complete(final SmartLogger smartLogger, final LEVEL completeLevel, final String completeStatus) {
@@ -192,7 +229,9 @@ final public class SmartLogger extends Thread {
         if (sleep == 0) {
             if (!status()) {
                 Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
-
+                if (recordedAtLeastOneError) {
+                    Loggers.log(LEVEL.ERROR, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+                }
             } else { //this means with no timeout, the logger also was completed once. i.e. status=true. Hence error.
                 throw new RuntimeException(LOGGER_HAS_ALREADY_BEEN_COMPLETED);
             }
@@ -201,18 +240,28 @@ final public class SmartLogger extends Thread {
         } else {
             if (!status()) {
                 Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
-
+                if (recordedAtLeastOneError) {
+                    Loggers.log(LEVEL.ERROR, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+                }
             } else { //this means with no timeout, the logger also was completed once. i.e. status=true. Hence error.
                 throw new RuntimeException(LOGGER_HAS_ALREADY_BEEN_COMPLETED);
             }
         }
     }
 
+    /**
+     *
+     * @param completeLevels
+     * @param completeStatus
+     */
     public void multiComplete(final LEVEL[] completeLevels, final Object completeStatus) {
         if (sleep == 0) {
             if (!status()) {
                 for (final LEVEL completeLevel : completeLevels) {
                     Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+                    if (recordedAtLeastOneError) {
+                        Loggers.log(LEVEL.ERROR, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+                    }
                 }
             } else { //this means with no timeout, the logger also was completed once. i.e. status=true. Hence error.
                 throw new RuntimeException(LOGGER_HAS_ALREADY_BEEN_COMPLETED);
@@ -220,11 +269,17 @@ final public class SmartLogger extends Thread {
         } else if (sleep == -1) {//timeout happened //need to track if logging happens twice... or not... since this condition is triggered by us inside the new thread
             for (final LEVEL completeLevel : completeLevels) {
                 Loggers.log(completeLevel, Loggers.EMBED + CAUSE_RECOVERED_WITH_STATUS + COLON + completeStatus + timeTaken(), logmsg);
+                if (recordedAtLeastOneError) {
+                    Loggers.log(LEVEL.ERROR, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+                }
             }
         } else {
             if (!status()) {
                 for (final LEVEL completeLevel : completeLevels) {
                     Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+                    if (recordedAtLeastOneError) {
+                        Loggers.log(LEVEL.ERROR, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+                    }
                 }
             } else { //this means with no timeout, the logger also was completed once. i.e. status=true. Hence error.
                 throw new RuntimeException(LOGGER_HAS_ALREADY_BEEN_COMPLETED);
@@ -236,26 +291,6 @@ final public class SmartLogger extends Thread {
      * @param completeStatus Complete status or null if you want to drop all further logging
      */
     public void complete(final String completeStatus) {
-        if (sleep == 0) {
-            if (!status()) {
-                if (completeStatus != null) {
-                    Loggers.log(level, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
-                }
-            } else { //this means with no timeout, the logger also was completed once. i.e. status=true. Hence error.
-                throw new RuntimeException(LOGGER_HAS_ALREADY_BEEN_COMPLETED);
-            }
-        } else if (sleep == -1) {//timeout happened //need to track if logging happens twice... or not... since this condition is triggered by us inside the new thread
-            if (completeStatus != null) {
-                Loggers.log(level, Loggers.EMBED + CAUSE_RECOVERED_WITH_STATUS + completeStatus + COLON + timeTaken(), logmsg);
-            }
-        } else {
-            if (!status()) {
-                if (completeStatus != null) {
-                    Loggers.log(level, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
-                }
-            } else { //this means with no timeout, the logger also was completed once. i.e. status=true. Hence error.
-                throw new RuntimeException(LOGGER_HAS_ALREADY_BEEN_COMPLETED);
-            }
-        }
+        complete(level, completeStatus);
     }
 }

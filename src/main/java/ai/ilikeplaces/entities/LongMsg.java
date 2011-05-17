@@ -62,6 +62,8 @@ public class LongMsg {
         return this;
     }
 
+    @Column(length = 10240)
+    @Lob
     public String getLongMsgContent() {
         return longMsgContent;
     }
@@ -70,7 +72,6 @@ public class LongMsg {
         this.longMsgContent = longMsgContent;
     }
 
-    @Column(columnDefinition = "VARCHAR(10240)")
     public LongMsg setLongMsgContentR(final String longMsgContent) {
         this.longMsgContent = longMsgContent;
         return this;
@@ -87,5 +88,15 @@ public class LongMsg {
         this.longMsgMetadata = longMsgMetadata;
         return this;
 
+    }
+
+    @Override
+    public String toString() {
+        return "LongMsg{" +
+                "longMsgId=" + longMsgId +
+                ", longMsgType=" + longMsgType +
+                ", longMsgContent='" + longMsgContent + '\'' +
+                ", longMsgMetadata='" + longMsgMetadata + '\'' +
+                '}';
     }
 }

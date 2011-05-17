@@ -3,7 +3,7 @@ package ai.ilikeplaces.logic.Listeners;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.Location;
-import ai.ilikeplaces.entities.PublicPhoto;
+import ai.ilikeplaces.entities.LongMsg;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.modules.Modules;
@@ -11,6 +11,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 import ai.ilikeplaces.ygp.impl.Client;
 import ai.ilikeplaces.ygp.impl.ClientFactory;
 import org.itsnat.core.ItsNatDocument;
@@ -18,17 +19,17 @@ import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.html.ItsNatHTMLDocument;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
 import where.yahooapis.com.v1.Place;
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
 import java.util.*;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
-import static ai.ilikeplaces.util.Loggers.EXCEPTION;
 import static ai.ilikeplaces.util.MarkupTag.*;
 
 /**
@@ -49,7 +50,8 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String HTTP_SESSION_ATTR_LOCATION = "HttpSessionAttr.location";
     private static final String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004 = "ai.ilikeplaces.logic.Listeners.ListenerMain.0004";
     private static final String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0005 = "ai.ilikeplaces.logic.Listeners.ListenerMain.0005";
-    private static final String HTTP_TRAVEL_ILIKEPLACES_COM_INDEX_JSP_CID_317285_PAGE_NAME_HOT_SEARCH_SUBMITTED_TRUE_VALIDATE_CITY_TRUE_CITY = "http://travel.ilikeplaces.com/index.jsp?cid=317285&pageName=hotSearch&submitted=true&validateCity=true&city=";
+    private static final String POST_ID = "id";
+    private static final String HTTP_TRAVEL_ILIKEPLACES_COM_INDEX_JSP_CID_317285_PAGE_NAME_HOT_SEARCH_SUBMITTED_TRUE_VALIDATE_CITY_TRUE_CITY = "http://travel.ilikeplaces.com/index.jsp?c" + POST_ID + "=317285&pageName=hotSearch&submitted=true&validateCity=true&city=";
     private static final String QUERIES_FOR_LOCATION = " queries for location ";
     private static final String OF = " of ";
     private static final String AI_ILIKEPLACES_RBS_GUI = "ai.ilikeplaces.rbs.GUI";
@@ -65,15 +67,39 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String _OF_ = "_of_";
     private static final String CLICK_TO_EXPLORE = "Click to explore ";
     private static final String VTIP = "vtip";
-    private static final String WIDTH = "width";
+    private static final String WIDTH = "w" + POST_ID + "th";
     private static final String PX = "110px;";
     private static final String UNLOADING_BODY_TIME_SPENT = "Unloading body. Time spent:";
-    private static final String WOEIDPAGE_TITLE = "woeidpage.title";
-    private static final String WOEIDPAGE_DESC = "woeidpage.desc";
+    private static final String WOEIDPAGE_TITLE = "woe" + POST_ID + "page.title";
+    private static final String WOEIDPAGE_DESC = "woe" + POST_ID + "page.desc";
     private static final String COMMA = ",";
     private static final String SIMPLE_LOCATION_NAME = "simpleLocationName";
     private static final ClientFactory YAHOO_GEO_PLANET_FACTORY = Modules.getModules().getYahooGeoPlanetFactory();
     private static final com.disqus.api.impl.ClientFactory DISQUS_API_FACTORY = Modules.getModules().getDisqusAPIFactory();
+    private static final String HTTP_DISQUS_COM_API_3_0_THREADS = "http://disqus.com/api/3.0/threads/";
+    private static final String HTTP_DISQUS_COM_API_3_0_POSTS = "http://disqus.com/api/3.0/posts/";
+    private static final String IDENT_WOEID = POST_ID + "ent:WOEID=";
+    private static final String THREAD = "thread";
+    private static final String LIST = "list";
+    private static final String RESPONSE = "response";
+    private static final String ID = POST_ID;
+    private static final String NUMBER_OF_ITEMS_AT_DISQUS_IN_THREAD = "Number of Items At Disqus in Thread:";
+    private static final String RAW__MESSAGE = "raw_message";
+    private static final String ERROR_IN_UC_DISQUS = "Error in UC DISQUS";
+    private static final String ERROR_IN_UC_SET_LOGIN_WIDGET = "Error in UC setLoginW" + POST_ID + "get";
+    private static final String ERROR_IN_UC_SEO = "Error in UC SEO";
+    private static final String ERROR_IN_UC_SIGN_ON_DISPLAY_LINK = "Error in UC signOnDisplayLink";
+    private static final String ERROR_IN_UC_SET_PROFILE_PHOTO_LINK = "Error in UC setProfilePhotoLink";
+    private static final String ERROR_IN_UC_SET_LOCATION_ID_FOR_JSREFERENCE = "Error in UC setLocationIdForJSReference";
+    private static final String ERROR_IN_UC_SHOW_UPLOAD_FILE_LINK = "Error in UC showUploadFileLink";
+    private static final String ERROR_IN_UC_SET_LOCATION_NAME_FOR_JSREFERENCE = "Error in UC setLocationNameForJSReference";
+    private static final String ERROR_IN_UC_SET_LOCATION_AS_PAGE_TOPIC = "Error in UC setLocationAsPageTopic";
+    private static final String ERROR_IN_UC_NO_SUPPORT_FOR_NEW_LOCATIONS = "Error in UC noSupportForNewLocations";
+
+    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("longMsgs");
+    private static final String CREATED_AT = "createdAt";
+    private static final String ERROR_IN_UC_SET_PROFILE_LINK = "Error in UC setProfileLink";
+    private static final String PIPE = "|";
 
     /**
      * @param request__
@@ -91,54 +117,20 @@ public class ListenerMain implements ItsNatServletRequestListener {
             protected Long WOEID;
 
             /**
-             * Intialize your document here by appending fragments
+             * Initialize your document here by appending fragments
              */
             @Override
             @SuppressWarnings("unchecked")
-            @TODO(task = "If location is not available" + COMMA + " it should be added through a widget(or fragment maybe?)")
+            @TODO(task = "If location is not available, it should be added through a w" + POST_ID + "get(or fragment maybe?)")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
 
-                    DISQUS:
-                    {
-                        try {
-                            final com.disqus.api.impl.Client threads = DISQUS_API_FACTORY.getInstance("http://disqus.com/api/3.0/threads/");
-                            final com.disqus.api.impl.Client posts = DISQUS_API_FACTORY.getInstance("http://disqus.com/api/3.0/posts/");
-
-                            final Map<String, String> threadParams = new HashMap<String, String>();
-                            threadParams.put("thread", "link:http://www.ilikeplaces.com"+((HttpServletRequest)request__.getServletRequest()).getRequestURI()+"?WOEID="+((HttpServletRequest)request__.getServletRequest()).getParameter("WOEID"));
-                            final JSONObject threadJsonObject = threads.get("list", threadParams);
-                            Loggers.DEBUG.debug(threadJsonObject.toString());
-                            Loggers.DEBUG.debug(threadJsonObject.getJSONArray("response").getJSONObject(0).get("id").toString());
-
-                            final Map<String, String> postParams = new HashMap<String, String>();
-                            postParams.put("thread", threadJsonObject.getJSONArray("response").getJSONObject(0).get("id").toString());
-                            final JSONObject postJsonObject = posts.get("list", postParams);
-                            Loggers.DEBUG.debug(postJsonObject.toString());
-                            Loggers.DEBUG.debug(postJsonObject.getJSONArray("response").getJSONObject(0).toString());
-                            Loggers.DEBUG.debug(postJsonObject.getJSONArray("response").getJSONObject(0).get("raw_message").toString());
-                        } catch (final Throwable t) {
-                            Loggers.DEBUG.debug("Error in Fetching Disqus Threads:" + t.getMessage());
-                        }
-                    }
-//                checkUserSpentTime:
-//                {
-//                    itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.body), EventType.UNLOAD.toString(), new EventListener() {
-//
-//                        Obj<Long> timeSpent = new Obj<Long>(System.currentTimeMillis());
-//
-//                        @Override
-//                        public void handleEvent(final Event evt_) {
-//                            Loggers.DEBUG.debug(UNLOADING_BODY_TIME_SPENT + (System.currentTimeMillis() - timeSpent.getObj()));
-//                        }
-//
-//                        @Override
-//                        public void finalize() throws Throwable {
-//                            Loggers.finalized(this.getClass().getName());
-//                            super.finalize();
-//                        }
-//                    }, false);
-//
-//                }
+                final SmartLogger sl = SmartLogger.start(
+                        Loggers.LEVEL.DEBUG,
+                        "Location Page.",
+                        60000,
+                        null,
+                        true
+                );
 
 
                 //this.location = (String) request_.getServletRequest().getAttribute(RBGet.config.getString("HttpSessionAttr.location"));
@@ -164,13 +156,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     }
                 }
 
-                final SmartLogger sl = SmartLogger.start(
-                        Loggers.LEVEL.SERVER_STATUS,
-                        RETURNING_LOCATION + location + TO_USER,
-                        60000,
-                        null,
-                        true
-                );
+                sl.appendToLogMSG(RETURNING_LOCATION + location + TO_USER);
 
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor + JSCodeToSend.FnLocationId + JSCodeToSend.FnLocationName + JSCodeToSend.FnSetTitle);
                 final ResourceBundle gUI = ResourceBundle.getBundle(AI_ILIKEPLACES_RBS_GUI);
@@ -186,6 +172,12 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     }
                 }
 
+                UCShowPlacesDataFromGooglePlaceAPIIncludingHotelsRestaurants:
+                {
+
+                }
+
+
                 layoutNeededForAllPages:
                 {
                     setLoginWidget:
@@ -194,7 +186,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             new SignInOn(request__, $(Main_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
                             };
                         } catch (final Throwable t) {
-                            Loggers.EXCEPTION.error("", t);
+                            sl.l(ERROR_IN_UC_SET_LOGIN_WIDGET, t);
                         }
                     }
 
@@ -216,7 +208,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 $(Main_loading_hotels_link).setAttribute(MarkupTag.A.href(), HTTP_TRAVEL_ILIKEPLACES_COM_INDEX_JSP_CID_317285_PAGE_NAME_HOT_SEARCH_SUBMITTED_TRUE_VALIDATE_CITY_TRUE_CITY + location.split(OF)[0].replace("/", SPACE));
                             }
                         } catch (final Throwable t) {
-                            Loggers.DEBUG.debug(t.getMessage());
+                            sl.l(ERROR_IN_UC_SEO, t);
                         }
                     }
                     signOnDisplayLink:
@@ -228,7 +220,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 $(Main_othersidebar_identity).setTextContent(gUI.getString(AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0005) + location);
                             }
                         } catch (final Throwable t) {
-                            Loggers.EXCEPTION.error("", t);
+                            sl.l(ERROR_IN_UC_SIGN_ON_DISPLAY_LINK, t);
                         }
 
                     }
@@ -241,7 +233,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 $(Main_othersidebar_profile_link).setAttribute(MarkupTag.A.href(), Controller.Page.signup.getURL());
                             }
                         } catch (final Throwable t) {
-                            Loggers.EXCEPTION.error("", t);
+                            sl.l(ERROR_IN_UC_SET_PROFILE_LINK, t);
                         }
                     }
                     setProfilePhotoLink:
@@ -266,7 +258,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 //displayBlock($(Main_location_photo));
                             }
                         } catch (final Throwable t) {
-                            EXCEPTION.error("{}", t);
+                            sl.l(ERROR_IN_UC_SET_PROFILE_PHOTO_LINK, t);
 
                         }
                     }
@@ -274,7 +266,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                 final Return<Location> r;
                 if (WOEID != null) {
-                    r = DB.getHumanCRUDLocationLocal(true).dirtyRLocation(WOEID);
+                    r = DB.getHumanCRUDLocationLocal(true).doRLocation(WOEID, REFRESH_SPEC);
                 } else {
                     r = new ReturnImpl<Location>(ExceptionCache.UNSUPPORTED_OPERATION_EXCEPTION, "Search Unavailable", false);
                     //r = DB.getHumanCRUDLocationLocal(true).dirtyRLocation(location, superLocation);
@@ -309,6 +301,109 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         }
                     }
 
+                    DISQUS:
+                    {
+                        try {
+
+                            UCIReadDatabaseData:
+                            {
+                                final List<LongMsg> existingLongMsgs = existingLocation_.getLongMsgs();
+
+                                if (existingLongMsgs == null || existingLongMsgs.size() == 0) {
+                                    sl.l("Direct update since exisitng data is zero or null.");
+                                    /*start disqus population anyway*/
+                                    UCICheckForDisqusData:
+                                    {
+                                        final JSONObject postJsonObject = getDisqusPosts(WOEID);
+                                        final JSONArray threadPosts = postJsonObject.getJSONArray(RESPONSE);
+                                        final int numberOfThreadPosts = threadPosts.length();
+                                        sl.l(NUMBER_OF_ITEMS_AT_DISQUS_IN_THREAD + numberOfThreadPosts);
+                                        UCSaveDataInDatabase:
+                                        {
+                                            Map<String, String> postsMap = new HashMap<String, String>();
+                                            for (int i = 0; i < numberOfThreadPosts; i++) {
+                                                final JSONObject threadPost = threadPosts.getJSONObject(i);
+                                                sl.l(threadPost.get(CREATED_AT).toString());
+                                                sl.l(threadPost.get(CREATED_AT).toString());
+                                                postsMap.put(threadPost.getString(POST_ID) + PIPE + threadPost.get(CREATED_AT).toString(), threadPost.toString());
+                                                final Element p = $(MarkupTag.P);
+                                                p.setTextContent(threadPost.get(CREATED_AT).toString() + PIPE + threadPost.get(RAW__MESSAGE).toString());
+                                                $(Main_disqus_thread_data).appendChild(p);
+                                            }
+                                            sl.l("Attempting to update posts data to database");
+                                            DB.getHumanCRUDLocationLocal(false).doULocationComments(WOEID, postsMap, REFRESH_SPEC);
+                                            sl.l("Database updated.");
+                                        }
+
+                                    }
+                                } else {
+                                    sl.l("No direct update since there is existing data in database.");
+                                    /* 500,000 indexed by Google at 80,000 pages a day is about 1 week  */
+                                    UCICheckIfDataNotRefreshedWithinLastWeek:
+                                    {
+                                        final LongMsg dateCalcPost = existingLongMsgs.get(0);
+                                        sl.l("Date calculation data:" + dateCalcPost.getLongMsgMetadata());
+                                        final String date = dateCalcPost.getLongMsgMetadata().split("\\|")[1];//we check if length is NOT zero in IF condition before
+                                        sl.l(date);
+                                        final String[] dataArr = date.split("-");
+                                        sl.l(Arrays.toString(dataArr));
+
+                                        Calendar then = Calendar.getInstance();
+                                        then.set(Integer.parseInt(dataArr[0]), Integer.parseInt(dataArr[1]), Integer.parseInt(dataArr[2].substring(0, 2)));
+                                        Calendar now = Calendar.getInstance();
+                                        final long elapsed = (now.getTimeInMillis() - then.getTimeInMillis()) / 1000 * 60 * 60 * 24;
+
+                                        if (elapsed > 7) {
+                                            sl.l("Seven days elapsed since last update");
+                                            UCICheckForDisqusData:
+                                            {
+                                                UCICheckIfPostCountIsLessThanAtDisqusToAvoidDisqusErasingOurDatabase:
+                                                {
+                                                    final JSONObject postJsonObject = getDisqusPosts(WOEID);
+                                                    final JSONArray threadPosts = postJsonObject.getJSONArray(RESPONSE);
+                                                    final int numberOfThreadPosts = threadPosts.length();
+                                                    sl.l(NUMBER_OF_ITEMS_AT_DISQUS_IN_THREAD + numberOfThreadPosts);
+
+                                                    if (existingLongMsgs.size() < numberOfThreadPosts) {
+                                                        UCSaveDataInDatabase:
+                                                        {
+                                                            Map<String, String> postsMap = new HashMap<String, String>();
+                                                            for (int i = 0; i < numberOfThreadPosts; i++) {
+                                                                final JSONObject threadPost = threadPosts.getJSONObject(i);
+                                                                sl.l(threadPost.get(CREATED_AT).toString());
+                                                                sl.l(threadPost.get(CREATED_AT).toString());
+                                                                postsMap.put(threadPost.getString(POST_ID) + PIPE + threadPost.get(CREATED_AT).toString(), threadPost.toString());
+                                                            }
+                                                            DB.getHumanCRUDLocationLocal(false).doULocationComments(WOEID, postsMap, REFRESH_SPEC);
+                                                        }
+                                                    } else {
+                                                        sl.l("Avoiding update since Disqus post count is lower than database post count.");
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            sl.l("Avoiding update since Last update was within seven days.");
+                                        }
+                                    }
+
+                                    UCAppendingSEODisqusData:
+                                    {
+                                        for (final LongMsg threadPost : existingLongMsgs) {
+                                            final Element p = $(MarkupTag.P);
+                                            p.setTextContent(threadPost.getLongMsgMetadata().split("|")[1] + PIPE + new JSONObject(threadPost.getLongMsgContent()).get(RAW__MESSAGE));
+                                            $(Main_disqus_thread_data).appendChild(p);
+                                        }
+                                    }
+
+                                }
+                            }
+
+
+                        } catch (final Throwable t) {
+                            sl.l(ERROR_IN_UC_DISQUS, t);
+                        }
+                    }
+
                     SEO:
                     {
                         setMetaGEOData:
@@ -327,7 +422,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 displayBlock($(Main_othersidebar_upload_file_sh));
                             }
                         } catch (final Throwable t) {
-                            Loggers.EXCEPTION.error("", t);
+                            sl.l(ERROR_IN_UC_SHOW_UPLOAD_FILE_LINK, t);
                         }
                     }
 
@@ -340,7 +435,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             hiddenLocationIdInputTag.setAttribute(INPUT.value(), existingLocation_.getLocationId().toString());
                             hTMLDocument__.getBody().appendChild(hiddenLocationIdInputTag);
                         } catch (final Throwable t) {
-                            Loggers.EXCEPTION.error("", t);
+                            sl.l(ERROR_IN_UC_SET_LOCATION_ID_FOR_JSREFERENCE, t);
                         }
                     }
 
@@ -353,7 +448,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             hiddenLocationIdInputTag.setAttribute(INPUT.value(), existingLocation_.getLocationName() + OF + existingLocation_.getLocationSuperSet().getLocationName());
                             hTMLDocument__.getBody().appendChild(hiddenLocationIdInputTag);
                         } catch (final Throwable t) {
-                            Loggers.EXCEPTION.error("", t);
+                            sl.l(ERROR_IN_UC_SET_LOCATION_NAME_FOR_JSREFERENCE, t);
                         }
                     }
 
@@ -374,40 +469,40 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             }
 
                         } catch (final Throwable t) {
-                            Loggers.EXCEPTION.error("", t);
+                            sl.l(ERROR_IN_UC_SET_LOCATION_AS_PAGE_TOPIC, t);
                         }
 
                     }
 
                     getAndDisplayAllThePhotos:
                     {
-                        List<PublicPhoto> listPublicPhoto = existingLocation_.getPublicPhotos();
-                        sl.appendToLogMSG(NUMBER_OF_PHOTOS_FOR + existingLocation_.getLocationName() + COLON + listPublicPhoto.size());
-
-                        int i = 0;
-                        for (final Iterator<PublicPhoto> it = listPublicPhoto.iterator(); it.hasNext(); i++) {
-                            try {
-                                final PublicPhoto publicPhoto = it.next();
-
-                                //old mode pasted end of class if needed
-                                newMode:
-                                {
-                                    final Element image = $(IMG);
-                                    image.setAttribute(IMG.src(), publicPhoto.getPublicPhotoURLPath());
-                                    image.setAttribute(IMG.alt(), publicPhoto.getPublicPhotoDescription());
-                                    image.setAttribute(IMG.style(), WIDTH + COLON + PX);
-
-                                    final Element link = $(A);
-                                    link.setAttribute(A.href(), publicPhoto.getPublicPhotoURLPath());
-
-                                    link.appendChild(image);
-
-                                    $(Main_yox).appendChild(link);
-                                }
-                            } catch (final Throwable t) {
-                                Loggers.EXCEPTION.error("", t);
-                            }
-                        }
+//                        List<PublicPhoto> listPublicPhoto = existingLocation_.getPublicPhotos();
+//                        sl.appendToLogMSG(NUMBER_OF_PHOTOS_FOR + existingLocation_.getLocationName() + COLON + listPublicPhoto.size());
+//
+//                        int i = 0;
+//                        for (final Iterator<PublicPhoto> it = listPublicPhoto.iterator(); it.hasNext(); i++) {
+//                            try {
+//                                final PublicPhoto publicPhoto = it.next();
+//
+//                                //old mode pasted end of class if needed
+//                                newMode:
+//                                {
+//                                    final Element image = $(IMG);
+//                                    image.setAttribute(IMG.src(), publicPhoto.getPublicPhotoURLPath());
+//                                    image.setAttribute(IMG.alt(), publicPhoto.getPublicPhotoDescription());
+//                                    image.setAttribute(IMG.style(), WIDTH + COLON + PX);
+//
+//                                    final Element link = $(A);
+//                                    link.setAttribute(A.href(), publicPhoto.getPublicPhotoURLPath());
+//
+//                                    link.appendChild(image);
+//
+//                                    $(Main_yox).appendChild(link);
+//                                }
+//                            } catch (final Throwable t) {
+//                                sl.l("Error in UC getAndDisplayAllThePhotos", t);
+//                            }
+//                        }
                     }
 
                 } else {
@@ -427,7 +522,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 $(Main_notice).appendChild(($(P).appendChild(hTMLDocument__.createTextNode(RBGet.logMsgs.getString("CANT_FIND_LOCATION")))));
                             }
                         } catch (final Throwable t) {
-                            Loggers.EXCEPTION.error("", t);
+                            sl.l(ERROR_IN_UC_NO_SUPPORT_FOR_NEW_LOCATIONS, t);
                         }
                     }
                 }
@@ -523,5 +618,19 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 return link;
             }
         };//Listener
+    }
+
+    private JSONObject getDisqusPosts(final long WOEID) throws JSONException {
+        final com.disqus.api.impl.Client threads = DISQUS_API_FACTORY.getInstance(HTTP_DISQUS_COM_API_3_0_THREADS);
+        final com.disqus.api.impl.Client posts = DISQUS_API_FACTORY.getInstance(HTTP_DISQUS_COM_API_3_0_POSTS);
+
+        final Map<String, String> threadParams = new HashMap<String, String>();
+        threadParams.put(THREAD, IDENT_WOEID + WOEID);
+        final JSONObject threadJsonObject = threads.get(LIST, threadParams);
+
+        final Map<String, String> postParams = new HashMap<String, String>();
+        postParams.put(THREAD, threadJsonObject.getJSONArray(RESPONSE).getJSONObject(0).get(ID).toString());
+        final JSONObject postJsonObject = posts.get(LIST, postParams);
+        return postJsonObject;
     }
 }

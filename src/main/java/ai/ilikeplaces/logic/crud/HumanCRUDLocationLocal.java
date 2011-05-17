@@ -4,9 +4,11 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ravindranath Akila
@@ -22,6 +24,10 @@ public interface HumanCRUDLocationLocal {
     public Return<Location> dirtyRLocation(final String locationName, final String superLocationName);
 
     public Return<Location> dirtyRLocation(final long locationId);
+
+    public Return<Location> doRLocation(final long locationId, final RefreshSpec refreshSpec);
+
+    public Return<Location> doULocationComments(final long locationId, final Map<String, String> posts, final RefreshSpec refreshSpec);
 
     public List<String> dirtyRLikeLocationNames(final String likeLocationName);
 
