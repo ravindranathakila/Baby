@@ -44,7 +44,7 @@ import java.util.Map;
 public class WallWidgetPrivatePhoto extends WallWidget {
 
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
-    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec();
+    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs","wallMutes");
 
     HumanId humanId;
 

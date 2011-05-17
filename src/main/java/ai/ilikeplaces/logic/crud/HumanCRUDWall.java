@@ -47,10 +47,10 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
 
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Return<Wall> readWall(final HumanId humanId, Obj wallOwnerId__, RefreshSpec refreshSpec__) {
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Return<Wall> readWall(final HumanId humanId, final Obj wallOwnerId__, final RefreshSpec refreshSpec__) {
         Return<Wall> r;
-        r = new ReturnImpl<Wall>(crudHumansWallLocal_.dirtyRHumansWall(humanId.getObj()).getWall(), READ_WALL_SUCCESSFUL);
+        r = new ReturnImpl<Wall>(crudHumansWallLocal_.doRHumansWall(humanId.getObj()).getWall(), READ_WALL_SUCCESSFUL);
         return r;
 
     }
@@ -59,20 +59,15 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Return<Wall> addEntryToWall(final HumanId humanId__, final HumanId msgOwner__, Obj wallOwnerId__, final String contentToBeAppended) {
-        Return<Wall> r;
-        try {
-            final Wall wall = crudHumansWallLocal_.rHumansWall(humanId__.getObj()).getWall();
+        final Wall wall = crudHumansWallLocal_.doRHumansWall(humanId__.getObj()).getWall();
 
-            wall.getWallMsgs().add(new Msg()
-                    .setMsgContentR(contentToBeAppended)
-                    .setMsgTypeR(Msg.msgTypeHUMAN)
-                    .setMsgMetadataR(msgOwner__.getObj()));
+        wall.getWallMsgs().size();//refreshing
+        wall.getWallMsgs().add(new Msg()
+                .setMsgContentR(contentToBeAppended)
+                .setMsgTypeR(Msg.msgTypeHUMAN)
+                .setMsgMetadataR(msgOwner__.getObj()));
 
-            r = new ReturnImpl<Wall>(wall, UPDATE_WALL_SUCCESSFUL);
-        } catch (final AbstractEjbApplicationException t) {
-            r = new ReturnImpl<Wall>(t, UPDATE_WALL_FAILED, true);
-        }
-        return r;
+        return new ReturnImpl<Wall>(wall, UPDATE_WALL_SUCCESSFUL);
 
     }
 
@@ -82,7 +77,7 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doUAddMuteEntry(crudHumansWallLocal_.dirtyRHumansWallID(operator__.getHumanId()),
+                    .doUAddMuteEntry(crudHumansWallLocal_.doDirtyRHumansWallID(operator__.getHumanId()),
                             mutee.getObj()), UPDATE_WALL_SUBSCRIPTION_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, UPDATE_WALL_SUBSCRIPTION_FALIED, true);
@@ -98,7 +93,7 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doURemoveMuteEntry(crudHumansWallLocal_.dirtyRHumansWallID(operator__.getHumanId()),
+                    .doURemoveMuteEntry(crudHumansWallLocal_.doDirtyRHumansWallID(operator__.getHumanId()),
                             mutee.getObj()), UPDATE_WALL_SUBSCRIPTION_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, UPDATE_WALL_SUBSCRIPTION_FALIED, true);

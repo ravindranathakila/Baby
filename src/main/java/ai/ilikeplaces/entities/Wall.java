@@ -1,7 +1,7 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.*;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
+import ai.ilikeplaces.util.jpa.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,11 +18,15 @@ import java.util.List;
 @NOTE(note = "Wall is initially a plain String. Each text is appended, hence non editable." +
         "A wall can be 'cleared' by a owner." +
         "This approach was taken to reduce TTM.")
-public class Wall implements Clearance {
+public class Wall implements Clearance, Refreshable<Wall> {
     public Long wallId = null;
     public Long clearance = 0L;
     public String wallContent = null;
+
+    @RefreshId("wallMsgs")
     public List<Msg> wallMsgs = null;
+
+    @RefreshId("wallMutes")
     public List<Mute> wallMutes = null;
     public Integer wallType = null;
     public String wallMetadata = null;
@@ -32,6 +36,9 @@ public class Wall implements Clearance {
 
 
     final static public int WALL_LENGTH = 10240;
+
+    private static final Refresh<Wall> REFRESH = new Refresh<Wall>();
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -58,13 +65,16 @@ public class Wall implements Clearance {
         return this;
     }
 
+    @DOCUMENTATION(
+            NOTE = @NOTE("Wall msgs are fetched lazy because sometimes private event is required to be loaded fast, and fetches wall, thereby wall msgs.")
+    )
     @FIXME(issue = "Find out how to limit resultset to say, last 20, in order to limit the results fetched")
     @UNIDIRECTIONAL
     @TODO(task = "Move DESC ASC TO SOME STATIC CLASS FOR REUSE")
     @OrderBy(Msg.msgIdCOL + " DESC")
     @OneToMany(
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE},
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     public List<Msg> getWallMsgs() {
         return wallMsgs;
     }
@@ -76,7 +86,7 @@ public class Wall implements Clearance {
     @UNIDIRECTIONAL
     @OneToMany(
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE},
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     public List<Mute> getWallMutes() {
         return wallMutes;
     }
@@ -116,6 +126,11 @@ public class Wall implements Clearance {
         this.clearance = clearance;
     }
 
+    @Override
+    public Wall refresh(final RefreshSpec refreshSpec) throws RefreshException {
+        REFRESH.refresh(this, refreshSpec);
+        return this;
+    }
 
     @Override
     public String toString() {

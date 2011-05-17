@@ -315,7 +315,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doDirtyRWall(dirtyRPrivateEventAsAny(operator__.getObj(), (Long) wallOwnerId__.getObjectAsValid()).returnValueBadly().getPrivateEventWall().getWallId()), READ_WALL_SUCCESSFUL);
+                    .doRWall(dirtyRPrivateEventAsAny(operator__.getObj(), (Long) wallOwnerId__.getObjectAsValid()).returnValueBadly().getPrivateEventWall().getWallId(),refreshSpec__), READ_WALL_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, READ_WALL_FAILED, true);
         }

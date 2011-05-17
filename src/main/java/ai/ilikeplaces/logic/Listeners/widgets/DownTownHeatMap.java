@@ -46,6 +46,15 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String BBUPDATE_TOKEN = "BBUPDATE_TOKEN";
     private static final String DownTownHeatMapBBUpdate =
             "\nDownTownHeatMapBBUpdate = function(swlat,swlng,nelat,nelng){document.getElementById('" + BBUPDATE_TOKEN + "').value = '' + swlat + ',' + swlng + ',' + nelat + ',' + nelng; document.getElementById('" + BBUPDATE_TOKEN + "').focus(); return document.getElementById('" + BBUPDATE_TOKEN + "');}\n";
+    private static final String LIST_OF_HOT_SPOTS_UNSHIFT_NEW_GOOGLE_MAPS_MARKER = "listOfHotSpots.unshift(new google.maps.Marker({ ";
+    private static final String POSITION_NEW_GOOGLE_MAPS_LAT_LNG = "position: new google.maps.LatLng(";
+    private static final String STRING = ",";
+    private static final String X1 = "), ";
+    private static final String TITLE = "title:'";
+    private static final String MAP_MAP = "map: map, ";
+    private static final String ICON_GET_COLORED_MARKER_WITH_INTENSITY = "icon: getColoredMarkerWithIntensity(";
+    private static final String GOOGLE_MAPS_EVENT_ADD_LISTENER_LIST_OF_HOT_SPOTS_0_CLICK_FUNCTION = "google.maps.event.addListener(listOfHotSpots[0], 'click', function() {\n";
+    private static final String X2 = ")  }));";
 
 
     private Element elementToUpdateWithWOEID;
@@ -131,7 +140,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 GeoCoord[] geoCoord = GeoCoord.getGeoCoordsByBounds(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
 
                 if (geoCoord[0].validate(v) == 0 && geoCoord[1].validate(v) == 0) {
-                    elementToUpdateWithWOEID.setAttribute(MarkupTag.INPUT.value(), geoCoord[0].toString() + "," + geoCoord[1]);
+                    elementToUpdateWithWOEID.setAttribute(MarkupTag.INPUT.value(), geoCoord[0].toString() + STRING + geoCoord[1]);
 
 
                     final List<PrivateEvent> privateEvents__ = DB.getHumanCrudPrivateEventLocal(true).doRPrivateEventsByBoundsAsSystem(
@@ -167,21 +176,21 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                             final W3CPoint coords = yaw.getCoordinates();
 
                             if (yaw.getCoordinates() != null) {
-                                itsNatDocument_.addCodeToSend("listOfHotSpots.unshift(new google.maps.Marker({ " +
-                                        "position: new google.maps.LatLng("
+                                itsNatDocument_.addCodeToSend(LIST_OF_HOT_SPOTS_UNSHIFT_NEW_GOOGLE_MAPS_MARKER +
+                                        POSITION_NEW_GOOGLE_MAPS_LAT_LNG
                                         + coords.getLatitude()
-                                        + ","
+                                        + STRING
                                         + coords.getLongitude()
-                                        + "), " +
-                                        "title:'" + yaw.getCommonName() + "', " +
-                                        "map: map, " +
-                                        "icon: getColoredMarkerWithIntensity(" + yaw.getHits() + ")  }));");
+                                        + X1 +
+                                        TITLE + yaw.getCommonName() + "', " +
+                                        MAP_MAP +
+                                        ICON_GET_COLORED_MARKER_WITH_INTENSITY + yaw.getHits() + X2);
 
-                                $$sendJSStmt("google.maps.event.addListener(listOfHotSpots[0], 'click', function() {\n" +
+                                $$sendJSStmt(GOOGLE_MAPS_EVENT_ADD_LISTENER_LIST_OF_HOT_SPOTS_0_CLICK_FUNCTION +
                                         JSCodeToSend.redirectPageWithURL(
                                                 new Parameter(Controller.Page.Organize.getURL())
                                                         .append(Controller.Page.DocOrganizeCategory, 143, true)
-                                                        .append(WOEIDGrabber.WOEHINT, coords.getLatitude() + "," + coords.getLongitude())
+                                                        .append(WOEIDGrabber.WOEHINT, coords.getLatitude() + STRING + coords.getLongitude())
                                                         .get()
                                         ) +
                                         "});");
