@@ -5,10 +5,13 @@ import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Mute;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.jpa.RefreshException;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,9 +20,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Ravindranath Akila
@@ -50,6 +51,16 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Wall doRWall(final long wallId, final RefreshSpec refreshSpec) throws DBFetchDataException {
+        try {
+            return crudServiceLocal_.findBadly(Wall.class, wallId).refresh(refreshSpec);
+        } catch (RefreshException e) {
+            throw new DBFetchDataException(e);
+        }
+    }
+
+    @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Deprecated
     public Wall doNTxUAppendToWall(long wallId, String contentToBeAppended) throws DBDishonourCheckedException {
@@ -76,6 +87,7 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
                 .setMsgTypeR(Msg.msgTypeHUMAN)
                 .setMsgMetadata(humanId);
 
+        returnVal.getWallMsgs().size();//refreshing
         returnVal.getWallMsgs().add(msg);
         return returnVal;
     }
@@ -85,7 +97,7 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
     public Wall doUAddMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException {
         final Wall returnVal = crudServiceLocal_.findBadly(Wall.class, wallId);
 
-        if(returnVal.getWallMutes().contains(new HumanId(mutee).getSelfAsValid())){
+        if (returnVal.getWallMutes().contains(new HumanId(mutee).getSelfAsValid())) {
             throw DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE;
         }
 
@@ -93,7 +105,7 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
                 .setMuteContentR(mutee)
                 .setMuteTypeR(Mute.muteTypeHUMAN)
                 .setMuteMetadataR(mutee));
-        
+
         return returnVal;
     }
 
@@ -104,11 +116,11 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
         final HumanId humanId = new HumanId(mutee).getSelfAsValid();
         final List<Mute> existing = new ArrayList<Mute>(2);//One for existing, other expecting duplicate entries.
         for (final Mute mute : returnVal.getWallMutes()) {
-            if (mute.equals(humanId)){
+            if (mute.equals(humanId)) {
                 existing.add(mute);
             }
         }
-        if(!returnVal.getWallMutes().removeAll(existing)){
+        if (!returnVal.getWallMutes().removeAll(existing)) {
             throw DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
         }
 

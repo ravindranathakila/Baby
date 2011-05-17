@@ -3,6 +3,8 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.exception.DBFetchDataException;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
 
@@ -24,6 +26,12 @@ public interface CRUDWallLocal {
      * @return Wall
      */
     public Wall doDirtyRWall(final long wallId) throws DBDishonourCheckedException;
+
+    /**
+     * @param wallId
+     * @return Wall
+     */
+    public Wall doRWall(final long wallId, final RefreshSpec refreshSpec) throws DBDishonourCheckedException, DBFetchDataException;
 
     /**
      * @param wallId

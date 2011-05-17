@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
@@ -198,7 +199,7 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
             final PrivatePhoto privatePhoto = rPrivatePhoto(operator__, wallOwnerId__, REFRESH_SPEC).returnValueBadly();
             final Wall privatePhotoWall = privatePhoto.getPrivatePhotoWall();
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doDirtyRWall(privatePhotoWall.getWallId()), READ_WALL_SUCCESSFUL);
+                    .doRWall(privatePhotoWall.getWallId(), refreshSpec__), READ_WALL_SUCCESSFUL);
         } catch (final Throwable t) {
             r = new ReturnImpl<Wall>(t, READ_WALL_FAILED, true);
         }

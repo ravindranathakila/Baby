@@ -3,8 +3,11 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansWall;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import ai.ilikeplaces.util.jpa.RefreshException;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,18 +34,26 @@ public class CRUDHumansWall extends AbstractSLBCallbacks implements CRUDHumansWa
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public HumansWall dirtyRHumansWall(final String humanId) {
-        return humansWallCrudServiceLocal_.find(HumansWall.class, humanId);
+    public HumansWall doRHumansWall(final String humanId, final RefreshSpec wallRefreshSpec) throws DBFetchDataException {
+        final HumansWall humansWall = humansWallCrudServiceLocal_.find(HumansWall.class, humanId);
+        try {
+            humansWall.getWall().refresh(wallRefreshSpec);
+        } catch (RefreshException e) {
+            throw new DBFetchDataException(e);
+        }
+        return humansWall;
     }
-
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public HumansWall rHumansWall(final String humanId) throws DBDishonourCheckedException {
-        return humansWallCrudServiceLocal_.findBadly(HumansWall.class, humanId);
+    public HumansWall doRHumansWall(final String humanId) {
+        final HumansWall humansWall = humansWallCrudServiceLocal_.find(HumansWall.class, humanId);
+        humansWall.getWall().getWallMsgs().size();
+        humansWall.getWall().getWallMutes().size();
+        return humansWall;
     }
 
-    public Long dirtyRHumansWallID(final String humanId) throws DBDishonourCheckedException {
+    public Long doDirtyRHumansWallID(final String humanId) throws DBDishonourCheckedException {
         return humansWallCrudServiceLocal_.findBadly(HumansWall.class, humanId).getWall().getWallId();
     }
 
