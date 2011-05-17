@@ -23,7 +23,7 @@
     stylers: [
       { visibility: "on" },
       { hue: "#00e5ff" },
-      { saturation: -100 },
+      { saturation: -80 },
       { lightness: 40 }
     ]
   },{
@@ -32,32 +32,48 @@
     stylers: [
       { visibility: "on" },
       { hue: "#00e5ff" },
-      { saturation: -100 },
+      { saturation: -90 },
       { lightness: 40 }
     ]
   },{
     featureType: "road.local",
     elementType: "geometry",
     stylers: [
-      { visibility: "on" },
       { hue: "#00e5ff" },
-      { saturation: -100 },
-      { lightness: 40 }
+      { visibility: "on" },
+      { invert_lightness: true },
+      { saturation: 0 },
+      { lightness: 80 }
+    ]
+  },{
+    featureType: "road.local",
+    elementType: "labels",
+    stylers: [
+      { lightness: 51 },
+      { saturation: 49 },
+      { hue: "#ff7700" },
+      { visibility: "on" }
     ]
   },{
     featureType: "water",
     elementType: "geometry",
     stylers: [
       { hue: "#0022ff" },
-      { saturation: -100 }
+      { saturation: 69 }
     ]
   },{
     featureType: "poi",
     elementType: "geometry",
     stylers: [
       { hue: "#ffff00" },
-      { saturation: -100 },
+      { saturation: -80 },
       { visibility: "on" }
+    ]
+  },{
+    featureType: "landscape.natural",
+    elementType: "all",
+    stylers: [
+      { saturation: -54 }
     ]
   }
 ];
