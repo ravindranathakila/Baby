@@ -44,11 +44,11 @@ public class ULocation extends AbstractSLBCallbacks implements ULocationLocal {
         final Location managedLocation = rLocationLocal_.doRLocation(locationId, refreshSpec);
         final Map<String, LongMsg> dbPostsMap = new HashMap<String, LongMsg>();
         for (final LongMsg dbPost : managedLocation.getLongMsgs()) {
-            dbPostsMap.put(dbPost.getLongMsgMetadata().split("|")[0], dbPost);
+            dbPostsMap.put(dbPost.getLongMsgMetadata().split("\\|")[0], dbPost);
         }
 
         for (final String postMeta : posts.keySet()) {
-            final String postMetaId = postMeta.split("|")[0];
+            final String postMetaId = postMeta.split("\\|")[0];
             if (dbPostsMap.containsKey(postMetaId)) {//Update Post if exists
                 dbPostsMap.get(postMetaId).setLongMsgContentR(posts.get(postMeta)).setLongMsgMetadataR(postMeta);
             } else {//Add as new post

@@ -341,12 +341,10 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                     /* 500,000 indexed by Google at 80,000 pages a day is about 1 week  */
                                     UCICheckIfDataNotRefreshedWithinLastWeek:
                                     {
-                                        final LongMsg dateCalcPost = existingLongMsgs.get(0);
+                                        final LongMsg dateCalcPost = existingLongMsgs.get(existingLongMsgs.size()-1);
                                         sl.l("Date calculation data:" + dateCalcPost.getLongMsgMetadata());
                                         final String date = dateCalcPost.getLongMsgMetadata().split("\\|")[1];//we check if length is NOT zero in IF condition before
-                                        sl.l(date);
                                         final String[] dataArr = date.split("-");
-                                        sl.l(Arrays.toString(dataArr));
 
                                         Calendar then = Calendar.getInstance();
                                         then.set(Integer.parseInt(dataArr[0]), Integer.parseInt(dataArr[1]), Integer.parseInt(dataArr[2].substring(0, 2)));
@@ -390,7 +388,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                     {
                                         for (final LongMsg threadPost : existingLongMsgs) {
                                             final Element p = $(MarkupTag.P);
-                                            p.setTextContent(threadPost.getLongMsgMetadata().split("|")[1] + PIPE + new JSONObject(threadPost.getLongMsgContent()).get(RAW__MESSAGE));
+                                            p.setTextContent(threadPost.getLongMsgMetadata().split("\\|")[1] + PIPE + new JSONObject(threadPost.getLongMsgContent()).get(RAW__MESSAGE));
                                             $(Main_disqus_thread_data).appendChild(p);
                                         }
                                     }
