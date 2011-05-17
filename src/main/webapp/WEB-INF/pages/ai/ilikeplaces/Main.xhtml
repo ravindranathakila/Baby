@@ -150,6 +150,7 @@
             }
         </script>
         <script type="text/javascript">
+            disqus_identifier = undefined;
             var disqus_developer = 0;
             var disqus_category_id = 777;
         </script>
@@ -433,7 +434,10 @@
                                         <h3 name="simpleLocationName">Your opinion and recommendations on #i18n will help others find the best deals at #i18n</h3>
                                     </div>
                                     <div class="span-14 last">
-                                        <div id="disqus_thread"></div>
+                                        <div id="disqus_thread">
+                                            <div id="Main_disqus_thread_data">
+                                            </div>
+                                        </div>
                                         <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=ilikeplaces">comments powered by Disqus.</a></noscript>
                                     </div>
                                 </div>
@@ -646,6 +650,7 @@
              <a id="Main_othersidebar_profile_link" href="#" style="display:none;">Profile</a>
         </div>
         <!--Initializing Progress Check-->
+	    <script type="text/javascript">disqus_identifier = document.getElementById('locationId').value;</script>
 	    <script type="text/javascript">ilp_progress_initialize();</script>
 
         <!--Expected to be cached in use since wide usage-->
@@ -685,9 +690,6 @@
 
 
         <script type="text/javascript" src="/js/jquery-impromptu.2.7.min.js"></script>
-     <!-- KISSinsights for ilikeplaces.com -->
-    <script type="text/javascript">var _kiq = _kiq || [];</script>
-    <script type="text/javascript" src="//s3.amazonaws.com/ki.js/12777/2hV.js" async="true"></script>
 
     </body>
 </html>

@@ -2,11 +2,11 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Location;
+import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.logic.crud.unit.RLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.ULocationLocal;
 import ai.ilikeplaces.util.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -14,6 +14,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ravindranath Akila
@@ -24,6 +25,8 @@ import java.util.List;
 @Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUDLocationLocal {
 
+    private static final String FIND_LOCATION_BY_LOCATION_ID_SUCCESSFUL = "Find location by location Id Successful!";
+    private static final String FETCH_LOCATION_BY_ID_AND_REFRESH_SPEC_FAILED = "Fetch location by Id and RefreshSpec FAILED!";
     @EJB
     private RLocationLocal rLocationLocal_;
 
@@ -52,6 +55,30 @@ public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUD
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<Location> doRLocation(final long locationId, final RefreshSpec refreshSpec) {
+        Return<Location> r;
+        try {
+            r = new ReturnImpl<Location>(rLocationLocal_.doRLocation(locationId, refreshSpec), FIND_LOCATION_BY_LOCATION_ID_SUCCESSFUL);
+            return r;
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<Location>(t, FETCH_LOCATION_BY_ID_AND_REFRESH_SPEC_FAILED, true);
+        }
+        return r;
+    }
+
+    public Return<Location> doULocationComments(final long locationId, final Map<String, String> posts, final RefreshSpec refreshSpec) {
+        Return<Location> r;
+        try {
+            r = new ReturnImpl<Location>(uLocationLocal_.doULocationPosts(locationId, posts, refreshSpec), "Update Location Posts Successful!");
+            return r;
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<Location>(t, "Update Location Posts FAILED!", true);
+        }
+        return r;
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<String> dirtyRLikeLocationNames(final String likeLocationName) {
         return rLocationLocal_.doDirtyRLikeLocationNames(likeLocationName);
     }
@@ -74,5 +101,4 @@ public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUD
         return uLocationLocal_.doULocationLatLng(locationId.getObjectAsValid(), latitude.getObjectAsValid(), longitude.getObjectAsValid());
     }
 
-    final static Logger logger = LoggerFactory.getLogger(HumanCRUDLocation.class);
 }

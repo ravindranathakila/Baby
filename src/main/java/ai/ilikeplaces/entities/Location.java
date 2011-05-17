@@ -2,6 +2,7 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
+import ai.ilikeplaces.util.jpa.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,7 @@ import java.util.List;
                 query = "SELECT loc.locationName FROM Location loc WHERE UPPER(loc.locationName) LIKE :locationName"),
         @NamedQuery(name = "FindAllLocationsByLikeName",
                 query = "SELECT loc FROM Location loc WHERE UPPER(loc.locationName) LIKE :locationName")})
-public class Location implements Serializable, Clearance, Comparable<Location> {
+public class Location implements Serializable, Clearance, Comparable<Location>,Refreshable<Location> {
 
     final static Logger logger = LoggerFactory.getLogger(Location.class.getName());
     final static public String LocationEntity = "Location";
@@ -51,9 +52,13 @@ public class Location implements Serializable, Clearance, Comparable<Location> {
     public String locationGeo2;
     public List<PublicPhoto> publicPhotos;
     public List<PrivateEvent> privateEvents;
+
+    @RefreshId("longMsgs")
     public List<LongMsg> longMsgs;
     public static final String OF_SPACE = " of ";
     public static final String OF_SCORE = "_of_";
+
+    private static final Refresh<Location> REFRESH = new Refresh<Location>();
 
 
     /**
@@ -177,7 +182,7 @@ public class Location implements Serializable, Clearance, Comparable<Location> {
     }
 
     @UNIDIRECTIONAL
-    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.REMOVE},
+    @OneToMany(cascade = {CascadeType.ALL},
             fetch = FetchType.LAZY)
     public List<LongMsg> getLongMsgs() {
         return longMsgs;
@@ -190,6 +195,12 @@ public class Location implements Serializable, Clearance, Comparable<Location> {
     @Transient
     public Long getWOEID() {
         return locationId;
+    }
+
+    @Override
+    public Location refresh(final RefreshSpec refreshSpec) throws RefreshException {
+        REFRESH.refresh(this, refreshSpec);
+        return this;
     }
 
     /**
