@@ -535,7 +535,7 @@ function initialize_gmap_scripts_transparently(){//wise any changes also to init
                         <div class="use100">
                             <div class="use100">
                                 <input class="vtip use100 center layer_2"
-                                   id="seachboxMap"
+                                   id="searchboxmap"
                                    style="border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;font-size:14px;height:24px;vertical-align:top;"
                                    value="e.g. las vegas, united states"
                                    onfocus="javascript:this.value='';"
@@ -546,7 +546,7 @@ function initialize_gmap_scripts_transparently(){//wise any changes also to init
                             <div class="use25p use50 use25a">
                             <div class="btn use100"
                                    id="searchButtonMap"
-                                   onclick="javascript:try{seachboxMap = document.getElementById('seachboxMap');new google.maps.Geocoder().geocode({address:seachboxMap.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){if(!(zoomInHint = !zoomInHint)){}map.setCenter(geocoderResult[0].geometry.location); var llb = geocoderResult[0].geometry.viewport; map.fitBounds(llb);}else{alert('No find '+seachboxMap.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
+                                   onclick="javascript:try{searchboxmap = document.getElementById('searchboxmap');new google.maps.Geocoder().geocode({address:searchboxmap.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){if(!(zoomInHint = !zoomInHint)){}map.setCenter(geocoderResult[0].geometry.location); var llb = geocoderResult[0].geometry.viewport; map.fitBounds(llb);}else{alert('No find '+searchboxmap.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
                                    style="font-size:18px;cursor:pointer;background-color;#FD78E1;border:1px;text-align:center;"
                                    >&nbsp;Search&nbsp;</div>
                          </div>

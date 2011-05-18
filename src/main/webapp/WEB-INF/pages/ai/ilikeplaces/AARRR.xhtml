@@ -132,7 +132,7 @@
                     <div class="use50 use25p use25a">
                         <div class="use100">
                         <input class="vtip use100 center layer_2"
-                           id="seachbox"
+                           id="searchbox"
                            style="border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;font-size:14px;height:24px;vertical-align:top;"
                            value="e.g. las vegas, united states"
                            onfocus="javascript:initialize_gmap_scripts();this.value='';"
@@ -144,7 +144,7 @@
                         <div class="use30 use35p use35a">
                         <a class="bold use100 layer_1 btn blue"
                                    id="searchButton"
-                                   onclick="javascript: try{$.prompt.close(); searchbox = document.getElementById('seachbox');new google.maps.Geocoder().geocode({address:searchbox.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){if(!(zoomInHint = !zoomInHint)){}map.setCenter(geocoderResult[0].geometry.location); var llb = geocoderResult[0].geometry.viewport; map.fitBounds(llb);}else{alert('No find '+searchbox.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
+                                   onclick="javascript: try{$.prompt.close(); searchbox = document.getElementById('searchbox');new google.maps.Geocoder().geocode({address:searchbox.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){if(!(zoomInHint = !zoomInHint)){}map.setCenter(geocoderResult[0].geometry.location); var llb = geocoderResult[0].geometry.viewport; map.fitBounds(llb);}else{alert('No find '+searchbox.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
                                    style="font-size:12px;cursor:pointer;background-color;#FD78E1;border:1px;"
                                    tabindex="2"
                                    href="#">Search</a>
@@ -328,7 +328,7 @@
                         focusLng = data.geoplugin_longitude;
                         focusLat = data.geoplugin_latitude;
                         zoom = data.geoplugin_city != null ? 11 : (data.geoplugin_region != null ? 9 : (data.geoplugin_countryName ? 6 : 2 ) );
-                        document.getElementById('seachbox').value = (data.geoplugin_city != null ? data.geoplugin_city + ',': '')
+                        document.getElementById('searchbox').value = (data.geoplugin_city != null ? data.geoplugin_city + ',': '')
                                                                     + (data.geoplugin_region != null ? data.geoplugin_region + ',' : '')
                                                                     + (data.geoplugin_countryName != null ? data.geoplugin_countryName : '');
                 });
@@ -351,7 +351,7 @@
                         //ignoring
                     }
                     $.prompt(popup);
-                    document.getElementById('seachbox').focus();
+                    document.getElementById('searchbox').focus();
 
                     return false;
                 }
