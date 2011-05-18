@@ -35,6 +35,8 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 @OK
 abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
+    private static final String SAVING = "Saving ";
+    private static final String CONTINUED = "...";
     RefObj<String> privateLocationName = null;
 
     RefObj<String> privateLocationInfo = null;
@@ -184,12 +186,13 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
                 mywoeid.setObj($$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
 
                 if (myprivateLocationName.validate(v) == 0 && myprivateLocationInfo.validate(v) == 0 && mywoeid.validate(v) == 0) {
+                    $$(PrivateLocationCreateCNotice).setTextContent(SAVING + myprivateLocationName + CONTINUED);
                     sl = SmartLogger.start(Loggers.LEVEL.DEBUG, SAVING_PRIVATE_LOCATION, 10000, null, true);
                     final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).cPrivateLocation(
-                                    myhumanId,
-                                    myprivateLocationName,
-                                    myprivateLocationInfo,
-                                    mywoeid);
+                            myhumanId,
+                            myprivateLocationName,
+                            myprivateLocationInfo,
+                            mywoeid);
                     if (r.returnStatus() == 0) {
                         remove(evt_.getTarget(), EventType.CLICK, this);
                         $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationName.getObj() + WAS_CREATED);
