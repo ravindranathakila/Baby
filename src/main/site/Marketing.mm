@@ -74,7 +74,7 @@
 </node>
 </node>
 <node CREATED="1304826823756" ID="Freemind_Link_1622011936" MODIFIED="1304826974351" TEXT="The Half Done Marketing Errands List">
-<node CREATED="1304826982351" ID="Freemind_Link_484328439" MODIFIED="1304826999960" TEXT="Forums Interactions">
+<node CREATED="1304826982351" ID="Freemind_Link_484328439" MODIFIED="1305693319722" TEXT="#9 Forums Interactions">
 <node CREATED="1304827000476" ID="Freemind_Link_1385656818" MODIFIED="1304827008367" TEXT="Available Forums">
 <node CREATED="1304827169883" ID="Freemind_Link_1854199894" LINK="http://www.party411.com" MODIFIED="1304827814740" TEXT="http://www.party411.com">
 <node CREATED="1304827192743" ID="Freemind_Link_1112416946" MODIFIED="1304827399415" TEXT="auth">
@@ -157,12 +157,89 @@
 </node>
 </node>
 </node>
+<node CREATED="1305671181297" FOLDED="true" ID="Freemind_Link_796590505" MODIFIED="1305671186686" TEXT="quora">
+<node CREATED="1305671193012" FOLDED="true" ID="Freemind_Link_1253430773" MODIFIED="1305671196027" TEXT="submissions">
+<node CREATED="1305671230378" FOLDED="true" ID="Freemind_Link_1450644211" MODIFIED="1305671261010" TEXT="2011-05-17(1)">
+<arrowlink DESTINATION="Freemind_Link_1034804652" ENDARROW="Default" ENDINCLINATION="465;0;" ID="Freemind_Arrow_Link_1175908142" STARTARROW="None" STARTINCLINATION="465;0;"/>
+<node CREATED="1305671245499" ID="Freemind_Link_1686823610" MODIFIED="1305671246561" TEXT="http://www.quora.com/Are-you-currently-or-thinking-about-planning-an-event-What-do-you-see-as-the-biggest-challenge-in-this-process"/>
+</node>
+</node>
+</node>
 </node>
 <node CREATED="1304827559054" ID="Freemind_Link_863134497" MODIFIED="1304827644148" TEXT="Gmail Label: #eventy"/>
 </node>
 <node CREATED="1305207018125" ID="Freemind_Link_740893876" MODIFIED="1305207031312" TEXT="Sign Up and MadContent and go for articles"/>
 <node CREATED="1305207034890" ID="Freemind_Link_1144649936" MODIFIED="1305207038281" TEXT="Write an ebook"/>
 <node CREATED="1305209183281" ID="Freemind_Link_748605181" MODIFIED="1305209207296" TEXT="Mail to disqus mailing addresses offering something(godaddy)"/>
+<node CREATED="1305667819637" ID="Freemind_Link_521092318" MODIFIED="1305693300159" TEXT="#8 Article Submissions">
+<node CREATED="1305668839952" ID="Freemind_Link_1387066228" MODIFIED="1305668844938" TEXT="Suggested Topics">
+<node CREATED="1305668845548" ID="Freemind_Link_1180766463" MODIFIED="1305668851472" TEXT="http://www.quora.com/As-an-American-what-activities-should-I-be-cautious-of-while-traveling-to-Singapore"/>
+<node CREATED="1305669032221" ID="Freemind_Link_855795163" MODIFIED="1305669033596" TEXT="http://www.quora.com/Travel/Which-five-cities-in-the-USA-are-must-see-for-a-European-tourist"/>
+<node CREATED="1305669041724" ID="Freemind_Link_844470743" MODIFIED="1305669042755" TEXT="http://www.quora.com/Whats-the-recommended-EU-based-online-event-registration-service-for-a-non-profit-not-a-charity-event-conference"/>
+<node CREATED="1305669049617" ID="Freemind_Link_1828505218" MODIFIED="1305669050680" TEXT="http://www.quora.com/Are-you-currently-or-thinking-about-planning-an-event-What-do-you-see-as-the-biggest-challenge-in-this-process"/>
+<node CREATED="1305671319105" ID="Freemind_Link_1245948661" MODIFIED="1305671320183" TEXT="http://www.quora.com/What-are-the-best-bachelor-party-ideas-other-than-strip-clubs"/>
+</node>
+<node CREATED="1305668853394" FOLDED="true" ID="Freemind_Link_1246189924" MODIFIED="1305668857302" TEXT="Available Sites">
+<node CREATED="1305667826403" FOLDED="true" ID="Freemind_Link_769147925" MODIFIED="1305667831793" TEXT="www.ezine.com">
+<node CREATED="1305667832371" ID="Freemind_Link_938314151" MODIFIED="1305667847434" TEXT="auth">
+<node CREATED="1305667848277" ID="Freemind_Link_1480537678" MODIFIED="1305667853996" TEXT="ravindranathakila@gmail.com"/>
+<node CREATED="1305667854449" ID="Freemind_Link_107815350" MODIFIED="1305667863309" TEXT="the complicated password"/>
+</node>
+</node>
+<node CREATED="1305667866699" FOLDED="true" ID="Freemind_Link_412560059" MODIFIED="1305667872199" TEXT="www.isnare.com">
+<node CREATED="1305667872855" ID="Freemind_Link_1557396945" MODIFIED="1305667875777" TEXT="auth">
+<node CREATED="1305667876340" ID="Freemind_Link_1058640721" MODIFIED="1305667881090" TEXT="ravindranathakila@gmail.com"/>
+<node CREATED="1305667881621" ID="Freemind_Link_878314906" MODIFIED="1305667883512" TEXT="teddy bear"/>
+</node>
+<node CREATED="1305671146993" FOLDED="true" ID="Freemind_Link_1030964381" MODIFIED="1305671149945" TEXT="submissions">
+<node CREATED="1305671158974" FOLDED="true" ID="Freemind_Link_1034804652" MODIFIED="1305671261010" TEXT="2011-05-17(1)">
+<node CREATED="1305671150523" ID="Freemind_Link_533737307" MODIFIED="1305671151742" TEXT="Event planning is perceived by many to be &quot;difficult. Impossible as it may sound, event planning is not that hard. In fact, event planning can run quite smoothly given that you make a proper plan and stick to it. One of they key qualities a good event manager has is to be prompt. The other mandatory quality is to look far ahead to see what you will need.  Event planning can done by organizing three categories and attending to them properly.  They are,  People, Money and Resources. If you&apos;re planning an event that has already been decided on, these are the key things to focus on.  People, you&apos;ll have to find early on. For one thing, this will allow them to pin point any things you will definitely overlook along the course. Then, they come in handy in managing money and resources. Money not found is bad. Money found, left in your hand is worse. With people around, they&apos;ll bring up questions. If you&apos;ve got money, give them wisely. If you haven&apos;t got any,  Money, is the next important thing. Figuring out how and where the money will come from is the next important thing. Usually, people can suggest ways to do this, but rarely others take initiative in finding money. Therefore, it is really important that you take initiative on any ideas and start collecting money. Marketing is important here.  Resources, are the stuff you gather from money. The first resource you need is the &quot;place&quot;. The next is the &quot;attendees&quot;. Once you add these two up, you&apos;ll need more resources to &quot;make them mix&quot;. If it is a conference kind of event, you&apos;ll need all formal stuff for them to mix. If it is a party, you&apos;ll need stuff for games. Marketing is important to get people.   Event marketing will need to come in early. Remember those world cup count downs saying &quot;100 days to the World Cup&quot; or alike? That&apos;s 3 months before the grand event right? That is how far you can actually plan ahead.   To summarize, when planning an event, think in terms of people who you can get help from, how and where the money comes from and what resources you need. Once you&apos;ve got these three basics enlisted on paper, start working towards getting them. Haveing people ready initially helps a lot because they will help you in ways you even would not guess. Money sometimes needs marketing and so does getting people. Make sure you book the place of your event early to avoid loosing the slot. Event planning isn&apos;t easy, but it isn&apos;t hard either if you plan it out properly.  There are many online event planning tools available. Minimally, create an email thread on your event among the planners. If not, have all the contacts on your phone SMS or chat IM group during the entire event. But keeps things very simple or you&apos;ll get disoriented.   Always respond with confirmations to people. Replying &quot;Ok thanks&quot; is not required for the message you just got, but if the sender knows you &apos;always respond to messages with something&apos;, they also know if you didn&apos;t respond to something, you missed it, and will ping you again. That is where your &quot;Ok thanks&quot; comes in handy.  Happy Event Planning!"/>
+</node>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1305693143155" ID="Freemind_Link_1273710543" MODIFIED="1305693276565" TEXT="#1 Keyword Research">
+<node CREATED="1305694238593" MODIFIED="1305694238593" TEXT="socialize, girls wanna have fun, party usa,go on a trip,meetup,halloween party games,party world,party america,party pictures,halloween party,have fun,planner event,party planning,planning a partyplanning partyevent planner,events planner,party themes,planning for an event,planning a event,planning an event,wedding planner,how to have fun,events management,event manager,events planning,event management,event planning,planning a wedding,planning event"/>
+<node CREATED="1305698980185" ID="Freemind_Link_668091631" MODIFIED="1305698985825" TEXT="Most Attractive Names">
+<node CREATED="1305699206207" FOLDED="true" ID="Freemind_Link_944910540" MODIFIED="1305699207082" TEXT="http://www.goodtoknow.co.uk/family/200024/Attractive-girls--names">
+<node CREATED="1305699223864" ID="Freemind_Link_20887028" MODIFIED="1305699371477" TEXT="1. Sophie &#xa;2. Rachel &#xa;3. Olivia &#xa;4. Karen &#xa;5. Katie &#xa;6. Sarah &#xa;7. Grace &#xa;8. Emily &#xa;9. Amanda &#xa;10. Heather &#xa;11. Emma &#xa;12. Lucy &#xa;13. Laura &#xa;14. Lisa &#xa;15. Julie &#xa;16. Caroline &#xa;17. Elizabeth &#xa;18. Helen &#xa;19. Jane &#xa;20. Ann&#xa;&#xa;&#xa;1. Ryan &#xa;2. James &#xa;3. Jack &#xa;4. Chris &#xa;5. Michael &#xa;6. Lewis &#xa;7. Andrew &#xa;8. Mark &#xa;9. David &#xa;10. Ian &#xa;11. Stephen &#xa;12. William &#xa;13. Paul &#xa;14. Brian &#xa;15. Robert &#xa;16. Richard &#xa;17. John &#xa;18. Peter &#xa;19. Thomas &#xa;20. George"/>
+</node>
+<node CREATED="1305699230708" FOLDED="true" ID="Freemind_Link_385818484" MODIFIED="1305699261771" TEXT="http://www.quirkology.com/UK/Experiment_name.shtml">
+<node CREATED="1305699308397" ID="Freemind_Link_1183143078" MODIFIED="1305699313085" TEXT="THE NAME EXPERIMENT &#xa;The following tables show the order of the 40 names used in the experiment, and the percentage of the public &#xa;voting for each name, for success, luck and attraction. &#xa;&#xa;Success &#xa;Name  %  Name  % &#xa;Elizabeth  11.6  James  13.0 &#xa;Caroline  10.6  Richard  8.7 &#xa;Helen  7.6  Michael  8.0 &#xa;Olivia  7.0  William  6.9 &#xa;Amanda  6.3  Andrew  6.4 &#xa;Karen  5.5  Mark  5.9 &#xa;Sarah  5.5  Robert  5.6 &#xa;Rachel  5.4  David  5.4 &#xa;Ann  5.0  John  4.8 &#xa;Laura  4.4  George  4.7 &#xa;Sophie  4.1  Paul  3.8 &#xa;Jane  3.8  Chris  3.7 &#xa;Heather  3.6  Peter  3.6 &#xa;Grace  3.5  Jack  3.5 &#xa;Emma  3.4  Thomas  3.4 &#xa;Julie  3.1  Ian  3.1 &#xa;Emily  2.8  Lewis  2.8 &#xa;Katie  2.5  Stephen  2.4 &#xa;Lucy  2.2  Ryan  1.9 &#xa;Lisa  1.8  Brian  1.8 &#xa; &#xa;Luck &#xa;Name  %  Name  % &#xa;Lucy  12.0  Jack  15.5 &#xa;Katie  11.8  Chris  6.7 &#xa;Lisa  6.4  Ryan  5.9 &#xa;Sophie  6.1  Peter  5.7 &#xa;Emma  5.6  James  5.6 &#xa;Julie  5.5  Stephen  5.4 &#xa;Emily  5.4  Michael  5.3 Heather  5.3  Lewis  5.2 &#xa;Rachel  5.2  David  5.1 &#xa;Grace  5.0  Ian  4.8 &#xa;Laura  4.5  Brian  4.6 &#xa;Sarah  4.4  Mark  4.2 &#xa;Amanda  3.8  Paul  3.6 &#xa;Olivia  3.5  Robert  3.5 &#xa;Jane  3.0  Andrew  3.4 &#xa;Caroline  2.9  George  3.3 &#xa;Karen  2.96  William  3.28 &#xa;Ann  2.39  Richard  3.12 &#xa;Elizabeth  2.31  Thomas  2.8 &#xa;Helen  1.57  John  2.31 &#xa; &#xa;Attractiveness &#xa;Name  %  Name  % &#xa;Sophie  15.5  Ryan  11.6 &#xa;Rachel  8.3  James  8.4 &#xa;Olivia  8.1  Jack  7.3 &#xa;Karen  8.0  Chris  6.7 &#xa;Katie  7.7  Michael  6.6 &#xa;Sarah  6.7  Lewis  6.3 &#xa;Grace  5.8  Andrew  6.2 &#xa;Emily  5.5  Mark  6.1 &#xa;Amanda  5.4  David  6.0 &#xa;Heather  5.2  Ian  4.6 &#xa;Emma  4.8  Stephen  4.3 &#xa;Lucy  4.8  William  3.8 &#xa;Laura  4.0  Paul  3.2 &#xa;Lisa  3.5  Brian  3.0 &#xa;Julie  3.1  Robert  2.9 &#xa;Caroline  2.9  Richard  2.8 &#xa;Elizabeth  2.5  John  2.2 &#xa;Helen  2.0  Peter  2.0 &#xa;Jane  1.2  Thomas  1.3 &#xa;Ann  .6  George  1.3 &#xa; "/>
+</node>
+</node>
+</node>
+<node CREATED="1305693638824" ID="Freemind_Link_981211784" MODIFIED="1305693644309" TEXT="#0 Propoganda">
+<node CREATED="1305693644871" ID="Freemind_Link_1559043011" MODIFIED="1305693658528" TEXT="Be compared with high ranking websites">
+<node CREATED="1305694369931" ID="Freemind_Link_241525583" MODIFIED="1305694375462" TEXT="to indicate size of website">
+<node CREATED="1305693660184" FOLDED="true" ID="Freemind_Link_1143108461" MODIFIED="1305693667215" TEXT="http://www.businessweek.com/smallbiz/tips/archives/2010/02/socialize_yourself.html">
+<node CREATED="1305693674669" ID="Freemind_Link_488146009" MODIFIED="1305693685700" TEXT="Shown in Google Trends"/>
+<node CREATED="1305693788931" ID="Freemind_Link_1270869393" MODIFIED="1305693790884" TEXT="auth">
+<node CREATED="1305693791119" ID="Freemind_Link_1598165392" MODIFIED="1305693801431" TEXT="Name:Danny Crane"/>
+<node CREATED="1305693792619" ID="Freemind_Link_1560238900" MODIFIED="1305693796712" TEXT="ravindranathakila@gmail.com"/>
+</node>
+<node CREATED="1305693806399" ID="Freemind_Link_93545163" MODIFIED="1305693808540" TEXT="type">
+<node CREATED="1305693808946" ID="Freemind_Link_1829820133" MODIFIED="1305693811977" TEXT="Web page comment"/>
+</node>
+<node CREATED="1305693994951" ID="Freemind_Link_994226646" MODIFIED="1305693996326" TEXT="content">
+<node CREATED="1305693996873" ID="Freemind_Link_906385379" MODIFIED="1305693998310" TEXT="&quot;With more than 300 million active users on Facebook, small businesses can easily tap into these communities to spread their message with minimal effort. By simply building a page for your company and connecting with friends to develop a community, you can start to trigger customer conversations.&quot;  I like your idea. Facebook offers you the opportunity to connect with your customers in a more personal way. While some companies like Coca Cola are quite strict with social policies(and have sound reason behind it-have a look at their policy), it is beneficial for small corporations to start interacting with customers on Facebook.  To be on the safe side, it is always good to conduct internal training and seminars before doing this. Sometimes employees and marketing, don&apos;t know exactly how to go about this. At times, employees also get on the offensive that you are using them as a tool to make your company public(I&apos;ve seen this happen). Therefore, before even thinking of getting into the social realm with your employees, appeal to company spirit and be open to your employees yourself. One good and healthy way of doing this is get them to suggest how to make the company more socially interactive. That, can do wonders.  While Facebook is dominant in attention, we should not forget that it is a mess of distraction when it comes to walls, pages and event invites. More fine grained tools like http://www.LinkedIn.com or http://www.ILikePlaces.com provide better, personal and less intrusive interactions with your customer.  Happy Corporate Socializing!"/>
+</node>
+<node CREATED="1305694043792" ID="Freemind_Link_550488367" MODIFIED="1305694046307" TEXT="updates">
+<node CREATED="1305694065056" ID="Freemind_Link_9707893" MODIFIED="1305694070525" TEXT="2011-05-18">
+<node CREATED="1305694046776" ID="Freemind_Link_1137301811" MODIFIED="1305694062900" TEXT="comment held for approval by moderator. no email received"/>
+<node CREATED="1305694086383" ID="Freemind_Link_704124456" MODIFIED="1305694092711" TEXT="resubmit as an article if not approved"/>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1305694375884" ID="Freemind_Link_1003633883" MODIFIED="1305694386196" TEXT="to indicate popularity of website"/>
+</node>
+<node CREATED="1305694272357" ID="Freemind_Link_383549672" MODIFIED="1305694295105" TEXT="Be CSR ahead">
+<node CREATED="1305694295746" ID="Freemind_Link_1742295917" MODIFIED="1305694327135" TEXT="to indicate already establishedness"/>
+<node CREATED="1305694317370" ID="Freemind_Link_1398967620" MODIFIED="1305694340229" TEXT="to indicate that you are a caring/responsible company"/>
+</node>
+</node>
 </node>
 <node CREATED="1305157642432" ID="Freemind_Link_95196066" MODIFIED="1305157663964" TEXT="The Chosen Marketing Strategies">
 <node CREATED="1305157791557" ID="Freemind_Link_1850845909" MODIFIED="1305158999621" TEXT="Ridable Growth Waves?"/>
@@ -194,7 +271,7 @@
 <node CREATED="1305159164078" ID="Freemind_Link_1369179674" MODIFIED="1305159168890" TEXT="Strategy Summar"/>
 </node>
 </node>
-<node CREATED="1304603305990" ID="Freemind_Link_620714991" MODIFIED="1304604565950" TEXT="May">
+<node CREATED="1304603305990" FOLDED="true" ID="Freemind_Link_620714991" MODIFIED="1304604565950" TEXT="May">
 <node CREATED="1304340068495" ID="Freemind_Link_84905687" MODIFIED="1304341080207" TEXT="20110502">
 <font NAME="Comic Sans MS" SIZE="12"/>
 <node BACKGROUND_COLOR="#009900" CREATED="1304340062667" FOLDED="true" ID="_" MODIFIED="1304343571926" TEXT="Alien Analysis">

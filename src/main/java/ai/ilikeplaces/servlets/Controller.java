@@ -373,6 +373,7 @@ final public class
                 Controller.Page.friendFindSearchTextInput,
                 Controller.Page.friendFindSearchButtonInput,
                 Controller.Page.friendFindSearchResults,
+                Controller.Page.friendFindSearchNotice,
                 Controller.Page.friendFindSearchInvites
         ) {
             @Override
@@ -964,6 +965,7 @@ final public class
         final static public String friendFindSearchTextInput = "friendFindSearchTextInput";
         final static public String friendFindSearchButtonInput = "friendFindSearchButtonInput";
         final static public String friendFindSearchResults = "friendFindSearchResults";
+        final static public String friendFindSearchNotice = "friendFindSearchNotice";
         final static public String friendFindSearchInvites = "friendFindSearchInvites";
 
         /*AddFriend Page*/

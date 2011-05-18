@@ -33,8 +33,7 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 @OK
 abstract public class PrivateEventCreate extends AbstractWidgetListener {
 
-    private static final String SAVING = "Saving ";
-    private static final String CONTINUED = "...";
+    private static final String SAVING = "Saving...";
     RefObj<String> privateEventName = null;
 
     RefObj<String> privateEventInfo = null;
@@ -124,6 +123,14 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
+
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventCreateSave), EventType.CLICK.toString(), new EventListener() {
+            @Override
+            public void handleEvent(final Event evt_) {
+                $$(privateEventCreateNotice).setTextContent(SAVING);
+            }
+        }, false);
+
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventCreateSave), EventType.CLICK.toString(), new EventListener() {
 
             final HumanId myhumanId = humanId;
@@ -136,8 +143,6 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
             public void handleEvent(final Event evt_) {
 
                 if (myprivateEventName.validate(v) == 0 && myprivateEventInfo.validate(v) == 0) {
-
-                    $$(privateEventCreateNotice).setTextContent(SAVING + myprivateEventName + CONTINUED);
 
                     final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).cPrivateEvent(myhumanId.getObj(), myprivateLocationId, myprivateEventName.getObjectAsValid(), myprivateEventInfo.getObjectAsValid(), "TODO DATE", "TODO DATE");
                     if (r.returnStatus() == 0) {
@@ -156,12 +161,6 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
                 } else {
                     //Validation message should've already been given to the users by above individual listeners
                 }
-            }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
             }
         }, false);
     }

@@ -35,8 +35,7 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 @OK
 abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
-    private static final String SAVING = "Saving ";
-    private static final String CONTINUED = "...";
+    private static final String SAVING = "Saving...";
     RefObj<String> privateLocationName = null;
 
     RefObj<String> privateLocationInfo = null;
@@ -172,6 +171,13 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 //        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateSave), EventType.CLICK.toString(), new EventListener() {
+            @Override
+            public void handleEvent(final Event evt_) {
+                $$(PrivateLocationCreateCNotice).setTextContent(SAVING);
+            }
+        }, false);
+
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateSave), EventType.CLICK.toString(), new EventListener() {
 
             final HumanId myhumanId = humanId;
             final RefObj<String> myprivateLocationName = privateLocationName;
@@ -186,7 +192,6 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
                 mywoeid.setObj($$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
 
                 if (myprivateLocationName.validate(v) == 0 && myprivateLocationInfo.validate(v) == 0 && mywoeid.validate(v) == 0) {
-                    $$(PrivateLocationCreateCNotice).setTextContent(SAVING + myprivateLocationName + CONTINUED);
                     sl = SmartLogger.start(Loggers.LEVEL.DEBUG, SAVING_PRIVATE_LOCATION, 10000, null, true);
                     final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).cPrivateLocation(
                             myhumanId,
@@ -218,18 +223,6 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
                     }
                 }
             }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
         }, false);
-    }
-
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
     }
 }
