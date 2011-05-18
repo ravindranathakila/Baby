@@ -61,8 +61,17 @@ abstract public class FindFriend extends AbstractWidgetListener {
             throw new ConstraintsViolatedException(((HumanId) initArgs[0]).getViolations());
         }
 
+        final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);
+
+        UCDisplayYouHaventAddedFriendsYet:
+        {
+            if(humansNetPeople.getHumansNetPeoples().size() == 0){
+                $$(Controller.Page.friendFindSearchNotice).setTextContent("Oops! You haven't added any friends yet. Add your friends to get going!");
+            }
+        }
+
         List<String> emails = new ArrayList<String>();
-        for (final HumansNetPeople hnp : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId).getHumansNetPeoples()) {
+        for (final HumansNetPeople hnp : humansNetPeople.getHumansNetPeoples()) {
             emails.add(hnp.getHumanId());
         }
 
@@ -83,7 +92,6 @@ abstract public class FindFriend extends AbstractWidgetListener {
         {
             clear($$(Controller.Page.friendFindSearchResults));
 
-            final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);
 
             for (final HumansNetPeople friend : humansNetPeople.getHumansNetPeoples()) {
 
