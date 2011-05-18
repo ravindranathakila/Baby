@@ -57,7 +57,7 @@
             background-color: #2AC;
         }
         div.jqi button.jqidefaultbutton{
-            background-color: #2AE;
+            background-color: #CCC;
         }
         .jqiwarning .jqi .jqibuttons{
             background-color: #2AC;
@@ -118,52 +118,59 @@
     <div style="display:none;">
         <div id="impromptuLoginForm">
                 <div class="use100 center" style="background-color:#ffffff;">
-                    <span style="font-size:16px;" class="intensity"><img src="http://www.ilikeplaces.com/favicon.png" alt="I"/>likeplaces.com socializes you!</span><br/>
-                    <span style="font-size:12px;">This website makes hanging out with people in your life frequent, easy and fun!</span><br/>
-                    <div class="use100" style="height:10px;">&nbsp;</div>
-                    <span style="font-size:12px;color:#aaaaaa;" class="layer_4">
-                        It's all about finding the right place and inviting them...<br/>
-                    </span>
-                    <div class="use100" style="height:5px;">&nbsp;</div>
-                    <span style="font-size:12px;" class="layer_3">To Start With,  Mark a Place<img src="http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=|11|ccc|glyphish_map-marker|16|cc2200|cc2200" alt=" "/> on the Map
-                        (e.g. Your Home<img style="height:19px;" src="http://chart.googleapis.com/chart?chst=d_map_xpin_icon&chld=pin_sright|home|00FFFF|FF0000" alt=""
-                                   />).</span>
-                    <div class="use100" style="height:5px;">&nbsp;</div>
-                    <div class="use50 use25p use25a">
-                        <div class="use100">
-                        <input class="vtip use100 center layer_2"
-                           id="searchbox"
-                           style="border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;font-size:14px;height:24px;vertical-align:top;"
-                           value="e.g. las vegas, united states"
-                           onfocus="javascript:initialize_gmap_scripts();this.value='';"
-                           tabindex="1"
-                           onchange="javascript:$('#searchButton').click();$.prompt.close();"
-                            />
+                    <h1 style="font-size:16px;" class="intensity">Welcome to <img src="http://www.ilikeplaces.com/favicon.png" alt="I"/>likeplaces.com!</h1>
+                    <h2 style="font-size:12px;"><i>The World's Largest Entertainment Website</i></h2>
+                    <div class="use100" style="display:block;">
+                        <span style="font-size:12px;" class="layer_3">To Start,<br/>
+                            Mark Any Interesting Place<img src="http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=|11|ccc|glyphish_map-marker|16|cc2200|cc2200" alt=" "/> On The Map <br/> To Plan An Event
+                            (e.g. Yes, Even your home<img style="height:19px;" src="http://chart.googleapis.com/chart?chst=d_map_xpin_icon&chld=pin_sright|home|00FFFF|FF0000" alt=""
+                                       />).</span>
+                        <div class="use100" style="height:5px;">&nbsp;</div>
+                        <div class="use50 use25p use25a">
+                            <div class="use100">
+                            <input class="vtip use100 center layer_2"
+                               id="searchbox"
+                               style="border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;font-size:14px;height:24px;vertical-align:top;"
+                               value="e.g. las vegas, united states"
+                               onfocus="javascript:initialize_gmap_scripts();this.value='';"
+                               tabindex="1"
+                               onchange="javascript:$('#searchButton').click();$.prompt.close();"
+                                />
+                            </div>
+                            <div class="use100" style="height:10px;">&nbsp;</div>
+                            <div class="use30 use35p use35a">
+                            <a class="bold use100 layer_1 btn blue"
+                                       id="searchButton"
+                                       onclick="javascript: try{$.prompt.close(); searchbox = document.getElementById('searchbox');new google.maps.Geocoder().geocode({address:searchbox.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){if(!(zoomInHint = !zoomInHint)){}map.setCenter(geocoderResult[0].geometry.location); var llb = geocoderResult[0].geometry.viewport; map.fitBounds(llb);}else{alert('No find '+searchbox.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
+                                       style="font-size:12px;cursor:pointer;background-color;#FD78E1;border:1px;"
+                                       tabindex="2"
+                                       href="#">Search</a>
+                             </div>
+                            <br/>
                         </div>
-                        <div class="use100" style="height:10px;">&nbsp;</div>
-                        <div class="use30 use35p use35a">
-                        <a class="bold use100 layer_1 btn blue"
-                                   id="searchButton"
-                                   onclick="javascript: try{$.prompt.close(); searchbox = document.getElementById('searchbox');new google.maps.Geocoder().geocode({address:searchbox.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){if(!(zoomInHint = !zoomInHint)){}map.setCenter(geocoderResult[0].geometry.location); var llb = geocoderResult[0].geometry.viewport; map.fitBounds(llb);}else{alert('No find '+searchbox.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
-                                   style="font-size:12px;cursor:pointer;background-color;#FD78E1;border:1px;"
-                                   tabindex="2"
-                                   href="#">Search</a>
-                         </div>
-                        <br/>
                     </div>
                     <div class="use100" style="height:20px;">&nbsp;</div>
                     <div class="use100">
                         <hr/>
                         <div class="use10 center">&nbsp;</div>
                         <div class="use35 center right">
-                             <a href="/page/_org" class="btn blue layer_2" style="text-align:right;float:right;">Login to Down&darr;Town</a>
+                            <div class="use100" style="text-align:right;">
+                                 Welcome back!<br/><i>You Need To:</i>
+                             </div>
+                             <div class="use100">
+                                 <a href="/page/_org" class="btn layer_2" style="text-align:right;float:right;">Login to Down&darr;Town</a>
+                             </div>
                         </div>
-                        <div class="use10">or</div>
+                        <div class="use10">&nbsp;</div>
                         <div class="use35 center left">
-                             <a href="/signup" class="btn blue layer_2" style="text-align:left;float:left;">&nbsp;&nbsp;Sign up - it's free!&nbsp;&nbsp;</a>
+                             <div class="use100" style="text-align:left;">
+                                 To Use This Website,<br/><i>You Need To:</i>
+                             </div>
+                             <div class="use100">
+                                <a href="/page/_org" class="btn blue layer_2" style="text-align:left;float:left;">&nbsp;&nbsp;Sign up - it's free!&nbsp;&nbsp;</a>
+                             </div>
                         </div>
                         <div class="use10 center">&nbsp;</div>
-                        <hr/>
                      </div>
                     <div class="use30 use70a"><sub><i>(Ctrl-F to Bring This Back)</i></sub></div>
 
@@ -194,6 +201,11 @@
                         The website generate a popularity map based on your markings.<br/>
                     </span>
                     <div class="use100" style="height:5px;">&nbsp;</div>
+                </div>
+        </div>
+        <div id="impromtuSignUp">
+                <div class="use100 center" style="background-color:#ffffff;">
+
                 </div>
         </div>
     </div>
@@ -316,9 +328,9 @@
 
             $.prompt(popup);
 
-            focusLat=36.11464603272065;//L.A.
-            focusLng=-115.17281600000001;//L.A.
-            zoom=12;//Setting default zoom in case ip based settings fail
+            focusLat=0//36.11464603272065;//L.A.
+            focusLng=0//-115.17281600000001;//L.A.
+            zoom=2;//12;//Setting default zoom in case ip based settings fail
 
             try{//Attempting to geo locate the user based on ip
                 // Build the URL to query
