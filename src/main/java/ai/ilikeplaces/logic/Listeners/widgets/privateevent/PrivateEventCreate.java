@@ -33,6 +33,8 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 @OK
 abstract public class PrivateEventCreate extends AbstractWidgetListener {
 
+    private static final String SAVING = "Saving ";
+    private static final String CONTINUED = "...";
     RefObj<String> privateEventName = null;
 
     RefObj<String> privateEventInfo = null;
@@ -134,6 +136,8 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
             public void handleEvent(final Event evt_) {
 
                 if (myprivateEventName.validate(v) == 0 && myprivateEventInfo.validate(v) == 0) {
+
+                    $$(privateEventCreateNotice).setTextContent(SAVING + myprivateEventName + CONTINUED);
 
                     final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).cPrivateEvent(myhumanId.getObj(), myprivateLocationId, myprivateEventName.getObjectAsValid(), myprivateEventInfo.getObjectAsValid(), "TODO DATE", "TODO DATE");
                     if (r.returnStatus() == 0) {
