@@ -1140,7 +1140,7 @@ final public class
         final static public String Main_right_column = "Main_right_column";
         final static public String Main_sidebar = "Main_sidebar";
         final static public String Main_login_widget = "Main_login_widget";
-        final static public String Main_location_backlink = "Main_location_backMain_disqus_thread_dataMain_disqus_thread_datalink";
+        final static public String Main_location_backlink = "Main_location_backlink";
         final static public String Main_location_list_header = "Main_location_list_header";
         final static public String Main_location_list = "Main_location_list";
         final static public String Main_flickr = "Main_flickr";
