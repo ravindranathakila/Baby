@@ -449,7 +449,7 @@
 <node CREATED="1306060981250" ID="Freemind_Link_621222348" MODIFIED="1306060986204" TEXT="Seriously, are you bored?"/>
 <node CREATED="1306060988219" ID="Freemind_Link_1550202149" MODIFIED="1306060996407" TEXT="Tell me, are you bored?"/>
 <node CREATED="1306060997610" ID="Freemind_Link_1741359827" MODIFIED="1306060999047" TEXT="Bored?"/>
-<node CREATED="1306061123533" ID="Freemind_Link_271977326" MODIFIED="1306062708096" TEXT="I LIKE PLACES!&#xa;The Worlds Biggest Entertainment Website&#xa;In order to use this website, you should be bored.&#xa;This website  finds you entertaining places to hang out with friends.&#xa;It then helps you quickly plan the outing or event.&#xa;Please don&apos;t overuse it - that implies a life full of boredom!(use social networks for that!)&#xa;I promise to use this website only to lead a happy socially rich life">
+<node CREATED="1306061123533" ID="Freemind_Link_271977326" MODIFIED="1306063596676" TEXT="I LIKE PLACES!&#xa;The Worlds Biggest Entertainment Website&#xa;In order to use this website, you should be bored.&#xa;This website  finds you entertaining places to hang out with friends.&#xa;It then helps you quickly plan the outing or event.&#xa;Please don&apos;t overuse it - that implies a life full of boredom!(use social networks for that!)&#xa;I agree to use this website only to lead a happy socially rich life and nothing else.">
 <icon BUILTIN="back"/>
 <icon BUILTIN="full-1"/>
 </node>
