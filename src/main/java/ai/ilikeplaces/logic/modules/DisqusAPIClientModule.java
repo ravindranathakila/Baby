@@ -1,4 +1,4 @@
-package ai.ilikeplaces.disqus.conf;
+package ai.ilikeplaces.logic.modules;
 
 import com.disqus.api.conf.AbstractDisqusAPIClientModule;
 

@@ -281,6 +281,11 @@
             <version>1.0</version>
         </dependency>
         <dependency>
+            <groupId>api.google.places</groupId>
+            <artifactId>GooglePlacesAPI-Client</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.google.code.facebookapi</groupId>
             <artifactId>facebook-java-api</artifactId>
             <version>3.0.4</version>
