@@ -1,4 +1,4 @@
-package ai.ilikeplaces.ygd.conf;
+package ai.ilikeplaces.logic.modules;
 
 import ai.ilikeplaces.ygp.conf.AbstractYGPClientModule;
 

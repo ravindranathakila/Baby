@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.disqus.conf.DisqusAPIClientModule;
+import ai.ilikeplaces.logic.modules.DisqusAPIClientModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.json.JSONArray;
