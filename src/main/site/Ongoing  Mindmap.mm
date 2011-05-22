@@ -1807,55 +1807,6 @@
 </node>
 </node>
 </node>
-<node CREATED="1283703158802" FOLDED="true" ID="Freemind_Link_640830008" MODIFIED="1289573580515" POSITION="left" TEXT="Marketing">
-<font NAME="Comic Sans MS" SIZE="14"/>
-<icon BUILTIN="bell"/>
-<node CREATED="1289010658744" ID="Freemind_Link_1999101897" MODIFIED="1289010663868" TEXT="GUIDE">
-<icon BUILTIN="help"/>
-<node CREATED="1289010668102" ID="Freemind_Link_1280564673" MODIFIED="1289010673273" TEXT="Inception">
-<node CREATED="1289010674023" ID="Freemind_Link_1823484800" MODIFIED="1289010707582" TEXT="The act of snapping the subject&apos;s attention"/>
-</node>
-<node CREATED="1289012978175" ID="Freemind_Link_845177365" MODIFIED="1289012981253" TEXT="Deception">
-<node CREATED="1289010740532" ID="Freemind_Link_1436190554" MODIFIED="1289010770872" TEXT="The action by the subject by which he spreads his deception"/>
-</node>
-<node CREATED="1289012981738" ID="Freemind_Link_1091601485" MODIFIED="1294980237554" TEXT="Infusion">
-<node CREATED="1289010710144" ID="Freemind_Link_1437503295" MODIFIED="1289010738875" TEXT="The act of retaining the subject&apos;s attention">
-<node CREATED="1294981194506" ID="Freemind_Link_1817130650" MODIFIED="1294981210629" TEXT="This will only be easy with true value products"/>
-</node>
-</node>
-</node>
-<node CREATED="1283703177927" FOLDED="true" ID="Freemind_Link_1817341781" MODIFIED="1283703202084" TEXT="Checklist">
-<node CREATED="1285778293411" ID="Freemind_Link_1030747214" MODIFIED="1286031836875" TEXT="Are you being dumb? No? BE DUMB!"/>
-<node CREATED="1283703161521" ID="Freemind_Link_63383641" MODIFIED="1283703168865" TEXT="Does it do what it says?"/>
-<node CREATED="1283703169490" ID="Freemind_Link_499084225" MODIFIED="1283703174943" TEXT="Does it say what is does?"/>
-</node>
-<node CREATED="1289010405006" FOLDED="true" ID="Freemind_Link_1694440250" MODIFIED="1289010479138" TEXT="Inception">
-<node CREATED="1289010825100" ID="Freemind_Link_112206367" MODIFIED="1289010840552" TEXT="Inception thu social sites">
-<node CREATED="1289010799494" ID="Freemind_Link_1483011254" MODIFIED="1289010974514" TEXT="OnlyWire submission"/>
-<node CREATED="1289012914173" ID="Freemind_Link_1477421608" MODIFIED="1289012920486" TEXT="Grab Words">
-<node CREATED="1289012935596" ID="Freemind_Link_538999889" MODIFIED="1289012941158" TEXT="OMG!"/>
-</node>
-</node>
-</node>
-<node CREATED="1289010479826" ID="Freemind_Link_452188577" MODIFIED="1289010481653" TEXT="Deception">
-<node CREATED="1286620028609" ID="Freemind_Link_1155133426" MODIFIED="1286620041578" TEXT="Rules make the game interesting">
-<node CREATED="1289012922548" ID="Freemind_Link_941219317" MODIFIED="1294980260398" TEXT="Hyper Words">
-<node CREATED="1289012941580" ID="Freemind_Link_1632147330" MODIFIED="1289012965659" TEXT="I just got robbed"/>
-</node>
-</node>
-</node>
-<node CREATED="1289010597860" ID="Freemind_Link_1689932969" MODIFIED="1294980226928" TEXT="Infusion"/>
-<node CREATED="1289013173634" ID="Freemind_Link_477801137" MODIFIED="1289013175572" TEXT="TODOs">
-<node CREATED="1289013178135" ID="Freemind_Link_917995578" MODIFIED="1289013186635" TEXT="Sign up for all social networks under a different username"/>
-</node>
-<node CREATED="1289567662906" ID="Freemind_Link_492559131" MODIFIED="1289567673250" TEXT="Use Cases">
-<icon BUILTIN="ksmiletris"/>
-<node CREATED="1289567691343" ID="Freemind_Link_1829373110" MODIFIED="1289567725312" TEXT="Each Use Case Is A Marketable One. If Not, Get Rid Of IT!">
-<icon BUILTIN="help"/>
-</node>
-<node CREATED="1289567745921" ID="Freemind_Link_973070027" MODIFIED="1289567758843" TEXT="View Home Page Hotspot Heat Map"/>
-</node>
-</node>
 <node CREATED="1283704339086" FOLDED="true" ID="Freemind_Link_386369610" MODIFIED="1283704377334" POSITION="left" TEXT="QA">
 <icon BUILTIN="pencil"/>
 <node CREATED="1288415653343" FOLDED="true" ID="Freemind_Link_540547344" MODIFIED="1288423654031" TEXT="FREEZER">
