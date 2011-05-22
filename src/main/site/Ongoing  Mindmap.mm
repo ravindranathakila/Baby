@@ -676,7 +676,7 @@
 </node>
 </node>
 </node>
-<node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" FOLDED="true" ID="Freemind_Link_1303374308" MODIFIED="1297919547171" POSITION="right" TEXT="Lab">
+<node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" ID="Freemind_Link_1303374308" MODIFIED="1297919547171" POSITION="right" TEXT="Lab">
 <icon BUILTIN="wizard"/>
 <hook NAME="accessories/plugins/NodeNote.properties">
 <text>Lab is where all the innovative solutions spring up. On the contrary that a things should be markatable, most stuff start on the wizardry lab.&#xa;Put your idea here, first on SPILL. Then try to shift it to SELL.&#xa;Move it back and forth, and well, its simple, coz THATS IT! You can cross check it with the Marketing section criteria and Focus section criteria. &#xa;Then shift it to QA.</text>
@@ -2065,7 +2065,7 @@
 </node>
 <node CREATED="1295620824234" ID="Freemind_Link_1315593715" MODIFIED="1295620836140" TEXT="no true value"/>
 </node>
-<node CREATED="1304083298723" ID="Freemind_Link_952164884" MODIFIED="1304083309436" POSITION="right" TEXT="Components">
+<node CREATED="1304083298723" FOLDED="true" ID="Freemind_Link_952164884" MODIFIED="1304083309436" POSITION="right" TEXT="Components">
 <node CREATED="1304083310654" ID="Freemind_Link_598402749" MODIFIED="1304084101057" TEXT="DT">
 <node CREATED="1304083359191" ID="Freemind_Link_1151798084" MODIFIED="1304083365735" TEXT="Top 4 Links">
 <node CREATED="1304083472617" ID="Freemind_Link_1180104827" MODIFIED="1304083474069" TEXT="P"/>

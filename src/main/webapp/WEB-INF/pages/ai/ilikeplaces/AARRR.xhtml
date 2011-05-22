@@ -13,6 +13,46 @@
         <link rel="stylesheet" href="/css/impromptu.css" type="text/css"/>
         <link rel="stylesheet" href="/css/layout.css" type="text/css"/>
 
+        <link  href="http://fonts.googleapis.com/css?family=Ultra:regular" rel="stylesheet" type="text/css" >
+        <style type="text/css">
+        .grabber {
+          font-family: 'Ultra', serif;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          text-shadow: none;
+          text-decoration: none;
+          text-transform: none;
+          letter-spacing: 0.097em;
+          word-spacing: 0.02em;
+          line-height: 1.55;
+        }
+        .grabber_title {
+          font-family: 'Ultra', serif;
+          font-size: 22px;
+          font-style: normal;
+          font-weight: 400;
+          text-shadow: none;
+          text-decoration: none;
+          text-transform: none;
+          letter-spacing: 0.097em;
+          word-spacing: 0.02em;
+          line-height: 1.55;
+        }
+        .grabber_subtitle {
+          font-family: 'Ultra', serif;
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 400;
+          text-shadow: none;
+          text-decoration: none;
+          text-transform: none;
+          letter-spacing: 0.097em;
+          word-spacing: 0.02em;
+          line-height: 1.55;
+        }
+        </style>
+
         <style type="text/css">
             div.jqi{
                 width: 50%;
@@ -177,6 +217,25 @@
 
                 </div>
         </div>
+        <div id="impromtuGrabber">
+                <div class="use100 center" style="background-color:#ffffff;">
+
+                    <span style="" class="layer_4 grabber_title">
+                        Welcome to <img src="http://www.ilikeplaces.com/favicon.png" alt="I" style="height:22px;"/> Like Places!                                                                       <br/>
+                    </span>
+                    <span style="" class="layer_4 grabber_subtitle">
+                        The Worlds Biggest Entertainment Website                                                        <br/>
+                    </span>
+                    <div class="use100" style="height:20px;"></div>
+                    <span style="" class="layer_4 grabber">
+                        In order to use this website, you should be bored.                                              <br/>
+                        This website  finds you entertaining places to hang out with friends.                           <br/>
+                        It then helps you quickly plan the outing or event.                                             <br/>
+                        Please don't overuse it - that implies a life full of boredom!(use social networks for that!)   <br/>
+                        'I agree to use this website only to lead a happy socially rich life and nothing else'           <br/>
+                    </span>
+                </div>
+        </div>
         <div id="impromtuTour1">
                 <div class="use100 center" style="background-color:#ffffff;">
                     <span style="font-size:16px;" class="intensity">By Marking Your Event's Place</span><br/>
@@ -280,6 +339,8 @@
         $(document).ready(function(){
             var impromptuLoginForm = $('#impromptuLoginForm').html();
             $('#impromptuLoginForm').remove();
+            var impromtuGrabber = $('#impromtuGrabber').html();
+            $('#impromtuGrabber').remove();
             var impromtuTour1 = $('#impromtuTour1').html();
             $('#impromtuTour1').remove();
             var impromtuTour2 = $('#impromtuTour2').html();
@@ -327,6 +388,8 @@
             };
 
             $.prompt(popup);
+            $.prompt.close();
+            $.prompt(impromtuGrabber, {buttons:{"Yes, make me socially rich!":true}});
 
             focusLat=0//36.11464603272065;//L.A.
             focusLng=0//-115.17281600000001;//L.A.
