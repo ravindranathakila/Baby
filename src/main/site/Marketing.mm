@@ -443,7 +443,18 @@
 </node>
 </node>
 <node CREATED="1306058881990" ID="Freemind_Link_340930573" MODIFIED="1306058971297" POSITION="left" TEXT="Penetrators">
-<node CREATED="1306060178771" ID="Freemind_Link_110455535" MODIFIED="1306060185786" TEXT="Applicants"/>
+<node CREATED="1306060178771" ID="Freemind_Link_110455535" MODIFIED="1306060185786" TEXT="Applicants">
+<node CREATED="1306061305237" ID="Freemind_Link_1550399035" MODIFIED="1306061313721" TEXT="Bored">
+<node CREATED="1306060956344" ID="Freemind_Link_588299331" MODIFIED="1306060979172" TEXT="Are you bored ?"/>
+<node CREATED="1306060981250" ID="Freemind_Link_621222348" MODIFIED="1306060986204" TEXT="Seriously, are you bored?"/>
+<node CREATED="1306060988219" ID="Freemind_Link_1550202149" MODIFIED="1306060996407" TEXT="Tell me, are you bored?"/>
+<node CREATED="1306060997610" ID="Freemind_Link_1741359827" MODIFIED="1306060999047" TEXT="Bored?"/>
+<node CREATED="1306061123533" ID="Freemind_Link_271977326" MODIFIED="1306062708096" TEXT="I LIKE PLACES!&#xa;The Worlds Biggest Entertainment Website&#xa;In order to use this website, you should be bored.&#xa;This website  finds you entertaining places to hang out with friends.&#xa;It then helps you quickly plan the outing or event.&#xa;Please don&apos;t overuse it - that implies a life full of boredom!(use social networks for that!)&#xa;I promise to use this website only to lead a happy socially rich life">
+<icon BUILTIN="back"/>
+<icon BUILTIN="full-1"/>
+</node>
+</node>
+</node>
 <node CREATED="1306058991218" ID="Freemind_Link_1179604946" MODIFIED="1306059018513" TEXT="Loser"/>
 <node CREATED="1306058996592" ID="Freemind_Link_679428450" MODIFIED="1306059015044" TEXT="Brave"/>
 <node CREATED="1306059000951" ID="Freemind_Link_892883600" MODIFIED="1306060190286" TEXT="Warriors"/>
@@ -475,6 +486,10 @@
 <text>The core belief. As this is hard to explain to people it HAS to have the following features.&#xa;&#xa;You and they believe in something. You never believe in each other, but this something. You make that something. &#xa;This thing should be easy to understand.&#xa;This thing should not conflict with core beliefs of people(can be propogandic though).&#xa;This thing should be easy to remember.&#xa;This thing should be easy to nurture by one self.</text>
 </hook>
 <node CREATED="1306057259100" ID="Freemind_Link_1578418793" LINK="#Freemind_Link_830418307" MODIFIED="1306059250904" TEXT="Emotional?"/>
+<node CREATED="1306062530140" ID="Freemind_Link_699568763" MODIFIED="1306062538952" TEXT="">
+<icon BUILTIN="full-1"/>
+<icon BUILTIN="forward"/>
+</node>
 </node>
 </node>
 </node>
@@ -498,20 +513,49 @@
 <arrowlink DESTINATION="Freemind_Link_621208670" ENDARROW="Default" ENDINCLINATION="87;0;" ID="Freemind_Arrow_Link_867304984" STARTARROW="None" STARTINCLINATION="87;0;"/>
 <node CREATED="1306055626487" HGAP="85" ID="Freemind_Link_405938849" MODIFIED="1306059780198" TEXT="Right Time" VSHIFT="39">
 <icon BUILTIN="flag"/>
-<node CREATED="1306057245302" ID="Freemind_Link_1404155415" LINK="#Freemind_Link_830418307" MODIFIED="1306059767229" TEXT="Emotional time?"/>
-<node CREATED="1306058264048" ID="Freemind_Link_531132616" LINK="#Freemind_Link_393810782" MODIFIED="1306059765401" TEXT="Seeking time?"/>
-<node CREATED="1306058801768" ID="Freemind_Link_120998846" LINK="#Freemind_Link_1915809512" MODIFIED="1306059763854" TEXT="Dissapointed at some time?"/>
+<node CREATED="1306057245302" ID="Freemind_Link_1404155415" LINK="#Freemind_Link_830418307" MODIFIED="1306059767229" TEXT="Emotional time?">
+<node CREATED="1306062530140" ID="Freemind_Link_248176346" MODIFIED="1306062538952" TEXT="">
+<icon BUILTIN="full-1"/>
+<icon BUILTIN="forward"/>
+</node>
+</node>
+<node CREATED="1306058264048" ID="Freemind_Link_531132616" LINK="#Freemind_Link_393810782" MODIFIED="1306059765401" TEXT="Seeking time?">
+<node CREATED="1306062530140" ID="Freemind_Link_1365985216" MODIFIED="1306062538952" TEXT="">
+<icon BUILTIN="full-1"/>
+<icon BUILTIN="forward"/>
+</node>
+</node>
+<node CREATED="1306058801768" ID="Freemind_Link_120998846" LINK="#Freemind_Link_1915809512" MODIFIED="1306059763854" TEXT="Dissapointed at some time?">
+<node CREATED="1306062530140" ID="Freemind_Link_1045286678" MODIFIED="1306062538952" TEXT="">
+<icon BUILTIN="full-1"/>
+<icon BUILTIN="forward"/>
+</node>
+</node>
 <node COLOR="#cccccc" CREATED="1306059590747" ID="Freemind_Link_539895964" MODIFIED="1306060030288" STYLE="fork" TEXT="Penetrated">
 <arrowlink DESTINATION="Freemind_Link_1404155415" ENDARROW="Default" ENDINCLINATION="104;0;" ID="Freemind_Arrow_Link_1072850912" STARTARROW="None" STARTINCLINATION="104;0;"/>
 <arrowlink DESTINATION="Freemind_Link_531132616" ENDARROW="Default" ENDINCLINATION="79;0;" ID="Freemind_Arrow_Link_1441330578" STARTARROW="None" STARTINCLINATION="79;0;"/>
 <arrowlink DESTINATION="Freemind_Link_120998846" ENDARROW="Default" ENDINCLINATION="121;0;" ID="Freemind_Arrow_Link_1087472617" STARTARROW="None" STARTINCLINATION="121;0;"/>
 <node CREATED="1306055622893" HGAP="77" ID="Freemind_Link_76078124" MODIFIED="1306059775651" TEXT="Right Place" VSHIFT="58">
 <icon BUILTIN="flag"/>
-<node CREATED="1306057232427" ID="Freemind_Link_746275166" LINK="#Freemind_Link_830418307" MODIFIED="1306058607262" TEXT="Emotional place?">
+<node CREATED="1306057232427" ID="Freemind_Link_746275166" LINK="#Freemind_Link_830418307" MODIFIED="1306062523796" TEXT="Emotional place?">
 <arrowlink DESTINATION="Freemind_Link_746275166" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Freemind_Arrow_Link_926962021" STARTARROW="None" STARTINCLINATION="0;0;"/>
+<node CREATED="1306062530140" ID="Freemind_Link_635381887" MODIFIED="1306062538952" TEXT="">
+<icon BUILTIN="full-1"/>
+<icon BUILTIN="forward"/>
 </node>
-<node CREATED="1306058258064" ID="Freemind_Link_1556499404" LINK="#Freemind_Link_393810782" MODIFIED="1306058650279" TEXT="Seeking place?"/>
-<node CREATED="1306058760361" ID="Freemind_Link_1337008119" LINK="#Freemind_Link_1915809512" MODIFIED="1306058831394" TEXT="Dissappointed about some place?"/>
+</node>
+<node CREATED="1306058258064" ID="Freemind_Link_1556499404" LINK="#Freemind_Link_393810782" MODIFIED="1306058650279" TEXT="Seeking place?">
+<node CREATED="1306062530140" ID="Freemind_Link_928831113" MODIFIED="1306062538952" TEXT="">
+<icon BUILTIN="full-1"/>
+<icon BUILTIN="forward"/>
+</node>
+</node>
+<node CREATED="1306058760361" ID="Freemind_Link_1337008119" LINK="#Freemind_Link_1915809512" MODIFIED="1306058831394" TEXT="Dissappointed about some place?">
+<node CREATED="1306062530140" ID="Freemind_Link_645925006" MODIFIED="1306062538952" TEXT="">
+<icon BUILTIN="full-1"/>
+<icon BUILTIN="forward"/>
+</node>
+</node>
 </node>
 </node>
 </node>
