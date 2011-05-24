@@ -56,7 +56,8 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String X2 = ")  }));";
 
     private static final com.google.places.api.impl.ClientFactory GOOGLE_API_CLIENT_FACTORY = Modules.getModules().getGooglePlacesAPIFactory();
-    private static final String LOCATION = "location";
+    private static final String LOCATION_JSON_OBJ_KEY = "location";
+    private static final String LOCATION = LOCATION_JSON_OBJ_KEY;
     private static final String RADIUS = "radius";
     private static final String PLACE_TYPES = "types";
     private static final String COMMON_PLACE_TYPES = "airport%7Camusement_park%7Caquarium%7Cart_gallery%7Catm%7Cbakery%7Cbank%7Cbar%7Cbeauty_salon%7Cbook_store%7Cbowling_alley%7Cbus_station%7Ccafe%7Ccampground%7Ccar_rental%7Ccasino%7Cchurch%7Ccity_hall%7Cclothing_store%7Cembassy%7Cfire_station%7Cflorist%7Cfood%7Cgas_station%7Cgym%7Chair_care%7Chindu_temple%7Cjewelry_store%7Clibrary%7Clodging%7Cmeal_delivery%7Cmeal_takeaway%7Cmosque%7Cmovie_rental%7Cmovie_theater%7Cmuseum%7Cnight_club%7Cpark%7Cparking%7Cpet_store%7Cplace_of_worship%7Cpolice%7Crestaurant%7Crv_park%7Cschool%7Cshoe_store%7Cshopping_mall%7Cspa%7Cstadium%7Csubway_station%7Csynagogue%7Ctaxi_stand%7Ctrain_station%7Ctravel_agency%7Cuniversity%7Czoo";
@@ -69,6 +70,12 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String X4 = "});";
     private static final String GOOGLE_PLACES_JSON_ENDPOINT = "https://maps.googleapis.com/maps/api/place/search/json";
     private static final String FAILED_TO_FETCH_GOOGLE_PLACES_DATA = "Failed to fetch Google Places Data";
+    private static final String RESULTS = "results";
+    private static final String GEOMETRY = "geometry";
+    private static final String LAT = "lat";
+    private static final String LNG = "lng";
+    private static final String NAME = "name";
+    private static final double APPROX_LENGTH_OF_ONE_LAT = 111325;
 
 
     private Element elementToUpdateWithWOEID;
@@ -131,54 +138,86 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 //                    $$(PrivateLocationCreateCNotice).setTextContent(woeid.getViolationAsString());
                 }
             }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
 
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapBB), EventType.BLUR.toString(), new EventListener() {
 
             final Validator v = new Validator();
-            GeoCoord geoCoordSW = new GeoCoord();
-            GeoCoord geoCoordNE = new GeoCoord();
+            final GeoCoord geoCoordSW = new GeoCoord();
+            final GeoCoord geoCoordNE = new GeoCoord();
             final ItsNatDocument ind = itsNatDocument_;
             final HumanId myhumanId = humanId;
 
             @Override
             public void handleEvent(final Event evt_) {
 
-                GeoCoord[] geoCoord = GeoCoord.getGeoCoordsByBounds(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+                final GeoCoord[] geoCoord = GeoCoord.getGeoCoordsByBounds(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
 
                 if (geoCoord[0].validate(v) == 0 && geoCoord[1].validate(v) == 0) {
                     elementToUpdateWithWOEID.setAttribute(MarkupTag.INPUT.value(), geoCoord[0].toString() + COMMA + geoCoord[1]);
 
-
-                    final List<PrivateEvent> privateEvents__ = DB.getHumanCrudPrivateEventLocal(true).doRPrivateEventsByBoundsAsSystem(
-                            geoCoord[0].getObjectAsValid().getLatitude(),
-                            geoCoord[1].getObjectAsValid().getLatitude(),
-                            geoCoord[0].getObjectAsValid().getLongitude(),
-                            geoCoord[1].getObjectAsValid().getLongitude()).returnValue();
-
-
                     /////////////////////////////
-                    final Set<Rawspot> rs = new HashSet<Rawspot>() {{
-                        for (final PrivateEvent privateEvent : privateEvents__) {
-                            add(
-                                    new Rawspot(
-                                            new W3CPoint(privateEvent.getPrivateLocation().getPrivateLocationLatitude(), privateEvent.getPrivateLocation().getPrivateLocationLongitude()),
-                                            privateEvent.getPrivateLocation().getPrivateLocationName()));
+                    final Double latitudeLB = geoCoord[0].getObjectAsValid().getLatitude();
+                    final Double latitudeTR = geoCoord[1].getObjectAsValid().getLatitude();
+                    final Double longitudeLB = geoCoord[0].getObjectAsValid().getLongitude();
+                    final Double longitudeTR = geoCoord[1].getObjectAsValid().getLongitude();
+
+                    final Set<Rawspot> rs = new HashSet<Rawspot>() {
+                        /*StaticBlockInsideSetToAddElementsEasily*/ {
+
+                            UCILikePlacesPlaces:
+                            {
+                                final List<PrivateEvent> privateEvents__ = DB.getHumanCrudPrivateEventLocal(true).doRPrivateEventsByBoundsAsSystem(
+                                        latitudeLB,
+                                        latitudeTR,
+                                        longitudeLB,
+                                        longitudeTR).returnValue();
+
+                                for (final PrivateEvent privateEvent : privateEvents__) {
+                                    add(
+                                            new Rawspot(
+                                                    new W3CPoint(privateEvent.getPrivateLocation().getPrivateLocationLatitude(), privateEvent.getPrivateLocation().getPrivateLocationLongitude()),
+                                                    privateEvent.getPrivateLocation().getPrivateLocationName()));
+                                }
+                            }
+
+                            UCGooglePlaces:
+                            {
+
+                                try {
+                                    final double latitudeAverage = (latitudeLB +
+                                            latitudeTR) / 2;
+                                    final double longitudeAverage = (longitudeLB +
+                                            longitudeTR) / 2;
+
+                                    final JSONObject placesJsonObject = getGooglePlaces(
+                                            latitudeAverage,
+                                            longitudeAverage,
+                                            (long) (Math.abs(latitudeAverage - latitudeLB) * APPROX_LENGTH_OF_ONE_LAT), COMMON_PLACE_TYPES);
+
+                                    final JSONArray placesJsonArray = placesJsonObject.getJSONArray(RESULTS);
+
+                                    for (int i = 0; i < placesJsonArray.length(); i++) {
+                                        final JSONObject lngLat = placesJsonArray.getJSONObject(i).getJSONObject(GEOMETRY).getJSONObject(LOCATION_JSON_OBJ_KEY);
+                                        add(
+                                                new Rawspot(
+                                                        new W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
+                                                        placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
+                                    }
+
+                                } catch (final Exception e) {
+                                    Loggers.ERROR.error(FAILED_TO_FETCH_GOOGLE_PLACES_DATA, e);
+                                }
+                            }
                         }
-                    }};
+                    };
 
                     final BoundingBox bb = new BoundingBox().setObj(
-                            geoCoord[0].getObjectAsValid().getLatitude(),
-                            geoCoord[0].getObjectAsValid().getLongitude(),
-                            geoCoord[1].getObjectAsValid().getLatitude(),
-                            geoCoord[1].getObjectAsValid().getLongitude());
+                            latitudeLB,
+                            longitudeLB,
+                            latitudeTR,
+                            longitudeTR);
 
                     final HotspotAnalyzer hsa = new HotspotAnalyzer(rs, (BoundingBox) bb.validateThrowAndGetThis());
 
@@ -211,14 +250,14 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 //                            final W3CPoint coords = hotspots.get(i).get(j).getCoordinates();
 //
 //                            if (coords != null) {
-//                                final Double latitude = coords.getLatitude();
+//                                final Double latitudeLB = coords.getLatitude();
 //                                final Double longitude = coords.getLongitude();
 //
 //                                final String commonName = hotspots.get(i).get(j).getCommonName();
 //
 //                                final long hits = hotspots.get(i).get(j).getHits();
 //
-//                                generateMarker(latitude, longitude, commonName, hits);
+//                                generateMarker(latitudeLB, longitude, commonName, hits);
 //
 //                                generateMarkerEvent(coords);
 //
@@ -226,39 +265,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 //                        }
 //                    }
 
-                    UCGetGooglePlaces:
-                    {
-                        try {
-                            final JSONObject placesJsonObject = getGooglePlaces(
-                                    (geoCoord[0].getObjectAsValid().getLatitude() +
-                                            geoCoord[1].getObjectAsValid().getLatitude()) / 2,
-                                    (geoCoord[0].getObjectAsValid().getLongitude() +
-                                            geoCoord[1].getObjectAsValid().getLongitude()) / 2,
-                                    1000, COMMON_PLACE_TYPES);
-
-                            final JSONArray placesJsonArray = placesJsonObject.getJSONArray("results");
-
-                            JSONObject place;
-                            for (int i = 0; i < placesJsonArray.length(); i++) {
-                                place = placesJsonArray.getJSONObject(i);
-
-                                final JSONObject lngLat = place.getJSONObject("geometry").getJSONObject("location");
-                                final double lat = Double.parseDouble(lngLat.getString("lat"));
-                                final double lng = Double.parseDouble(lngLat.getString("lng"));
-
-                                generateMarker(
-                                        lat,
-                                        lng,
-                                        place.getString("name"), 10);
-                                generateMarkerEvent(new W3CPoint(lat, lng));
-                            }
-
-                        } catch (final Exception e) {
-                            Loggers.ERROR.error(FAILED_TO_FETCH_GOOGLE_PLACES_DATA, e);
-                        }
-
-
-                    }
 
                 } else {
 
