@@ -76,6 +76,9 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String LNG = "lng";
     private static final String NAME = "name";
     private static final double APPROX_LENGTH_OF_ONE_LAT = 111325;
+    private static final String SQUOTE = "'";
+    private static final String URL_SPACE = "%20";
+    private static final String SPACE = " ";
 
 
     private Element elementToUpdateWithWOEID;
@@ -200,10 +203,12 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
                                     for (int i = 0; i < placesJsonArray.length(); i++) {
                                         final JSONObject lngLat = placesJsonArray.getJSONObject(i).getJSONObject(GEOMETRY).getJSONObject(LOCATION_JSON_OBJ_KEY);
-                                        add(
-                                                new Rawspot(
-                                                        new W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
-                                                        placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
+                                        for (int j = 0; j < 9; j++) {//We loop to give higher rating for google enlisted places
+                                            add(
+                                                    new Rawspot(
+                                                            new W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
+                                                            placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
+                                        }
                                     }
 
                                 } catch (final Exception e) {
@@ -290,7 +295,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 + X1 +
                 TITLE + commonName + X3 +
                 MAP_MAP +
-                ICON_GET_COLORED_MARKER_WITH_INTENSITY + hits + X2);
+                ICON_GET_COLORED_MARKER_WITH_INTENSITY + hits + COMMA + SQUOTE + commonName.replace(SPACE, URL_SPACE) + SQUOTE + X2);
     }
 
     private void generateMarkerEvent(W3CPoint coords) {

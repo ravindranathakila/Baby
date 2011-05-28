@@ -24,6 +24,12 @@ public enum EventType {
             return "blur";
         }
     },
+    CHANGE() {
+        @Override
+        public String toString() {
+            return "change";
+        }
+    },
     UNLOAD() {
         @Override
         public String toString() {
