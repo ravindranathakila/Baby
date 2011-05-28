@@ -1,8 +1,8 @@
-<map version="0.8.1">
+<map version="0.9.0">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
 <node CREATED="1304339998591" ID="Freemind_Link_647673425" MODIFIED="1306058971297" TEXT="Marketing">
 <font NAME="Comic Sans MS" SIZE="12"/>
-<node CREATED="1304603299475" FOLDED="true" ID="Freemind_Link_1783261531" MODIFIED="1304603303771" POSITION="right" TEXT="2011">
+<node CREATED="1304603299475" FOLDED="true" ID="Freemind_Link_1783261531" MODIFIED="1306501847640" POSITION="right" TEXT="2011">
 <node CREATED="1304603326396" FOLDED="true" ID="Freemind_Link_1527518165" MODIFIED="1304689582242" TEXT="Executive Summary of Adimpression 2011">
 <font BOLD="true" NAME="SansSerif" SIZE="18"/>
 <node CREATED="1304603337849" ID="Freemind_Link_992763483" MODIFIED="1304689575213" TEXT="We all started this with location based advertising.">
@@ -59,7 +59,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1304783075507" FOLDED="true" ID="Freemind_Link_140176817" MODIFIED="1304783088445" TEXT="Marketing Plan of Adimpression 2011">
+<node CREATED="1304783075507" FOLDED="true" ID="Freemind_Link_140176817" MODIFIED="1306501845718" TEXT="Marketing Plan of Adimpression 2011">
 <node CREATED="1304783089007" ID="Freemind_Link_1359848668" MODIFIED="1304826980632" TEXT="The Almost Flat Marketing List">
 <node CREATED="1304783100008" ID="Freemind_Link_146684658" MODIFIED="1304783106774" TEXT="Article Submissions">
 <node CREATED="1304783107070" ID="Freemind_Link_531488876" MODIFIED="1304783138634" TEXT="Make sure you submit to only your website related sites"/>
@@ -73,7 +73,7 @@
 <node CREATED="1304783749292" ID="Freemind_Link_1225937860" MODIFIED="1304783776214" TEXT="iSnare at 2$ for submission and article distribution"/>
 </node>
 </node>
-<node CREATED="1304826823756" FOLDED="true" ID="Freemind_Link_1622011936" MODIFIED="1304826974351" TEXT="The Half Done Marketing Errands List">
+<node CREATED="1304826823756" ID="Freemind_Link_1622011936" MODIFIED="1306500000062" TEXT="The Half Done Marketing Errands List">
 <node CREATED="1304826982351" ID="Freemind_Link_484328439" MODIFIED="1305693319722" TEXT="#9 Forums Interactions">
 <node CREATED="1304827000476" ID="Freemind_Link_1385656818" MODIFIED="1304827008367" TEXT="Available Forums">
 <node CREATED="1304827169883" ID="Freemind_Link_1854199894" LINK="http://www.party411.com" MODIFIED="1304827814740" TEXT="http://www.party411.com">
@@ -173,6 +173,9 @@
 <node CREATED="1305896165013" ID="Freemind_Link_320148295" MODIFIED="1305896167466" TEXT="teddy bear"/>
 <node CREATED="1305896169044" ID="Freemind_Link_1722377631" MODIFIED="1305896173512" TEXT="akila@adimpression.mobi"/>
 </node>
+</node>
+<node CREATED="1306500003125" ID="ID_703465634" MODIFIED="1306500009296" TEXT="Facebook Pages">
+<node CREATED="1306500009546" ID="ID_888849176" MODIFIED="1306500018703" TEXT="Page for each town with current events"/>
 </node>
 </node>
 <node CREATED="1305207018125" ID="Freemind_Link_740893876" MODIFIED="1305207031312" TEXT="Sign Up and MadContent and go for articles"/>
@@ -278,7 +281,7 @@
 <node CREATED="1305159164078" ID="Freemind_Link_1369179674" MODIFIED="1305159168890" TEXT="Strategy Summar"/>
 </node>
 </node>
-<node CREATED="1304603305990" ID="Freemind_Link_620714991" MODIFIED="1304604565950" TEXT="May">
+<node CREATED="1304603305990" FOLDED="true" ID="Freemind_Link_620714991" MODIFIED="1306499993921" TEXT="May">
 <node CREATED="1304340068495" ID="Freemind_Link_84905687" MODIFIED="1304341080207" TEXT="20110502">
 <font NAME="Comic Sans MS" SIZE="12"/>
 <node BACKGROUND_COLOR="#009900" CREATED="1304340062667" FOLDED="true" ID="_" MODIFIED="1304343571926" TEXT="Alien Analysis">
@@ -442,95 +445,308 @@
 </node>
 </node>
 </node>
-<node CREATED="1306058881990" ID="Freemind_Link_340930573" MODIFIED="1306058971297" POSITION="left" TEXT="Penetrators">
-<node CREATED="1306060178771" ID="Freemind_Link_110455535" MODIFIED="1306060185786" TEXT="Applicants">
-<node CREATED="1306061305237" FOLDED="true" ID="Freemind_Link_1550399035" MODIFIED="1306258279545" TEXT="Bored">
-<arrowlink DESTINATION="Freemind_Link_679428450" ENDARROW="Default" ENDINCLINATION="161;0;" ID="Freemind_Arrow_Link_941260288" STARTARROW="None" STARTINCLINATION="161;0;"/>
-<node CREATED="1306060956344" ID="Freemind_Link_588299331" MODIFIED="1306060979172" TEXT="Are you bored ?"/>
-<node CREATED="1306060981250" ID="Freemind_Link_621222348" MODIFIED="1306060986204" TEXT="Seriously, are you bored?"/>
-<node CREATED="1306060988219" ID="Freemind_Link_1550202149" MODIFIED="1306060996407" TEXT="Tell me, are you bored?"/>
-<node CREATED="1306060997610" ID="Freemind_Link_1741359827" MODIFIED="1306060999047" TEXT="Bored?"/>
+<node CREATED="1306058881990" ID="Freemind_Link_340930573" MODIFIED="1306504045921" POSITION="left" TEXT="Penetrators">
+<node CREATED="1306546295288" ID="ID_719807011" MODIFIED="1306546299602" TEXT="Mint">
+<node CREATED="1306546301666" ID="ID_370588626" MODIFIED="1306546315656" TEXT="Has to imply &quot;Places&quot;"/>
+<node CREATED="1306546316906" ID="ID_1852971758" MODIFIED="1306546339869" TEXT="Has to indicate &quot;Entertainment&quot;"/>
+</node>
+<node CREATED="1306060178771" FOLDED="true" ID="Freemind_Link_110455535" MODIFIED="1306547150723" TEXT="Applicants">
+<node CREATED="1306258198129" ID="Freemind_Link_1773820053" MODIFIED="1306546431813" TEXT="Just... Have Fun!"/>
+<node CREATED="1306546467374" ID="ID_945821355" MODIFIED="1306546478785" TEXT="You - Friends - Places - Fun"/>
+<node CREATED="1306546524819" ID="ID_1895634668" MODIFIED="1306546554988" TEXT="Friends - Places - Entertainment"/>
+<node CREATED="1306546433954" ID="ID_1456239022" MODIFIED="1306546441739" TEXT="Places to have fun"/>
+<node CREATED="1306258210918" ID="Freemind_Link_382170510" MODIFIED="1306258217008" TEXT="The Worlds Playground"/>
+<node CREATED="1306258299047" ID="Freemind_Link_1592959311" MODIFIED="1306258304762" TEXT="Where do you think you are going"/>
+<node CREATED="1306258344934" ID="Freemind_Link_89893226" MODIFIED="1306258351066" TEXT="Place Matters.. When Its Social"/>
+<node CREATED="1306258360514" ID="Freemind_Link_1484252248" MODIFIED="1306258369556" TEXT="Come.. Let&apos;s go some places"/>
+<node CREATED="1306258410384" ID="Freemind_Link_1505086429" MODIFIED="1306258425558" TEXT="You didn&apos;t see us coming did you? We come from places"/>
+<node CREATED="1306258456500" ID="Freemind_Link_1548345731" MODIFIED="1306258462366" TEXT="Some go heaven... we go places"/>
+<node CREATED="1306258473112" ID="Freemind_Link_1745824747" MODIFIED="1306258479667" TEXT="Get lost... in some place"/>
+</node>
+<node CREATED="1306058996592" ID="Freemind_Link_679428450" MODIFIED="1306547152083" TEXT="Brave">
+<node CREATED="1306258427091" ID="Freemind_Link_102093151" MODIFIED="1306414177562" TEXT="Places even gods digg"/>
+<node CREATED="1306258371793" ID="Freemind_Link_323733176" MODIFIED="1306414175468" TEXT="Admit it, places ARE fun"/>
+<node CREATED="1306258231904" ID="ID_1235934793" MODIFIED="1306550507588">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Let's Build A Happyer Planet
+    </p>
+    <p>
+      It's simple. Just pick an entertaining place from the Map. The rest wil be done for you!
+    </p>
+  </body>
+</html>
+</richcontent>
+<icon BUILTIN="back"/>
+<icon BUILTIN="full-5"/>
+</node>
+<node CREATED="1306258231904" ID="ID_709488799" MODIFIED="1306547398049">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Let's Build A Happyer Planet
+    </p>
+    <p>
+      It's as easy as finding an entertaining place, planning something exciting and inviting friends!
+    </p>
+  </body>
+</html>
+</richcontent>
+<icon BUILTIN="back"/>
+<icon BUILTIN="full-4"/>
+</node>
+<node CREATED="1306258231904" ID="ID_1279920361" MODIFIED="1306504128453">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Let's Build A Happyer Planet
+    </p>
+    <p>
+      Pick a place, plan something interesting and invite your friends.
+    </p>
+  </body>
+</html></richcontent>
+<icon BUILTIN="back"/>
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1306258231904" ID="Freemind_Link_474940571" MODIFIED="1306547160554" TEXT="Let&apos;s Build A Happyer Planet">
+<icon BUILTIN="back"/>
+<icon BUILTIN="full-2"/>
+</node>
 <node CREATED="1306061123533" ID="Freemind_Link_271977326" MODIFIED="1306063596676" TEXT="I LIKE PLACES!&#xa;The Worlds Biggest Entertainment Website&#xa;In order to use this website, you should be bored.&#xa;This website  finds you entertaining places to hang out with friends.&#xa;It then helps you quickly plan the outing or event.&#xa;Please don&apos;t overuse it - that implies a life full of boredom!(use social networks for that!)&#xa;I agree to use this website only to lead a happy socially rich life and nothing else.">
 <icon BUILTIN="back"/>
 <icon BUILTIN="full-1"/>
 </node>
 </node>
-<node CREATED="1306258198129" ID="Freemind_Link_1773820053" MODIFIED="1306258204032" TEXT="Just... Have Fun!"/>
-<node CREATED="1306258210918" ID="Freemind_Link_382170510" MODIFIED="1306258217008" TEXT="The Worlds Playground"/>
-<node CREATED="1306258231904" ID="Freemind_Link_474940571" MODIFIED="1306258243225" TEXT="Lets Build A Happy Planet"/>
-<node CREATED="1306258299047" ID="Freemind_Link_1592959311" MODIFIED="1306258304762" TEXT="Where do you think you are going"/>
-<node CREATED="1306258253671" ID="Freemind_Link_1796464889" MODIFIED="1306258272034" TEXT="Food for thought, Places to be Happy">
-<arrowlink DESTINATION="Freemind_Link_1179604946" ENDARROW="Default" ENDINCLINATION="251;0;" ID="Freemind_Arrow_Link_1749521247" STARTARROW="None" STARTINCLINATION="251;0;"/>
+<node CREATED="1306058991218" FOLDED="true" ID="Freemind_Link_1179604946" MODIFIED="1306504056468" TEXT="Loser">
+<node CREATED="1306258253671" ID="Freemind_Link_1796464889" MODIFIED="1306414172015" TEXT="Food for thought, Places to be Happy"/>
 </node>
-<node CREATED="1306258344934" ID="Freemind_Link_89893226" MODIFIED="1306258351066" TEXT="Place Matters.. When Its Social"/>
-<node CREATED="1306258360514" ID="Freemind_Link_1484252248" MODIFIED="1306258369556" TEXT="Come.. Let&apos;s go some places"/>
-<node CREATED="1306258371793" ID="Freemind_Link_323733176" MODIFIED="1306258379943" TEXT="Admit it, places ARE fun"/>
-<node CREATED="1306258410384" ID="Freemind_Link_1505086429" MODIFIED="1306258425558" TEXT="You didn&apos;t see us coming did you? We come from places"/>
-<node CREATED="1306258427091" ID="Freemind_Link_102093151" MODIFIED="1306258438510" TEXT="Places even gods digg"/>
-<node CREATED="1306258456500" ID="Freemind_Link_1548345731" MODIFIED="1306258462366" TEXT="Some go heaven... we go places"/>
-<node CREATED="1306258473112" ID="Freemind_Link_1745824747" MODIFIED="1306258479667" TEXT="Get lost... in some place"/>
-</node>
-<node CREATED="1306058991218" ID="Freemind_Link_1179604946" MODIFIED="1306258272034" TEXT="Loser"/>
-<node CREATED="1306058996592" ID="Freemind_Link_679428450" MODIFIED="1306258279545" TEXT="Brave"/>
 <node CREATED="1306059000951" ID="Freemind_Link_892883600" MODIFIED="1306060190286" TEXT="Warriors"/>
 </node>
 <node CREATED="1306055485112" ID="Freemind_Link_232833227" MODIFIED="1306059827150" POSITION="left" TEXT="The Golden Circle">
 <icon BUILTIN="wizard"/>
 <node COLOR="#cccccc" CREATED="1306059400723" ID="Freemind_Link_1586088254" MODIFIED="1306059827150" TEXT="Penetrated">
 <arrowlink DESTINATION="Freemind_Link_232833227" ENDARROW="Default" ENDINCLINATION="84;0;" ID="Freemind_Arrow_Link_1101734140" STARTARROW="None" STARTINCLINATION="84;0;"/>
-<node CREATED="1306055403784" ID="Freemind_Link_1385965198" MODIFIED="1306060132974" TEXT="WHAT?">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>Basically features to cater the why and how</text>
-</hook>
+<node CREATED="1306055403784" ID="Freemind_Link_1385965198" MODIFIED="1306501915046">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      <b>WHAT?(State your case)</b>
+    </p>
+  </body>
+</html></richcontent>
+<richcontent TYPE="NOTE"><html><head/><body><p>Basically features to cater the why and how</p></body></html></richcontent>
 <node CREATED="1306058432928" ID="Freemind_Link_84716663" LINK="#Freemind_Link_393810782" MODIFIED="1306059825291" TEXT="Seek"/>
 <node COLOR="#cccccc" CREATED="1306059350523" ID="Freemind_Link_8814572" MODIFIED="1306059825291" TEXT="Penetrated">
 <arrowlink DESTINATION="Freemind_Link_84716663" ENDARROW="Default" ENDINCLINATION="62;0;" ID="Freemind_Arrow_Link_1372278498" STARTARROW="None" STARTINCLINATION="62;0;"/>
-<node CREATED="1306055393502" HGAP="53" ID="Freemind_Link_364643781" MODIFIED="1306060130193" TEXT="HOW?" VSHIFT="43">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>How works best in story mode. How we did fight the battle. How we stand for the philosophy!</text>
-</hook>
-<node CREATED="1306059032871" ID="Freemind_Link_1612968179" MODIFIED="1306059486576" TEXT="Story">
-<node CREATED="1306059500373" ID="Freemind_Link_244608743" LINK="#Freemind_Link_531177503" MODIFIED="1306059911696" TEXT="Curiosity and Amusement"/>
-<node CREATED="1306059505357" ID="Freemind_Link_639647212" LINK="#Freemind_Link_209948448" MODIFIED="1306059821072" TEXT="Faith"/>
+<node CREATED="1306055393502" HGAP="53" ID="Freemind_Link_364643781" MODIFIED="1306502567593" VSHIFT="43">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      <b>HOW?(State your case)</b>
+    </p>
+    <p>
+      How are you going about what you and I now believe?
+    </p>
+    <p>
+      Do I want to pour faith into my belief with your jar?
+    </p>
+    <p>
+      Why would I?
+    </p>
+  </body>
+</html></richcontent>
+<richcontent TYPE="NOTE"><html><head/><body><p>How works best in story mode. How we did fight the battle. How we stand for the philosophy!</p></body></html></richcontent>
+<node CREATED="1306258231904" ID="ID_1551026049" MODIFIED="1306546932342">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Let's Build A Happyer Planet
+    </p>
+    <p>
+      Pick a place, plan something exciting and invite your friends.
+    </p>
+  </body>
+</html></richcontent>
+<icon BUILTIN="full-3"/>
+<icon BUILTIN="forward"/>
+<node CREATED="1306501881984" ID="ID_650611744" MODIFIED="1306502234671" TEXT="I begin my case">
+<icon BUILTIN="prepare"/>
 </node>
-<node COLOR="#cccccc" CREATED="1306059347617" ID="Freemind_Link_1447181342" MODIFIED="1306059832822" TEXT="Penetrated">
-<arrowlink DESTINATION="Freemind_Link_244608743" ENDARROW="Default" ENDINCLINATION="80;0;" ID="Freemind_Arrow_Link_1599146588" STARTARROW="None" STARTINCLINATION="80;0;"/>
-<arrowlink DESTINATION="Freemind_Link_639647212" ENDARROW="Default" ENDINCLINATION="49;0;" ID="Freemind_Arrow_Link_247502865" STARTARROW="None" STARTINCLINATION="49;0;"/>
-<node CREATED="1306055399659" HGAP="62" ID="Freemind_Link_1498742279" MODIFIED="1306060127475" TEXT="WHY?" VSHIFT="44">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>The core belief. As this is hard to explain to people it HAS to have the following features.&#xa;&#xa;You and they believe in something. You never believe in each other, but this something. You make that something. &#xa;This thing should be easy to understand.&#xa;This thing should not conflict with core beliefs of people(can be propogandic though).&#xa;This thing should be easy to remember.&#xa;This thing should be easy to nurture by one self.</text>
-</hook>
-<node CREATED="1306057259100" ID="Freemind_Link_1578418793" LINK="#Freemind_Link_830418307" MODIFIED="1306059250904" TEXT="Emotional?"/>
-<node CREATED="1306062530140" ID="Freemind_Link_699568763" MODIFIED="1306062538952" TEXT="">
+</node>
+<node CREATED="1306502391171" FOLDED="true" ID="ID_1238246815" MODIFIED="1306504201718" TEXT="Let&apos;s build a happyer planet">
+<icon BUILTIN="full-2"/>
+<icon BUILTIN="forward"/>
+<icon BUILTIN="stop"/>
+<node CREATED="1306502617484" ID="ID_244439918" MODIFIED="1306503107609" TEXT="I begin my case">
+<icon BUILTIN="prepare"/>
+</node>
+<node CREATED="1306502632265" ID="ID_965988272" MODIFIED="1306503248843" TEXT="To have social happiness we need our friends to do it and this will get them on board with our invitations">
+<icon BUILTIN="stop"/>
+</node>
+<node CREATED="1306503168156" ID="ID_685242993" MODIFIED="1306503248843" TEXT="After getting our friends on board, we can start finding cool places to plan events">
+<icon BUILTIN="stop"/>
+</node>
+<node CREATED="1306503193859" ID="ID_819146495" MODIFIED="1306503248843" TEXT="After find a good place we can plan an event there with the wall, road directions, email flyer and album">
+<icon BUILTIN="stop"/>
+</node>
+</node>
+<node COLOR="#cccccc" CREATED="1306059347617" ID="Freemind_Link_1447181342" MODIFIED="1306503344281" TEXT="Penetrated">
+<arrowlink DESTINATION="ID_1238246815" ENDARROW="Default" ENDINCLINATION="151;0;" ID="Arrow_ID_1138445081" STARTARROW="None" STARTINCLINATION="151;0;"/>
+<node COLOR="#990099" CREATED="1306055399659" HGAP="62" ID="Freemind_Link_1498742279" MODIFIED="1306544565753" STYLE="fork" VSHIFT="44">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      <font color="#000000"><b>WHY?(State your case)</b> </font>
+    </p>
+    <p>
+      <font color="#000000">Why are you doing this, and why would I? </font>
+    </p>
+    <p>
+      <font color="#000000"><b>I might believe what you believe in, but I won't believe you!</b></font>
+    </p>
+  </body>
+</html>
+</richcontent>
+<richcontent TYPE="NOTE"><html><head/><body><p>The core belief. As this is hard to explain to people it HAS to have the following features.<br/><br/>You and they believe in something. You never believe in each other, but this something. You make that something. <br/>This thing should be easy to understand.<br/>This thing should not conflict with core beliefs of people(can be propogandic though).<br/>This thing should be easy to remember.<br/>This thing should be easy to nurture by one self.</p></body></html></richcontent>
+<node CREATED="1306258231904" ID="ID_1882692747" MODIFIED="1306544785502">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Let's Build A Happyer Planet
+    </p>
+    <p>
+      Pick a place, plan something exciting and invite your friends.
+    </p>
+  </body>
+</html></richcontent>
+<icon BUILTIN="full-3"/>
+<icon BUILTIN="forward"/>
+<icon BUILTIN="go"/>
+<node CREATED="1306501881984" ID="ID_936704411" MODIFIED="1306502234671" TEXT="I begin my case">
+<icon BUILTIN="prepare"/>
+</node>
+<node CREATED="1306502016687" ID="ID_1623818742" MODIFIED="1306502171453" TEXT="Everybody looks for happiness, mainly through religion">
+<icon BUILTIN="go"/>
+</node>
+<node CREATED="1306502097281" ID="ID_233825775" MODIFIED="1306502667906" TEXT="Happyness is a matter of gathering the right people at the right place and throwing events">
+<icon BUILTIN="prepare"/>
+</node>
+<node CREATED="1306502119890" ID="ID_572107428" MODIFIED="1306502216062">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      It can be a family dinner or hanging out with friends and grabbing a movie,
+    </p>
+    <p>
+      that is needed to keep ourselves happy.
+    </p>
+  </body>
+</html></richcontent>
+<icon BUILTIN="go"/>
+</node>
+<node CREATED="1306502143250" ID="ID_1067423702" MODIFIED="1306502226000" TEXT="Happiness can be gained on Earth too">
+<icon BUILTIN="prepare"/>
+</node>
+</node>
+<node CREATED="1306501872671" ID="ID_801056784" MODIFIED="1306502516531" TEXT="Let&apos;s buld a happyer planet">
+<icon BUILTIN="full-2"/>
+<icon BUILTIN="forward"/>
+<icon BUILTIN="go"/>
+<node CREATED="1306501881984" ID="ID_1231154774" MODIFIED="1306502234671" TEXT="I begin my case">
+<icon BUILTIN="prepare"/>
+</node>
+<node CREATED="1306502016687" ID="ID_1809037494" MODIFIED="1306502171453" TEXT="Everybody looks for happiness, mainly through religion">
+<icon BUILTIN="go"/>
+</node>
+<node CREATED="1306502097281" ID="ID_290615383" MODIFIED="1306502667906" TEXT="Happyness is a matter of gathering the right people at the right place and throwing events">
+<icon BUILTIN="prepare"/>
+</node>
+<node CREATED="1306502119890" ID="ID_441432570" MODIFIED="1306502216062">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      It can be a family dinner or hanging out with friends and grabbing a movie,
+    </p>
+    <p>
+      that is needed to keep ourselves happy.
+    </p>
+  </body>
+</html></richcontent>
+<icon BUILTIN="go"/>
+</node>
+<node CREATED="1306502143250" ID="ID_389091070" MODIFIED="1306502226000" TEXT="Happiness can be gained on Earth too">
+<icon BUILTIN="prepare"/>
+</node>
+</node>
+<node CREATED="1306062530140" ID="Freemind_Link_699568763" MODIFIED="1306502260375" TEXT="">
 <icon BUILTIN="full-1"/>
+<icon BUILTIN="forward"/>
+<icon BUILTIN="stop"/>
+<node CREATED="1306501992890" ID="ID_1163534749" MODIFIED="1306502248453" TEXT="I have no case">
+<icon BUILTIN="stop"/>
+</node>
+</node>
+</node>
+</node>
+</node>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1306055581706" ID="Freemind_Link_1686754881" MODIFIED="1306546953488" POSITION="left" TEXT="The Cunning Beggar">
+<richcontent TYPE="NOTE"><html><head/><body><p>The cunning beggar comes near the church every sunday.<br/>As the service finishes, he stands there waiting for the people of God to come out.<br/>He wears his most ragged clothes and looks his worst with sweat and lack of breakfast, and he carries his begging bowl.<br/>He is a rich man!<br/>~Ravindranath Akila</p></body></html></richcontent>
+<icon BUILTIN="wizard"/>
+<node COLOR="#cccccc" CREATED="1306059414519" ID="Freemind_Link_133381740" MODIFIED="1306060030288" STYLE="fork" TEXT="Penetrated">
+<arrowlink DESTINATION="Freemind_Link_1686754881" ENDARROW="Default" ENDINCLINATION="84;0;" ID="Freemind_Arrow_Link_763191296" STARTARROW="None" STARTINCLINATION="84;0;"/>
+<node CREATED="1306055629174" ID="Freemind_Link_1539635701" MODIFIED="1306546954879" TEXT="Right Stuff">
+<icon BUILTIN="flag"/>
+<node CREATED="1306057253662" ID="Freemind_Link_793990935" LINK="#Freemind_Link_830418307" MODIFIED="1306059761885" TEXT="Emotion with/for?"/>
+<node CREATED="1306058329238" ID="Freemind_Link_621208670" LINK="#Freemind_Link_393810782" MODIFIED="1306059700433" TEXT="Seeking for?">
+<node CREATED="1306416350906" ID="ID_137073339" MODIFIED="1306500795609" TEXT="This is the main thing people seek for?!">
+<icon BUILTIN="full-2"/>
 <icon BUILTIN="forward"/>
 </node>
 </node>
-</node>
-</node>
-</node>
-</node>
-</node>
-</node>
-<node CREATED="1306055581706" ID="Freemind_Link_1686754881" MODIFIED="1306059789948" POSITION="left" TEXT="The Cunning Beggar">
-<icon BUILTIN="wizard"/>
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>The cunning beggar comes near the church every sunday.&#xa;As the service finishes, he stands there waiting for the people of God to come out.&#xa;He wears his most ragged clothes and looks his worst with sweat and lack of breakfast, and he carries his begging bowl.&#xa;He is a rich man!&#xa;~Ravindranath Akila</text>
-</hook>
-<node COLOR="#cccccc" CREATED="1306059414519" ID="Freemind_Link_133381740" MODIFIED="1306060030288" STYLE="fork" TEXT="Penetrated">
-<arrowlink DESTINATION="Freemind_Link_1686754881" ENDARROW="Default" ENDINCLINATION="84;0;" ID="Freemind_Arrow_Link_763191296" STARTARROW="None" STARTINCLINATION="84;0;"/>
-<node CREATED="1306055629174" ID="Freemind_Link_1539635701" MODIFIED="1306057225114" TEXT="Right Stuff">
-<icon BUILTIN="flag"/>
-<node CREATED="1306057253662" ID="Freemind_Link_793990935" LINK="#Freemind_Link_830418307" MODIFIED="1306059761885" TEXT="Emotion with/for?"/>
-<node CREATED="1306058329238" ID="Freemind_Link_621208670" LINK="#Freemind_Link_393810782" MODIFIED="1306059700433" TEXT="Seeking for?"/>
 <node COLOR="#cccccc" CREATED="1306059582356" ID="Freemind_Link_1794302000" MODIFIED="1306060030288" STYLE="fork" TEXT="Penetrated">
 <arrowlink DESTINATION="Freemind_Link_793990935" ENDARROW="Default" ENDINCLINATION="118;0;" ID="Freemind_Arrow_Link_342848490" STARTARROW="None" STARTINCLINATION="118;0;"/>
 <arrowlink DESTINATION="Freemind_Link_621208670" ENDARROW="Default" ENDINCLINATION="87;0;" ID="Freemind_Arrow_Link_867304984" STARTARROW="None" STARTINCLINATION="87;0;"/>
-<node CREATED="1306055626487" HGAP="85" ID="Freemind_Link_405938849" MODIFIED="1306059780198" TEXT="Right Time" VSHIFT="39">
+<node CREATED="1306055626487" HGAP="85" ID="Freemind_Link_405938849" MODIFIED="1306415834578" TEXT="Right Time" VSHIFT="39">
 <icon BUILTIN="flag"/>
 <node CREATED="1306057245302" ID="Freemind_Link_1404155415" LINK="#Freemind_Link_830418307" MODIFIED="1306059767229" TEXT="Emotional time?">
-<node CREATED="1306062530140" ID="Freemind_Link_248176346" MODIFIED="1306062538952" TEXT="">
-<icon BUILTIN="full-1"/>
+<node CREATED="1306416350906" ID="ID_1682452270" MODIFIED="1306416363765" TEXT="Sad / Depressed?">
+<icon BUILTIN="full-2"/>
 <icon BUILTIN="forward"/>
 </node>
 </node>
@@ -539,11 +755,20 @@
 <icon BUILTIN="full-1"/>
 <icon BUILTIN="forward"/>
 </node>
+<node CREATED="1306416350906" ID="ID_142705278" MODIFIED="1306416470593" TEXT="Traveling to some place as an alien">
+<icon BUILTIN="full-2"/>
+<icon BUILTIN="forward"/>
+</node>
 </node>
 <node CREATED="1306058801768" ID="Freemind_Link_120998846" LINK="#Freemind_Link_1915809512" MODIFIED="1306059763854" TEXT="Dissapointed at some time?">
 <node CREATED="1306062530140" ID="Freemind_Link_1045286678" MODIFIED="1306062538952" TEXT="">
 <icon BUILTIN="full-1"/>
 <icon BUILTIN="forward"/>
+</node>
+<node CREATED="1306416350906" ID="ID_1336121628" MODIFIED="1306416402578" TEXT="Dissattisfied with what life offers">
+<icon BUILTIN="full-2"/>
+<icon BUILTIN="forward"/>
+<node CREATED="1306416403343" ID="ID_702702616" MODIFIED="1306416410687" TEXT="Nothing to do on facebook"/>
 </node>
 </node>
 <node COLOR="#cccccc" CREATED="1306059590747" ID="Freemind_Link_539895964" MODIFIED="1306060030288" STYLE="fork" TEXT="Penetrated">
@@ -552,16 +777,20 @@
 <arrowlink DESTINATION="Freemind_Link_120998846" ENDARROW="Default" ENDINCLINATION="121;0;" ID="Freemind_Arrow_Link_1087472617" STARTARROW="None" STARTINCLINATION="121;0;"/>
 <node CREATED="1306055622893" HGAP="77" ID="Freemind_Link_76078124" MODIFIED="1306059775651" TEXT="Right Place" VSHIFT="58">
 <icon BUILTIN="flag"/>
-<node CREATED="1306057232427" ID="Freemind_Link_746275166" LINK="#Freemind_Link_830418307" MODIFIED="1306062523796" TEXT="Emotional place?">
+<node CREATED="1306057232427" ID="Freemind_Link_746275166" LINK="#Freemind_Link_830418307" MODIFIED="1306416013375" TEXT="Emotional place?">
 <arrowlink DESTINATION="Freemind_Link_746275166" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Freemind_Arrow_Link_926962021" STARTARROW="None" STARTINCLINATION="0;0;"/>
-<node CREATED="1306062530140" ID="Freemind_Link_635381887" MODIFIED="1306062538952" TEXT="">
-<icon BUILTIN="full-1"/>
+<node CREATED="1306415957203" ID="ID_1610115437" MODIFIED="1306416002031" TEXT="Because seeking happiness is emotional and thrilling, and in this case caring(about others). It also triggers pride for cause.">
+<icon BUILTIN="full-2"/>
 <icon BUILTIN="forward"/>
 </node>
 </node>
 <node CREATED="1306058258064" ID="Freemind_Link_1556499404" LINK="#Freemind_Link_393810782" MODIFIED="1306058650279" TEXT="Seeking place?">
-<node CREATED="1306062530140" ID="Freemind_Link_928831113" MODIFIED="1306062538952" TEXT="">
+<node CREATED="1306062530140" ID="Freemind_Link_928831113" MODIFIED="1306415894031" TEXT="Because a bored person seeks something to do">
 <icon BUILTIN="full-1"/>
+<icon BUILTIN="forward"/>
+</node>
+<node CREATED="1306415957203" ID="ID_666399720" MODIFIED="1306416049968" TEXT="Because people seek happiness even through religion">
+<icon BUILTIN="full-2"/>
 <icon BUILTIN="forward"/>
 </node>
 </node>
@@ -569,6 +798,11 @@
 <node CREATED="1306062530140" ID="Freemind_Link_645925006" MODIFIED="1306062538952" TEXT="">
 <icon BUILTIN="full-1"/>
 <icon BUILTIN="forward"/>
+<node CREATED="1306415897187" ID="ID_1918654775" MODIFIED="1306415916203" TEXT="Because a bored person is dissappointed about existing places"/>
+</node>
+<node CREATED="1306415957203" ID="ID_1418057773" MODIFIED="1306416083671" TEXT="Because people are generally dissappointed about life.">
+<icon BUILTIN="full-2"/>
+<icon BUILTIN="forward"/>
 </node>
 </node>
 </node>
@@ -578,23 +812,19 @@
 </node>
 </node>
 </node>
-<node CREATED="1306057065799" ID="Freemind_Link_169183248" MODIFIED="1306057096237" POSITION="left" TEXT="The Homo Sapient Effects">
+<node CREATED="1306057065799" FOLDED="true" ID="Freemind_Link_169183248" MODIFIED="1306501840515" POSITION="left" TEXT="The Homo Sapient Effects">
 <icon BUILTIN="wizard"/>
 <node CREATED="1306057098581" ID="Freemind_Link_830418307" MODIFIED="1306058607262" TEXT="Emotion">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>Emotion, triggered by the most basic system in the brain, overrides logic.&#xa;If you can trigger an emotion in your favor, you&apos;ve done a good job.</text>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p>Emotion, triggered by the most basic system in the brain, overrides logic.<br/>If you can trigger an emotion in your favor, you've done a good job.</p></body></html></richcontent>
 </node>
 <node CREATED="1306058450085" ID="Freemind_Link_393810782" MODIFIED="1306058574042" TEXT="Explorer">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>Humans are natural explorers. However, how this can apply in this context should be fine grained!</text>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p>Humans are natural explorers. However, how this can apply in this context should be fine grained!</p></body></html></richcontent>
 </node>
 <node CREATED="1306058735985" ID="Freemind_Link_1915809512" MODIFIED="1306058825738" TEXT="Leadership &amp; Propoganda"/>
 <node CREATED="1306059446454" ID="Freemind_Link_531177503" MODIFIED="1306059906212" TEXT="Curiosity and Amusement"/>
 <node CREATED="1306059451360" ID="Freemind_Link_209948448" MODIFIED="1306059452860" TEXT="Faith"/>
 </node>
-<node CREATED="1283703177927" ID="Freemind_Link_1817341781" MODIFIED="1306055532018" POSITION="left" TEXT="Flat Zeroeth Checklist">
+<node CREATED="1283703177927" FOLDED="true" ID="Freemind_Link_1817341781" MODIFIED="1306502895453" POSITION="left" TEXT="Flat Zeroeth Checklist">
 <node CREATED="1285778293411" ID="Freemind_Link_1030747214" MODIFIED="1286031836875" TEXT="Are you being dumb? No? BE DUMB!"/>
 <node CREATED="1283703161521" ID="Freemind_Link_63383641" MODIFIED="1283703168865" TEXT="Does it do what it says?"/>
 <node CREATED="1283703169490" ID="Freemind_Link_499084225" MODIFIED="1283703174943" TEXT="Does it say what is does?"/>

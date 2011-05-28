@@ -268,7 +268,6 @@ public class HotspotAnalyzer {
     }
 
     private static String memory() {
-        System.out.println(Runtime.getRuntime().freeMemory());
         return Runtime.getRuntime().freeMemory() + BYTES;
     }
 

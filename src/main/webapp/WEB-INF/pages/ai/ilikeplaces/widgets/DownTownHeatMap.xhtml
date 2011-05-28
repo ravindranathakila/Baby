@@ -10,70 +10,36 @@
 <head>
     <title>\ilikeplaces\src\main\webapp\WEB-INF\pages\ai\ilikeplaces\widgets\DownTownHeatMap.xhtml</title>
 </head>
-<body>
-<div class="by" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
+<body style="height:100%;">
+<div class="by" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat" style="height:100%;">
 
 <script type="text/javascript">
 
 
  var stylez = [
   {
-    featureType: "road.highway",
-    elementType: "geometry",
+    featureType: "all",
+    elementType: "all",
     stylers: [
-      { visibility: "on" },
-      { hue: "#00e5ff" },
-      { saturation: -80 },
-      { lightness: 40 }
-    ]
-  },{
-    featureType: "road.arterial",
-    elementType: "geometry",
-    stylers: [
-      { visibility: "on" },
-      { hue: "#00e5ff" },
-      { saturation: -90 },
-      { lightness: 40 }
-    ]
-  },{
-    featureType: "road.local",
-    elementType: "geometry",
-    stylers: [
-      { hue: "#00e5ff" },
-      { visibility: "on" },
-      { invert_lightness: true },
-      { saturation: 0 },
-      { lightness: 80 }
-    ]
-  },{
-    featureType: "road.local",
-    elementType: "labels",
-    stylers: [
-      { lightness: 28 },
-      { saturation: 67 },
-      { hue: "#0800ff" },
-      { visibility: "on" }
-    ]
-  },{
-    featureType: "water",
-    elementType: "geometry",
-    stylers: [
-      { hue: "#0022ff" },
-      { saturation: 69 }
+      { hue: "#ffbb00" }
     ]
   },{
     featureType: "poi",
-    elementType: "geometry",
+    elementType: "all",
     stylers: [
-      { hue: "#ffff00" },
-      { saturation: -80 },
-      { visibility: "on" }
+      { hue: "#ff3300" }
+    ]
+  },{
+    featureType: "landscape.man_made",
+    elementType: "all",
+    stylers: [
+      { hue: "#ff3300" }
     ]
   },{
     featureType: "landscape.natural",
     elementType: "all",
     stylers: [
-      { saturation: -54 }
+      { hue: "#b2ff00" }
     ]
   }
 ];
@@ -101,27 +67,27 @@ function clearHotSpots(){
     }
 }
 
-function getColoredMarkerWithIntensity(intensity){
-    if(Math.log(intensity)/Math.log(10) < 1 ){
-        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|000|glyphish_map-marker|16|00b7fa|892e40';
+function getColoredMarkerWithIntensity(intensity, title){
+    if(intensity < 1 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|ff00cc|glyphish_map-marker|24|ff00cc|FB0';
     }
-    if(Math.log(intensity)/Math.log(10) < 2 ){
-        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|000|glyphish_map-marker|16|f94c7d|892e40';
+    if(intensity < 5 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|ee00aa|glyphish_map-marker|24|cc00aa|FB0';
     }
-    if(Math.log(intensity)/Math.log(10) < 3 ){
-        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|000|glyphish_map-marker|16|f9c405|892e40';
+    if(intensity < 10 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|dd0088|glyphish_map-marker|24|cc0088|FB0';
     }
-    if(Math.log(intensity)/Math.log(10) < 4 ){
-        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|000|glyphish_map-marker|16|fb150f|892e40';
+    if(intensity < 20 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|cc0066|glyphish_map-marker|24|990066|FB0';
     }
-    if(Math.log(intensity)/Math.log(10) < 5 ){
-        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|000|glyphish_map-marker|16|f8f509|892e40';
+    if(intensity < 50 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|bb0044|glyphish_map-marker|24|990044|FB0';
     }
-    if(Math.log(intensity)/Math.log(10) < 6 ){
-        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|000|glyphish_map-marker|16|009d00|892e40';
+    if(intensity < 100 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|aa0022|glyphish_map-marker|24|660022|FB0';
     }
-    if(Math.log(intensity)/Math.log(10) >= 6 ){
-        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|000|glyphish_map-marker|16|004fa1|892e40';
+    if(intensity >= 100 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|12|990000|glyphish_map-marker|24|660000|FB0';
     }
 }
 
@@ -446,23 +412,23 @@ function initialize_gmap_scripts_transparently(){//wise any changes also to init
 
 
 </script>
-    <div class="by" style="overflow:hidden;" id="DownTownHeatMap_load_click">
+    <div class="by" style="overflow:hidden;height:99%;" id="DownTownHeatMap_load_click">
         <div></div>
         <div class="by center" title="fun places map!" style="cursor:pointer;">
-            Stuff's loading... It's gonna be great.. but just a moment!
+            Rome wasn't built in a day!
         </div>
         <div></div>
     </div>
-    <div class="by" style="overflow:hidden;display:none;" id="DownTownHeatMap_map_wrapper">
-        <div id="DownTownHeatMap_map" class="by vtip" title="Double-click to Zoom" style="height:600px;font-size:12px;">
+    <div class="by" style="overflow:hidden;display:none;height:99%;" id="DownTownHeatMap_map_wrapper">
+        <div id="DownTownHeatMap_map" class="by" style="height:100%;font-size:12px;">
         </div>
     </div>
-    <div class="by center">
+    <div class="by center" style="height:1%;">
         <div class="by2 center">
-            <input type="text" class="by center" id="DownTownHeatMapWOEID" value="0,0" readonly="readonly" style="background-color:transparent;color:transparent;border:none;font-family: Impact, Charcoal, sans-serif;"/>
+            <input type="text" class="by center" id="DownTownHeatMapWOEID" value="0,0" readonly="readonly" style="background-color:transparent;color:transparent;border:none;"/>
         </div>
         <div class="by2 center">
-            <input type="text" class="by center" id="DownTownHeatMapBB" value="0,0" readonly="readonly" style="background-color:transparent;color:transparent;border:none;font-family: Impact, Charcoal, sans-serif;"/>
+            <input type="text" class="by center" id="DownTownHeatMapBB" value="0,0" readonly="readonly" style="background-color:transparent;color:transparent;border:none;"/>
         </div>
     </div>
     <div style="display:none;">
