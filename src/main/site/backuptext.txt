@@ -52,3 +52,43 @@ body {
 
 
 
+
+
+ALL LIGHT BROWN - 5
+
+[
+  {
+    featureType: "all",
+    elementType: "all",
+    stylers: [
+      { hue: "#ffbb00" }
+    ]
+  }
+]
+
+
+
+
+ALL LIGHT BROWN WITH POI IN FADED RED - 6
+
+[
+  {
+    featureType: "all",
+    elementType: "all",
+    stylers: [
+      { hue: "#ffbb00" }
+    ]
+  },{
+    featureType: "poi",
+    elementType: "all",
+    stylers: [
+      { hue: "#ff3300" }
+    ]
+  }
+]
+
+
+
+
+
+
