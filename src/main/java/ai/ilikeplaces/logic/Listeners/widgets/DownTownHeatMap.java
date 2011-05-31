@@ -203,12 +203,10 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
                                     for (int i = 0; i < placesJsonArray.length(); i++) {
                                         final JSONObject lngLat = placesJsonArray.getJSONObject(i).getJSONObject(GEOMETRY).getJSONObject(LOCATION_JSON_OBJ_KEY);
-                                        for (int j = 0; j < 9; j++) {//We loop to give higher rating for google enlisted places
                                             add(
                                                     new Rawspot(
                                                             new W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
                                                             placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
-                                        }
                                     }
 
                                 } catch (final Exception e) {
