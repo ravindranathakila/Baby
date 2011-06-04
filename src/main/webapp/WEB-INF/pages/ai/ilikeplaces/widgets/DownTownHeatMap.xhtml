@@ -58,7 +58,7 @@ function setNotificationFetchNegative(){
 
 function setNotification(text){
     $('#CurrentActivityNotificationBox').append('<span>'+text+'<br/></span>');
-    setTimeout('setClearForLastNotification()',5000);
+    setTimeout('setClearForLastNotification()',9000);
 }
 
 function setClearForLastNotification(){
@@ -66,6 +66,11 @@ function setClearForLastNotification(){
 }
 
 //setInterval("clearNotificationArea()",7000);
+
+ function hotSpotClicked(hotspotClickDetails){
+    alert('Some people thought it is useless to make an application that helps you plan events in these cool places. So we decided to remove the event collaboration platform');
+    alert(hotspotClickDetails.url);
+ }
 
 function getColoredMarkerWithIntensity(intensity, title){
     if(intensity < 1 ){
@@ -269,7 +274,11 @@ function initialize_DownTownHeatMap_map(){
             },
             function(geocoderResult,geocoderStatus){
                 if(geocoderStatus == google.maps.GeocoderStatus.OK){
-                    setNotification("We are somewhere near.. "+geocoderResult[0].address_components[0].long_name+", " + geocoderResult[geocoderResult.length-1].address_components[geocoderResult[geocoderResult.length-1].address_components.length-1].long_name);
+                    var locationString = '';
+                        for(var j in geocoderResult[0].address_components){
+                            locationString += geocoderResult[0].address_components[j].long_name + ' ';
+                        }
+                    setNotification("We are somewhere near.. " + locationString);
                 }else{
                     setNotification("Hey where we are?!!");
                 }
