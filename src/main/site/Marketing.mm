@@ -220,7 +220,7 @@
 </node>
 </node>
 <node CREATED="1305693143155" ID="Freemind_Link_1273710543" MODIFIED="1305693276565" TEXT="#1 Keyword Research">
-<node CREATED="1305694238593" MODIFIED="1305694238593" TEXT="socialize, girls wanna have fun, party usa,go on a trip,meetup,halloween party games,party world,party america,party pictures,halloween party,have fun,planner event,party planning,planning a partyplanning partyevent planner,events planner,party themes,planning for an event,planning a event,planning an event,wedding planner,how to have fun,events management,event manager,events planning,event management,event planning,planning a wedding,planning event"/>
+<node CREATED="1305694238593" ID="ID_1704685217" MODIFIED="1305694238593" TEXT="socialize, girls wanna have fun, party usa,go on a trip,meetup,halloween party games,party world,party america,party pictures,halloween party,have fun,planner event,party planning,planning a partyplanning partyevent planner,events planner,party themes,planning for an event,planning a event,planning an event,wedding planner,how to have fun,events management,event manager,events planning,event management,event planning,planning a wedding,planning event"/>
 <node CREATED="1305698980185" ID="Freemind_Link_668091631" MODIFIED="1305698985825" TEXT="Most Attractive Names">
 <node CREATED="1305699206207" FOLDED="true" ID="Freemind_Link_944910540" MODIFIED="1305699207082" TEXT="http://www.goodtoknow.co.uk/family/200024/Attractive-girls--names">
 <node CREATED="1305699223864" ID="Freemind_Link_20887028" MODIFIED="1305699371477" TEXT="1. Sophie &#xa;2. Rachel &#xa;3. Olivia &#xa;4. Karen &#xa;5. Katie &#xa;6. Sarah &#xa;7. Grace &#xa;8. Emily &#xa;9. Amanda &#xa;10. Heather &#xa;11. Emma &#xa;12. Lucy &#xa;13. Laura &#xa;14. Lisa &#xa;15. Julie &#xa;16. Caroline &#xa;17. Elizabeth &#xa;18. Helen &#xa;19. Jane &#xa;20. Ann&#xa;&#xa;&#xa;1. Ryan &#xa;2. James &#xa;3. Jack &#xa;4. Chris &#xa;5. Michael &#xa;6. Lewis &#xa;7. Andrew &#xa;8. Mark &#xa;9. David &#xa;10. Ian &#xa;11. Stephen &#xa;12. William &#xa;13. Paul &#xa;14. Brian &#xa;15. Robert &#xa;16. Richard &#xa;17. John &#xa;18. Peter &#xa;19. Thomas &#xa;20. George"/>
@@ -261,6 +261,13 @@
 </node>
 <node CREATED="1306798194090" ID="ID_960978056" MODIFIED="1306798202199" TEXT="Be Portrayed as a Religion">
 <node CREATED="1306798202606" ID="ID_989050604" MODIFIED="1306798217622" TEXT="FB Fan Page - Is Happiness Your Religion?"/>
+</node>
+</node>
+<node CREATED="1306884489223" ID="ID_1825080151" MODIFIED="1306884497192" TEXT="#7 Link Building">
+<node CREATED="1306884497786" ID="ID_1493498265" MODIFIED="1306884508413" TEXT="Directory Critic">
+<node CREATED="1306884511225" ID="ID_1215200335" MODIFIED="1306884553621" TEXT="Category - Travel">
+<node CREATED="1306884642007" ID="ID_1108296227" MODIFIED="1306884725626" TEXT="2488&#x9;Travel Article Directory&#x9;12-2-10&#x9;travel&#x9;0&#x9;report &#xa;2489&#x9;WD travel directory&#x9;2-12-09&#x9;travel&#x9;0&#x9;report &#xa;2490&#x9;Travel Articles Directory&#x9;5-2-10&#x9;travel&#x9;0&#x9;report &#xa;2491&#x9;Articles Abroad&#x9;1-12-07&#x9;travel&#x9;1&#x9;report &#xa;2492&#x9;GlobeTales.com Travel Article Directory&#x9;28-1-10&#x9;travel&#x9;0&#x9;report &#xa;2493&#x9;Travel Articles&#x9;30-7-06&#x9;travel&#x9;2&#x9;report &#xa;2494&#x9;Free Travel Articles&#x9;27-1-09&#x9;travel&#x9;0&#x9;report &#xa;2495&#x9;Travel Articles&#x9;6-6-07&#x9;travel&#x9;0&#x9;report &#xa;2496&#x9;Travel Articles&#x9;24-3-07&#x9;travel&#x9;0&#x9;report &#xa;2497&#x9;Free Tavel Articles&#x9;20-1-09&#x9;travel&#x9;2&#x9;report "/>
+</node>
 </node>
 </node>
 </node>

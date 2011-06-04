@@ -151,16 +151,15 @@
                                id="searchbox"
                                style="border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;font-size:14px;height:24px;vertical-align:top;"
                                value="e.g. las vegas, united states"
-                               onfocus="javascript:initialize_gmap_scripts();this.value='';"
                                tabindex="1"
-                               onchange="javascript:$('#searchButton').click();$.prompt.close();"
+                               onchange="javascript:setMapToLocation(document.getElementById('searchbox').value);$.prompt.close();"
                                 />
                             </div>
                             <div class="use100" style="height:10px;">&nbsp;</div>
                             <div class="use30 use35p use35a">
                             <a class="bold use100 layer_1 btn blue"
                                        id="searchButton"
-                                       onclick="javascript: try{$.prompt.close(); searchbox = document.getElementById('searchbox');new google.maps.Geocoder().geocode({address:searchbox.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){if(!(zoomInHint = !zoomInHint)){}map.setCenter(geocoderResult[0].geometry.location); var llb = geocoderResult[0].geometry.viewport; map.fitBounds(llb);}else{alert('No find '+searchbox.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
+                                       onclick="javascript:setMapToLocation(document.getElementById('searchbox'));"
                                        style="font-size:12px;cursor:pointer;background-color;#FD78E1;border:1px;"
                                        tabindex="2"
                                        href="#">Search</a>
@@ -250,53 +249,7 @@
 
         <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
         <script type="text/javascript" src="/js/jquery-impromptu.2.7.min.js"></script>
-        <script type="text/javascript">
 
-           function gup( name ){//thank you lobo235, http://www.netlobo.com/url_query_string_javascript.html
-             name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-             var regexS = "[\\?&]"+name+"=([^&#]*)";
-             var regex = new RegExp( regexS );
-             var results = regex.exec( window.location.href );
-             if( results == null )
-               return "";
-             else
-               return results[1];
-           }
-
-           function focusMapWithLatLng(){
-               try{
-                   if(gup("latitude") != "" && gup("longitude") != ""){
-                     initialize_gmap_scripts();
-                     map.setCenter(new google.maps.LatLng(gup("latitude"),gup("longitude")));
-                     clearInterval(focusMapWithLatLngLoop);
-                     if(gup("type") != ""){
-                       var type = gup("type");
-                       if(type == "building"){
-                           map.setZoom(17);
-                       }
-                       else if(type == "area"){
-                           map.setZoom(15);
-                       }
-                       else if(type == "town"){
-                           map.setZoom(13);
-                       }
-                       else if(type == "city"){
-                           map.setZoom(11);
-                       }else{
-                           map.setZoom(10);
-                       }
-                     }
-                   }else{
-                       clearInterval(focusMapWithLatLngLoop);
-                   }
-               }catch(err){
-                   //alert(err);//debug
-               }
-           }
-
-           zoomInHint = true;
-
-        </script>
         <script type="text/javascript">
             try{
                setTimeout("initialize_gmap_scripts_transparently()", 7000);
@@ -413,13 +366,61 @@
         });
     </script>
 
-    <script type="text/javascript">
-        document.write(unescape('%3Cscript type="text/javascript" src="'+
-        document.location.protocol+'//counter.goingup.com/js/tracker.js?st=mztgrwe&amp;b=5"%3E%3C/script%3E'));
+       <script type="text/javascript">
+
+       function gup( name ){//thank you lobo235, http://www.netlobo.com/url_query_string_javascript.html
+         name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+         var regexS = "[\\?&]"+name+"=([^&#]*)";
+         var regex = new RegExp( regexS );
+         var results = regex.exec( window.location.href );
+         if( results == null )
+           return "";
+         else
+           return results[1];
+       }
+
+
+       focusMapWithLatLngLoop = undefined;
+
+       function focusMapWithLatLng(){
+           try{
+               if(gup("latitude") != "" && gup("longitude") != ""){
+                 map.setCenter(new google.maps.LatLng(gup("latitude"),gup("longitude")));
+                 if(gup("type") != ""){
+                   var type = gup("type");
+                   if(type == "building"){
+                       map.setZoom(17);
+                   }
+                   else if(type == "area"){
+                       map.setZoom(15);
+                   }
+                   else if(type == "town"){
+                       map.setZoom(13);
+                   }
+                   else if(type == "city"){
+                       map.setZoom(11);
+                   }else{
+                       map.setZoom(10);
+                   }
+                 }
+                clearInterval(focusMapWithLatLngLoop);
+                try{
+                    $.prompt.close();
+                }catch(err){
+                    //ignoring
+                }
+               }else{
+               }
+           }catch(err){
+               //alert(err);//debug
+           }
+       }
+
+       focusMapWithLatLngLoop = setInterval('focusMapWithLatLng()',2000);
+
+       zoomInHint = true;
+
     </script>
-    <noscript><a href="http://www.goingup.com" title="stat counter"><img
-            src="http://counter.goingup.com/default.php?st=mztgrwe&amp;b=5" border="0" alt="stat counter"/></a>
-    </noscript>
 
     </body>
 </html>

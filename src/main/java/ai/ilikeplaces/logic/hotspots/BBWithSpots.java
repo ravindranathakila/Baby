@@ -121,13 +121,24 @@ public class BBWithSpots extends Pair<BoundingBox, RawspotElasticArray> {
             m++;
         }
 
+        final String[] alphabetCaseModeString = (promoted == null ? EMPTY :
+                (promoted.getValue() > assistant.getValue()
+                        ? promoted.getKey()//if ranks are not equal
+                        : (promoted.getKey().length() < assistant.getKey().length()
+                        ? promoted.getKey()//if ranks are equal and promoted has shorter name
+                        : assistant.getKey()))).split(SPACE);//if ranks are equal assistant and has shorter name
 
-        return promoted == null ? EMPTY :
-               (promoted.getValue() > assistant.getValue()
-                ? promoted.getKey()//if ranks are not equal
-                : (promoted.getKey().length() < assistant.getKey().length()
-                   ? promoted.getKey()//if ranks are equal and promoted has shorter name
-                   : assistant.getKey()));//if ranks are equal assistant and has shorter name
+
+        String returnedString = "";
+        for (int i1 = 0, allLowerCaseModeStringLength = alphabetCaseModeString.length; i1 < allLowerCaseModeStringLength; i1++) {
+            final String lowerCaseWord = alphabetCaseModeString[i1];
+            if (!lowerCaseWord.isEmpty()) {
+                returnedString += SPACE + (lowerCaseWord.charAt(0) + EMPTY).toUpperCase() + lowerCaseWord.substring(1);
+            }
+        }
+        returnedString = returnedString.isEmpty() ? EMPTY : returnedString.substring(1);//Removing the preceding blank space added by loop
+
+        return returnedString;
     }
 
     final W3CPoint spotAverage() {
