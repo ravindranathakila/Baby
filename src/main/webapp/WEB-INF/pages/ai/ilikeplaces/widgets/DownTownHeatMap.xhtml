@@ -49,18 +49,23 @@ function clearNotificationArea(){
 }
 
 function setNotificationFetchPositive(){
-   setNotification('Wag wag.. found something!!');
+   setNotification('Wag Wag.. Look what I found!!');
 }
 
 function setNotificationFetchNegative(){
-   setNotification('Puff puff.. found nothing!');
+   setNotification('Puff puff!!.. where am I?!');
 }
 
 function setNotification(text){
-    $('#CurrentActivityNotificationBox').empty().text(text);
+    $('#CurrentActivityNotificationBox').append('<span>'+text+'<br/></span>');
+    setTimeout('setClearForLastNotification()',5000);
 }
 
-setInterval("clearNotificationArea()",7000);
+function setClearForLastNotification(){
+   $('#CurrentActivityNotificationBox').children(':first').remove();
+}
+
+//setInterval("clearNotificationArea()",7000);
 
 function getColoredMarkerWithIntensity(intensity, title){
     if(intensity < 1 ){
@@ -249,22 +254,22 @@ function initialize_DownTownHeatMap_map(){
         maxWidth:400
     });
 
-    infowindow.open(map,placeMarker);
+    //infowindow.open(map,placeMarker);
 
     var geocoder = new google.maps.Geocoder();
 
-    geocodetoinfowindow = function(){
+    geoCodeToNotifications = function(){
         if(map.getZoom() > 13){
-            infowindow.setContent("Tracking you...");
+            setNotification("Wait for me...");
             geocoder.geocode(
             {
                 location:map.getCenter()
             },
             function(geocoderResult,geocoderStatus){
                 if(geocoderStatus == google.maps.GeocoderStatus.OK){
-                    infowindow.setContent("Vicinity.. "+geocoderResult[0].address_components[0].long_name+", " + geocoderResult[geocoderResult.length-1].address_components[geocoderResult[geocoderResult.length-1].address_components.length-1].long_name);
+                    setNotification("You at.. "+geocoderResult[0].address_components[0].long_name+", " + geocoderResult[geocoderResult.length-1].address_components[geocoderResult[geocoderResult.length-1].address_components.length-1].long_name);
                 }else{
-                    infowindow.setContent("Hope you know where you are!!");
+                    setNotification("Hope we know where we are!!");
                 }
             }
             );
@@ -280,10 +285,9 @@ function initialize_DownTownHeatMap_map(){
             }
 
             if(confirm("We don't want your friends to end up next doors do we... \nMark this as exact place of event?")){
-                infowindow.setContent("That's the place you selected!");
+                setNotification("That's the place you selected!");
                 map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
-                infowindow.setPosition(placeMarker.getPosition());
-                DownTownHeatMapWOEIDUpdate(map.getCenter().lat(), map.getCenter().lng()).focus();
+                setNotification(placeMarker.getPosition());
                 window.location.href = "/page/_org?category=143&woehint=" + placeMarker.getPosition().lat() + "," + placeMarker.getPosition().lng();
             }
         }else{
@@ -319,37 +323,13 @@ function initialize_DownTownHeatMap_map(){
         placeMarker.setPosition(map.getCenter());
     });
 
-    google.maps.event.addListener(map, 'zoom_changed', function() {
-        infowindow.setContent("Zoom to Street Level! "+ (18-(map.getZoom())) + " levels more to go...");
-        infowindow.setPosition(placeMarker.getPosition());
-
-        geocodetoinfowindow();
-
+    google.maps.event.addListener(map, 'idle', function() {
+        geoCodeToNotifications();
     });
 
-    google.maps.event.addListener(map, 'zoom_changed', function() {
-        var myOptions;
-        if(map.getZoom()>19){
-            myOptions = {
-                 //mapTypeId: google.maps.MapTypeId.ROADMAP,
-                draggable:true//TODO, set to false
-            };
-            map.setOptions(myOptions);
-        }else{
-            myOptions = {
-                draggable:true
-            };
-            map.setOptions(myOptions);
-        }
-    });
-
-    google.maps.event.addListener(map, 'dragstart', function() {
-        infowindow.setContent("Point the marker to the EXACT place.<br/>Click on the marker to confirm!");
-        infowindow.setPosition(placeMarker.getPosition());
-    });
 
     function listenerCallOnDownTownHeatMapBBUpdate(){
-            $('#CurrentActivityNotificationBox').empty().text('woof woof....');
+            setNotification('Sniff Sniff....');
              var curr = DownTownHeatMapBBUpdate(
                 map.getBounds().getSouthWest().lat(),
                 map.getBounds().getSouthWest().lng(),
@@ -366,8 +346,8 @@ function initialize_DownTownHeatMap_map(){
         }
     });
 
-    google.maps.event.addListener(map, 'dragend', function() {
-        geocodetoinfowindow();
+    google.maps.event.addListener(map, 'idle', function() {
+        geoCodeToNotifications();
     });
 }
 
