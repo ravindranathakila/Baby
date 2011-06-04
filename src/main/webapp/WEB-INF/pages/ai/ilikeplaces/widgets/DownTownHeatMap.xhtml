@@ -16,38 +16,7 @@
 <script type="text/javascript">
 
 
- var stylez = [
-  {
-    featureType: "all",
-    elementType: "all",
-    stylers: [
-      { hue: "#ffbb00" }
-    ]
-  },{
-    featureType: "poi",
-    elementType: "all",
-    stylers: [
-      { hue: "#ff3300" }
-    ]
-  },{
-    featureType: "landscape.man_made",
-    elementType: "all",
-    stylers: [
-      { hue: "#ff3300" }
-    ]
-  },{
-    featureType: "landscape.natural",
-    elementType: "all",
-    stylers: [
-      { hue: "#b2ff00" }
-    ]
-  }
-];
-
-
-
-
-
+ var rooze = [{featureType:"all",elementType:"all",stylers:[{hue:"#ffbb00"}]},{featureType:"poi",elementType:"all",stylers:[{hue:"#ff3300"}]},{featureType:"landscape.man_made",elementType:"all", stylers:[{hue:"#ff3300"}]},{ featureType:"landscape.natural", elementType:"all", stylers:[{hue:"#b2ff00"}]}];
 
 markerIcon = "http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=1|14|000|glyphish_map-marker|16|4bf202|892e40";
 
@@ -258,7 +227,7 @@ function initialize_DownTownHeatMap_map(){
         name: "DownTown"
     };
 
-    var dwntwnMapTyp = new google.maps.StyledMapType(stylez, styledMapOptions);
+    var dwntwnMapTyp = new google.maps.StyledMapType(rooze, styledMapOptions);
 
     map.mapTypes.set(DWN_TWN_ID, dwntwnMapTyp);
 
@@ -391,13 +360,7 @@ function initialize_DownTownHeatMap_map(){
             curr.blur();
     }
 
-    google.maps.event.addListener(map, 'center_changed', function() {
-        if(map.getZoom()>7){
-            listenerCallOnDownTownHeatMapBBUpdate();
-        }
-    });
-
-    google.maps.event.addListener(map, 'zoom_changed', function() {
+    google.maps.event.addListener(map, 'idle', function() {
         if(map.getZoom()>7){
             listenerCallOnDownTownHeatMapBBUpdate();
         }
