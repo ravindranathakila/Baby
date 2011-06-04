@@ -67,6 +67,32 @@ function clearHotSpots(){
     }
 }
 
+clearNotificationAreaFuncCacheLastText = undefined;
+
+function clearNotificationArea(){
+    if($('#CurrentActivityNotificationBox').is(':empty') == false){
+        if(clearNotificationAreaFuncCacheLastText == $('#CurrentActivityNotificationBox').text()){
+            $('#CurrentActivityNotificationBox').empty();
+        }else{
+            clearNotificationAreaFuncCacheLastText = $('#CurrentActivityNotificationBox').text();
+        }
+    }
+}
+
+function setNotificationFetchPositive(){
+   setNotification('Wag wag.. found something!!');
+}
+
+function setNotificationFetchNegative(){
+   setNotification('Puff puff.. found nothing!');
+}
+
+function setNotification(text){
+    $('#CurrentActivityNotificationBox').empty().text(text);
+}
+
+setInterval("clearNotificationArea()",7000);
+
 function getColoredMarkerWithIntensity(intensity, title){
     if(intensity < 1 ){
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|ff00cc|glyphish_map-marker|24|ff00cc|FB0';
@@ -354,6 +380,7 @@ function initialize_DownTownHeatMap_map(){
     });
 
     function listenerCallOnDownTownHeatMapBBUpdate(){
+            $('#CurrentActivityNotificationBox').empty().text('woof woof....');
              var curr = DownTownHeatMapBBUpdate(
                 map.getBounds().getSouthWest().lat(),
                 map.getBounds().getSouthWest().lng(),
@@ -364,7 +391,7 @@ function initialize_DownTownHeatMap_map(){
             curr.blur();
     }
 
-    google.maps.event.addListener(map, 'dragend', function() {
+    google.maps.event.addListener(map, 'center_changed', function() {
         if(map.getZoom()>7){
             listenerCallOnDownTownHeatMapBBUpdate();
         }
@@ -411,11 +438,31 @@ function initialize_gmap_scripts_transparently(){//wise any changes also to init
 }
 
 
+function setMapToLocation(value){
+    try{
+        new google.maps.Geocoder().geocode(
+            {address:value},
+            function(geocoderResult, geocoderStatus){
+                if(geocoderStatus == google.maps.GeocoderStatus.OK){
+                    if(!(zoomInHint = !zoomInHint)){
+                    }
+                    map.setCenter(geocoderResult[0].geometry.location);
+                    var llb = geocoderResult[0].geometry.viewport;
+                    map.fitBounds(llb);
+                }else{
+                    alert('No find '+value+' :(  (try city, state or a larger place)');
+                }
+            }
+        );
+    }catch(err){
+    }
+}
+
 </script>
     <div class="by" style="overflow:hidden;height:99%;" id="DownTownHeatMap_load_click">
         <div></div>
         <div class="by center" title="fun places map!" style="cursor:pointer;">
-            Rome wasn't built in a day!
+            <i>Rome wasn't built in a day!</i>
         </div>
         <div></div>
     </div>
@@ -435,7 +482,7 @@ function initialize_gmap_scripts_transparently(){//wise any changes also to init
         <div id="mapCustomControlsShowHide" style="width:180px;">
                     <div id="mapCustomControlsShowHideText" class="btn use100" style="font-size:18px;text-align:center;cursor:pointer;">Show Pics</div>&nbsp;
         </div>
-        <div id="mapCustomControlsNEWS" class="by5" style="height:200px;">
+        <div id="mapCustomControlsNEWS" class="by5" style="height:200px;width:144px;">
 			<div class="by" style="height:135px;">
 				<div class="by" style="height:45px;">
                 <div class="by3" style="height:45px;">
@@ -509,17 +556,19 @@ function initialize_gmap_scripts_transparently(){//wise any changes also to init
                                    id="searchboxmap"
                                    style="border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;font-size:14px;height:24px;vertical-align:top;background-color:transparent;font-weight:bold;"
                                    value="e.g. las vegas, united states"
-                                   onfocus="javascript:this.value='';"
                                    tabindex="1"
-                                   onchange="javascript:$('#searchButtonMap').click();"
+                                   onchange="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
                                     />
                             </div>
                             <div class="use25p use50 use25a">
-                            <div class="btn use100"
-                                   id="searchButtonMap"
-                                   onclick="javascript:try{searchboxmap = document.getElementById('searchboxmap');new google.maps.Geocoder().geocode({address:searchboxmap.value},function(geocoderResult,geocoderStatus){if(geocoderStatus == google.maps.GeocoderStatus.OK){if(!(zoomInHint = !zoomInHint)){}map.setCenter(geocoderResult[0].geometry.location); var llb = geocoderResult[0].geometry.viewport; map.fitBounds(llb);}else{alert('No find '+searchboxmap.value+' :(  (try city, state or a larger place)');;}});}catch(err){}"
-                                   style="font-size:18px;cursor:pointer;background-color;#FD78E1;border:1px;text-align:center;"
-                                   >&nbsp;Search&nbsp;</div>
+                                <div class="btn use100"
+                                       id="searchButtonMap"
+                                       onclick="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
+                                       style="font-size:18px;cursor:pointer;background-color;#FD78E1;border:1px;text-align:center;"
+                                       >&nbsp;Go Fetch!&nbsp;
+                                </div>
+                            </div>
+                            <div id="CurrentActivityNotificationBox" class="use100 bold" style="text-align:center;color:#cc2200;">
                          </div>
                         <br/>
                     </div>

@@ -79,6 +79,8 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String SQUOTE = "'";
     private static final String URL_SPACE = "%20";
     private static final String SPACE = " ";
+    private static final String NOTIFY_USER_POSITIVE = "setNotificationFetchPositive();";
+    private static final String NOTIFY_USER_NEGATIVE = "setNotificationFetchNegative();";
 
 
     private Element elementToUpdateWithWOEID;
@@ -227,11 +229,15 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 //                    final Map<Integer, Map<Integer, Hotspot>> hotspots = hsa.getHotspots();
                     final Hotspot[][] hotspots = hsa.getHotspots();
 
+                    boolean foundAnySpots = false;
+
                     for (final Hotspot[] hotspotspitch : hotspots) {
                         for (final Hotspot yaw : hotspotspitch) {
                             final W3CPoint coords = yaw.getCoordinates();
 
                             if (yaw.getCoordinates() != null) {
+
+                                foundAnySpots = true;
 
                                 final Double latitude = coords.getLatitude();
                                 final Double longitude = coords.getLongitude();
@@ -267,6 +273,12 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 //                            }
 //                        }
 //                    }
+
+                    if(foundAnySpots){
+                        $$sendJSStmt(NOTIFY_USER_POSITIVE);
+                    }else{
+                        $$sendJSStmt(NOTIFY_USER_NEGATIVE);
+                    }
 
 
                 } else {
