@@ -2,7 +2,6 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivateEvent;
-import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.hotspots.Hotspot;
 import ai.ilikeplaces.logic.hotspots.HotspotAnalyzer;
@@ -205,10 +204,10 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
                                     for (int i = 0; i < placesJsonArray.length(); i++) {
                                         final JSONObject lngLat = placesJsonArray.getJSONObject(i).getJSONObject(GEOMETRY).getJSONObject(LOCATION_JSON_OBJ_KEY);
-                                            add(
-                                                    new Rawspot(
-                                                            new W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
-                                                            placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
+                                        add(
+                                                new Rawspot(
+                                                        new W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
+                                                        placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
                                     }
 
                                 } catch (final Exception e) {
@@ -274,9 +273,9 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 //                        }
 //                    }
 
-                    if(foundAnySpots){
+                    if (foundAnySpots) {
                         $$sendJSStmt(NOTIFY_USER_POSITIVE);
-                    }else{
+                    } else {
                         $$sendJSStmt(NOTIFY_USER_NEGATIVE);
                     }
 
@@ -310,12 +309,11 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
     private void generateMarkerEvent(W3CPoint coords) {
         $$sendJSStmt(GOOGLE_MAPS_EVENT_ADD_LISTENER_LIST_OF_HOT_SPOTS_0_CLICK_FUNCTION +
-                JSCodeToSend.redirectPageWithURL(
-                        new Parameter(Controller.Page.Organize.getURL())
-                                .append(Controller.Page.DocOrganizeCategory, 143, true)
-                                .append(WOEIDGrabber.WOEHINT, coords.getLatitude() + COMMA + coords.getLongitude())
-                                .get()
-                ) +
+                "hotSpotClicked({" +
+                "latitude:" + coords.getLatitude() + "," +
+                "longitude:" + coords.getLatitude() + "," +
+                "url:" + "'" +new Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, 143, true).append(WOEIDGrabber.WOEHINT, coords.getLatitude() + COMMA + coords.getLongitude()).get() + "'" +
+                "});" +
                 X4);
     }
 
