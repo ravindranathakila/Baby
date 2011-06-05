@@ -41,18 +41,25 @@ import java.util.*;
 public class DownTownHeatMap extends AbstractWidgetListener {
 
     private static final String WOEIDUPDATE_TOKEN = "WOEIDUPDATE_TOKEN";
+    private static final String OPEN_BRACKET = "(";
+    private static final String CLOSE_BRACKET = ")";
+    private static final String SINGLE_QUOTE = "'";
+    private static final String CLOSE_BRACE = "}";
+    private static final String SEMI_COLON = ";";
+    private static final String OPEN_BRACE = "{";
     private static final String DownTownHeatMapWOEIDUpdate =
-            "\nDownTownHeatMapWOEIDUpdate = function(lat,lng){document.getElementById('" + WOEIDUPDATE_TOKEN + "').value = '' + lat + ',' + lng; document.getElementById('" + WOEIDUPDATE_TOKEN + "').focus(); return document.getElementById('" + WOEIDUPDATE_TOKEN + "');}\n";
+            "\nDownTownHeatMapWOEIDUpdate = function" + OPEN_BRACKET + "lat,lng" + CLOSE_BRACKET + OPEN_BRACE + "document.getElementById(" + SINGLE_QUOTE + WOEIDUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + ".value = " + SINGLE_QUOTE + "' + lat + ',' + lng" + SEMI_COLON + " document.getElementById" + OPEN_BRACKET + SINGLE_QUOTE + WOEIDUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + ".focus" + OPEN_BRACKET + CLOSE_BRACKET + SEMI_COLON + " return document.getElementById(" + SINGLE_QUOTE + WOEIDUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + SEMI_COLON + CLOSE_BRACE + "\n";
 
     private static final String BBUPDATE_TOKEN = "BBUPDATE_TOKEN";
     private static final String DownTownHeatMapBBUpdate =
-            "\nDownTownHeatMapBBUpdate = function(swlat,swlng,nelat,nelng){document.getElementById('" + BBUPDATE_TOKEN + "').value = '' + swlat + ',' + swlng + ',' + nelat + ',' + nelng; document.getElementById('" + BBUPDATE_TOKEN + "').focus(); return document.getElementById('" + BBUPDATE_TOKEN + "');}\n";
+            "\nDownTownHeatMapBBUpdate = function" + OPEN_BRACKET + "swlat,swlng,nelat,nelng" + CLOSE_BRACKET + OPEN_BRACE + "document.getElementById(" + SINGLE_QUOTE + BBUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + ".value = " + SINGLE_QUOTE + "' + swlat + ',' + swlng + ',' + nelat + ',' + nelng" + SEMI_COLON + " document.getElementById" + OPEN_BRACKET + SINGLE_QUOTE + BBUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + ".focus" + OPEN_BRACKET + CLOSE_BRACKET + SEMI_COLON + " return document.getElementById(" + SINGLE_QUOTE + BBUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + SEMI_COLON + CLOSE_BRACE + "\n";
     private static final String COMMA = ",";
-    private static final String X1 = "), ";
-    private static final String TITLE = "title:'";
-    private static final String MAP_MAP = "map: map, ";
-    private static final String ICON_GET_COLORED_MARKER_WITH_INTENSITY = "icon: getColoredMarkerWithIntensity(";
-    private static final String X2 = ")  }));";
+    private static final String X1 = CLOSE_BRACKET + ", ";
+    private static final String COLON = ":";
+    private static final String TITLE = "title" + COLON + SINGLE_QUOTE;
+    private static final String MAP_MAP = "map" + COLON + " map, ";
+    private static final String ICON_GET_COLORED_MARKER_WITH_INTENSITY = "icon" + COLON + " getColoredMarkerWithIntensity" + OPEN_BRACKET;
+    private static final String X2 = CLOSE_BRACKET + "  " + CLOSE_BRACE + "))" + SEMI_COLON;
 
     private static final com.google.places.api.impl.ClientFactory GOOGLE_API_CLIENT_FACTORY = Modules.getModules().getGooglePlacesAPIFactory();
     private static final String LOCATION_JSON_OBJ_KEY = "location";
@@ -62,12 +69,13 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String COMMON_PLACE_TYPES = "airport%7Camusement_park%7Caquarium%7Cart_gallery%7Catm%7Cbakery%7Cbank%7Cbar%7Cbeauty_salon%7Cbook_store%7Cbowling_alley%7Cbus_station%7Ccafe%7Ccampground%7Ccar_rental%7Ccasino%7Cchurch%7Ccity_hall%7Cclothing_store%7Cembassy%7Cfire_station%7Cflorist%7Cfood%7Cgas_station%7Cgym%7Chair_care%7Chindu_temple%7Cjewelry_store%7Clibrary%7Clodging%7Cmeal_delivery%7Cmeal_takeaway%7Cmosque%7Cmovie_rental%7Cmovie_theater%7Cmuseum%7Cnight_club%7Cpark%7Cparking%7Cpet_store%7Cplace_of_worship%7Cpolice%7Crestaurant%7Crv_park%7Cschool%7Cshoe_store%7Cshopping_mall%7Cspa%7Cstadium%7Csubway_station%7Csynagogue%7Ctaxi_stand%7Ctrain_station%7Ctravel_agency%7Cuniversity%7Czoo";
     private static final String SENSOR = "sensor";
     private static final String TRUE = "true";
-    private static final String LIST_OF_HOT_SPOTS_UNSHIFT_NEW_GOOGLE_MAPS_MARKER = "listOfHotSpots.unshift(new google.maps.Marker({ ";
-    private static final String POSITION_NEW_GOOGLE_MAPS_LAT_LNG = "position: new google.maps.LatLng(";
-    private static final String GOOGLE_MAPS_EVENT_ADD_LISTENER_LIST_OF_HOT_SPOTS_0_CLICK_FUNCTION = "google.maps.event.addListener(listOfHotSpots[0], 'click', function() {\n";
-    private static final String X3 = "', ";
-    private static final String X4 = "});";
-    private static final String GOOGLE_PLACES_JSON_ENDPOINT = "https://maps.googleapis.com/maps/api/place/search/json";
+    private static final String LIST_OF_HOT_SPOTS_UNSHIFT_NEW_GOOGLE_MAPS_MARKER = "listOfHotSpots.unshift" + OPEN_BRACKET + "new google.maps.Marker(" + OPEN_BRACE + " ";
+    private static final String POSITION_NEW_GOOGLE_MAPS_LAT_LNG = "position" + COLON + " new google.maps.LatLng" + OPEN_BRACKET;
+    private static final String GOOGLE_MAPS_EVENT_ADD_LISTENER = "google.maps.event.addListener";
+    private static final String GOOGLE_MAPS_EVENT_ADD_LISTENER_LIST_OF_HOT_SPOTS_0_CLICK_FUNCTION = GOOGLE_MAPS_EVENT_ADD_LISTENER + OPEN_BRACKET + "listOfHotSpots[0], " + SINGLE_QUOTE + "click', function(" + CLOSE_BRACKET + " " + OPEN_BRACE + "\n";
+    private static final String X3 = SINGLE_QUOTE + ", ";
+    private static final String X4 = CLOSE_BRACE + CLOSE_BRACKET + SEMI_COLON;
+    private static final String GOOGLE_PLACES_JSON_ENDPOINT = "https" + COLON + "//maps.googleapis.com/maps/api/place/search/json";
     private static final String FAILED_TO_FETCH_GOOGLE_PLACES_DATA = "Failed to fetch Google Places Data";
     private static final String RESULTS = "results";
     private static final String GEOMETRY = "geometry";
@@ -75,11 +83,23 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String LNG = "lng";
     private static final String NAME = "name";
     private static final double APPROX_LENGTH_OF_ONE_LAT = 111325;
-    private static final String SQUOTE = "'";
+    private static final String SQUOTE = SINGLE_QUOTE;
     private static final String URL_SPACE = "%20";
     private static final String SPACE = " ";
-    private static final String NOTIFY_USER_POSITIVE = "setNotificationFetchPositive();";
-    private static final String NOTIFY_USER_NEGATIVE = "setNotificationFetchNegative();";
+    private static final String NOTIFY_USER_POSITIVE = "setNotificationFetchPositive" + OPEN_BRACKET + CLOSE_BRACKET + SEMI_COLON;
+    private static final String NOTIFY_USER_NEGATIVE = "setNotificationFetchNegative" + OPEN_BRACKET + CLOSE_BRACKET + SEMI_COLON;
+    private static final String FUNCTION = "function";
+    private static final String HOT_SPOT_CLICKED = "hotSpotClicked";
+    private static final String LATITUDE = "latitude";
+    private static final String LONGITUDE = "longitude";
+    private static final String URL = "url";
+    private static final String LIST_OF_HOT_SPOTS_0 = "listOfHotSpots[0]";
+    private static final String CLICK = "click";
+    private static final String MOUSEOVER = "mouseover";
+    private static final String SET_NOTIFICATION = "setNotification";
+    private static final String HOT_SPOT_MOUSE_ENTER = "hotSpotMouseEnter";
+    private static final String COMMON_NAME = "commonName";
+    private static final String PROCESS_MARKER = "processMarker";
 
 
     private Element elementToUpdateWithWOEID;
@@ -230,6 +250,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
                     boolean foundAnySpots = false;
 
+
                     for (final Hotspot[] hotspotspitch : hotspots) {
                         for (final Hotspot yaw : hotspotspitch) {
                             final W3CPoint coords = yaw.getCoordinates();
@@ -247,7 +268,17 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
                                 generateMarker(latitude, longitude, commonName, hits);
 
-                                generateMarkerEvent(coords);
+                                generateMarkerEvents(coords, commonName, hits);
+
+                                $$sendJSStmt(PROCESS_MARKER + OPEN_BRACKET +
+                                        (OPEN_BRACE +
+                                                (COMMON_NAME + COLON + SINGLE_QUOTE + commonName + SINGLE_QUOTE) + COMMA +
+                                                (LATITUDE + COLON + coords.getLatitude()) + COMMA +
+                                                (LONGITUDE + COLON + coords.getLatitude()) + COMMA +
+                                                (URL + COLON + SINGLE_QUOTE + new Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, 143, true).append(WOEIDGrabber.WOEHINT, coords.getLatitude() + COMMA + coords.getLongitude()).get() + SINGLE_QUOTE) +
+                                                CLOSE_BRACE) +
+                                        CLOSE_BRACKET
+                                );
                             }
                         }
                     }
@@ -267,7 +298,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 //
 //                                generateMarker(latitudeLB, longitude, commonName, hits);
 //
-//                                generateMarkerEvent(coords);
+//                                generateMarkerEvents(coords,commonName,hits);
 //
 //                            }
 //                        }
@@ -307,14 +338,31 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 ICON_GET_COLORED_MARKER_WITH_INTENSITY + hits + COMMA + SQUOTE + commonName.replace(SPACE, URL_SPACE) + SQUOTE + X2);
     }
 
-    private void generateMarkerEvent(W3CPoint coords) {
-        $$sendJSStmt(GOOGLE_MAPS_EVENT_ADD_LISTENER_LIST_OF_HOT_SPOTS_0_CLICK_FUNCTION +
-                "hotSpotClicked({" +
-                "latitude:" + coords.getLatitude() + "," +
-                "longitude:" + coords.getLatitude() + "," +
-                "url:" + "'" +new Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, 143, true).append(WOEIDGrabber.WOEHINT, coords.getLatitude() + COMMA + coords.getLongitude()).get() + "'" +
-                "});" +
-                X4);
+    private void generateMarkerEvents(final W3CPoint coords, String commonName, long hits) {
+
+        $$sendJSStmt(generateGoogleMarkerEvent(
+                LIST_OF_HOT_SPOTS_0,
+                CLICK,
+                (HOT_SPOT_CLICKED + OPEN_BRACKET +
+                        (OPEN_BRACE +
+                                (LATITUDE + COLON + coords.getLatitude()) + COMMA +
+                                (LONGITUDE + COLON + coords.getLatitude()) + COMMA +
+                                (URL + COLON + SINGLE_QUOTE + new Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, 143, true).append(WOEIDGrabber.WOEHINT, coords.getLatitude() + COMMA + coords.getLongitude()).get() + SINGLE_QUOTE) +
+                                CLOSE_BRACE) + CLOSE_BRACKET + SEMI_COLON)
+        ));
+        $$sendJSStmt(generateGoogleMarkerEvent(
+                LIST_OF_HOT_SPOTS_0,
+                MOUSEOVER,
+                (HOT_SPOT_MOUSE_ENTER + OPEN_BRACKET +
+                        (OPEN_BRACE +
+                                (COMMON_NAME + COLON + SINGLE_QUOTE + commonName + SINGLE_QUOTE) + COMMA +
+                                (LATITUDE + COLON + coords.getLatitude()) + COMMA +
+                                (LONGITUDE + COLON + coords.getLatitude()) +
+                                CLOSE_BRACE) +
+                        CLOSE_BRACKET +
+                        SEMI_COLON)
+        ));
+
     }
 
 
@@ -325,6 +373,13 @@ public class DownTownHeatMap extends AbstractWidgetListener {
         params.put(PLACE_TYPES, placeTypes);
         params.put(SENSOR, TRUE);
         return GOOGLE_API_CLIENT_FACTORY.getInstance(GOOGLE_PLACES_JSON_ENDPOINT).get("", params);
+    }
+
+    private String generateGoogleMarkerEvent(final String elementToWhichToAssociateEvent, final String eventType, final String javascriptCallbackFunctionContent) {
+        return GOOGLE_MAPS_EVENT_ADD_LISTENER + OPEN_BRACKET + elementToWhichToAssociateEvent + COMMA + SINGLE_QUOTE + eventType + SINGLE_QUOTE + COMMA + FUNCTION + OPEN_BRACKET + CLOSE_BRACKET + OPEN_BRACE +
+                javascriptCallbackFunctionContent +
+                CLOSE_BRACE + CLOSE_BRACKET + SEMI_COLON;
+
     }
 }
 
