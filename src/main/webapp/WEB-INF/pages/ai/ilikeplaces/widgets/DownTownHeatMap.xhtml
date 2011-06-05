@@ -48,15 +48,15 @@ function clearNotificationArea(){
     }
 }
 
-function setNotificationFetchPositive(){
+function setNotificationFetchPositive(){//WARNING! used in java
    setNotification('Wag Wag.. Look what I found!!');
 }
 
-function setNotificationFetchNegative(){
+function setNotificationFetchNegative(){//WARNING! used in java
    setNotification('Puff puff!!.. Nothing here for us... Nobody\'s been here in ages!');
 }
 
-function setNotification(text){
+function setNotification(text){//WARNING! used in java
     $('#CurrentActivityNotificationBox').append('<span>'+text+'<br/></span>');
     setTimeout('setClearForLastNotification()',9000);
 }
@@ -67,9 +67,17 @@ function setClearForLastNotification(){
 
 //setInterval("clearNotificationArea()",7000);
 
- function hotSpotClicked(hotspotClickDetails){
-    alert('Some people thought it is useless to make an application that helps you plan events in these cool places. So we decided to remove the event collaboration platform');
-    alert(hotspotClickDetails.url);
+ function hotSpotClicked(hotspotClickDetails){//WARNING! used in java
+    if(confirm('Some people thought it is useless to make an application that helps you plan events in these cool places. So we decided to remove the event collaboration platform. If you think it is useful please click ok. Don\'t forget to send us your feedback!')){
+        window.location.href = hotspotClickDetails.url;
+    }
+ }
+ function hotSpotMouseEnter(hotspotMouseEnterDetails){//WARNING! used in java
+    setNotification(hotspotMouseEnterDetails.commonName);
+ }
+
+ function processMarker(markerInfo){
+    $('#mapCustomControlsSolidLinks').append('<span>'+markerInfo.commonName+'&rarr;<br/></span>');
  }
 
 function getColoredMarkerWithIntensity(intensity, title){
@@ -154,7 +162,7 @@ function initialize_DownTownHeatMap_map(){
             mapCustomControlsShowHideText.innerHTML='Hide Pics';
         }
      });
-     document.getElementById('mapCustomControlsShowHide').index = 1;
+
      GAIA.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(document.getElementById('mapCustomControlsShowHide'));
 
      google.maps.event.addDomListener(document.getElementById('mapCustomControlsSearchBox'), 'click', function() {
@@ -163,6 +171,7 @@ function initialize_DownTownHeatMap_map(){
      document.getElementById('mapCustomControlsSearchBox').index = 1;
      GAIA.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById('mapCustomControlsSearchBox'));
 
+     GAIA.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('mapCustomControlsSolidLinks'));
 
      google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSNW'), 'click', function() {
      GAIA.panBy(-30, -30);
@@ -356,6 +365,12 @@ function initialize_DownTownHeatMap_map(){
             listenerCallOnDownTownHeatMapBBUpdate();
         }
     });
+	
+    google.maps.event.addListener(map, 'idle', function() {
+        if(GAIA.getZoom()<=7){
+            setNotification('Whoa! we\'re too high up!');
+        }
+    });
 }
 
 initialize_gmap_scripts_done = false;
@@ -412,7 +427,7 @@ function setMapToLocation(value){
     <div class="by" style="overflow:hidden;height:99%;" id="DownTownHeatMap_load_click">
         <div></div>
         <div class="by center" title="fun places map!" style="cursor:pointer;">
-            <i>Rome wasn't built in a day!</i>
+            Rome wasn't built in a day...  <i><sub>~ Hmmmm who said that... was it Anonymous?</sub></i>
         </div>
         <div></div>
     </div>
@@ -429,6 +444,9 @@ function setMapToLocation(value){
         </div>
     </div>
     <div style="display:none;">
+        <div id="mapCustomControlsSolidLinks" class="by4 bold" style="color:#cc2200;">
+            &nbsp;<br/>
+        </div>
         <div id="mapCustomControlsShowHide" style="width:180px;">
                     <div id="mapCustomControlsShowHideText" class="btn use100" style="font-size:18px;text-align:center;cursor:pointer;">Show Pics</div>&nbsp;
         </div>
