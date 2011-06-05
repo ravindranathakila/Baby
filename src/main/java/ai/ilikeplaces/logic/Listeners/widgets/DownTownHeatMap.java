@@ -274,7 +274,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                                         (OPEN_BRACE +
                                                 (COMMON_NAME + COLON + SINGLE_QUOTE + commonName + SINGLE_QUOTE) + COMMA +
                                                 (LATITUDE + COLON + coords.getLatitude()) + COMMA +
-                                                (LONGITUDE + COLON + coords.getLatitude()) + COMMA +
+                                                (LONGITUDE + COLON + coords.getLongitude()) + COMMA +
                                                 (URL + COLON + SINGLE_QUOTE + new Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, 143, true).append(WOEIDGrabber.WOEHINT, coords.getLatitude() + COMMA + coords.getLongitude()).get() + SINGLE_QUOTE) +
                                                 CLOSE_BRACE) +
                                         CLOSE_BRACKET
@@ -346,7 +346,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 (HOT_SPOT_CLICKED + OPEN_BRACKET +
                         (OPEN_BRACE +
                                 (LATITUDE + COLON + coords.getLatitude()) + COMMA +
-                                (LONGITUDE + COLON + coords.getLatitude()) + COMMA +
+                                (LONGITUDE + COLON + coords.getLongitude()) + COMMA +
                                 (URL + COLON + SINGLE_QUOTE + new Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, 143, true).append(WOEIDGrabber.WOEHINT, coords.getLatitude() + COMMA + coords.getLongitude()).get() + SINGLE_QUOTE) +
                                 CLOSE_BRACE) + CLOSE_BRACKET + SEMI_COLON)
         ));
@@ -357,7 +357,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                         (OPEN_BRACE +
                                 (COMMON_NAME + COLON + SINGLE_QUOTE + commonName + SINGLE_QUOTE) + COMMA +
                                 (LATITUDE + COLON + coords.getLatitude()) + COMMA +
-                                (LONGITUDE + COLON + coords.getLatitude()) +
+                                (LONGITUDE + COLON + coords.getLongitude()) +
                                 CLOSE_BRACE) +
                         CLOSE_BRACKET +
                         SEMI_COLON)
