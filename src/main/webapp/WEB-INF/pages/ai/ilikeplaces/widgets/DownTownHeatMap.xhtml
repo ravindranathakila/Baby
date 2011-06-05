@@ -77,11 +77,15 @@ function setClearForLastNotification(){
  }
 
  function processMarker(markerInfo){
-    $('#mapCustomControlsSolidLinks').append('<span style=\'cursor:pointer;\'>'+markerInfo.commonName+'&rarr;<br/></span>');
+    $('#mapCustomControlsSolidLinks').append('<span style=\'cursor:pointer;text-decoration:underline;\'>'+markerInfo.commonName+'&rarr;<br/></span>');
     $('#mapCustomControlsSolidLinks').children(':last').click(
         function(){
             GAIA.setCenter(new google.maps.LatLng(markerInfo.latitude,markerInfo.longitude));
-            GAIA.setZoom(15);
+            if(GAIA.getZoom() < 16){
+                GAIA.setZoom(GAIA.getZoom() + 2);
+            }else{
+                GAIA.setZoom(GAIA.getZoom() + 2);
+            }
         }
     );
  }
@@ -171,9 +175,14 @@ function initialize_DownTownHeatMap_map(){
 
      GAIA.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(document.getElementById('mapCustomControlsShowHide'));
 
-     google.maps.event.addDomListener(document.getElementById('mapCustomControlsSearchBox'), 'click', function() {
-        //nothing so far
+     google.maps.event.addDomListener(document.getElementById('mapCustomControlsSearchZoomIn'), 'click', function() {
+        GAIA.setZoom(GAIA.getZoom() + 2);
+     })
+
+     google.maps.event.addDomListener(document.getElementById('mapCustomControlsSearchZoomOut'), 'click', function() {
+        GAIA.setZoom(GAIA.getZoom() - 1);
      });
+
      document.getElementById('mapCustomControlsSearchBox').index = 1;
      GAIA.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById('mapCustomControlsSearchBox'));
 
@@ -292,6 +301,9 @@ function initialize_DownTownHeatMap_map(){
                     var locationString = '';
                         for(var j in geocoderResult[0].address_components){
                             locationString += geocoderResult[0].address_components[j].long_name + ' ';
+                            if(j>1){
+                                break;
+                            }
                         }
                     setNotification("We are somewhere near.. " + locationString);
                 }else{
@@ -425,7 +437,7 @@ function setMapToLocation(value){
                     var llb = geocoderResult[0].geometry.viewport;
                     GAIA.fitBounds(llb);
                 }else{
-                    alert('No find '+value+' :(  (try city, state or a larger place)');
+                    setNotification('No find '+value+' :(  (try city, state or a larger place)');
                 }
             }
         );
@@ -456,8 +468,13 @@ function setMapToLocation(value){
     </div>
     <div style="display:none;">
         <div id="mapCustomControlsSolidLinksWidget" class="by4 bold" >
-            <div style="height:50px;">&nbsp;</div>
-            <div id="mapCustomControlsSolidLinks" class="by bold" style="color:#cc2200;">
+            <div style="height:50px;" class="by">&nbsp;</div>
+            <div class="by">
+                <div class="use5">&nbsp;</div>
+                <div class="use95">
+                    <div id="mapCustomControlsSolidLinks" class="by bold" style="color:#cc2200;">
+                    </div>
+                </div>
             </div>
         </div>
         <div id="mapCustomControlsShowHide" style="width:180px;">
@@ -515,18 +532,22 @@ function setMapToLocation(value){
             <div class="by" style="height:45px;">
                 <div class="by" style="height:45px;">
                     <div id="mapCustomControlsNEWSZoomIn" class="by2" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
-                        <img src="/images/zoom_in_32t.png" style="height:100%;" alt="-"/></div>
+                        <img src="/images/zoom_in_32t.png" style="height:100%;" alt="+"/></div>
                     <div id="mapCustomControlsNEWSZoomOut" class="by2" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
                         <img src="/images/zoom_out_32t.png" style="height:100%;" alt="-"/></div>
                 </div>
             </div>
         </div>
         <div class="by">
-            <div class="by" id="mapCustomControlsNEWSZoomMain" style="height:50px;width:100px;">
-                <div id="mapCustomControlsNEWSZoomInMain" class="by2" style="height:100%;">
-                    <img src="/images/zoom_in_32t.png"  style="height:100%;" alt="-"/></div>
-                <div id="mapCustomControlsNEWSZoomOutMain" class="by2" style="height:100%;">
-                    <img src="/images/zoom_out_32t.png" style="height:100%;" alt="-"/></div>
+            <div class="by" id="mapCustomControlsNEWSZoomMain" style="height:80px;width:70px;">
+                <div class="by2" style="height:50%;">
+                </div>
+                <div id="mapCustomControlsNEWSZoomOutMain" class="by2" style="height:50%;">
+                    <img src="/images/zoom_out_32t.png"  style="height:100%;" alt="-"/></div>
+                <div id="mapCustomControlsNEWSZoomInMain" class="by2" style="height:50%;">
+                    <img src="/images/zoom_in_32t.png" style="height:100%;" alt="+"/></div>
+                <div class="by2" style="height:50%;">
+                </div>
             </div>
         </div>
         <div id="mapCustomControlsSearchBox" style="width:200px;">
@@ -541,13 +562,19 @@ function setMapToLocation(value){
                                    onchange="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
                                     />
                             </div>
-                            <div class="use25p use50 use25a">
+                            <div id="mapCustomControlsSearchZoomIn" class="use25" style="font-size:24px;font-weight:900;text-align:center;cursor:pointer;height:100%;">
+                                +
+                            </div>
+                            <div class="use50">
                                 <div class="btn use100"
                                        id="searchButtonMap"
                                        onclick="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
                                        style="font-size:18px;cursor:pointer;background-color;#FD78E1;border:1px;text-align:center;"
                                        >&nbsp;Go Fetch!&nbsp;
                                 </div>
+                            </div>
+                            <div id="mapCustomControlsSearchZoomOut" class="use25" style="font-size:24px;font-weight:900;text-align:center;cursor:pointer;height:100%;">
+                                -
                             </div>
                             <div id="CurrentActivityNotificationBox" class="use100 bold" style="text-align:center;color:#cc2200;">
                          </div>
