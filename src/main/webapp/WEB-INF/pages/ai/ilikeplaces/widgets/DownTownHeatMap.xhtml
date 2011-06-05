@@ -77,7 +77,13 @@ function setClearForLastNotification(){
  }
 
  function processMarker(markerInfo){
-    $('#mapCustomControlsSolidLinks').append('<span>'+markerInfo.commonName+'&rarr;<br/></span>');
+    $('#mapCustomControlsSolidLinks').append('<span style=\'cursor:pointer;\'>'+markerInfo.commonName+'&rarr;<br/></span>');
+    $('#mapCustomControlsSolidLinks').children(':last').click(
+        function(){
+            GAIA.setCenter(new google.maps.LatLng(markerInfo.latitude,markerInfo.longitude));
+            GAIA.setZoom(15);
+        }
+    );
  }
 
 function getColoredMarkerWithIntensity(intensity, title){
@@ -171,7 +177,7 @@ function initialize_DownTownHeatMap_map(){
      document.getElementById('mapCustomControlsSearchBox').index = 1;
      GAIA.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById('mapCustomControlsSearchBox'));
 
-     GAIA.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('mapCustomControlsSolidLinks'));
+     GAIA.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('mapCustomControlsSolidLinksWidget'));
 
      google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSNW'), 'click', function() {
      GAIA.panBy(-30, -30);
@@ -347,6 +353,10 @@ function initialize_DownTownHeatMap_map(){
         geoCodeToNotifications();
     });
 
+    google.maps.event.addListener(map, 'idle', function() {
+        $('#mapCustomControlsSolidLinks').empty();
+    });
+
 
     function listenerCallOnDownTownHeatMapBBUpdate(){
             setNotification('Sniff Sniff....');
@@ -427,7 +437,8 @@ function setMapToLocation(value){
     <div class="by" style="overflow:hidden;height:99%;" id="DownTownHeatMap_load_click">
         <div></div>
         <div class="by center" title="fun places map!" style="cursor:pointer;">
-            Rome wasn't built in a day...  <i><sub>~ Hmmmm who said that... was it Anonymous?</sub></i>
+            Rome wasn't built in a day...<br/>
+            <i><sub>~ Hmmmm who said that... was it Anonymous?</sub></i>
         </div>
         <div></div>
     </div>
@@ -444,8 +455,10 @@ function setMapToLocation(value){
         </div>
     </div>
     <div style="display:none;">
-        <div id="mapCustomControlsSolidLinks" class="by4 bold" style="color:#cc2200;">
-            &nbsp;<br/>
+        <div id="mapCustomControlsSolidLinksWidget" class="by4 bold" >
+            <div style="height:50px;">&nbsp;</div>
+            <div id="mapCustomControlsSolidLinks" class="by bold" style="color:#cc2200;">
+            </div>
         </div>
         <div id="mapCustomControlsShowHide" style="width:180px;">
                     <div id="mapCustomControlsShowHideText" class="btn use100" style="font-size:18px;text-align:center;cursor:pointer;">Show Pics</div>&nbsp;
