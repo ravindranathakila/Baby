@@ -61,6 +61,14 @@ function setNotification(text){//WARNING! used in java
     setTimeout('setClearForLastNotification()',9000);
 }
 
+function setActionLink(text, onclickActions, doClear){//WARNING! used in java
+    if(doClear){
+        $('#mapCustomControlsActionLinks').empty();
+    }
+    $('#mapCustomControlsActionLinks').append('<span style=\'cursor:pointer;text-decoration:underline;\'>'+text+'<br/></span>');
+    $('#mapCustomControlsActionLinks').children(':last').click(onclickActions);
+}
+
 function setClearForLastNotification(){
    $('#CurrentActivityNotificationBox').children(':first').remove();
 }
@@ -68,9 +76,15 @@ function setClearForLastNotification(){
 //setInterval("clearNotificationArea()",7000);
 
  function hotSpotClicked(hotspotClickDetails){//WARNING! used in java
-    if(confirm('Some people thought it is useless to make an application that helps you plan events in these cool places. So we decided to remove the event collaboration platform. If you think it is useful please click ok. Don\'t forget to send us your feedback!')){
-        window.location.href = hotspotClickDetails.url;
-    }
+    setNotification("Great! You've selected a place. Check Actions!");
+    setActionLink(
+        "Add this place to your event planner!",
+        function(){
+            alert('We\'re gonna send you to Down Town. Don\'t worry, we\'ve got you covered!');
+            window.location.href = hotspotClickDetails.url;
+        },
+        true
+    );
  }
  function hotSpotMouseEnter(hotspotMouseEnterDetails){//WARNING! used in java
     setNotification(hotspotMouseEnterDetails.commonName);
@@ -187,6 +201,8 @@ function initialize_DownTownHeatMap_map(){
      GAIA.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById('mapCustomControlsSearchBox'));
 
      GAIA.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('mapCustomControlsSolidLinksWidget'));
+
+     GAIA.controls[google.maps.ControlPosition.RIGHT_TOP].push(document.getElementById('mapCustomControlsSolidActionsWidget'));
 
      google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSNW'), 'click', function() {
      GAIA.panBy(-30, -30);
@@ -324,12 +340,20 @@ function initialize_DownTownHeatMap_map(){
 
             if(confirm("We don't want your friends to end up next doors do we... \nMark this as exact place of event?")){
                 setNotification("That's the place you selected!");
-                GAIA.setMapTypeId(google.maps.MapTypeId.SATELLITE);
                 setNotification(placeMarker.getPosition());
-                window.location.href = "/page/_org?category=143&woehint=" + placeMarker.getPosition().lat() + "," + placeMarker.getPosition().lng();
+                setNotification("Great! You've selected a place. Check Actions!");
+                setActionLink(
+                    "Add this place to your event planner!",
+                    function(){
+                        alert('We\'re gonna send you to Down&darr;Town. Don\'t worry, we\'ve got you covered!');
+                        window.location.href = "/page/_org?category=143&woehint=" + placeMarker.getPosition().lat() + "," + placeMarker.getPosition().lng();
+                    },
+                    true
+                );
             }
         }else{
-            alert("Zoom to Street Level! "+ (18-(GAIA.getZoom())) + " levels more to go...");
+            setNotification("Zoom to Street Level! "+ (18-(GAIA.getZoom())) + " levels more to go...");
+            setActionLink("Zoom a bit more",function(){GAIA.setZoom(GAIA.getZoom() + 1);},true);
         }
     };
 
@@ -481,6 +505,26 @@ function setMapToLocation(value){
                         &nbsp;
                     </div>
                     <div id="mapCustomControlsSolidLinks" class="by bold" style="color:#cc2200;">
+                    </div>
+                </div>
+                <div class="use5">&nbsp;</div>
+            </div>
+            <div class="by"  style="height:5px;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">&nbsp;</div>
+        </div>
+        <div id="mapCustomControlsSolidActionsWidget" class="by5 bold" >
+            <div style="height:50px;" class="by">&nbsp;</div>
+            <div class="by" style="height:5px;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">&nbsp;</div>
+            <div class="by" style="background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">
+                <div class="use5">&nbsp;</div>
+                <div class="use90">
+                    <div class="by bold" style="color:#cc2200;">
+                        <span style="font-size:13px;">Take Action Assistance</span><br/>
+                        <span style="font-size:12px;"><i>Click if anything interesting action pops up</i></span>
+                    </div>
+                    <div class="by" style="height:3px;">
+                        &nbsp;
+                    </div>
+                    <div id="mapCustomControlsActionLinks" class="by bold" style="color:#cc2200;">
                     </div>
                 </div>
                 <div class="use5">&nbsp;</div>
