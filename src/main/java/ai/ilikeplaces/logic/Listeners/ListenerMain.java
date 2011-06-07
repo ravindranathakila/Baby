@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
+import twitter4j.*;
 import where.yahooapis.com.v1.Place;
 
 import java.text.MessageFormat;
@@ -101,6 +102,11 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String ERROR_IN_UC_SET_PROFILE_LINK = "Error in UC setProfileLink";
     private static final String PIPE = "|";
 
+    final static Twitter TWITTER = new TwitterFactory().getInstance();
+    final static Query QUERY = new Query("fun OR happening OR enjoy OR nightclub OR restaurant OR party OR travel :)");
+    private static final String AT_SIGN = "@";
+    private static final String EMPTY = "";
+
     /**
      * @param request__
      * @param response__
@@ -141,7 +147,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     if (attr.length == 3) {
                         superLocation = attr[2];
                     } else {
-                        superLocation = "";
+                        superLocation = EMPTY;
                     }
                     tryLocationId:
                     {
@@ -341,7 +347,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                     /* 500,000 indexed by Google at 80,000 pages a day is about 1 week  */
                                     UCICheckIfDataNotRefreshedWithinLastWeek:
                                     {
-                                        final LongMsg dateCalcPost = existingLongMsgs.get(existingLongMsgs.size()-1);
+                                        final LongMsg dateCalcPost = existingLongMsgs.get(existingLongMsgs.size() - 1);
                                         sl.l("Date calculation data:" + dateCalcPost.getLongMsgMetadata());
                                         final String date = dateCalcPost.getLongMsgMetadata().split("\\|")[1];//we check if length is NOT zero in IF condition before
                                         final String[] dataArr = date.split("-");
@@ -398,9 +404,9 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
 
                         } catch (final Throwable t) {
-                            if(t.getMessage().contains("Got error code:400")){
+                            if (t.getMessage().contains("Got error code:400")) {
                                 sl.l(ERROR_IN_UC_DISQUS, new Exception(t.getMessage()));//We don't want to log the unwanted stack trace. This happens when nobody has posted a message on this page before.
-                            } else{
+                            } else {
                                 sl.l(ERROR_IN_UC_DISQUS, t);
                             }
                         }
@@ -414,6 +420,22 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             $(Main_geoposition).setAttribute(MarkupTag.META.content(), existingLocation_.getLocationGeo1() + COMMA + existingLocation_.getLocationGeo2());
                             $(Main_geoplacename).setAttribute(MarkupTag.META.content(), existingLocation_.getLocationName());
                             $(Main_georegion).setAttribute(MarkupTag.META.content(), existingLocation_.getLocationSuperSet().getLocationName());
+                        }
+                        setTwitterData:
+                        {
+                            try {
+                                final QueryResult result = TWITTER.search(QUERY.geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 40, Query.MILES));
+                                for (Tweet tweet : result.getTweets()) {
+                                    final Element p = $(MarkupTag.P);
+                                    p.setTextContent(tweet.getText().replace(AT_SIGN, EMPTY));
+                                    $(Main_disqus_thread_data).appendChild(p);
+                                }
+                                if(result.getTweets().size() == 0){
+                                    sl.l("No twitter results found");
+                                }
+                            } catch (final Throwable t) {
+                                sl.l("An error occurred during twitter fetch:" + t.getMessage());
+                            }
                         }
                     }
 
