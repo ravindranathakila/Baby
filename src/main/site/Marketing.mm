@@ -74,7 +74,7 @@
 </node>
 </node>
 <node CREATED="1304826823756" ID="Freemind_Link_1622011936" MODIFIED="1306500000062" TEXT="The Half Done Marketing Errands List">
-<node CREATED="1304826982351" ID="Freemind_Link_484328439" MODIFIED="1305693319722" TEXT="#9 Forums Interactions">
+<node CREATED="1304826982351" FOLDED="true" ID="Freemind_Link_484328439" MODIFIED="1307367711258" TEXT="#9 Forums Interactions">
 <node CREATED="1304827000476" ID="Freemind_Link_1385656818" MODIFIED="1304827008367" TEXT="Available Forums">
 <node CREATED="1304827169883" FOLDED="true" ID="Freemind_Link_1854199894" LINK="http://www.party411.com" MODIFIED="1306653429120" TEXT="http://www.party411.com">
 <node CREATED="1304827192743" ID="Freemind_Link_1112416946" MODIFIED="1304827399415" TEXT="auth">
@@ -199,8 +199,8 @@
 <node CREATED="1305669049617" ID="Freemind_Link_1828505218" MODIFIED="1305669050680" TEXT="http://www.quora.com/Are-you-currently-or-thinking-about-planning-an-event-What-do-you-see-as-the-biggest-challenge-in-this-process"/>
 <node CREATED="1305671319105" ID="Freemind_Link_1245948661" MODIFIED="1305671320183" TEXT="http://www.quora.com/What-are-the-best-bachelor-party-ideas-other-than-strip-clubs"/>
 </node>
-<node CREATED="1305668853394" FOLDED="true" ID="Freemind_Link_1246189924" MODIFIED="1305668857302" TEXT="Available Sites">
-<node CREATED="1305667826403" FOLDED="true" ID="Freemind_Link_769147925" MODIFIED="1305667831793" TEXT="www.ezine.com">
+<node CREATED="1305668853394" ID="Freemind_Link_1246189924" MODIFIED="1307367715929" TEXT="Available Sites">
+<node CREATED="1305667826403" ID="Freemind_Link_769147925" MODIFIED="1307367717726" TEXT="www.ezine.com">
 <node CREATED="1305667832371" ID="Freemind_Link_938314151" MODIFIED="1305667847434" TEXT="auth">
 <node CREATED="1305667848277" ID="Freemind_Link_1480537678" MODIFIED="1305667853996" TEXT="ravindranathakila@gmail.com"/>
 <node CREATED="1305667854449" ID="Freemind_Link_107815350" MODIFIED="1305667863309" TEXT="the complicated password"/>
@@ -302,7 +302,7 @@
 <node CREATED="1305159164078" ID="Freemind_Link_1369179674" MODIFIED="1306798446987" TEXT="Strategy Summary"/>
 </node>
 </node>
-<node CREATED="1304603305990" ID="Freemind_Link_620714991" MODIFIED="1306640742656" TEXT="May">
+<node CREATED="1304603305990" FOLDED="true" ID="Freemind_Link_620714991" MODIFIED="1307367690290" TEXT="May">
 <node CREATED="1304340068495" ID="Freemind_Link_84905687" MODIFIED="1304341080207" TEXT="20110502">
 <font NAME="Comic Sans MS" SIZE="12"/>
 <node BACKGROUND_COLOR="#009900" CREATED="1304340062667" FOLDED="true" ID="_" MODIFIED="1304343571926" TEXT="Alien Analysis">
@@ -566,8 +566,7 @@
       <b>WHAT?(State your case)</b>(GOC3)
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <richcontent TYPE="NOTE"><html><head/><body><p>Basically features to cater the why and how</p></body></html></richcontent>
 <node CREATED="1306058432928" ID="Freemind_Link_84716663" LINK="#Freemind_Link_393810782" MODIFIED="1306059825291" TEXT="Seek"/>
 <node COLOR="#cccccc" CREATED="1306059350523" ID="Freemind_Link_8814572" MODIFIED="1306059825291" TEXT="Penetrated">
@@ -591,8 +590,7 @@
       Why would I?(GOC2)
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <richcontent TYPE="NOTE"><html><head/><body><p>How works best in story mode. How we did fight the battle. How we stand for the philosophy!</p></body></html></richcontent>
 <node CREATED="1306258231904" ID="ID_1551026049" MODIFIED="1306546932342">
 <richcontent TYPE="NODE"><html>
@@ -649,8 +647,7 @@
       <b><font color="#000000">I might believe what you believe in, but I won't believe you!</font></b><font color="#000000">(GOC1)</font>
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <richcontent TYPE="NOTE"><html><head/><body><p>The core belief. As this is hard to explain to people it HAS to have the following features.<br/><br/>You and they believe in something. You never believe in each other, but this something. You make that something. <br/>This thing should be easy to understand.<br/>This thing should not conflict with core beliefs of people(can be propogandic though).<br/>This thing should be easy to remember.<br/>This thing should be easy to nurture by one self.</p></body></html></richcontent>
 <node CREATED="1306258231904" ID="ID_1882692747" MODIFIED="1306544785502">
 <richcontent TYPE="NODE"><html>
