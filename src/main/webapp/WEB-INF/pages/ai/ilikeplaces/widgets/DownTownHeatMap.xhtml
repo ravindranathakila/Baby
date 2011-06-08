@@ -61,9 +61,10 @@ function setNotification(text){//WARNING! used in java
     setTimeout('setClearForLastNotification()',9000);
 }
 
-function setActionLink(text, onclickActions, doClear){//WARNING! used in java
+function setActionLink(text, title, onclickActions, doClear){//WARNING! used in java
     if(doClear){
         $('#mapCustomControlsActionLinks').empty();
+        $('#mapCustomControlsActionLinksTitle').empty().text(title);
     }
     $('#mapCustomControlsActionLinks').append('<span style=\'cursor:pointer;text-decoration:underline;\'>'+text+'<br/></span>');
     $('#mapCustomControlsActionLinks').children(':last').click(onclickActions);
@@ -75,15 +76,45 @@ function setClearForLastNotification(){
 
 //setInterval("clearNotificationArea()",7000);
 
+ directionWorker = undefined;
+ directionsDisplay = undefined;
+
  function hotSpotClicked(hotspotClickDetails){//WARNING! used in java
     setNotification("Great! You've selected a place. Check Actions!");
     setActionLink(
-        "Add this place to your event planner!",
+        "Create a Moment Here",
+        hotspotClickDetails.commonName,
         function(){
             alert('We\'re gonna send you to Down Town. Don\'t worry, we\'ve got you covered!');
             window.location.href = hotspotClickDetails.url;
         },
         true
+    );
+    setActionLink(
+        "Find Directions To Reach Here",
+        "",
+        function(){
+            var from = prompt('We\'re gonna send you to Down Town. Don\'t worry, we\'ve got you covered!');
+
+            directionWorker = ((directionWorker == undefined) ? (new google.maps.DirectionsService()) : directionWorker);
+            directionsDisplay = ((directionsDisplay == undefined) ? (new google.maps.DirectionsRenderer({draggable: true})) : directionsDisplay);
+            directionsDisplay.setMap(GAIA);
+            directionWorker.route({
+                    origin:from,
+                    destination:new google.maps.LatLng(hotspotClickDetails.latitude,hotspotClickDetails.longitude),
+                    travelMode:google.maps.TravelMode.DRIVING
+                },
+                function(response,status){
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        directionsDisplay.setDirections(response);
+                        setNotification("Did you know you can drag direction markers?");
+                    }else{
+                        alert(status);
+                    }
+                }
+            );
+        },
+        false
     );
  }
  function hotSpotMouseEnter(hotspotMouseEnterDetails){//WARNING! used in java
@@ -344,6 +375,7 @@ function initialize_DownTownHeatMap_map(){
                 setNotification("Great! You've selected a place. Check Actions!");
                 setActionLink(
                     "Add this place to your event planner!",
+                    "",
                     function(){
                         alert('We\'re gonna send you to Down&darr;Town. Don\'t worry, we\'ve got you covered!');
                         window.location.href = "/page/_org?category=143&woehint=" + placeMarker.getPosition().lat() + "," + placeMarker.getPosition().lng();
@@ -353,7 +385,7 @@ function initialize_DownTownHeatMap_map(){
             }
         }else{
             setNotification("Zoom to Street Level! "+ (18-(GAIA.getZoom())) + " levels more to go...");
-            setActionLink("Zoom a bit more",function(){GAIA.setZoom(GAIA.getZoom() + 1);},true);
+            setActionLink("Zoom a bit more","",function(){GAIA.setZoom(GAIA.getZoom() + 1);},true);
         }
     };
 
@@ -518,8 +550,7 @@ function setMapToLocation(value){
                 <div class="use5">&nbsp;</div>
                 <div class="use90">
                     <div class="by bold" style="color:#cc2200;">
-                        <span style="font-size:13px;">Take Action Assistance</span><br/>
-                        <span style="font-size:12px;"><i>Click if anything interesting action pops up</i></span>
+                        <span id="mapCustomControlsActionLinksTitle" style="font-size:13px;">Take Action</span><br/>
                     </div>
                     <div class="by" style="height:3px;">
                         &nbsp;
