@@ -123,14 +123,30 @@ function setClearForLastNotification(){
 
  function processMarker(markerInfo){
     $('#mapCustomControlsSolidLinks').append('<span style=\'cursor:pointer;text-decoration:underline;\'>'+markerInfo.commonName+'&rarr;<br/></span>');
+
+    var currentMarker = listOfHotSpots[0];
+
     $('#mapCustomControlsSolidLinks').children(':last').click(
         function(){
+            currentMarker.setAnimation(google.maps.Animation.BOUNCE);
             GAIA.setCenter(new google.maps.LatLng(markerInfo.latitude,markerInfo.longitude));
             if(GAIA.getZoom() < 16){
                 GAIA.setZoom(GAIA.getZoom() + 2);
             }else{
                 GAIA.setZoom(GAIA.getZoom() + 2);
             }
+        }
+    );
+
+    $('#mapCustomControlsSolidLinks').children(':last')
+    .mouseenter(
+        function(){
+            currentMarker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+    )
+    .mouseleave(
+        function(){
+            currentMarker.setAnimation(null);
         }
     );
  }
@@ -173,6 +189,7 @@ function initialize_DownTownHeatMap_map(){
         zoom: 5,
         center: myLatlng,
         mapTypeId: DWN_TWN_ID,
+        mapTypeControl: false,
         mapTypeControlOptions:{
             style:google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
             position:google.maps.ControlPosition.TOP_LEFT,
@@ -231,7 +248,7 @@ function initialize_DownTownHeatMap_map(){
      document.getElementById('mapCustomControlsSearchBox').index = 1;
      GAIA.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById('mapCustomControlsSearchBox'));
 
-     GAIA.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('mapCustomControlsSolidLinksWidget'));
+     GAIA.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('mapCustomControlsSolidLinksWidget'));
 
      GAIA.controls[google.maps.ControlPosition.RIGHT_TOP].push(document.getElementById('mapCustomControlsSolidActionsWidget'));
 
@@ -277,6 +294,16 @@ function initialize_DownTownHeatMap_map(){
      if(jQuery.browser.mobile){
         document.getElementById('mapCustomControlsNEWS').index = 1;
         GAIA.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('mapCustomControlsNEWS'));
+     }else{
+        var adUnitDiv = document.getElementById('mapCustomControlsAdUnit');
+        var adUnitOptions = {
+            format: google.maps.adsense.AdFormat.SQUARE,
+            position: google.maps.ControlPosition.RIGHT_BOTTOM,
+            map: GAIA,
+            visible: true,
+            publisherId: 'pub-6582809080416673'
+        }
+        adUnit = new google.maps.adsense.AdUnit(adUnitDiv, adUnitOptions);
      }
 
 
@@ -523,8 +550,10 @@ function setMapToLocation(value){
         </div>
     </div>
     <div style="display:none;">
+        <div id="mapCustomControlsAdUnit" class="by5" style="color:#cc2200;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">
+        </div>
         <div id="mapCustomControlsSolidLinksWidget" class="by4 bold" >
-            <div style="height:50px;" class="by">&nbsp;</div>
+            <div style="height:0px;" class="by">&nbsp;</div>
             <div class="by" style="height:5px;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">&nbsp;</div>
             <div class="by" style="background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">
                 <div class="use5">&nbsp;</div>
@@ -636,8 +665,11 @@ function setMapToLocation(value){
             </div>
         </div>
         <div id="mapCustomControlsSearchBox" style="width:200px;">
+                    <div class="use100" style="height:10px;">
+                        &nbsp;
+                    </div>
                     <div class="use100">
-                        <div class="use100">
+                        <div class="use100">     `
                             <div class="use100">
                                 <input class="vtip use100 center layer_2"
                                    id="searchboxmap"
