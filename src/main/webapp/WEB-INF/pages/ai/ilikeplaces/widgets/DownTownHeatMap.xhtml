@@ -66,7 +66,10 @@ function setActionLink(text, title, onclickActions, doClear){//WARNING! used in 
         $('#mapCustomControlsActionLinks').empty();
         $('#mapCustomControlsActionLinksTitle').empty().text(title);
     }
-    $('#mapCustomControlsActionLinks').append('<span style=\'cursor:pointer;text-decoration:underline;\'>'+text+'<br/></span>');
+    //$('#mapCustomControlsActionLinks').append('<span style=\'cursor:pointer;text-decoration:underline;\'>'+text+'<br/></span>');
+    $('#mapCustomControlsActionLinks').append('<div class=\'by\' style=\'height:7px;\'>&nbsp;</div>');
+    $('#mapCustomControlsActionLinks').append('<a style=\'cursor:pointer;\' class=\'btn blue\'><i></i><span style=\'font-size:13px;\'><span></span><i></i>'+text+'</span></a>');
+
     $('#mapCustomControlsActionLinks').children(':last').click(onclickActions);
 }
 
@@ -128,7 +131,6 @@ function setClearForLastNotification(){
 
     $('#mapCustomControlsSolidLinks').children(':last').click(
         function(){
-            currentMarker.setAnimation(google.maps.Animation.BOUNCE);
             GAIA.setCenter(new google.maps.LatLng(markerInfo.latitude,markerInfo.longitude));
             if(GAIA.getZoom() < 16){
                 GAIA.setZoom(GAIA.getZoom() + 2);
