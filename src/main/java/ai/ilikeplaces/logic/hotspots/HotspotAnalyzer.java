@@ -38,7 +38,7 @@ public class HotspotAnalyzer {
     private Hotspot[][] hotspots;
 //    private Map<Integer, Map<Integer, Hotspot>> hotspots;
 
-    public double[] blockWH;//= new double[]{0.000184401869775, 0.000133145585763375};
+    public double[] blockWH;
 
     private Validator v = new Validator();
     private int arrayWSize;
@@ -79,7 +79,8 @@ public class HotspotAnalyzer {
         final double width = widthEnd - widthStart;
         final double height = heightEnd - heightStart;
 
-        blockWH = new double[]{width / 12, height / 12};
+        //blockWH = new double[]{width / 12, height / 12};
+        blockWH = new double[]{0.000184401869775, 0.000133145585763375};
 
 //        arrayWSize = (int) Math.ceil(width / blockWH[0]);
 //        arrayHSize = (int) Math.ceil(height / blockWH[1]);
