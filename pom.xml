@@ -31,7 +31,7 @@
             <artifactId>jsp-api</artifactId>
             <version>1+</version>
             <scope>system</scope>
-            <systemPath>T:/apache-tomcat-6.0.14/lib/jsp-api.jar</systemPath>
+            <systemPath>M:/apache-tomcat-6.0.14/lib/jsp-api.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.apache.openejb</groupId>
