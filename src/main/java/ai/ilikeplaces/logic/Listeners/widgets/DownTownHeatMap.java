@@ -100,6 +100,8 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String HOT_SPOT_MOUSE_ENTER = "hotSpotMouseEnter";
     private static final String COMMON_NAME = "commonName";
     private static final String PROCESS_MARKER = "processMarker";
+    private static final String HTIS = "htis";
+    private static final String THIS = "this";
 
 
     private Element elementToUpdateWithWOEID;
@@ -272,6 +274,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
                                 $$sendJSStmt(PROCESS_MARKER + OPEN_BRACKET +
                                         (OPEN_BRACE +
+                                                (HTIS + COLON + THIS) + COMMA +
                                                 (COMMON_NAME + COLON + SINGLE_QUOTE + commonName + SINGLE_QUOTE) + COMMA +
                                                 (LATITUDE + COLON + coords.getLatitude()) + COMMA +
                                                 (LONGITUDE + COLON + coords.getLongitude()) + COMMA +
@@ -345,6 +348,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 CLICK,
                 (HOT_SPOT_CLICKED + OPEN_BRACKET +
                         (OPEN_BRACE +
+                                (HTIS + COLON + THIS) + COMMA +
                                 (COMMON_NAME + COLON + SINGLE_QUOTE + commonName + SINGLE_QUOTE) + COMMA +
                                 (LATITUDE + COLON + coords.getLatitude()) + COMMA +
                                 (LONGITUDE + COLON + coords.getLongitude()) + COMMA +
@@ -356,6 +360,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 MOUSEOVER,
                 (HOT_SPOT_MOUSE_ENTER + OPEN_BRACKET +
                         (OPEN_BRACE +
+                                (HTIS + COLON + THIS) + COMMA +
                                 (COMMON_NAME + COLON + SINGLE_QUOTE + commonName + SINGLE_QUOTE) + COMMA +
                                 (LATITUDE + COLON + coords.getLatitude()) + COMMA +
                                 (LONGITUDE + COLON + coords.getLongitude()) +
