@@ -11,7 +11,7 @@
     <title>\ilikeplaces\src\main\webapp\WEB-INF\pages\ai\ilikeplaces\widgets\DownTownHeatMap.xhtml</title>
 </head>
 <body style="height:100%;">
-<div class="by" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat" style="height:100%;">
+<div class="by dbg_" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat" style="height:100%;">
 
 <script type="text/javascript">
 
@@ -646,21 +646,27 @@ function setMapToLocation(value){
                 </div>
             </div>
         </div>
-        <div class="by" id="mapCustomControlsNEWSZoomMain" style="height:80px;width:70px;">
-            <div class="by2" style="height:50%;">
-            </div>
-            <div id="mapCustomControlsNEWSZoomOutMain" class="by2" style="height:50%;">
-                <img src="/images/zoom_out_32t.png"  style="height:100%;" alt="-"/></div>
-            <div id="mapCustomControlsNEWSZoomInMain" class="by2" style="height:50%;">
-                <img src="/images/zoom_in_32t.png" style="height:100%;" alt="+"/></div>
-            <div class="by2" style="height:50%;">
+        <div class="by" id="mapCustomControlsNEWSZoomMain" style="height:123.6px;width:200px;">
+            <div style="width:100%;height:100%;">
+                <div class="use618" style="height:100%;">
+                    &nbsp;
+                </div>
+                <div class="use382" style="height:100%;">
+                    <div class="use618" style="height:38.2%;">
+                    </div>
+                    <div id="mapCustomControlsNEWSZoomOutMain" class="use382" style="height:38.2%;">
+                        <img src="/images/zoom_out_32t.png" style="width:100%;" alt="-"/></div>
+                    <div id="mapCustomControlsNEWSZoomInMain" class="use618" style="height:61.8%;">
+                        <img src="/images/zoom_in_32t.png"  style="width:100%;" alt="+"/></div>
+                    <div class="use382" style="height:61.8%;">
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="mapCustomControlsSearchBox" style="width:38.2%;">
-                    <div class="use100" style="width:100%;height:9.55%;">
-                        <div style="width:50%;height:61.8%;padding-left:19.1%;padding-right:19.1%;">
-                            <div style="height:38.2%;" class="use100">&nbsp;</div>                            `
-                            <div class="use100" style="height:61.8%;">
+        <div id="mapCustomControlsSearchBox">
+                    <div style="width:336px;height:65px;">
+                        <div style="width:100%;height:61.8%;">
+                            <div class="use100" style="height:100%;">
                                 <input class="vtip use100 center layer_2"
                                    id="searchboxmap"
                                    style="height:100%;border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;font-size:14px;vertical-align:top;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
@@ -670,13 +676,12 @@ function setMapToLocation(value){
                                     />
                             </div>
                         </div>
-                        <div style="width:50%;height:38.2%;padding-left:19.1%;padding-right:19.1%;">
-                            <div style="height:38.2%;" class="use100">&nbsp;</div>                            `
-                            <div style="width:61.8%;height:61.8%;padding-left:19.1%;padding-right:19.1%;">
+                        <div style="width:100%;height:38.2%;">
+                            <div style="width:38.2;height:100%;padding-left:30.9%;padding-right:30.9%;overflow:hidden;">
                                 <div class="btn use100"
                                        id="searchButtonMap"
                                        onclick="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
-                                       style="height:100%;font-size:16px;font-weight:900;cursor:pointer;background-color;#FD78E1;border:1px;text-align:center;"
+                                       style="height:100%;font-weight:900;cursor:pointer;background-color;#FD78E1;border:1px;text-align:center;vertical-align:middle;"
                                        >&nbsp;Go Fetch!&nbsp;
                                 </div>
                             </div>
