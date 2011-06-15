@@ -547,11 +547,10 @@ function setMapToLocation(value){
         <div id="mapCustomControlsAdUnit" class="by5" style="color:#cc2200;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">
         </div>
         <div id="mapCustomControlsSolidLinksWidget" class="bold" style="width:30.9%;">
-            <div style="height:0px;" class="by">&nbsp;</div>
             <div class="by" style="height:5px;">&nbsp;</div>
             <div class="by" style="">
                 <div class="use5">&nbsp;</div>
-                <div class="use95">
+                <div class="use90">
                     <div class="by bold" style="height:34px;color:#ffffff;background-color:#cc2200;opacity:0.8; filter:alpha(opacity=80);text-align:center;">
                         <span style="font-size:21.3px;padding:5px;text-align:center;line-height:34px;">On the Map</span>
                     </div>
@@ -563,6 +562,7 @@ function setMapToLocation(value){
                     </div>
                     <div class="use191" style="background-color:transparent;">&nbsp;</div>
                 </div>
+                <div class="use5">&nbsp;</div>
             </div>
         </div>
         <div id="mapCustomControlsSolidActionsWidget" class="bold" style="width:19.1%;">
@@ -664,29 +664,34 @@ function setMapToLocation(value){
                 </div>
             </div>
         </div>
-        <div id="mapCustomControlsSearchBox">
-                    <div style="width:336px;height:65px;">
-                        <div style="width:100%;height:61.8%;">
-                            <div class="use100" style="height:100%;">
-                                <input class="vtip use100 center layer_2"
-                                   id="searchboxmap"
-                                   style="height:100%;border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;font-size:14px;vertical-align:top;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
-                                   value="e.g. las vegas, united states"
-                                   tabindex="1"
-                                   onchange="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
-                                    />
-                            </div>
-                        </div>
-                        <div style="width:100%;height:38.2%;">
-                            <div style="width:38.2;height:100%;padding-left:30.9%;padding-right:30.9%;overflow:hidden;">
-                                <div class="btn use100"
-                                       id="searchButtonMap"
-                                       onclick="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
-                                       style="height:100%;font-weight:900;cursor:pointer;background-color;#FD78E1;border:1px;text-align:center;vertical-align:middle;"
-                                       >&nbsp;Go Fetch!&nbsp;
+        <div id="mapCustomControlsSearchBox" style="width:100%;">
+                    <div style="width:38.2%;height:65px;padding-left:30.9%;padding-right:30.9%;">
+                        <div class="use5">&nbsp;</div>
+                        <div class="use90">
+                            <div style="width:100%;height:5px;">&nbsp;</div>
+                            <div style="width:100%;height:61.8%;">
+                                <div class="use100" style="height:34px;">
+                                    <input class="vtip use100 center layer_2"
+                                       id="searchboxmap"
+                                       style="color:#cc2200;height:34px;line-height:34px;border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;font-size:21.3px;vertical-align:top;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
+                                       value="e.g. las vegas, united states"
+                                       tabindex="1"
+                                       onchange="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
+                                        />
                                 </div>
                             </div>
-                         </div>
+                            <div style="width:100%;height:38.2%;">
+                                <div style="width:38.2;height:100%;padding-left:30.9%;padding-right:30.9%;overflow:hidden;">
+                                    <div class="btn fetch use100"
+                                           id="searchButtonMap"
+                                           onclick="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
+                                           style="background-color:#cc2200;height:100%;font-weight:900;cursor:pointer;background-color;#FD78E1;border:1px;text-align:center;vertical-align:middle;"
+                                           >&nbsp;Go Fetch!&nbsp;
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="use5">&nbsp;</div>
                     </div>
                     <br/>
                     <div id="CurrentActivityNotificationBox" class="use100 bold" style="width:100%;text-align:center;color:#cc2200;">&nbsp;</div>
