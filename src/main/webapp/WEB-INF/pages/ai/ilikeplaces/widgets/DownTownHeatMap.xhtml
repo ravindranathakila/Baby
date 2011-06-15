@@ -244,8 +244,6 @@ function initialize_DownTownHeatMap_map(){
 
      GAIA.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('mapCustomControlsSolidLinksWidget'));
 
-     GAIA.controls[google.maps.ControlPosition.RIGHT_TOP].push(document.getElementById('mapCustomControlsSolidActionsWidget'));
-
      google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSNW'), 'click', function() {
      GAIA.panBy(-30, -30);
      });
@@ -300,6 +298,8 @@ function initialize_DownTownHeatMap_map(){
         adUnit = new google.maps.adsense.AdUnit(adUnitDiv, adUnitOptions);
      }
 
+
+     GAIA.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('mapCustomControlsSolidActionsWidget'));
 
      google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSZoomInMain'), 'click', function() {
      GAIA.setZoom(GAIA.getZoom()+1);
@@ -568,16 +568,16 @@ function setMapToLocation(value){
         <div id="mapCustomControlsSolidActionsWidget" class="bold" style="width:19.1%;">
             <div style="height:50px;" class="by">&nbsp;</div>
             <div class="by" style="height:5px;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">&nbsp;</div>
-            <div class="by" style="background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">
+            <div class="by">
                 <div class="use5">&nbsp;</div>
                 <div class="use90">
-                    <div class="by bold" style="color:#cc2200;">
-                        <span id="mapCustomControlsActionLinksTitle" style="font-size:13px;">Take Action</span><br/>
+                    <div id="mapCustomControlsActionLinks" class="by bold" style="color:#cc2200;text-align:center;">
                     </div>
                     <div class="by" style="height:3px;">
                         &nbsp;
                     </div>
-                    <div id="mapCustomControlsActionLinks" class="by bold" style="color:#cc2200;">
+                    <div class="by bold" style="background-color:#cc2200;height:34px;text-align:center;">
+                        <span id="mapCustomControlsActionLinksTitle" style="font-size:21.3px;line-height:34px;text-align:center;color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">Take Action</span>
                     </div>
                 </div>
                 <div class="use5">&nbsp;</div>
