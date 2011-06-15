@@ -68,7 +68,7 @@ function setActionLink(text, title, onclickActions, doClear){//WARNING! used in 
     }
     //$('#mapCustomControlsActionLinks').append('<span style=\'cursor:pointer;text-decoration:underline;\'>'+text+'<br/></span>');
     $('#mapCustomControlsActionLinks').append('<div class=\'by\' style=\'height:7px;\'>&nbsp;</div>');
-    $('#mapCustomControlsActionLinks').append('<a style=\'cursor:pointer;background-color:#cc2200;color:#ffffff;\' class=\'btn\'><i></i><span style=\'font-size:13px;\'><span></span><i></i>'+text+'</span></a>');
+    $('#mapCustomControlsActionLinks').append('<a style=\'margin-right:0px;cursor:pointer;background-color:#cc2200;color:#ffffff;\' class=\'btn\'><i></i><span style=\'font-size:13px;\'><span></span><i></i>'+text+'</span></a>');
 
     $('#mapCustomControlsActionLinks').children(':last').click(onclickActions);
 }
@@ -85,7 +85,7 @@ function setClearForLastNotification(){
  function hotSpotClicked(hotspotClickDetails){//WARNING! used in java
     setNotification("Great! You've selected a place. Check Actions!");
     setActionLink(
-        "Create a Moment Here",
+        "Create a Moment",
         hotspotClickDetails.commonName,
         function(){
             alert('We\'re gonna send you to Down Town. Don\'t worry, we\'ve got you covered!');
@@ -94,7 +94,7 @@ function setClearForLastNotification(){
         true
     );
     setActionLink(
-        "Find Directions To Reach Here",
+        "Find Directions",
         "",
         function(){
             var from = prompt('We\'re gonna send you to Down Town. Don\'t worry, we\'ve got you covered!');
@@ -567,10 +567,9 @@ function setMapToLocation(value){
         </div>
         <div id="mapCustomControlsSolidActionsWidget" class="bold" style="width:19.1%;">
             <div style="height:50px;" class="by">&nbsp;</div>
-            <div class="by" style="height:5px;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">&nbsp;</div>
+            <div class="by" style="height:5px;">&nbsp;</div>
             <div class="by">
-                <div class="use5">&nbsp;</div>
-                <div class="use90">
+                <div class="use95">
                     <div id="mapCustomControlsActionLinks" class="by bold" style="color:#cc2200;text-align:center;">
                     </div>
                     <div class="by" style="height:3px;">
