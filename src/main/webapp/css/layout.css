@@ -701,3 +701,51 @@
     float:left;
 }
 
+
+.use618{
+    width:61.8%;
+    position:relative;
+    float:left;
+}.use618p{
+    padding-left:61.8%;
+    position:relative;
+    float:left;
+}.use618a{
+    padding-right:61.8%;
+    position:relative;
+    float:left;
+}
+
+
+
+.use382{
+    width:38.2%;
+    position:relative;
+    float:left;
+}.use382p{
+    padding-left:38.2%;
+    position:relative;
+    float:left;
+}.use382a{
+    padding-right:38.2%;
+    position:relative;
+    float:left;
+}
+
+
+
+
+.use191{
+    width:19.1%;
+    position:relative;
+    float:left;
+}.use191p{
+    padding-left:19.1%;
+    position:relative;
+    float:left;
+}.use191a{
+    padding-right:19.1%;
+    position:relative;
+    float:left;
+}
+
