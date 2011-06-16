@@ -68,7 +68,7 @@ function setActionLink(text, title, onclickActions, doClear){//WARNING! used in 
     }
     //$('#mapCustomControlsActionLinks').append('<span style=\'cursor:pointer;text-decoration:underline;\'>'+text+'<br/></span>');
     $('#mapCustomControlsActionLinks').append('<div class=\'by\' style=\'height:7px;\'>&nbsp;</div>');
-    $('#mapCustomControlsActionLinks').append('<a style=\'margin-right:0px;cursor:pointer;background-color:#cc2200;color:#ffffff;\' class=\'btn\'><i></i><span style=\'font-size:13px;\'><span></span><i></i>'+text+'</span></a>');
+    $('#mapCustomControlsActionLinks').append('<a style=\'margin-right:0px;cursor:pointer;background-color:#cc2200;color:#ffffff;\' class=\'btn\'><i></i><span style=\'font-size:17px;\'><span></span><i></i>'+text+'</span></a>');
 
     $('#mapCustomControlsActionLinks').children(':last').click(onclickActions);
 }
@@ -155,25 +155,25 @@ function setClearForLastNotification(){
 
 function getColoredMarkerWithIntensity(intensity, title){
     if(intensity < 1 ){
-        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|ff00cc|glyphish_map-marker|24|ff00cc|FB0';
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|ff00cc|glyphish_map-marker|24|ff00cc|FB0';
     }
     if(intensity < 5 ){
-        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|ee00aa|glyphish_map-marker|24|cc00aa|FB0';
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|ee00aa|glyphish_map-marker|24|cc00aa|FB0';
     }
     if(intensity < 10 ){
-        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|dd0088|glyphish_map-marker|24|cc0088|FB0';
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|dd0088|glyphish_map-marker|24|cc0088|FB0';
     }
     if(intensity < 20 ){
-        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|cc0066|glyphish_map-marker|24|990066|FB0';
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|cc0066|glyphish_map-marker|24|990066|FB0';
     }
     if(intensity < 50 ){
-        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|bb0044|glyphish_map-marker|24|990044|FB0';
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|bb0044|glyphish_map-marker|24|990044|FB0';
     }
     if(intensity < 100 ){
-        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|14|aa0022|glyphish_map-marker|24|660022|FB0';
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|aa0022|glyphish_map-marker|24|660022|FB0';
     }
     if(intensity >= 100 ){
-        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|12|990000|glyphish_map-marker|24|660000|FB0';
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|990000|glyphish_map-marker|24|660000|FB0';
     }
 }
 
@@ -565,23 +565,23 @@ function setMapToLocation(value){
                 <div class="use5">&nbsp;</div>
             </div>
         </div>
-        <div id="mapCustomControlsSolidActionsWidget" class="bold" style="width:19.1%;">
+        <div id="mapCustomControlsSolidActionsWidget" class="bold" style="width:19.1%;overflow:hidden;">
             <div style="height:50px;" class="by">&nbsp;</div>
             <div class="by" style="height:5px;">&nbsp;</div>
             <div class="by">
                 <div class="use95">
                     <div id="mapCustomControlsActionLinks" class="by bold" style="color:#cc2200;text-align:center;">
                     </div>
-                    <div class="by" style="height:3px;">
+                    <div class="by" style="height:5px;">
                         &nbsp;
                     </div>
-                    <div class="by bold" style="background-color:#cc2200;height:34px;text-align:center;">
-                        <span id="mapCustomControlsActionLinksTitle" style="font-size:21.3px;line-height:34px;text-align:center;color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">Take Action</span>
+                    <div class="by bold" style="background-color:#cc2200;height:34px;text-align:center;opacity:0.7; filter:alpha(opacity=70);">
+                        <span id="mapCustomControlsActionLinksTitle" style="font-size:21.3px;line-height:34px;text-align:center;color:#ffffff;">Take Action</span>
                     </div>
                 </div>
                 <div class="use5">&nbsp;</div>
             </div>
-            <div class="by"  style="height:5px;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">&nbsp;</div>
+            <div class="by"  style="height:5px;">&nbsp;</div>
         </div>
         <div id="mapCustomControlsShowHide" style="width:140px;">
                     <div id="mapCustomControlsShowHideText" class="btn use100" style="font-size:16px;text-align:center;cursor:pointer;">Show Pics</div>&nbsp;
@@ -663,12 +663,12 @@ function setMapToLocation(value){
                 </div>
             </div>
         </div>
-        <div id="mapCustomControlsSearchBox" style="width:100%;">
-                    <div style="width:38.2%;padding-left:30.9%;padding-right:30.9%;">
-                        <div class="use5">&nbsp;</div>
+        <div id="mapCustomControlsSearchBox" style="width:38.2%;padding-left:30.9%;padding-right:30.9%;overflow:hidden;">
+                    <div class="use100">
+                        <div class="use5" style="height:100%;">&nbsp;</div>
                         <div class="use90">
                             <div style="width:100%;height:5px;">&nbsp;</div>
-                            <div style="width:100%;height:61.8%;">
+                            <div style="width:100%;">
                                 <div class="use100" style="height:34px;">
                                     <input class="vtip use100 center layer_2"
                                        id="searchboxmap"
@@ -679,21 +679,23 @@ function setMapToLocation(value){
                                         />
                                 </div>
                             </div>
-                            <div style="width:100%;34px;">
-                                <div style="width:38.2;height:100%;padding-left:30.9%;padding-right:30.9%;overflow:hidden;">
+                            <div style="width:100%;height:10px;">
+                                &nbsp;
+                            </div>
+                            <div style="width:100%;height:34px;overflow:hidden;">
+                                <div style="width:38.2%;height:34px;padding-left:30.9%;padding-right:30.9%;">
                                     <div class="btn use100"
                                            id="searchButtonMap"
                                            onclick="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
-                                           style="background-color:#cc2200;height:100%;font-size:21.3px;font-weight:900;cursor:pointer;background-color;#FD78E1;border:1px;text-align:center;vertical-align:middle;"
-                                           >&nbsp;Go Fetch!&nbsp;
+                                           style="background-color:#cc2200;height:100%;line-height:28px;;font-size:21.3px;font-weight:900;cursor:pointer;background-color;#FD78E1;border:1px;text-align:center;vertical-align:middle;">
+                                        Go Fetch!
                                     </div>
                                 </div>
                              </div>
                         </div>
-                        <div class="use5">&nbsp;</div>
+                        <div class="use5" style="height:100%;">&nbsp;</div>
                     </div>
-                    <br/>
-                    <div id="CurrentActivityNotificationBox" class="use100 bold" style="width:100%;text-align:center;color:#cc2200;">&nbsp;</div>
+                    <div id="CurrentActivityNotificationBox" class="bold" style="width:100%;text-align:center;color:#cc2200;">&nbsp;</div>
         </div>
     </div>
 </div>
