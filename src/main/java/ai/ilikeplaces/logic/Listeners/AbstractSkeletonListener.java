@@ -33,7 +33,7 @@ import static ai.ilikeplaces.util.Loggers.EXCEPTION;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class AbstractSkeletonListener extends AbstractListener {
 
-    public static final String TITLE = "who goes there...?! ";
+    public static final String TITLE = "Hey ";
     private static final String NO_LOGIN = "NoLogin";
     private static final String BN = "bn";
     private static final String PROFILE_PHOTOS = "PROFILE_PHOTOS";

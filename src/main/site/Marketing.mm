@@ -2,7 +2,7 @@
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
 <node CREATED="1304339998591" ID="Freemind_Link_647673425" MODIFIED="1306058971297" TEXT="Marketing">
 <font NAME="Comic Sans MS" SIZE="12"/>
-<node CREATED="1304603299475" ID="Freemind_Link_1783261531" MODIFIED="1307252989665" POSITION="right" TEXT="2011">
+<node CREATED="1304603299475" FOLDED="true" ID="Freemind_Link_1783261531" MODIFIED="1307969655437" POSITION="right" TEXT="2011">
 <node CREATED="1304603326396" FOLDED="true" ID="Freemind_Link_1527518165" MODIFIED="1304689582242" TEXT="Executive Summary of Adimpression 2011">
 <font BOLD="true" NAME="SansSerif" SIZE="18"/>
 <node CREATED="1304603337849" ID="Freemind_Link_992763483" MODIFIED="1304689575213" TEXT="We all started this with location based advertising.">
@@ -59,7 +59,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1304783075507" ID="Freemind_Link_140176817" MODIFIED="1306640744390" TEXT="Marketing Plan of Adimpression 2011">
+<node CREATED="1304783075507" FOLDED="true" ID="Freemind_Link_140176817" MODIFIED="1307969653781" TEXT="Marketing Plan of Adimpression 2011">
 <node CREATED="1304783089007" ID="Freemind_Link_1359848668" MODIFIED="1304826980632" TEXT="The Almost Flat Marketing List">
 <node CREATED="1304783100008" FOLDED="true" ID="Freemind_Link_146684658" MODIFIED="1306653439963" TEXT="Article Submissions">
 <node CREATED="1304783107070" ID="Freemind_Link_531488876" MODIFIED="1304783138634" TEXT="Make sure you submit to only your website related sites"/>
@@ -466,12 +466,12 @@
 </node>
 </node>
 </node>
-<node CREATED="1306058881990" FOLDED="true" ID="Freemind_Link_340930573" MODIFIED="1307252978681" POSITION="left" TEXT="Penetrators">
+<node CREATED="1306058881990" ID="Freemind_Link_340930573" MODIFIED="1308105893796" POSITION="left" TEXT="Penetrators">
 <node CREATED="1306546295288" ID="ID_719807011" MODIFIED="1306546299602" TEXT="Mint">
 <node CREATED="1306546301666" ID="ID_370588626" MODIFIED="1306546315656" TEXT="Has to imply &quot;Places&quot;"/>
 <node CREATED="1306546316906" ID="ID_1852971758" MODIFIED="1306546339869" TEXT="Has to indicate &quot;Entertainment&quot;"/>
 </node>
-<node CREATED="1306060178771" FOLDED="true" ID="Freemind_Link_110455535" MODIFIED="1306547150723" TEXT="Applicants">
+<node CREATED="1306060178771" ID="Freemind_Link_110455535" MODIFIED="1308105898156" TEXT="Applicants">
 <node CREATED="1306258198129" ID="Freemind_Link_1773820053" MODIFIED="1306546431813" TEXT="Just... Have Fun!"/>
 <node CREATED="1306546467374" ID="ID_945821355" MODIFIED="1306546478785" TEXT="You - Friends - Places - Fun"/>
 <node CREATED="1306546524819" ID="ID_1895634668" MODIFIED="1306546554988" TEXT="Friends - Places - Entertainment"/>
@@ -484,9 +484,14 @@
 <node CREATED="1306258456500" ID="Freemind_Link_1548345731" MODIFIED="1306258462366" TEXT="Some go heaven... we go places"/>
 <node CREATED="1306258473112" ID="Freemind_Link_1745824747" MODIFIED="1306258479667" TEXT="Get lost... in some place"/>
 </node>
-<node CREATED="1306058996592" ID="Freemind_Link_679428450" MODIFIED="1306547152083" TEXT="Brave">
+<node CREATED="1306058996592" ID="Freemind_Link_679428450" MODIFIED="1308106002656" TEXT="Brave">
+<node CREATED="1308105902265" ID="ID_956606957" MODIFIED="1308106006890" TEXT="It&apos;s Damn Social"/>
 <node CREATED="1306258427091" ID="Freemind_Link_102093151" MODIFIED="1306414177562" TEXT="Places even gods digg"/>
 <node CREATED="1306258371793" ID="Freemind_Link_323733176" MODIFIED="1306414175468" TEXT="Admit it, places ARE fun"/>
+<node CREATED="1308105947015" ID="ID_1521017130" MODIFIED="1308107979593" TEXT="Everybody was looking for happiness. &#xa;&quot;Heaven&quot; seemed to be &quot;the place to go&quot;.&#xa;Though, at one point of time we felt &quot;we weren&apos;t happy enough on Earth&quot;. &#xa;We looked around. Others had the same problem!&#xa;We decided it&apos;s quite dumb to sit around doing nothing and wait for heaven. &#xa;It was okay for us to believe in phrophesies millenia&apos;s old, but to do nothing about &quot;not being happy&quot;, sucked!&#xa;We&apos;d neglected our friends and family due to various reasons.&#xa;It was often because, we&apos;d not have the place and time to meet with friends and family, to have some fun in our own ways.&#xa;Friends and family we always had, and time we &quot;kind of&quot; managed, but a place was not always there. We knew if the we find time to hang out, with the right place, we&apos;d get a combination hard to find even in heaven. We all knew what fun it was to hang around with people we care(or fight). That was our dream - Be Happy On Earth!&#xa;&#xa;So we created www.ilikeplaces.com. A collection of cool places to hang around with people we care. For now, we&apos;re just that!&#xa;&#xa;">
+<icon BUILTIN="back"/>
+<icon BUILTIN="full-6"/>
+</node>
 <node CREATED="1306258231904" ID="ID_1235934793" MODIFIED="1306550507588">
 <richcontent TYPE="NODE"><html>
   <head>
@@ -830,12 +835,20 @@
 </node>
 </node>
 </node>
-<node CREATED="1307245389165" FOLDED="true" ID="ID_310356034" MODIFIED="1307252982978" POSITION="left" TEXT="The Four Usual Suspects(FUS) - The Bars We Set The Highest">
+<node CREATED="1307245389165" FOLDED="true" ID="ID_310356034" MODIFIED="1308105892281" POSITION="left" TEXT="The Four Usual Suspects(FUS) - The Bars We Set The Highest">
 <icon BUILTIN="wizard"/>
 <node CREATED="1307245411745" ID="ID_944727217" MODIFIED="1307246182542" TEXT="Analyzing the problem, it&apos;s boundaries and limitations.(FUS1)"/>
 <node CREATED="1307245454483" ID="ID_1892067123" MODIFIED="1307245962697" TEXT="Least effort to solution(FUS2)"/>
 <node CREATED="1307245463296" ID="ID_222575109" MODIFIED="1307245968432" TEXT="Consistent and quality updates(FUS3)"/>
-<node CREATED="1307245481813" ID="ID_1606485639" MODIFIED="1307245976026" TEXT="Anthropomorphic design and movement(FUS4)"/>
+<node CREATED="1307245481813" ID="ID_1606485639" MODIFIED="1307245976026" TEXT="Anthropomorphic design and movement(FUS4)">
+<node CREATED="1307969679296" ID="ID_1169519293" MODIFIED="1307969691187" TEXT="Assimilation"/>
+<node CREATED="1307969691890" ID="ID_38462006" MODIFIED="1307969698296" TEXT="Curvature"/>
+<node CREATED="1307969698765" ID="ID_1070674711" MODIFIED="1307969700750" TEXT="Cleavage"/>
+<node CREATED="1307969968671" ID="ID_1867470405" MODIFIED="1307970254687" TEXT="The Golden Ratio">
+<node CREATED="1307970225984" ID="ID_1143060069" LINK="http://www.msnbc.msn.com/id/34482178/ns/health-skin_and_beauty/t/ideal-beauty-matter-millimeters-study-says/" MODIFIED="1307970296171" TEXT="1"/>
+<node CREATED="1307970242390" ID="ID_1728394564" LINK="http://goldennumber.net/face.htm" MODIFIED="1307970302546" TEXT="2"/>
+</node>
+</node>
 </node>
 <node CREATED="1306057065799" FOLDED="true" ID="Freemind_Link_169183248" MODIFIED="1307252984134" POSITION="left" TEXT="The Homo Sapient Effects">
 <icon BUILTIN="wizard"/>
@@ -849,7 +862,7 @@
 <node CREATED="1306059446454" ID="Freemind_Link_531177503" MODIFIED="1306059906212" TEXT="Curiosity and Amusement"/>
 <node CREATED="1306059451360" ID="Freemind_Link_209948448" MODIFIED="1306059452860" TEXT="Faith"/>
 </node>
-<node CREATED="1283703177927" FOLDED="true" ID="Freemind_Link_1817341781" MODIFIED="1307252985447" POSITION="left" TEXT="Flat Zeroeth Checklist">
+<node CREATED="1283703177927" FOLDED="true" ID="Freemind_Link_1817341781" MODIFIED="1307969657578" POSITION="left" TEXT="Flat Zeroeth Checklist">
 <node CREATED="1285778293411" ID="Freemind_Link_1030747214" MODIFIED="1286031836875" TEXT="Are you being dumb? No? BE DUMB!"/>
 <node CREATED="1283703161521" ID="Freemind_Link_63383641" MODIFIED="1283703168865" TEXT="Does it do what it says?"/>
 <node CREATED="1283703169490" ID="Freemind_Link_499084225" MODIFIED="1283703174943" TEXT="Does it say what is does?"/>
