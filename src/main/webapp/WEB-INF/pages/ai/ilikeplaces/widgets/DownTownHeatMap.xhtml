@@ -125,6 +125,8 @@ function setClearForLastNotification(){
  }
 
  function processMarker(markerInfo){
+    document.getElementById('mapCustomControlsSolidLinksWidget').style.zIndex='11';//Main notifications overlaps this div. Doing this immediately after pushing won't work either.
+
     $('#mapCustomControlsSolidLinks').append('<div style=\'width:100%;height:5px;\'>&nbsp;</div><span style=\'cursor:pointer;text-decoration:underline;font-size:13px;\'>'+markerInfo.commonName+'&rarr;</span>');
 
     var currentMarker = listOfHotSpots[0];
@@ -375,7 +377,7 @@ function initialize_DownTownHeatMap_map(){
                         }
                     setNotification("We are somewhere near.. " + locationString);
                 }else{
-                    setNotification("Hey where we are?!!");
+                    setNotification("Hey where are we?!!");
                 }
             }
             );
@@ -584,7 +586,7 @@ function setMapToLocation(value){
             <div class="by"  style="height:5px;">&nbsp;</div>
         </div>
         <div id="mapCustomControlsShowHide" style="width:140px;">
-                    <div id="mapCustomControlsShowHideText" class="btn use100" style="font-size:16px;text-align:center;cursor:pointer;">Show Pics</div>&nbsp;
+                    <div id="mapCustomControlsShowHideText" class="btn use100" style="background-color:#cc2200;font-size:21.3px;font-weight:900;text-align:center;cursor:pointer;">Show Pics</div>&nbsp;
         </div>
         <div id="mapCustomControlsNEWS" class="by5" style="height:200px;width:144px;">
 			<div class="by" style="height:135px;">
@@ -644,7 +646,7 @@ function setMapToLocation(value){
                 </div>
             </div>
         </div>
-        <div class="by" id="mapCustomControlsNEWSZoomMain" style="height:123.6px;width:200px;">
+        <div class="by" id="mapCustomControlsNEWSZoomMain" style="height:123.6px;width:200px;opacity:0.8;filter:alpha(opacity=80);">
             <div style="width:100%;height:100%;">
                 <div class="use618" style="height:100%;">
                     &nbsp;
@@ -653,9 +655,9 @@ function setMapToLocation(value){
                     <div class="use618" style="height:38.2%;">
                         &nbsp;
                     </div>
-                    <div id="mapCustomControlsNEWSZoomOutMain" class="use382" style="height:38.2%;">
+                    <div id="mapCustomControlsNEWSZoomOutMain" class="use382" style="height:38.2%;cursor:pointer;">
                         <img src="/images/zoom_out_32t.png" style="width:100%;" alt="-"/></div>
-                    <div id="mapCustomControlsNEWSZoomInMain" class="use618" style="height:61.8%;">
+                    <div id="mapCustomControlsNEWSZoomInMain" class="use618" style="height:61.8%;cursor:pointer;">
                         <img src="/images/zoom_in_32t.png"  style="width:100%;" alt="+"/></div>
                     <div class="use382" style="height:61.8%;">
                         &nbsp;
@@ -687,7 +689,7 @@ function setMapToLocation(value){
                                     <div class="btn use100"
                                            id="searchButtonMap"
                                            onclick="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
-                                           style="background-color:#cc2200;height:100%;line-height:28px;;font-size:21.3px;font-weight:900;cursor:pointer;background-color;#FD78E1;border:1px;text-align:center;vertical-align:middle;">
+                                           style="background-color:#cc2200;height:100%;line-height:28px;;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;opacity:0.8;filter:alpha(opacity=80);">
                                         Go Fetch!
                                     </div>
                                 </div>
