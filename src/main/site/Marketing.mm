@@ -2,8 +2,8 @@
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
 <node CREATED="1304339998591" ID="Freemind_Link_647673425" MODIFIED="1306058971297" TEXT="Marketing">
 <font NAME="Comic Sans MS" SIZE="12"/>
-<node CREATED="1304603299475" FOLDED="true" ID="Freemind_Link_1783261531" MODIFIED="1307969655437" POSITION="right" TEXT="2011">
-<node CREATED="1304603326396" FOLDED="true" ID="Freemind_Link_1527518165" MODIFIED="1304689582242" TEXT="Executive Summary of Adimpression 2011">
+<node CREATED="1304603299475" ID="Freemind_Link_1783261531" MODIFIED="1308500719515" POSITION="right" TEXT="2011">
+<node CREATED="1304603326396" FOLDED="true" ID="Freemind_Link_1527518165" MODIFIED="1308574702484" TEXT="Executive Summary of Adimpression 2011">
 <font BOLD="true" NAME="SansSerif" SIZE="18"/>
 <node CREATED="1304603337849" ID="Freemind_Link_992763483" MODIFIED="1304689575213" TEXT="We all started this with location based advertising.">
 <font BOLD="true" NAME="SansSerif" SIZE="16"/>
@@ -59,7 +59,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1304783075507" FOLDED="true" ID="Freemind_Link_140176817" MODIFIED="1307969653781" TEXT="Marketing Plan of Adimpression 2011">
+<node CREATED="1304783075507" FOLDED="true" ID="Freemind_Link_140176817" MODIFIED="1308574701046" TEXT="Marketing Plan of Adimpression 2011">
 <node CREATED="1304783089007" ID="Freemind_Link_1359848668" MODIFIED="1304826980632" TEXT="The Almost Flat Marketing List">
 <node CREATED="1304783100008" FOLDED="true" ID="Freemind_Link_146684658" MODIFIED="1306653439963" TEXT="Article Submissions">
 <node CREATED="1304783107070" ID="Freemind_Link_531488876" MODIFIED="1304783138634" TEXT="Make sure you submit to only your website related sites"/>
@@ -302,171 +302,133 @@
 <node CREATED="1305159164078" ID="Freemind_Link_1369179674" MODIFIED="1306798446987" TEXT="Strategy Summary"/>
 </node>
 </node>
-<node CREATED="1304603305990" FOLDED="true" ID="Freemind_Link_620714991" MODIFIED="1307367690290" TEXT="May">
-<node CREATED="1304340068495" ID="Freemind_Link_84905687" MODIFIED="1304341080207" TEXT="20110502">
-<font NAME="Comic Sans MS" SIZE="12"/>
-<node BACKGROUND_COLOR="#009900" CREATED="1304340062667" FOLDED="true" ID="_" MODIFIED="1304343571926" TEXT="Alien Analysis">
-<font NAME="Comic Sans MS" SIZE="12"/>
-<node CREATED="1304340097086" ID="Freemind_Link_1823445291" MODIFIED="1304341080192" TEXT="Home Page">
-<font NAME="Comic Sans MS" SIZE="12"/>
-<node BACKGROUND_COLOR="#9999ff" CREATED="1304340122247" ID="Freemind_Link_1190765478" MODIFIED="1304341080192" TEXT="1. I type www.ilikeplaces.com">
-<font NAME="Comic Sans MS" SIZE="12"/>
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304340160332" ID="Freemind_Link_1692725123" MODIFIED="1304341080192" TEXT="I don&apos;t know what i like places is">
-<font NAME="Comic Sans MS" SIZE="12"/>
+<node CREATED="1304603305990" ID="Freemind_Link_620714991" MODIFIED="1308614507343" TEXT="Week">
+<node CREATED="1308614925328" ID="ID_634066279" MODIFIED="1308614928109" TEXT="#25">
+<node CREATED="1308614950375" ID="ID_298683684" MODIFIED="1308615134203" TEXT="#1">
+<node CREATED="1308615135015" ID="ID_1094484600" LINK="http://www.quora.com/Where-does-Heidi-Montag-live" MODIFIED="1308615135015" TEXT="quora.com &gt; Where-does-Heidi-Montag-live"/>
+<node CREATED="1308615154875" ID="ID_384008840" LINK="http://www.quora.com/Amy-Winehouse/Where-does-Amy-Winehouse-live" MODIFIED="1308615154875" TEXT="quora.com &gt; Amy-Winehouse &gt; Where-does-Amy-Winehouse-live"/>
 </node>
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304340170844" ID="Freemind_Link_899290258" MODIFIED="1304341080192" TEXT="I suspect it is about places I like">
-<font NAME="Comic Sans MS" SIZE="12"/>
-</node>
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304340184928" ID="Freemind_Link_7430844" MODIFIED="1304341080192" TEXT="What places do I like?">
-<font NAME="Comic Sans MS" SIZE="12"/>
-</node>
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304340197618" ID="Freemind_Link_274653609" MODIFIED="1304341080192" TEXT="What&apos;s it got to do with this site?">
-<font NAME="Comic Sans MS" SIZE="12"/>
-</node>
-<node CREATED="1304341622906" ID="Freemind_Link_273366420" MODIFIED="1304342971249" TEXT="21 Seconds Avg Conn FF3.5">
-<icon BUILTIN="flag"/>
+<node CREATED="1308615162031" FOLDED="true" ID="ID_483198706" MODIFIED="1308617343765" TEXT="#2">
+<node CREATED="1308615618593" ID="ID_803964988" LINK="http://www.quora.com/What-is-happening-Morocco-in-June-July-Any-festivals-or-events" MODIFIED="1308615618593" TEXT="quora.com &gt; What-is-happening-Morocco-in-June-July-Any-festivals-or-events">
+<node CREATED="1308615627296" ID="ID_1479718075" MODIFIED="1308616133125" TEXT="@TODO Give ILP link">
+<icon BUILTIN="hourglass"/>
 </node>
 </node>
-<node BACKGROUND_COLOR="#9999ff" CREATED="1304340150117" ID="Freemind_Link_928753314" MODIFIED="1304341080192" TEXT="2. I see &quot;The Events&quot; &quot;The Connections&quot; &quot;The Manager&quot; &quot;The Snaps&quot;">
-<font NAME="Comic Sans MS" SIZE="12"/>
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304340361975" ID="Freemind_Link_1883283058" MODIFIED="1304341080192" TEXT="I read these but nothing registered">
-<font NAME="Comic Sans MS" SIZE="12"/>
-</node>
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304340384112" ID="Freemind_Link_459635263" MODIFIED="1304341080176" TEXT="Not even &quot;The Snaps&quot; registered at Photos">
-<font NAME="Comic Sans MS" SIZE="12"/>
+<node CREATED="1308616115937" ID="ID_1109993288" LINK="http://www.quora.com/If-traveling-to-Morocco-in-the-summer-" MODIFIED="1308616115937" TEXT="quora.com &gt; If-traveling-to-Morocco-in-the-summer-(June-July)-will-Marrakesh-be-too-hot-And-if-so-is-it-worth-going-to-Morocco-and-not-going-to-Marrakesh">
+<node CREATED="1308615627296" ID="ID_875676582" MODIFIED="1308616136218" TEXT="@TODO Give ILP link">
+<icon BUILTIN="hourglass"/>
 </node>
 </node>
-<node BACKGROUND_COLOR="#9999ff" CREATED="1304340426224" ID="Freemind_Link_1900023776" MODIFIED="1304341080176" TEXT="3. I see a &quot;Stuff Loading Be Patient&quot; sign">
-<font NAME="Comic Sans MS" SIZE="12"/>
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304340444036" ID="Freemind_Link_340278096" MODIFIED="1304341080176" TEXT="I feel a bit offended">
-<font NAME="Comic Sans MS" SIZE="12"/>
-</node>
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304340448956" ID="Freemind_Link_1119087907" MODIFIED="1304341080176" TEXT="I comply to be patient though">
-<font NAME="Comic Sans MS" SIZE="12"/>
-</node>
-<node CREATED="1304341638823" ID="Freemind_Link_1845651617" MODIFIED="1304342966353" TEXT="26 Seconds Avg Conn FF3.5">
-<icon BUILTIN="flag"/>
-</node>
-</node>
-<node BACKGROUND_COLOR="#9999ff" CREATED="1304340150117" ID="Freemind_Link_221274271" MODIFIED="1304341080176" TEXT="4. I see a pop up">
-<font NAME="Comic Sans MS" SIZE="12"/>
-<node BACKGROUND_COLOR="#9999ff" CREATED="1304340768421" ID="Freemind_Link_376052224" MODIFIED="1304341080176" TEXT="4.1. I see &quot;Welcome to dowtown I Like Places&quot;">
-<font NAME="Comic Sans MS" SIZE="12"/>
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304340448956" ID="Freemind_Link_170505301" MODIFIED="1304341080176" TEXT="I am confused why I am welcome">
-<font NAME="Comic Sans MS" SIZE="12"/>
-</node>
-<node CREATED="1304341966346" ID="Freemind_Link_1150579906" MODIFIED="1304342974205" TEXT="34 Seconds Avg Conn FF.35">
-<icon BUILTIN="flag"/>
-</node>
-</node>
-<node BACKGROUND_COLOR="#9999ff" CREATED="1304340768421" ID="Freemind_Link_1469164779" MODIFIED="1304341080176" TEXT="4.2. I see this website found where I live">
-<font NAME="Comic Sans MS" SIZE="12"/>
-<node BACKGROUND_COLOR="#99ff66" CREATED="1304340448956" ID="Freemind_Link_735533782" MODIFIED="1304341080160" TEXT="I am amused!">
-<font NAME="Comic Sans MS" SIZE="12"/>
-</node>
-<node BACKGROUND_COLOR="#99ff66" CREATED="1304340895880" ID="Freemind_Link_914167230" MODIFIED="1304341080160" TEXT="I feel like exploring further because this site knows where I am">
-<font NAME="Comic Sans MS" SIZE="12"/>
-</node>
-</node>
-<node BACKGROUND_COLOR="#9999ff" CREATED="1304340768421" ID="Freemind_Link_1101055151" MODIFIED="1304341080160" TEXT="4.3. I see a map in the background">
-<font NAME="Comic Sans MS" SIZE="12"/>
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304340971939" ID="Freemind_Link_394429319" MODIFIED="1304341080160" TEXT="I don&apos;t know how to view it">
-<font NAME="Comic Sans MS" SIZE="12"/>
-</node>
-<node BACKGROUND_COLOR="#99ff66" CREATED="1304340980023" ID="Freemind_Link_974848188" MODIFIED="1304341080145" TEXT="I feel the map is cool because of small images I see">
-<font NAME="Comic Sans MS" SIZE="12"/>
-</node>
-<node BACKGROUND_COLOR="#99ff66" CREATED="1304341137890" ID="Freemind_Link_1579916130" MODIFIED="1304341176725" TEXT="I notice I can click the &quot;Ok&quot; button and guess it would show me the map"/>
-</node>
-<node BACKGROUND_COLOR="#9999ff" CREATED="1304341397552" ID="Freemind_Link_780728459" MODIFIED="1304341511553" TEXT="4.4 I see &#xa;Down&#x2193;Town helps you to &#xa;plan events/trips/outings and get social   &#xa;Zoom to street level and mark your event&apos;s place &#xa;That way we can give your friends road directions! &#xa;e.g. Home, Theatre, Park, Club, Ground   &#xa;Any specific place on your mind?&quot;">
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304340971939" ID="Freemind_Link_56403351" MODIFIED="1304341448952" TEXT="Thats a LOT to read!">
-<font NAME="Comic Sans MS" SIZE="12"/>
-</node>
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304340971939" ID="Freemind_Link_979152558" MODIFIED="1304341465636" TEXT="I don&apos;t like reading this much">
-<font NAME="Comic Sans MS" SIZE="12"/>
-</node>
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304340971939" ID="Freemind_Link_1877996822" MODIFIED="1304341475975" TEXT="I feel tired reading">
-<font NAME="Comic Sans MS" SIZE="12"/>
-</node>
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304341528347" ID="Freemind_Link_1881092191" MODIFIED="1304341594645" TEXT="I feel tired of this site. I&apos;m leaving">
-<icon BUILTIN="clanbomber"/>
+<node CREATED="1308616297078" ID="ID_1111204078" LINK="http://ask.metafilter.com/66026/do-i-visit-the-tourist-nightmare-or-a-backwater-colony" MODIFIED="1308616309375" TEXT="do i visit the tourist nightmare or a backwater colony? "/>
+<node CREATED="1308616356875" ID="ID_1289128469" LINK="http://www.africaguide.com/forums/read.php?14,9695" MODIFIED="1308616366390" TEXT="Driving around Morocco in a motorhome "/>
+<node CREATED="1308616444953" ID="ID_719427789" LINK="http://www.panoramio.com/map/#lt%3D31.791702%26ln%3D-7.092620%26z%3D12%26k%3D2%26a%3D1%26tab%3D1" MODIFIED="1308616456703" TEXT="Panoramio - Morocco"/>
+<node CREATED="1308617141046" ID="ID_1516480590" MODIFIED="1308617152937" TEXT="Co-branding">
+<node CREATED="1308617158109" ID="ID_389123100" MODIFIED="1308617158921" TEXT="http://boards.bootsnall.com/female-traveling-alone-to-morocco-in-june-t22541.html"/>
+<node CREATED="1308617165171" ID="ID_648538389" MODIFIED="1308617166265" TEXT="http://www.lonelyplanet.com/thorntree/thread.jspa?threadID=1869580"/>
+<node CREATED="1308617173687" ID="ID_1283193347" MODIFIED="1308617174593" TEXT="http://forum.mapmonde.org/morocco-in-july-t118063.html"/>
+<node CREATED="1308617216859" ID="ID_721929183" MODIFIED="1308617217750" TEXT="http://www.tripadvisor.ca/ShowTopic-g293730-i9195-k4443356-Travel_in_July_with_family-Morocco.html"/>
+<node CREATED="1308617274953" ID="ID_638381455" MODIFIED="1308617275953" TEXT="http://riadzany.blogspot.com/2011/06/travel-writing-about-morocco-31.html"/>
+<node CREATED="1308617286265" ID="ID_1248242230" MODIFIED="1308617287218" TEXT="http://www.journeybeyondtravel.com/news/morocco-travel/when-to-travel-to-morocco.html"/>
+<node CREATED="1308617299437" ID="ID_1614186633" MODIFIED="1308617300515" TEXT="http://chrisncarinne.posterous.com/best-times-to-visit-africa-tags-travel"/>
+<node CREATED="1308617306140" ID="ID_713107186" MODIFIED="1308617306921" TEXT="http://travelpicks.dailymail.co.uk/2011/06/four-nights-in-morocco-from-735-with-elegant-resorts.html"/>
+<node CREATED="1308617312765" ID="ID_1846681588" MODIFIED="1308617313671" TEXT="http://blog.writersdigest.com/norules/2011/06/20/OffOnVacationThroughJuly8.aspx"/>
 </node>
 </node>
 </node>
 </node>
-<node CREATED="1306044958377" ID="Freemind_Link_741932986" MODIFIED="1306044976065" TEXT="&quot;IT IS&quot; &amp; &quot;I FEEL&quot;"/>
+<node CREATED="1308574728546" ID="ID_1452265871" MODIFIED="1308574737156" TEXT="Best Social Media Marketing Websites">
+<node CREATED="1308574990515" ID="ID_400379795" MODIFIED="1308580750234" TEXT="Day #1 Ride a Wave - Find a new Wave">
+<node CREATED="1308575007515" ID="ID_290499089" MODIFIED="1308575012359" TEXT="e.g. Royal Wedding"/>
+<node CREATED="1308577517921" ID="ID_1409785516" MODIFIED="1308577523296" TEXT="e.g. Waka waka"/>
+<node CREATED="1308581184343" ID="ID_640404365" LINK="http://www.google.com/trends/hottrends" MODIFIED="1308581184343" TEXT="google.com &gt; Trends &gt; Hottrends"/>
+<node CREATED="1308581288406" ID="ID_1430011558" LINK="http://trends.google.com/websites?q=travel.yahoo.com" MODIFIED="1308581288406">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <a href="http://trends.google.com/websites?q=travel.yahoo.com">http://trends.google.com/websites?q=travel.yahoo.com</a>
+  </body>
+</html></richcontent>
 </node>
-<node BACKGROUND_COLOR="#cc00cc" CREATED="1304342734117" FOLDED="true" ID="Freemind_Link_1831760766" MODIFIED="1304343546132" TEXT="Perception Assumption">
-<node BACKGROUND_COLOR="#ffff66" CREATED="1304342996087" ID="Freemind_Link_1253337406" MODIFIED="1304343645181" TEXT="This website is a professional site like or better than facebook"/>
-<node BACKGROUND_COLOR="#ffff66" CREATED="1304343015545" ID="Freemind_Link_99923607" MODIFIED="1304343645212" TEXT="This website is very useful to socialize"/>
-<node BACKGROUND_COLOR="#ffff66" CREATED="1304343026619" ID="Freemind_Link_1529051317" MODIFIED="1304343645212" TEXT="This website is very easy to use"/>
-<node BACKGROUND_COLOR="#ffff66" CREATED="1304343041697" ID="Freemind_Link_1455989355" MODIFIED="1304343645196" TEXT="This website has cool stuff like road directions"/>
-<node BACKGROUND_COLOR="#ffff66" CREATED="1304343057542" ID="Freemind_Link_496181539" MODIFIED="1304343645196" TEXT="This website helps event planning a lot"/>
-<node BACKGROUND_COLOR="#ffff66" CREATED="1304343072166" ID="Freemind_Link_850620685" MODIFIED="1304343645196" TEXT="This website makes event planning easy"/>
-<node BACKGROUND_COLOR="#ffff66" CREATED="1304343080409" ID="Freemind_Link_1169637695" MODIFIED="1304343645196" TEXT="This website offers even planning WITH FRIEND COLLABORATION"/>
-<node BACKGROUND_COLOR="#ffff66" CREATED="1304343102025" ID="Freemind_Link_1703971858" MODIFIED="1304343645196" TEXT="This website has a lot of features like in facebook"/>
-<node BACKGROUND_COLOR="#ffff66" CREATED="1304343114225" ID="Freemind_Link_44826261" MODIFIED="1304343645196" TEXT="This website is free"/>
-<node BACKGROUND_COLOR="#ffff66" CREATED="1304343439453" ID="Freemind_Link_191115272" MODIFIED="1304343645196" TEXT="This website is fast enough"/>
+<node CREATED="1308581348781" ID="ID_841425691" LINK="http://www.google.com/trends" MODIFIED="1308581348781">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <a href="http://www.google.com/trends">http://www.google.com/trends</a>
+  </body>
+</html></richcontent>
 </node>
-<node BACKGROUND_COLOR="#006666" CREATED="1304342765667" FOLDED="true" ID="Freemind_Link_1625219234" MODIFIED="1304343588697" TEXT="Perception Reality">
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304343276847" ID="Freemind_Link_680048775" MODIFIED="1304343624030" TEXT="People don&apos;t know what i like places is just by domain name"/>
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304343300950" ID="Freemind_Link_218386664" MODIFIED="1304343624030" TEXT="People get confused how their liking about places relate to the site"/>
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304343341351" ID="Freemind_Link_1176585683" MODIFIED="1304343624030" TEXT="People don&apos;t like reading what this website is for. It is too much effort. It does not appeal"/>
-<node BACKGROUND_COLOR="#ff6666" CREATED="1304343452075" ID="Freemind_Link_76413996" MODIFIED="1304343624030" TEXT="The website takes a considerable time to load"/>
+<node CREATED="1308582566062" ID="ID_392830532" MODIFIED="1308582572968" TEXT="Ask Quora about trends"/>
 </node>
-<node BACKGROUND_COLOR="#ff6600" CREATED="1304343470798" FOLDED="true" ID="Freemind_Link_1926506341" MODIFIED="1304343675121" TEXT="Fix Plan">
-<node CREATED="1304343736702" ID="Freemind_Link_375485771" MODIFIED="1304343760081" TEXT="1. Reduce number of pop up words from 60 to 20"/>
-<node CREATED="1304343763338" ID="Freemind_Link_419210214" MODIFIED="1304343803893" TEXT="2. Remove pink. Use blue for safety(as researcha also implies)"/>
-<node CREATED="1304343824747" ID="Freemind_Link_1209697365" MODIFIED="1304343831293" TEXT="3. Beutify Search Button"/>
-<node CREATED="1304343832898" ID="Freemind_Link_191225827" MODIFIED="1304343884379" TEXT="4. Change Top 4 Links to impactive, easy and perceivable ones"/>
-<node CREATED="1304343891361" ID="Freemind_Link_8720718" MODIFIED="1304343904095" TEXT="5. Remove all unwanted libraries and load way faster"/>
-<node CREATED="1304343922939" ID="Freemind_Link_1360169814" MODIFIED="1304343964101" TEXT="6. Change Login to Enter"/>
-<node CREATED="1304343973453" ID="Freemind_Link_1629938598" MODIFIED="1304344011607" TEXT="7. Deliver the simple message &quot;Plan fun event with your friends at fun places&quot;."/>
-<node CREATED="1304346858820" ID="Freemind_Link_540909837" MODIFIED="1304346875135" TEXT="8. Remove distractive map tooltip"/>
+<node CREATED="1308576053031" ID="ID_140840987" MODIFIED="1308576154750" TEXT="Day #2 Article Mustering">
+<node CREATED="1308576175968" ID="ID_211045893" MODIFIED="1308576393781" TEXT="Select article topic seasonal/trendy">
+<node CREATED="1308576184781" ID="ID_872986219" MODIFIED="1308576186593" TEXT="travel"/>
+<node CREATED="1308576187046" ID="ID_556053582" MODIFIED="1308576188281" TEXT="events"/>
 </node>
-<node BACKGROUND_COLOR="#00ff00" CREATED="1304343476710" FOLDED="true" ID="Freemind_Link_1012321619" MODIFIED="1304346765650" TEXT="Fix" VSHIFT="-12">
-<node CREATED="1304343973453" ID="Freemind_Link_1724077065" MODIFIED="1304344011607" TEXT="7. Deliver the simple message &quot;Plan fun event with your friends at fun places&quot;."/>
-<node CREATED="1304343736702" ID="Freemind_Link_125802262" MODIFIED="1304343760081" TEXT="1. Reduce number of pop up words from 60 to 20"/>
-<node CREATED="1304343763338" ID="Freemind_Link_1686370108" MODIFIED="1304343803893" TEXT="2. Remove pink. Use blue for safety(as researcha also implies)"/>
-<node CREATED="1304343824747" ID="Freemind_Link_1796018602" MODIFIED="1304343831293" TEXT="3. Beutify Search Button"/>
-<node BACKGROUND_COLOR="#00ff00" CREATED="1304343832898" ID="Freemind_Link_15930914" MODIFIED="1304429939638" TEXT="4. Removed"/>
-<node BACKGROUND_COLOR="#00ff00" CREATED="1304343891361" ID="Freemind_Link_1047216456" MODIFIED="1304429960108" TEXT="5. Removed"/>
-<node CREATED="1304343922939" ID="Freemind_Link_1987424704" MODIFIED="1304343964101" TEXT="6. Change Login to Enter"/>
-<node CREATED="1304344577401" ID="Freemind_Link_380227087" MODIFIED="1304345109194" TEXT="7">
-<node CREATED="1304345087999" ID="Freemind_Link_975174338" MODIFIED="1304345091948" TEXT="Option 1">
-<node CREATED="1304345004048" ID="Freemind_Link_463203767" MODIFIED="1304345121867" TEXT="&quot;You Found It!&quot;"/>
-<node CREATED="1304345004048" ID="Freemind_Link_636501312" MODIFIED="1304345140049" TEXT="&quot;You&apos;ve just found a cool way to have fun with your friend in cool places!&quot;"/>
+<node CREATED="1308576189531" ID="ID_413216703" MODIFIED="1308576197390" TEXT="Set up Google Alerts"/>
+<node CREATED="1308576197937" ID="ID_597105547" MODIFIED="1308576204703" TEXT="Ask Quora Question"/>
+<node CREATED="1308576215937" ID="ID_821232065" MODIFIED="1308576220718" TEXT="Fetch Panoramio Photos"/>
+<node CREATED="1308576561171" ID="ID_663158036" MODIFIED="1308576571000" TEXT="Find strong links on topic for co-branding"/>
 </node>
-<node CREATED="1304345096989" ID="Freemind_Link_1370991660" MODIFIED="1304345098799" TEXT="Option 2">
-<node CREATED="1304345109880" ID="Freemind_Link_1992899870" MODIFIED="1304345307826" TEXT="&quot;Have fun with your friends at fun places&quot;"/>
+<node CREATED="1308576057390" ID="ID_1153640813" MODIFIED="1308576285515" TEXT="Day #3 Article Submission">
+<node CREATED="1308576247046" ID="ID_1788033065" MODIFIED="1308576840109" TEXT="Compose Article Based on Article Mustering"/>
+<node CREATED="1308576605140" ID="ID_178326971" MODIFIED="1308577111031" TEXT="Submit Article to Article Submission Websites"/>
+<node CREATED="1308577315250" ID="ID_298934746" MODIFIED="1308577367515" TEXT="Submit Article link to related blogs (first page google results)"/>
 </node>
-<node CREATED="1304345197530" ID="Freemind_Link_1126604440" MODIFIED="1304345199825" TEXT="Option 3">
-<node CREATED="1304345200449" ID="Freemind_Link_871648285" MODIFIED="1304345217430" TEXT="Do you know a cool place to hangout? Mark it here for others to find!"/>
-<node CREATED="1304345219240" ID="Freemind_Link_1436559141" MODIFIED="1304345250376" TEXT="Do you want to find out a cool place to hangout? Zoom in on any city to find out!"/>
-<node CREATED="1304345257712" ID="Freemind_Link_1020641719" MODIFIED="1304345295903" TEXT="Are you planning an event? Mark the place here for and we&apos;ll give road directions to your friends. "/>
-</node>
-<node BACKGROUND_COLOR="#00ff00" CREATED="1304346767056" ID="Freemind_Link_1174079526" MODIFIED="1304429455883" TEXT="Option 4">
-<node BACKGROUND_COLOR="#00ff00" CREATED="1304346771588" ID="Freemind_Link_957706267" MODIFIED="1304429476099" TEXT="Main Message In Main Popup">
-<node CREATED="1304347071743" ID="Freemind_Link_87321105" MODIFIED="1304347318109" TEXT="Have fun in places! Join your friends!"/>
-</node>
-<node BACKGROUND_COLOR="#00ff00" CREATED="1304346783621" ID="Freemind_Link_1415847787" MODIFIED="1304429455898" TEXT="Quick Tour Has Further Info">
-<node CREATED="1304347089715" ID="Freemind_Link_836902200" MODIFIED="1304347099138" TEXT="1. What kind of places?">
-<node CREATED="1304347100373" ID="Freemind_Link_1527791173" MODIFIED="1304347153756" TEXT="Places you can have fun include, restaurants, resorts, safari spots, "/>
-</node>
-<node CREATED="1304347230440" ID="Freemind_Link_830075664" MODIFIED="1304347275869" TEXT="2. How do I find good places?"/>
-<node CREATED="1304347247130" ID="Freemind_Link_972708582" MODIFIED="1304347285308" TEXT="3. How do I mark a cool place I know?"/>
-<node CREATED="1304347156553" ID="Freemind_Link_124527451" MODIFIED="1304347289574" TEXT="4. Where do my friends come in?"/>
-<node CREATED="1304347178229" ID="Freemind_Link_1501305329" MODIFIED="1304347295528" TEXT="5. What is it like inside?"/>
-<node CREATED="1304347202545" ID="Freemind_Link_1996461889" MODIFIED="1304347300060" TEXT="6. Are my details safe?"/>
+<node CREATED="1308576061515" ID="ID_1355554913" MODIFIED="1308576851531" TEXT="Day #4 This Week In [Country] FB Fan Page/Create Update Based on Article Mustering">
+<node CREATED="1308576962390" ID="ID_1026571874" MODIFIED="1308614578484" TEXT="Initally try just 4 countries so that loop happens by continent">
+<node CREATED="1308614714656" ID="ID_597123133" MODIFIED="1308614718968" TEXT="Africa">
+<node CREATED="1308614832906" ID="ID_481000871" MODIFIED="1308614834921" TEXT="Morocco">
+<node CREATED="1308614556437" ID="ID_1006156526" MODIFIED="1308614562046" TEXT="South Africa">
+<node CREATED="1308614602437" ID="ID_1840638113" MODIFIED="1308614850968" TEXT="Tunisia"/>
 </node>
 </node>
 </node>
-<node CREATED="1304346858820" ID="Freemind_Link_863336663" MODIFIED="1304346875135" TEXT="8. Remove distractive map tooltip"/>
+<node CREATED="1308614674078" ID="ID_1765963752" MODIFIED="1308614676984" TEXT="Europe">
+<node CREATED="1308614677453" ID="ID_678821141" MODIFIED="1308614679140" TEXT="France">
+<node CREATED="1308614704531" ID="ID_903002054" MODIFIED="1308614710187" TEXT="Spain">
+<node CREATED="1308614811984" ID="ID_834874164" MODIFIED="1308614814203" TEXT="Germany">
+<node CREATED="1308614814546" ID="ID_909671469" MODIFIED="1308614818875" TEXT="United Kingdom"/>
 </node>
 </node>
 </node>
 </node>
-<node CREATED="1306058881990" ID="Freemind_Link_340930573" MODIFIED="1308105893796" POSITION="left" TEXT="Penetrators">
+<node CREATED="1308614686656" ID="ID_603509627" MODIFIED="1308614689109" TEXT="Asia">
+<node CREATED="1308614689437" ID="ID_146517198" MODIFIED="1308614690875" TEXT="China">
+<node CREATED="1308614767062" ID="ID_876757447" MODIFIED="1308614771687" TEXT="Malaysia">
+<node CREATED="1308614779093" ID="ID_404231991" MODIFIED="1308614781812" TEXT="Hong Kong">
+<node CREATED="1308614784656" ID="ID_1309864344" MODIFIED="1308614786578" TEXT="Thailand">
+<node CREATED="1308614791015" ID="ID_925962156" MODIFIED="1308614795000" TEXT="Macau, China"/>
+</node>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1308614692859" ID="ID_520929565" MODIFIED="1308614737828" TEXT="Middle East">
+<node CREATED="1308614739578" ID="ID_1089747420" MODIFIED="1308614742937" TEXT="Egypt"/>
+</node>
+</node>
+<node CREATED="1308614666265" ID="ID_1523417206" LINK="http://en.wikipedia.org/wiki/World_Tourism_rankings" MODIFIED="1308614666265">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <a href="http://en.wikipedia.org/wiki/World_Tourism_rankings">http://en.wikipedia.org/wiki/World_Tourism_rankings</a>
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node CREATED="1308576065156" ID="ID_963246739" MODIFIED="1308576067671" TEXT="Day #5"/>
+<node CREATED="1308576068484" ID="ID_350212599" MODIFIED="1308576073187" TEXT="Day #6"/>
+<node CREATED="1308576073968" ID="ID_1629873335" MODIFIED="1308576077453" TEXT="Day #6"/>
+</node>
+</node>
+<node CREATED="1306058881990" FOLDED="true" ID="Freemind_Link_340930573" MODIFIED="1308449010812" POSITION="left" TEXT="Penetrators">
 <node CREATED="1306546295288" ID="ID_719807011" MODIFIED="1306546299602" TEXT="Mint">
 <node CREATED="1306546301666" ID="ID_370588626" MODIFIED="1306546315656" TEXT="Has to imply &quot;Places&quot;"/>
 <node CREATED="1306546316906" ID="ID_1852971758" MODIFIED="1306546339869" TEXT="Has to indicate &quot;Entertainment&quot;"/>
@@ -835,11 +797,23 @@
 </node>
 </node>
 </node>
-<node CREATED="1307245389165" FOLDED="true" ID="ID_310356034" MODIFIED="1308105892281" POSITION="left" TEXT="The Four Usual Suspects(FUS) - The Bars We Set The Highest">
+<node CREATED="1307245389165" FOLDED="true" ID="ID_310356034" MODIFIED="1308500717718" POSITION="left" TEXT="The Four Usual Suspects(FUS) - The Bars We Set The Highest">
 <icon BUILTIN="wizard"/>
 <node CREATED="1307245411745" ID="ID_944727217" MODIFIED="1307246182542" TEXT="Analyzing the problem, it&apos;s boundaries and limitations.(FUS1)"/>
-<node CREATED="1307245454483" ID="ID_1892067123" MODIFIED="1307245962697" TEXT="Least effort to solution(FUS2)"/>
-<node CREATED="1307245463296" ID="ID_222575109" MODIFIED="1307245968432" TEXT="Consistent and quality updates(FUS3)"/>
+<node CREATED="1307245454483" ID="ID_1892067123" MODIFIED="1307245962697" TEXT="Least effort to solution(FUS2)">
+<node CREATED="1308449037046" ID="ID_1485351133" MODIFIED="1308449162156" STYLE="fork" TEXT="Mandatory Checkpoints in Neural Pathway">
+<node CREATED="1308449163328" ID="ID_1305474419" MODIFIED="1308449171437" TEXT="The Home Button Effect"/>
+</node>
+<node CREATED="1308449112937" ID="ID_1573290525" MODIFIED="1308449139015" TEXT="Least Check Points in Neural Pathway"/>
+</node>
+<node CREATED="1307245463296" ID="ID_222575109" MODIFIED="1307245968432" TEXT="Consistent and quality updates(FUS3)">
+<node CREATED="1308449041500" FOLDED="true" ID="ID_1507474408" MODIFIED="1308449088718" TEXT="Action Confirmations">
+<node CREATED="1308449071406" ID="ID_317078212" MODIFIED="1308449077109" TEXT="Confirm the action the user just did"/>
+</node>
+<node CREATED="1308449047359" FOLDED="true" ID="ID_1986507592" MODIFIED="1308449089500" TEXT="Expectation Confirmations">
+<node CREATED="1308449078296" ID="ID_1919213808" MODIFIED="1308449083468" TEXT="Tell the user what to expect"/>
+</node>
+</node>
 <node CREATED="1307245481813" ID="ID_1606485639" MODIFIED="1307245976026" TEXT="Anthropomorphic design and movement(FUS4)">
 <node CREATED="1307969679296" ID="ID_1169519293" MODIFIED="1307969691187" TEXT="Assimilation"/>
 <node CREATED="1307969691890" ID="ID_38462006" MODIFIED="1307969698296" TEXT="Curvature"/>
@@ -850,7 +824,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1306057065799" FOLDED="true" ID="Freemind_Link_169183248" MODIFIED="1307252984134" POSITION="left" TEXT="The Homo Sapient Effects">
+<node CREATED="1306057065799" FOLDED="true" ID="Freemind_Link_169183248" MODIFIED="1308449014906" POSITION="left" TEXT="The Homo Sapient Effects">
 <icon BUILTIN="wizard"/>
 <node CREATED="1306057098581" ID="Freemind_Link_830418307" MODIFIED="1306058607262" TEXT="Emotion">
 <richcontent TYPE="NOTE"><html><head/><body><p>Emotion, triggered by the most basic system in the brain, overrides logic.<br/>If you can trigger an emotion in your favor, you've done a good job.</p></body></html></richcontent>
@@ -867,8 +841,177 @@
 <node CREATED="1283703161521" ID="Freemind_Link_63383641" MODIFIED="1283703168865" TEXT="Does it do what it says?"/>
 <node CREATED="1283703169490" ID="Freemind_Link_499084225" MODIFIED="1283703174943" TEXT="Does it say what is does?"/>
 </node>
-<node CREATED="1306055549893" FOLDED="true" ID="Freemind_Link_1306469091" MODIFIED="1306055555377" POSITION="right" TEXT="Postponed">
-<node CREATED="1289010658744" FOLDED="true" ID="Freemind_Link_1999101897" MODIFIED="1289010663868" TEXT="GUIDE">
+<node CREATED="1308574580515" FOLDED="true" ID="ID_1672056757" MODIFIED="1308574635890" POSITION="left" TEXT="Garbaged">
+<node CREATED="1308574609125" ID="ID_722825368" MODIFIED="1308574623953" TEXT="201106201826">
+<node CREATED="1304603299475" ID="ID_1177162653" MODIFIED="1308500719515" TEXT="2011">
+<node CREATED="1304603305990" ID="ID_5648053" MODIFIED="1308500721312" TEXT="May">
+<node CREATED="1304340068495" ID="ID_859746219" MODIFIED="1304341080207" TEXT="20110502">
+<font NAME="Comic Sans MS" SIZE="12"/>
+<node BACKGROUND_COLOR="#009900" CREATED="1304340062667" FOLDED="true" ID="ID_1834115543" MODIFIED="1308574572078" TEXT="Alien Analysis">
+<font NAME="Comic Sans MS" SIZE="12"/>
+<node CREATED="1304340097086" ID="ID_9360120" MODIFIED="1304341080192" TEXT="Home Page">
+<font NAME="Comic Sans MS" SIZE="12"/>
+<node BACKGROUND_COLOR="#9999ff" CREATED="1304340122247" ID="ID_1803449801" MODIFIED="1304341080192" TEXT="1. I type www.ilikeplaces.com">
+<font NAME="Comic Sans MS" SIZE="12"/>
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304340160332" ID="ID_1469955563" MODIFIED="1304341080192" TEXT="I don&apos;t know what i like places is">
+<font NAME="Comic Sans MS" SIZE="12"/>
+</node>
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304340170844" ID="ID_607597344" MODIFIED="1304341080192" TEXT="I suspect it is about places I like">
+<font NAME="Comic Sans MS" SIZE="12"/>
+</node>
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304340184928" ID="ID_704142253" MODIFIED="1304341080192" TEXT="What places do I like?">
+<font NAME="Comic Sans MS" SIZE="12"/>
+</node>
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304340197618" ID="ID_1054712252" MODIFIED="1304341080192" TEXT="What&apos;s it got to do with this site?">
+<font NAME="Comic Sans MS" SIZE="12"/>
+</node>
+<node CREATED="1304341622906" ID="ID_818209131" MODIFIED="1304342971249" TEXT="21 Seconds Avg Conn FF3.5">
+<icon BUILTIN="flag"/>
+</node>
+</node>
+<node BACKGROUND_COLOR="#9999ff" CREATED="1304340150117" ID="ID_1331057815" MODIFIED="1304341080192" TEXT="2. I see &quot;The Events&quot; &quot;The Connections&quot; &quot;The Manager&quot; &quot;The Snaps&quot;">
+<font NAME="Comic Sans MS" SIZE="12"/>
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304340361975" ID="ID_471354876" MODIFIED="1304341080192" TEXT="I read these but nothing registered">
+<font NAME="Comic Sans MS" SIZE="12"/>
+</node>
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304340384112" ID="ID_642563731" MODIFIED="1304341080176" TEXT="Not even &quot;The Snaps&quot; registered at Photos">
+<font NAME="Comic Sans MS" SIZE="12"/>
+</node>
+</node>
+<node BACKGROUND_COLOR="#9999ff" CREATED="1304340426224" ID="ID_615461256" MODIFIED="1304341080176" TEXT="3. I see a &quot;Stuff Loading Be Patient&quot; sign">
+<font NAME="Comic Sans MS" SIZE="12"/>
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304340444036" ID="ID_1472741918" MODIFIED="1304341080176" TEXT="I feel a bit offended">
+<font NAME="Comic Sans MS" SIZE="12"/>
+</node>
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304340448956" ID="ID_908034975" MODIFIED="1304341080176" TEXT="I comply to be patient though">
+<font NAME="Comic Sans MS" SIZE="12"/>
+</node>
+<node CREATED="1304341638823" ID="ID_1910612443" MODIFIED="1304342966353" TEXT="26 Seconds Avg Conn FF3.5">
+<icon BUILTIN="flag"/>
+</node>
+</node>
+<node BACKGROUND_COLOR="#9999ff" CREATED="1304340150117" ID="ID_1015775725" MODIFIED="1304341080176" TEXT="4. I see a pop up">
+<font NAME="Comic Sans MS" SIZE="12"/>
+<node BACKGROUND_COLOR="#9999ff" CREATED="1304340768421" ID="ID_91086905" MODIFIED="1304341080176" TEXT="4.1. I see &quot;Welcome to dowtown I Like Places&quot;">
+<font NAME="Comic Sans MS" SIZE="12"/>
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304340448956" ID="ID_547841012" MODIFIED="1304341080176" TEXT="I am confused why I am welcome">
+<font NAME="Comic Sans MS" SIZE="12"/>
+</node>
+<node CREATED="1304341966346" ID="ID_1444968449" MODIFIED="1304342974205" TEXT="34 Seconds Avg Conn FF.35">
+<icon BUILTIN="flag"/>
+</node>
+</node>
+<node BACKGROUND_COLOR="#9999ff" CREATED="1304340768421" ID="ID_875147063" MODIFIED="1304341080176" TEXT="4.2. I see this website found where I live">
+<font NAME="Comic Sans MS" SIZE="12"/>
+<node BACKGROUND_COLOR="#99ff66" CREATED="1304340448956" ID="ID_918588737" MODIFIED="1304341080160" TEXT="I am amused!">
+<font NAME="Comic Sans MS" SIZE="12"/>
+</node>
+<node BACKGROUND_COLOR="#99ff66" CREATED="1304340895880" ID="ID_819948745" MODIFIED="1304341080160" TEXT="I feel like exploring further because this site knows where I am">
+<font NAME="Comic Sans MS" SIZE="12"/>
+</node>
+</node>
+<node BACKGROUND_COLOR="#9999ff" CREATED="1304340768421" ID="ID_1214774857" MODIFIED="1304341080160" TEXT="4.3. I see a map in the background">
+<font NAME="Comic Sans MS" SIZE="12"/>
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304340971939" ID="ID_1188828607" MODIFIED="1304341080160" TEXT="I don&apos;t know how to view it">
+<font NAME="Comic Sans MS" SIZE="12"/>
+</node>
+<node BACKGROUND_COLOR="#99ff66" CREATED="1304340980023" ID="ID_92944583" MODIFIED="1304341080145" TEXT="I feel the map is cool because of small images I see">
+<font NAME="Comic Sans MS" SIZE="12"/>
+</node>
+<node BACKGROUND_COLOR="#99ff66" CREATED="1304341137890" ID="ID_1428013008" MODIFIED="1304341176725" TEXT="I notice I can click the &quot;Ok&quot; button and guess it would show me the map"/>
+</node>
+<node BACKGROUND_COLOR="#9999ff" CREATED="1304341397552" ID="ID_524427910" MODIFIED="1304341511553" TEXT="4.4 I see &#xa;Down&#x2193;Town helps you to &#xa;plan events/trips/outings and get social   &#xa;Zoom to street level and mark your event&apos;s place &#xa;That way we can give your friends road directions! &#xa;e.g. Home, Theatre, Park, Club, Ground   &#xa;Any specific place on your mind?&quot;">
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304340971939" ID="ID_1914954372" MODIFIED="1304341448952" TEXT="Thats a LOT to read!">
+<font NAME="Comic Sans MS" SIZE="12"/>
+</node>
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304340971939" ID="ID_997482635" MODIFIED="1304341465636" TEXT="I don&apos;t like reading this much">
+<font NAME="Comic Sans MS" SIZE="12"/>
+</node>
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304340971939" ID="ID_956497750" MODIFIED="1304341475975" TEXT="I feel tired reading">
+<font NAME="Comic Sans MS" SIZE="12"/>
+</node>
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304341528347" ID="ID_1019160653" MODIFIED="1304341594645" TEXT="I feel tired of this site. I&apos;m leaving">
+<icon BUILTIN="clanbomber"/>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1306044958377" ID="ID_727956132" MODIFIED="1306044976065" TEXT="&quot;IT IS&quot; &amp; &quot;I FEEL&quot;"/>
+</node>
+<node BACKGROUND_COLOR="#cc00cc" CREATED="1304342734117" FOLDED="true" ID="ID_1771768178" MODIFIED="1308574577125" TEXT="Perception Assumption">
+<node BACKGROUND_COLOR="#ffff66" CREATED="1304342996087" ID="ID_1268905348" MODIFIED="1304343645181" TEXT="This website is a professional site like or better than facebook"/>
+<node BACKGROUND_COLOR="#ffff66" CREATED="1304343015545" ID="ID_1225466826" MODIFIED="1304343645212" TEXT="This website is very useful to socialize"/>
+<node BACKGROUND_COLOR="#ffff66" CREATED="1304343026619" ID="ID_1113847705" MODIFIED="1304343645212" TEXT="This website is very easy to use"/>
+<node BACKGROUND_COLOR="#ffff66" CREATED="1304343041697" ID="ID_377694299" MODIFIED="1304343645196" TEXT="This website has cool stuff like road directions"/>
+<node BACKGROUND_COLOR="#ffff66" CREATED="1304343057542" ID="ID_927022260" MODIFIED="1304343645196" TEXT="This website helps event planning a lot"/>
+<node BACKGROUND_COLOR="#ffff66" CREATED="1304343072166" ID="ID_898173001" MODIFIED="1304343645196" TEXT="This website makes event planning easy"/>
+<node BACKGROUND_COLOR="#ffff66" CREATED="1304343080409" ID="ID_221277215" MODIFIED="1304343645196" TEXT="This website offers even planning WITH FRIEND COLLABORATION"/>
+<node BACKGROUND_COLOR="#ffff66" CREATED="1304343102025" ID="ID_1968123420" MODIFIED="1304343645196" TEXT="This website has a lot of features like in facebook"/>
+<node BACKGROUND_COLOR="#ffff66" CREATED="1304343114225" ID="ID_1821898509" MODIFIED="1304343645196" TEXT="This website is free"/>
+<node BACKGROUND_COLOR="#ffff66" CREATED="1304343439453" ID="ID_1095431167" MODIFIED="1304343645196" TEXT="This website is fast enough"/>
+</node>
+<node BACKGROUND_COLOR="#006666" CREATED="1304342765667" FOLDED="true" ID="ID_895104693" MODIFIED="1308500758328" TEXT="Perception Reality">
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304343276847" ID="ID_1537179348" MODIFIED="1304343624030" TEXT="People don&apos;t know what i like places is just by domain name"/>
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304343300950" ID="ID_556732296" MODIFIED="1304343624030" TEXT="People get confused how their liking about places relate to the site"/>
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304343341351" ID="ID_54441514" MODIFIED="1304343624030" TEXT="People don&apos;t like reading what this website is for. It is too much effort. It does not appeal"/>
+<node BACKGROUND_COLOR="#ff6666" CREATED="1304343452075" ID="ID_1117369749" MODIFIED="1304343624030" TEXT="The website takes a considerable time to load"/>
+</node>
+<node BACKGROUND_COLOR="#ff6600" CREATED="1304343470798" FOLDED="true" ID="ID_1708469591" MODIFIED="1308500753140" TEXT="Fix Plan">
+<node CREATED="1304343736702" ID="ID_491821519" MODIFIED="1304343760081" TEXT="1. Reduce number of pop up words from 60 to 20"/>
+<node CREATED="1304343763338" ID="ID_973126837" MODIFIED="1304343803893" TEXT="2. Remove pink. Use blue for safety(as researcha also implies)"/>
+<node CREATED="1304343824747" ID="ID_924311313" MODIFIED="1304343831293" TEXT="3. Beutify Search Button"/>
+<node CREATED="1304343832898" ID="ID_231027925" MODIFIED="1304343884379" TEXT="4. Change Top 4 Links to impactive, easy and perceivable ones"/>
+<node CREATED="1304343891361" ID="ID_1629851028" MODIFIED="1304343904095" TEXT="5. Remove all unwanted libraries and load way faster"/>
+<node CREATED="1304343922939" ID="ID_1398292003" MODIFIED="1304343964101" TEXT="6. Change Login to Enter"/>
+<node CREATED="1304343973453" ID="ID_865354682" MODIFIED="1304344011607" TEXT="7. Deliver the simple message &quot;Plan fun event with your friends at fun places&quot;."/>
+<node CREATED="1304346858820" ID="ID_906028613" MODIFIED="1304346875135" TEXT="8. Remove distractive map tooltip"/>
+</node>
+<node BACKGROUND_COLOR="#00ff00" CREATED="1304343476710" FOLDED="true" ID="ID_1173361036" MODIFIED="1304346765650" TEXT="Fix" VSHIFT="-12">
+<node CREATED="1304343973453" ID="ID_1286380524" MODIFIED="1304344011607" TEXT="7. Deliver the simple message &quot;Plan fun event with your friends at fun places&quot;."/>
+<node CREATED="1304343736702" ID="ID_521100068" MODIFIED="1304343760081" TEXT="1. Reduce number of pop up words from 60 to 20"/>
+<node CREATED="1304343763338" ID="ID_188912779" MODIFIED="1304343803893" TEXT="2. Remove pink. Use blue for safety(as researcha also implies)"/>
+<node CREATED="1304343824747" ID="ID_1961014052" MODIFIED="1304343831293" TEXT="3. Beutify Search Button"/>
+<node BACKGROUND_COLOR="#00ff00" CREATED="1304343832898" ID="ID_824835007" MODIFIED="1304429939638" TEXT="4. Removed"/>
+<node BACKGROUND_COLOR="#00ff00" CREATED="1304343891361" ID="ID_1386053427" MODIFIED="1304429960108" TEXT="5. Removed"/>
+<node CREATED="1304343922939" ID="ID_1661181745" MODIFIED="1304343964101" TEXT="6. Change Login to Enter"/>
+<node CREATED="1304344577401" ID="ID_574687614" MODIFIED="1304345109194" TEXT="7">
+<node CREATED="1304345087999" ID="ID_1377271677" MODIFIED="1304345091948" TEXT="Option 1">
+<node CREATED="1304345004048" ID="ID_1766302759" MODIFIED="1304345121867" TEXT="&quot;You Found It!&quot;"/>
+<node CREATED="1304345004048" ID="ID_78221647" MODIFIED="1304345140049" TEXT="&quot;You&apos;ve just found a cool way to have fun with your friend in cool places!&quot;"/>
+</node>
+<node CREATED="1304345096989" ID="ID_988328844" MODIFIED="1304345098799" TEXT="Option 2">
+<node CREATED="1304345109880" ID="ID_1579303528" MODIFIED="1304345307826" TEXT="&quot;Have fun with your friends at fun places&quot;"/>
+</node>
+<node CREATED="1304345197530" ID="ID_336655263" MODIFIED="1304345199825" TEXT="Option 3">
+<node CREATED="1304345200449" ID="ID_705265505" MODIFIED="1304345217430" TEXT="Do you know a cool place to hangout? Mark it here for others to find!"/>
+<node CREATED="1304345219240" ID="ID_1390571456" MODIFIED="1304345250376" TEXT="Do you want to find out a cool place to hangout? Zoom in on any city to find out!"/>
+<node CREATED="1304345257712" ID="ID_506418414" MODIFIED="1304345295903" TEXT="Are you planning an event? Mark the place here for and we&apos;ll give road directions to your friends. "/>
+</node>
+<node BACKGROUND_COLOR="#00ff00" CREATED="1304346767056" ID="ID_1431825401" MODIFIED="1304429455883" TEXT="Option 4">
+<node BACKGROUND_COLOR="#00ff00" CREATED="1304346771588" ID="ID_1307358201" MODIFIED="1304429476099" TEXT="Main Message In Main Popup">
+<node CREATED="1304347071743" ID="ID_960126862" MODIFIED="1304347318109" TEXT="Have fun in places! Join your friends!"/>
+</node>
+<node BACKGROUND_COLOR="#00ff00" CREATED="1304346783621" ID="ID_831704049" MODIFIED="1304429455898" TEXT="Quick Tour Has Further Info">
+<node CREATED="1304347089715" ID="ID_847674964" MODIFIED="1304347099138" TEXT="1. What kind of places?">
+<node CREATED="1304347100373" ID="ID_664117543" MODIFIED="1304347153756" TEXT="Places you can have fun include, restaurants, resorts, safari spots, "/>
+</node>
+<node CREATED="1304347230440" ID="ID_945585436" MODIFIED="1304347275869" TEXT="2. How do I find good places?"/>
+<node CREATED="1304347247130" ID="ID_1717548181" MODIFIED="1304347285308" TEXT="3. How do I mark a cool place I know?"/>
+<node CREATED="1304347156553" ID="ID_550235418" MODIFIED="1304347289574" TEXT="4. Where do my friends come in?"/>
+<node CREATED="1304347178229" ID="ID_315657069" MODIFIED="1304347295528" TEXT="5. What is it like inside?"/>
+<node CREATED="1304347202545" ID="ID_958131586" MODIFIED="1304347300060" TEXT="6. Are my details safe?"/>
+</node>
+</node>
+</node>
+<node CREATED="1304346858820" ID="ID_239762439" MODIFIED="1304346875135" TEXT="8. Remove distractive map tooltip"/>
+</node>
+</node>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1306055549893" FOLDED="true" ID="Freemind_Link_1306469091" MODIFIED="1308574644343" POSITION="left" TEXT="Postponed">
+<node CREATED="1289010658744" FOLDED="true" ID="Freemind_Link_1999101897" MODIFIED="1308500780890" TEXT="GUIDE">
 <icon BUILTIN="help"/>
 <node CREATED="1289010668102" ID="Freemind_Link_1280564673" MODIFIED="1289010673273" TEXT="Inception">
 <node CREATED="1289010674023" ID="Freemind_Link_1823484800" MODIFIED="1289010707582" TEXT="The act of snapping the subject&apos;s attention"/>
