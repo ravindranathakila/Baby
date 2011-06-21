@@ -84,11 +84,8 @@ function setClearForLastNotification(){
  function hotSpotClicked(hotspotClickDetails){//WARNING! used in java
     setNotification("Great! You've selected a place. Check Actions!");
 
-    if(confirm("Oh! This feature is just around the corner. \nWould you like to signup with us meanwhile?")){
-        alert("Okay. That's really nice of you. Please fill in the form in the next page. Thanks!");
-        window.location = "/";
-        return;
-    }else{
+    if(true){
+        alert("Oh! This feature is just around the corner. Just you wait!!");
         return;
     }
 
@@ -405,11 +402,8 @@ function initialize_DownTownHeatMap_map(){
                 setNotification(placeMarker.getPosition());
                 setNotification("Great! You've selected a place. Check Actions!");
 
-                if(confirm("Oh! This feature is just around the corner. \nWould you like to signup with us meanwhile?")){
-                    alert("Okay. That's really nice of you. Please fill in the form in the next page. Thanks!");
-                    window.location = "/";
-                    return;
-                }else{
+                if(true){
+                    alert("Oh! This feature is just around the corner. Just you wait!!");
                     return;
                 }
 
@@ -425,11 +419,8 @@ function initialize_DownTownHeatMap_map(){
             }
         }else{
             setNotification("Zoom to Street Level! "+ (18-(GAIA.getZoom())) + " levels more to go...");
-            if(confirm("Oh! This feature is just around the corner. \nWould you like to signup with us meanwhile?")){
-                alert("Okay. That's really nice of you. Please fill in the form in the next page. Thanks!");
-                window.location = "/";
-                return;
-            }else{
+            if(true){
+                alert("Oh! This feature is just around the corner. Just you wait!!");
                 return;
             }
             setActionLink("Zoom a bit more","",function(){GAIA.setZoom(GAIA.getZoom() + 1);},true);
