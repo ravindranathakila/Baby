@@ -66,7 +66,6 @@ function setActionLink(text, title, onclickActions, doClear){//WARNING! used in 
         $('#mapCustomControlsActionLinks').empty();
         $('#mapCustomControlsActionLinksTitle').empty().text(title);
     }
-    //$('#mapCustomControlsActionLinks').append('<span style=\'cursor:pointer;text-decoration:underline;\'>'+text+'<br/></span>');
     $('#mapCustomControlsActionLinks').append('<div class=\'by\' style=\'height:7px;\'>&nbsp;</div>');
     $('#mapCustomControlsActionLinks').append('<a style=\'margin-right:0px;cursor:pointer;background-color:#cc2200;color:#ffffff;\' class=\'btn\'><i></i><span style=\'font-size:17px;\'><span></span><i></i>'+text+'</span></a>');
 
@@ -84,6 +83,15 @@ function setClearForLastNotification(){
 
  function hotSpotClicked(hotspotClickDetails){//WARNING! used in java
     setNotification("Great! You've selected a place. Check Actions!");
+
+    if(confirm("Oh! This feature is just around the corner. \nWould you like to signup with us meanwhile?")){
+        alert("Okay. That's really nice of you. Please fill in the form in the next page. Thanks!");
+        window.location = "/";
+        return;
+    }else{
+        return;
+    }
+
     setActionLink(
         "Create a Moment",
         hotspotClickDetails.commonName,
@@ -396,6 +404,15 @@ function initialize_DownTownHeatMap_map(){
                 setNotification("That's the place you selected!");
                 setNotification(placeMarker.getPosition());
                 setNotification("Great! You've selected a place. Check Actions!");
+
+                if(confirm("Oh! This feature is just around the corner. \nWould you like to signup with us meanwhile?")){
+                    alert("Okay. That's really nice of you. Please fill in the form in the next page. Thanks!");
+                    window.location = "/";
+                    return;
+                }else{
+                    return;
+                }
+
                 setActionLink(
                     "Add this place to your event planner!",
                     "",
@@ -408,6 +425,13 @@ function initialize_DownTownHeatMap_map(){
             }
         }else{
             setNotification("Zoom to Street Level! "+ (18-(GAIA.getZoom())) + " levels more to go...");
+            if(confirm("Oh! This feature is just around the corner. \nWould you like to signup with us meanwhile?")){
+                alert("Okay. That's really nice of you. Please fill in the form in the next page. Thanks!");
+                window.location = "/";
+                return;
+            }else{
+                return;
+            }
             setActionLink("Zoom a bit more","",function(){GAIA.setZoom(GAIA.getZoom() + 1);},true);
         }
     };

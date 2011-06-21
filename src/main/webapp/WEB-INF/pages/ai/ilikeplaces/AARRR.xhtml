@@ -135,64 +135,7 @@
 
     <div style="display:none;">
         <div id="impromptuLoginForm">
-                <div class="use100 center" style="background-color:#ffffff;">
-                    <h1 style="font-size:16px;" class="intensity">Welcome to <img src="http://www.ilikeplaces.com/favicon.png" alt="I"/>likeplaces.com!</h1>
-                    <h2 style="font-size:12px;"><i>The World's Largest Entertainment Website</i></h2>
-                    <div class="use100" style="display:block;">
-                        <span style="font-size:12px;" class="layer_3">To Start,<br/>
-                            Mark Any Interesting Place<img src="http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=|11|ccc|glyphish_map-marker|16|cc2200|cc2200" alt=" "/> On The Map <br/> To Plan An Event
-                            (e.g. Yes, Even your home<img style="height:19px;" src="http://chart.googleapis.com/chart?chst=d_map_xpin_icon&chld=pin_sright|home|00FFFF|FF0000" alt=""
-                                       />).</span>
-                        <div class="use100" style="height:5px;">&nbsp;</div>
-                        <div class="use50 use25p use25a">
-                            <div class="use100">
-                            <input class="vtip use100 center layer_2"
-                               id="searchbox"
-                               style="border:1px solid #ccc;border-bottom-color:#999;border-right-color:#999;font-size:14px;height:24px;vertical-align:top;"
-                               value="e.g. las vegas, united states"
-                               tabindex="1"
-                               onchange="javascript:setMapToLocation(document.getElementById('searchbox').value);$.prompt.close();"
-                                />
-                            </div>
-                            <div class="use100" style="height:10px;">&nbsp;</div>
-                            <div class="use30 use35p use35a">
-                            <a class="bold use100 layer_1 btn blue"
-                                       id="searchButton"
-                                       onclick="javascript:setMapToLocation(document.getElementById('searchbox'));"
-                                       style="font-size:12px;cursor:pointer;background-color;#FD78E1;border:1px;"
-                                       tabindex="2"
-                                       href="#">Search</a>
-                             </div>
-                            <br/>
-                        </div>
-                    </div>
-                    <div class="use100" style="height:20px;">&nbsp;</div>
-                    <div class="use100">
-                        <hr/>
-                        <div class="use10 center">&nbsp;</div>
-                        <div class="use35 center right">
-                            <div class="use100" style="text-align:right;">
-                                 Welcome back!<br/><i>You Need To:</i>
-                             </div>
-                             <div class="use100">
-                                 <a href="/page/_org" class="btn layer_2" style="text-align:right;float:right;">Login to Down&darr;Town</a>
-                             </div>
-                        </div>
-                        <div class="use10">&nbsp;</div>
-                        <div class="use35 center left">
-                             <div class="use100" style="text-align:left;">
-                                 To Use This Website,<br/><i>You Need To:</i>
-                             </div>
-                             <div class="use100">
-                                <a href="/page/_org" class="btn blue layer_2" style="text-align:left;float:left;">&nbsp;&nbsp;Sign up - it's free!&nbsp;&nbsp;</a>
-                             </div>
-                        </div>
-                        <div class="use10 center">&nbsp;</div>
-                     </div>
-                    <div class="use30 use70a"><sub><i>(Ctrl-F to Bring This Back)</i></sub></div>
-
-
-                </div>
+            <a>Coming Soon!</a>
         </div>
         <div id="impromtuGrabber">
                 <div class="use100 center" style="background-color:#ffffff;">
@@ -327,7 +270,7 @@
             //$.prompt(popup);
             //$.prompt.close();
             if(getCookie("viewed_quick_tour") != "true"){
-                $.prompt(impromtuGrabber, {buttons:{"Give Me a Quick Tour!":true}});
+                //$.prompt(impromtuGrabber, {buttons:{"Give Me a Quick Tour!":true}});
                 setCookie("viewed_quick_tour","true",1);
             }else{
                 setCookie("viewed_quick_tour","false",1);
@@ -345,7 +288,7 @@
                         focusLng = data.geoplugin_longitude;
                         focusLat = data.geoplugin_latitude;
                         zoom = data.geoplugin_city != null ? 11 : (data.geoplugin_region != null ? 9 : (data.geoplugin_countryName ? 6 : 2 ) );
-                        document.getElementById('searchbox').value = (data.geoplugin_city != null ? data.geoplugin_city + ',': '')
+                        document.getElementById('searchboxmap').value = (data.geoplugin_city != null ? data.geoplugin_city + ',': '')
                                                                     + (data.geoplugin_region != null ? data.geoplugin_region + ',' : '')
                                                                     + (data.geoplugin_countryName != null ? data.geoplugin_countryName : '');
                 });
@@ -355,7 +298,7 @@
 
             initialize_gmap_scripts();
 
-            $(document).keyup(function(event){
+            /*$(document).keyup(function(event){
                 var ckup=event.keyCode?event.keyCode:event.which?event.which:event.charCode;
                 if(ckup==17)isCtrl=false;
             }).keydown(function(event){
@@ -368,11 +311,9 @@
                         //ignoring
                     }
                     $.prompt(popup);
-                    document.getElementById('searchbox').focus();
-
                     return false;
                 }
-            });
+            });*/
         });
     </script>
 
