@@ -308,12 +308,8 @@
 <node CREATED="1308615135015" ID="ID_1094484600" LINK="http://www.quora.com/Where-does-Heidi-Montag-live" MODIFIED="1308615135015" TEXT="quora.com &gt; Where-does-Heidi-Montag-live"/>
 <node CREATED="1308615154875" ID="ID_384008840" LINK="http://www.quora.com/Amy-Winehouse/Where-does-Amy-Winehouse-live" MODIFIED="1308615154875" TEXT="quora.com &gt; Amy-Winehouse &gt; Where-does-Amy-Winehouse-live"/>
 </node>
-<node CREATED="1308615162031" FOLDED="true" ID="ID_483198706" MODIFIED="1308617343765" TEXT="#2">
-<node CREATED="1308615618593" ID="ID_803964988" LINK="http://www.quora.com/What-is-happening-Morocco-in-June-July-Any-festivals-or-events" MODIFIED="1308615618593" TEXT="quora.com &gt; What-is-happening-Morocco-in-June-July-Any-festivals-or-events">
-<node CREATED="1308615627296" ID="ID_1479718075" MODIFIED="1308616133125" TEXT="@TODO Give ILP link">
-<icon BUILTIN="hourglass"/>
-</node>
-</node>
+<node CREATED="1308615162031" ID="ID_483198706" MODIFIED="1308703100203" TEXT="#2">
+<node CREATED="1308615618593" ID="ID_803964988" LINK="http://www.quora.com/What-is-happening-Morocco-in-June-July-Any-festivals-or-events" MODIFIED="1308703148359" TEXT="quora.com &gt; What-is-happening-Morocco-in-June-July-Any-festivals-or-events"/>
 <node CREATED="1308616115937" ID="ID_1109993288" LINK="http://www.quora.com/If-traveling-to-Morocco-in-the-summer-" MODIFIED="1308616115937" TEXT="quora.com &gt; If-traveling-to-Morocco-in-the-summer-(June-July)-will-Marrakesh-be-too-hot-And-if-so-is-it-worth-going-to-Morocco-and-not-going-to-Marrakesh">
 <node CREATED="1308615627296" ID="ID_875676582" MODIFIED="1308616136218" TEXT="@TODO Give ILP link">
 <icon BUILTIN="hourglass"/>
@@ -332,6 +328,11 @@
 <node CREATED="1308617299437" ID="ID_1614186633" MODIFIED="1308617300515" TEXT="http://chrisncarinne.posterous.com/best-times-to-visit-africa-tags-travel"/>
 <node CREATED="1308617306140" ID="ID_713107186" MODIFIED="1308617306921" TEXT="http://travelpicks.dailymail.co.uk/2011/06/four-nights-in-morocco-from-735-with-elegant-resorts.html"/>
 <node CREATED="1308617312765" ID="ID_1846681588" MODIFIED="1308617313671" TEXT="http://blog.writersdigest.com/norules/2011/06/20/OffOnVacationThroughJuly8.aspx"/>
+</node>
+</node>
+<node CREATED="1308703103750" ID="ID_826644749" MODIFIED="1308703112000" TEXT="#3">
+<node CREATED="1308703112890" ID="ID_525915219" MODIFIED="1308703148375" TEXT="Stumbled">
+<arrowlink DESTINATION="ID_803964988" ENDARROW="Default" ENDINCLINATION="524;0;" ID="Arrow_ID_435464518" STARTARROW="None" STARTINCLINATION="524;0;"/>
 </node>
 </node>
 </node>
@@ -419,8 +420,7 @@
   <body>
     <a href="http://en.wikipedia.org/wiki/World_Tourism_rankings">http://en.wikipedia.org/wiki/World_Tourism_rankings</a>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 <node CREATED="1308576065156" ID="ID_963246739" MODIFIED="1308576067671" TEXT="Day #5"/>
