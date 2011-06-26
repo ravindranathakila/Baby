@@ -308,6 +308,8 @@ function initialize_DownTownHeatMap_map(){
 
      GAIA.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('mapCustomControlsSolidActionsWidget'));
 
+     GAIA.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('mapCustomControlsSignupForm'));
+
      google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSZoomInMain'), 'click', function() {
      GAIA.setZoom(GAIA.getZoom()+1);
      });
@@ -561,6 +563,12 @@ function setMapToLocation(value){
         </div>
     </div>
     <div style="display:none;">
+        <div id="mapCustomControlsSignupForm">
+                <input id="DownTownHeatMapSignupEmail"/>
+                <input id="DownTownHeatMapSignupPassword"/>
+                <span id="DownTownHeatMapSignupNotifications"></span>
+                <input id="DownTownHeatMapSignupButton"/>
+        </div>
         <div id="mapCustomControlsAdUnit" class="by5" style="color:#cc2200;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">
         </div>
         <div id="mapCustomControlsSolidLinksWidget" class="bold" style="width:30.9%;">
