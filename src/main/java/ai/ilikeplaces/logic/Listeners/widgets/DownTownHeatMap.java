@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.hotspots.Hotspot;
 import ai.ilikeplaces.logic.hotspots.HotspotAnalyzer;
@@ -121,6 +122,8 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
         elementToUpdateWithWOEID = (Element) initArgs[0];
         humanId = new HumanId((String) initArgs[1]);
+        email = new Email("");
+        password = new Password("");
 
         itsNatDocument_.addCodeToSend(
                 DownTownHeatMapWOEIDUpdate.replace(
@@ -151,32 +154,30 @@ public class DownTownHeatMap extends AbstractWidgetListener {
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapSignupEmail), EventType.BLUR.toString(), new EventListener() {
 
                         final Validator v = new Validator();
-                        Email myemail = email;
+                        final Email myemail = email;
 
                         @Override
                         public void handleEvent(final Event evt_) {
                             myemail.setObj(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()));
-                            Loggers.INFO.info("Email:" + myemail.toString());
                             if (myemail.validate(v) == 0) {
                                 $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email Valid!");
                             } else {
-                                $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email Invalid!");
+                                $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email INVALID!");
                             }
                         }
                     }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapSignupPassword), EventType.BLUR.toString(), new EventListener() {
 
                         final Validator v = new Validator();
-                        Password mypassword = password;
+                        final Password mypassword = password;
 
                         @Override
                         public void handleEvent(final Event evt_) {
                             mypassword.setObj(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()));
-                            Loggers.INFO.info("Password Length:" + mypassword.getObj().length());
                             if (mypassword.validate(v) == 0) {
                                 $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Password Valid!");
                             } else {
-                                $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Password Invalid!");
+                                $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Password INVALID!");
                             }
                         }
                     }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
@@ -184,10 +185,28 @@ public class DownTownHeatMap extends AbstractWidgetListener {
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapSignupButton), EventType.CLICK.toString(), new EventListener() {
 
                         final Validator v = new Validator();
+                        final Email myemail = email;
+                        final Password mypassword = password;
 
                         @Override
                         public void handleEvent(final Event evt_) {
-                            Loggers.INFO.info("Signup Clicked!");
+                            if (myemail.validate(v) == 0 && mypassword.validate(v) == 0) {
+                                if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
+                                    try {
+                                        DB.getHumanCRUDHumanLocal(true).doCHuman(
+                                                new HumanId().setObjAsValid(email.getObj()),
+                                                mypassword,
+                                                myemail);
+                                    } catch (DBDishonourCheckedException e) {
+                                        $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email was taken meanwhile!:(");
+                                    }
+                                } else {
+                                    $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("This email is TAKEN!:(");
+                                }
+                            } else {
+                                //Ignored as the individual validators would've reported the error by now
+                            }
+
                         }
                     }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
         }

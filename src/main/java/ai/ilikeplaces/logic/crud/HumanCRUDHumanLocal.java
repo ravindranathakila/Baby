@@ -58,7 +58,7 @@ public interface HumanCRUDHumanLocal extends Verify {
      * Checks if a human is in the database
      *
      * @param humanId
-     * @return boolean
+     * @return boolean true if user exists
      */
     public Return<Boolean> doDirtyCheckHuman(final String humanId);
 
