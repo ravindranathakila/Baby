@@ -356,7 +356,11 @@ final public class
 
         DownTownHeatMap("ai/ilikeplaces/widgets/DownTownHeatMap.xhtml",
                 Controller.Page.DownTownHeatMapWOEID,
-                Controller.Page.DownTownHeatMapBB
+                Controller.Page.DownTownHeatMapBB,
+                Controller.Page.DownTownHeatMapSignupEmail,
+                Controller.Page.DownTownHeatMapSignupPassword,
+                Controller.Page.DownTownHeatMapSignupNotifications,
+                Controller.Page.DownTownHeatMapSignupButton
         ) {
             @Override
             public String getURL() {
@@ -730,7 +734,7 @@ final public class
                 Controller.Page.Main_location_list,
                 Controller.Page.Main_flickr,
                 Controller.Page.Main_disqus_thread_data
-                ) {
+        ) {
             @Override
             public String getURL() {
                 return APP_ROOT + "page/main";
@@ -958,6 +962,10 @@ final public class
         /*DownTownHeatMap IDs*/
         final static public String DownTownHeatMapWOEID = "DownTownHeatMapWOEID";
         final static public String DownTownHeatMapBB = "DownTownHeatMapBB";
+        final static public String DownTownHeatMapSignupEmail = "DownTownHeatMapSignupEmail";
+        final static public String DownTownHeatMapSignupPassword = "DownTownHeatMapSignupPassword";
+        final static public String DownTownHeatMapSignupNotifications = "DownTownHeatMapSignupNotifications";
+        final static public String DownTownHeatMapSignupButton = "DownTownHeatMapSignupButton";
 
         /*FindFriend Page*/
         final static public String DocFindFriend = "DocFindFriend";
