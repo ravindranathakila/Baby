@@ -3,13 +3,17 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.hotspots.Hotspot;
 import ai.ilikeplaces.logic.hotspots.HotspotAnalyzer;
 import ai.ilikeplaces.logic.hotspots.Rawspot;
+import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.modules.Modules;
 import ai.ilikeplaces.logic.validators.unit.*;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
+import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
 import com.google.gdata.data.geo.impl.W3CPoint;
 import net.sf.oval.Validator;
@@ -26,6 +30,7 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 import twitter4j.org.json.JSONException;
 
+import java.text.MessageFormat;
 import java.util.*;
 
 /**
@@ -193,10 +198,32 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                             if (myemail.validate(v) == 0 && mypassword.validate(v) == 0) {
                                 if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
                                     try {
-                                        DB.getHumanCRUDHumanLocal(true).doCHuman(
+
+                                        final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
                                                 new HumanId().setObjAsValid(email.getObj()),
                                                 mypassword,
                                                 myemail);
+
+                                        if (humanCreateReturn.returnValue()) {
+
+                                            final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                                                    .append(ServletLogin.Username, myemail.getObj(), true)
+                                                    .append(ServletLogin.Password,
+                                                            DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
+                                                                    .returnValue()
+                                                                    .getHumanAuthenticationHash())
+                                                    .get();
+
+                                            final String mail = MessageFormat.format(RBGet.gui().getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
+                                                    .replace("activationURL", "<a href='" +
+                                                            activationURL + "' >" + activationURL + "</a>");
+                                            SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                                    myemail.getObj(),
+                                                    RBGet.gui().getString("SIGNUP_HEADER"),
+                                                    mail);
+                                            $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+                                        }
+
                                     } catch (DBDishonourCheckedException e) {
                                         $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email was taken meanwhile!:(");
                                     }
