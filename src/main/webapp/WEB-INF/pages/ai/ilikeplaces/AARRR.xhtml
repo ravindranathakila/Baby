@@ -40,7 +40,7 @@
                 width: 50%;
                 position: absolute;
                 background-color: #ffffff;
-                border: solid 1px #FD78E1;
+                border: solid 1px #cc2200;
                 border-radius: 10px;
                 -moz-border-radius: 10px;
                 -webkit-border-radius: 10px;
@@ -63,7 +63,7 @@
         div.jqi .jqibuttons{
             text-align: right;
             padding: 5px 0 5px 0;
-            border: solid 1px #2AC;
+            border: solid 1px #cc2200;
             background-color: #ffffff;
         }
         div.jqi button{
@@ -71,7 +71,7 @@
             margin: 0 10px;
             background-color: #2AC;
             border: solid 1px #f4f4f4;
-            color: #ffffff;
+            color: #ffff22;
             font-weight: bold;
             font-size: 12px;
         }
@@ -79,7 +79,7 @@
             background-color: #2AC;
         }
         div.jqi button.jqidefaultbutton{
-            background-color: #CCC;
+            background-color: #cc2200;
         }
         .jqiwarning .jqi .jqibuttons{
             background-color: #2AC;
@@ -141,25 +141,23 @@
         <div id="impromtuGrabber">
                 <div class="use100 center" style="background-color:#ffffff;">
 
-                    <span style="" class="layer_4 grabber_title">
-                        Welcome to <img src="http://www.ilikeplaces.com/favicon.png" alt="I" style="height:22px;"/> Like Places!                                                                       <br/>
+                    <span style="color:#aaaaaa;" class="grabber_title">
+                        Welcome to <img src="http://www.ilikeplaces.com/favicon.png" alt="I" style="height:22px;"/> Like Places! <br/>
                     </span>
-                    <span style="" class="layer_4 grabber_subtitle">
-                        The Worlds Biggest Entertainment Website                                                        <br/>
+                    <span style="color:#777777;" class="grabber_subtitle">
+                        Who says there aren't interesting places to hang around?<br/>
                     </span>
                     <div class="use100" style="height:20px;"></div>
-                    <span style="" class="layer_4 grabber center">
-                        We were losing touch with distanced friends and family...
-                        We tried to keep up via social networks, but updates faded because we rarely met them...
-                        Some people we couldn't meet when we had the chance...
-                        Some we simply neglected due to carelessness...
-                        Some, we just couldn't create that moment to spend with them, be it dining out or a road trip...
-
-                        It just wasn't happening...
-
-                        We realized we just didn't find the place and time to do this...
-
-                        So we created I like places... If you've got people you miss and time to hang out, we've got the places for you!
+                    <span class="layer_4 grabber center" style="color:#888888;">
+                        We were losing touch with distanced friends and family<br/>
+                        We tried to keep up via social networks, but updates faded because we rarely met them<br/>
+                        Some people we couldn't meet when we had the chance<br/>
+                        Some we simply neglected due to carelessness<br/>
+                        Some, we just couldn't create that moment to spend with them, be it dining out or a road trip<br/>
+                        It just wasn't happening<br/>
+                        We realized we just didn't find the place and time to do this<br/>
+                        So we created I like places<br/>
+                        If you've got people you miss and time to hang out, we've got the places for you!<br/>
                     </span>
                 </div>
         </div>
@@ -184,7 +182,7 @@
                         How?<br/>
                     </span>
                     <span style="font-size:11px;" class="layer_4">
-                        The website generate a popularity map based on your markings.<br/>
+                        The website generates a popularity map based on your markings.<br/>
                     </span>
                     <div class="use100" style="height:5px;">&nbsp;</div>
                 </div>
@@ -273,7 +271,7 @@
             //$.prompt(popup);
             //$.prompt.close();
             if(getCookie("viewed_quick_tour") != "true"){
-                //$.prompt(impromtuGrabber, {buttons:{"Give Me a Quick Tour!":true}});
+                $.prompt(impromtuGrabber, {buttons:{"Give Me a Quick Tour!":true}});
                 setCookie("viewed_quick_tour","true",1);
             }else{
                 setCookie("viewed_quick_tour","false",1);
