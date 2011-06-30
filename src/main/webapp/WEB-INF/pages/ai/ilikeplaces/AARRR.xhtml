@@ -69,7 +69,7 @@
         div.jqi button{
             padding: 3px 10px;
             margin: 0 10px;
-            background-color: #2AC;
+            background-color: #cc2200;
             border: solid 1px #f4f4f4;
             color: #ffff22;
             font-weight: bold;
@@ -187,6 +187,22 @@
                     <div class="use100" style="height:5px;">&nbsp;</div>
                 </div>
         </div>
+        <div id="impromtuTour3">
+                <div class="use100 center" style="background-color:#ffffff;">
+                    <span style="font-size:16px;" class="intensity">3</span><br/>
+                    <div class="use100" style="height:10px;">&nbsp;</div>
+                    <span style="font-size:11px;" class="layer_4">
+                        ...the more others can find them.<br/>
+                    </span>
+                    <span style="font-size:11px;" class="layer_4">
+                        How?<br/>
+                    </span>
+                    <span style="font-size:11px;" class="layer_4">
+                        The website generates a popularity map based on your markings.<br/>
+                    </span>
+                    <div class="use100" style="height:5px;">&nbsp;</div>
+                </div>
+        </div>
         <div id="impromtuSignUp">
                 <div class="use100 center" style="background-color:#ffffff;">
 
@@ -226,55 +242,61 @@
             $('#impromtuTour1').remove();
             var impromtuTour2 = $('#impromtuTour2').html();
             $('#impromtuTour2').remove();
+            var impromtuTour3 = $('#impromtuTour3').html();
+            $('#impromtuTour3').remove();
 
 
             popup = {
                 state0: {
-                    html: impromptuLoginForm,
-                    buttons: { "Take a Quick Tour?": true , "Show Map": false},
+                    html: impromtuGrabber,
+                    buttons:{"Give Me a Quick Tour!":true},
                     focus: 1,
                     submit:function(v,m,f){
-                        if(!v){
-                            focusMapWithLatLng();
-                            return true;
-                        }
-                        else{
+                        if(getCookie("quick_tour_state") == "2"){
+                            $.prompt.goToState('state2');
+                        } else
+                        if(getCookie("quick_tour_state") == "3"){
+                            $.prompt.goToState('state3');
+                        } else {
                             $.prompt.goToState('state1');
                         }
                         return false;
                     }
                 },
-                state1: {
+                state1: {//Search Widget
                     html: impromtuTour1,
-                    buttons: { Back: -1, Next: 0 },
+                    buttons: { Okay: 0 },
                     focus: 1,
                     submit:function(v,m,f){
-                        if(v==0) $.prompt.goToState('state2');
-                        else if(v=-1)
-                        $.prompt.goToState('state0');
+                        setCookie("quick_tour_state","2",14);
+                        $.prompt.goToState('state2');
                         return false;
                     }
                 },
-                state2: {
+                state2: {//Map Interesting Areas
                     html: impromtuTour2,
-                    buttons: { Back: -1, Exit: 0 },
+                    buttons: { Okay: 0 },
                     focus: 1,
                     submit:function(v,m,f){
-                        if(v==0) $.prompt.close();
-                        else if(v=-1)
-                        $.prompt.goToState('state1');
+                        setCookie("quick_tour_state","3",14);
+                        $.prompt.goToState('state3');
+                        return false;
+                    }
+                },
+                state3: {//Map Area Appeal
+                    html: impromtuTour3,
+                    buttons: { Okay: 0 },
+                    focus: 1,
+                    submit:function(v,m,f){
+                        setCookie("quick_tour_state","last",14);
+                        $.prompt.close();
                         return false;
                     }
                 }
             };
 
-            //$.prompt(popup);
-            //$.prompt.close();
-            if(getCookie("viewed_quick_tour") != "true"){
-                $.prompt(impromtuGrabber, {buttons:{"Give Me a Quick Tour!":true}});
-                setCookie("viewed_quick_tour","true",1);
-            }else{
-                setCookie("viewed_quick_tour","false",1);
+            if(getCookie("quick_tour_state") != "last"){
+                $.prompt(popup);
             }
 
             focusLat=0//36.11464603272065;//L.A.
