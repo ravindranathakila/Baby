@@ -305,11 +305,17 @@
 <node CREATED="1304603305990" ID="Freemind_Link_620714991" MODIFIED="1308614507343" TEXT="Week">
 <node CREATED="1308614925328" ID="ID_634066279" MODIFIED="1308614928109" TEXT="#25">
 <node CREATED="1308614950375" ID="ID_298683684" MODIFIED="1308615134203" TEXT="#1">
-<node CREATED="1308615135015" ID="ID_1094484600" LINK="http://www.quora.com/Where-does-Heidi-Montag-live" MODIFIED="1308615135015" TEXT="quora.com &gt; Where-does-Heidi-Montag-live"/>
-<node CREATED="1308615154875" ID="ID_384008840" LINK="http://www.quora.com/Amy-Winehouse/Where-does-Amy-Winehouse-live" MODIFIED="1308615154875" TEXT="quora.com &gt; Amy-Winehouse &gt; Where-does-Amy-Winehouse-live"/>
+<node CREATED="1308615135015" ID="ID_1094484600" LINK="http://www.quora.com/Where-does-Heidi-Montag-live" MODIFIED="1309220814281" TEXT="quora.com &gt; Where-does-Heidi-Montag-live">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1308615154875" ID="ID_384008840" LINK="http://www.quora.com/Amy-Winehouse/Where-does-Amy-Winehouse-live" MODIFIED="1309220814265" TEXT="quora.com &gt; Amy-Winehouse &gt; Where-does-Amy-Winehouse-live">
+<icon BUILTIN="button_ok"/>
+</node>
 </node>
 <node CREATED="1308615162031" ID="ID_483198706" MODIFIED="1308703100203" TEXT="#2">
-<node CREATED="1308615618593" ID="ID_803964988" LINK="http://www.quora.com/What-is-happening-Morocco-in-June-July-Any-festivals-or-events" MODIFIED="1308703148359" TEXT="quora.com &gt; What-is-happening-Morocco-in-June-July-Any-festivals-or-events"/>
+<node CREATED="1308615618593" ID="ID_803964988" LINK="http://www.quora.com/What-is-happening-Morocco-in-June-July-Any-festivals-or-events" MODIFIED="1309220836468" TEXT="quora.com &gt; What-is-happening-Morocco-in-June-July-Any-festivals-or-events">
+<icon BUILTIN="button_ok"/>
+</node>
 <node CREATED="1308616115937" ID="ID_1109993288" LINK="http://www.quora.com/If-traveling-to-Morocco-in-the-summer-" MODIFIED="1308616115937" TEXT="quora.com &gt; If-traveling-to-Morocco-in-the-summer-(June-July)-will-Marrakesh-be-too-hot-And-if-so-is-it-worth-going-to-Morocco-and-not-going-to-Marrakesh">
 <node CREATED="1308615627296" ID="ID_875676582" MODIFIED="1308616136218" TEXT="@TODO Give ILP link">
 <icon BUILTIN="hourglass"/>
@@ -336,8 +342,27 @@
 </node>
 </node>
 </node>
+<node CREATED="1309222233046" ID="ID_1818980326" MODIFIED="1309222235765" TEXT="#26">
+<node CREATED="1309222238343" ID="ID_1754821549" MODIFIED="1309222311687" TEXT="#1">
+<node CREATED="1309222285484" ID="ID_979093574" LINK="http://www.quora.com/Where-does-John-Wayne-Gacy-live" MODIFIED="1309222321156" TEXT="quora.com &gt; Where-does-John-Wayne-Gacy-live">
+<icon BUILTIN="button_ok"/>
 </node>
-<node CREATED="1308574728546" ID="ID_1452265871" MODIFIED="1308574737156" TEXT="Best Social Media Marketing Websites">
+<node CREATED="1309222294156" ID="ID_1787228703" LINK="http://www.quora.com/Where-does-Amanda-Knox-live" MODIFIED="1309222321171" TEXT="quora.com &gt; Where-does-Amanda-Knox-live">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1309222301328" ID="ID_1792581003" LINK="http://www.quora.com/Frank-McCourt/Where-does-Frank-McCourt-live" MODIFIED="1309222321171" TEXT="quora.com &gt; Frank-McCourt &gt; Where-does-Frank-McCourt-live">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1309222306734" ID="ID_1282551919" LINK="http://www.quora.com/Rod-Blagojevich/Where-does-Rod-R-Blagojevich-live" MODIFIED="1309222321171" TEXT="quora.com &gt; Rod-Blagojevich &gt; Where-does-Rod-R-Blagojevich-live">
+<icon BUILTIN="button_ok"/>
+</node>
+<node CREATED="1309222312125" ID="ID_1257823909" LINK="http://www.quora.com/What-is-happening-in-France-in-June-July-Any-festivals-or-events" MODIFIED="1309222321171" TEXT="quora.com &gt; What-is-happening-in-France-in-June-July-Any-festivals-or-events">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1308574728546" ID="ID_1452265871" MODIFIED="1309221137812" TEXT="Best Social Media Marketing Websites">
 <node CREATED="1308574990515" ID="ID_400379795" MODIFIED="1308580750234" TEXT="Day #1 Ride a Wave - Find a new Wave">
 <node CREATED="1308575007515" ID="ID_290499089" MODIFIED="1308575012359" TEXT="e.g. Royal Wedding"/>
 <node CREATED="1308577517921" ID="ID_1409785516" MODIFIED="1308577523296" TEXT="e.g. Waka waka"/>
@@ -428,12 +453,12 @@
 <node CREATED="1308576073968" ID="ID_1629873335" MODIFIED="1308576077453" TEXT="Day #6"/>
 </node>
 </node>
-<node CREATED="1306058881990" FOLDED="true" ID="Freemind_Link_340930573" MODIFIED="1308449010812" POSITION="left" TEXT="Penetrators">
+<node CREATED="1306058881990" ID="Freemind_Link_340930573" MODIFIED="1309265930062" POSITION="left" TEXT="Penetrators">
 <node CREATED="1306546295288" ID="ID_719807011" MODIFIED="1306546299602" TEXT="Mint">
 <node CREATED="1306546301666" ID="ID_370588626" MODIFIED="1306546315656" TEXT="Has to imply &quot;Places&quot;"/>
 <node CREATED="1306546316906" ID="ID_1852971758" MODIFIED="1306546339869" TEXT="Has to indicate &quot;Entertainment&quot;"/>
 </node>
-<node CREATED="1306060178771" ID="Freemind_Link_110455535" MODIFIED="1308105898156" TEXT="Applicants">
+<node CREATED="1306060178771" FOLDED="true" ID="Freemind_Link_110455535" MODIFIED="1309265964515" TEXT="Applicants">
 <node CREATED="1306258198129" ID="Freemind_Link_1773820053" MODIFIED="1306546431813" TEXT="Just... Have Fun!"/>
 <node CREATED="1306546467374" ID="ID_945821355" MODIFIED="1306546478785" TEXT="You - Friends - Places - Fun"/>
 <node CREATED="1306546524819" ID="ID_1895634668" MODIFIED="1306546554988" TEXT="Friends - Places - Entertainment"/>
@@ -446,10 +471,14 @@
 <node CREATED="1306258456500" ID="Freemind_Link_1548345731" MODIFIED="1306258462366" TEXT="Some go heaven... we go places"/>
 <node CREATED="1306258473112" ID="Freemind_Link_1745824747" MODIFIED="1306258479667" TEXT="Get lost... in some place"/>
 </node>
-<node CREATED="1306058996592" ID="Freemind_Link_679428450" MODIFIED="1308106002656" TEXT="Brave">
+<node CREATED="1306058996592" ID="Freemind_Link_679428450" MODIFIED="1309266174578" TEXT="Brave">
 <node CREATED="1308105902265" ID="ID_956606957" MODIFIED="1308106006890" TEXT="It&apos;s Damn Social"/>
 <node CREATED="1306258427091" ID="Freemind_Link_102093151" MODIFIED="1306414177562" TEXT="Places even gods digg"/>
 <node CREATED="1306258371793" ID="Freemind_Link_323733176" MODIFIED="1306414175468" TEXT="Admit it, places ARE fun"/>
+<node CREATED="1309266031968" ID="ID_1019971780" MODIFIED="1309266045531" TEXT="You can find interesting places in any area"/>
+<node CREATED="1309266501093" ID="ID_1556619436" MODIFIED="1309266515734" TEXT=" Who says there aren&apos;t interesting places to hang around?"/>
+<node CREATED="1309266517328" ID="ID_1549247074" MODIFIED="1309266531421" TEXT=" Who says you cant find interesting places to hang around?"/>
+<node CREATED="1309266178515" ID="ID_423882627" MODIFIED="1309266230250" TEXT="We were losing touch with distanced friends and family...&#xa;We tried to keep up via social networks, but updates faded because we rarely met them...&#xa;Some people we couldn&apos;t meet when we had the chance...&#xa;Some we simply neglected due to carelessness...&#xa;Some, we just couldn&apos;t create that moment to spend with them, be it dining out or a road trip...&#xa;It just wasn&apos;t happening...&#xa;We realized we just didn&apos;t find the place and time to do this...&#xa;So we created I like places... If you&apos;ve got people you miss and time to hang out, we&apos;ve got the places for you!"/>
 <node CREATED="1308105947015" ID="ID_1521017130" MODIFIED="1308107979593" TEXT="Everybody was looking for happiness. &#xa;&quot;Heaven&quot; seemed to be &quot;the place to go&quot;.&#xa;Though, at one point of time we felt &quot;we weren&apos;t happy enough on Earth&quot;. &#xa;We looked around. Others had the same problem!&#xa;We decided it&apos;s quite dumb to sit around doing nothing and wait for heaven. &#xa;It was okay for us to believe in phrophesies millenia&apos;s old, but to do nothing about &quot;not being happy&quot;, sucked!&#xa;We&apos;d neglected our friends and family due to various reasons.&#xa;It was often because, we&apos;d not have the place and time to meet with friends and family, to have some fun in our own ways.&#xa;Friends and family we always had, and time we &quot;kind of&quot; managed, but a place was not always there. We knew if the we find time to hang out, with the right place, we&apos;d get a combination hard to find even in heaven. We all knew what fun it was to hang around with people we care(or fight). That was our dream - Be Happy On Earth!&#xa;&#xa;So we created www.ilikeplaces.com. A collection of cool places to hang around with people we care. For now, we&apos;re just that!&#xa;&#xa;">
 <icon BUILTIN="back"/>
 <icon BUILTIN="full-6"/>
@@ -519,7 +548,7 @@
 </node>
 <node CREATED="1306059000951" ID="Freemind_Link_892883600" MODIFIED="1306060190286" TEXT="Warriors"/>
 </node>
-<node COLOR="#338800" CREATED="1306055485112" FOLDED="true" ID="Freemind_Link_232833227" MODIFIED="1307252976056" POSITION="left" TEXT="The Golden Circle(GOC)">
+<node COLOR="#338800" CREATED="1306055485112" FOLDED="true" ID="Freemind_Link_232833227" MODIFIED="1309265929109" POSITION="left" TEXT="The Golden Circle(GOC)">
 <icon BUILTIN="wizard"/>
 <node COLOR="#cccccc" CREATED="1306059400723" ID="Freemind_Link_1586088254" MODIFIED="1306059827150" TEXT="Penetrated">
 <arrowlink DESTINATION="Freemind_Link_232833227" ENDARROW="Default" ENDINCLINATION="84;0;" ID="Freemind_Arrow_Link_1101734140" STARTARROW="None" STARTINCLINATION="84;0;"/>
@@ -710,7 +739,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1306055581706" FOLDED="true" ID="Freemind_Link_1686754881" MODIFIED="1307252981541" POSITION="left" TEXT="The Cunning Beggar(CUB)">
+<node CREATED="1306055581706" FOLDED="true" ID="Freemind_Link_1686754881" MODIFIED="1309265925312" POSITION="left" TEXT="The Cunning Beggar(CUB)">
 <richcontent TYPE="NOTE"><html><head/><body><p>The cunning beggar comes near the church every sunday.<br/>As the service finishes, he stands there waiting for the people of God to come out.<br/>He wears his most ragged clothes and looks his worst with sweat and lack of breakfast, and he carries his begging bowl.<br/>He is a rich man!<br/>~Ravindranath Akila</p></body></html></richcontent>
 <icon BUILTIN="wizard"/>
 <node COLOR="#cccccc" CREATED="1306059414519" ID="Freemind_Link_133381740" MODIFIED="1306060030288" STYLE="fork" TEXT="Penetrated">
@@ -1010,7 +1039,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1306055549893" FOLDED="true" ID="Freemind_Link_1306469091" MODIFIED="1308574644343" POSITION="left" TEXT="Postponed">
+<node CREATED="1306055549893" FOLDED="true" ID="Freemind_Link_1306469091" MODIFIED="1309265921671" POSITION="left" TEXT="Postponed">
 <node CREATED="1289010658744" FOLDED="true" ID="Freemind_Link_1999101897" MODIFIED="1308500780890" TEXT="GUIDE">
 <icon BUILTIN="help"/>
 <node CREATED="1289010668102" ID="Freemind_Link_1280564673" MODIFIED="1289010673273" TEXT="Inception">
