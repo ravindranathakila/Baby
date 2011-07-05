@@ -152,7 +152,7 @@
                         We were losing touch with distanced friends and family<br/>
                         We tried to keep up via social networks, but updates faded because we rarely met them<br/>
                         Some we couldn't meet when we had the chance<br/>
-                        Some we simply neglected due to carelessness<br/>
+                        Some we carelessly ignored<br/>
                         Some, we just couldn't create that moment to spend with them, be it dining out or a road trip<br/>
                         It just wasn't happening<br/>
                         We realized we just didn't find the place and time to do this<br/>
@@ -165,27 +165,35 @@
         </div>
         <div id="impromtuTour1">
                 <div class="use100 center" style="background-color:#ffffff;">
-                    <span style="font-size:16px;" class="intensity">By Marking Your Event's Place</span><br/>
+                    <span style="font-size:16px;" class="intensity">What place or area am I interested in?</span><br/>
                     <div class="use100" style="height:10px;">&nbsp;</div>
-                    <div><img src="/images/Travel_Directions 1.JPG" style="width:100%;" alt="loading..."/></div>
+                    <div class="use80 use10p use10a"><img src="/images/Search 1_1.JPG" style="width:100%;" alt="loading..."/></div>
                     <span style="font-size:11px;" class="layer_4">
-                        We can give your friends and family road directions to reach there!<br/>
+                        Use the <i>Go Fetch!</i> box to focus the map on the place or area you are interested in<br/>
+                        For example type "Paris" and hit the Go Fetch! button
                     </span>
                 </div>
         </div>
         <div id="impromtuTour2">
                 <div class="use100 center" style="background-color:#ffffff;">
-                    <span style="font-size:16px;" class="intensity">The more you mark places</span><br/>
+                    <span style="font-size:16px;" class="intensity">What happens if I search for "Park Lane, London"?</span><br/>
                     <div class="use100" style="height:10px;">&nbsp;</div>
                     <span style="font-size:11px;" class="layer_4">
-                        ...the more others can find them.<br/>
+                        If the search was successful, the map will focus on Park Lane of London<br/>
                     </span>
-                    <span style="font-size:11px;" class="layer_4">
-                        How?<br/>
-                    </span>
-                    <span style="font-size:11px;" class="layer_4">
-                        The website generates a popularity map based on your markings.<br/>
-                    </span>
+                    <div class="use80 use10p use10a"><img src="/images/Search 1_2.JPG" style="width:80%;" alt="loading..."/></div>
+                    <div class="use45 use5a">
+                        <span style="font-size:11px;" class="layer_4">
+                            If any interesting places are found, they will be listed on the left<br/>
+                        </span>
+                        <img src="/images/Search 1_3.JPG" style="width:100%;" alt="loading..."/>
+                    </div>
+                    <div class="use50">
+                        <span style="font-size:11px;" class="layer_4">
+                            The interesting places will also be marked on the map with markers
+                        </span>
+                        <img src="/images/Search 1_4.JPG" style="width:100%;" alt="loading..."/>
+                    </div>
                     <div class="use100" style="height:5px;">&nbsp;</div>
                 </div>
         </div>
@@ -267,7 +275,7 @@
                 },
                 state1: {//Search Widget
                     html: impromtuTour1,
-                    buttons: { Okay: 0 },
+                    buttons: { 'Okay, what happens next?': 0 },
                     focus: 1,
                     submit:function(v,m,f){
                         setCookie("quick_tour_state","2",14);
