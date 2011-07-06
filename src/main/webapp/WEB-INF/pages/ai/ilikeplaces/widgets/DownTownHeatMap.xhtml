@@ -161,25 +161,25 @@ function setClearForLastNotification(){
  }
 
 function getColoredMarkerWithIntensity(intensity, title){
-    if(intensity < 1 ){
+    if(intensity < 2 ){
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|ff00cc|glyphish_map-marker|24|ff00cc|FB0';
     }
-    if(intensity < 5 ){
+    if(intensity < 4 ){
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|ee00aa|glyphish_map-marker|24|cc00aa|FB0';
     }
-    if(intensity < 10 ){
+    if(intensity < 6 ){
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|dd0088|glyphish_map-marker|24|cc0088|FB0';
     }
-    if(intensity < 20 ){
+    if(intensity < 8 ){
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|cc0066|glyphish_map-marker|24|990066|FB0';
     }
-    if(intensity < 50 ){
+    if(intensity < 10 ){
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|bb0044|glyphish_map-marker|24|990044|FB0';
     }
-    if(intensity < 100 ){
+    if(intensity < 12 ){
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|aa0022|glyphish_map-marker|24|660022|FB0';
     }
-    if(intensity >= 100 ){
+    if(intensity >= 12 ){
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|990000|glyphish_map-marker|24|660000|FB0';
     }
 }
