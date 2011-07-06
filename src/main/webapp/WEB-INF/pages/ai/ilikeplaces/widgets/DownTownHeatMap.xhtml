@@ -132,11 +132,11 @@ function setClearForLastNotification(){
  function processMarker(markerInfo){
     document.getElementById('mapCustomControlsSolidLinksWidget').style.zIndex='11';//Main notifications overlaps this div. Doing this immediately after pushing won't work either.
 
-    $('#mapCustomControlsSolidLinks').append('<div style=\'width:100%;height:5px;\'>&nbsp;</div><span style=\'cursor:pointer;text-decoration:underline;font-size:13px;\'>'+markerInfo.commonName+'&rarr;</span>');
+    $('#mapCustomControlsSolidLinks').append('<span style=\'cursor:pointer;text-decoration:underline;font-size:13px;\'>'+markerInfo.commonName + '</span><div style=\'width:100%;height:5px;\'>&nbsp;</div> ');
 
     var currentMarker = listOfHotSpots[0];
 
-    $('#mapCustomControlsSolidLinks').children(':last').click(
+    $('#mapCustomControlsSolidLinks').children(':last').prev().click(
         function(){
             GAIA.setCenter(new google.maps.LatLng(markerInfo.latitude,markerInfo.longitude));
             if(GAIA.getZoom() < 16){
@@ -147,7 +147,7 @@ function setClearForLastNotification(){
         }
     );
 
-    $('#mapCustomControlsSolidLinks').children(':last')
+    $('#mapCustomControlsSolidLinks').children(':last').prev()
     .mouseenter(
         function(){
             currentMarker.setAnimation(google.maps.Animation.BOUNCE);
