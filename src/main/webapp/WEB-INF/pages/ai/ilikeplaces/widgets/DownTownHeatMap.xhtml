@@ -84,11 +84,6 @@ function setClearForLastNotification(){
  function hotSpotClicked(hotspotClickDetails){//WARNING! used in java
     setNotification("Great! You've selected a place. Check Actions!");
 
-    if(true){
-        alert("Oh! This feature is just around the corner. Just you wait!!");
-        return;
-    }
-
     setActionLink(
         "Create a Moment",
         hotspotClickDetails.commonName,
@@ -102,7 +97,7 @@ function setClearForLastNotification(){
         "Find Directions",
         "",
         function(){
-            var from = prompt('We\'re gonna send you to Down Town. Don\'t worry, we\'ve got you covered!');
+            var from = prompt('Where are you starting your journey from?');
 
             directionWorker = ((directionWorker == undefined) ? (new google.maps.DirectionsService()) : directionWorker);
             directionsDisplay = ((directionsDisplay == undefined) ? (new google.maps.DirectionsRenderer({draggable: true})) : directionsDisplay);
@@ -404,11 +399,6 @@ function initialize_DownTownHeatMap_map(){
                 setNotification(placeMarker.getPosition());
                 setNotification("Great! You've selected a place. Check Actions!");
 
-                if(true){
-                    alert("Oh! This feature is just around the corner. Just you wait!!");
-                    return;
-                }
-
                 setActionLink(
                     "Add this place to your event planner!",
                     "",
@@ -421,10 +411,6 @@ function initialize_DownTownHeatMap_map(){
             }
         }else{
             setNotification("Zoom to Street Level! "+ (18-(GAIA.getZoom())) + " levels more to go...");
-            if(true){
-                alert("Oh! This feature is just around the corner. Just you wait!!");
-                return;
-            }
             setActionLink("Zoom a bit more","",function(){GAIA.setZoom(GAIA.getZoom() + 1);},true);
         }
     };
