@@ -405,7 +405,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                         } catch (final Throwable t) {
                             if (t.getMessage().contains("Got error code:400")) {
-                                sl.l(ERROR_IN_UC_DISQUS, new Exception(t.getMessage()));//We don't want to log the unwanted stack trace. This happens when nobody has posted a message on this page before.
+                                sl.l(ERROR_IN_UC_DISQUS + COLON + t.getMessage());//We don't want to log the unwanted stack trace. This happens when nobody has posted a message on this page before.
                             } else {
                                 sl.l(ERROR_IN_UC_DISQUS, t);
                             }

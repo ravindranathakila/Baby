@@ -34,6 +34,7 @@ public class WallWidgetHumansWall extends WallWidget {
 
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
     private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs","wallMutes");
+    private static final RefreshSpec REFRESH_SPEC_EMPTY = new RefreshSpec();
 
 
     HumanId requestedProfile;
@@ -155,7 +156,7 @@ public class WallWidgetHumansWall extends WallWidget {
             @Override
             public void handleEvent(final Event evt_) {
 
-                if (DB.getHumanCrudWallLocal(true).readWall(myrequestedProfile, new Obj<HumanId>(currUserAsVisitor), null).returnValueBadly().getWallMutes().contains(mycurrUserAsVisitor)) {
+                if (DB.getHumanCrudWallLocal(true).readWall(myrequestedProfile, new Obj<HumanId>(currUserAsVisitor), REFRESH_SPEC_EMPTY).returnValueBadly().getWallMutes().contains(mycurrUserAsVisitor)) {
                     if (DB.getHumanCrudWallLocal(true).unmuteWall(myrequestedProfile, mycurrUserAsVisitor, new Obj<HumanId>(currUserAsVisitor)).returnStatus() == 0) {
                         $$(evt_).setTextContent(WallWidget.MUTE);
                     }
