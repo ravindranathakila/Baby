@@ -17,6 +17,45 @@
 
 
  var rooze = [{featureType:"all",elementType:"all",stylers:[{hue:"#ffbb00"}]},{featureType:"poi",elementType:"all",stylers:[{hue:"#ff3300"}]},{featureType:"landscape.man_made",elementType:"all", stylers:[{hue:"#ff3300"}]},{ featureType:"landscape.natural", elementType:"all", stylers:[{hue:"#b2ff00"}]}];
+ var rooze = [
+  {
+    featureType: "water",
+    elementType: "all",
+    stylers: [
+      { saturation: -100 }
+    ]
+  },{
+    featureType: "transit",
+    elementType: "all",
+    stylers: [
+
+    ]
+  },{
+    featureType: "road",
+    elementType: "all",
+    stylers: [
+      { saturation: -100 }
+    ]
+  },{
+    featureType: "poi",
+    elementType: "all",
+    stylers: [
+      { saturation: -98 }
+    ]
+  },{
+    featureType: "landscape",
+    elementType: "all",
+    stylers: [
+      { saturation: -100 }
+    ]
+  },{
+    featureType: "administrative",
+    elementType: "all",
+    stylers: [
+      { saturation: -100 }
+    ]
+  }
+];
 
 markerIcon = "http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=1|14|000|glyphish_map-marker|16|4bf202|892e40";
 
@@ -67,7 +106,7 @@ function setActionLink(text, title, onclickActions, doClear){//WARNING! used in 
         $('#mapCustomControlsActionLinksTitle').empty().text(title);
     }
     $('#mapCustomControlsActionLinks').append('<div class=\'by\' style=\'height:7px;\'>&nbsp;</div>');
-    $('#mapCustomControlsActionLinks').append('<a style=\'margin-right:0px;cursor:pointer;background-color:#cc2200;color:#ffffff;\' class=\'btn\'><i></i><span style=\'font-size:17px;\'><span></span><i></i>'+text+'</span></a>');
+    $('#mapCustomControlsActionLinks').append('<a style=\'margin-right:0px;cursor:pointer;background-color:#000000;color:#ffffff;\' class=\'btn\'><i></i><span style=\'font-size:17px;\'><span></span><i></i>'+text+'</span></a>');
 
     $('#mapCustomControlsActionLinks').children(':last').click(onclickActions);
 }
@@ -348,7 +387,7 @@ function initialize_DownTownHeatMap_map(){
         position: myLatlng,
         map: map,
         title:"Is it here? if so, click on this marker!!!",
-        icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=|11|eee|glyphish_map-marker|16|cc2200|cc2200"
+        icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=|11|eee|glyphish_map-marker|16|000000|000000"
     });
 
 
@@ -551,70 +590,70 @@ function setMapToLocation(value){
     <div style="display:none;">
         <div id="mapCustomControlsSignupForm" style="width:30.9%;">
             <div class="use80 use10a use10p">
-                <div class="use100" style="color:#cc2200;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
+                <div class="use100" style="color:#000000;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
                     Your Email
                 </div>
                 <div class="use100">
                     <input
                             id="DownTownHeatMapSignupEmail"
-                            style="width:100%;color:#cc2200;height:34px;border:none;font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
+                            style="width:100%;color:#000000;height:34px;border:none;font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
                     />
                 </div>
                 <div class="use100" style="height:5px;">
 
                 </div>
-                <div class="use100" style="color:#cc2200;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
+                <div class="use100" style="color:#000000;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
                     Password
                 </div>
-                <div class="use100" style="color:#cc2200;font-size:10px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
+                <div class="use100" style="color:#000000;font-size:10px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
                     (we won't store it)
                     (it should be at least 8 characters long)
                 </div>
                 <div class="use100">
                     <input
                             id="DownTownHeatMapSignupPassword"
-                            style="width:100%;color:#cc2200;height:34px;border:none;font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
+                            style="width:100%;color:#000000;height:34px;border:none;font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
                             type="password"
                     />
                 </div>
                 <div class="use100 center" >
                     <span
                             id="DownTownHeatMapSignupNotifications"
-                            style="width:100%;text-align:center;color:#cc2200;font-weight:900;">
+                            style="width:100%;text-align:center;color:#000000;font-weight:900;">
                         &nbsp;
                     </span>
                 </div>
                 <div class="btn use90 use5a use5p"
                        id="DownTownHeatMapSignupButton"
-                       style="background-color:#cc2200;height:28px;line-height:28px;;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;opacity:0.8;filter:alpha(opacity=80);">
+                       style="background-color:#000000;height:28px;line-height:28px;;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;opacity:0.8;filter:alpha(opacity=80);">
                       Sign Up!
                 </div>
                 <div class="use100 center" style="height:10px;">
                     &nbsp;
                 </div>
                 <div class="use100 center">
-                        <hr style="color:#cc2200;background-color:#cc2200;"/>
+                        <hr style="color:#000000;background-color:#000000;"/>
                        <a href="https://www.pivotaltracker.com/projects/304913/overview"
                           target="_blank"
-                          style="font-size:12px;font-weight:900;color:#cc2200;text-decoration:underline;">beneath www.<img src="/favicon.png" alt="i" style="height:16px;"/>likeplaces.com</a>
+                          style="font-size:12px;font-weight:900;color:#000000;text-decoration:underline;">beneath www.<img src="/favicon.png" alt="i" style="height:16px;"/>likeplaces.com</a>
                 </div>
             </div>
         </div>
-        <div id="mapCustomControlsAdUnit" class="by5" style="color:#cc2200;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">
+        <div id="mapCustomControlsAdUnit" class="by5" style="color:#000000;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">
         </div>
         <div id="mapCustomControlsSolidLinksWidget" class="bold" style="width:30.9%;">
             <div class="by" style="height:5px;">&nbsp;</div>
             <div class="by">
                 <div class="use5">&nbsp;</div>
                 <div class="use90">
-                    <div class="by bold ntyS" style="height:34px;color:#ffffff;background-color:#cc2200;opacity:0.8; filter:alpha(opacity=80);text-align:center;">
+                    <div class="by bold ntyS" style="height:34px;color:#ffffff;background-color:#000000;opacity:0.8; filter:alpha(opacity=80);text-align:center;">
                         <span style="font-size:21.3px;padding:5px;text-align:center;line-height:34px;">On the Map</span>
                     </div>
                     <div class="by" style="height:3px;">
                         &nbsp;
                     </div>
                     <div class="use191" style="background-color:transparent;">&nbsp;</div>
-                    <div id="mapCustomControlsSolidLinks" class="bold use618 center" style="color:#cc2200;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">
+                    <div id="mapCustomControlsSolidLinks" class="bold use618 center" style="color:#000000;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">
                     </div>
                     <div class="use191" style="background-color:transparent;">&nbsp;</div>
                 </div>
@@ -626,12 +665,12 @@ function setMapToLocation(value){
             <div class="by" style="height:5px;">&nbsp;</div>
             <div class="by">
                 <div class="use95">
-                    <div id="mapCustomControlsActionLinks" class="by bold" style="color:#cc2200;text-align:center;">
+                    <div id="mapCustomControlsActionLinks" class="by bold" style="color:#000000;text-align:center;">
                     </div>
                     <div class="by" style="height:5px;">
                         &nbsp;
                     </div>
-                    <div class="by bold ntyS" style="background-color:#cc2200;height:34px;text-align:center;opacity:0.7; filter:alpha(opacity=70);">
+                    <div class="by bold ntyS" style="background-color:#000000;height:34px;text-align:center;opacity:0.7; filter:alpha(opacity=70);">
                         <span id="mapCustomControlsActionLinksTitle" style="font-size:21.3px;line-height:34px;text-align:center;color:#ffffff;">Take Action</span>
                     </div>
                 </div>
@@ -640,7 +679,7 @@ function setMapToLocation(value){
             <div class="by"  style="height:5px;">&nbsp;</div>
         </div>
         <div id="mapCustomControlsShowHide" style="width:140px;">
-                    <div id="mapCustomControlsShowHideText" class="btn use100" style="background-color:#cc2200;font-size:21.3px;font-weight:900;text-align:center;cursor:pointer;">Show Pics</div>&nbsp;
+                    <div id="mapCustomControlsShowHideText" class="btn use100" style="background-color:#000000;font-size:21.3px;font-weight:900;text-align:center;cursor:pointer;">Show Pics</div>&nbsp;
         </div>
         <div id="mapCustomControlsNEWS" class="by5" style="height:200px;width:144px;">
 			<div class="by" style="height:135px;">
@@ -694,9 +733,9 @@ function setMapToLocation(value){
             <div class="by" style="height:45px;">
                 <div class="by" style="height:45px;">
                     <div id="mapCustomControlsNEWSZoomIn" class="by2" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
-                        <img src="/images/zoom_in_32t.png" style="height:100%;" alt="+"/></div>
+                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_in_32.png" style="height:100%;" alt="+"/></div>
                     <div id="mapCustomControlsNEWSZoomOut" class="by2" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
-                        <img src="/images/zoom_out_32t.png" style="height:100%;" alt="-"/></div>
+                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_out_32.png" style="height:100%;" alt="-"/></div>
                 </div>
             </div>
         </div>
@@ -710,9 +749,9 @@ function setMapToLocation(value){
                         &nbsp;
                     </div>
                     <div id="mapCustomControlsNEWSZoomOutMain" class="use382" style="height:38.2%;cursor:pointer;">
-                        <img src="/images/zoom_out_32t.png" style="width:100%;" alt="-"/></div>
+                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_out_32.png" style="width:100%;" alt="-"/></div>
                     <div id="mapCustomControlsNEWSZoomInMain" class="use618" style="height:61.8%;cursor:pointer;">
-                        <img src="/images/zoom_in_32t.png"  style="width:100%;" alt="+"/></div>
+                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_in_32.png"  style="width:100%;" alt="+"/></div>
                     <div class="use382" style="height:61.8%;">
                         &nbsp;
                     </div>
@@ -728,7 +767,7 @@ function setMapToLocation(value){
                                 <div class="use100" style="height:34px;">
                                     <input class="vtip use100 center layer_2"
                                        id="searchboxmap"
-                                       style="color:#cc2200;height:34px;border:none;font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
+                                       style="color:#000000;height:34px;border:none;font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
                                        value="e.g. las vegas, united states"
                                        tabindex="1"
                                        onchange="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
@@ -743,7 +782,7 @@ function setMapToLocation(value){
                                     <div class="btn use100"
                                            id="searchButtonMap"
                                            onclick="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
-                                           style="background-color:#cc2200;height:100%;line-height:28px;;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;opacity:0.8;filter:alpha(opacity=80);">
+                                           style="background-color:#000000;height:100%;line-height:28px;;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;opacity:0.8;filter:alpha(opacity=80);">
                                         Go Fetch!
                                     </div>
                                 </div>
@@ -751,7 +790,7 @@ function setMapToLocation(value){
                         </div>
                         <div class="use5" style="height:78px;">&nbsp;</div>
                     </div>
-                    <div id="CurrentActivityNotificationBox" class="bold" style="text-align:center;color:#cc2200;">&nbsp;</div>
+                    <div id="CurrentActivityNotificationBox" class="bold" style="text-align:center;color:#000000;">&nbsp;</div>
         </div>
     </div>
 </div>
