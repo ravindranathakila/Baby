@@ -106,10 +106,11 @@ function setActionLink(text, title, onclickActions, doClear){//WARNING! used in 
         $('#mapCustomControlsActionLinks').empty();
         $('#mapCustomControlsActionLinksTitle').empty().text(title);
     }
-    $('#mapCustomControlsActionLinks').append('<div class=\'by\' style=\'height:7px;\'>&nbsp;</div>');
-    $('#mapCustomControlsActionLinks').append('<a style=\'margin-right:0px;cursor:pointer;background-color:#000000;color:#ffffff;\' class=\'btn\'><i></i><span style=\'font-size:17px;\'><span></span><i></i>'+text+'</span></a>');
-
+    $('#mapCustomControlsActionLinks').append(
+        '<div class=\'by\'><a style=\'font-size:14px;margin-right:0px;cursor:pointer;background-color:#ffffff;color:#000000;text-decoration:underline;\' class=\'\'>'+text+'</a></div>');
     $('#mapCustomControlsActionLinks').children(':last').click(onclickActions);
+    $('#mapCustomControlsActionLinks').append(
+        '<div class=\'by\' style=\'height:7px;\'>&nbsp;</div>');
 }
 
 function setClearForLastNotification(){
@@ -668,7 +669,10 @@ function setMapToLocation(value){
             <div class="by" style="height:5px;">&nbsp;</div>
             <div class="by">
                 <div class="use100">
-                    <div id="mapCustomControlsActionLinks" class="by bold" style="color:#000000;text-align:center;">
+                    <div class="by" style="color:#000000;text-align:center;">
+                        <h2 id="mapCustomControlsActionLinksTitle">&nbsp;</h2>
+                    </div>
+                    <div id="mapCustomControlsActionLinks" class="by" style="color:#000000;text-align:center;">
                     </div>
                     <div class="by" style="height:5px;">
                         &nbsp;
@@ -765,8 +769,8 @@ function setMapToLocation(value){
         </div>
         <div id="mapCustomControlsSearchBox" style="width:38.2%;padding-left:30.9%;padding-right:30.9%;overflow:hidden;">
                     <div class="use100">
-                        <div class="use5" style="height:78px;;">&nbsp;</div>
-                        <div class="use90" style="height:109px;;">
+                        <div class="use5" style="height:89px;;">&nbsp;</div>
+                        <div class="use90" style="height:89px;;">
                             <div style="width:100%;height:5px;">&nbsp;</div>
                             <div style="width:100%;height:34px;">
                                 <div class="use100" style="height:34px;">
@@ -779,7 +783,7 @@ function setMapToLocation(value){
                                         />
                                 </div>
                             </div>
-                            <div style="width:100%;height:60px;overflow:hidden;">
+                            <div style="width:100%;height:50px;overflow:hidden;">
                                 <div class="use50 use25a use25p  center"
                                        id="searchButtonMap"
                                        onclick="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
@@ -788,7 +792,7 @@ function setMapToLocation(value){
                                 </div>
                              </div>
                         </div>
-                        <div class="use5" style="height:78px;">&nbsp;</div>
+                        <div class="use5" style="height:89px;">&nbsp;</div>
                     </div>
                     <div id="CurrentActivityNotificationBox" class="bold" style="text-align:center;color:#000000;">&nbsp;</div>
         </div>
