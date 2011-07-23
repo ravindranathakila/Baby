@@ -123,6 +123,15 @@ function setClearForLastNotification(){
  directionsDisplay = undefined;
 
  function hotSpotClicked(hotspotClickDetails){//WARNING! used in java
+    if(GAIA.getZoom() < 14){
+        alert('You clicked on a place while too high up in sky.\nWe\'re going to zoom you in.\nThen click on a more precise place.');
+        setNotification("Zooming you in on this place because you're way too high up.");
+        setNotification("Once you get a better view, click on the place.");
+        GAIA.setCenter(new google.maps.LatLng(hotspotClickDetails.latitude,hotspotClickDetails.longitude));
+        GAIA.setZoom(14);
+        return;
+    }
+
     setNotification("Great! You've selected a place. Check Actions!");
 
     setActionLink(
@@ -595,7 +604,7 @@ function setMapToLocation(value){
         <div id="mapCustomControlsSignupForm" style="width:30.9%;">
             <div class="use80 use10a use10p">
                 <div class="use100" style="color:#000000;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
-                    Your Email
+                    Enter Your Email
                 </div>
                 <div class="use100">
                     <input
@@ -607,7 +616,7 @@ function setMapToLocation(value){
 
                 </div>
                 <div class="use100" style="color:#000000;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
-                    Password
+                    Choose a Password
                 </div>
                 <div class="use100" style="color:#000000;font-size:10px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
                     (we won't store it)
