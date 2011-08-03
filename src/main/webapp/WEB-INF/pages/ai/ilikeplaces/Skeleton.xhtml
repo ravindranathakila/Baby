@@ -9,23 +9,11 @@
     </title>
     <link rel="icon" type="image/ico" href="/favicon.ico"/>
 
-    <!-- Framework CSS -->
-    <!--<link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection"/>-->
-    <!--<link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"/>-->
-    <!--[if lt IE 8]>
-    <!--<link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]&ndash;&gt;-->
-
-    <!--<link rel="stylesheet" href="/css/theme/gta.css" type="text/css"/>-->
-
-    <!--<link rel="stylesheet" type="text/css" href="/nifty/niftyCorners.css"/>-->
-    <!--<link rel="stylesheet" type="text/css" href="/cdn/js/niftyPrint.css" media="print"/>-->
-    <link rel="stylesheet" type="text/css" href="/css/vtip.css"/>
-    <link rel="stylesheet" href="/css/theme/blur_attn.css" type="text/css"/>
+     <link rel="stylesheet" type="text/css" href="/css/vtip.css"/>
+    <!--<link rel="stylesheet" href="/css/theme/blur_attn.css" type="text/css"/>-->
     <link rel="stylesheet" href="/css/layout.css" type="text/css"/>
-    <!--<link rel="stylesheet" href="/css/buttons.css" type="text/css"/>-->
     <link rel="stylesheet" href="/css/FileUploadButton.css" type="text/css"/>
     <link rel="stylesheet" href="/css/impromptu.css" type="text/css"/>
-    <!--<link href='http://fonts.googleapis.com/css?family=Cuprum&subset=cyrillic,latin' rel='stylesheet' type='text/css' />-->
 
     <style type="text/css">
         html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td  {
@@ -44,13 +32,6 @@
 
         LI{
            font-size:16px;
-        }
-
-        .impact{
-            font-family:impact;
-        }
-        .Cuprum{
-            font-family:'Cuprum';
         }
 
         .nav_link_img {
@@ -89,9 +70,9 @@
       })();
     </script>
 </head>
-<body class="intensity layer"  id="body" style="overflow-x:hidden;">
+<body class="intensity"  id="body" style="overflow-x:hidden;">
 <div id="monitorId"
-     style="width: 320px; margin-left:350px; margin-top:5%; color:#000000; background:transparent; z-index:20; display:none; position:absolute;">
+     style="width: 320px; margin-left:350px; margin-top:5%;background:transparent; z-index:20; display:none; position:absolute;">
     <div  style="background:#808080;text-align:center;">
         <br/>
         <span style="text-align:center;color:#ffffff;font-size:36px;">Just a second...</span>
@@ -101,33 +82,41 @@
 </div>
 <div id="Skeleton_display" class="use100" itsnat:nocache="true" style="display:block;overflow:hidden;">
 <div class="use100">
-<div class="use100" style="height:50px;">
-    <div class="use100 inherit_height">
-        <div class="use40 inherit_height line_height_50 center" style="overflow:hidden;">
-        <span class="ilp_title inherit_height inherit_line_height vtip cursor_link"
-            title="Go back to www.ilikeplaces.com"
-            onclick="javascript:window.location='/';"
-            style="color:#dd55ee;font-size:100%;font-family:'Arial';text-decoration:underline;font-weight:normal;">D O W N &nbsp;<b>&darr;</b>&nbsp; T O W N</span>
+<div class="use100" style="height:78px;">
+    <div class="use100 inherit_height" style="background:url('/images/Talk Page Header Stripe.jpg') repeat-x;">
+        <div class="use40 inherit_height center" style="overflow:hidden;">
+            <div style="height:15%;">&nbsp;</div>
+            <div style="height:70%;">
+                <img class="vtip cursor_link"
+                     style="height:100%;vertical-align:middle;"
+                    title="Go back to www.ilikeplaces.com"
+                    onclick="javascript:window.location='/';"
+                    src="/images/Down Town Logo.png"
+                    alt="Down Town"
+                />
+            </div>
+            <div style="height:15%;">&nbsp;</div>
+
         </div>
-        <div id="Skeleton_login_widget" class="use60 inherit_height">
+        <div id="Skeleton_login_widget" class="use60" style="height:78px;">
         </div>
     </div>
 </div>
+<div class="use100" style="font-size:10px;height:5px;">
+    &nbsp;
+</div>
+<div class="use100" style="background-color:#f5f5f5;">
 
-<div class="use100 ">
-    <div class="use100 ">
-        &nbsp;
-    </div>
-    <div class="use100 ">
-        <div class="use20" id="Skeleton_othersidebar">
-            <div class="use100 ">
-                <div class="use100  black_bg" style="background-color:#000000;">
-                    <img class="use100" id="Skeleton_profile_photo"
+    <div class="use100">
+        <div class="use25" id="Skeleton_othersidebar" >
+            <div class="use100">
+                <div class="use100" style="background-color:#6b6d6d;">
+                    <img id="Skeleton_profile_photo"
                          src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG"
-                         width="100%"
+                         style="width:98%;;padding:1% 1% 1% 1% ;"
                          alt="Profile Picture"/>
                 </div>
-                <div class="use100  center ntyBot black_bg white fg title_blend bold">
+                <div class="use100  center ntyBot black_bg white fg title_blend bold" style="display:none;">
                     <span id="Skeleton_othersidebar_identity" class="white_fg"></span>
                 </div>
             </div>
@@ -135,65 +124,62 @@
                 <div class="use100  height_10">
                     &nbsp;
                 </div>
+                <!-- TALK -->
                 <div class="use100 ">
-                    <div class="use20 center">
-                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/chat_32.png" class="nav_link_img"
-                             alt="Attributed to http://www.picol.org"/>
-                    </div>
-                    <div class="use80  nav_link intensity_3 hover ntyS" style="overflow:hidden;">
+                    <div class="use70 use15p use15a center">
                         <a id="Skeleton_othersidebar_wall_link" href="#" class="intensity vtip"
-                           title="Hi, click here to see your wall">THE TALK</a>
+                               title="Hi, click here to see your wall">
+                            <img src="/images/The Talk_Button.png" class="use100"
+                                 alt="Attributed to http://www.picol.org"/>
+                        </a>
                     </div>
                 </div>
                 <div class="use100  height_10">
                     &nbsp;
                 </div>
+                <!-- CONNECTIONS -->
                 <div class="use100 ">
-                    <div class="use20 center">
-                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/group_half_32.png"
-                             class="nav_link_img" alt="Attributed to http://www.picol.org"/>
-                    </div>
-                    <div class="use80  nav_link intensity_3 hover ntyS" style="overflow:hidden;">
+                    <div class="use70 use15p use15a center">
                         <a id="Skeleton_othersidebar_places_link" href="/page/_friends" class="intensity vtip"
-                           title="Hi, click  here to Manage/Invite your friends">THE CONNECTIONS</a>
+                                 title="Hi, click  here to Manage/Invite your friends">
+                            <img src="/images/Connections_Button.png"
+                                 class="use100" alt="Attributed to http://www.picol.org"/>
+                        </a>
                     </div>
                 </div>
                 <div class="use100  height_10">
                     &nbsp;
                 </div>
-                <div class="use100 ">
-                    <div class="use20 center">
-                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/avatar_32.png" class="nav_link_img"
-                             alt="Attributed to http://www.picol.org"/>
-                    </div>
-                    <div class="use80  nav_link intensity_3 hover ntyS" style="overflow:hidden;">
+                <div class="use100">
+                    <div class="use70 use15p use15a center">
                         <a id="Skeleton_othersidebar_profile_link" href="/page/_me" class="intensity vtip"
-                           title="Hi, click here to view your profile">THE MANAGER</a>
+                           title="Hi, click here to view your profile">
+                            <img src="/images/Manager_Button.png" class="use100"
+                                 alt="Attributed to http://www.picol.org"/>
+                        </a>
                     </div>
                 </div>
                 <div class="use100  height_10">
                     &nbsp;
                 </div>
                 <div class="use100 ">
-                    <div class="use20 center">
-                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/image_32.png" class="nav_link_img"
-                             alt="Attributed to http://www.picol.org"/>
-                    </div>
-                    <div class="use80  nav_link intensity_3 hover ntyS" style="overflow:hidden;">
-                        <a id="Skeleton_othersidebar_photo_manager_link" href="/page/_me" class="intensity">THE SNAPS</a>
+                    <div class="use70 use15p use15a center">
+                        <a id="Skeleton_othersidebar_photo_manager_link" href="/page/_me" class="intensity">
+                            <img src="/images/Snaps_Button.png" class="use100"
+                              alt="Attributed to http://www.picol.org"/>
+                        </a>
                     </div>
                 </div>
                 <div class="use100  height_10">
                     &nbsp;
                 </div>
                 <div class="use100 ">
-                    <div class="use20 center">
-                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/calendar_32.png"
-                             class="nav_link_img" alt="Attributed to http://www.picol.org"/>
-                    </div>
-                    <div class="use80  nav_link intensity_3 hover ntyS" style="overflow:hidden;">
+                    <div class="use70 use15p use15a center">
                         <a id="Skeleton_othersidebar_organizer_link" href="/page/_org" class="intensity vtip"
-                           title="Hi, click here to see your events">THE EVENTS</a>
+                           title="Hi, click here to see your events">
+                            <img src="/images/Events_Button.png"
+                                 class="use100" alt="Attributed to http://www.picol.org"/>
+                        </a>
                     </div>
                 </div>
                 <div class="use100  height_10">
@@ -226,13 +212,12 @@
                 </div>
                 <hr class="bg_fd78e1 fg_fd78e1" style="color:#fd78e1;background-color:#fd78e1;"/>
                 <div class="use100 ">
-                    <div class="use80 nav_link intensity_7 hover ntyS">
+                    <div class="use70 use15p use15a">
                         <a  href="/page/_legal" class="layer vtip"
-                           title="Legal Information">Legal</a>
-                    </div>
-                    <div class="use20  center">
-                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/security_closed_32.png"
-                             class="nav_link_img" alt="Attributed to http://www.picol.org"/>
+                           title="Legal Information">
+                            <img src="/images/legal Button.png"
+                               class="use100" alt="Attributed to http://www.picol.org"/>
+                        </a>
                     </div>
                 </div>
                 <div class="use100  height_10">
@@ -240,37 +225,40 @@
                 </div>
             </div>
         </div>
-        <div class="use60" id="Skeleton_center">
+        <div class="use50" id="Skeleton_center" style="background-color:#ffffff;">
+            <div class="use90 use5p use5a">
 
-            <div class="use100 ">
-                <div class="use100  center">
-                    <h2 id="PageTitle" class="vtip" title=""></h2>
+                <div class="use100 ">
+                    <div class="use100  center">
+                        <h2 id="PageTitle" class="vtip" title=""></h2>
 
-                    <h3 id="PageIntro" class="vtip" title=""></h3>
+                        <h3 id="PageIntro" class="vtip" title=""></h3>
+                    </div>
                 </div>
-            </div>
-            <div class="use100" id="Skeleton_notice_sh" style="display:none;">
-                <div class="use100  center" style="background:#feffac;">
-                    <div id="Skeleton_notice" class="yellow_fg bold large"></div>
+                <div class="use100" id="Skeleton_notice_sh" style="display:none;">
+                    <div class="use100  center" style="background:#feffac;">
+                        <div id="Skeleton_notice" class="yellow_fg bold large"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="use100 center" style="display:block;">
-                <div id="PageNotice" class="fg_red bold"></div>
-            </div>
+                <div class="use100 center" style="display:block;">
+                    <div id="PageNotice" class="fg_red bold"></div>
+                </div>
 
-            <div class="use100" id="Skeleton_center_skeleton">
-            </div>
+                <div class="use100" id="Skeleton_center_skeleton">
+                </div>
 
-            <div class="use100" id="Skeleton_center_content">
-                <div class="use50" id="Skeleton_left_column">
-                    &nbsp;
+                <div class="use100" id="Skeleton_center_content">
+                    <div class="use50" id="Skeleton_left_column">
+                        &nbsp;
+                    </div>
+                    <div class="use50" id="Skeleton_right_column">
+                        &nbsp;
+                    </div>
                 </div>
-                <div class="use50" id="Skeleton_right_column">
-                    &nbsp;
-                </div>
+
             </div>
         </div>
-        <div class="use20" id="Skeleton_sidebar">
+        <div class="use25" id="Skeleton_sidebar"">
         </div>
     </div>
 </div>
