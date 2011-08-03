@@ -5,90 +5,74 @@
         <title>Sign On Off</title>
     </head>
     <body>
-        <div class="use100 last inherit_height black_bg" id="signinon_login" style="display:none;">
+        <div class="use100 inherit_height " id="signinon_login" style="display:none;overflow:hidden;">
             <form method="post" id="Html_login" action="/login">
-                <div class="use15 inherit_height bg_a9abf1">
-                    <div class="use100 black_bg" style="height: 12px;">
-                        &nbsp;
-                    </div>
-                    <div class="use100 intensity_0" style="height: 13px;">
-                        &nbsp;&nbsp;&nbsp;&nbsp;Email:
-                    </div>
-                    <div class="use100 black_bg" style="height: 15px;">
-                        &nbsp;
+                <div class="use15 inherit_height bg_a9abf1" style="overflow:hidden;">
+                    <div class="use100 inherit_height line_height_50 center" style="font-size:100%;">
+                        &nbsp;&nbsp;Email:&nbsp;&nbsp;
                     </div>
                 </div>
-                <div class="use20 inherit_height line_height_40 black_bg vtip" title="Hi, enter your email address here" >
-                    <input class="span-3 last layer_2 inherit_height" style="font-family:impact;" id="Username"
-                           name="Username" maxlength="255" type="text"/>
+                <div class="use20 inherit_height line_height_50 vtip" style="overflow:hidden;" title="Hi, enter your email address here" >
+                    <div class="use100" style="height:10%;">&nbsp;</div>
+                    <div class="use100" style="height:30%;">
+                        <input class="use100 inherit_height" style="height:100%;border:none;" id="Username"
+                               name="Username" maxlength="255" type="text"/>
+                    </div>
+                    <div class="use100" style="height:10%;">&nbsp;</div>
                 </div>
-
-
-                <div class="use15 inherit_height bg_a9abf1">
-                    <div class="use100 black_bg" style="height: 12px;">
-                        &nbsp;
-                    </div>
-                    <div class="use100 intensity_0" style="height: 13px;">
-                        &nbsp;Password:
-                    </div>
-                    <div class="use100 black_bg" style="height: 15px;">
-                        &nbsp;
+                <div class="use15 inherit_height bg_a9abf1" style="overflow:hidden;">
+                    <div class="use100 inherit_height line_height_50 center" style="height:13px;">
+                        &nbsp;&nbsp;Password:&nbsp;&nbsp;
                     </div>
                 </div>
-                <div class="use20 inherit_height line_height_40 black_bg vtip" title="Hi, enter your email address here" >
-                    <input class="span-3 last layer_2 bold vtip" style="font-family:impact;" id="Password"
-                           name="Password" maxlength="255" type="password"  title="Hi, enter your password here. If you remember right, it was 8 or more characters long."/>
+                <div class="use20 inherit_height line_height_50  vtip" style="overflow:hidden;" title="Hi, enter your email address here" >
+                    <div class="use100" style="height:10%;">&nbsp;</div>
+                    <div class="use100" style="height:30%;">
+                        <input class="use100 bold vtip" style="height:100%;border:none;" id="Password"
+                               name="Password" maxlength="255" type="password"  title="Hi, enter your password here. If you remember right, it was 8 or more characters long."/>
+                    </div>
+                    <div class="use100" style="height:10%;">&nbsp;</div>
                 </div>
 
-                <div class="use15 inherit_height bg_a9abf1 vtip" title="Hi, enter your email, and password, and click here to login. To signup for a new account, click the sign up  button and then select an email and a password.">
-                    <div class="use100 height_10 intensity_0">
-                        &nbsp;
-                    </div>
-                    <div class="use100 height_15 black_bg cursor_link">
-                        <a onclick="javascript:document.forms['Html_login'].submit();"
-                           class="btn">&nbsp;Log In&nbsp;</a>
-                    </div>
-                    <div class="use100 height_15 black_bg">
-                        &nbsp;
+                <div class="use15 inherit_height bg_a9abf1 vtip center" style="overflow:hidden;" title="Hi, enter your email, and password, and click here to login. To signup for a new account, click the sign up  button and then select an email and a password.">
+                    <div class="use90 use5p use5a inherit_height line_height_50 center cursor_link">
+                        <div class="use100" style="height:10%;">&nbsp;</div>
+                        <div class="use100 intensity_3" style="height:30%;">
+                            <a onclick="javascript:document.forms['Html_login'].submit();"
+                               class="">&nbsp;Log In&nbsp;</a>
+                        </div>
+                        <div class="use100" style="height:10%;">&nbsp;</div>
                     </div>
                 </div>
-                <div class="use15 last inherit_height bg_a9abf1 vtip" title="Hi, click here to sign up for a free account">
-                    <div class="use100 height_10 black_bg">
-                        &nbsp;
-                    </div>
-                    <div class="use100 height_15 black_bg cursor_link">
-                        <a onclick="javascript:document.forms['Html_login'].action='/signup';document.forms['Html_login'].submit();"
-                           class="btn">&nbsp;Sign Up&nbsp;</a>
-                    </div>
-                    <div class="use100 height_15 black_bg">
-                        &nbsp;
+                <div class="use15 inherit_height line_height_50 bg_a9abf1 vtip center" style="overflow:hidden;" title="Hi, click here to sign up for a free account">
+                    <div class="use90 use5p use5a inherit_height line_height_50 center cursor_link">
+                        <div class="use100" style="height:10%;">&nbsp;</div>
+                        <div class="use100 intensity_3" style="height:30%;">
+                            <a onclick="javascript:document.forms['Html_login'].action='/signup';document.forms['Html_login'].submit();"
+                               class="">&nbsp;Sign Up&nbsp;</a>
+                        </div>
+                        <div class="use100" style="height:10%;">&nbsp;</div>
                     </div>
                 </div>
             </form>
         </div>
         <!-- Only one of these 3 divs are visible -->
-        <div class="use100 inherit_height" id="signinon_logon" style="display:block;">
-            <div class="use80 inherit_height">
-                <div class="use100 inherit_height line_height_40">
-                    <div class="use100 bold inherit_height inherit_line_height">
-                        &nbsp;
-                    </div>
-                </div>
+        <div class="use100" id="signinon_logon" style="display:none;height:100%;">
+            <div class="use60" style="height:100%;">
+                &nbsp;
             </div>
-            <div class="use20 inherit_height bg_a9abf1">
-                <div class="use100 height_10 intensity_0">
-                    &nbsp;
+            <div class="use40 bg_a9abf1" style="height:100%;">
+                <div class="use100" style="height:20%;">&nbsp;</div>
+                <div class="use100" style="height:60%;">
+                    <a href="/page/_so" class="btn vtip" style="vertical-align:middle;text-decoration:none;font-size:100%;" title="Leave :')">
+                        <img src="/images/Account Button.png" alt="Account" style="vertical-align:middle;height:100%;"/>
+                    </a>
                 </div>
-                <div class="use100 height_15 intensity_0 bold">
-                    &nbsp;<a href="/page/_so" class="btn vtip" style="text-decoration:none;font-size:100%;" title="Leave :')">Log out</a>
-                </div>
-                <div class="use100 height_15 black_bg">
-                    &nbsp;
-                </div>
+                <div class="use100" style="height:20%;">&nbsp;</div>
             </div>
         </div>
         <!-- Only one of these 3 divs are visible -->
-        <div class="use100 last inherit_height intensity_0" id="signinon_signup" style="display:block;">
+        <div class="use100  inherit_height" id="signinon_signup" style="display:none;">
             <form method="post" id="Html_signup" action="/signup">
                 <div>
                     <input id="SignUpUsername"
