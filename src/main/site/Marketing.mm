@@ -1,8 +1,8 @@
 <map version="0.9.0">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node CREATED="1304339998591" ID="Freemind_Link_647673425" MODIFIED="1306058971297" TEXT="Marketing">
+<node CREATED="1304339998591" ID="Freemind_Link_647673425" MODIFIED="1311781013984" TEXT="X Culture">
 <font NAME="Comic Sans MS" SIZE="12"/>
-<node CREATED="1304603299475" ID="Freemind_Link_1783261531" MODIFIED="1308500719515" POSITION="right" TEXT="2011">
+<node CREATED="1304603299475" ID="Freemind_Link_1783261531" MODIFIED="1311725727109" POSITION="right" TEXT="2011">
 <node CREATED="1304603326396" FOLDED="true" ID="Freemind_Link_1527518165" MODIFIED="1308574702484" TEXT="Executive Summary of Adimpression 2011">
 <font BOLD="true" NAME="SansSerif" SIZE="18"/>
 <node CREATED="1304603337849" ID="Freemind_Link_992763483" MODIFIED="1304689575213" TEXT="We all started this with location based advertising.">
@@ -302,8 +302,8 @@
 <node CREATED="1305159164078" ID="Freemind_Link_1369179674" MODIFIED="1306798446987" TEXT="Strategy Summary"/>
 </node>
 </node>
-<node CREATED="1304603305990" ID="Freemind_Link_620714991" MODIFIED="1308614507343" TEXT="Week">
-<node CREATED="1308614925328" ID="ID_634066279" MODIFIED="1308614928109" TEXT="#25">
+<node CREATED="1304603305990" FOLDED="true" ID="Freemind_Link_620714991" MODIFIED="1311725631062" TEXT="Week">
+<node CREATED="1308614925328" FOLDED="true" ID="ID_634066279" MODIFIED="1311725573125" TEXT="#25">
 <node CREATED="1308614950375" ID="ID_298683684" MODIFIED="1308615134203" TEXT="#1">
 <node CREATED="1308615135015" ID="ID_1094484600" LINK="http://www.quora.com/Where-does-Heidi-Montag-live" MODIFIED="1309220814281" TEXT="quora.com &gt; Where-does-Heidi-Montag-live">
 <icon BUILTIN="button_ok"/>
@@ -342,7 +342,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1309222233046" ID="ID_1818980326" MODIFIED="1309222235765" TEXT="#26">
+<node CREATED="1309222233046" FOLDED="true" ID="ID_1818980326" MODIFIED="1311725551578" TEXT="#26">
 <node CREATED="1309222238343" ID="ID_1754821549" MODIFIED="1309222311687" TEXT="#1">
 <node CREATED="1309222285484" ID="ID_979093574" LINK="http://www.quora.com/Where-does-John-Wayne-Gacy-live" MODIFIED="1310345137685" TEXT="quora.com &gt; Where-does-John-Wayne-Gacy-live"/>
 <node CREATED="1309222294156" ID="ID_1787228703" LINK="http://www.quora.com/Where-does-Amanda-Knox-live" MODIFIED="1310345137685" TEXT="quora.com &gt; Where-does-Amanda-Knox-live"/>
@@ -351,14 +351,14 @@
 <node CREATED="1309222312125" ID="ID_1257823909" LINK="http://www.quora.com/What-is-happening-in-France-in-June-July-Any-festivals-or-events" MODIFIED="1310345137669" TEXT="quora.com &gt; What-is-happening-in-France-in-June-July-Any-festivals-or-events"/>
 </node>
 </node>
-<node CREATED="1310344921091" ID="ID_496543327" MODIFIED="1310344926779" TEXT="#27">
+<node CREATED="1310344921091" FOLDED="true" ID="ID_496543327" MODIFIED="1311725550640" TEXT="#27">
 <node CREATED="1310344929185" ID="ID_50980246" MODIFIED="1310344931388" TEXT="#1">
 <node CREATED="1310345106779" ID="ID_1944819004" LINK="http://www.quora.com/Kate-Hudson-1/Where-does-Kate-Hudson-live" MODIFIED="1310345106779" TEXT="quora.com &gt; Kate-Hudson-1 &gt; Where-does-Kate-Hudson-live"/>
 </node>
 </node>
 </node>
-<node CREATED="1308574728546" ID="ID_1452265871" MODIFIED="1310345363529" TEXT="Best Social Media Marketing Websites">
-<node CREATED="1308574990515" ID="ID_400379795" MODIFIED="1308580750234" TEXT="Day #1 Ride a Wave - Find a new Wave">
+<node CREATED="1308574728546" FOLDED="true" ID="ID_1452265871" MODIFIED="1311725728468" TEXT="Weekly Strategy">
+<node CREATED="1308574990515" FOLDED="true" ID="ID_400379795" MODIFIED="1311725624750" TEXT="Day #1 Ride a Wave - Find a new Wave">
 <node CREATED="1308575007515" ID="ID_290499089" MODIFIED="1308575012359" TEXT="e.g. Royal Wedding"/>
 <node CREATED="1308577517921" ID="ID_1409785516" MODIFIED="1308577523296" TEXT="e.g. Waka waka"/>
 <node CREATED="1308581184343" ID="ID_640404365" LINK="http://www.google.com/trends/hottrends" MODIFIED="1308581184343" TEXT="google.com &gt; Trends &gt; Hottrends"/>
@@ -384,7 +384,7 @@
 </node>
 <node CREATED="1308582566062" ID="ID_392830532" MODIFIED="1308582572968" TEXT="Ask Quora about trends"/>
 </node>
-<node CREATED="1308576053031" ID="ID_140840987" MODIFIED="1308576154750" TEXT="Day #2 Article Mustering">
+<node CREATED="1308576053031" FOLDED="true" ID="ID_140840987" MODIFIED="1311725623765" TEXT="Day #2 Article Mustering">
 <node CREATED="1308576175968" ID="ID_211045893" MODIFIED="1308576393781" TEXT="Select article topic seasonal/trendy">
 <node CREATED="1308576184781" ID="ID_872986219" MODIFIED="1308576186593" TEXT="travel"/>
 <node CREATED="1308576187046" ID="ID_556053582" MODIFIED="1308576188281" TEXT="events"/>
@@ -394,12 +394,12 @@
 <node CREATED="1308576215937" ID="ID_821232065" MODIFIED="1308576220718" TEXT="Fetch Panoramio Photos"/>
 <node CREATED="1308576561171" ID="ID_663158036" MODIFIED="1308576571000" TEXT="Find strong links on topic for co-branding"/>
 </node>
-<node CREATED="1308576057390" ID="ID_1153640813" MODIFIED="1308576285515" TEXT="Day #3 Article Submission">
+<node CREATED="1308576057390" FOLDED="true" ID="ID_1153640813" MODIFIED="1311725622671" TEXT="Day #3 Article Submission">
 <node CREATED="1308576247046" ID="ID_1788033065" MODIFIED="1308576840109" TEXT="Compose Article Based on Article Mustering"/>
 <node CREATED="1308576605140" ID="ID_178326971" MODIFIED="1308577111031" TEXT="Submit Article to Article Submission Websites"/>
 <node CREATED="1308577315250" ID="ID_298934746" MODIFIED="1308577367515" TEXT="Submit Article link to related blogs (first page google results)"/>
 </node>
-<node CREATED="1308576061515" ID="ID_1355554913" MODIFIED="1308576851531" TEXT="Day #4 This Week In [Country] FB Fan Page/Create Update Based on Article Mustering">
+<node CREATED="1308576061515" FOLDED="true" ID="ID_1355554913" MODIFIED="1311725625812" TEXT="Day #4 This Week In [Country] FB Fan Page/Create Update Based on Article Mustering">
 <node CREATED="1308576962390" ID="ID_1026571874" MODIFIED="1308614578484" TEXT="Initally try just 4 countries so that loop happens by continent">
 <node CREATED="1308614714656" ID="ID_597123133" MODIFIED="1308614718968" TEXT="Africa">
 <node CREATED="1308614832906" ID="ID_481000871" MODIFIED="1308614834921" TEXT="Morocco">
@@ -446,6 +446,123 @@
 <node CREATED="1308576065156" ID="ID_963246739" MODIFIED="1308576067671" TEXT="Day #5"/>
 <node CREATED="1308576068484" ID="ID_350212599" MODIFIED="1308576073187" TEXT="Day #6"/>
 <node CREATED="1308576073968" ID="ID_1629873335" MODIFIED="1308576077453" TEXT="Day #6"/>
+</node>
+<node CREATED="1311725751015" ID="ID_1943479223" MODIFIED="1311725765953" TEXT="Stranger to Family(STF)">
+<node CREATED="1311725791531" ID="ID_1248237533" MODIFIED="1311727905281" TEXT="Find - Stranger" VSHIFT="4">
+<node CREATED="1311725806734" ID="ID_1826906033" MODIFIED="1311727941343" TEXT="(Opinion)Has no interest in us">
+<arrowlink DESTINATION="ID_1088223246" ENDARROW="Default" ENDINCLINATION="115;0;" ID="Arrow_ID_1506438920" STARTARROW="None" STARTINCLINATION="115;0;"/>
+<icon BUILTIN="full-1"/>
+</node>
+<node CREATED="1311725862140" ID="ID_1682743959" MODIFIED="1311727948984" TEXT="(Attitude)Does not speak to us">
+<arrowlink DESTINATION="ID_1363016987" ENDARROW="Default" ENDINCLINATION="131;0;" ID="Arrow_ID_905583642" STARTARROW="None" STARTINCLINATION="131;0;"/>
+<icon BUILTIN="full-2"/>
+</node>
+<node CREATED="1311725812484" ID="ID_1153820837" MODIFIED="1311728144046" TEXT="(Need)Might have an interest which we can provide">
+<arrowlink DESTINATION="ID_1083213387" ENDARROW="Default" ENDINCLINATION="116;0;" ID="Arrow_ID_132724583" STARTARROW="None" STARTINCLINATION="116;0;"/>
+<font NAME="SansSerif" SIZE="12"/>
+<icon BUILTIN="full-3"/>
+<node CREATED="1311728177453" ID="ID_937419862" MODIFIED="1311728182296" TEXT="Let&apos;s not try though"/>
+</node>
+<node CREATED="1311725825968" ID="ID_1282149754" MODIFIED="1311728144046" TEXT="(Need)Might fall for an interest we show">
+<arrowlink DESTINATION="ID_1828495254" ENDARROW="Default" ENDINCLINATION="116;0;" ID="Arrow_ID_1041329261" STARTARROW="None" STARTINCLINATION="116;0;"/>
+<font NAME="SansSerif" SIZE="12"/>
+<icon BUILTIN="full-4"/>
+<node CREATED="1311728184375" ID="ID_1111077992" MODIFIED="1311728185984" TEXT="Let&apos;s not try though "/>
+</node>
+<node CREATED="1311725856421" ID="ID_312719167" MODIFIED="1311727992390" TEXT="(Trust)Does not trust us">
+<arrowlink DESTINATION="ID_1081450939" ENDARROW="Default" ENDINCLINATION="215;0;" ID="Arrow_ID_1159201080" STARTARROW="None" STARTINCLINATION="215;0;"/>
+<icon BUILTIN="full-5"/>
+</node>
+</node>
+<node CREATED="1311725890359" HGAP="33" ID="ID_922815197" MODIFIED="1311727903390" TEXT="Advertise - Self Introduction" VSHIFT="3">
+<node CREATED="1311725923687" ID="ID_1088223246" MODIFIED="1311727941343" TEXT="1st +ve or -ve impression">
+<arrowlink DESTINATION="ID_1223015007" ENDARROW="Default" ENDINCLINATION="176;0;" ID="Arrow_ID_1486804063" STARTARROW="None" STARTINCLINATION="176;0;"/>
+<icon BUILTIN="full-1"/>
+</node>
+<node CREATED="1311725893671" ID="ID_1363016987" MODIFIED="1311727948984" TEXT="Speaks to us">
+<arrowlink DESTINATION="ID_701821259" ENDARROW="Default" ENDINCLINATION="462;0;" ID="Arrow_ID_1933026266" STARTARROW="None" STARTINCLINATION="462;0;"/>
+<icon BUILTIN="full-2"/>
+</node>
+<node CREATED="1311725812484" ID="ID_1083213387" MODIFIED="1311728144046" TEXT="Might have an interest which we can provide">
+<arrowlink DESTINATION="ID_148376024" ENDARROW="Default" ENDINCLINATION="138;0;" ID="Arrow_ID_1621956503" STARTARROW="None" STARTINCLINATION="138;0;"/>
+<font NAME="SansSerif" SIZE="12"/>
+<icon BUILTIN="full-3"/>
+<node CREATED="1311728189718" ID="ID_876848325" MODIFIED="1311728190875" TEXT="Let&apos;s not try though "/>
+</node>
+<node CREATED="1311725825968" ID="ID_1828495254" MODIFIED="1311728144046" TEXT="Might fall for an interest we show">
+<arrowlink DESTINATION="ID_1124259884" ENDARROW="Default" ENDINCLINATION="310;0;" ID="Arrow_ID_17166505" STARTARROW="None" STARTINCLINATION="310;0;"/>
+<font NAME="SansSerif" SIZE="12"/>
+<icon BUILTIN="full-4"/>
+<node CREATED="1311728192218" ID="ID_613180244" MODIFIED="1311728194453" TEXT="Let&apos;s not try though "/>
+<node CREATED="1311727508265" ID="ID_1806029026" MODIFIED="1311727587421" TEXT="E.g. Asking &quot;Do you believe in God?&quot; from a non-believer will fail miserably here (triggers anger)"/>
+</node>
+<node CREATED="1311725856421" ID="ID_1081450939" MODIFIED="1311727992390" TEXT="Wonders why we said hello. More cautious about trust">
+<arrowlink DESTINATION="ID_842789987" ENDARROW="Default" ENDINCLINATION="120;0;" ID="Arrow_ID_358095610" STARTARROW="None" STARTINCLINATION="120;0;"/>
+<icon BUILTIN="full-5"/>
+</node>
+</node>
+<node CREATED="1311726388046" HGAP="116" ID="ID_1562603887" MODIFIED="1311727898750" TEXT="Nurture - Conversing" VSHIFT="-7">
+<node CREATED="1311726417906" ID="ID_1223015007" MODIFIED="1311727941343" TEXT="Interested in us. Wonderes if we really care.">
+<arrowlink DESTINATION="ID_116832131" ENDARROW="Default" ENDINCLINATION="281;0;" ID="Arrow_ID_183783352" STARTARROW="None" STARTINCLINATION="281;0;"/>
+<icon BUILTIN="full-1"/>
+</node>
+<node CREATED="1311726436906" ID="ID_701821259" MODIFIED="1311727948984" TEXT="Speaking to us. Wonders if we&apos;re wasting her time, or something good waiting to happen.(Agenticity)">
+<arrowlink DESTINATION="ID_257632804" ENDARROW="Default" ENDINCLINATION="222;0;" ID="Arrow_ID_471757526" STARTARROW="None" STARTINCLINATION="222;0;"/>
+<icon BUILTIN="full-2"/>
+</node>
+<node CREATED="1311726453718" ID="ID_148376024" MODIFIED="1311727960640" TEXT="Attention. Time. Now we can/better ask now what interests her.">
+<arrowlink DESTINATION="ID_685577925" ENDARROW="Default" ENDINCLINATION="143;0;" ID="Arrow_ID_157670965" STARTARROW="None" STARTINCLINATION="143;0;"/>
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1311726599812" ID="ID_1124259884" MODIFIED="1311727979140" TEXT="Offer what we have. Like offering a drink to a guest at home. Be gentle. Ask if drinks are ok.">
+<arrowlink DESTINATION="ID_367405169" ENDARROW="Default" ENDINCLINATION="292;0;" ID="Arrow_ID_312337782" STARTARROW="None" STARTINCLINATION="292;0;"/>
+<icon BUILTIN="full-4"/>
+</node>
+<node CREATED="1311727166062" ID="ID_842789987" MODIFIED="1311727992390" TEXT="Trusts us generally because we didn&apos;t pressuer her.">
+<arrowlink DESTINATION="ID_657572502" ENDARROW="Default" ENDINCLINATION="147;0;" ID="Arrow_ID_828280420" STARTARROW="None" STARTINCLINATION="147;0;"/>
+<icon BUILTIN="full-5"/>
+</node>
+</node>
+<node CREATED="1311726729468" HGAP="113" ID="ID_1752271918" MODIFIED="1311727916937" TEXT="Reward - Volunterily Hooked" VSHIFT="4">
+<node CREATED="1311726956984" ID="ID_116832131" MODIFIED="1311728079953" TEXT="We are important. Not vital. ">
+<arrowlink DESTINATION="ID_1279379172" ENDARROW="Default" ENDINCLINATION="270;0;" ID="Arrow_ID_623004605" STARTARROW="None" STARTINCLINATION="270;0;"/>
+<icon BUILTIN="full-1"/>
+<node CREATED="1311728084953" ID="ID_425591639" MODIFIED="1311728086015" TEXT="Solution For: &quot;Right now we&apos;re dead, nobody needs us&quot;.  We&apos;ve got what she needs."/>
+</node>
+<node CREATED="1311727599593" ID="ID_257632804" MODIFIED="1311727948984" TEXT="Inquires from us. We should respond in a caring manner.">
+<arrowlink DESTINATION="ID_1383001931" ENDARROW="Default" ENDINCLINATION="268;0;" ID="Arrow_ID_947103361" STARTARROW="None" STARTINCLINATION="268;0;"/>
+<icon BUILTIN="full-2"/>
+</node>
+<node CREATED="1311727627250" ID="ID_685577925" MODIFIED="1311727960640" TEXT="Either we&apos;ve got something she wanted">
+<arrowlink DESTINATION="ID_1225835825" ENDARROW="Default" ENDINCLINATION="118;0;" ID="Arrow_ID_681822272" STARTARROW="None" STARTINCLINATION="118;0;"/>
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1311727643562" ID="ID_367405169" MODIFIED="1311727979140" TEXT="or she wants something we have">
+<arrowlink DESTINATION="ID_1307025514" ENDARROW="Default" ENDINCLINATION="116;0;" ID="Arrow_ID_599321025" STARTARROW="None" STARTINCLINATION="116;0;"/>
+<icon BUILTIN="full-4"/>
+</node>
+<node CREATED="1311727654062" ID="ID_657572502" MODIFIED="1311727992390" TEXT="Tusts but is in inquiry stage">
+<arrowlink DESTINATION="ID_1603078673" ENDARROW="Default" ENDINCLINATION="144;0;" ID="Arrow_ID_1360272655" STARTARROW="None" STARTINCLINATION="144;0;"/>
+<icon BUILTIN="full-5"/>
+</node>
+</node>
+<node CREATED="1311726099796" HGAP="203" ID="ID_1873803536" MODIFIED="1311727911281" TEXT="Cherish - Joins Family" VSHIFT="-258">
+<node CREATED="1311726103078" ID="ID_1279379172" MODIFIED="1311727941343" TEXT="Takes care of us and makes others care too">
+<icon BUILTIN="full-1"/>
+</node>
+<node CREATED="1311726119156" ID="ID_1383001931" MODIFIED="1311727948984" TEXT="Quite open with us">
+<icon BUILTIN="full-2"/>
+</node>
+<node CREATED="1311726127656" ID="ID_1225835825" MODIFIED="1311727960640" TEXT="Might have an interest which we provide">
+<icon BUILTIN="full-3"/>
+</node>
+<node CREATED="1311726138406" ID="ID_1307025514" MODIFIED="1311727979140" TEXT="Open to fall for an interest we show">
+<icon BUILTIN="full-4"/>
+</node>
+<node CREATED="1311726197359" ID="ID_1603078673" MODIFIED="1311727992390" TEXT="Trusts us completely to even manage/guide them">
+<icon BUILTIN="full-5"/>
+</node>
+</node>
 </node>
 </node>
 <node CREATED="1306058881990" FOLDED="true" ID="Freemind_Link_340930573" MODIFIED="1310086070936" POSITION="left" TEXT="Penetrators">
@@ -543,7 +660,7 @@
 </node>
 <node CREATED="1306059000951" ID="Freemind_Link_892883600" MODIFIED="1306060190286" TEXT="Warriors"/>
 </node>
-<node COLOR="#338800" CREATED="1306055485112" FOLDED="true" ID="Freemind_Link_232833227" MODIFIED="1309265929109" POSITION="left" TEXT="The Golden Circle(GOC)">
+<node COLOR="#338800" CREATED="1306055485112" FOLDED="true" ID="Freemind_Link_232833227" MODIFIED="1311725488984" POSITION="left" TEXT="The Golden Circle(GOC)">
 <icon BUILTIN="wizard"/>
 <node COLOR="#cccccc" CREATED="1306059400723" ID="Freemind_Link_1586088254" MODIFIED="1306059827150" TEXT="Penetrated">
 <arrowlink DESTINATION="Freemind_Link_232833227" ENDARROW="Default" ENDINCLINATION="84;0;" ID="Freemind_Arrow_Link_1101734140" STARTARROW="None" STARTINCLINATION="84;0;"/>
@@ -734,7 +851,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1306055581706" FOLDED="true" ID="Freemind_Link_1686754881" MODIFIED="1309265925312" POSITION="left" TEXT="The Cunning Beggar(CUB)">
+<node CREATED="1306055581706" FOLDED="true" ID="Freemind_Link_1686754881" MODIFIED="1311725477812" POSITION="left" TEXT="The Cunning Beggar(CUB)">
 <richcontent TYPE="NOTE"><html><head/><body><p>The cunning beggar comes near the church every sunday.<br/>As the service finishes, he stands there waiting for the people of God to come out.<br/>He wears his most ragged clothes and looks his worst with sweat and lack of breakfast, and he carries his begging bowl.<br/>He is a rich man!<br/>~Ravindranath Akila</p></body></html></richcontent>
 <icon BUILTIN="wizard"/>
 <node COLOR="#cccccc" CREATED="1306059414519" ID="Freemind_Link_133381740" MODIFIED="1306060030288" STYLE="fork" TEXT="Penetrated">
@@ -821,7 +938,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1307245389165" ID="ID_310356034" MODIFIED="1310086082389" POSITION="left" TEXT="The Four Usual Suspects(FUS) - The Bars We Set The Highest">
+<node CREATED="1307245389165" FOLDED="true" ID="ID_310356034" MODIFIED="1311725538968" POSITION="left" TEXT="The Four Usual Suspects(FUS) - The Bars We Set The Highest">
 <icon BUILTIN="wizard"/>
 <node CREATED="1307245411745" ID="ID_944727217" MODIFIED="1307246182542" TEXT="Analyzing the problem, it&apos;s boundaries and limitations.(FUS1)"/>
 <node CREATED="1307245454483" ID="ID_1892067123" MODIFIED="1307245962697" TEXT="Least effort to solution(FUS2)">
@@ -848,7 +965,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1306057065799" FOLDED="true" ID="Freemind_Link_169183248" MODIFIED="1310086077014" POSITION="left" TEXT="The Homo Sapient Effects">
+<node CREATED="1306057065799" FOLDED="true" ID="Freemind_Link_169183248" MODIFIED="1311725493265" POSITION="left" TEXT="The Homo Sapient Effects">
 <icon BUILTIN="wizard"/>
 <node CREATED="1306057098581" ID="Freemind_Link_830418307" MODIFIED="1306058607262" TEXT="Emotion">
 <richcontent TYPE="NOTE"><html><head/><body><p>Emotion, triggered by the most basic system in the brain, overrides logic.<br/>If you can trigger an emotion in your favor, you've done a good job.</p></body></html></richcontent>
@@ -860,7 +977,7 @@
 <node CREATED="1306059446454" ID="Freemind_Link_531177503" MODIFIED="1306059906212" TEXT="Curiosity and Amusement"/>
 <node CREATED="1306059451360" ID="Freemind_Link_209948448" MODIFIED="1306059452860" TEXT="Faith"/>
 </node>
-<node CREATED="1283703177927" FOLDED="true" ID="Freemind_Link_1817341781" MODIFIED="1310086078889" POSITION="left" TEXT="Flat Zeroeth Checklist">
+<node CREATED="1283703177927" FOLDED="true" ID="Freemind_Link_1817341781" MODIFIED="1311725496750" POSITION="left" TEXT="Flat Zeroeth Checklist">
 <node CREATED="1285778293411" ID="Freemind_Link_1030747214" MODIFIED="1286031836875" TEXT="Are you being dumb? No? BE DUMB!"/>
 <node CREATED="1283703161521" ID="Freemind_Link_63383641" MODIFIED="1283703168865" TEXT="Does it do what it says?"/>
 <node CREATED="1283703169490" ID="Freemind_Link_499084225" MODIFIED="1283703174943" TEXT="Does it say what is does?"/>
@@ -1034,7 +1151,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1306055549893" FOLDED="true" ID="Freemind_Link_1306469091" MODIFIED="1309265921671" POSITION="left" TEXT="Postponed">
+<node CREATED="1306055549893" FOLDED="true" ID="Freemind_Link_1306469091" MODIFIED="1311725541921" POSITION="left" TEXT="Postponed">
 <node CREATED="1289010658744" FOLDED="true" ID="Freemind_Link_1999101897" MODIFIED="1308500780890" TEXT="GUIDE">
 <icon BUILTIN="help"/>
 <node CREATED="1289010668102" ID="Freemind_Link_1280564673" MODIFIED="1289010673273" TEXT="Inception">
