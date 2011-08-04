@@ -214,7 +214,7 @@ final public class ServletSignup extends HttpServlet {
                         final String mail = MessageFormat.format(gUI.getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
                                 .replace("activationURL", "<a href='" +
                                         activationURL + "' >" + activationURL + "</a>");
-                        SendMail.getSendMailLocal().sendAsSimpleText(
+                        SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
                                 username,
                                 gUI.getString("SIGNUP_HEADER"),
                                 mail);
