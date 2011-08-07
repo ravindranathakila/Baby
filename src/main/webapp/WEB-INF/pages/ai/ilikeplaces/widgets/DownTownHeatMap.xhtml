@@ -16,7 +16,7 @@
 <script type="text/javascript">
 
 
- var rooze = [{featureType:"all",elementType:"all",stylers:[{hue:"#ffbb00"}]},{featureType:"poi",elementType:"all",stylers:[{hue:"#ff3300"}]},{featureType:"landscape.man_made",elementType:"all", stylers:[{hue:"#ff3300"}]},{ featureType:"landscape.natural", elementType:"all", stylers:[{hue:"#b2ff00"}]}];
+ //var rooze = [{featureType:"all",elementType:"all",stylers:[{hue:"#ffbb00"}]},{featureType:"poi",elementType:"all",stylers:[{hue:"#ff3300"}]},{featureType:"landscape.man_made",elementType:"all", stylers:[{hue:"#ff3300"}]},{ featureType:"landscape.natural", elementType:"all", stylers:[{hue:"#b2ff00"}]}];
  var rooze = [
   {
     featureType: "water",
@@ -525,6 +525,15 @@ function initialize_DownTownHeatMap_map(){
     google.maps.event.addListener(map, 'idle', function() {
         if(GAIA.getZoom()<=7){
             setNotification('Whoa! we\'re too high up!');
+        }
+    });
+
+    google.maps.event.addListener(map, 'idle', function() {
+        if(GAIA.getZoom()>=18){
+            GAIA.setMapTypeId(google.maps.MapTypeId.SATELLITE); //Setting the map to sattelite mode for user to see where the building is properly
+            setNotification('Map is now in satellite mode so that you can see actual places to choose from.');
+        }else{
+            GAIA.setMapTypeId(DWN_TWN_ID);//Resetting the map to normal mode
         }
     });
 }
