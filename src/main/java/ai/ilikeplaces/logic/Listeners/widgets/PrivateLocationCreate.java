@@ -24,6 +24,10 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
+import javax.servlet.http.HttpServletRequest;
+
+import java.util.List;
+
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 
 
@@ -36,6 +40,9 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
     private static final String SAVING = "Saving...";
+    private static final String PLACENAME = "placename";
+    private static final String PLACEDETAILS = "placedetails";
+    private static final String WOEHINT = "woehint";
     RefObj<String> privateLocationName = null;
 
     RefObj<String> privateLocationInfo = null;
@@ -73,6 +80,82 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
         this.privateLocationName = new SimpleName();
 
         this.privateLocationInfo = new Info();
+
+        Loggers.DEBUG.debug(((HttpServletRequest) request.getServletRequest()).getHeader("Referer"));
+
+        TryToAutoCreatePrivateLocationFromURL:
+        {
+            TryToGetPrivateLocationNameHintFromURL:
+            {
+                final String placename = $$(request, PLACENAME);
+                if (placename != null) {
+                    this.privateLocationName.setObj(placename);
+                }
+            }
+
+            TryToGetPrivateLocationDescriptionHintFromURL:
+            {
+                final String placedetails = $$(request, PLACEDETAILS);
+                if (placedetails != null) {
+                    this.privateLocationInfo.setObj(placedetails);
+                }
+            }
+
+            boolean existingLocation = false;
+
+            TryToGetPrivateLocationPositionOnMapFromURL:
+            {
+                if ($$(request, WOEHINT) != null) {
+                    woeid = new GeoCoord().setObj($$(request, WOEHINT));
+                    final List<PrivateLocation> privateLocations = DB.getHumanCRUDHumanLocal(false).doDirtyRHumansPrivateLocation(humanId).returnValue().getPrivateLocationsOwned();
+
+                    for (final PrivateLocation privateLocation : privateLocations) {
+
+                        if (privateLocation.getPrivateLocationLatitude() - 0.000133145585763375 < woeid.getObjectAsValid().getLatitude() &&
+                                privateLocation.getPrivateLocationLatitude() + 0.000133145585763375 > woeid.getObjectAsValid().getLatitude() &&
+                                privateLocation.getPrivateLocationLongitude() - 0.000184401869775 < woeid.getObjectAsValid().getLongitude() &&
+                                privateLocation.getPrivateLocationLongitude() + 0.000184401869775 > woeid.getObjectAsValid().getLongitude()) {//Same place
+
+
+                            itsNatDocument_.addCodeToSend(JSCodeToSend.redirectPageWithURL(
+                                    new Parameter(Controller.Page.Organize.getURL())
+                                            .append(Controller.Page.DocOrganizeCategory, 2, true)
+                                            .append(Controller.Page.DocOrganizeLocation, privateLocation.getPrivateLocationId())
+                                            .get()
+                            ));
+                            existingLocation = true;
+                            break;
+                        }
+                    }
+
+                }
+            }
+
+            DoTheCreatingPartAfterValidationPrivateLocationsCriteria:
+            {
+                if (this.privateLocationName.validate() == 0 && this.privateLocationInfo.validate() == 0 && this.woeid.validate() == 0) {
+
+                    if (!existingLocation) {
+                        final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).cPrivateLocation(
+                                humanId,
+                                privateLocationName,
+                                privateLocationInfo,
+                                woeid);
+                        if (r.returnStatus() == 0) {
+                            itsNatDocument_.addCodeToSend(JSCodeToSend.redirectPageWithURL(
+                                    new Parameter(Controller.Page.Organize.getURL())
+                                            .append(Controller.Page.DocOrganizeCategory, 2, true)
+                                            .append(Controller.Page.DocOrganizeLocation, r.returnValue().getPrivateLocationId())
+                                            .get()
+                            ));//
+                        } else {
+                            $$(PrivateLocationCreateCNotice).setTextContent(r.returnMsg());
+                        }
+                    }
+                }
+            }
+        }
+
 
         RenderWOEIDGrabber:
         {
