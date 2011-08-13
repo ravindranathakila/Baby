@@ -358,4 +358,14 @@ public abstract class AbstractWidgetListener {
             Loggers.DEBUG.debug(page.toString() + ":ids:" + document_.getElementById(id));
         }
     }
+
+    /**
+     *
+     * @param itsNatServletRequest ItsNatServletRequest
+     * @param uRLParameter Parameter on URL which you want
+     * @return the result returned from itsNatServletRequest.getServletRequest().getParameter()
+     */
+    public String $$(final ItsNatServletRequest itsNatServletRequest, final String uRLParameter){
+        return itsNatServletRequest.getServletRequest().getParameter(uRLParameter);
+    }
 }
