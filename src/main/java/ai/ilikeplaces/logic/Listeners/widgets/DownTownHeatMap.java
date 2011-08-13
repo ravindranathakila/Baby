@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
@@ -34,6 +35,9 @@ import java.text.MessageFormat;
 import java.util.*;
 
 /**
+ * Try not to format this class, just format the section you are interested in.
+ * It looks like crap, I know, but it'll look worse once you trust the IDE to format it for you, yes, even IntelliJ :)
+ * <p/>
  * Created by IntelliJ IDEA.
  * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Sep 10, 2010
@@ -126,7 +130,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     protected void init(final Object... initArgs) {
 
         elementToUpdateWithWOEID = (Element) initArgs[0];
-        humanId = new HumanId((String) initArgs[1]);
+        humanId = new HumanId((String) initArgs[1]);//Value set will be null if user is not logged in
         email = new Email("");
         password = new Password("");
 
@@ -158,221 +162,249 @@ public class DownTownHeatMap extends AbstractWidgetListener {
         {
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapSignupEmail), EventType.BLUR.toString(), new EventListener() {
 
-                        final Validator v = new Validator();
-                        final Email myemail = email;
+                final Validator v = new Validator();
+                final Email myemail = email;
 
-                        @Override
-                        public void handleEvent(final Event evt_) {
-                            myemail.setObj(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()));
-                            if (myemail.validate(v) == 0) {
-                                $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email Valid!");
-                            } else {
-                                $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email INVALID!");
-                            }
-                        }
-                    }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+                @Override
+                public void handleEvent(final Event evt_) {
+                    myemail.setObj(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()));
+                    if (myemail.validate(v) == 0) {
+                        $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email Valid!");
+                    } else {
+                        $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email INVALID!");
+                    }
+                }
+            }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapSignupPassword), EventType.BLUR.toString(), new EventListener() {
 
-                        final Validator v = new Validator();
-                        final Password mypassword = password;
+                final Validator v = new Validator();
+                final Password mypassword = password;
 
-                        @Override
-                        public void handleEvent(final Event evt_) {
-                            mypassword.setObj(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()));
-                            if (mypassword.validate(v) == 0) {
-                                $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Password Valid!");
-                            } else {
-                                $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Password INVALID!");
-                            }
-                        }
-                    }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+                @Override
+                public void handleEvent(final Event evt_) {
+                    mypassword.setObj(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()));
+                    if (mypassword.validate(v) == 0) {
+                        $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Password Valid!");
+                    } else {
+                        $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Password INVALID!");
+                    }
+                }
+            }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapSignupButton), EventType.CLICK.toString(), new EventListener() {
 
-                        final Validator v = new Validator();
-                        final Email myemail = email;
-                        final Password mypassword = password;
+                final Validator v = new Validator();
+                final Email myemail = email;
+                final Password mypassword = password;
 
-                        @Override
-                        public void handleEvent(final Event evt_) {
-                            if (myemail.validate(v) == 0 && mypassword.validate(v) == 0) {
-                                if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
-                                    try {
+                @Override
+                public void handleEvent(final Event evt_) {
+                    if (myemail.validate(v) == 0 && mypassword.validate(v) == 0) {
+                        if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
+                            try {
 
-                                        final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
-                                                new HumanId().setObjAsValid(email.getObj()),
-                                                mypassword,
-                                                myemail);
+                                final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                                        new HumanId().setObjAsValid(email.getObj()),
+                                        mypassword,
+                                        myemail);
 
-                                        if (humanCreateReturn.returnValue()) {
+                                if (humanCreateReturn.returnValue()) {
 
-                                            final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
-                                                    .append(ServletLogin.Username, myemail.getObj(), true)
-                                                    .append(ServletLogin.Password,
-                                                            DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
-                                                                    .returnValue()
-                                                                    .getHumanAuthenticationHash())
-                                                    .get();
+                                    final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                                            .append(ServletLogin.Username, myemail.getObj(), true)
+                                            .append(ServletLogin.Password,
+                                                    DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
+                                                            .returnValue()
+                                                            .getHumanAuthenticationHash())
+                                            .get();
 
-                                            final String mail = MessageFormat.format(RBGet.gui().getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
-                                                    .replace("activationURL", "<a href='" +
-                                                            activationURL + "' >" + activationURL + "</a>");
-                                            SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
-                                                    myemail.getObj(),
-                                                    RBGet.gui().getString("SIGNUP_HEADER"),
-                                                    mail);
-                                            $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
-                                        }
-
-                                    } catch (DBDishonourCheckedException e) {
-                                        $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email was taken meanwhile!:(");
-                                    }
-                                } else {
-                                    $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("This email is TAKEN!:(");
+                                    final String mail = MessageFormat.format(RBGet.gui().getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
+                                            .replace("activationURL", "<a href='" +
+                                                    activationURL + "' >" + activationURL + "</a>");
+                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                            myemail.getObj(),
+                                            RBGet.gui().getString("SIGNUP_HEADER"),
+                                            mail);
+                                    $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
                                 }
-                            } else {
-                                //Ignored as the individual validators would've reported the error by now
-                            }
 
+                            } catch (DBDishonourCheckedException e) {
+                                $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email was taken meanwhile!:(");
+                            }
+                        } else {
+                            $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("This email is TAKEN!:(");
                         }
-                    }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+                    } else {
+                        //Ignored as the individual validators would've reported the error by now
+                    }
+
+                }
+            }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
         }
 
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapWOEID), EventType.BLUR.toString(), new EventListener() {
 
-                    final Validator v = new Validator();
-                    RefObj<String> woeid;
+            final Validator v = new Validator();
+            RefObj<String> woeid;
 
-                    @Override
-                    public void handleEvent(final Event evt_) {
-                        woeid = new Info(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+            @Override
+            public void handleEvent(final Event evt_) {
+                woeid = new Info(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
 
-                        if (woeid.validate(v) == 0) {
-                            elementToUpdateWithWOEID.setAttribute(MarkupTag.INPUT.value(), woeid.getObjectAsValid());
-                        } else {
-                        }
-                    }
-                }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+                if (woeid.validate(v) == 0) {
+                    elementToUpdateWithWOEID.setAttribute(MarkupTag.INPUT.value(), woeid.getObjectAsValid());
+                } else {
+                }
+            }
+        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
 
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapBB), EventType.BLUR.toString(), new EventListener() {
 
-                    final Validator v = new Validator();
-                    final GeoCoord geoCoordSW = new GeoCoord();
-                    final GeoCoord geoCoordNE = new GeoCoord();
-                    final ItsNatDocument ind = itsNatDocument_;
-                    final HumanId myhumanId = humanId;
+            final Validator v = new Validator();
+            final GeoCoord geoCoordSW = new GeoCoord();
+            final GeoCoord geoCoordNE = new GeoCoord();
+            final ItsNatDocument ind = itsNatDocument_;
+            final HumanId myhumanId = humanId;
 
-                    @Override
-                    public void handleEvent(final Event evt_) {
+            @Override
+            public void handleEvent(final Event evt_) {
 
-                        final GeoCoord[] geoCoord = GeoCoord.getGeoCoordsByBounds(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+                final GeoCoord[] geoCoord = GeoCoord.getGeoCoordsByBounds(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
 
-                        if (geoCoord[0].validate(v) == 0 && geoCoord[1].validate(v) == 0) {
-                            elementToUpdateWithWOEID.setAttribute(MarkupTag.INPUT.value(), geoCoord[0].toString() + COMMA + geoCoord[1]);
+                if (geoCoord[0].validate(v) == 0 && geoCoord[1].validate(v) == 0) {
+                    elementToUpdateWithWOEID.setAttribute(MarkupTag.INPUT.value(), geoCoord[0].toString() + COMMA + geoCoord[1]);
 
-                            /////////////////////////////
-                            final Double latitudeLB = geoCoord[0].getObjectAsValid().getLatitude();
-                            final Double latitudeTR = geoCoord[1].getObjectAsValid().getLatitude();
-                            final Double longitudeLB = geoCoord[0].getObjectAsValid().getLongitude();
-                            final Double longitudeTR = geoCoord[1].getObjectAsValid().getLongitude();
+                    /////////////////////////////
+                    final Double latitudeLB = geoCoord[0].getObjectAsValid().getLatitude();
+                    final Double latitudeTR = geoCoord[1].getObjectAsValid().getLatitude();
+                    final Double longitudeLB = geoCoord[0].getObjectAsValid().getLongitude();
+                    final Double longitudeTR = geoCoord[1].getObjectAsValid().getLongitude();
 
-                            final Set<Rawspot> rs = new HashSet<Rawspot>() {
-                                /*StaticBlockInsideSetToAddElementsEasily*/ {
+                    final Set<Rawspot> rs = new HashSet<Rawspot>() {//Initializing HashSet as an anonymous class. God speed!
+                        /*StaticBlockInsideSetToAddElementsEasily*/ {
 
-                                    UCILikePlacesPlaces:
-                                    {
-                                        final List<PrivateEvent> privateEvents__ = DB.getHumanCrudPrivateEventLocal(true).doRPrivateEventsByBoundsAsSystem(
-                                                latitudeLB,
-                                                latitudeTR,
-                                                longitudeLB,
-                                                longitudeTR).returnValue();
+                            UCILikePlacesPlaces:
+                            {
+                                final List<PrivateEvent> privateEvents__ = DB.getHumanCrudPrivateEventLocal(true).doRPrivateEventsByBoundsAsSystem(
+                                        latitudeLB,
+                                        latitudeTR,
+                                        longitudeLB,
+                                        longitudeTR).returnValue();
 
-                                        for (final PrivateEvent privateEvent : privateEvents__) {
-                                            add(
-                                                    new Rawspot(
-                                                            new W3CPoint(privateEvent.getPrivateLocation().getPrivateLocationLatitude(), privateEvent.getPrivateLocation().getPrivateLocationLongitude()),
-                                                            privateEvent.getPrivateLocation().getPrivateLocationName()));
-                                        }
-                                    }
-
-                                    UCGooglePlaces:
-                                    {
-
-                                        try {
-                                            final double latitudeAverage = (latitudeLB +
-                                                    latitudeTR) / 2;
-                                            final double longitudeAverage = (longitudeLB +
-                                                    longitudeTR) / 2;
-
-                                            final JSONObject placesJsonObject = getGooglePlaces(
-                                                    latitudeAverage,
-                                                    longitudeAverage,
-                                                    (long) (Math.abs(latitudeAverage - latitudeLB) * APPROX_LENGTH_OF_ONE_LAT), COMMON_PLACE_TYPES);
-
-                                            final JSONArray placesJsonArray = placesJsonObject.getJSONArray(RESULTS);
-
-                                            for (int i = 0; i < placesJsonArray.length(); i++) {
-                                                final JSONObject lngLat = placesJsonArray.getJSONObject(i).getJSONObject(GEOMETRY).getJSONObject(LOCATION_JSON_OBJ_KEY);
-                                                add(
-                                                        new Rawspot(
-                                                                new W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
-                                                                placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
-                                            }
-
-                                        } catch (final Exception e) {
-                                            Loggers.ERROR.error(FAILED_TO_FETCH_GOOGLE_PLACES_DATA, e);
-                                        }
-                                    }
-                                }
-                            };
-
-                            final BoundingBox bb = new BoundingBox().setObj(
-                                    latitudeLB,
-                                    longitudeLB,
-                                    latitudeTR,
-                                    longitudeTR);
-
-                            final HotspotAnalyzer hsa = new HotspotAnalyzer(rs, (BoundingBox) bb.validateThrowAndGetThis());
-
-//                    final Map<Integer, Map<Integer, Hotspot>> hotspots = hsa.getHotspots();
-                            final Hotspot[][] hotspots = hsa.getHotspots();
-
-                            boolean foundAnySpots = false;
-
-
-                            for (final Hotspot[] hotspotspitch : hotspots) {
-                                for (final Hotspot yaw : hotspotspitch) {
-                                    final W3CPoint coords = yaw.getCoordinates();
-
-                                    if (yaw.getCoordinates() != null) {
-
-                                        foundAnySpots = true;
-
-                                        final Double latitude = coords.getLatitude();
-                                        final Double longitude = coords.getLongitude();
-
-                                        final String commonName = yaw.getCommonName();
-
-                                        final long hits = yaw.getHits();
-
-                                        generateMarker(latitude, longitude, commonName, hits);
-
-                                        generateMarkerEvents(coords, commonName, hits);
-
-                                        $$sendJSStmt(PROCESS_MARKER + OPEN_BRACKET +
-                                                (OPEN_BRACE +
-                                                        (HTIS + COLON + THIS) + COMMA +
-                                                        (COMMON_NAME + COLON + SINGLE_QUOTE + commonName + SINGLE_QUOTE) + COMMA +
-                                                        (LATITUDE + COLON + coords.getLatitude()) + COMMA +
-                                                        (LONGITUDE + COLON + coords.getLongitude()) + COMMA +
-                                                        (URL + COLON + SINGLE_QUOTE + new Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, 143, true).append(WOEIDGrabber.WOEHINT, coords.getLatitude() + COMMA + coords.getLongitude()).get() + SINGLE_QUOTE) +
-                                                        CLOSE_BRACE) +
-                                                CLOSE_BRACKET
-                                        );
-                                    }
+                                for (final PrivateEvent privateEvent : privateEvents__) {
+                                    add(
+                                            new Rawspot(
+                                                    new W3CPoint(privateEvent.getPrivateLocation().getPrivateLocationLatitude(), privateEvent.getPrivateLocation().getPrivateLocationLongitude()),
+                                                    privateEvent.getPrivateLocation().getPrivateLocationName()));
                                 }
                             }
+
+                            UCGooglePlaces:
+                            {
+
+                                try {
+                                    final double latitudeAverage = (latitudeLB +
+                                            latitudeTR) / 2;
+                                    final double longitudeAverage = (longitudeLB +
+                                            longitudeTR) / 2;
+
+                                    final JSONObject placesJsonObject = getGooglePlaces(
+                                            latitudeAverage,
+                                            longitudeAverage,
+                                            (long) (Math.abs(latitudeAverage - latitudeLB) * APPROX_LENGTH_OF_ONE_LAT), COMMON_PLACE_TYPES);
+
+                                    final JSONArray placesJsonArray = placesJsonObject.getJSONArray(RESULTS);
+
+                                    for (int i = 0; i < placesJsonArray.length(); i++) {
+                                        final JSONObject lngLat = placesJsonArray.getJSONObject(i).getJSONObject(GEOMETRY).getJSONObject(LOCATION_JSON_OBJ_KEY);
+                                        add(
+                                                new Rawspot(
+                                                        new W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
+                                                        placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
+                                    }
+
+                                } catch (final Exception e) {
+                                    Loggers.ERROR.error(FAILED_TO_FETCH_GOOGLE_PLACES_DATA, e);
+                                }
+                            }
+                        }
+                    };
+
+                    final BoundingBox bb = new BoundingBox().setObj(
+                            latitudeLB,
+                            longitudeLB,
+                            latitudeTR,
+                            longitudeTR);
+
+                    final HotspotAnalyzer hsa = new HotspotAnalyzer(rs, (BoundingBox) bb.validateThrowAndGetThis());
+
+//                    final Map<Integer, Map<Integer, Hotspot>> hotspots = hsa.getHotspots();
+                    final Hotspot[][] hotspots = hsa.getHotspots();
+
+                    boolean foundAnySpots = false;
+
+
+                    for (final Hotspot[] hotspotspitch : hotspots) {
+                        for (final Hotspot yaw : hotspotspitch) {
+                            final W3CPoint coords = yaw.getCoordinates();
+
+                            if (yaw.getCoordinates() != null) {
+
+                                foundAnySpots = true;
+
+                                final Double latitude = coords.getLatitude();
+                                final Double longitude = coords.getLongitude();
+
+                                final String commonName = yaw.getCommonName();
+
+                                final long hits = yaw.getHits();
+
+                                generateMarker(latitude, longitude, commonName, hits);
+
+                                generateMarkerEvents(coords, commonName, hits);
+
+                                $$sendJSStmt(PROCESS_MARKER + OPEN_BRACKET +
+                                        (OPEN_BRACE +
+                                                (HTIS + COLON + THIS) + COMMA +
+                                                (COMMON_NAME + COLON + SINGLE_QUOTE + commonName + SINGLE_QUOTE) + COMMA +
+                                                (LATITUDE + COLON + coords.getLatitude()) + COMMA +
+                                                (LONGITUDE + COLON + coords.getLongitude()) + COMMA +
+                                                (URL + COLON + SINGLE_QUOTE + new Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, 143, true).append(WOEIDGrabber.WOEHINT, coords.getLatitude() + COMMA + coords.getLongitude()).get() + SINGLE_QUOTE) +
+                                                CLOSE_BRACE) +
+                                        CLOSE_BRACKET
+                                );
+                            }
+                        }
+                    }
+
+                    if (humanId.validate() == 0) {//User is logged in
+                        final List<PrivateLocation> usersOwnPrivateLocations = DB.getHumanCRUDHumanLocal(false).doDirtyRHumansPrivateLocation(humanId).returnValue().getPrivateLocationsOwned();
+
+                        for (final PrivateLocation userOwnPrivateLocation : usersOwnPrivateLocations) {
+
+                            generateMarker(userOwnPrivateLocation.getPrivateLocationLatitude(),
+                                    userOwnPrivateLocation.getPrivateLocationLongitude(),
+                                    userOwnPrivateLocation.getPrivateLocationName(),
+                                    1);//@TODO Hits needs to be fixed in an efficient way
+
+                            generateMarkerEvents(
+                                    new W3CPoint(userOwnPrivateLocation.getPrivateLocationLatitude(), userOwnPrivateLocation.getPrivateLocationLongitude()),
+                                    userOwnPrivateLocation.getPrivateLocationName(),
+                                    (long) 1);//@TODO Hits needs to be fixed in an efficient way
+
+                            $$sendJSStmt(PROCESS_MARKER + OPEN_BRACKET +
+                                    (OPEN_BRACE +
+                                            (HTIS + COLON + THIS) + COMMA +
+                                            (COMMON_NAME + COLON + SINGLE_QUOTE + userOwnPrivateLocation.getPrivateLocationName().replaceAll("'","\\'") + SINGLE_QUOTE) + COMMA +
+                                            (LATITUDE + COLON + userOwnPrivateLocation.getPrivateLocationLatitude()) + COMMA +
+                                            (LONGITUDE + COLON + userOwnPrivateLocation.getPrivateLocationLongitude()) + COMMA +
+                                            (URL + COLON + SINGLE_QUOTE + new Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, 143, true).append(WOEIDGrabber.WOEHINT, userOwnPrivateLocation.getPrivateLocationLatitude() + COMMA + userOwnPrivateLocation.getPrivateLocationLongitude()).get() + SINGLE_QUOTE) +
+                                            CLOSE_BRACE) +
+                                    CLOSE_BRACKET
+                            );
+                        }
+                    }
 
 
 //                    for (int i = 0; i < hotspots.size(); i++) {
@@ -395,24 +427,24 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 //                        }
 //                    }
 
-                            if (foundAnySpots) {
-                                $$sendJSStmt(NOTIFY_USER_POSITIVE);
-                            } else {
-                                $$sendJSStmt(NOTIFY_USER_NEGATIVE);
-                            }
-
-
-                        } else {
-
-                        }
+                    if (foundAnySpots) {
+                        $$sendJSStmt(NOTIFY_USER_POSITIVE);
+                    } else {
+                        $$sendJSStmt(NOTIFY_USER_NEGATIVE);
                     }
 
-                    @Override
-                    public void finalize() throws Throwable {
-                        Loggers.finalized(this.getClass().getName());
-                        super.finalize();
-                    }
-                }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+
+                } else {
+
+                }
+            }
+
+            @Override
+            public void finalize() throws Throwable {
+                Loggers.finalized(this.getClass().getName());
+                super.finalize();
+            }
+        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
 
     }
