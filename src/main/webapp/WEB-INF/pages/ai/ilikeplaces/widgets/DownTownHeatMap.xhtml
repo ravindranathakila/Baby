@@ -138,8 +138,10 @@ function setClearForLastNotification(){
         "Create a Moment",
         hotspotClickDetails.commonName,
         function(){
-            alert('We\'re gonna send you to Down Town. Don\'t worry, we\'ve got you covered!');
-            window.location.href = hotspotClickDetails.url;
+            //@TODO check if this is a users private location
+            var placename = prompt('What do you call this place?');
+            var placedetails = prompt('Short description of this place?');
+            window.location.href = hotspotClickDetails.url + '&placename=' + placename + '&placedetails=' + placedetails;
         },
         true
     );
@@ -226,6 +228,29 @@ function getColoredMarkerWithIntensity(intensity, title){
     }
     if(intensity >= 12 ){
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|990000|glyphish_map-marker|24|660000|FB0';
+    }
+}
+function getMyColoredMarkerWithIntensity(intensity, title){
+    if(intensity < 2 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|ff99cc|glyphish_map-marker|24|00ffcc|FB0';
+    }
+    if(intensity < 4 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|ee99aa|glyphish_map-marker|24|00ccaa|FB0';
+    }
+    if(intensity < 6 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|dd9988|glyphish_map-marker|24|00cc88|FB0';
+    }
+    if(intensity < 8 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|cc9966|glyphish_map-marker|24|009966|FB0';
+    }
+    if(intensity < 10 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|bb9944|glyphish_map-marker|24|009944|FB0';
+    }
+    if(intensity < 12 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|aa9922|glyphish_map-marker|24|006622|FB0';
+    }
+    if(intensity >= 12 ){
+        return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|999900|glyphish_map-marker|24|006600|FB0';
     }
 }
 

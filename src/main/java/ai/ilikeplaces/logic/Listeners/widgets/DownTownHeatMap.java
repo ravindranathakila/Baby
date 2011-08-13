@@ -66,6 +66,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String TITLE = "title" + COLON + SINGLE_QUOTE;
     private static final String MAP_MAP = "map" + COLON + " map, ";
     private static final String ICON_GET_COLORED_MARKER_WITH_INTENSITY = "icon" + COLON + " getColoredMarkerWithIntensity" + OPEN_BRACKET;
+    private static final String ICON_GET_MY_COLORED_MARKER_WITH_INTENSITY = "icon" + COLON + " getMyColoredMarkerWithIntensity" + OPEN_BRACKET;
     private static final String X2 = CLOSE_BRACKET + "  " + CLOSE_BRACE + "))" + SEMI_COLON;
 
     private static final com.google.places.api.impl.ClientFactory GOOGLE_API_CLIENT_FACTORY = Modules.getModules().getGooglePlacesAPIFactory();
@@ -383,14 +384,14 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
                         for (final PrivateLocation userOwnPrivateLocation : usersOwnPrivateLocations) {
 
-                            generateMarker(userOwnPrivateLocation.getPrivateLocationLatitude(),
+                            generateMyMarker(userOwnPrivateLocation.getPrivateLocationLatitude(),
                                     userOwnPrivateLocation.getPrivateLocationLongitude(),
-                                    userOwnPrivateLocation.getPrivateLocationName(),
+                                    userOwnPrivateLocation.getPrivateLocationName().replaceAll("'","\\'"),
                                     1);//@TODO Hits needs to be fixed in an efficient way
 
                             generateMarkerEvents(
                                     new W3CPoint(userOwnPrivateLocation.getPrivateLocationLatitude(), userOwnPrivateLocation.getPrivateLocationLongitude()),
-                                    userOwnPrivateLocation.getPrivateLocationName(),
+                                    userOwnPrivateLocation.getPrivateLocationName().replaceAll("'","\\'"),
                                     (long) 1);//@TODO Hits needs to be fixed in an efficient way
 
                             $$sendJSStmt(PROCESS_MARKER + OPEN_BRACKET +
@@ -459,6 +460,18 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 TITLE + commonName + X3 +
                 MAP_MAP +
                 ICON_GET_COLORED_MARKER_WITH_INTENSITY + hits + COMMA + SQUOTE + commonName.replace(SPACE, URL_SPACE) + SQUOTE + X2);
+    }
+
+    private void generateMyMarker(Double latitude, Double longitude, String commonName, long hits) {
+        itsNatDocument_.addCodeToSend(LIST_OF_HOT_SPOTS_UNSHIFT_NEW_GOOGLE_MAPS_MARKER +
+                POSITION_NEW_GOOGLE_MAPS_LAT_LNG
+                + latitude
+                + COMMA
+                + longitude
+                + X1 +
+                TITLE + commonName + X3 +
+                MAP_MAP +
+                ICON_GET_MY_COLORED_MARKER_WITH_INTENSITY + hits + COMMA + SQUOTE + commonName.replace(SPACE, URL_SPACE) + SQUOTE + X2);
     }
 
     private void generateMarkerEvents(final W3CPoint coords, String commonName, long hits) {
