@@ -1,4 +1,4 @@
-<map version="0.8.1">
+<map version="0.9.0">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
 <node CREATED="1266111255046" ID="Freemind_Link_1364723499" MODIFIED="1283702725295" STYLE="bubble" TEXT="Hibernate">
 <hook NAME="accessories/plugins/CreationModificationPlugin_new.properties"/>
@@ -677,10 +677,8 @@
 </node>
 </node>
 <node BACKGROUND_COLOR="#666666" COLOR="#990000" CREATED="1283778508421" ID="Freemind_Link_1303374308" MODIFIED="1297919547171" POSITION="right" TEXT="Lab">
+<richcontent TYPE="NOTE"><html><head/><body><p>Lab is where all the innovative solutions spring up. On the contrary that a things should be markatable, most stuff start on the wizardry lab.<br/>Put your idea here, first on SPILL. Then try to shift it to SELL.<br/>Move it back and forth, and well, its simple, coz THATS IT! You can cross check it with the Marketing section criteria and Focus section criteria. <br/>Then shift it to QA.</p></body></html></richcontent>
 <icon BUILTIN="wizard"/>
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>Lab is where all the innovative solutions spring up. On the contrary that a things should be markatable, most stuff start on the wizardry lab.&#xa;Put your idea here, first on SPILL. Then try to shift it to SELL.&#xa;Move it back and forth, and well, its simple, coz THATS IT! You can cross check it with the Marketing section criteria and Focus section criteria. &#xa;Then shift it to QA.</text>
-</hook>
 <node CREATED="1283778655218" ID="Freemind_Link_1143795250" MODIFIED="1283779225796" TEXT="Guide">
 <icon BUILTIN="help"/>
 <node CREATED="1283871999906" FOLDED="true" ID="Freemind_Link_1891457905" MODIFIED="1297920194500" TEXT="SPILL">
@@ -1019,10 +1017,8 @@
 </node>
 </node>
 <node CREATED="1283871927859" FOLDED="true" ID="Freemind_Link_504513171" MODIFIED="1291817174968" TEXT="Sell">
+<richcontent TYPE="NOTE"><html><head/><body><p>Zeroeth Rule of Marketing: Give them what they want.<br/>Zeroeth Rule of PR: Its personal.</p></body></html></richcontent>
 <icon BUILTIN="bell"/>
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>Zeroeth Rule of Marketing: Give them what they want.&#xa;Zeroeth Rule of PR: Its personal.</text>
-</hook>
 <node CREATED="1283778806593" FOLDED="true" ID="Freemind_Link_991036540" MODIFIED="1283778870015" TEXT="Fun Map">
 <icon BUILTIN="full-1"/>
 <node CREATED="1283778817171" ID="Freemind_Link_832808578" MODIFIED="1283779022984" TEXT="How do I find where to have fun at this place?">
@@ -1133,10 +1129,8 @@
 </node>
 </node>
 <node CREATED="1297921271359" ID="Freemind_Link_642182478" MODIFIED="1297921351406" TEXT="D&amp;D">
+<richcontent TYPE="NOTE"><html><head/><body><p>Slay the beast, Grab the reward, Tell the story</p></body></html></richcontent>
 <icon BUILTIN="password"/>
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>Slay the beast, Grab the reward, Tell the story</text>
-</hook>
 <node CREATED="1297860960718" ID="Freemind_Link_1660226477" MODIFIED="1297919566812" TEXT="Legal Credibility">
 <icon BUILTIN="full-1"/>
 </node>
@@ -1448,7 +1442,7 @@
 <node CREATED="1295774966622" ID="Freemind_Link_862744323" MODIFIED="1295774984372" TEXT="fix non activated human changing password to make human alive."/>
 <node CREATED="1295775006279" ID="Freemind_Link_1257735463" MODIFIED="1295775022232" TEXT="fix trailing dot problem on hash activation email"/>
 </node>
-<node BACKGROUND_COLOR="#663300" CREATED="1296794504162" FOLDED="true" ID="Freemind_Link_1669933885" MODIFIED="1296794606291" POSITION="right" TEXT="Ugly">
+<node BACKGROUND_COLOR="#663300" CREATED="1296794504162" FOLDED="true" ID="Freemind_Link_1669933885" MODIFIED="1313218110296" POSITION="right" TEXT="Ugly">
 <node CREATED="1296794612929" ID="Freemind_Link_1434250851" MODIFIED="1296794618614" TEXT="Display Name Change"/>
 <node CREATED="1296794619114" ID="Freemind_Link_357230110" MODIFIED="1296794644338" TEXT="Profile Link"/>
 <node CREATED="1296794646056" ID="Freemind_Link_1341234988" MODIFIED="1296794656927" TEXT="Confirmation Email"/>
@@ -1672,7 +1666,7 @@
 </node>
 </node>
 <node CREATED="1301193485481" ID="Freemind_Link_170773314" MODIFIED="1301193636519" POSITION="left" TEXT="7 Software Chakra">
-<node CREATED="1301193506841" FOLDED="true" ID="Freemind_Link_1641665550" MODIFIED="1303624821197" TEXT="Marketing Layer">
+<node CREATED="1301193506841" ID="Freemind_Link_1641665550" MODIFIED="1313218128171" TEXT="Marketing Layer">
 <node CREATED="1303527537238" ID="Freemind_Link_266737089" MODIFIED="1303527574613" TEXT="Propoganda Layer"/>
 <node CREATED="1303527564957" ID="Freemind_Link_1103580799" MODIFIED="1303527606770" TEXT="Everyt SIngle Thing Should Feel Right Layer"/>
 <node CREATED="1303531931950" ID="Freemind_Link_112184728" MODIFIED="1303531953185" TEXT="Why Actions Layer">
@@ -1694,7 +1688,7 @@
 </node>
 <node CREATED="1303623766688" ID="Freemind_Link_1992298353" MODIFIED="1303623772533" TEXT="Instant Gratification Layer"/>
 </node>
-<node CREATED="1303624579981" FOLDED="true" ID="Freemind_Link_534795945" MODIFIED="1303624632885" TEXT="Data Integration Layer">
+<node CREATED="1303624579981" FOLDED="true" ID="Freemind_Link_534795945" MODIFIED="1313218126828" TEXT="Data Integration Layer">
 <node CREATED="1301193519451" ID="Freemind_Link_1737351096" MODIFIED="1303624648311" TEXT="Functionality Exposure Layer"/>
 <node CREATED="1301193528905" ID="Freemind_Link_915658905" MODIFIED="1303624617928" TEXT="Logic Layer"/>
 <node CREATED="1301193533827" ID="Freemind_Link_1870668604" MODIFIED="1303624622382" TEXT="Associations Layer"/>
@@ -1705,7 +1699,7 @@
 </node>
 <node CREATED="1303624725955" ID="Freemind_Link_909746859" MODIFIED="1303624738239" TEXT="e.g. This is what people say &quot;I got an idea&quot;"/>
 </node>
-<node CREATED="1301193616487" FOLDED="true" ID="Freemind_Link_406011536" MODIFIED="1301193628346" TEXT="Operating Base">
+<node CREATED="1301193616487" FOLDED="true" ID="Freemind_Link_406011536" MODIFIED="1313218125218" TEXT="Operating Base">
 <node CREATED="1301193637831" ID="Freemind_Link_1913141314" MODIFIED="1303623881622" TEXT="Firewalls"/>
 <node CREATED="1301193645972" ID="Freemind_Link_150634481" MODIFIED="1303623886123" TEXT="Databases"/>
 <node CREATED="1303623887045" ID="Freemind_Link_391072800" MODIFIED="1303623889264" TEXT="Servers"/>
@@ -1718,12 +1712,10 @@
 <node CREATED="1303624739505" ID="Freemind_Link_1052380455" MODIFIED="1303624760526" TEXT="e.g. This is what people call data center architecture"/>
 </node>
 </node>
-<node BACKGROUND_COLOR="#0066cc" COLOR="#ffffff" CREATED="1290173397671" FOLDED="true" ID="Freemind_Link_1969704607" MODIFIED="1290173528390" POSITION="left" TEXT="BAKCBONE">
+<node BACKGROUND_COLOR="#0066cc" COLOR="#ffffff" CREATED="1290173397671" FOLDED="true" ID="Freemind_Link_1969704607" MODIFIED="1313218116343" POSITION="left" TEXT="BAKCBONE">
 <font BOLD="true" NAME="Comic Sans MS" SIZE="12"/>
 <node CREATED="1290230087937" ID="Freemind_Link_1044396462" MODIFIED="1290230174953" TEXT="STANDUP">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>What are you standing up for?</text>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p>What are you standing up for?</p></body></html></richcontent>
 </node>
 <node CREATED="1290230094687" ID="Freemind_Link_1803998399" MODIFIED="1290230098906" TEXT="SUPPORTERS">
 <node CREATED="1290173953515" ID="Freemind_Link_1802116634" MODIFIED="1290221296937" TEXT="EXTERNAL SUPPORT">
@@ -1812,10 +1804,8 @@
 <node CREATED="1288415653343" FOLDED="true" ID="Freemind_Link_540547344" MODIFIED="1288423654031" TEXT="FREEZER">
 <icon BUILTIN="desktop_new"/>
 <node CREATED="1288421673765" FOLDED="true" ID="Freemind_Link_1507643800" MODIFIED="1288422805046" TEXT="MARKETABILITY FREEZE">
+<richcontent TYPE="NOTE"><html><head/><body><p>Unless you freeze the product as "marketable", you cannot do ANY freezing.</p></body></html></richcontent>
 <icon BUILTIN="full-1"/>
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>Unless you freeze the product as &quot;marketable&quot;, you cannot do ANY freezing.</text>
-</hook>
 <node CREATED="1288494134890" ID="Freemind_Link_1722996598" MODIFIED="1288494424984" TEXT="Create personal locations based on hh">
 <edge WIDTH="thin"/>
 <node CREATED="1288494499906" ID="Freemind_Link_1464782037" MODIFIED="1288494525531" TEXT="Specify other owners to it"/>
@@ -1933,16 +1923,12 @@
 </node>
 </node>
 <node CREATED="1288415702156" ID="Freemind_Link_57901070" MODIFIED="1288422854234" TEXT="FEATURE FREEZE">
+<richcontent TYPE="NOTE"><html><head/><body><p>After a marketing freeze, it becomes clear what features are to be added, removed now, and then freeze features.</p></body></html></richcontent>
 <icon BUILTIN="full-2"/>
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>After a marketing freeze, it becomes clear what features are to be added, removed now, and then freeze features.</text>
-</hook>
 </node>
 <node CREATED="1288421879843" ID="Freemind_Link_891692060" MODIFIED="1288422884843" TEXT="GUI FREEZE">
+<richcontent TYPE="NOTE"><html><head/><body><p>GUI freeze is where you know for sure the look and feel is ok. This can be done only after the features are frozen.</p></body></html></richcontent>
 <icon BUILTIN="full-3"/>
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>GUI freeze is where you know for sure the look and feel is ok. This can be done only after the features are frozen.</text>
-</hook>
 <node CREATED="1288421982656" ID="Freemind_Link_694091115" MODIFIED="1288422274187" TEXT="LOOK FREEZE">
 <icon BUILTIN="full-1"/>
 </node>
@@ -1951,10 +1937,8 @@
 </node>
 </node>
 <node CREATED="1288415723171" ID="Freemind_Link_264841006" MODIFIED="1288422973234" TEXT="GOF FREEZE">
+<richcontent TYPE="NOTE"><html><head/><body><p>GOF is to do with all the design pattern freezes you can do to the code. This is the core place of the freeze. <br/>If you got here freezing the ones before this freeze, you've done most of of your freeze.</p></body></html></richcontent>
 <icon BUILTIN="full-4"/>
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>GOF is to do with all the design pattern freezes you can do to the code. This is the core place of the freeze. &#xa;If you got here freezing the ones before this freeze, you&apos;ve done most of of your freeze.</text>
-</hook>
 <node CREATED="1289102022661" ID="Freemind_Link_1346535151" MODIFIED="1289102046485" TEXT="TODO:Mail queueing or trying mechanism">
 <icon BUILTIN="flag"/>
 </node>
@@ -1967,89 +1951,57 @@
 </node>
 </node>
 </node>
-<node CREATED="1291212117250" FOLDED="true" ID="Freemind_Link_1414706278" MODIFIED="1291815705453" POSITION="left" TEXT="Staging">
+<node CREATED="1291212117250" FOLDED="true" ID="Freemind_Link_1414706278" MODIFIED="1313218113328" POSITION="left" TEXT="Staging">
 <font NAME="Comic Sans MS" SIZE="14"/>
 <icon BUILTIN="kaddressbook"/>
 <node CREATED="1291212602703" ID="Freemind_Link_1737407813" MODIFIED="1291214185046" TEXT="Set tomcat compression">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>    &lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;&#xa;               connectionTimeout=&quot;20000&quot;&#xa;               redirectPort=&quot;8443&quot;&#xa;               compression=&quot;on&quot;&#xa;&#x9;&#x9;&#x9;   compressionMinSize=&quot;1024&quot;&#xa;               compressableMimeType=&quot;text/html,text/javascript,text/css,text/xhtml&quot;/&gt;</text>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p>    &lt;Connector port="8080" protocol="HTTP/1.1"<br/>               connectionTimeout="20000"<br/>               redirectPort="8443"<br/>               compression="on"<br/>			   compressionMinSize="1024"<br/>               compressableMimeType="text/html,text/javascript,text/css,text/xhtml"/&gt;</p></body></html></richcontent>
 </node>
 <node CREATED="1291212604468" ID="Freemind_Link_59226303" MODIFIED="1291214185046" TEXT="Set tomcat character encoding">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text>    &lt;Connector port=&quot;8080&quot; maxHttpHeaderSize=&quot;8192&quot;&#xa;     maxThreads=&quot;150&quot; minSpareThreads=&quot;25&quot; maxSpareThreads=&quot;75&quot;&#xa;     enableLookups=&quot;false&quot; redirectPort=&quot;8443&quot; acceptCount=&quot;100&quot;&#xa;     connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot;&#xa;     compression=&quot;on&quot;&#xa;     compressionMinSize=&quot;128&quot;&#xa;     noCompressionUserAgents=&quot;gozilla, traviata&quot; &#xa;     compressableMimeType=&quot;text/html,text/xml,text/plain,text/css,text/ javascript,application/x-javascript,application/javascript&quot;&#xa;     URIEncoding=&quot;UTF-8&quot;&#xa;    /&gt;</text>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p>    &lt;Connector port="8080" maxHttpHeaderSize="8192"<br/>     maxThreads="150" minSpareThreads="25" maxSpareThreads="75"<br/>     enableLookups="false" redirectPort="8443" acceptCount="100"<br/>     connectionTimeout="20000" disableUploadTimeout="true"<br/>     compression="on"<br/>     compressionMinSize="128"<br/>     noCompressionUserAgents="gozilla, traviata" <br/>     compressableMimeType="text/html,text/xml,text/plain,text/css,text/ javascript,application/x-javascript,application/javascript"<br/>     URIEncoding="UTF-8"<br/>    /&gt;</p></body></html></richcontent>
 </node>
 <node CREATED="1291212637531" ID="Freemind_Link_469647367" MODIFIED="1291214185046" TEXT="Compare local(non cdn) and Header Expires Filter in WEB.XML">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p/></body></html></richcontent>
 </node>
 <node CREATED="1291212646750" ID="Freemind_Link_1477242506" MODIFIED="1291214185046" TEXT=" Add cloudfiles.properties and log4j.properties to tomcat lib">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p/></body></html></richcontent>
 </node>
 <node CREATED="1291212671046" ID="Freemind_Link_490713279" MODIFIED="1291214185031" TEXT="check whether globalconfig should be put in tomcat lib and diff it with new one">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p/></body></html></richcontent>
 </node>
 <node CREATED="1291212681453" ID="Freemind_Link_1323247436" MODIFIED="1291214185031" TEXT="disable disqus developer mode">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p/></body></html></richcontent>
 </node>
 <node CREATED="1291212713812" ID="Freemind_Link_215516192" MODIFIED="1291216237109" TEXT="check if access is prevented to openejb, and roles defined">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p/></body></html></richcontent>
 </node>
 <node CREATED="1291213930125" ID="Freemind_Link_1485504866" MODIFIED="1291216237125" TEXT="Upload latest sources">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p/></body></html></richcontent>
 </node>
 <node CREATED="1291214174406" ID="Freemind_Link_932887219" MODIFIED="1291216237125" TEXT="Backup existing database">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p/></body></html></richcontent>
 </node>
 <node CREATED="1291214117578" ID="Freemind_Link_804394739" MODIFIED="1291216237125" TEXT="Upload war">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p/></body></html></richcontent>
 </node>
 <node CREATED="1291214130437" ID="Freemind_Link_1454121737" MODIFIED="1291216237125" TEXT="Compare and copy config.properties as GlobalConfig.properties">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p/></body></html></richcontent>
 </node>
 <node CREATED="1291216191734" ID="Freemind_Link_1627016185" MODIFIED="1291216237125" TEXT="Backup Users!">
+<richcontent TYPE="NOTE"><html><head/><body><p/></body></html></richcontent>
 <icon BUILTIN="flag"/>
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
 </node>
 <node CREATED="1291216110437" ID="Freemind_Link_1160336191" MODIFIED="1291216237125" TEXT="Remove existing database">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p/></body></html></richcontent>
 </node>
 <node CREATED="1291216112625" ID="Freemind_Link_426396135" MODIFIED="1291216237125" TEXT="Startup new app so that the tables are generated">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p/></body></html></richcontent>
 </node>
 <node CREATED="1291216120531" ID="Freemind_Link_1808227689" MODIFIED="1291216237125" TEXT="Stop new app">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p/></body></html></richcontent>
 </node>
 <node CREATED="1291213950796" ID="Freemind_Link_1942704877" MODIFIED="1291216237125" TEXT="importing geo data to derby. Tab character, should be copied off something like notepad and pasted ">
-<hook NAME="accessories/plugins/NodeNote.properties">
-<text/>
-</hook>
+<richcontent TYPE="NOTE"><html><head/><body><p/></body></html></richcontent>
 </node>
 </node>
 <node CREATED="1275667013786" FOLDED="true" ID="Freemind_Link_374011926" MODIFIED="1297919306265" POSITION="left" TEXT="ITPS">
