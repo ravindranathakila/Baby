@@ -103,17 +103,12 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
                 if (name.validate(v) == 0) {
                     myprivateLocationName.setObj(name.getObj());
-                    clear($$(PrivateLocationCreateCNotice));
+                    $$clear($$(PrivateLocationCreateCNotice));
                 } else {
                     $$(PrivateLocationCreateCNotice).setTextContent(name.getViolationAsString());
                 }
             }
 
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateInfo), EventType.BLUR.toString(), new EventListener() {
@@ -136,11 +131,7 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
                 }
             }
 
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
+
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
 //        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateWOEID), EventType.BLUR.toString(), new EventListener() {
