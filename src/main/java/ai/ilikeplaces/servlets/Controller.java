@@ -79,6 +79,7 @@ final public class
     final PageFace geoBusiness = Page.GeoBusiness;
     final PageFace photos = Page.Photos;
     final PageFace legal = Page.Legal;
+    final PageFace muster = Page.Muster;
 
     final PageFace findFriendWidget = Page.FindFriend;
     final PageFace friendAdd = Page.FriendAdd;
@@ -104,6 +105,7 @@ final public class
 
     final PageFace termsOfServices = Page.TermsOfServices;
     final PageFace privacyPolicy = Page.PrivacyPolicy;
+    final PageFace bate = Page.Bate;
 
 // -------------------------- ENUMERATIONS --------------------------
 
@@ -126,6 +128,24 @@ final public class
             @Override
             public String toString() {
                 return DocPrivacyPolicy;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
+
+        Bate("ai/ilikeplaces/widgets/bate.xhtml",
+               Controller.Page.BateSignupEmail,
+               Controller.Page.BateSignupPassword,
+               Controller.Page.BateSignupNotifications,
+               Controller.Page.BateSignupButton
+        ) {
+            @Override
+            public String toString() {
+                return DocBate;
             }
 
             @Override
@@ -477,6 +497,19 @@ final public class
             @Override
             public String toString() {
                 return DocLegal;
+            }
+        },
+
+        Muster(null
+        ) {
+            @Override
+            public String getURL() {
+                return APP_ROOT + "page/_muster";
+            }
+
+            @Override
+            public String toString() {
+                return DocMuster;
             }
         },
 
@@ -842,7 +875,15 @@ final public class
         /*PrivacyPolicy Page*/
         final static public String DocPrivacyPolicy = "DocPrivacyPolicy";
         /*PrivacyPolicy IDs*/
+        //Nothing here
 
+        /*Bate Page*/
+        final static public String DocBate = "DocBate";
+        /*Bate IDs*/
+        final static public String BateSignupEmail = "BateSignupEmail";
+        final static public String BateSignupPassword = "BateSignupPassword";
+        final static public String BateSignupNotifications = "BateSignupNotifications";
+        final static public String BateSignupButton = "BateSignupButton";
 
         /*Album Page*/
         final static public String DocAlbum = "DocAlbum";
@@ -1023,6 +1064,9 @@ final public class
 
         /*GeoBusiness Page*/
         final static public String DocLegal = "DocLegal";
+
+        /*Muster Page*/
+        final static public String DocMuster = "DocMuster";
 
         /*TemplateGeneric Pages*/
         final static public String DocPublic = "DocPublic";
@@ -1299,6 +1343,8 @@ final public class
 
             inhs__.registerItsNatDocumentTemplate(legal.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerLegal());
 
+            inhs__.registerItsNatDocumentTemplate(muster.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerMuster());
+
             inhs__.registerItsNatDocumentTemplate(geoBusiness.toString(), "text/html", new TemplateSourceGeoBusiness()).addItsNatServletRequestListener(new ListenerGeoBusiness());
 
             inhs__.registerItsNatDocumentTemplate(templateGeneric.toString(), "text/html", new TemplateGeneric(true));
@@ -1357,6 +1403,8 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(termsOfServices.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(termsOfServices));
 
             inhs__.registerItsNatDocFragmentTemplate(privacyPolicy.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privacyPolicy));
+
+            inhs__.registerItsNatDocFragmentTemplate(bate.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(bate));
         }
     }
 
@@ -1485,6 +1533,9 @@ final public class
                 } else if (isLegalPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocLegal);/*Framework specific*/
                     Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0022"));
+                } else if (isMusterPage(URL__)) {
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocMuster);/*Framework specific*/
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0023"));
                 } else {/*Divert to home page*/
                     Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
                     request__.getServletRequest().setAttribute("location", "");
@@ -1576,6 +1627,10 @@ final public class
 
     static private boolean isLegalPage(final String URL_) {
         return (URL_.startsWith("_legal"));
+    }
+
+    static private boolean isMusterPage(final String URL_) {
+        return (URL_.startsWith("_muster"));
     }
 
     /**

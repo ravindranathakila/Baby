@@ -42,7 +42,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
     private static final String CODENAME = "codename:";
     private static final String CODENAME_KEY = "codename";
     private static final String SPACE = " ";
-    private static final String HMMMM_YOU_HAVE_NOT_LOGGED_IN_FROM_ABOVE_IF_YOU_DON_T_HAVE_AN_ACCOUNT_ENTER_YOUR_EMAIL_AND_A_PASSWORD_AND_HIT_SIGN_UP_INSTEAD_OF_SIGN_IN = "Hmmmm... You have not logged in from above. If you don't have an account, enter your email and a password and hit sign up instead of sign in.";
+    private static final String NOT_LOGGED_IN_NOTICE = "Hmmmm... Why have you not logged in?!";
     boolean initStatus = false;
     private static final String TALK = "Talk!";
 
@@ -94,16 +94,12 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                     setMainTitle:
                     {
                         $(skeletonTitle).setTextContent(
-                                TITLE
-                                        + CODENAME + RBGet.globalConfig.getString(CODENAME_KEY)
-                                        + SPACE + RBGet.globalConfig.getString(BN));
+                                        RBGet.globalConfig.getString(CODENAME_KEY));
                     }
                     setMetaDescription:
                     {
                         $(skeletonTitle).setAttribute(MarkupTag.META.namee(),
-                                TITLE
-                                        + CODENAME + RBGet.globalConfig.getString(CODENAME_KEY)
-                                        + SPACE + RBGet.globalConfig.getString(BN));
+                                RBGet.globalConfig.getString(CODENAME_KEY));
                     }
                 } catch (final Throwable t) {
                     Loggers.DEBUG.debug(t.getMessage());
@@ -184,7 +180,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                 try {
                     if (getUsername() == null) {
                         $(Controller.Page.SkeletonCPageNotice).setTextContent(
-                                HMMMM_YOU_HAVE_NOT_LOGGED_IN_FROM_ABOVE_IF_YOU_DON_T_HAVE_AN_ACCOUNT_ENTER_YOUR_EMAIL_AND_A_PASSWORD_AND_HIT_SIGN_UP_INSTEAD_OF_SIGN_IN);
+                                NOT_LOGGED_IN_NOTICE);
                     }
                 } catch (final Throwable t) {
                     EXCEPTION.error("{}", t);

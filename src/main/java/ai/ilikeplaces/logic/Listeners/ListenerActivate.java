@@ -35,8 +35,12 @@ public class ListenerActivate implements ItsNatServletRequestListener {
                 super.init(itsNatHTMLDocument__, hTMLDocument__, itsNatDocument__, initArgs);
                 UCShowActivateMSG:
                 {
-                    $(Controller.Page.Skeleton_notice).setTextContent("We've just mailed you! Click the link in the mail to activate your account. See ya soon!");
-                    displayBlock($(Controller.Page.Skeleton_notice_sh));
+                    if(getUsername() == null){
+                        $(Controller.Page.Skeleton_notice).setTextContent("We've just mailed you! Click the link in the mail to activate your account. See ya soon!");
+                        displayBlock($(Controller.Page.Skeleton_notice_sh));
+                    }else{
+                        itsNatDocument.addCodeToSend(JSCodeToSend.redirectPageWithURL("/"));
+                    }
                 }
 
             }
