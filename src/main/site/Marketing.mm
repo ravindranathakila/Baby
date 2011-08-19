@@ -59,7 +59,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1304783075507" FOLDED="true" ID="Freemind_Link_140176817" MODIFIED="1308574701046" TEXT="Marketing Plan of Adimpression 2011">
+<node CREATED="1304783075507" ID="Freemind_Link_140176817" MODIFIED="1313758544640" TEXT="Marketing Plan of Adimpression 2011">
 <node CREATED="1304783089007" ID="Freemind_Link_1359848668" MODIFIED="1304826980632" TEXT="The Almost Flat Marketing List">
 <node CREATED="1304783100008" FOLDED="true" ID="Freemind_Link_146684658" MODIFIED="1306653439963" TEXT="Article Submissions">
 <node CREATED="1304783107070" ID="Freemind_Link_531488876" MODIFIED="1304783138634" TEXT="Make sure you submit to only your website related sites"/>
@@ -263,7 +263,7 @@
 <node CREATED="1306798202606" ID="ID_989050604" MODIFIED="1306798217622" TEXT="FB Fan Page - Is Happiness Your Religion?"/>
 </node>
 </node>
-<node CREATED="1306884489223" ID="ID_1825080151" MODIFIED="1306884497192" TEXT="#7 Link Building">
+<node CREATED="1306884489223" FOLDED="true" ID="ID_1825080151" MODIFIED="1313758567421" TEXT="#7 Link Building">
 <node CREATED="1306884497786" ID="ID_1493498265" MODIFIED="1306884508413" TEXT="Directory Critic">
 <node CREATED="1306884511225" ID="ID_1215200335" MODIFIED="1306884553621" TEXT="Category - Travel">
 <node CREATED="1306884642007" ID="ID_1108296227" MODIFIED="1306884725626" TEXT="2488&#x9;Travel Article Directory&#x9;12-2-10&#x9;travel&#x9;0&#x9;report &#xa;2489&#x9;WD travel directory&#x9;2-12-09&#x9;travel&#x9;0&#x9;report &#xa;2490&#x9;Travel Articles Directory&#x9;5-2-10&#x9;travel&#x9;0&#x9;report &#xa;2491&#x9;Articles Abroad&#x9;1-12-07&#x9;travel&#x9;1&#x9;report &#xa;2492&#x9;GlobeTales.com Travel Article Directory&#x9;28-1-10&#x9;travel&#x9;0&#x9;report &#xa;2493&#x9;Travel Articles&#x9;30-7-06&#x9;travel&#x9;2&#x9;report &#xa;2494&#x9;Free Travel Articles&#x9;27-1-09&#x9;travel&#x9;0&#x9;report &#xa;2495&#x9;Travel Articles&#x9;6-6-07&#x9;travel&#x9;0&#x9;report &#xa;2496&#x9;Travel Articles&#x9;24-3-07&#x9;travel&#x9;0&#x9;report &#xa;2497&#x9;Free Tavel Articles&#x9;20-1-09&#x9;travel&#x9;2&#x9;report "/>
@@ -302,7 +302,7 @@
 <node CREATED="1305159164078" ID="Freemind_Link_1369179674" MODIFIED="1306798446987" TEXT="Strategy Summary"/>
 </node>
 </node>
-<node CREATED="1304603305990" FOLDED="true" ID="Freemind_Link_620714991" MODIFIED="1311725631062" TEXT="Week">
+<node CREATED="1304603305990" FOLDED="true" ID="Freemind_Link_620714991" MODIFIED="1313758543171" TEXT="Week">
 <node CREATED="1308614925328" FOLDED="true" ID="ID_634066279" MODIFIED="1311725573125" TEXT="#25">
 <node CREATED="1308614950375" ID="ID_298683684" MODIFIED="1308615134203" TEXT="#1">
 <node CREATED="1308615135015" ID="ID_1094484600" LINK="http://www.quora.com/Where-does-Heidi-Montag-live" MODIFIED="1309220814281" TEXT="quora.com &gt; Where-does-Heidi-Montag-live">
@@ -357,7 +357,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1308574728546" FOLDED="true" ID="ID_1452265871" MODIFIED="1311725728468" TEXT="Weekly Strategy">
+<node CREATED="1308574728546" FOLDED="true" ID="ID_1452265871" MODIFIED="1313758541343" TEXT="Weekly Strategy">
 <node CREATED="1308574990515" FOLDED="true" ID="ID_400379795" MODIFIED="1311725624750" TEXT="Day #1 Ride a Wave - Find a new Wave">
 <node CREATED="1308575007515" ID="ID_290499089" MODIFIED="1308575012359" TEXT="e.g. Royal Wedding"/>
 <node CREATED="1308577517921" ID="ID_1409785516" MODIFIED="1308577523296" TEXT="e.g. Waka waka"/>
@@ -384,7 +384,7 @@
 </node>
 <node CREATED="1308582566062" ID="ID_392830532" MODIFIED="1308582572968" TEXT="Ask Quora about trends"/>
 </node>
-<node CREATED="1308576053031" FOLDED="true" ID="ID_140840987" MODIFIED="1311725623765" TEXT="Day #2 Article Mustering">
+<node CREATED="1308576053031" ID="ID_140840987" MODIFIED="1313758535671" TEXT="Day #2 Article Mustering">
 <node CREATED="1308576175968" ID="ID_211045893" MODIFIED="1308576393781" TEXT="Select article topic seasonal/trendy">
 <node CREATED="1308576184781" ID="ID_872986219" MODIFIED="1308576186593" TEXT="travel"/>
 <node CREATED="1308576187046" ID="ID_556053582" MODIFIED="1308576188281" TEXT="events"/>
@@ -394,12 +394,12 @@
 <node CREATED="1308576215937" ID="ID_821232065" MODIFIED="1308576220718" TEXT="Fetch Panoramio Photos"/>
 <node CREATED="1308576561171" ID="ID_663158036" MODIFIED="1308576571000" TEXT="Find strong links on topic for co-branding"/>
 </node>
-<node CREATED="1308576057390" FOLDED="true" ID="ID_1153640813" MODIFIED="1311725622671" TEXT="Day #3 Article Submission">
+<node CREATED="1308576057390" ID="ID_1153640813" MODIFIED="1313758537734" TEXT="Day #3 Article Submission">
 <node CREATED="1308576247046" ID="ID_1788033065" MODIFIED="1308576840109" TEXT="Compose Article Based on Article Mustering"/>
 <node CREATED="1308576605140" ID="ID_178326971" MODIFIED="1308577111031" TEXT="Submit Article to Article Submission Websites"/>
 <node CREATED="1308577315250" ID="ID_298934746" MODIFIED="1308577367515" TEXT="Submit Article link to related blogs (first page google results)"/>
 </node>
-<node CREATED="1308576061515" FOLDED="true" ID="ID_1355554913" MODIFIED="1311725625812" TEXT="Day #4 This Week In [Country] FB Fan Page/Create Update Based on Article Mustering">
+<node CREATED="1308576061515" FOLDED="true" ID="ID_1355554913" MODIFIED="1313758540312" TEXT="Day #4 This Week In [Country] FB Fan Page/Create Update Based on Article Mustering">
 <node CREATED="1308576962390" ID="ID_1026571874" MODIFIED="1308614578484" TEXT="Initally try just 4 countries so that loop happens by continent">
 <node CREATED="1308614714656" ID="ID_597123133" MODIFIED="1308614718968" TEXT="Africa">
 <node CREATED="1308614832906" ID="ID_481000871" MODIFIED="1308614834921" TEXT="Morocco">
@@ -938,7 +938,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1307245389165" FOLDED="true" ID="ID_310356034" MODIFIED="1311725538968" POSITION="left" TEXT="The Four Usual Suspects(FUS) - The Bars We Set The Highest">
+<node CREATED="1307245389165" ID="ID_310356034" MODIFIED="1313758685718" POSITION="left" TEXT="The Four Usual Suspects(FUS) - The Bars We Set The Highest">
 <icon BUILTIN="wizard"/>
 <node CREATED="1307245411745" ID="ID_944727217" MODIFIED="1307246182542" TEXT="Analyzing the problem, it&apos;s boundaries and limitations.(FUS1)"/>
 <node CREATED="1307245454483" ID="ID_1892067123" MODIFIED="1307245962697" TEXT="Least effort to solution(FUS2)">
@@ -956,7 +956,9 @@
 </node>
 </node>
 <node CREATED="1307245481813" ID="ID_1606485639" MODIFIED="1307245976026" TEXT="Anthropomorphic design and movement(FUS4)">
-<node CREATED="1307969679296" ID="ID_1169519293" MODIFIED="1310086122124" TEXT="Assimilation and Neural Surfing"/>
+<node CREATED="1307969679296" ID="ID_1169519293" MODIFIED="1310086122124" TEXT="Assimilation and Neural Surfing">
+<node CREATED="1313758725125" ID="ID_1051967656" MODIFIED="1313758738078" TEXT="Cat Alive"/>
+</node>
 <node CREATED="1307969691890" ID="ID_38462006" MODIFIED="1307969698296" TEXT="Curvature"/>
 <node CREATED="1307969698765" ID="ID_1070674711" MODIFIED="1307969700750" TEXT="Cleavage"/>
 <node CREATED="1307969968671" ID="ID_1867470405" MODIFIED="1307970254687" TEXT="The Golden Ratio">
@@ -977,7 +979,7 @@
 <node CREATED="1306059446454" ID="Freemind_Link_531177503" MODIFIED="1306059906212" TEXT="Curiosity and Amusement"/>
 <node CREATED="1306059451360" ID="Freemind_Link_209948448" MODIFIED="1306059452860" TEXT="Faith"/>
 </node>
-<node CREATED="1283703177927" FOLDED="true" ID="Freemind_Link_1817341781" MODIFIED="1311725496750" POSITION="left" TEXT="Flat Zeroeth Checklist">
+<node CREATED="1283703177927" FOLDED="true" ID="Freemind_Link_1817341781" MODIFIED="1313758683578" POSITION="left" TEXT="Flat Zeroeth Checklist">
 <node CREATED="1285778293411" ID="Freemind_Link_1030747214" MODIFIED="1286031836875" TEXT="Are you being dumb? No? BE DUMB!"/>
 <node CREATED="1283703161521" ID="Freemind_Link_63383641" MODIFIED="1283703168865" TEXT="Does it do what it says?"/>
 <node CREATED="1283703169490" ID="Freemind_Link_499084225" MODIFIED="1283703174943" TEXT="Does it say what is does?"/>
