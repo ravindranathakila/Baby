@@ -9,6 +9,11 @@
 </head>
 <body>
 <div class="use100 last" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
+    <script type="text/javascript">
+        if(window.location.hash){
+            window.location.href = '?'+(window.location.hash + '').substring(1);
+        }
+    </script>
     <h2 class="use100 last black_fg center">Add the email addresses of your connections here</h2>
     <h2 class="use100 last black_fg center">You are allowed to leave junk text (commas, braces) among the emails.</h2>
     <h3 class="use100 last black_fg center">hint:take the mails off a group email you send or received, or a csv.</h3>

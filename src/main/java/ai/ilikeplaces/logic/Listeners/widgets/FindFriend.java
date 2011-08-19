@@ -4,6 +4,8 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.HumansNetPeople;
+import ai.ilikeplaces.logic.contactimports.ImportedContact;
+import ai.ilikeplaces.logic.contactimports.google.GoogleContactImporter;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.Email;
@@ -23,6 +25,7 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 
@@ -63,9 +66,34 @@ abstract public class FindFriend extends AbstractWidgetListener {
 
         final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);
 
+        UCAttemptToRecognizeGoogleContactImportRedirect:
+        {
+//            final String uri = ((HttpServletRequest) request.getServletRequest()).getRequestURI();
+//            Loggers.INFO.info("{}", uri);
+//            Loggers.INFO.info("{}", ((HttpServletRequest) request.getServletRequest()).getRequestURL().toString());
+//            final String authTokenWithTail = uri.split("#")[1];
+//            Loggers.INFO.info("", authTokenWithTail);
+            final String authToken = ((HttpServletRequest) request.getServletRequest()).getParameter("access_token");
+            Loggers.INFO.info("{}", authToken);
+
+            final List<ImportedContact> importedContacts = GoogleContactImporter.fetchContacts("ravindranathakila@gmail.com", authToken);
+
+            for (final ImportedContact importedContact : importedContacts) {
+                new UserProperty(request,
+                        $$(Controller.Page.friendFindSearchResults),
+                        importedContact.getFullName(),
+                        "#",
+                        "#",
+                        ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText("").get()) {
+                    protected void init(final Object... initArgs) {
+                    }
+                };
+            }
+        }
+
         UCDisplayYouHaventAddedFriendsYet:
         {
-            if(humansNetPeople.getHumansNetPeoples().size() == 0){
+            if (humansNetPeople.getHumansNetPeoples().size() == 0) {
                 $$(Controller.Page.friendFindSearchNotice).setTextContent("Oops! You haven't added any friends yet. Add your friends to get going!");
             }
         }
@@ -178,10 +206,10 @@ abstract public class FindFriend extends AbstractWidgetListener {
                 @Override
                 public void handleEvent(final Event evt_) {
                     final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.USER,
-                                                             myhumanId.getObj() + " finding friends",
-                                                             60000,
-                                                             null,
-                                                             true
+                            myhumanId.getObj() + " finding friends",
+                            60000,
+                            null,
+                            true
                     );
 
                     final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(myhumanId);
@@ -219,6 +247,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
 
 
                     clear($$(Controller.Page.friendFindSearchInvites));
+
                     for (final Email email : myemails) {
                         if (!matchedEmailList.contains(email)) {
 
@@ -237,10 +266,10 @@ abstract public class FindFriend extends AbstractWidgetListener {
                                         @Override
                                         public void handleEvent(final Event evt_) {
                                             final SmartLogger inviteSL = SmartLogger.start(Loggers.LEVEL.USER,
-                                                                                           mymyhumanId.getObj() + " sending join social network invitation to " + mymyemail.getObj(),
-                                                                                           60000,
-                                                                                           null,
-                                                                                           true);
+                                                    mymyhumanId.getObj() + " sending join social network invitation to " + mymyemail.getObj(),
+                                                    60000,
+                                                    null,
+                                                    true);
                                             SendMail.getSendMailLocal().sendAsSimpleText(
                                                     mymyemail.getObj(),
                                                     "On behalf of " + mymyhumanId.getObj(),
@@ -249,12 +278,6 @@ abstract public class FindFriend extends AbstractWidgetListener {
                                             inviteSL.complete(Loggers.LEVEL.USER, Loggers.DONE);
                                             remove(evt_.getTarget(), EventType.CLICK, this);
                                         }
-
-                                        @Override
-                                        public void finalize() throws Throwable {
-                                            Loggers.finalized(this.getClass().getName());
-                                            super.finalize();
-                                        }
                                     }, false);
                                 }
                             };
@@ -262,19 +285,9 @@ abstract public class FindFriend extends AbstractWidgetListener {
                     }
                     sl.complete(Loggers.LEVEL.USER, Loggers.DONE);
                 }
-
-                @Override
-                public void finalize() throws Throwable {
-                    Loggers.finalized(this.getClass().getName());
-                    super.finalize();
-                }
             }, false);
         }
     }
 
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
-    }
+
 }
