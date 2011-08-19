@@ -118,6 +118,30 @@ abstract public class UserProperty extends AbstractWidgetListener {
     }
 
     /**
+     * General purpose user property renderer with NO CONNECTION TO DATABASE WHATSOEVER
+     *
+     * @param displayName
+     * @param profileUrl
+     * @param profilePhoto
+     * @param content
+     * @param params
+     */
+    public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final String displayName, final String profileUrl, final String profilePhoto, final Element content, final Object... params) {
+        super(request__, Page.UserProperty, appendToElement__, params);
+        $$(Controller.Page.user_property_name).setTextContent(displayName);
+        $$(Controller.Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + profileUrl);
+        $$(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), profilePhoto);
+        $$(Controller.Page.user_property_content).appendChild(content);
+
+        this.fetchToEmail(
+                params,
+                profileUrl,
+                profilePhoto,
+                content); //http://blog.ilikeplaces.com/
+
+    }
+
+    /**
      * @param args
      */
     protected void fetchToEmail(final Object... args) {

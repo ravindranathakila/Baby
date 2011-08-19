@@ -8,4 +8,24 @@ package ai.ilikeplaces.logic.contactimports;
  */
 public class ImportedContact {
 
+    String email;
+
+    String fullName;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(final String email) {
+        this.email = email;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(final String fullName) {
+        this.fullName = fullName;
+    }
+
 }

@@ -1,35 +1,23 @@
 package ai.ilikeplaces.logic.contactimports.google;
 
 
-import com.google.gdata.client.Query;
-import com.google.gdata.client.Service;
+import ai.ilikeplaces.logic.contactimports.ImportedContact;
+import ai.ilikeplaces.rbs.RBGet;
 import com.google.gdata.client.contacts.ContactsService;
-import com.google.gdata.client.http.HttpGDataRequest;
 //import sample.contacts.ContactsExampleParameters.Actions;
-import com.google.gdata.data.DateTime;
 import com.google.gdata.data.Link;
 import com.google.gdata.data.contacts.*;
 import com.google.gdata.data.extensions.Email;
 import com.google.gdata.data.extensions.ExtendedProperty;
 import com.google.gdata.data.extensions.Im;
 import com.google.gdata.data.extensions.Name;
-import com.google.gdata.util.AuthenticationException;
-import com.google.gdata.util.NoLongerAvailableException;
 import com.google.gdata.util.ServiceException;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.RandomAccessFile;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.KeyPair;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by IntelliJ IDEA.
@@ -558,7 +546,7 @@ public class GoogleContactImporter {
      * @param args Command-line arguments.
      */
     public static void main(String[] args) throws ServiceException, IOException {
-          printAllContacts();
+        printAllContacts();
 //
 //        ContactsExampleParameters parameters = new ContactsExampleParameters(args);
 //        if (parameters.isVerbose()) {
@@ -721,5 +709,107 @@ public class GoogleContactImporter {
 
             System.out.println("Contact's ETag: " + entry.getEtag());
         }
+    }
+
+    public static List<ImportedContact> fetchContacts(final String emailToImportFrom, final String authSubToken) {
+
+        final ContactsService myService = new ContactsService("ilikeplaces.com");//
+        myService.setAuthSubToken(authSubToken, null/*This sucks, so I passed null and it worked!*/);
+
+
+        // Request the feed
+        final URL feedUrl;
+        try {
+            feedUrl = new URL("https://www.google.com/m8/feeds/contacts/" + emailToImportFrom + "/full");
+        } catch (final MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+        final ContactFeed resultFeed;
+        try {
+            resultFeed = myService.getFeed(feedUrl, ContactFeed.class);
+        } catch (final ServiceException e) {
+            throw new RuntimeException(e);
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        final List<ImportedContact> importedContacts = new ArrayList<ImportedContact>();
+
+        CONTACTS:
+        for (ContactEntry entry : resultFeed.getEntries()) {
+
+            final ImportedContact contact = new ImportedContact();
+
+            SetEmail:
+            {
+                Email alternateEmail = null;
+                for (final Email email : entry.getEmailAddresses()) {
+                    if (email.getPrimary()) {
+                        contact.setEmail(email.getAddress());
+                    } else {
+                        alternateEmail = email;
+                    }
+                }
+
+                if (contact.getEmail() == null) {
+                    if (alternateEmail != null) {
+                        contact.setEmail(alternateEmail.getAddress());
+                    } else {
+                        continue CONTACTS;
+                    }
+                }
+            }
+
+
+            SetName:
+            {
+                if (entry.hasName()) {
+                    Name name = entry.getName();
+                    if (name.hasFullName()) { //This should work based on result inspection. The bean seems to combine the data and return here.
+                        String nameToDisplay = name.getFullName().getValue();
+                        if (name.getFullName().hasYomi()) {
+                            nameToDisplay += "" + name.getFullName().getYomi();
+                        }
+                        contact.setFullName(nameToDisplay);
+                    } else {
+                        String nameToDisplay = "";
+                        if (name.hasAdditionalName()) {
+                            nameToDisplay += name.getAdditionalName().getValue() + " ";
+                            if (name.getAdditionalName().hasYomi()) {
+                                nameToDisplay += name.getAdditionalName().getYomi() + " ";
+                            }
+                        }
+
+                        if (name.hasFamilyName()) {
+                            nameToDisplay += name.getFamilyName().getValue() + " ";
+                            if (name.getFamilyName().hasYomi()) {
+                                nameToDisplay += " " + name.getFamilyName().getYomi() + " ";
+                            }
+                        }
+                        contact.setFullName(nameToDisplay);//if name="" we are screwed, but we're used to it aren't we
+                    }
+
+                } else {
+                    //now what!
+                }
+            }
+
+            //The photo business seems fishy
+//            Link photoLink = entry.getContactPhotoLink();
+//            String photoLinkHref = photoLink.getHref();
+//            System.out.println("Photo Link: " + photoLinkHref);
+//
+//            if (photoLink.getEtag() != null) {
+//                System.out.println("Contact Photo's ETag: " + photoLink.getEtag());
+//            }
+//
+//            System.out.println("Contact's ETag: " + entry.getEtag());
+
+            importedContacts.add(contact);
+        }
+
+        return importedContacts;
+
     }
 }
