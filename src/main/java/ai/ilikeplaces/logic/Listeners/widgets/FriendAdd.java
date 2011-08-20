@@ -89,19 +89,6 @@ abstract public class FriendAdd extends AbstractWidgetListener {
                     //DO something!
                 }
             }
-
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
         }, false);
-    }
-
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
     }
 }

@@ -130,7 +130,13 @@ abstract public class UserProperty extends AbstractWidgetListener {
      * @param content
      * @param params
      */
-    public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final String displayName, final String profileUrl, final String profilePhoto, final Element content, final Object... params) {
+    public UserProperty(final ItsNatServletRequest request__,
+                        final Element appendToElement__,
+                        final String displayName,
+                        final String profileUrl,
+                        final String profilePhoto,
+                        final Element content,
+                        final Object... params) {
         super(request__, Page.UserProperty, appendToElement__, params);
         $$(Controller.Page.user_property_name).setTextContent(displayName);
         $$(Controller.Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + profileUrl);
@@ -208,12 +214,6 @@ abstract public class UserProperty extends AbstractWidgetListener {
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
     }
 
-
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
-    }
 
     /**
      * User profile photo URL. Can be null, empty or # in which case the default photo URL is returned. This value is

@@ -25,18 +25,24 @@ import org.w3c.dom.html.HTMLDocument;
 abstract public class Button extends AbstractWidgetListener {
 
     /**
+     * Now supports image ONLY IF text is unavailable
      * @param request__
      * @param appendToElement__
      * @param buttonText
      * @param doRefreshPageOnClick
-     * @param params
+     * @param params [0] should be the img src, if left blank, realized text and will be hidden
      */
     public Button(final ItsNatServletRequest request__, final Element appendToElement__, final String buttonText, final boolean doRefreshPageOnClick, final Object... params) {
         super(request__, Page.GenericButton, appendToElement__, buttonText, doRefreshPageOnClick, params);
 
-        $$(Controller.Page.GenericButtonText).setTextContent(buttonText);
-        $$(Controller.Page.GenericButtonText).setAttribute(MarkupTag.GENERIC.classs(), "vtip");
-        $$(Controller.Page.GenericButtonText).setAttribute(MarkupTag.GENERIC.title(), buttonText);
+        if(buttonText != null && !buttonText.isEmpty()){
+            displayNone($$(Page.GenericButtonImage));
+            $$(Controller.Page.GenericButtonText).setAttribute(MarkupTag.GENERIC.title(), buttonText);
+            $$(Controller.Page.GenericButtonText).setTextContent(buttonText);
+        }else{
+             displayBlock($$(Controller.Page.GenericButtonText));
+             $$(Page.GenericButtonImage).setAttribute(MarkupTag.IMG.src(), (String)params[0]);
+        }
 
 
         if (doRefreshPageOnClick) {
