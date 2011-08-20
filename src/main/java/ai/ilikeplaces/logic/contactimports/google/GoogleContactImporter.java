@@ -720,7 +720,7 @@ public class GoogleContactImporter {
         // Request the feed
         final URL feedUrl;
         try {
-            feedUrl = new URL("https://www.google.com/m8/feeds/contacts/" + emailToImportFrom + "/full");
+            feedUrl = new URL("https://www.google.com/m8/feeds/contacts/" + emailToImportFrom + "/full?max-results=1000");
         } catch (final MalformedURLException e) {
             throw new RuntimeException(e);
         }
