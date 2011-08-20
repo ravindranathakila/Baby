@@ -141,7 +141,8 @@ final public class
                Controller.Page.BateSignupEmail,
                Controller.Page.BateSignupPassword,
                Controller.Page.BateSignupNotifications,
-               Controller.Page.BateSignupButton
+               Controller.Page.BateSignupButton,
+               Controller.Page.BateImportResults
         ) {
             @Override
             public String toString() {
@@ -884,6 +885,7 @@ final public class
         final static public String BateSignupPassword = "BateSignupPassword";
         final static public String BateSignupNotifications = "BateSignupNotifications";
         final static public String BateSignupButton = "BateSignupButton";
+        final static public String BateImportResults = "BateImportResults";
 
         /*Album Page*/
         final static public String DocAlbum = "DocAlbum";

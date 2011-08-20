@@ -25,14 +25,13 @@ import org.w3c.dom.html.HTMLDocument;
 abstract public class Button extends AbstractWidgetListener {
 
     /**
-     *
      * @param request__
      * @param appendToElement__
      * @param buttonText
      * @param doRefreshPageOnClick
      * @param params
      */
-    public Button(final ItsNatServletRequest request__,  final Element appendToElement__, final String buttonText, final boolean doRefreshPageOnClick, final Object... params) {
+    public Button(final ItsNatServletRequest request__, final Element appendToElement__, final String buttonText, final boolean doRefreshPageOnClick, final Object... params) {
         super(request__, Page.GenericButton, appendToElement__, buttonText, doRefreshPageOnClick, params);
 
         $$(Controller.Page.GenericButtonText).setTextContent(buttonText);
@@ -44,12 +43,6 @@ abstract public class Button extends AbstractWidgetListener {
             itsNatDocument_.addEventListener((EventTarget) $$(Controller.Page.GenericButtonLink), EventType.CLICK.toString(), new EventListener() {
                 @Override
                 public void handleEvent(final Event evt_) {
-                }
-
-                @Override
-                public void finalize() throws Throwable {
-                    Loggers.finalized(this.getClass().getName());
-                    super.finalize();
                 }
             }, false, JSCodeToSend.RefreshPage);
         }
@@ -67,16 +60,6 @@ abstract public class Button extends AbstractWidgetListener {
     }
 
     protected void setBluePrintCSSSpan(final int span, final int prepend, final int append, final boolean isLast) {
-        $$(Controller.Page.GenericButtonWidth).setAttribute("class",
-                "span-" + span +
-                        (prepend == 0 ? "" : " prepend-" + prepend) +
-                        (append == 0 ? "" : " append-" + append) +
-                        (isLast ? " last" : ""));
-    }
-
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
+        $$(Controller.Page.GenericButtonWidth).setAttribute("class", $$(Controller.Page.GenericButtonWidth).getAttribute("class") + " use100");
     }
 }

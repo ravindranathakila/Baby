@@ -125,12 +125,6 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
     }
 
 
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
-    }
-
     /**
      * User profile photo URL from DB. Can be null, in which case the default photo URL is returned. This value is
      * define in the properties files
@@ -139,12 +133,10 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
      * @return
      */
     static public String formatProfilePhotoUrl(final String rawURLFromDB) {
-        return rawURLFromDB == null || rawURLFromDB.isEmpty() ?
-               RBGet.globalConfig.getString("PROFILE_PHOTO_DEFAULT") :
-               RBGet.globalConfig.getString("PROFILE_PHOTOS") + rawURLFromDB;
+        return UserProperty.formatProfilePhotoUrl(rawURLFromDB);
     }
 
     static public String formatProfileUrl(final String relativeURL, final boolean makeAbsolute) {
-        return makeAbsolute ? RBGet.globalConfig.getString("WEBSITE") + relativeURL : relativeURL;
+        return UserProperty.formatProfileUrl(relativeURL, makeAbsolute);
     }
 }

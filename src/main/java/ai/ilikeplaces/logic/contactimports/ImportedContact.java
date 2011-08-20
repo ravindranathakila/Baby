@@ -1,12 +1,14 @@
 package ai.ilikeplaces.logic.contactimports;
 
+import ai.ilikeplaces.entities.HumanEquals;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Ravindranath Akila
  * Date: 8/17/11
  * Time: 10:09 PM
  */
-public class ImportedContact {
+public class ImportedContact extends HumanEquals {
 
     String email;
 
@@ -28,4 +30,8 @@ public class ImportedContact {
         this.fullName = fullName;
     }
 
+    @Override
+    public String getHumanId() {
+        return email;
+    }
 }

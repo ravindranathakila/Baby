@@ -48,6 +48,12 @@ public interface HumanCRUDHumanLocal extends Verify {
 
     public Return<Boolean> doDirtyIsHumansNetPeople(final RefObj<String> adderHumanId, final RefObj<String> addeeHumanId);
 
+    /**
+     * Checks if the user exists on ilikeplaces.com by her email
+     *
+     * @param emails
+     * @return
+     */
     public List<HumansIdentity> doDirtyRHumansIdentitiesByEmails(final List<Email> emails);
 
     public Return<Boolean> doCHuman(final RefObj<String> username, final RefObj<String> password, final RefObj<String> email) throws DBDishonourCheckedException;
