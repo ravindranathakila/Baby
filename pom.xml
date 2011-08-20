@@ -373,21 +373,39 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                            <!-- NOTE: Deprecated in version 2.4. Use 'classpathLayoutType' instead.
-                            <classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout>
-                            -->
-                        </manifest>
-                        <manifestEntries>
-                            <Implementation-Build>${buildNumber}</Implementation-Build>
-                        </manifestEntries>
-                    </archive>
+                    <outputDirectory>
+                        M:/apache-tomcat-6.0.14/webapps/
+                    </outputDirectory>
+                    <webappDirectory>
+                        M:/apache-tomcat-6.0.14/webapps/${project.build.finalName}
+                    </webappDirectory>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <goals>
+                            <goal>exploded</goal>
+                        </goals>
+                        <configuration>
+                            <webappDirectory>
+                                M:/apache-tomcat-6.0.14/webapps/${project.build.finalName}
+                            </webappDirectory>
+                            <archive>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                    <classpathPrefix>lib/</classpathPrefix>
+                                    <!-- NOTE: Deprecated in version 2.4. Use 'classpathLayoutType' instead.
+                                    <classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout>
+                                    -->
+                                </manifest>
+                                <manifestEntries>
+                                    <Implementation-Build>${buildNumber}</Implementation-Build>
+                                </manifestEntries>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
-
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

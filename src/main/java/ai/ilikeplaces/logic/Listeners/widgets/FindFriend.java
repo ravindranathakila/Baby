@@ -37,6 +37,9 @@ import java.util.*;
 @OK
 abstract public class FindFriend extends AbstractWidgetListener {
 
+    private static final String ACCESS_TOKEN = "access_token";
+    private static final String HASH = "#";
+    private static final String DEFAULT = "default";
     final private Logger logger = LoggerFactory.getLogger(FindFriend.class.getName());
 
     HumanId humanId;
@@ -68,26 +71,23 @@ abstract public class FindFriend extends AbstractWidgetListener {
 
         UCAttemptToRecognizeGoogleContactImportRedirect:
         {
-//            final String uri = ((HttpServletRequest) request.getServletRequest()).getRequestURI();
-//            Loggers.INFO.info("{}", uri);
-//            Loggers.INFO.info("{}", ((HttpServletRequest) request.getServletRequest()).getRequestURL().toString());
-//            final String authTokenWithTail = uri.split("#")[1];
-//            Loggers.INFO.info("", authTokenWithTail);
-            final String authToken = ((HttpServletRequest) request.getServletRequest()).getParameter("access_token");
-            Loggers.INFO.info("{}", authToken);
 
-            final List<ImportedContact> importedContacts = GoogleContactImporter.fetchContacts("ravindranathakila@gmail.com", authToken);
+            final String authToken = request.getServletRequest().getParameter(ACCESS_TOKEN);
 
-            for (final ImportedContact importedContact : importedContacts) {
-                new UserProperty(request,
-                        $$(Controller.Page.friendFindSearchResults),
-                        importedContact.getFullName(),
-                        "#",
-                        "#",
-                        ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText("").get()) {
-                    protected void init(final Object... initArgs) {
-                    }
-                };
+            if (authToken != null) {
+                final List<ImportedContact> importedContacts = GoogleContactImporter.fetchContacts(DEFAULT, authToken);
+
+                for (final ImportedContact importedContact : importedContacts) {
+                    new UserProperty(request,
+                            $$(Controller.Page.friendFindSearchResults),
+                            importedContact.getFullName(),
+                            HASH,
+                            HASH,
+                            ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText("").get()) {
+                        protected void init(final Object... initArgs) {
+                        }
+                    };
+                }
             }
         }
 
@@ -118,7 +118,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
 
         UCDisplayExistingUsers:
         {
-            clear($$(Controller.Page.friendFindSearchResults));
+            //clear($$(Controller.Page.friendFindSearchResults));
 
 
             for (final HumansNetPeople friend : humansNetPeople.getHumansNetPeoples()) {

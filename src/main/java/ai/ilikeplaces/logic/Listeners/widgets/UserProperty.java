@@ -18,6 +18,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * @author Ravindranath Akila
@@ -29,8 +30,11 @@ abstract public class UserProperty extends AbstractWidgetListener {
     private static final String USER_PROPERTY_EMAIL_XHTML = "ai/ilikeplaces/widgets/UserProperty_email.xhtml";
     private static final String YIKES__SOMETHING__WENT__WRONG = "YIKES_SOMETHING_WENT_WRONG";
     private static final String PROFILE__PHOTO__DEFAULT = "PROFILE_PHOTO_DEFAULT";
+    private static final String INVITES_AVATAR_CONTAINER = "INVITES_AVATAR_CONTAINER";
     private static final String PROFILE__PHOTOS = "PROFILE_PHOTOS";
     private static final String WEBSITE = "WEBSITE";
+    private static final String HASH = "#";
+    private static final String EXT_GIF = ".gif";
 
     /**
      * Shows the profile belonging to humanId
@@ -130,13 +134,13 @@ abstract public class UserProperty extends AbstractWidgetListener {
         super(request__, Page.UserProperty, appendToElement__, params);
         $$(Controller.Page.user_property_name).setTextContent(displayName);
         $$(Controller.Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + profileUrl);
-        $$(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), profilePhoto);
+        $$(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(profilePhoto));
         $$(Controller.Page.user_property_content).appendChild(content);
 
         this.fetchToEmail(
-                params,
-                profileUrl,
-                profilePhoto,
+                displayName,
+                "#",
+                formatProfilePhotoUrl(profilePhoto),
                 content); //http://blog.ilikeplaces.com/
 
     }
@@ -212,16 +216,16 @@ abstract public class UserProperty extends AbstractWidgetListener {
     }
 
     /**
-     * User profile photo URL from DB. Can be null, in which case the default photo URL is returned. This value is
+     * User profile photo URL. Can be null, empty or # in which case the default photo URL is returned. This value is
      * define in the properties files
      *
-     * @param rawURLFromDB
+     * @param profileUrl
      * @return
      */
-    static public String formatProfilePhotoUrl(final String rawURLFromDB) {
-        return rawURLFromDB == null || rawURLFromDB.isEmpty() ?
-                RBGet.globalConfig.getString(PROFILE__PHOTO__DEFAULT) :
-                RBGet.globalConfig.getString(PROFILE__PHOTOS) + rawURLFromDB;
+    static public String formatProfilePhotoUrl(final String profileUrl) {
+        return profileUrl == null || profileUrl.isEmpty() || profileUrl.equals(HASH) ?
+                RBGet.globalConfig.getString(INVITES_AVATAR_CONTAINER) + (((((int)(Math.random() * 100)) % 5)) + 1) + EXT_GIF :
+                RBGet.globalConfig.getString(PROFILE__PHOTOS) + profileUrl;
     }
 
     static public String formatProfileUrl(final String relativeURL, final boolean makeAbsolute) {
