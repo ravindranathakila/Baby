@@ -26,6 +26,10 @@ import java.util.List;
  * Time: 10:04 PM
  */
 public class GoogleContactImporter {
+    private static final String ILIKEPLACES_COM = "ilikeplaces.com";
+    private static final String HTTPS_WWW_GOOGLE_COM_M8_FEEDS_CONTACTS = "https://www.google.com/m8/feeds/contacts/";
+    private static final String RESULT_LIMIT = RBGet.getGlobalConfigKey("GOOGLE_CONTACTS_RESULT_LIMIT");
+    private static final String FULL_MAX_RESULTS_1000 = "/full?max-results="+RESULT_LIMIT;
 
 //    private enum SystemGroup {
 //        MY_CONTACTS("Contacts", "My Contacts"),
@@ -713,14 +717,14 @@ public class GoogleContactImporter {
 
     public static List<ImportedContact> fetchContacts(final String emailToImportFrom, final String authSubToken) {
 
-        final ContactsService myService = new ContactsService("ilikeplaces.com");//
+        final ContactsService myService = new ContactsService(ILIKEPLACES_COM);//
         myService.setAuthSubToken(authSubToken, null/*This sucks, so I passed null and it worked!*/);
 
 
         // Request the feed
         final URL feedUrl;
         try {
-            feedUrl = new URL("https://www.google.com/m8/feeds/contacts/" + emailToImportFrom + "/full?max-results=1000");
+            feedUrl = new URL(HTTPS_WWW_GOOGLE_COM_M8_FEEDS_CONTACTS + emailToImportFrom + FULL_MAX_RESULTS_1000);
         } catch (final MalformedURLException e) {
             throw new RuntimeException(e);
         }

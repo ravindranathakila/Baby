@@ -45,12 +45,12 @@ abstract public class UserProperty extends AbstractWidgetListener {
      *
      * @param request__
      * @param appendToElement__
-     * @param humanId
+     * @param humanIdWhosProfileToShow
      * @param params
      */
-    public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId, final Object... params) {
-        super(request__, Page.UserProperty, appendToElement__, humanId, params);
-        final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(humanId);
+    public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanIdWhosProfileToShow, final Object... params) {
+        super(request__, Page.UserProperty, appendToElement__, humanIdWhosProfileToShow, params);
+        final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(humanIdWhosProfileToShow);
         if (r.returnStatus() == 0) {
             final HumansIdentity hi = r.returnValue();
             $$(Controller.Page.user_property_name).setTextContent(hi.getHuman().getDisplayName());
@@ -73,12 +73,12 @@ abstract public class UserProperty extends AbstractWidgetListener {
      * @param request__
      * @param appendToElement__
      * @param content
-     * @param humanId
+     * @param humanIdWhosProfileToShow
      * @param params
      */
-    public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final Element content, final HumanId humanId, final Object... params) {
-        super(request__, Page.UserProperty, appendToElement__, humanId, params);
-        final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(humanId);
+    public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final Element content, final HumanId humanIdWhosProfileToShow, final Object... params) {
+        super(request__, Page.UserProperty, appendToElement__, humanIdWhosProfileToShow, params);
+        final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(humanIdWhosProfileToShow);
         if (r.returnStatus() == 0) {
             final HumansIdentity hi = r.returnValue();
             $$(Controller.Page.user_property_name).setTextContent(hi.getHuman().getDisplayName());
@@ -103,20 +103,20 @@ abstract public class UserProperty extends AbstractWidgetListener {
      * @param request__
      * @param appendToElement__
      * @param content
-     * @param humansIdentity
+     * @param humanIdWhosProfileToShow
      * @param params
      */
-    public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final Element content, final HumansIdentity humansIdentity, final Object... params) {
-        super(request__, Page.UserProperty, appendToElement__, humansIdentity, params);
-        $$(Controller.Page.user_property_name).setTextContent(humansIdentity.getHuman().getDisplayName());
-        $$(Controller.Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + humansIdentity.getUrl().getUrl());
-        $$(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(humansIdentity.getHumansIdentityProfilePhoto()));
+    public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final Element content, final HumansIdentity humanIdWhosProfileToShow, final Object... params) {
+        super(request__, Page.UserProperty, appendToElement__, humanIdWhosProfileToShow, params);
+        $$(Controller.Page.user_property_name).setTextContent(humanIdWhosProfileToShow.getHuman().getDisplayName());
+        $$(Controller.Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + humanIdWhosProfileToShow.getUrl().getUrl());
+        $$(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(humanIdWhosProfileToShow.getHumansIdentityProfilePhoto()));
         $$(Controller.Page.user_property_content).appendChild(content);
 
         this.fetchToEmail(
-                humansIdentity.getHuman().getDisplayName(),
-                formatProfileUrl(ProfileRedirect.PROFILE_URL + humansIdentity.getUrl().getUrl(), true),
-                formatProfilePhotoUrl(humansIdentity.getHumansIdentityProfilePhoto()),
+                humanIdWhosProfileToShow.getHuman().getDisplayName(),
+                formatProfileUrl(ProfileRedirect.PROFILE_URL + humanIdWhosProfileToShow.getUrl().getUrl(), true),
+                formatProfilePhotoUrl(humanIdWhosProfileToShow.getHumansIdentityProfilePhoto()),
                 content); //http://blog.ilikeplaces.com/
 
     }

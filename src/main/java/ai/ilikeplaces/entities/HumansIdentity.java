@@ -32,7 +32,7 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "FindPaginatedHumansByEmails",
                 query = "SELECT hi FROM HumansIdentity hi WHERE hi.humanId IN(:humansIdentityEmails)")})
-public class HumansIdentity implements HumanPkJoinFace, Serializable {
+public class HumansIdentity extends HumanEquals implements HumanPkJoinFace, Serializable {
 
     final static public String FindPaginatedHumansByEmails = "FindPaginatedHumansByEmails";
     final static public String HumansIdentityEmails = "humansIdentityEmails";

@@ -30,6 +30,22 @@ import java.util.*;
 
 
 /**
+ * Why the fuck I used {@link ai.ilikeplaces.entities.HumansNet} on this class I have no idea.
+ * It fucking uses up a lot of memory.
+ * Judging by my previous rants, I'm sure there was a reason. But I still don't get it.
+ * I write this at the time I'm trying to hook up contact imports with existing users on ilikeplaces.com .
+ * <p/>  <br/>
+ * <b>Okay, lets clear this out.  <br/>
+ * There are 3 kinds. Basically,    <br/>
+ * Existing on ilikeplaces and her friend <br/>
+ * Existing on ilikeplaces not her friend   <br/>
+ * Not existing on ilikeplaces  <br/> <br/>
+ * </b>
+ * <p/><br/>
+ * It seems we are fetching her existing friends each time she does a search. This is OK, but can be cached on the widget.
+ * I'm sure at the time of writing this code I was so poor I decided reading from the DB to RAM each time is better than
+ * caching it. I never checked Memory $ vs CPU cycles $. It's too late for either. Let's fix the code as we go.
+ *
  * @author Ravindranath Akila
  */
 
@@ -67,7 +83,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
             throw new ConstraintsViolatedException(((HumanId) initArgs[0]).getViolations());
         }
 
-        final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);
+        final HumansNetPeople herExistingFriends = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);//First important variable to notice
 
         UCAttemptToRecognizeGoogleContactImportRedirect:
         {
@@ -75,31 +91,60 @@ abstract public class FindFriend extends AbstractWidgetListener {
             final String authToken = request.getServletRequest().getParameter(ACCESS_TOKEN);
 
             if (authToken != null) {
-                final List<ImportedContact> importedContacts = GoogleContactImporter.fetchContacts(DEFAULT, authToken);
 
-                for (final ImportedContact importedContact : importedContacts) {
-                    new UserProperty(request,
-                            $$(Controller.Page.friendFindSearchResults),
-                            importedContact.getFullName(),
-                            HASH,
-                            HASH,
-                            ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText("").get()) {
-                        protected void init(final Object... initArgs) {
-                        }
-                    };
+                final List<ImportedContact> whoppingImportedContactsortedContacts;//Second important variable to notice
+                Import_Google_Contacts__Add_To_Emails_List:
+                {
+                    whoppingImportedContactsortedContacts = GoogleContactImporter.fetchContacts(DEFAULT, authToken);
+
+                    for (final ImportedContact importedContact : whoppingImportedContactsortedContacts) {//LOOPING A WHOPPING 1000
+                        emails.add(new Email(importedContact.getHumanId()));
+                    }
+                }
+
+                final List<HumansIdentity> existingUsersFromDB;//Third important variable to notice
+                final List<String> existingUsers = new ArrayList<String>();//LOOPING 300
+                Get_Users_Existing_Friends__Add_To_Humans_Network:
+                {
+                    existingUsersFromDB = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentitiesByEmails(new ArrayList<Email>(emails));
+                    for (final HumansNetPeople h : herExistingFriends.getHumansNetPeoples()) {
+                        existingUsers.add(h.getHumanId());
+                    }
+                }
+
+                clear($$(Controller.Page.friendFindSearchResults));
+
+                for (final HumansIdentity humansIdentity : existingUsersFromDB) {
+                    if (!existingUsers.contains(humansIdentity.getHumanId())) {
+                        generateFriendAddWidgetFor(new HumanId(humansIdentity.getHumanId()), humanId);
+                    } else {
+                        generateFriendDeleteWidgetFor(new HumanId(humansIdentity.getHumanId()), humanId);
+                    }
+                }
+
+                for (final ImportedContact importedContact : whoppingImportedContactsortedContacts) {
+                    if (!herExistingFriends.getHumansNetPeoples().contains(importedContact)) {
+                        new UserProperty(request,
+                                $$(Controller.Page.friendFindSearchResults),
+                                importedContact.getFullName(),
+                                HASH,
+                                HASH,
+                                ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText("").get()) {
+                        };
+                    }
                 }
             }
         }
 
         UCDisplayYouHaventAddedFriendsYet:
         {
-            if (humansNetPeople.getHumansNetPeoples().size() == 0) {
+            if (herExistingFriends.getHumansNetPeoples().size() == 0) {
                 $$(Controller.Page.friendFindSearchNotice).setTextContent("Oops! You haven't added any friends yet. Add your friends to get going!");
             }
         }
 
         List<String> emails = new ArrayList<String>();
-        for (final HumansNetPeople hnp : humansNetPeople.getHumansNetPeoples()) {
+        for (final HumansNetPeople hnp : herExistingFriends.getHumansNetPeoples()) {
             emails.add(hnp.getHumanId());
         }
 
@@ -121,14 +166,9 @@ abstract public class FindFriend extends AbstractWidgetListener {
             //clear($$(Controller.Page.friendFindSearchResults));
 
 
-            for (final HumansNetPeople friend : humansNetPeople.getHumansNetPeoples()) {
+            for (final HumansNetPeople friend : herExistingFriends.getHumansNetPeoples()) {
 
-                new UserProperty(request, $$(Controller.Page.friendFindSearchResults), new HumanId(friend.getHumanId())) {
-                    protected void init(final Object... initArgs) {
-                        new FriendDelete(request, $$(Controller.Page.user_property_content), (HumanId) initArgs[0], humanId) {
-                        };
-                    }
-                };
+                generateFriendDeleteWidgetFor(new HumanId(friend.getHumanId()), humanId);
 
             }
 
@@ -186,11 +226,6 @@ abstract public class FindFriend extends AbstractWidgetListener {
 
                 }
 
-                @Override
-                public void finalize() throws Throwable {
-                    Loggers.finalized(this.getClass().getName());
-                    super.finalize();
-                }
             }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
         }
 
@@ -225,23 +260,9 @@ abstract public class FindFriend extends AbstractWidgetListener {
                     for (final HumansIdentity humansIdentity : mymatches.getObj()) {
                         matchedEmailList.add(new Email(humansIdentity.getHumanId()));
                         if (!humansNetPeoples.contains(humansIdentity.getHumanId())) {
-
-                            new UserProperty(request, $$(Controller.Page.friendFindSearchResults), new HumanId(humansIdentity.getHumanId())) {
-                                protected void init(final Object... initArgs) {
-                                    new FriendAdd(request, $$(Controller.Page.user_property_content), (HumanId) initArgs[0], myhumanId) {
-                                    };
-                                }
-                            };
-
+                            generateFriendAddWidgetFor(new HumanId(humansIdentity.getHumanId()), myhumanId);
                         } else {
-
-                            new UserProperty(request, $$(Controller.Page.friendFindSearchResults), new HumanId(humansIdentity.getHumanId())) {
-                                protected void init(final Object... initArgs) {
-                                    new FriendDelete(request, $$(Controller.Page.user_property_content), (HumanId) initArgs[0], myhumanId) {
-                                    };
-                                }
-                            };
-
+                            generateFriendDeleteWidgetFor(new HumanId(humansIdentity.getHumanId()), myhumanId);
                         }
                     }
 
@@ -285,8 +306,27 @@ abstract public class FindFriend extends AbstractWidgetListener {
                     }
                     sl.complete(Loggers.LEVEL.USER, Loggers.DONE);
                 }
+
             }, false);
         }
+    }
+
+    private void generateFriendDeleteWidgetFor(final HumanId humanIdWhosProfileToShow, final HumanId currentUser) {
+        new UserProperty(request, $$(Page.friendFindSearchResults), humanIdWhosProfileToShow, currentUser) {
+            protected void init(final Object... initArgs) {
+                new FriendDelete(request, $$(Page.user_property_content), (HumanId) initArgs[0], (HumanId) ((Object[]) initArgs[1])[0]) {//This var args thingy is an awesome way to flexibility, except when not careful!
+                };
+            }
+        };
+    }
+
+    private void generateFriendAddWidgetFor(final HumanId humanIdWhosProfileToShow, final HumanId currentUser) {
+        new UserProperty(request, $$(Page.friendFindSearchResults), humanIdWhosProfileToShow, currentUser) {
+            protected void init(final Object... initArgs) {
+                new FriendAdd(request, $$(Page.user_property_content), (HumanId) initArgs[0], (HumanId) ((Object[]) initArgs[1])[0]) {//This var args thingy is an awesome way to flexibility, except when not careful!
+                };
+            }
+        };
     }
 
 
