@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.css.CSSStyleDeclaration;
+import org.w3c.dom.css.ElementCSSInlineStyle;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
@@ -40,6 +42,14 @@ import static ai.ilikeplaces.servlets.Controller.Page;
 )
 public abstract class AbstractWidgetListener {
 
+    private static final String DISPLAY_BLOCK_ = "display:block";
+    private static final String DISPLAY_NONE_ = "display:none";
+    private static final String DISPLAY_BLOCK_WITH_SPACE = "display: block";
+    private static final String DISPLAY_NONE_WITH_SPACE = "display: none";
+    private static final String DISPLAY = "display";
+    private static final String BLOCK = "block";
+    private static final String NONE = "none";
+    private static final String EMPTY = "";
     protected final ItsNatDocument itsNatDocument_;
     private final HTMLDocument hTMLDocument_;
     private final ItsNatHTMLDocument itsNatHTMLDocument_;
@@ -209,10 +219,10 @@ public abstract class AbstractWidgetListener {
             for (String elementId__ : widgetElements) {
                 if (!elementId__.equals(toggleLink)) {
                     final String existingVal = $$(elementId__).getAttribute(STYLE);
-                    if (existingVal.contains("display:block")) {
-                        $$(elementId__).setAttribute(STYLE, existingVal.replace("display:block", "display:none"));
+                    if (existingVal.contains(AbstractWidgetListener.DISPLAY_BLOCK_)) {
+                        $$(elementId__).setAttribute(STYLE, existingVal.replace(AbstractWidgetListener.DISPLAY_BLOCK_, AbstractWidgetListener.DISPLAY_NONE_));
                     } else {
-                        $$(elementId__).setAttribute(STYLE, DISPLAY_NONE + existingVal);
+                        $$(elementId__).setAttribute(STYLE, DISPLAY_NONE_ + existingVal);
                     }
                 }
             }
@@ -221,12 +231,12 @@ public abstract class AbstractWidgetListener {
             for (String elementId__ : widgetElements) {
                 if (!elementId__.equals(toggleLink)) {
                     @FIXME(issue = "this is wrong. css can have necessary spaces. e.g. backgroound-image:0% 0% url(/path/image.png);")
-                    final String existingVal = $$(elementId__).getAttribute(STYLE).replace(" ", "");
+                    final String existingVal = $$(elementId__).getAttribute(STYLE).replace(" ", EMPTY);
 
-                    if (existingVal.contains("display:none")) {
-                        $$(elementId__).setAttribute(STYLE, existingVal.replace("display:none", "display:block"));
+                    if (existingVal.contains(AbstractWidgetListener.DISPLAY_NONE_)) {
+                        $$(elementId__).setAttribute(STYLE, existingVal.replace(AbstractWidgetListener.DISPLAY_NONE_, AbstractWidgetListener.DISPLAY_BLOCK_));
                     } else {
-                        $$(elementId__).setAttribute(STYLE, DISPLAY_BLOCK + existingVal);
+                        $$(elementId__).setAttribute(STYLE, DISPLAY_BLOCK_ + existingVal);
                     }
                 }
             }
@@ -235,11 +245,11 @@ public abstract class AbstractWidgetListener {
     }
 
     protected final void displayBlock(final Element element__) {
-        element__.setAttribute(STYLE, DISPLAY_BLOCK);
+        ((ElementCSSInlineStyle) element__).getStyle().setProperty(DISPLAY, BLOCK, EMPTY);
     }
 
     protected final void displayNone(final Element element__) {
-        element__.setAttribute(STYLE, DISPLAY_NONE);
+        ((ElementCSSInlineStyle) element__).getStyle().setProperty(DISPLAY, NONE, EMPTY);
     }
 
     final protected Element $$(MarkupTagFace tagNameInAllCaps) {
@@ -257,8 +267,16 @@ public abstract class AbstractWidgetListener {
      * @param useCapture     ... default false
      */
     final protected void remove(final EventTarget eventTarget_, final EventType eventType_, final EventListener eventListener_, final Boolean... useCapture) {
-        logger.debug("HELLO, REMOVING WIDGET LISTENER");
         itsNatDocument_.removeEventListener(eventTarget_, eventType_.toString(), eventListener_, useCapture.length == 0 ? false : useCapture[0]);
+    }
+    /**
+     * @param event_
+     * @param eventType_
+     * @param eventListener_
+     * @param useCapture     ... default false
+     */
+    final protected void $$remove(final Event event_, final EventType eventType_, final EventListener eventListener_, final Boolean... useCapture) {
+        remove((EventTarget) event_, eventType_, eventListener_, useCapture);
     }
 
     /**
@@ -353,19 +371,18 @@ public abstract class AbstractWidgetListener {
     }
 
 
-    protected void  $$printDocumentElementIds() {
+    protected void $$printDocumentElementIds() {
         for (final String id : Controller.GlobalPageIdRegistry.get(page)) {
             Loggers.DEBUG.debug(page.toString() + ":ids:" + document_.getElementById(id));
         }
     }
 
     /**
-     *
      * @param itsNatServletRequest ItsNatServletRequest
-     * @param uRLParameter Parameter on URL which you want
+     * @param uRLParameter         Parameter on URL which you want
      * @return the result returned from itsNatServletRequest.getServletRequest().getParameter()
      */
-    public String $$(final ItsNatServletRequest itsNatServletRequest, final String uRLParameter){
+    public String $$(final ItsNatServletRequest itsNatServletRequest, final String uRLParameter) {
         return itsNatServletRequest.getServletRequest().getParameter(uRLParameter);
     }
 }

@@ -92,12 +92,12 @@ abstract public class FindFriend extends AbstractWidgetListener {
 
             if (authToken != null) {
 
-                final List<ImportedContact> whoppingImportedContactsortedContacts;//Second important variable to notice
+                final List<ImportedContact> whoppingImportedContacts;//Second important variable to notice
                 Import_Google_Contacts__Add_To_Emails_List:
                 {
-                    whoppingImportedContactsortedContacts = GoogleContactImporter.fetchContacts(DEFAULT, authToken);
+                    whoppingImportedContacts = GoogleContactImporter.fetchContacts(DEFAULT, authToken);
 
-                    for (final ImportedContact importedContact : whoppingImportedContactsortedContacts) {//LOOPING A WHOPPING 1000
+                    for (final ImportedContact importedContact : whoppingImportedContacts) {//LOOPING A WHOPPING 1000
                         emails.add(new Email(importedContact.getHumanId()));
                     }
                 }
@@ -122,15 +122,9 @@ abstract public class FindFriend extends AbstractWidgetListener {
                     }
                 }
 
-                for (final ImportedContact importedContact : whoppingImportedContactsortedContacts) {
+                for (final ImportedContact importedContact : whoppingImportedContacts) {
                     if (!herExistingFriends.getHumansNetPeoples().contains(importedContact)) {
-                        new UserProperty(request,
-                                $$(Controller.Page.friendFindSearchResults),
-                                importedContact.getFullName(),
-                                HASH,
-                                HASH,
-                                ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText("").get()) {
-                        };
+                        generateFriendInviteWidgetFor(importedContact, humanId);
                     }
                 }
             }
@@ -324,6 +318,32 @@ abstract public class FindFriend extends AbstractWidgetListener {
         new UserProperty(request, $$(Page.friendFindSearchResults), humanIdWhosProfileToShow, currentUser) {
             protected void init(final Object... initArgs) {
                 new FriendAdd(request, $$(Page.user_property_content), (HumanId) initArgs[0], (HumanId) ((Object[]) initArgs[1])[0]) {//This var args thingy is an awesome way to flexibility, except when not careful!
+                };
+            }
+        };
+    }
+
+    private void generateFriendInviteWidgetFor(final ImportedContact importedContact, final HumanId currentUser) {
+        new UserProperty(
+                request,
+                $$(Page.friendFindSearchResults),
+                importedContact.getFullName(),
+                "#",
+                "#",
+                ElementComposer.compose($$(MarkupTag.BR)).get(),
+                currentUser) {
+            protected void init(final Object... initArgs) {
+                new Button(request, $$(Page.user_property_content), "Invite", false) {
+                    @Override
+                    protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
+                        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.GenericButtonLink), EventType.CLICK.toString(), new EventListener() {
+                            @Override
+                            public void handleEvent(final Event evt) {
+                                $$(Page.GenericButtonText).setTextContent("Invited!");
+                                $$remove(evt, EventType.CLICK, this);
+                            }
+                        }, false);
+                    }
                 };
             }
         };
