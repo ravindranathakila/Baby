@@ -120,6 +120,7 @@ public abstract class AbstractWidgetListener<T> {
      */
     @WARNING(warning = "If you want your variables initialized by the time you reach registereventlisteners, do the asignmen in init, NOT the implemented subclass constructer" +
             "which runs as super, init, registereventlisteners and THEN the remainder of the constructer.")
+    @Deprecated
     public AbstractWidgetListener(final ItsNatServletRequest request__, final Page page__, final Element appendToElement__, final Object... initArgs) {
 
         request = request__;
@@ -151,28 +152,11 @@ public abstract class AbstractWidgetListener<T> {
     }
 
     /**
-     * Creating a constructor for implementing classes with variable arguments is strongly frowned upon.
-     * The reason is that when widgets gets nested, things get quite hasty.
-     * Instead, have a constructor for each type created.
-     * Use varargs to transport just one object which transports the data.
-     * Think of this constructors var args as a clean slate to do data transport extremely fast and memory efficiently.
-     * The implementation of it is upto the extender.
-     * <p/>
-     * En example of a proper extend would be
-     * <br/>
-     * <br/>
-     * <code>
-     * &nbsp; &nbsp; public class CustomAbstractWidgetListener extends AbstractWidgetListener{<br/>
-     * &nbsp; &nbsp; &nbsp; &nbsp; public CustomAbstractWidgetListener(final ItsNatServletRequest request__, final Element appendToElement__, final Bean dataTransferBean){<br/>
-     * &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.super(request__, Controller.Page.mypage, dataTransferBean);<br/>
-     * &nbsp; &nbsp; &nbsp; &nbsp; }<br/>
-     * &nbsp; &nbsp; }<br/>
-     * </code>
      *
      * @param request__
      * @param page__
-     * @param appendToElement__
      * @param t
+     * @param appendToElement__
      */
     public AbstractWidgetListener(final ItsNatServletRequest request__, final Page page__, final T t, final Element appendToElement__) {
 
@@ -201,11 +185,12 @@ public abstract class AbstractWidgetListener<T> {
 
         setWidgetElementIds(Controller.GlobalPageIdRegistry.get(page));
         init(t);
+        init(new Object[]{t});//In case the invoker overrides. Reflection mandates getMethod methods should be public, hence we cant detect an override at runtime :'( boohooohoo
         registerEventListeners(itsNatHTMLDocument_, hTMLDocument_);
     }
 
     /**
-     * Use this only in conjuction with {@link #AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.ilikeplaces.servlets.Controller.Page, org.w3c.dom.Element, Object...)}
+     * Use this only in conjunction with {@link #AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.ilikeplaces.servlets.Controller.Page, org.w3c.dom.Element, Object...)}
      * NON GENERIC constructor
      *
      * @param initArgs
