@@ -1,6 +1,8 @@
 package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
+import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall;
 import ai.ilikeplaces.servlets.Controller;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServlet;
@@ -40,7 +42,7 @@ import static ai.ilikeplaces.servlets.Controller.Page;
         WARNING = @WARNING("If you want your variables initialized by the time you reach registereventlisteners, do the asignmen in init, NOT the implemented subclass constructer" +
                 "which runs as super, init, registereventlisteners and THEN the remainder of the constructer.")
 )
-public abstract class AbstractWidgetListener {
+public abstract class AbstractWidgetListener<T> {
 
     private static final String DISPLAY_BLOCK_ = "display:block";
     private static final String DISPLAY_NONE_ = "display:none";
@@ -93,9 +95,28 @@ public abstract class AbstractWidgetListener {
 
 
     /**
+     * Creating a constructor for implementing classes with variable arguments is strongly frowned upon.
+     * The reason is that when widgets gets nested, things get quite hasty.
+     * Instead, have a constructor for each type created.
+     * Use varargs to transport just one object which transports the data.
+     * Think of this constructors var args as a clean slate to do data transport extremely fast and memory efficiently.
+     * The implementation of it is upto the extender.
+     * <p/>
+     * En example of a proper extend would be
+     * <br/>
+     * <br/>
+     * <code>
+     * &nbsp; &nbsp; public class CustomAbstractWidgetListener extends AbstractWidgetListener{<br/>
+     * &nbsp; &nbsp; &nbsp; &nbsp; public CustomAbstractWidgetListener(final ItsNatServletRequest request__, final Element appendToElement__, final Bean dataTransferBean){<br/>
+     * &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.super(request__, Controller.Page.mypage, dataTransferBean);<br/>
+     * &nbsp; &nbsp; &nbsp; &nbsp; }<br/>
+     * &nbsp; &nbsp; }<br/>
+     * </code>
+     *
      * @param request__
      * @param page__
      * @param appendToElement__
+     * @param initArgs
      */
     @WARNING(warning = "If you want your variables initialized by the time you reach registereventlisteners, do the asignmen in init, NOT the implemented subclass constructer" +
             "which runs as super, init, registereventlisteners and THEN the remainder of the constructer.")
@@ -129,7 +150,85 @@ public abstract class AbstractWidgetListener {
         registerEventListeners(itsNatHTMLDocument_, hTMLDocument_);
     }
 
-    protected abstract void init(final Object... initArgs);
+    /**
+     * Creating a constructor for implementing classes with variable arguments is strongly frowned upon.
+     * The reason is that when widgets gets nested, things get quite hasty.
+     * Instead, have a constructor for each type created.
+     * Use varargs to transport just one object which transports the data.
+     * Think of this constructors var args as a clean slate to do data transport extremely fast and memory efficiently.
+     * The implementation of it is upto the extender.
+     * <p/>
+     * En example of a proper extend would be
+     * <br/>
+     * <br/>
+     * <code>
+     * &nbsp; &nbsp; public class CustomAbstractWidgetListener extends AbstractWidgetListener{<br/>
+     * &nbsp; &nbsp; &nbsp; &nbsp; public CustomAbstractWidgetListener(final ItsNatServletRequest request__, final Element appendToElement__, final Bean dataTransferBean){<br/>
+     * &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.super(request__, Controller.Page.mypage, dataTransferBean);<br/>
+     * &nbsp; &nbsp; &nbsp; &nbsp; }<br/>
+     * &nbsp; &nbsp; }<br/>
+     * </code>
+     *
+     * @param request__
+     * @param page__
+     * @param appendToElement__
+     * @param t
+     */
+    public AbstractWidgetListener(final ItsNatServletRequest request__, final Page page__, final T t, final Element appendToElement__) {
+
+        request = request__;
+        instanceId = InstanceCounter_++;
+        page = page__;
+        this.itsNatDocument_ = request__.getItsNatDocument();
+        this.itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument_;
+        this.hTMLDocument_ = itsNatHTMLDocument_.getHTMLDocument();
+        this.document_ = itsNatDocument_.getDocument();
+        final ItsNatServlet itsNatServlet_ = itsNatDocument_.getItsNatDocumentTemplate().getItsNatServlet();
+        final ItsNatHTMLDocFragmentTemplate inhdft_ = (ItsNatHTMLDocFragmentTemplate) itsNatServlet_.getItsNatDocFragmentTemplate(page__.toString());
+
+        //@todo needs to be removed.
+        try {
+            if (!inhdft_.isOnLoadCacheStaticNodes()) {
+                inhdft_.setOnLoadCacheStaticNodes(false);
+                Loggers.DEBUG.debug("Set static for fragment to false");
+            }
+        } catch (final Exception e) {
+            Loggers.EXCEPTION.error("Possible is setting static mode for fragment.");
+        }
+
+        LogNull.logThrow(inhdft_, NPE_1);//Do not remove unless performance degrade is evident.
+        appendToElement__.appendChild(inhdft_.loadDocumentFragmentBody(itsNatDocument_));
+
+        setWidgetElementIds(Controller.GlobalPageIdRegistry.get(page));
+        init(t);
+        registerEventListeners(itsNatHTMLDocument_, hTMLDocument_);
+    }
+
+    /**
+     * Use this only in conjuction with {@link #AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.ilikeplaces.servlets.Controller.Page, org.w3c.dom.Element, Object...)}
+     * NON GENERIC constructor
+     *
+     * @param initArgs
+     */
+    @WARNING(
+            "Use this only in conjunction with {@link #AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.ilikeplaces.servlets.Controller.Page, org.w3c.dom.Element, Object...)} " +
+                    "NON GENERIC constructor"
+    )
+    protected void init(final Object... initArgs) {
+    }
+
+    /**
+     * Use this only in conjunction with {@link #AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.ilikeplaces.servlets.Controller.Page, Object, org.w3c.dom.Element)}
+     * GENERIC constructor.
+     *
+     * @param t
+     */
+    @WARNING(
+            "Use this only in conjunction with {@link #AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.ilikeplaces.servlets.Controller.Page, Object, org.w3c.dom.Element)} " +
+                    "GENERIC constructor"
+    )
+    protected void init(final T t) {
+    }
 
     /**
      * Use ItsNatHTMLDocument variable stored in the AbstractListener class
@@ -244,11 +343,48 @@ public abstract class AbstractWidgetListener {
         }
     }
 
+    @Deprecated
+    @DOCUMENTATION(
+            WARNING = @WARNING("Overrides existing values withing the style. " +
+                    "Needed by fetchToEmail of WallWidgetHumansWall though since it fails on the other."),
+            SEE = @SEE(
+                    {AbstractWidgetListener.class, WallWidgetHumansWall.class}
+            ),
+            NOTE = @NOTE("ai.ilikeplaces.AbstractWidgetListener#$$displayBlock . " +
+                    "Also note that this method is needed by " +
+                    "ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall#protected void fetchToEmail(Object... args)")
+
+    )
     protected final void displayBlock(final Element element__) {
+        element__.setAttribute(STYLE, DISPLAY_BLOCK);
+    }
+
+    @Deprecated
+    @DOCUMENTATION(
+            WARNING = @WARNING("Overrides existing values withing the style. " +
+                    "Needed by fetchToEmail of WallWidgetHumansWall though since it fails on the other."),
+            SEE = @SEE(
+                    {AbstractWidgetListener.class, WallWidgetHumansWall.class}
+            ),
+            NOTE = @NOTE("ai.ilikeplaces.AbstractWidgetListener#$$displayNone . " +
+                    "Also note that this method is needed by " +
+                    "ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall#protected void fetchToEmail(Object... args)")
+
+    )
+    protected final void displayNone(final Element element__) {
+        element__.setAttribute(STYLE, DISPLAY_NONE);
+    }
+
+    @WARNING("Fails on ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall#protected void fetchToEmail(Object... args) " +
+            "since it is not a normal itsnat operation on the current document, but a raw created one.")
+    protected final void $$displayBlock(final Element element__) {
         ((ElementCSSInlineStyle) element__).getStyle().setProperty(DISPLAY, BLOCK, EMPTY);
     }
 
-    protected final void displayNone(final Element element__) {
+    @WARNING("Fails on ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall#protected void fetchToEmail(Object... args) " +
+            "since it is not a normal itsnat operation on the current document, but a raw created one.")
+
+    protected final void $$displayNone(final Element element__) {
         ((ElementCSSInlineStyle) element__).getStyle().setProperty(DISPLAY, NONE, EMPTY);
     }
 
@@ -269,6 +405,7 @@ public abstract class AbstractWidgetListener {
     final protected void remove(final EventTarget eventTarget_, final EventType eventType_, final EventListener eventListener_, final Boolean... useCapture) {
         itsNatDocument_.removeEventListener(eventTarget_, eventType_.toString(), eventListener_, useCapture.length == 0 ? false : useCapture[0]);
     }
+
     /**
      * @param event_
      * @param eventType_
@@ -276,7 +413,7 @@ public abstract class AbstractWidgetListener {
      * @param useCapture     ... default false
      */
     final protected void $$remove(final Event event_, final EventType eventType_, final EventListener eventListener_, final Boolean... useCapture) {
-        remove((EventTarget) event_, eventType_, eventListener_, useCapture);
+        remove(event_.getTarget(), eventType_, eventListener_, useCapture);
     }
 
     /**

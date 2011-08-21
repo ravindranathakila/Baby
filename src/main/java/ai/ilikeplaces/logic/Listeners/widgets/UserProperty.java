@@ -18,7 +18,6 @@ import org.xml.sax.SAXException;
 
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
-import java.util.Random;
 
 /**
  * @author Ravindranath Akila
@@ -124,29 +123,22 @@ abstract public class UserProperty extends AbstractWidgetListener {
     /**
      * General purpose user property renderer with NO CONNECTION TO DATABASE WHATSOEVER
      *
-     * @param displayName
-     * @param profileUrl
-     * @param profilePhoto
+     * @param request__
+     * @param appendToElement__
      * @param content
-     * @param params
+     * @param inviteCriteria
      */
-    public UserProperty(final ItsNatServletRequest request__,
-                        final Element appendToElement__,
-                        final String displayName,
-                        final String profileUrl,
-                        final String profilePhoto,
-                        final Element content,
-                        final Object... params) {
-        super(request__, Page.UserProperty, appendToElement__, params);
-        $$(Controller.Page.user_property_name).setTextContent(displayName);
-        $$(Controller.Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + profileUrl);
-        $$(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(profilePhoto));
+    public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final Element content, final InviteCriteria inviteCriteria) {
+        super(request__, Page.UserProperty, appendToElement__, content, inviteCriteria);
+        $$(Controller.Page.user_property_name).setTextContent(inviteCriteria.getDisplayName());
+        $$(Controller.Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + inviteCriteria.getProfileUrl());
+        $$(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(inviteCriteria.getProfilePhoto()));
         $$(Controller.Page.user_property_content).appendChild(content);
 
         this.fetchToEmail(
-                displayName,
+                inviteCriteria.getDisplayName(),
                 "#",
-                formatProfilePhotoUrl(profilePhoto),
+                formatProfilePhotoUrl(inviteCriteria.getProfilePhoto()),
                 content); //http://blog.ilikeplaces.com/
 
     }
@@ -224,11 +216,58 @@ abstract public class UserProperty extends AbstractWidgetListener {
      */
     static public String formatProfilePhotoUrl(final String profileUrl) {
         return profileUrl == null || profileUrl.isEmpty() || profileUrl.equals(HASH) ?
-                RBGet.globalConfig.getString(INVITES_AVATAR_CONTAINER) + (((((int)(Math.random() * 100)) % 5)) + 1) + EXT_GIF :
+                RBGet.globalConfig.getString(INVITES_AVATAR_CONTAINER) + (((((int) (Math.random() * 100)) % 5)) + 1) + EXT_GIF :
                 RBGet.globalConfig.getString(PROFILE__PHOTOS) + profileUrl;
     }
 
     static public String formatProfileUrl(final String relativeURL, final boolean makeAbsolute) {
         return makeAbsolute ? RBGet.globalConfig.getString(WEBSITE) + relativeURL : relativeURL;
+    }
+
+    static class InviteCriteria {
+        private final String displayName;
+        private final String profileUrl;
+        private final String profilePhoto;
+        private final HumanId inviter;
+        private final HumanId invitee;
+
+        /**
+         * @param displayName
+         * @param inviteesProfileUrl
+         * @param inviteesProfilePhoto
+         * @param inviter
+         * @param invitee
+         */
+        InviteCriteria(final String displayName,
+                       final String inviteesProfileUrl,
+                       final String inviteesProfilePhoto,
+                       final HumanId inviter,
+                       final HumanId invitee) {
+            this.displayName = displayName;
+            this.profileUrl = inviteesProfileUrl;
+            this.profilePhoto = inviteesProfilePhoto;
+            this.inviter = inviter;
+            this.invitee = invitee;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        public String getProfileUrl() {
+            return profileUrl;
+        }
+
+        public String getProfilePhoto() {
+            return profilePhoto;
+        }
+
+        public HumanId getInviter() {
+            return inviter;
+        }
+
+        public HumanId getInvitee() {
+            return invitee;
+        }
     }
 }

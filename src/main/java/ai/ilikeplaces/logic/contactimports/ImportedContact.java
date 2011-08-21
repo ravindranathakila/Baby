@@ -1,6 +1,8 @@
 package ai.ilikeplaces.logic.contactimports;
 
+import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumanEquals;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 
 /**
  * Created by IntelliJ IDEA.
@@ -33,5 +35,9 @@ public class ImportedContact extends HumanEquals {
     @Override
     public String getHumanId() {
         return email;
+    }
+
+    public HumanId getAsHumanId() {
+        return new HumanId(email);
     }
 }
