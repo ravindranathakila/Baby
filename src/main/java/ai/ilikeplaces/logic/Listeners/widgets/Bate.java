@@ -121,12 +121,11 @@ abstract public class Bate extends AbstractWidgetListener {
 
                 for (final ImportedContact importedContact : whoppingImportedContacts) {
                     if (!herExistingFriends.getHumansNetPeoples().contains(importedContact)) {
-                        new UserProperty(request,
-                                $$(Controller.Page.BateImportResults),
-                                importedContact.getFullName(),
-                                HASH,
-                                HASH,
-                                ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText("").get()) {
+                        new UserProperty(
+                                request,
+                                $$(Page.BateImportResults),
+                                ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText("").get(),
+                                new UserProperty.InviteCriteria(importedContact.getFullName(), HASH, HASH, humanId, importedContact.getAsHumanId()) ) {
                         };
                     }
                 }
