@@ -25,7 +25,6 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 
@@ -327,19 +326,50 @@ abstract public class FindFriend extends AbstractWidgetListener {
         new UserProperty(
                 request,
                 $$(Page.friendFindSearchResults),
-                importedContact.getFullName(),
-                "#",
-                "#",
                 ElementComposer.compose($$(MarkupTag.BR)).get(),
-                currentUser) {
+                new UserProperty.InviteCriteria(importedContact.getFullName(), "#", "#", currentUser, importedContact.getAsHumanId())) {
+
             protected void init(final Object... initArgs) {
-                new Button(request, $$(Page.user_property_content), "Invite", false) {
+                new Button(
+                        request,
+                        $$(Page.user_property_content),
+                        (new ButtonCriteria(false, "Click here to invite..", "#")
+                                .setMetadata(
+                                        ((InviteCriteria) initArgs[1]).getInviter(),
+                                        ((InviteCriteria) initArgs[1]).getInvitee()))) {
+
+                    private HumanId inviter;
+                    private HumanId invitee;
+
+                    @Override
+                    protected void init(final ButtonCriteria buttonCriteria) {
+                        inviter = (HumanId)buttonCriteria.getMetadata()[0];
+                        invitee = (HumanId)buttonCriteria.getMetadata()[1];
+                    }
+
                     @Override
                     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
+
                         itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.GenericButtonLink), EventType.CLICK.toString(), new EventListener() {
+                            private HumanId myinviter = inviter;
+                            private HumanId myinvitee = invitee;
+
                             @Override
                             public void handleEvent(final Event evt) {
                                 $$(Page.GenericButtonText).setTextContent("Invited!");
+                                SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(
+                                        myinvitee.getHumanId(),
+                                        "Yep! Invited!",
+                                        "Hey! You've just been invited into to I LIKE PLACES!\n" +
+                                                "\n" +
+                                                "Now that you've gotten yourself in, use the following link to activate your account.\n" +
+                                                "\n" +
+                                                "Your temporary password is 1sdfsdfsd.\n" +
+                                                "\n" +
+                                                "Make sure you change it.\n" +
+                                                "\n" +
+                                                "All the best!");
+
                                 $$remove(evt, EventType.CLICK, this);
                             }
                         }, false);
