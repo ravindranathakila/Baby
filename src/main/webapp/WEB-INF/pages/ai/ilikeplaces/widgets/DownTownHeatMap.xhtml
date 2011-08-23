@@ -64,6 +64,21 @@ focusLat = 0;
 focusLng = 0;
 zoom = 5;
 
+lastSelectedLocation = {
+        name:'',
+        desc:'',
+        lat:undefined,
+        lng:undefined
+    };
+
+geocoder = undefined;
+
+function getGeocoder(){
+    return geocoder = geocoder != undefined ? geocoder : new google.maps.Geocoder();
+}
+
+
+
 listOfHotSpots = new Array();
 
 function clearHotSpots(){
@@ -134,14 +149,38 @@ function setClearForLastNotification(){
 
     setNotification("Great! You've selected a place. Check Actions!");
 
+    lastSelectedLocation.name = hotspotClickDetails.commonName;
+    lastSelectedLocation.lat =  hotspotClickDetails.latitude;
+    lastSelectedLocation.lng =  hotspotClickDetails.longitude;
+
+    getGeocoder().geocode(
+        {
+            location:new google.maps.LatLng(hotspotClickDetails.latitude,hotspotClickDetails.longitude)
+        },
+        function(geocoderResult,geocoderStatus){
+            if(geocoderStatus == google.maps.GeocoderStatus.OK){
+                var locationString = '';
+                    for(var j in geocoderResult[0].address_components){
+                        locationString += geocoderResult[0].address_components[j].long_name + ' ';
+                        if(j>1){
+                            break;
+                        }
+                    }
+                 lastSelectedLocation.desc = locationString;
+            }else{
+                //hmmmm... B-/
+            }
+        }
+    );
+
     setActionLink(
         "Create a Moment",
         hotspotClickDetails.commonName,
         function(){
             //@TODO check if this is a users private location
-            var placename = prompt('What do you call this place?');
-            var placedetails = prompt('Short description of this place?');
-            window.location.href = hotspotClickDetails.url + '&placename=' + placename + '&placedetails=' + placedetails;
+            var placename = prompt('What do you call this place?', lastSelectedLocation.name);
+            var placedetails = prompt('Short description of this place?', lastSelectedLocation.desc.substring(0,29));
+            window.location.href = hotspotClickDetails.url + '&placename=' + placename + '&placedetails=' + placedetails.substring(0,30);
         },
         true
     );
@@ -436,29 +475,28 @@ function initialize_DownTownHeatMap_map(){
 
     //infowindow.open(map,placeMarker);
 
-    var geocoder = new google.maps.Geocoder();
 
     geoCodeToNotifications = function(){
         if(GAIA.getZoom() > 13){
             setNotification("Wait for me...");
-            geocoder.geocode(
-            {
-                location:GAIA.getCenter()
-            },
-            function(geocoderResult,geocoderStatus){
-                if(geocoderStatus == google.maps.GeocoderStatus.OK){
-                    var locationString = '';
-                        for(var j in geocoderResult[0].address_components){
-                            locationString += geocoderResult[0].address_components[j].long_name + ' ';
-                            if(j>1){
-                                break;
+            getGeocoder().geocode(
+                {
+                    location:GAIA.getCenter()
+                },
+                function(geocoderResult,geocoderStatus){
+                    if(geocoderStatus == google.maps.GeocoderStatus.OK){
+                        var locationString = '';
+                            for(var j in geocoderResult[0].address_components){
+                                locationString += geocoderResult[0].address_components[j].long_name + ' ';
+                                if(j>1){
+                                    break;
+                                }
                             }
-                        }
-                    setNotification("We are somewhere near.. " + locationString);
-                }else{
-                    setNotification("Hey where are we?!!");
+                        setNotification("We are somewhere near.. " + locationString);
+                    }else{
+                        setNotification("Hey where are we?!!");
+                    }
                 }
-            }
             );
         }
     };
@@ -595,7 +633,7 @@ function initialize_gmap_scripts_transparently(){//wise any changes also to init
 
 function setMapToLocation(value){
     try{
-        new google.maps.Geocoder().geocode(
+        getGeocoder().geocode(
             {address:value},
             function(geocoderResult, geocoderStatus){
                 if(geocoderStatus == google.maps.GeocoderStatus.OK){
