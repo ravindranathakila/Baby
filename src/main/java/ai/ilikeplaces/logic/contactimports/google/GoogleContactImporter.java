@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.contactimports.google;
 
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.rbs.RBGet;
+import ai.ilikeplaces.util.Pair;
 import com.google.gdata.client.contacts.ContactsService;
 //import sample.contacts.ContactsExampleParameters.Actions;
 import com.google.gdata.data.Link;
@@ -29,7 +30,7 @@ public class GoogleContactImporter {
     private static final String ILIKEPLACES_COM = "ilikeplaces.com";
     private static final String HTTPS_WWW_GOOGLE_COM_M8_FEEDS_CONTACTS = "https://www.google.com/m8/feeds/contacts/";
     private static final String RESULT_LIMIT = RBGet.getGlobalConfigKey("GOOGLE_CONTACTS_RESULT_LIMIT");
-    private static final String FULL_MAX_RESULTS_1000 = "/full?max-results="+RESULT_LIMIT;
+    private static final String FULL_MAX_RESULTS_1000 = "/full?max-results=" + RESULT_LIMIT;
 
 //    private enum SystemGroup {
 //        MY_CONTACTS("Contacts", "My Contacts"),
@@ -715,7 +716,7 @@ public class GoogleContactImporter {
         }
     }
 
-    public static List<ImportedContact> fetchContacts(final String emailToImportFrom, final String authSubToken) {
+    public static Pair<ai.ilikeplaces.logic.validators.unit.Email, List<ImportedContact>> fetchContacts(final String emailToImportFrom, final String authSubToken) {
 
         final ContactsService myService = new ContactsService(ILIKEPLACES_COM);//
         myService.setAuthSubToken(authSubToken, null/*This sucks, so I passed null and it worked!*/);
@@ -813,7 +814,7 @@ public class GoogleContactImporter {
             importedContacts.add(contact);
         }
 
-        return importedContacts;
+        return new Pair<ai.ilikeplaces.logic.validators.unit.Email, List<ImportedContact>>(new ai.ilikeplaces.logic.validators.unit.Email(resultFeed.getId()), importedContacts);
 
     }
 }

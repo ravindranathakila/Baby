@@ -94,7 +94,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
                 final List<ImportedContact> whoppingImportedContacts;//Second important variable to notice
                 Import_Google_Contacts__Add_To_Emails_List:
                 {
-                    whoppingImportedContacts = GoogleContactImporter.fetchContacts(DEFAULT, authToken);
+                    whoppingImportedContacts = GoogleContactImporter.fetchContacts(DEFAULT, authToken).getValue();
 
                     for (final ImportedContact importedContact : whoppingImportedContacts) {//LOOPING A WHOPPING 1000
                         emails.add(new Email(importedContact.getHumanId()));
@@ -322,12 +322,13 @@ abstract public class FindFriend extends AbstractWidgetListener {
         };
     }
 
+
     private void generateFriendInviteWidgetFor(final ImportedContact importedContact, final HumanId currentUser) {
         new UserProperty(
                 request,
                 $$(Page.friendFindSearchResults),
                 ElementComposer.compose($$(MarkupTag.BR)).get(),
-                new UserProperty.InviteCriteria(importedContact.getFullName(), "#", "#", currentUser, importedContact.getAsHumanId())) {
+                new UserProperty.InviteCriteria(importedContact.getFullName(), "#", "#", currentUser, importedContact)) {
 
             protected void init(final Object... initArgs) {
                 new Button(
@@ -339,12 +340,12 @@ abstract public class FindFriend extends AbstractWidgetListener {
                                         ((InviteCriteria) initArgs[1]).getInvitee()))) {
 
                     private HumanId inviter;
-                    private HumanId invitee;
+                    private ImportedContact invitee;
 
                     @Override
                     protected void init(final ButtonCriteria buttonCriteria) {
-                        inviter = (HumanId)buttonCriteria.getMetadata()[0];
-                        invitee = (HumanId)buttonCriteria.getMetadata()[1];
+                        inviter = (HumanId) buttonCriteria.getMetadata()[0];
+                        invitee = (ImportedContact) buttonCriteria.getMetadata()[1];
                     }
 
                     @Override
@@ -352,15 +353,16 @@ abstract public class FindFriend extends AbstractWidgetListener {
 
                         itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.GenericButtonLink), EventType.CLICK.toString(), new EventListener() {
                             private HumanId myinviter = inviter;
-                            private HumanId myinvitee = invitee;
+                            private ImportedContact myinvitee = invitee;
 
                             @Override
                             public void handleEvent(final Event evt) {
                                 $$(Page.GenericButtonText).setTextContent("Invited!");
                                 SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(
                                         myinvitee.getHumanId(),
-                                        "Yep! Invited!",
-                                        "Hey! You've just been invited into to I LIKE PLACES!\n" +
+                                        "Yep! Invited! (by " + myinviter.getHumanId() + ")",
+                                        "Hey " + myinvitee.getFullNameAsEmptyIfNull().trim() + "! " +
+                                                "You've just been invited into to I LIKE PLACES!\n" +
                                                 "\n" +
                                                 "Now that you've gotten yourself in, use the following link to activate your account.\n" +
                                                 "\n" +
@@ -378,6 +380,5 @@ abstract public class FindFriend extends AbstractWidgetListener {
             }
         };
     }
-
 
 }
