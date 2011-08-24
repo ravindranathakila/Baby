@@ -4,7 +4,7 @@
     <groupId>ai</groupId>
     <artifactId>ilikeplaces-main</artifactId>
     <packaging>war</packaging>
-    <version>1.6180-SNAPSHOT</version>
+    <version>0.6</version>
     <name>ilikeplaces JEE6 Webapp</name>
     <url>http://maven.apache.org</url>
 
@@ -413,7 +413,7 @@
                 <version>1.0-beta-3</version>
                 <configuration>
                     <!--revisionOnScmFailure>NON_SCM_MODE</revisionOnScmFailure-->
-                    <format>BOT ILIKEPLACES REINC-1.6180.{0,date,yyyy.MM.dd.HH.mm.ss}</format>
+                    <format>BOT ILIKEPLACES REINC-0.6.{0,date,yyyy.MM.dd.HH.mm.ss}</format>
                     <items>
                         <item>timestamp</item>
                     </items>

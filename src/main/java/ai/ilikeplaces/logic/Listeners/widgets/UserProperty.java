@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
+import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
@@ -229,7 +230,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
         private final String profileUrl;
         private final String profilePhoto;
         private final HumanId inviter;
-        private final HumanId invitee;
+        private final ImportedContact invitee;
 
         /**
          * @param displayName
@@ -242,7 +243,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
                        final String inviteesProfileUrl,
                        final String inviteesProfilePhoto,
                        final HumanId inviter,
-                       final HumanId invitee) {
+                       final ImportedContact invitee) {
             this.displayName = displayName;
             this.profileUrl = inviteesProfileUrl;
             this.profilePhoto = inviteesProfilePhoto;
@@ -266,7 +267,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
             return inviter;
         }
 
-        public HumanId getInvitee() {
+        public ImportedContact getInvitee() {
             return invitee;
         }
     }

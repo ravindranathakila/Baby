@@ -12,6 +12,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
  */
 public class ImportedContact extends HumanEquals {
 
+    private static final String EMPTY = "";
     String email;
 
     String fullName;
@@ -26,6 +27,10 @@ public class ImportedContact extends HumanEquals {
 
     public String getFullName() {
         return fullName;
+    }
+
+    public String getFullNameAsEmptyIfNull() {
+        return fullName != null ? fullName : EMPTY;
     }
 
     public void setFullName(final String fullName) {
