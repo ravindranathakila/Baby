@@ -68,19 +68,14 @@ abstract public class Bate extends AbstractWidgetListener {
      */
     @Override
     protected void init(final Object... initArgs) {
+        matches = new Obj<List<HumansIdentity>>(new ArrayList<HumansIdentity>());
+        emails = new HashSet<Email>();
         email = new Email("");
         password = new Password("");
 
-        matches = new Obj<List<HumansIdentity>>(new ArrayList<HumansIdentity>());
-        emails = new HashSet<Email>();
+//            this.humanId = ((HumanId) initArgs[0]);
 
-        if (((HumanId) initArgs[0]).validate() == 0) {
-            this.humanId = ((HumanId) initArgs[0]);
-        } else {
-            throw new ConstraintsViolatedException(((HumanId) initArgs[0]).getViolations());
-        }
-
-        final HumansNetPeople herExistingFriends = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);//First important variable to notice
+//        final HumansNetPeople herExistingFriends = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);//First important variable to notice
 
         UCAttemptToRecognizeGoogleContactImportRedirect:
         {
@@ -92,7 +87,9 @@ abstract public class Bate extends AbstractWidgetListener {
                 final List<ImportedContact> whoppingImportedContacts;//Second important variable to notice
                 Import_Google_Contacts__Add_To_Emails_List:
                 {
-                    whoppingImportedContacts = GoogleContactImporter.fetchContacts(DEFAULT, authToken);
+                    Pair<Email, List<ImportedContact>> emailListPair = GoogleContactImporter.fetchContacts(DEFAULT, authToken);
+                    this.humanId = new HumanId(emailListPair.getKey().getObjectAsValid());
+                    whoppingImportedContacts = emailListPair.getValue();
 
                     for (final ImportedContact importedContact : whoppingImportedContacts) {//LOOPING A WHOPPING 1000
                         emails.add(new Email(importedContact.getHumanId()));
@@ -100,50 +97,21 @@ abstract public class Bate extends AbstractWidgetListener {
                 }
 
                 final List<HumansIdentity> existingUsersFromDB;//Third important variable to notice
-                final List<String> existingUsers = new ArrayList<String>();//LOOPING 300 Approx
-                Get_Users_Existing_Friends__Add_To_Humans_Network:
+                final List<String> existingUsers = new ArrayList<String>();//LOOPING 300
+                Get_Existing_Users:
                 {
                     existingUsersFromDB = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentitiesByEmails(new ArrayList<Email>(emails));
-                    for (final HumansNetPeople h : herExistingFriends.getHumansNetPeoples()) {
-                        existingUsers.add(h.getHumanId());
-                    }
                 }
 
-                clear($$(Controller.Page.BateImportResults));
-
-                for (final HumansIdentity humansIdentity : existingUsersFromDB) {
-                    if (!existingUsers.contains(humansIdentity.getHumanId())) {
-                        generateFriendAddWidgetFor(new HumanId(humansIdentity.getHumanId()), humanId);
-                    } else {
-                        generateFriendDeleteWidgetFor(new HumanId(humansIdentity.getHumanId()), humanId);
-                    }
-                }
+                clear($$(Page.BateImportResults));
 
                 for (final ImportedContact importedContact : whoppingImportedContacts) {
-                    if (!herExistingFriends.getHumansNetPeoples().contains(importedContact)) {
-                        new UserProperty(
-                                request,
-                                $$(Page.BateImportResults),
-                                ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText("").get(),
-                                new UserProperty.InviteCriteria(importedContact.getFullName(), HASH, HASH, humanId, importedContact.getAsHumanId()) ) {
-                        };
+                    if (!existingUsersFromDB.contains(importedContact)) {
+                        generateFriendInviteWidgetFor(importedContact, humanId);
                     }
                 }
             }
         }
-
-        UCDisplayYouHaventAddedFriendsYet:
-        {
-            if (herExistingFriends.getHumansNetPeoples().size() == 0) {
-                $$(Controller.Page.friendFindSearchNotice).setTextContent("Oops! You haven't added any friends yet. Add your friends to get going!");
-            }
-        }
-
-        List<String> emails = new ArrayList<String>();
-        for (final HumansNetPeople hnp : herExistingFriends.getHumansNetPeoples()) {
-            emails.add(hnp.getHumanId());
-        }
-
 
     }
 
@@ -234,6 +202,7 @@ abstract public class Bate extends AbstractWidgetListener {
         }
     }
 
+
     private void generateFriendDeleteWidgetFor(final HumanId humanIdWhosProfileToShow, final HumanId currentUser) {
         new UserProperty(request, $$(Page.friendFindSearchResults), humanIdWhosProfileToShow, currentUser) {
             protected void init(final Object... initArgs) {
@@ -251,5 +220,64 @@ abstract public class Bate extends AbstractWidgetListener {
             }
         };
     }
+
+    private void generateFriendInviteWidgetFor(final ImportedContact importedContact, final HumanId currentUser) {
+        new UserProperty(
+                request,
+                $$(Page.BateImportResults),
+                ElementComposer.compose($$(MarkupTag.BR)).get(),
+                new UserProperty.InviteCriteria(importedContact.getFullName(), "#", "#", currentUser, importedContact)) {
+
+            protected void init(final Object... initArgs) {
+                new Button(
+                        request,
+                        $$(Page.user_property_content),
+                        (new ButtonCriteria(false, "Click here to invite..", "#")
+                                .setMetadata(
+                                        ((InviteCriteria) initArgs[1]).getInviter(),
+                                        ((InviteCriteria) initArgs[1]).getInvitee()))) {
+
+                    private HumanId inviter;
+                    private ImportedContact invitee;
+
+                    @Override
+                    protected void init(final ButtonCriteria buttonCriteria) {
+                        inviter = (HumanId) buttonCriteria.getMetadata()[0];
+                        invitee = (ImportedContact) buttonCriteria.getMetadata()[1];
+                    }
+
+                    @Override
+                    protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
+
+                        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.GenericButtonLink), EventType.CLICK.toString(), new EventListener() {
+                            private HumanId myinviter = inviter;
+                            private ImportedContact myinvitee = invitee;
+
+                            @Override
+                            public void handleEvent(final Event evt) {
+                                $$(Page.GenericButtonText).setTextContent("Invited!");
+                                SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(
+                                        myinvitee.getHumanId(),
+                                        "Yep! Invited! (by " + myinviter.getHumanId() + ")",
+                                        "Hey " + myinvitee.getFullNameAsEmptyIfNull().trim() + "! " +
+                                                "You've just been invited into to I LIKE PLACES!\n" +
+                                                "\n" +
+                                                "Now that you've gotten yourself in, use the following link to activate your account.\n" +
+                                                "\n" +
+                                                "Your temporary password is 1sdfsdfsd.\n" +
+                                                "\n" +
+                                                "Make sure you change it.\n" +
+                                                "\n" +
+                                                "All the best!");
+
+                                $$remove(evt, EventType.CLICK, this);
+                            }
+                        }, false);
+                    }
+                };
+            }
+        };
+    }
+
 
 }
