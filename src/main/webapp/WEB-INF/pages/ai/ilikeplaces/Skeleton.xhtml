@@ -82,7 +82,7 @@
 </div>
 <div id="Skeleton_display" class="use100" itsnat:nocache="true" style="display:block;overflow:hidden;">
 <div class="use100">
-<div class="use100" style="height:78px;">
+<div class="use100 lose_attn" style="height:78px;">
     <div class="use100 inherit_height" style="background:url('/images/Talk Page Header Stripe.jpg') repeat-x;">
         <div class="use40 inherit_height center" style="overflow:hidden;">
             <div style="height:15%;">&nbsp;</div>
@@ -120,7 +120,7 @@
                     <span id="Skeleton_othersidebar_identity" class="white_fg"></span>
                 </div>
             </div>
-            <div class="use100 ">
+            <div class="use100 lose_attn">
                 <div class="use100  height_10">
                     &nbsp;
                 </div>
@@ -258,7 +258,7 @@
 
             </div>
         </div>
-        <div class="use25" id="Skeleton_sidebar">
+        <div class="use25 lose_attn" id="Skeleton_sidebar">
         </div>
     </div>
 </div>
@@ -274,7 +274,20 @@
 <script type="text/javascript" src="/js/miniquarry/ItsNatEventMonitor.js"></script>
 <script type="text/javascript" src="/js/miniquarry/util.js"></script>
 <script type="text/javascript">
+    //VTIP
     vtip();
+
+    //LOSE ATTN
+    $('.lose_attn').mouseenter(function() {
+       $('.lose_attn').fadeTo("slow",1.0);
+    });
+
+
+    $('.lose_attn').mouseleave(function() {
+        $('.lose_attn').fadeTo("slow",0.1);
+    });
+
+
 </script>
 
 </body>
