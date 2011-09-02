@@ -125,7 +125,7 @@ public class AlbumManager extends AbstractWidgetListener {
                                 public void handleEvent(final Event evt_) {
                                     if (!imageLoaded) {
 
-                                        $$(evt_).setAttribute(MarkupTag.IMG.src(), $$(evt_).getAttribute(MarkupTag.DIV.title()));
+                                        $$(evt_).setAttribute(MarkupTag.IMG.src(), $$(evt_).getAttribute(MarkupTag.IMG.title()));
 
                                         imageLoaded = true;//safety measure 1
                                     }
