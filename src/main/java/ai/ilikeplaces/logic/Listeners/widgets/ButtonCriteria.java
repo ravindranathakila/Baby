@@ -6,12 +6,19 @@ public class ButtonCriteria implements InterWidgetMetadata<ButtonCriteria> {
     private boolean doRefreshPageOnClick;
     private String buttonText;
     private String buttonImage;
+    private String buttonWidthCss;
     private Object[] metadata;
 
     public ButtonCriteria(final boolean doRefreshPageOnClick, final String buttonText, final String buttonImage) {
         this.doRefreshPageOnClick = doRefreshPageOnClick;
         this.buttonText = buttonText;
         this.buttonImage = buttonImage;
+    }
+    public ButtonCriteria(final boolean doRefreshPageOnClick, final String buttonText, final String buttonImage, final String buttonWidthCss) {
+        this.doRefreshPageOnClick = doRefreshPageOnClick;
+        this.buttonText = buttonText;
+        this.buttonImage = buttonImage;
+        this.buttonWidthCss = buttonWidthCss;
     }
 
     public boolean isDoRefreshPageOnClick() {
@@ -36,6 +43,14 @@ public class ButtonCriteria implements InterWidgetMetadata<ButtonCriteria> {
 
     public void setButtonImage(final String buttonImage) {
         this.buttonImage = buttonImage;
+    }
+
+    public String getButtonWidthCss() {
+        return buttonWidthCss;
+    }
+
+    public void setButtonWidthCss(String buttonWidthCss) {
+        this.buttonWidthCss = buttonWidthCss;
     }
 
     public Object[] getMetadata() {

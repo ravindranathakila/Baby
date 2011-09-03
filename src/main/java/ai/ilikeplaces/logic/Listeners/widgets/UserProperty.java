@@ -217,7 +217,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
      */
     static public String formatProfilePhotoUrl(final String profileUrl) {
         return profileUrl == null || profileUrl.isEmpty() || profileUrl.equals(HASH) ?
-                RBGet.globalConfig.getString(INVITES_AVATAR_CONTAINER) + (((((int) (Math.random() * 100)) % 5)) + 1) + EXT_GIF :
+                RBGet.globalConfig.getString(INVITES_AVATAR_CONTAINER) + (((((int) (Math.random() * 100)) % 16)) + 1) + EXT_GIF :
                 RBGet.globalConfig.getString(PROFILE__PHOTOS) + profileUrl;
     }
 

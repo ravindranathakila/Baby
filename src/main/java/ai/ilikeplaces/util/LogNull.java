@@ -43,7 +43,24 @@ final public class LogNull {
         return null;
     }
 
+    /**
+     * This stops the thread execution by throwing a NPE immediately
+     *
+     * @return Object
+     */
+    static public Object logThrow() {
+        throw new NullPointerException(MSG);
+    }
 
+    /**
+     * This stops the thread execution by throwing a NPE immediately
+     *
+     * @param customMsg__
+     * @return Object
+     */
+    static public Object logThrow(final String customMsg__) {
+        throw new NullPointerException(MSG + "\n" + customMsg__);
+    }
 
     /**
      * This stops the thread execution by throwing a the given exception as a RuntimeException immediately

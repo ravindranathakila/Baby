@@ -61,7 +61,7 @@ abstract public class Button extends AbstractWidgetListener<ButtonCriteria> {
     public Button(final ItsNatServletRequest request__, final Element appendToElement__, final ButtonCriteria buttonCriteria) {
         super(request__, Page.GenericButton, buttonCriteria, appendToElement__);
 
-        if (buttonCriteria.getButtonText() != null && !buttonCriteria.getButtonText().isEmpty()) {
+        if (buttonCriteria.getButtonText() != null || !buttonCriteria.getButtonText().isEmpty()) {
             $$displayNone($$(Page.GenericButtonImage));
             $$(Controller.Page.GenericButtonText).setAttribute(MarkupTag.GENERIC.title(), buttonCriteria.getButtonText());
             $$(Controller.Page.GenericButtonText).setTextContent(buttonCriteria.getButtonText());
