@@ -43,23 +43,24 @@ final public class LogNull {
         return null;
     }
 
+
+
     /**
-     * This stops the thread execution by throwing a NPE immediately
+     * This stops the thread execution by throwing a the given exception as a RuntimeException immediately
      *
      * @return Object
      */
-    static public Object logThrow() {
-        throw new NullPointerException(MSG);
+    static public void logThrow(final Throwable exceptionToBeThrownAsARuntimeException_) {
+        throw new RuntimeException(exceptionToBeThrownAsARuntimeException_);
     }
 
     /**
-     * This stops the thread execution by throwing a NPE immediately
+     * This converts the given Throwable to a RuntimeException and returns it
      *
-     * @param customMsg__
-     * @return Object
+     * @return RuntimeException
      */
-    static public Object logThrow(final String customMsg__) {
-        throw new NullPointerException(MSG + "\n" + customMsg__);
+    static public RuntimeException getRuntimeException(final Throwable exceptionToBeThrownAsARuntimeException_) {
+        return new RuntimeException(exceptionToBeThrownAsARuntimeException_);
     }
 
     /**

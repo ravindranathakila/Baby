@@ -2,7 +2,6 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
-import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
@@ -18,18 +17,19 @@ import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
 import net.sf.oval.Validator;
-import net.sf.oval.exception.ConstraintsViolatedException;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
+import javax.xml.transform.TransformerException;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -259,16 +259,7 @@ abstract public class Bate extends AbstractWidgetListener {
                                 SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(
                                         myinvitee.getHumanId(),
                                         "Yep! Invited! (by " + myinviter.getHumanId() + ")",
-                                        "Hey " + myinvitee.getFullNameAsEmptyIfNull().trim() + "! " +
-                                                "You've just been invited into to I LIKE PLACES!\n" +
-                                                "\n" +
-                                                "Now that you've gotten yourself in, use the following link to activate your account.\n" +
-                                                "\n" +
-                                                "Your temporary password is 1sdfsdfsd.\n" +
-                                                "\n" +
-                                                "Make sure you change it.\n" +
-                                                "\n" +
-                                                "All the best!");
+                                        "");
 
                                 $$remove(evt, EventType.CLICK, this);
                             }
@@ -279,5 +270,45 @@ abstract public class Bate extends AbstractWidgetListener {
         };
     }
 
+    final String getHTMLStringForOfflineFriendInvite(final String inviter, final String invitee) {
+        try {
+
+            final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + Controller.USER_PROPERTY_EMAIL_XHTML);
+
+            $$(Controller.Page.user_property_name, document).setTextContent(inviter);
+            $$(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), "#");
+            $$(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(), UserProperty.formatProfilePhotoUrl("#"));
+            $$(Controller.Page.user_property_content, document).appendChild(
+                    document.importNode(
+                            ElementComposer.compose(
+                                    document.createElement(MarkupTag.DIV.toString())
+                            ).$ElementSetText(
+                                    "Hey! You've just been invited into to I LIKE PLACES!\n" +
+                                            "\n" +
+                                            "I LIKE PLACES IS FOR MEETING UP WITH PEOPLE YOU CARE AT INTERESTING PLACES.\n" +
+                                            "IT HELPS YOU FIND INTERESTING PLACES AND ORAGANIZE MOMENTs WITH YOUR FRIENDS AND/OR FAMILY.\n" +
+                                            "THOUGH, I LIKE PLACES IS INVITES ONLY. THIS MEANS YOU NEED TO GET INVITED IN BY SOMEONE WHO CARES ABOUT YOU.\n" +
+                                            "\n" +
+                                            "THIS, HAS JUST HAPPENED.\n" +
+                                            "\n" +
+                                            "Now that you've gotten yourself in, use the following link to activate your account.\n" +
+                                            "\n" +
+                                            "Your temporary password is 1sdfsdfsd.\n" +
+                                            "\n" +
+                                            "Make sure you change it.\n" +
+                                            "\n" +
+                                            "All the best and, Have Fun in Places!"
+
+                            ).getAsNode(),
+                            true)
+            );
+
+
+            return HTMLDocParser.convertNodeToHtml($$(Page.user_property_widget, document));
+        } catch (TransformerException e) {
+            throw LogNull.getRuntimeException(e);
+        }
+
+    }
 
 }
