@@ -27,7 +27,7 @@ import java.io.IOException;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class UserProperty extends AbstractWidgetListener {
 
-    private static final String USER_PROPERTY_EMAIL_XHTML = "ai/ilikeplaces/widgets/UserProperty_email.xhtml";
+    private static final String USER_PROPERTY_EMAIL_XHTML = Controller.USER_PROPERTY_EMAIL_XHTML;
     private static final String YIKES__SOMETHING__WENT__WRONG = "YIKES_SOMETHING_WENT_WRONG";
     private static final String PROFILE__PHOTO__DEFAULT = "PROFILE_PHOTO_DEFAULT";
     private static final String INVITES_AVATAR_CONTAINER = "INVITES_AVATAR_CONTAINER";
