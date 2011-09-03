@@ -7,6 +7,11 @@
     <title>bate</title>
 </head>
 <body itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
+        <script type="text/javascript">
+            if(window.location.hash){
+                window.location.href = '?'+(window.location.hash + '').substring(1);
+            }
+        </script>
         <!-- Google +1 button js -->
         <script type="text/javascript">
           (function() {
@@ -16,25 +21,31 @@
           })();
         </script>
 
-        <div class="use90 use5p use5a center" style="font-size:15px;font-weight:800;">
-            <i>Hey there! You've found us!<br/>
-            This website is for meeting up with people you care at interesting places.<br/>
-            It helps you find interesting places and organize moments with your friends and family.<br/> <br/>
+        <div class="use90 use5p use5a center" id="BateIntroduction" style="font-size:15px;font-weight:800;">
+            <div class="use100">
+                <i>Hey there! You've found us!<br/>
+                This website is for meeting up with people you care at interesting places.<br/>
+                It helps you find interesting places and organize moments with your friends and family.<br/> <br/>
 
-            Though, I like places is invites only.<br/>
-            This means, to use this website, you need to get invited in by someone who cares about you.<br/> <br/>
-            The best way to get invited is to reciprocate this by inviting out your friends and family first.<br/>
-            They in turn will invite you back in...<br/><br/>.</i>
-        </div>
-        <div class="use100">
-            <div class="use20">
-                &nbsp;
-            </div>
-            <div class="use60 center">
-                <a href="#" style="font-size:16px;text-decoration:none;color:red;font-weight:800;">Click here to invite your contacts from Google <img src="http://www.google.com/favicon.ico" alt="_"/></a>
-            </div>
-            <div class="use20">
-                <div class="g-plusone" data-size="tall"></div>
+                Though, I like places is invites only.<br/>
+                This means, to use this website, you need to get invited in by someone who cares about you.<br/> <br/>
+                The best way to get invited is to reciprocate this by inviting out your friends and family first.<br/>
+                They in turn will invite you back in...<br/><br/>.</i>
+             </div>
+             <div class="use100">
+                <div class="use20">
+                    &nbsp;
+                </div>
+                <div class="use60 center">
+                    <a
+                            href="https://accounts.google.com/o/oauth2/auth?response_type=token&scope=https://www.google.com/m8/feeds&redirect_uri=http://www.ilikeplaces.com/page/_muster&client_id=796688826799.apps.googleusercontent.com&hl=en&from_login=1&pli=1"
+                            style="font-size:16px;text-decoration:none;color:red;font-weight:800;">
+                        Click here to invite your contacts from Google <img src="http://www.google.com/favicon.ico" alt="_"/>
+                    </a>
+                </div>
+                <div class="use20">
+                    <div class="g-plusone" data-size="tall"></div>
+                </div>
             </div>
         </div>
         <div class="use90 use5p use5a" id="BateImportResults">

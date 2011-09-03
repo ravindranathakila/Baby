@@ -104,6 +104,7 @@ abstract public class Bate extends AbstractWidgetListener {
                 }
 
                 clear($$(Page.BateImportResults));
+                $$displayNone($$(Controller.Page.BateIntroduction));
 
                 for (final ImportedContact importedContact : whoppingImportedContacts) {
                     if (!existingUsersFromDB.contains(importedContact)) {
@@ -229,10 +230,11 @@ abstract public class Bate extends AbstractWidgetListener {
                 new UserProperty.InviteCriteria(importedContact.getFullName(), "#", "#", currentUser, importedContact)) {
 
             protected void init(final Object... initArgs) {
+
                 new Button(
                         request,
                         $$(Page.user_property_content),
-                        (new ButtonCriteria(false, "Click here to invite..", "#")
+                        (new ButtonCriteria(false, null, "#","padding-left:40%; width:20%; padding-right:40%;" )
                                 .setMetadata(
                                         ((InviteCriteria) initArgs[1]).getInviter(),
                                         ((InviteCriteria) initArgs[1]).getInvitee()))) {
@@ -255,11 +257,17 @@ abstract public class Bate extends AbstractWidgetListener {
 
                             @Override
                             public void handleEvent(final Event evt) {
+
+                                try {
+                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                            myinvitee.getHumanId(),
+                                            "Yep! Invited! (by " + myinviter.getHumanId() + ")",
+                                            getHTMLStringForOfflineFriendInvite(myinviter.getHumanId(), myinvitee.getFullName()));
+                                } catch (final Throwable t) {
+                                    Loggers.EXCEPTION.error("Error sending email", t);
+                                }
+
                                 $$(Page.GenericButtonText).setTextContent("Invited!");
-                                SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(
-                                        myinvitee.getHumanId(),
-                                        "Yep! Invited! (by " + myinviter.getHumanId() + ")",
-                                        "");
 
                                 $$remove(evt, EventType.CLICK, this);
                             }
@@ -283,20 +291,20 @@ abstract public class Bate extends AbstractWidgetListener {
                             ElementComposer.compose(
                                     document.createElement(MarkupTag.DIV.toString())
                             ).$ElementSetText(
-                                    "Hey! You've just been invited into to I LIKE PLACES!\n" +
-                                            "\n" +
-                                            "I LIKE PLACES IS FOR MEETING UP WITH PEOPLE YOU CARE AT INTERESTING PLACES.\n" +
-                                            "IT HELPS YOU FIND INTERESTING PLACES AND ORAGANIZE MOMENTs WITH YOUR FRIENDS AND/OR FAMILY.\n" +
-                                            "THOUGH, I LIKE PLACES IS INVITES ONLY. THIS MEANS YOU NEED TO GET INVITED IN BY SOMEONE WHO CARES ABOUT YOU.\n" +
-                                            "\n" +
-                                            "THIS, HAS JUST HAPPENED.\n" +
-                                            "\n" +
-                                            "Now that you've gotten yourself in, use the following link to activate your account.\n" +
-                                            "\n" +
-                                            "Your temporary password is 1sdfsdfsd.\n" +
-                                            "\n" +
-                                            "Make sure you change it.\n" +
-                                            "\n" +
+                                    "Hey! You've just been invited into to I LIKE PLACES!<br/>" +
+                                            "<br/>" +
+                                            "I like places is for meeting people you care at interesting places.<br/>" +
+                                            "Here, you can find interesting places and organize moments with your friends and family.<br/>" +
+                                            "Though, I like places is invites only. This means you need to get invited in by someone who cares about you.<br/>" +
+                                            "<br/>" +
+                                            "This, has just happened!<br/>" +
+                                            "<br/>" +
+                                            "Now that you've gotten yourself in, use the following link to activate your account.<br/>" +
+                                            "<br/>" +
+                                            "Your temporary password is 1sdfsdfsd.<br/>" +
+                                            "<br/>" +
+                                            "Make sure you change it.<br/>" +
+                                            "<br/>" +
                                             "All the best and, Have Fun in Places!"
 
                             ).getAsNode(),
@@ -305,7 +313,7 @@ abstract public class Bate extends AbstractWidgetListener {
 
 
             return HTMLDocParser.convertNodeToHtml($$(Page.user_property_widget, document));
-        } catch (TransformerException e) {
+        } catch (final Throwable e) {
             throw LogNull.getRuntimeException(e);
         }
 
