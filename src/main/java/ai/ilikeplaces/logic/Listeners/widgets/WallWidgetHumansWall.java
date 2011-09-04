@@ -139,13 +139,6 @@ public class WallWidgetHumansWall extends WallWidget {
                     }
                 }
             }
-
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
         }, false);
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.wallMute), EventType.CLICK.toString(), new EventListener() {
