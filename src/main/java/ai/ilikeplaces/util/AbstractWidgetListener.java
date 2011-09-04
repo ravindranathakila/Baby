@@ -152,7 +152,6 @@ public abstract class AbstractWidgetListener<T> {
     }
 
     /**
-     *
      * @param request__
      * @param page__
      * @param t
@@ -279,6 +278,12 @@ public abstract class AbstractWidgetListener<T> {
         return document__.getElementById(key__);
     }
 
+    /**
+     * This method WILL NOT FETCH ELEMENTS OF OTHER WIDGETS since the {@link #instanceId instanceId} will be different
+     *
+     * @param key__
+     * @return
+     */
     final private Element getWidgetElementById(final String key__) {
         final String elementId__ = Controller.GlobalHTMLIdRegistry.get(key__);
         if (elementId__ == null) {
@@ -482,12 +487,6 @@ public abstract class AbstractWidgetListener<T> {
 
     final static protected Logger logger = LoggerFactory.getLogger(AbstractWidgetListener.class);
 
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
-    }
-
     void $$asyn(final Runnable r) {
         new Thread(r).start();
     }
@@ -507,4 +506,23 @@ public abstract class AbstractWidgetListener<T> {
     public String $$(final ItsNatServletRequest itsNatServletRequest, final String uRLParameter) {
         return itsNatServletRequest.getServletRequest().getParameter(uRLParameter);
     }
+
+
+    /**
+     * @param elementOfWhichIdIsRequired
+     * @return Id of element
+     */
+    final protected String $$getId(final Element elementOfWhichIdIsRequired) {
+        return elementOfWhichIdIsRequired.getAttribute(MarkupTag.GENERIC.id());
+    }
+
+    /**
+     * @param elementOfWhichIdIsRequired
+     * @return Id of element
+     */
+    final protected String $$getId(final String elementOfWhichIdIsRequired) {
+        return $$getId($$(elementOfWhichIdIsRequired));
+    }
+
+
 }
