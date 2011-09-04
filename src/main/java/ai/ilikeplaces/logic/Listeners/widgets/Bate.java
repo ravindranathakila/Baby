@@ -78,14 +78,11 @@ abstract public class Bate extends AbstractWidgetListener {
      */
     @Override
     protected void init(final Object... initArgs) {
+        $$displayNone($(Controller.Page.CPageNotice));
         matches = new Obj<List<HumansIdentity>>(new ArrayList<HumansIdentity>());
         emails = new HashSet<Email>();
         email = new Email("");
         password = new Password("");
-
-//            this.humanId = ((HumanId) initArgs[0]);
-
-//        final HumansNetPeople herExistingFriends = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);//First important variable to notice
 
         UCAttemptToRecognizeGoogleContactImportRedirect:
         {
@@ -297,6 +294,20 @@ abstract public class Bate extends AbstractWidgetListener {
                     }
                 };
             }
+
+            @Override
+            protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+
+                itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.user_property_content), EventType.CLICK.toString(), new EventListener() {
+
+                    @Override
+                    public void handleEvent(final Event evt) {
+                        //$$displayNone($$(Page.user_property_widget));
+                        $$sendJS(JSCodeToSend.jqueryHide($$getId(Page.user_property_widget)));
+                    }
+                }, false);
+
+            }
         };
     }
 
@@ -317,7 +328,7 @@ abstract public class Bate extends AbstractWidgetListener {
                                             "I like places is for meeting people you care at interesting places. " +
                                             "Here, you can find interesting places and organize moments with your friends and family. " +
                                             "You can join I Like Places only through an invite. " +
-                                            "Now that you've gotten yourself in, use the following link to activate your account. " +
+                                            "Now that you've gotten yourself in, use the following link to access I Like Places. " +
                                             "http://www.ilikeplaces.com . " +
                                             "Your temporary password is oiwfbwefx. " +
                                             "Make sure you change it. " +

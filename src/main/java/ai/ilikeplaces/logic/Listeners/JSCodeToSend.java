@@ -60,4 +60,8 @@ final public class JSCodeToSend {
         return "\nwindow.location.href = '" + urlTobeRedirectedTo + "';\n";
 
     }
+
+    public static String jqueryHide(final String elementToAnimateHide) {
+        return "\n$('#" + elementToAnimateHide + "').hide('slow');\n";
+    }
 }
