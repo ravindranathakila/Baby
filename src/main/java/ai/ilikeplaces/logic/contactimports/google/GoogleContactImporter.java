@@ -2,11 +2,13 @@ package ai.ilikeplaces.logic.contactimports.google;
 
 
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
+import ai.ilikeplaces.logic.validators.unit.SimpleName;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Pair;
 import com.google.gdata.client.contacts.ContactsService;
 //import sample.contacts.ContactsExampleParameters.Actions;
 import com.google.gdata.data.Link;
+import com.google.gdata.data.Person;
 import com.google.gdata.data.contacts.*;
 import com.google.gdata.data.extensions.Email;
 import com.google.gdata.data.extensions.ExtendedProperty;
@@ -31,6 +33,127 @@ public class GoogleContactImporter {
     private static final String HTTPS_WWW_GOOGLE_COM_M8_FEEDS_CONTACTS = "https://www.google.com/m8/feeds/contacts/";
     private static final String RESULT_LIMIT = RBGet.getGlobalConfigKey("GOOGLE_CONTACTS_RESULT_LIMIT");
     private static final String FULL_MAX_RESULTS_1000 = "/full?max-results=" + RESULT_LIMIT;
+
+    public static Pair<ai.ilikeplaces.logic.validators.unit.Email, List<ImportedContact>> fetchContacts(final String emailToImportFrom, final String authSubToken) {
+
+        final ContactFeed resultFeed = getResultFeed(emailToImportFrom, authSubToken);
+
+        final List<ImportedContact> importedContacts = getContracts(resultFeed);
+
+        return new Pair<ai.ilikeplaces.logic.validators.unit.Email, List<ImportedContact>>(new ai.ilikeplaces.logic.validators.unit.Email(resultFeed.getId()), importedContacts);
+
+    }
+
+    public static Pair<SimpleName, List<ImportedContact>> fetchContactsWithAuthorName(final String emailToImportFrom, final String authSubToken) {
+
+        final ContactFeed resultFeed = getResultFeed(emailToImportFrom, authSubToken);
+
+        final List<ImportedContact> importedContacts = getContracts(resultFeed);
+
+        return new Pair<SimpleName, List<ImportedContact>>(new SimpleName(resultFeed.getAuthors().get(0).getName()), importedContacts);
+
+    }
+    public static Pair<Person, List<ImportedContact>> fetchContactsWithAuthor(final String emailToImportFrom, final String authSubToken) {
+
+        final ContactFeed resultFeed = getResultFeed(emailToImportFrom, authSubToken);
+
+        final List<ImportedContact> importedContacts = getContracts(resultFeed);
+
+        return new Pair<Person, List<ImportedContact>>(resultFeed.getAuthors().get(0), importedContacts);
+
+    }
+
+    private static List<ImportedContact> getContracts(ContactFeed resultFeed) {
+        final List<ImportedContact> importedContacts = new ArrayList<ImportedContact>();
+
+        CONTACTS:
+        for (ContactEntry entry : resultFeed.getEntries()) {
+
+            final ImportedContact contact = new ImportedContact();
+
+            SetEmail:
+            {
+                Email alternateEmail = null;
+                for (final Email email : entry.getEmailAddresses()) {
+                    if (email.getPrimary()) {
+                        contact.setEmail(email.getAddress());
+                    } else {
+                        alternateEmail = email;
+                    }
+                }
+
+                if (contact.getEmail() == null) {
+                    if (alternateEmail != null) {
+                        contact.setEmail(alternateEmail.getAddress());
+                    } else {
+                        continue CONTACTS;
+                    }
+                }
+            }
+
+
+            SetName:
+            {
+                if (entry.hasName()) {
+                    Name name = entry.getName();
+                    if (name.hasFullName()) { //This should work based on result inspection. The bean seems to combine the data and return here.
+                        String nameToDisplay = name.getFullName().getValue();
+                        if (name.getFullName().hasYomi()) {
+                            nameToDisplay += "" + name.getFullName().getYomi();
+                        }
+                        contact.setFullName(nameToDisplay);
+                    } else {
+                        String nameToDisplay = "";
+                        if (name.hasAdditionalName()) {
+                            nameToDisplay += name.getAdditionalName().getValue() + " ";
+                            if (name.getAdditionalName().hasYomi()) {
+                                nameToDisplay += name.getAdditionalName().getYomi() + " ";
+                            }
+                        }
+
+                        if (name.hasFamilyName()) {
+                            nameToDisplay += name.getFamilyName().getValue() + " ";
+                            if (name.getFamilyName().hasYomi()) {
+                                nameToDisplay += " " + name.getFamilyName().getYomi() + " ";
+                            }
+                        }
+                        contact.setFullName(nameToDisplay);//if name="" we are screwed, but we're used to it aren't we
+                    }
+
+                } else {
+                    //now what!
+                }
+            }
+
+            importedContacts.add(contact);
+        }
+        return importedContacts;
+    }
+
+    private static ContactFeed getResultFeed(String emailToImportFrom, String authSubToken) {
+        final ContactsService myService = new ContactsService(ILIKEPLACES_COM);//
+        myService.setAuthSubToken(authSubToken, null/*This sucks, so I passed null and it worked!*/);
+
+
+        // Request the feed
+        final URL feedUrl;
+        try {
+            feedUrl = new URL(HTTPS_WWW_GOOGLE_COM_M8_FEEDS_CONTACTS + emailToImportFrom + FULL_MAX_RESULTS_1000);
+        } catch (final MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+        final ContactFeed resultFeed;
+        try {
+            resultFeed = myService.getFeed(feedUrl, ContactFeed.class);
+        } catch (final ServiceException e) {
+            throw new RuntimeException(e);
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+        return resultFeed;
+    }
+
 
 //    private enum SystemGroup {
 //        MY_CONTACTS("Contacts", "My Contacts"),
@@ -716,105 +839,4 @@ public class GoogleContactImporter {
         }
     }
 
-    public static Pair<ai.ilikeplaces.logic.validators.unit.Email, List<ImportedContact>> fetchContacts(final String emailToImportFrom, final String authSubToken) {
-
-        final ContactsService myService = new ContactsService(ILIKEPLACES_COM);//
-        myService.setAuthSubToken(authSubToken, null/*This sucks, so I passed null and it worked!*/);
-
-
-        // Request the feed
-        final URL feedUrl;
-        try {
-            feedUrl = new URL(HTTPS_WWW_GOOGLE_COM_M8_FEEDS_CONTACTS + emailToImportFrom + FULL_MAX_RESULTS_1000);
-        } catch (final MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-
-        final ContactFeed resultFeed;
-        try {
-            resultFeed = myService.getFeed(feedUrl, ContactFeed.class);
-        } catch (final ServiceException e) {
-            throw new RuntimeException(e);
-        } catch (final IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        final List<ImportedContact> importedContacts = new ArrayList<ImportedContact>();
-
-        CONTACTS:
-        for (ContactEntry entry : resultFeed.getEntries()) {
-
-            final ImportedContact contact = new ImportedContact();
-
-            SetEmail:
-            {
-                Email alternateEmail = null;
-                for (final Email email : entry.getEmailAddresses()) {
-                    if (email.getPrimary()) {
-                        contact.setEmail(email.getAddress());
-                    } else {
-                        alternateEmail = email;
-                    }
-                }
-
-                if (contact.getEmail() == null) {
-                    if (alternateEmail != null) {
-                        contact.setEmail(alternateEmail.getAddress());
-                    } else {
-                        continue CONTACTS;
-                    }
-                }
-            }
-
-
-            SetName:
-            {
-                if (entry.hasName()) {
-                    Name name = entry.getName();
-                    if (name.hasFullName()) { //This should work based on result inspection. The bean seems to combine the data and return here.
-                        String nameToDisplay = name.getFullName().getValue();
-                        if (name.getFullName().hasYomi()) {
-                            nameToDisplay += "" + name.getFullName().getYomi();
-                        }
-                        contact.setFullName(nameToDisplay);
-                    } else {
-                        String nameToDisplay = "";
-                        if (name.hasAdditionalName()) {
-                            nameToDisplay += name.getAdditionalName().getValue() + " ";
-                            if (name.getAdditionalName().hasYomi()) {
-                                nameToDisplay += name.getAdditionalName().getYomi() + " ";
-                            }
-                        }
-
-                        if (name.hasFamilyName()) {
-                            nameToDisplay += name.getFamilyName().getValue() + " ";
-                            if (name.getFamilyName().hasYomi()) {
-                                nameToDisplay += " " + name.getFamilyName().getYomi() + " ";
-                            }
-                        }
-                        contact.setFullName(nameToDisplay);//if name="" we are screwed, but we're used to it aren't we
-                    }
-
-                } else {
-                    //now what!
-                }
-            }
-
-            //The photo business seems fishy
-//            Link photoLink = entry.getContactPhotoLink();
-//            String photoLinkHref = photoLink.getHref();
-//            System.out.println("Photo Link: " + photoLinkHref);
-//
-//            if (photoLink.getEtag() != null) {
-//                System.out.println("Contact Photo's ETag: " + photoLink.getEtag());
-//            }
-//
-//            System.out.println("Contact's ETag: " + entry.getEtag());
-
-            importedContacts.add(contact);
-        }
-
-        return new Pair<ai.ilikeplaces.logic.validators.unit.Email, List<ImportedContact>>(new ai.ilikeplaces.logic.validators.unit.Email(resultFeed.getId()), importedContacts);
-
-    }
 }

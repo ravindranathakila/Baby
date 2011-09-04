@@ -11,11 +11,13 @@ import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
+import ai.ilikeplaces.logic.validators.unit.SimpleName;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
+import com.google.gdata.data.Person;
 import net.sf.oval.Validator;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
@@ -34,6 +36,13 @@ import java.text.MessageFormat;
 import java.util.*;
 
 /**
+ * You know, having everything on one place promotes readability. This class is full of inner classes because of that.
+ * However, if you see it as a mess, you are probably not the "get the overall picture" type. So do some refactoring.
+ * Use a good IDE and move the abstract classes to separate ones. I'd go with IntellJ. Good luck. God speed!
+ * <p/>
+ * Oh one more thing, varargs contructurs and alike were a design decision made at the very begining of ilikeplaces to
+ * promote agility. It has helped a lot since. Still helps. So learn to deal with it.
+ *
  * @author Ravindranath Akila
  */
 
@@ -48,6 +57,7 @@ abstract public class Bate extends AbstractWidgetListener {
     final private Logger logger = LoggerFactory.getLogger(FindFriend.class.getName());
 
     HumanId humanId;
+    SimpleName humansName;
 
     RefObj<List<HumansIdentity>> matches = null;
 
@@ -87,8 +97,9 @@ abstract public class Bate extends AbstractWidgetListener {
                 final List<ImportedContact> whoppingImportedContacts;//Second important variable to notice
                 Import_Google_Contacts__Add_To_Emails_List:
                 {
-                    Pair<Email, List<ImportedContact>> emailListPair = GoogleContactImporter.fetchContacts(DEFAULT, authToken);
-                    this.humanId = new HumanId(emailListPair.getKey().getObjectAsValid());
+                    Pair<Person, List<ImportedContact>> emailListPair = GoogleContactImporter.fetchContactsWithAuthor(DEFAULT, authToken);
+                    this.humanId = new HumanId(emailListPair.getKey().getEmail());
+                    this.humansName = new SimpleName(emailListPair.getKey().getName());
                     whoppingImportedContacts = emailListPair.getValue();
 
                     for (final ImportedContact importedContact : whoppingImportedContacts) {//LOOPING A WHOPPING 1000
@@ -108,7 +119,7 @@ abstract public class Bate extends AbstractWidgetListener {
 
                 for (final ImportedContact importedContact : whoppingImportedContacts) {
                     if (!existingUsersFromDB.contains(importedContact)) {
-                        generateFriendInviteWidgetFor(importedContact, humanId);
+                        generateFriendInviteWidgetFor(importedContact, humanId, humansName);
                     }
                 }
             }
@@ -222,30 +233,38 @@ abstract public class Bate extends AbstractWidgetListener {
         };
     }
 
-    private void generateFriendInviteWidgetFor(final ImportedContact importedContact, final HumanId currentUser) {
+    private void generateFriendInviteWidgetFor(final ImportedContact importedContact, final HumanId currentUser, final SimpleName humansName) {
         new UserProperty(
                 request,
                 $$(Page.BateImportResults),
                 ElementComposer.compose($$(MarkupTag.BR)).get(),
-                new UserProperty.InviteCriteria(importedContact.getFullName(), "#", "#", currentUser, importedContact)) {
+                new UserProperty.InviteCriteria(
+                        importedContact.getFullName(),//This name is of the person being invited(invitee), not the inviter
+                        "#",
+                        "#",
+                        currentUser,
+                        importedContact)) {
 
             protected void init(final Object... initArgs) {
 
                 new Button(
                         request,
                         $$(Page.user_property_content),
-                        (new ButtonCriteria(false, null, "#","padding-left:40%; width:20%; padding-right:40%;" )
+                        (new ButtonCriteria(false, "Invite", "#", "padding-left:0%; width:20%; padding-right:80%;")
                                 .setMetadata(
                                         ((InviteCriteria) initArgs[1]).getInviter(),
-                                        ((InviteCriteria) initArgs[1]).getInvitee()))) {
+                                        ((InviteCriteria) initArgs[1]).getInvitee(),
+                                        ((InviteCriteria) initArgs[1]).getDisplayName()))) {
 
                     private HumanId inviter;
                     private ImportedContact invitee;
+                    private String invitersName;
 
                     @Override
                     protected void init(final ButtonCriteria buttonCriteria) {
                         inviter = (HumanId) buttonCriteria.getMetadata()[0];
                         invitee = (ImportedContact) buttonCriteria.getMetadata()[1];
+                        invitersName = (String) buttonCriteria.getMetadata()[2];
                     }
 
                     @Override
@@ -254,15 +273,18 @@ abstract public class Bate extends AbstractWidgetListener {
                         itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.GenericButtonLink), EventType.CLICK.toString(), new EventListener() {
                             private HumanId myinviter = inviter;
                             private ImportedContact myinvitee = invitee;
+                            private String myinvitersName = invitersName;
 
                             @Override
                             public void handleEvent(final Event evt) {
 
                                 try {
+                                    String htmlBody = getHTMLStringForOfflineFriendInvite(myinvitersName, myinvitee.getFullName());
+                                    Loggers.INFO.info(htmlBody);
                                     SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
                                             myinvitee.getHumanId(),
-                                            "Yep! Invited! (by " + myinviter.getHumanId() + ")",
-                                            getHTMLStringForOfflineFriendInvite(myinviter.getHumanId(), myinvitee.getFullName()));
+                                            "Invitation from " + myinvitersName,
+                                            htmlBody);
                                 } catch (final Throwable t) {
                                     Loggers.EXCEPTION.error("Error sending email", t);
                                 }
@@ -284,29 +306,22 @@ abstract public class Bate extends AbstractWidgetListener {
             final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + Controller.USER_PROPERTY_EMAIL_XHTML);
 
             $$(Controller.Page.user_property_name, document).setTextContent(inviter);
-            $$(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), "#");
+            $$(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), "http://www.ilikeplaces.com");
             $$(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(), UserProperty.formatProfilePhotoUrl("#"));
             $$(Controller.Page.user_property_content, document).appendChild(
                     document.importNode(
                             ElementComposer.compose(
                                     document.createElement(MarkupTag.DIV.toString())
                             ).$ElementSetText(
-                                    "Hey! You've just been invited into to I LIKE PLACES!<br/>" +
-                                            "<br/>" +
-                                            "I like places is for meeting people you care at interesting places.<br/>" +
-                                            "Here, you can find interesting places and organize moments with your friends and family.<br/>" +
-                                            "Though, I like places is invites only. This means you need to get invited in by someone who cares about you.<br/>" +
-                                            "<br/>" +
-                                            "This, has just happened!<br/>" +
-                                            "<br/>" +
-                                            "Now that you've gotten yourself in, use the following link to activate your account.<br/>" +
-                                            "<br/>" +
-                                            "Your temporary password is 1sdfsdfsd.<br/>" +
-                                            "<br/>" +
-                                            "Make sure you change it.<br/>" +
-                                            "<br/>" +
-                                            "All the best and, Have Fun in Places!"
-
+                                    "Hey! " + inviter + " has just invited you into to I LIKE PLACES! " +
+                                            "I like places is for meeting people you care at interesting places. " +
+                                            "Here, you can find interesting places and organize moments with your friends and family. " +
+                                            "You can join I Like Places only through an invite. " +
+                                            "Now that you've gotten yourself in, use the following link to activate your account. " +
+                                            "http://www.ilikeplaces.com . " +
+                                            "Your temporary password is oiwfbwefx. " +
+                                            "Make sure you change it. " +
+                                            "All the best and Have Fun! "
                             ).getAsNode(),
                             true)
             );
