@@ -290,6 +290,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
             message.setSubject(simpleTextSubject);
             message.setContent(htmlBody, TEXT_HTML);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recepientEmail));
+            message.addRecipient(Message.RecipientType.CC, new InternetAddress(RBGet.globalConfig.getString("noti_app_mail")));
 
             r = new ReturnImpl<Boolean>(finalSend(message), "Mail sending to " + recepientEmail + " successful!");
 
@@ -331,6 +332,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
             message.setSubject(simpleTextSubject);
 
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recepientEmail));
+            message.addRecipient(Message.RecipientType.CC, new InternetAddress(RBGet.globalConfig.getString("noti_app_mail")));
 
 
             final MimeBodyPart textPart = new MimeBodyPart();
@@ -370,6 +372,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
             message.setSubject(simpleTextSubject);
 
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recepientEmail));
+            message.addRecipient(Message.RecipientType.CC, new InternetAddress(RBGet.globalConfig.getString("noti_app_mail")));
 
 
             final MimeBodyPart textPart = new MimeBodyPart();
