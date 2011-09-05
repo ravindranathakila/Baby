@@ -13,6 +13,16 @@ import ai.ilikeplaces.util.jpa.RefreshSpec;
  * Time: 10:26 PM
  */
 public interface GeneralCRUDWall {
+
+    /**
+     *
+     * @param operator
+     * @param msgOwner__ The (usually non-living) entity which owns this wall.
+     * It is usually something like a {@link ai.ilikeplaces.entities.PrivateEvent PrivateEvent}
+     * @param wallOwnerId__
+     * @param contentToBeAppended
+     * @return
+     */
     public Return<Wall> addEntryToWall(final HumanId operator, final HumanId msgOwner__, final Obj wallOwnerId__, final String contentToBeAppended);
 
     public Return<Wall> muteWall(final HumanId operator, final HumanId mutee__, final Obj wallOwnerId__);
