@@ -324,11 +324,11 @@ abstract public class Bate extends AbstractWidgetListener {
                             ElementComposer.compose(
                                     document.createElement(MarkupTag.DIV.toString())
                             ).$ElementSetText(
-                                    "Hey! " + inviter + " has just invited you into to I LIKE PLACES! " +
-                                            "I like places is for meeting people you care at interesting places. " +
-                                            "Here, you can find interesting places and organize moments with your friends and family. " +
+                                    "Hey! " + inviter + " has just invited you to I LIKE PLACES! " +
+                                            "The website is for meeting people you care at interesting places. " +
+                                            "In it, you can find interesting places and organize moments with your friends and family. " +
                                             "You can join I Like Places only through an invite. " +
-                                            "Now that you've gotten yourself in, use the following link to access I Like Places. " +
+                                            "Now that " + inviter + " has gotten you in, use the following link to access I Like Places. " +
                                             "http://www.ilikeplaces.com . " +
                                             "Your temporary password is oiwfbwefx. " +
                                             "Make sure you change it. " +
