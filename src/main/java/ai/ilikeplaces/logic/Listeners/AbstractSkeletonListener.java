@@ -94,7 +94,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                     setMainTitle:
                     {
                         $(skeletonTitle).setTextContent(
-                                        RBGet.globalConfig.getString(CODENAME_KEY));
+                                RBGet.globalConfig.getString(CODENAME_KEY));
                     }
                     setMetaDescription:
                     {
@@ -144,7 +144,11 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                         final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(new HumanId(getUsername()).getSelfAsValid());
                         if (r.returnStatus() == 0) {
                             final HumansIdentity hi = r.returnValue();
-                            $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(), ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+                            $(Skeleton_profile_photo).setAttribute(
+                                    MarkupTag.IMG.src(),
+                                    hi.getHumansIdentityProfilePhoto() == null || hi.getHumansIdentityProfilePhoto().isEmpty() ?
+                                            RBGet.getGlobalConfigKey("PROFILE_PHOTO_DEFAULT") : hi.getHumansIdentityProfilePhoto()
+                            );
                             $(Skeleton_othersidebar_wall_link).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
                         }
                     }
