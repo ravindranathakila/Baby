@@ -84,12 +84,20 @@ final public class Loggers {
      */
     final static public Logger ERROR = LoggerFactory.getLogger("EXCEPTION");
 
+    final static public void error(final String message, final Throwable throwable) {
+        ERROR.error(message, throwable);
+    }
+
 
     /**
      * Exceptions and Errors in one logger is easy for monitoring
      * DO NOT ASSIGN THIS TO A NEW LOGGER. POINT TO {@link #ERROR ERROR} INSTEAD.
      */
     final static public Logger EXCEPTION = ERROR;
+
+    final static public void exception(final String message, final Exception exception) {
+        EXCEPTION.error(message, exception);
+    }
 
 
     /**
@@ -109,15 +117,27 @@ final public class Loggers {
      */
     final static public Logger DEBUG = LoggerFactory.getLogger("DEBUG");
 
+    final static public void debug(final String message) {
+        DEBUG.debug(message);
+    }
+
     /**
      * Just for ease of user instead of creating loggers everywhere
      */
     final static public Logger INFO = LoggerFactory.getLogger("INFO");
 
+    final static public void info(final String message) {
+        INFO.info(message);
+    }
+
     /**
      * Just for ease of user instead of creating loggers everywhere
      */
     final static public Logger WARN = LoggerFactory.getLogger("WARN");
+
+    final static public void warn(final String message) {
+        WARN.warn(message);
+    }
 
     static public Object ifNullToString(final Object object) {
         return object != null ? object : NULL;
@@ -165,7 +185,7 @@ final public class Loggers {
                 Loggers.USER.info(message, obj);
                 break;
             case USER_EXCEPTION:
-                Loggers.USER_EXCEPTION.error(message,  obj instanceof Throwable ? (Throwable) obj : new Throwable(obj.toString()));
+                Loggers.USER_EXCEPTION.error(message, obj instanceof Throwable ? (Throwable) obj : new Throwable(obj.toString()));
                 break;
             case NON_USER:
                 Loggers.NON_USER.info(message, obj);
