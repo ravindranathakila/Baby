@@ -2,7 +2,7 @@
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
 <node CREATED="1304339998591" ID="Freemind_Link_647673425" MODIFIED="1311781013984" TEXT="X Culture">
 <font NAME="Comic Sans MS" SIZE="12"/>
-<node CREATED="1304603299475" ID="Freemind_Link_1783261531" MODIFIED="1311725727109" POSITION="right" TEXT="2011">
+<node CREATED="1304603299475" FOLDED="true" ID="Freemind_Link_1783261531" MODIFIED="1315235880671" POSITION="right" TEXT="2011">
 <node CREATED="1304603326396" FOLDED="true" ID="Freemind_Link_1527518165" MODIFIED="1308574702484" TEXT="Executive Summary of Adimpression 2011">
 <font BOLD="true" NAME="SansSerif" SIZE="18"/>
 <node CREATED="1304603337849" ID="Freemind_Link_992763483" MODIFIED="1304689575213" TEXT="We all started this with location based advertising.">
@@ -447,7 +447,7 @@
 <node CREATED="1308576068484" ID="ID_350212599" MODIFIED="1308576073187" TEXT="Day #6"/>
 <node CREATED="1308576073968" ID="ID_1629873335" MODIFIED="1308576077453" TEXT="Day #6"/>
 </node>
-<node CREATED="1311725751015" ID="ID_1943479223" MODIFIED="1313295271046" TEXT="Stranger to Family(STF)">
+<node CREATED="1311725751015" FOLDED="true" ID="ID_1943479223" MODIFIED="1315235238015" TEXT="Stranger to Family(STF)">
 <node CREATED="1311725791531" ID="ID_1754606262" MODIFIED="1311727905281" TEXT="Find - Stranger" VSHIFT="4">
 <node CREATED="1311725806734" ID="ID_876782830" MODIFIED="1311727941343" TEXT="(Opinion)Has no interest in us">
 <arrowlink DESTINATION="ID_599899531" ENDARROW="Default" ENDINCLINATION="115;0;" ID="Arrow_ID_1890615911" STARTARROW="None" STARTINCLINATION="115;0;"/>
@@ -938,7 +938,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1307245389165" ID="ID_310356034" MODIFIED="1313758685718" POSITION="left" TEXT="The Four Usual Suspects(FUS) - The Bars We Set The Highest">
+<node CREATED="1307245389165" FOLDED="true" ID="ID_310356034" MODIFIED="1315237060484" POSITION="left" TEXT="The Four Usual Suspects(FUS) - The Bars We Set The Highest">
 <icon BUILTIN="wizard"/>
 <node CREATED="1307245411745" ID="ID_944727217" MODIFIED="1307246182542" TEXT="Analyzing the problem, it&apos;s boundaries and limitations.(FUS1)"/>
 <node CREATED="1307245454483" ID="ID_1892067123" MODIFIED="1307245962697" TEXT="Least effort to solution(FUS2)">
@@ -947,7 +947,7 @@
 </node>
 <node CREATED="1308449112937" ID="ID_1573290525" MODIFIED="1308449139015" TEXT="Least Check Points in Neural Pathway"/>
 </node>
-<node CREATED="1307245463296" ID="ID_222575109" MODIFIED="1307245968432" TEXT="Consistent and quality updates(FUS3)">
+<node CREATED="1307245463296" FOLDED="true" ID="ID_222575109" MODIFIED="1315237041859" TEXT="Consistent and quality updates(FUS3)">
 <node CREATED="1308449041500" FOLDED="true" ID="ID_1507474408" MODIFIED="1308449088718" TEXT="Action Confirmations">
 <node CREATED="1308449071406" ID="ID_317078212" MODIFIED="1308449077109" TEXT="Confirm the action the user just did"/>
 </node>
@@ -955,19 +955,19 @@
 <node CREATED="1308449078296" ID="ID_1919213808" MODIFIED="1308449083468" TEXT="Tell the user what to expect"/>
 </node>
 </node>
-<node CREATED="1307245481813" ID="ID_1606485639" MODIFIED="1307245976026" TEXT="Anthropomorphic design and movement(FUS4)">
+<node CREATED="1307245481813" ID="ID_1606485639" MODIFIED="1315237036765" TEXT="Anthropomorphic design and movement(FUS4)">
 <node CREATED="1307969679296" ID="ID_1169519293" MODIFIED="1310086122124" TEXT="Assimilation and Neural Surfing">
 <node CREATED="1313758725125" ID="ID_1051967656" MODIFIED="1313758738078" TEXT="Cat Alive"/>
 </node>
 <node CREATED="1307969691890" ID="ID_38462006" MODIFIED="1307969698296" TEXT="Curvature"/>
 <node CREATED="1307969698765" ID="ID_1070674711" MODIFIED="1307969700750" TEXT="Cleavage"/>
-<node CREATED="1307969968671" ID="ID_1867470405" MODIFIED="1307970254687" TEXT="The Golden Ratio">
+<node CREATED="1307969968671" FOLDED="true" ID="ID_1867470405" MODIFIED="1315237029468" TEXT="The Golden Ratio">
 <node CREATED="1307970225984" ID="ID_1143060069" LINK="http://www.msnbc.msn.com/id/34482178/ns/health-skin_and_beauty/t/ideal-beauty-matter-millimeters-study-says/" MODIFIED="1307970296171" TEXT="1"/>
 <node CREATED="1307970242390" ID="ID_1728394564" LINK="http://goldennumber.net/face.htm" MODIFIED="1307970302546" TEXT="2"/>
 </node>
 </node>
 </node>
-<node CREATED="1306057065799" FOLDED="true" ID="Freemind_Link_169183248" MODIFIED="1311725493265" POSITION="left" TEXT="The Homo Sapient Effects">
+<node CREATED="1306057065799" FOLDED="true" ID="Freemind_Link_169183248" MODIFIED="1315237050171" POSITION="left" TEXT="The Homo Sapient Effects">
 <icon BUILTIN="wizard"/>
 <node CREATED="1306057098581" ID="Freemind_Link_830418307" MODIFIED="1306058607262" TEXT="Emotion">
 <richcontent TYPE="NOTE"><html><head/><body><p>Emotion, triggered by the most basic system in the brain, overrides logic.<br/>If you can trigger an emotion in your favor, you've done a good job.</p></body></html></richcontent>
@@ -979,12 +979,50 @@
 <node CREATED="1306059446454" ID="Freemind_Link_531177503" MODIFIED="1306059906212" TEXT="Curiosity and Amusement"/>
 <node CREATED="1306059451360" ID="Freemind_Link_209948448" MODIFIED="1306059452860" TEXT="Faith"/>
 </node>
-<node CREATED="1283703177927" FOLDED="true" ID="Freemind_Link_1817341781" MODIFIED="1313758683578" POSITION="left" TEXT="Flat Zeroeth Checklist">
+<node CREATED="1315237171734" FOLDED="true" ID="ID_1252855715" MODIFIED="1315237360546" POSITION="left" TEXT="Modes">
+<icon BUILTIN="wizard"/>
+<node CREATED="1315237179343" ID="ID_1107378700" MODIFIED="1315237183859" TEXT="Bitch Mode">
+<node CREATED="1315237103562" ID="ID_491572224" MODIFIED="1315237108515" TEXT="The Bitch Effect">
+<node CREATED="1315237111656" ID="ID_1777496350" MODIFIED="1315237127031">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <div>
+      <span style="font-variant: normal; font-family: Arial; color: rgb(0, 0, 0); font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none" id="internal-source-marker_0.9975473885424435"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">Remember the movie &quot;500 Days of Summer&quot;? The bitch effect is in such context. With luck you've had that experience. I've been lucky. </font></span><br /><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">She appears to be very proud and smiling, yet very easily approachable and engage-able.</font></span><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">Doesn't command pride, rather demands it through character.</font></span><br /><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">She is intelligent and shows it in a very affectionate matter.</font></span><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">Doesn't command intelligence, rather demands it through character.</font></span><br /><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">She cares in the most ultimate human sense and will show no attachment due to it. She will show attachment when care is the least needed.</font></span><br /><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">She will always love some inexplicable person but will appear to be more probable to fall for you by either showing interest in others or to you.</font></span><br /><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">That my son, is the bitch effect.</font></span><br /><br /><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">Points of Concern when applying to marketing:</font></span><br /><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">Gender attraction will be unavailable</font></span><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">Behavior might be hard to simulate</font></span>
+    </div>
+  </body>
+</html></richcontent>
+</node>
+</node>
+</node>
+<node CREATED="1315237188406" ID="ID_1181924656" MODIFIED="1315237190484" TEXT="Cat Mode">
+<node CREATED="1315237200421" ID="ID_1325284596" MODIFIED="1315237204890" TEXT="The Curiosity Effect">
+<node CREATED="1315237206343" ID="ID_528514010" MODIFIED="1315237209937">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <div>
+      <span style="font-variant: normal; font-family: Arial; color: rgb(0, 0, 0); font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none" id="internal-source-marker_0.5351211798842996"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">Cat doesn't know what the website is for and cat doesn't care</font></span><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">Solution to explain what the website is for</font></span><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">Cat knows what the web the website is for and cares a little bit</font></span><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">Solution to make the cat care</font></span><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">Cat knows and cares about the website but isnt't motivated to use it</font></span><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">Solution to motivate the cat</font></span><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">&#160;</font></span><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">How Melanie/Cheryl/Jennifer/Samantha/Amanda uses I Like Places</font></span><br /><span style="font-variant: normal; color: rgb(0, 0, 0); font-family: Arial; font-weight: normal; vertical-align: baseline; font-style: normal; font-size: 11pt; white-space: pre-wrap; text-decoration: none"><font size="11pt" face="Arial" color="rgb(0, 0, 0)">How Paul/Adam/David/Steven/Clint/James/Justin uses I Like Places</font></span>
+    </div>
+  </body>
+</html></richcontent>
+</node>
+</node>
+</node>
+<node CREATED="1315237222125" ID="ID_832057070" MODIFIED="1315237225703" TEXT="The Alien Mode">
+<node CREATED="1315237226203" ID="ID_1279433772" MODIFIED="1315237233171" TEXT="The Human Species"/>
+</node>
+</node>
+<node CREATED="1283703177927" FOLDED="true" ID="Freemind_Link_1817341781" MODIFIED="1315237052375" POSITION="left" TEXT="Flat Zeroeth Checklist">
 <node CREATED="1285778293411" ID="Freemind_Link_1030747214" MODIFIED="1286031836875" TEXT="Are you being dumb? No? BE DUMB!"/>
 <node CREATED="1283703161521" ID="Freemind_Link_63383641" MODIFIED="1283703168865" TEXT="Does it do what it says?"/>
 <node CREATED="1283703169490" ID="Freemind_Link_499084225" MODIFIED="1283703174943" TEXT="Does it say what is does?"/>
 </node>
-<node CREATED="1308574580515" FOLDED="true" ID="ID_1672056757" MODIFIED="1310086080764" POSITION="left" TEXT="Garbaged">
+<node CREATED="1308574580515" FOLDED="true" ID="ID_1672056757" MODIFIED="1315237055093" POSITION="left" TEXT="Garbaged">
 <node CREATED="1308574609125" ID="ID_722825368" MODIFIED="1308574623953" TEXT="201106201826">
 <node CREATED="1304603299475" ID="ID_1177162653" MODIFIED="1308500719515" TEXT="2011">
 <node CREATED="1304603305990" ID="ID_5648053" MODIFIED="1308500721312" TEXT="May">
@@ -1153,7 +1191,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1306055549893" FOLDED="true" ID="Freemind_Link_1306469091" MODIFIED="1311725541921" POSITION="left" TEXT="Postponed">
+<node CREATED="1306055549893" FOLDED="true" ID="Freemind_Link_1306469091" MODIFIED="1315237056843" POSITION="left" TEXT="Postponed">
 <node CREATED="1289010658744" FOLDED="true" ID="Freemind_Link_1999101897" MODIFIED="1308500780890" TEXT="GUIDE">
 <icon BUILTIN="help"/>
 <node CREATED="1289010668102" ID="Freemind_Link_1280564673" MODIFIED="1289010673273" TEXT="Inception">
@@ -1178,6 +1216,43 @@
 <node CREATED="1294981194506" ID="Freemind_Link_1817130650" MODIFIED="1294981210629" TEXT="This will only be easy with true value products"/>
 </node>
 </node>
+</node>
+</node>
+<node CREATED="1315235257015" ID="ID_1421917318" MODIFIED="1315235787234" POSITION="right" TEXT="0.6 Launch Marketing Plan">
+<node CREATED="1315235920109" ID="ID_1845104154" MODIFIED="1315237387406" TEXT="Resources">
+<icon BUILTIN="password"/>
+<node CREATED="1315235922703" ID="ID_1879092931" MODIFIED="1315235929062" TEXT="Self Email Invites"/>
+<node CREATED="1315235930984" ID="ID_1223376962" MODIFIED="1315235939968" TEXT="Add Spam Emails and then Self Invites"/>
+<node CREATED="1315235941390" ID="ID_1784051826" MODIFIED="1315235973843" TEXT="Google Plus follower link (Intriguing message only)"/>
+<node CREATED="1315235974781" ID="ID_1751368732" MODIFIED="1315235986281" TEXT="Google Plus Panoramio Photo Share"/>
+</node>
+<node CREATED="1315236191781" ID="ID_776353434" MODIFIED="1315236802921" TEXT="Goals">
+<icon BUILTIN="flag-black"/>
+<node CREATED="1315236194046" ID="ID_1415517494" MODIFIED="1315236284078" TEXT="Ubiquuty to appear propogandic and avoid shame among friends. Yes, seriously!"/>
+<node CREATED="1315236213703" ID="ID_876101466" MODIFIED="1315236232515" TEXT="Create a big userbase - atlest this will provide emails"/>
+<node CREATED="1315236233953" ID="ID_1597336209" MODIFIED="1315236259093" TEXT="Jump the chicken and egg - get some content going"/>
+</node>
+<node CREATED="1315236810687" ID="ID_897904101" MODIFIED="1315236813015" TEXT="Workflow">
+<node CREATED="1315235331531" ID="ID_1686864022" MODIFIED="1315235661390" TEXT="September 11- Invite Self Contacts">
+<node CREATED="1315235369296" ID="ID_430174705" MODIFIED="1315235512734" TEXT="500 in 1 day "/>
+</node>
+<node CREATED="1315235338968" ID="ID_1094223728" MODIFIED="1315235847796" TEXT="September 12,13,14,15 - Invite Email Forwarding Contacts and Add Google Follows">
+<node CREATED="1315235526703" ID="ID_1339299528" MODIFIED="1315235549031" TEXT="100 in 1 day"/>
+<node CREATED="1315235794812" ID="ID_166176685" MODIFIED="1315235821843" TEXT="10 Google Follows A Day"/>
+<node CREATED="1315235549562" ID="ID_595627926" MODIFIED="1315235552796" TEXT="100 in 1 day"/>
+<node CREATED="1315235794812" ID="ID_842382580" MODIFIED="1315235826109" TEXT="10 Google Follows A Day"/>
+<node CREATED="1315235553187" ID="ID_1170268253" MODIFIED="1315235556859" TEXT="100 in 1 day"/>
+<node CREATED="1315235794812" ID="ID_1121212134" MODIFIED="1315235829078" TEXT="10 Google Follows A Day"/>
+<node CREATED="1315235557468" ID="ID_1851825890" MODIFIED="1315235562015" TEXT="100 in 1 day"/>
+<node CREATED="1315235794812" ID="ID_1785465625" MODIFIED="1315235811031" TEXT="10 Google Follows A Day"/>
+</node>
+</node>
+<node CREATED="1315236842859" ID="ID_1109258601" MODIFIED="1315237434000" TEXT="Backup Plan">
+<icon BUILTIN="korn"/>
+<node CREATED="1315235986796" ID="ID_691916083" MODIFIED="1315235998312" TEXT="2012 Calendar"/>
+<node CREATED="1315236021546" ID="ID_1663376440" MODIFIED="1315236876125" TEXT="Create Email Forwards of Panoramio and forward to all, linking to ilikeplaces"/>
+<node CREATED="1315236886718" ID="ID_546252555" MODIFIED="1315236893062" TEXT="Advertising Agency"/>
+<node CREATED="1315236894140" ID="ID_1064985890" MODIFIED="1315236904593" TEXT="Span Emails"/>
 </node>
 </node>
 </node>
