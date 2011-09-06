@@ -178,6 +178,8 @@ abstract public class Bate extends AbstractWidgetListener {
 
                                 if (humanCreateReturn.returnValue()) {
 
+                                    UserIntroduction.createIntroData(new HumanId(email.getObj()));
+
                                     final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
                                             .append(ServletLogin.Username, myemail.getObj(), true)
                                             .append(ServletLogin.Password,
