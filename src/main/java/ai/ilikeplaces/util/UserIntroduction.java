@@ -27,18 +27,42 @@ public class UserIntroduction {
                     "TODO",
                     "TODO");
 
+
+            DB.getHumanCrudPrivateEventLocal(false).addEntryToWall(
+                     newUser,
+                     newUser,
+                     new Obj<Long>(privateEventReturn.returnValue().getPrivateEventId()),
+                     "I can delete this event. With deleting goes all stuff in it!");
+
+
+            DB.getHumanCrudPrivateEventLocal(false).addEntryToWall(
+                     newUser,
+                     newUser,
+                     new Obj<Long>(privateEventReturn.returnValue().getPrivateEventId()),
+                     "The stuff on this moment is private to it's members only.");
+
+
+            DB.getHumanCrudPrivateEventLocal(false).addEntryToWall(
+                     newUser,
+                     newUser,
+                     new Obj<Long>(privateEventReturn.returnValue().getPrivateEventId()),
+                     "I should add my friends so that I can invite them to this moment (visit http://www.ilikeplaces.com/page/_friends)");
+
+
+            DB.getHumanCrudPrivateEventLocal(false).addEntryToWall(
+                    newUser,
+                    newUser,
+                    new Obj<Long>(privateEventReturn.returnValue().getPrivateEventId()),
+                    "I should also try uploading and forwarding a photo to see what happens! (see below)");
+
+
             DB.getHumanCrudPrivateEventLocal(false).addEntryToWall(
                     newUser,
                     newUser,
                     new Obj<Long>(privateEventReturn.returnValue().getPrivateEventId()),
                     "I just started a moment at Taj Mahal!");
 
-            DB.getHumanCrudPrivateEventLocal(false).addEntryToWall(
-                    newUser,
-                    newUser,
-                    new Obj<Long>(privateEventReturn.returnValue().getPrivateEventId()),
-                    "I need to add my friends http://www.ilikeplaces.com/page/_friends so that I can invite them to this moment.\"");
-        }
+     }
 
         SettingPersonalWall:
         {
