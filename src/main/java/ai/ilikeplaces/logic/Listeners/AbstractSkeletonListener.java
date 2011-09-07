@@ -147,7 +147,8 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                             $(Skeleton_profile_photo).setAttribute(
                                     MarkupTag.IMG.src(),
                                     hi.getHumansIdentityProfilePhoto() == null || hi.getHumansIdentityProfilePhoto().isEmpty() ?
-                                            RBGet.getGlobalConfigKey("PROFILE_PHOTO_DEFAULT") : hi.getHumansIdentityProfilePhoto()
+                                            RBGet.getGlobalConfigKey("PROFILE_PHOTO_DEFAULT") :
+                                            RBGet.getGlobalConfigKey("PROFILE_PHOTOS") + hi.getHumansIdentityProfilePhoto()
                             );
                             $(Skeleton_othersidebar_wall_link).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
                         }
