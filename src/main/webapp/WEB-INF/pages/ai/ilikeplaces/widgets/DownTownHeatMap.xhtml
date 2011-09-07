@@ -188,14 +188,33 @@ function setClearForLastNotification(){
         "Find Directions",
         "",
         function(){
-            var from = prompt('Where are you starting your journey from?');
+            renderRoute(hotspotClickDetails.latitude,hotspotClickDetails.longitude);
+        },
+        false
+    );
+ }
 
-            directionWorker = ((directionWorker == undefined) ? (new google.maps.DirectionsService()) : directionWorker);
-            directionsDisplay = ((directionsDisplay == undefined) ? (new google.maps.DirectionsRenderer({draggable: true})) : directionsDisplay);
-            directionsDisplay.setMap(GAIA);
-            directionWorker.route({
+ function renderRouteFromURL(){
+        var toLatLng = gup('toLatLng');
+        var toLat = toLatLng.split(',')[0];
+        var toLng = toLatLng.split(',')[1];
+        if(!toLat || !toLng){
+          return;
+        }
+
+        renderRoute(toLat,toLng);
+ }
+
+ setTimeout('renderRouteFromURL()',5000);
+
+ function renderRoute(toLat,toLng){
+
+         setUpDirectionStuff();
+
+         var from  = prompt('Where are you starting your journey from?');
+         directionWorker.route({
                     origin:from,
-                    destination:new google.maps.LatLng(hotspotClickDetails.latitude,hotspotClickDetails.longitude),
+                    destination:new google.maps.LatLng(toLat,toLng),
                     travelMode:google.maps.TravelMode.DRIVING
                 },
                 function(response,status){
@@ -206,11 +225,16 @@ function setClearForLastNotification(){
                         alert(status);
                     }
                 }
-            );
-        },
-        false
-    );
+         );
+
  }
+
+ function setUpDirectionStuff(){//Chose stuff over handler, manager, initializer. Lately starting to hate too techy words;)
+        directionWorker = ((directionWorker == undefined) ? (new google.maps.DirectionsService()) : directionWorker);
+        directionsDisplay = ((directionsDisplay == undefined) ? (new google.maps.DirectionsRenderer({draggable: true})) : directionsDisplay);
+        directionsDisplay.setMap(GAIA);
+ }
+
  function hotSpotMouseEnter(hotspotMouseEnterDetails){//WARNING! used in java
     setNotification(hotspotMouseEnterDetails.commonName);
  }
