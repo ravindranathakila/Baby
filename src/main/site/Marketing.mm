@@ -1,8 +1,8 @@
 <map version="0.9.0">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node CREATED="1304339998591" ID="Freemind_Link_647673425" MODIFIED="1311781013984" TEXT="X Culture">
+<node CREATED="1304339998591" ID="Freemind_Link_647673425" MODIFIED="1315400697937" TEXT="X Culture">
 <font NAME="Comic Sans MS" SIZE="12"/>
-<node CREATED="1304603299475" FOLDED="true" ID="Freemind_Link_1783261531" MODIFIED="1315235880671" POSITION="right" TEXT="2011">
+<node CREATED="1304603299475" FOLDED="true" ID="Freemind_Link_1783261531" MODIFIED="1315400695625" POSITION="right" TEXT="2011">
 <node CREATED="1304603326396" FOLDED="true" ID="Freemind_Link_1527518165" MODIFIED="1308574702484" TEXT="Executive Summary of Adimpression 2011">
 <font BOLD="true" NAME="SansSerif" SIZE="18"/>
 <node CREATED="1304603337849" ID="Freemind_Link_992763483" MODIFIED="1304689575213" TEXT="We all started this with location based advertising.">
@@ -660,7 +660,7 @@
 </node>
 <node CREATED="1306059000951" ID="Freemind_Link_892883600" MODIFIED="1306060190286" TEXT="Warriors"/>
 </node>
-<node COLOR="#338800" CREATED="1306055485112" FOLDED="true" ID="Freemind_Link_232833227" MODIFIED="1313298456905" POSITION="left" TEXT="The Golden Circle(GOC)">
+<node COLOR="#338800" CREATED="1306055485112" FOLDED="true" ID="Freemind_Link_232833227" MODIFIED="1315400694406" POSITION="left" TEXT="The Golden Circle(GOC)">
 <icon BUILTIN="wizard"/>
 <node COLOR="#cccccc" CREATED="1306059400723" ID="Freemind_Link_1586088254" MODIFIED="1306059827150" TEXT="Penetrated">
 <arrowlink DESTINATION="Freemind_Link_232833227" ENDARROW="Default" ENDINCLINATION="84;0;" ID="Freemind_Arrow_Link_1101734140" STARTARROW="None" STARTINCLINATION="84;0;"/>
