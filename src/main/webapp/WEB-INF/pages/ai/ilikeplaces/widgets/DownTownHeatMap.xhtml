@@ -205,8 +205,6 @@ function setClearForLastNotification(){
         renderRoute(toLat,toLng);
  }
 
- setTimeout('renderRouteFromURL()',5000);
-
  function renderRoute(toLat,toLng){
 
          setUpDirectionStuff();
@@ -222,7 +220,7 @@ function setClearForLastNotification(){
                         directionsDisplay.setDirections(response);
                         setNotification("Did you know you can drag direction markers?");
                     }else{
-                        alert(status);
+                        alert('Couldn\'t find the place you gave :-(');
                     }
                 }
          );
@@ -628,6 +626,21 @@ function initialize_DownTownHeatMap_map(){
 }
 
 initialize_gmap_scripts_done = false;
+
+if(initialize_gmap_scripts_done){
+    renderRouteFromURL()
+}else{
+    try{
+       setTimeout('renderRouteFromURL()',5000);
+    }catch(err){
+       try{
+          setTimeout('renderRouteFromURL()',10000);
+       }catch(err){
+           //to hell with it!
+       }
+    }
+}
+
 
 function initialize_gmap_scripts(){//wise any changes also to initialize_gmap_scripts_transparently
     if(!initialize_gmap_scripts_done){
