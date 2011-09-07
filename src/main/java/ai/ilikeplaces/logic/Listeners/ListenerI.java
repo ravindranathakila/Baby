@@ -8,6 +8,7 @@ import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.ElementComposer;
 import ai.ilikeplaces.util.Loggers;
@@ -114,7 +115,9 @@ public class ListenerI implements ItsNatServletRequestListener {
                                              */
                                             final String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(requestedProfile)).returnValueBadly();
                                             $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(),
-                                                                                   ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrl(url));
+                                                    url == null || url.isEmpty() ?
+                                                            RBGet.getGlobalConfigKey("PROFILE_PHOTO_DEFAULT") :
+                                                            RBGet.getGlobalConfigKey("PROFILE_PHOTOS") + url);
                                         }
                                     } catch (final Throwable t) {
                                         EXCEPTION.error("{}", t);
