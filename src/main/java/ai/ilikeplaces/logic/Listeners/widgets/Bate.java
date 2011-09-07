@@ -279,7 +279,6 @@ abstract public class Bate extends AbstractWidgetListener {
 
                                 try {
                                     String htmlBody = getHTMLStringForOfflineFriendInvite(myinvitersName, myinvitee.getFullName());
-                                    Loggers.INFO.info(htmlBody);
                                     SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
                                             myinvitee.getHumanId(),
                                             "Invitation from " + myinvitersName,
