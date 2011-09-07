@@ -34,7 +34,7 @@
                     <img id="privateEventDeleteLocationMap" src="http://maps.google.com/maps/api/staticmap?sensor=false&center=48.85567989976907,2.3545074462890625&size=230x250&format=jpg&markers=color:0x7fe2ff|label:S|48.85567989976907,2.3545074462890625&path=fillcolor:0xAA000033|color:0xFFFFFF00" alt="Loading..."
                      class="cursor_link vtip use100"
                      title="Click to Get Directions!"
-                     onclick="javascript:window.open(this.src.replace('center','daddr').replace('maps/api/staticmap',''));"
+                     onclick="javascript:window.open(this.src.replace('http://maps.google.com/maps/api/staticmap?sensor=false&','/?').replace('center','toLatLng'));"
                             />
                 </div>
                 <hr class="space"/>
