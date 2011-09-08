@@ -5,6 +5,7 @@ import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.logic.Listeners.widgets.DisplayName;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
+import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.Listeners.widgets.UserPropertySidebar;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -144,11 +145,10 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                         final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(new HumanId(getUsername()).getSelfAsValid());
                         if (r.returnStatus() == 0) {
                             final HumansIdentity hi = r.returnValue();
+                            String profilePhotoURL = hi.getHumansIdentityProfilePhoto();
                             $(Skeleton_profile_photo).setAttribute(
                                     MarkupTag.IMG.src(),
-                                    hi.getHumansIdentityProfilePhoto() == null || hi.getHumansIdentityProfilePhoto().isEmpty() ?
-                                            RBGet.getGlobalConfigKey("PROFILE_PHOTO_DEFAULT") :
-                                            RBGet.getGlobalConfigKey("PROFILE_PHOTOS") + hi.getHumansIdentityProfilePhoto()
+                                    ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrlStatic(profilePhotoURL)
                             );
                             $(Skeleton_othersidebar_wall_link).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
                         }
