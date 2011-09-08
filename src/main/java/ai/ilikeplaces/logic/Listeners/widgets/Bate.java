@@ -319,7 +319,7 @@ abstract public class Bate extends AbstractWidgetListener {
 
             $$(Controller.Page.user_property_name, document).setTextContent(inviter);
             $$(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), "http://www.ilikeplaces.com");
-            $$(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(), UserProperty.formatProfilePhotoUrl("#"));
+            $$(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(), RBGet.getGlobalConfigKey("PROFILE_PHOTO_DEFAULT"));
             $$(Controller.Page.user_property_content, document).appendChild(
                     document.importNode(
                             ElementComposer.compose(
