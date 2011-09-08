@@ -4,14 +4,17 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.HumansNetPeople;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.contactimports.google.GoogleContactImporter;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
+import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
 import net.sf.oval.exception.ConstraintsViolatedException;
 import org.itsnat.core.ItsNatServletRequest;
@@ -19,6 +22,7 @@ import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
@@ -51,6 +55,10 @@ import java.util.*;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 abstract public class FindFriend extends AbstractWidgetListener {
+
+    private static final String PASSWORD_DETAILS = "_passwordDetails";
+    private static final String PASSWORD_ADVICE = "_passwordAdvice";
+    private static final String URL = "_url";
 
     private static final String ACCESS_TOKEN = "access_token";
     private static final String HASH = "#";
@@ -326,26 +334,35 @@ abstract public class FindFriend extends AbstractWidgetListener {
     private void generateFriendInviteWidgetFor(final ImportedContact importedContact, final HumanId currentUser) {
         new UserProperty(
                 request,
-                $$(Page.friendFindSearchResults),
+                $$(Page.friendFindSearchInvites),
                 ElementComposer.compose($$(MarkupTag.BR)).get(),
-                new UserProperty.InviteCriteria(importedContact.getFullName(), "#", "#", currentUser, importedContact)) {
+                new UserProperty.InviteCriteria(
+                        importedContact.getFullName(),//This name is of the person being invited(invitee), not the inviter
+                        "#",
+                        "#",
+                        currentUser,
+                        importedContact)) {
 
             protected void init(final Object... initArgs) {
+
                 new Button(
                         request,
                         $$(Page.user_property_content),
-                        (new ButtonCriteria(false, "Click here to invite..", "#")
+                        (new ButtonCriteria(false, "Invite", "#", "padding-left:0%; width:20%; padding-right:80%;")
                                 .setMetadata(
                                         ((InviteCriteria) initArgs[1]).getInviter(),
-                                        ((InviteCriteria) initArgs[1]).getInvitee()))) {
+                                        ((InviteCriteria) initArgs[1]).getInvitee(),
+                                        ((InviteCriteria) initArgs[1]).getDisplayName()))) {
 
                     private HumanId inviter;
                     private ImportedContact invitee;
+                    private String invitersName;
 
                     @Override
                     protected void init(final ButtonCriteria buttonCriteria) {
                         inviter = (HumanId) buttonCriteria.getMetadata()[0];
                         invitee = (ImportedContact) buttonCriteria.getMetadata()[1];
+                        invitersName = (String) buttonCriteria.getMetadata()[2];
                     }
 
                     @Override
@@ -354,23 +371,47 @@ abstract public class FindFriend extends AbstractWidgetListener {
                         itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.GenericButtonLink), EventType.CLICK.toString(), new EventListener() {
                             private HumanId myinviter = inviter;
                             private ImportedContact myinvitee = invitee;
+                            private String myinvitersName = invitersName;
 
                             @Override
                             public void handleEvent(final Event evt) {
+
+                                try {
+
+                                    final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
+
+                                    final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                                            new HumanId().setObjAsValid(myinvitee.getEmail()),
+                                            new Password(randomPassword),
+                                            new Email(myinvitee.getEmail()));
+
+                                    if (humanCreateReturn.returnValue()) {
+
+                                        UserIntroduction.createIntroData(new HumanId(myinvitee.getEmail()));
+
+                                        final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                                                .append(ServletLogin.Username, myinvitee.getEmail(), true)
+                                                .append(ServletLogin.Password,
+                                                        DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myinvitee.getEmail()))
+                                                                .returnValue()
+                                                                .getHumanAuthenticationHash())
+                                                .get();
+
+                                        String htmlBody = getHTMLStringForOnlineFriendInvite(myinvitersName, myinvitee.getFullName());
+                                        htmlBody = htmlBody.replace(URL, activationURL);
+                                        htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Your temporary password is " + randomPassword);
+                                        htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Make sure you change it.");
+
+                                        SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                                myinvitee.getHumanId(),
+                                                "Invitation from " + myinvitersName,
+                                                htmlBody);
+                                    }
+                                } catch (final Throwable t) {
+                                    Loggers.EXCEPTION.error("Error creating user", t);
+                                }
+
                                 $$(Page.GenericButtonText).setTextContent("Invited!");
-                                SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(
-                                        myinvitee.getHumanId(),
-                                        "Yep! Invited! (by " + myinviter.getHumanId() + ")",
-                                        "Hey " + myinvitee.getFullNameAsEmptyIfNull().trim() + "! " +
-                                                "You've just been invited into to I LIKE PLACES!\n" +
-                                                "\n" +
-                                                "Now that you've gotten yourself in, use the following link to activate your account.\n" +
-                                                "\n" +
-                                                "Your temporary password is 1sdfsdfsd.\n" +
-                                                "\n" +
-                                                "Make sure you change it.\n" +
-                                                "\n" +
-                                                "All the best!");
 
                                 $$remove(evt, EventType.CLICK, this);
                             }
@@ -378,7 +419,69 @@ abstract public class FindFriend extends AbstractWidgetListener {
                     }
                 };
             }
+
+            @Override
+            protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+
+                itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.user_property_content), EventType.CLICK.toString(), new EventListener() {
+
+                    @Override
+                    public void handleEvent(final Event evt) {
+                        //$$displayNone($$(Page.user_property_widget));
+                        $$sendJS(JSCodeToSend.jqueryHide($$getId(Page.user_property_widget)));
+                    }
+                }, false);
+
+            }
         };
+    }
+
+    /**
+     * Online, implies that the inviter is online
+     *
+     * @param inviter
+     * @param invitee
+     * @return
+     */
+    final String getHTMLStringForOnlineFriendInvite(final String inviter, final String invitee) {
+        try {
+
+            final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + Controller.USER_PROPERTY_EMAIL_XHTML);
+
+            $$(Controller.Page.user_property_name, document).setTextContent(inviter);
+            $$(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), "http://www.ilikeplaces.com");
+
+
+            final String profilePhotoUrl = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(inviter)).returnValueBadly();
+
+            $$(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(),
+                    UserProperty.formatProfilePhotoUrlStatic(profilePhotoUrl));
+
+
+            $$(Controller.Page.user_property_content, document).appendChild(
+                    document.importNode(
+                            ElementComposer.compose(
+                                    document.createElement(MarkupTag.DIV.toString())
+                            ).$ElementSetText(
+                                    "Hey! " + inviter + " has just invited you to I LIKE PLACES! " +
+                                            "The website is for meeting people you care at interesting places. " +
+                                            "In it, you can find interesting places and organize moments with your friends and family. " +
+                                            "You can join I Like Places only through an invite. " +
+                                            "Now that " + inviter + " has gotten you in, use the following link to access I Like Places. " +
+                                            URL + " . " +
+                                            PASSWORD_DETAILS + " " +
+                                            PASSWORD_ADVICE + " " +
+                                            "All the best and Have Fun! "
+                            ).getAsNode(),
+                            true)
+            );
+
+
+            return HTMLDocParser.convertNodeToHtml($$(Page.user_property_widget, document));
+        } catch (final Throwable e) {
+            throw LogNull.getRuntimeException(e);
+        }
+
     }
 
 }

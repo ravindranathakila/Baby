@@ -48,6 +48,9 @@ import java.util.*;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class Bate extends AbstractWidgetListener {
+    private static final String PASSWORD_DETAILS = "_passwordDetails";
+    private static final String PASSWORD_ADVICE = "_passwordAdvice";
+    private static final String URL = "_url";
     private Email email;
     private Password password;
 
@@ -188,13 +191,18 @@ abstract public class Bate extends AbstractWidgetListener {
                                                             .getHumanAuthenticationHash())
                                             .get();
 
-                                    final String mail = MessageFormat.format(RBGet.gui().getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
-                                            .replace("activationURL", "<a href='" +
-                                                    activationURL + "' >" + activationURL + "</a>");
+
+                                    String htmlBody = getHTMLStringForOfflineFriendInvite("I Like Places", email.getObj());
+
+                                    htmlBody = htmlBody.replace(URL, activationURL);
+                                    htmlBody = htmlBody.replace(PASSWORD_ADVICE, "");
+                                    htmlBody = htmlBody.replace(PASSWORD_DETAILS, "");
+
                                     SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
                                             myemail.getObj(),
-                                            RBGet.gui().getString("SIGNUP_HEADER"),
-                                            mail);
+                                            "I Like Places prides you with an Exclusive Invite!",
+                                            htmlBody);
+
                                     $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
                                 }
 
@@ -231,6 +239,7 @@ abstract public class Bate extends AbstractWidgetListener {
             }
         };
     }
+
 
     private void generateFriendInviteWidgetFor(final ImportedContact importedContact, final HumanId currentUser, final SimpleName humansName) {
         new UserProperty(
@@ -278,13 +287,37 @@ abstract public class Bate extends AbstractWidgetListener {
                             public void handleEvent(final Event evt) {
 
                                 try {
+
+                                    final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
+
+                                    final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                                            new HumanId().setObjAsValid(myinvitee.getEmail()),
+                                            new Password(randomPassword),
+                                            new Email(myinvitee.getEmail()));
+
+                                    UserIntroduction.createIntroData(new HumanId(myinvitee.getEmail()));
+
+                                    final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                                            .append(ServletLogin.Username, myinvitee.getEmail(), true)
+                                            .append(ServletLogin.Password,
+                                                    DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myinvitee.getEmail()))
+                                                            .returnValue()
+                                                            .getHumanAuthenticationHash())
+                                            .get();
+
+
                                     String htmlBody = getHTMLStringForOfflineFriendInvite(myinvitersName, myinvitee.getFullName());
+
+                                    htmlBody = htmlBody.replace(URL, activationURL);
+                                    htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
+                                    htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it. ");
+
                                     SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
                                             myinvitee.getHumanId(),
                                             "Invitation from " + myinvitersName,
                                             htmlBody);
                                 } catch (final Throwable t) {
-                                    Loggers.EXCEPTION.error("Error sending email", t);
+                                    Loggers.error("Error sending email", t);
                                 }
 
                                 $$(Page.GenericButtonText).setTextContent("Invited!");
@@ -312,6 +345,13 @@ abstract public class Bate extends AbstractWidgetListener {
         };
     }
 
+    /**
+     * Offline, implies the inviter is offline
+     *
+     * @param inviter
+     * @param invitee
+     * @return
+     */
     final String getHTMLStringForOfflineFriendInvite(final String inviter, final String invitee) {
         try {
 
@@ -330,9 +370,9 @@ abstract public class Bate extends AbstractWidgetListener {
                                             "In it, you can find interesting places and organize moments with your friends and family. " +
                                             "You can join I Like Places only through an invite. " +
                                             "Now that " + inviter + " has gotten you in, use the following link to access I Like Places. " +
-                                            "http://www.ilikeplaces.com . " +
-                                            "Your temporary password is oiwfbwefx. " +
-                                            "Make sure you change it. " +
+                                            URL + " . " +
+                                            PASSWORD_DETAILS + " " +
+                                            PASSWORD_ADVICE + " " +
                                             "All the best and Have Fun! "
                             ).getAsNode(),
                             true)

@@ -221,6 +221,12 @@ abstract public class UserProperty extends AbstractWidgetListener {
                 RBGet.globalConfig.getString(PROFILE__PHOTOS) + profileUrl;
     }
 
+    static public String formatProfilePhotoUrlStatic(final String profileUrl) {
+        return profileUrl == null || profileUrl.isEmpty() ?
+                RBGet.getGlobalConfigKey(PROFILE__PHOTO__DEFAULT) :
+                RBGet.getGlobalConfigKey(PROFILE__PHOTOS) + profileUrl;
+    }
+
     static public String formatProfileUrl(final String relativeURL, final boolean makeAbsolute) {
         return makeAbsolute ? RBGet.globalConfig.getString(WEBSITE) + relativeURL : relativeURL;
     }
