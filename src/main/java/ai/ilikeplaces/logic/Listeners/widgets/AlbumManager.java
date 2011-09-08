@@ -43,6 +43,7 @@ public class AlbumManager extends AbstractWidgetListener {
     private static final String BUTTONTEXT_EMAIL_FORWARDED = "buttontext.email.forwarded";
     private static final String BUTTONTEXT_CLICK_TO_CONFIRM = "buttontext.click.to.confirm";
     private static final String SLASH = "/";
+    private static final String NO_PHOTOS_IN_ALBUM = "No photos in album!";
     final private Logger logger = LoggerFactory.getLogger(AlbumManager.class.getName());
     private HumanId humanId = null;
     private PrivateEvent privateEvent;
@@ -216,8 +217,13 @@ public class AlbumManager extends AbstractWidgetListener {
                     confirmed = false;
                     $$(evt_).setTextContent(RBGet.gui().getString(BUTTONTEXT_EMAIL_FORWARDED));
                 } else {
-                    confirmed = true;
-                    $$(evt_).setTextContent(RBGet.gui().getString(BUTTONTEXT_CLICK_TO_CONFIRM));
+                    if (!(albumReturn.returnValue().getAlbumPhotos().size() == 0)) {
+                        confirmed = true;
+                        $$(evt_).setTextContent(RBGet.gui().getString(BUTTONTEXT_CLICK_TO_CONFIRM));
+                    }else{
+                        $$(evt_).setTextContent(RBGet.gui().getString(NO_PHOTOS_IN_ALBUM));
+                    }
+
                 }
             }
 
