@@ -115,9 +115,7 @@ public class ListenerI implements ItsNatServletRequestListener {
                                              */
                                             final String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(requestedProfile)).returnValueBadly();
                                             $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(),
-                                                    url == null || url.isEmpty() ?
-                                                            RBGet.getGlobalConfigKey("PROFILE_PHOTO_DEFAULT") :
-                                                            RBGet.getGlobalConfigKey("PROFILE_PHOTOS") + url);
+                                                    ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrlStatic(url));
                                         }
                                     } catch (final Throwable t) {
                                         EXCEPTION.error("{}", t);
