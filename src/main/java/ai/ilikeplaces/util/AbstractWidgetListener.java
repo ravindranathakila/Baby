@@ -26,20 +26,30 @@ import java.util.Set;
 import static ai.ilikeplaces.servlets.Controller.Page;
 
 /**
- * Each widget itself knows its functionality.
- * Hence, each widget should register its own event listeners.
- * But there will be several copies of the same widget in the same page.
- * Therefore, the widget ids should be different.
- * Each widget has to have its own class
- *
  * @author Ravindranath Akila
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @DOCUMENTATION(
-        FIXME = @FIXME(issues = {"Nested widgets have issues registering themselves upon DOM events.",
-                "ItsNat html document fragment templates appear to be needed to only loaded once and then reused."}),
-        WARNING = @WARNING("If you want your variables initialized by the time you reach registereventlisteners, do the asignmen in init, NOT the implemented subclass constructer" +
+        LOGIC = @LOGIC({
+                @NOTE("Each widget itself knows its functionality." +
+                        "Hence, each widget should register its own event listeners. " +
+                        "But there will be several copies of the same widget in the same page. " +
+                        "Therefore, the widget ids should be different. " +
+                        "Each widget has to have its own class. "
+                ),
+                @NOTE("Each widget has it's own vaiable names." +
+                        "However, since there can be multiple copies of the same widget in a page, a static long values is appended to the element ids." +
+                        "This makes the element IDs unique within a page."
+                )}),
+
+        FIXME = @FIXME(
+                issues = {"Nested widgets have issues registering themselves upon DOM events.",
+                        "ItsNat html document fragment templates appear to be needed to only loaded once and then reused."}),
+
+        WARNING = @WARNING("If you want your variables initialized by the time you reach registereventlisteners, " +
+                "do the assignment in init. " +
+                "NOT the implemented subclass constructer" +
                 "which runs as super, init, registereventlisteners and THEN the remainder of the constructer.")
 )
 public abstract class AbstractWidgetListener<T> {
