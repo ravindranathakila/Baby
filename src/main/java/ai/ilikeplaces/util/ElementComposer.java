@@ -15,6 +15,9 @@ import org.w3c.dom.Text;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class ElementComposer {
 
+    private static final String A_HREF = "<a href='";
+    private static final String A_HREF_OPEN_END = "' >";
+    private static final String A_HREF_CLOSE = "</a>";
     private final Element element;
 
     private ElementComposer(final Element element) {
@@ -32,13 +35,13 @@ public class ElementComposer {
         return new ElementComposer(elementToBeComposed);
     }
 
-    final public Element get(){
+    final public Element get() {
         return element;
     }
 
 
-    final public Node getAsNode(){
-        return (Node)element;
+    final public Node getAsNode() {
+        return (Node) element;
     }
 
     /**
@@ -131,6 +134,15 @@ public class ElementComposer {
     static public final Element $ElementSetAttribute(final Element element, final String attributeName, final String attributeValue) {
         element.setAttribute(attributeName, attributeValue);
         return element;
+    }
+
+    final public static String generateNamedLinkTo(final String url, final String name) {
+        return A_HREF +
+                url + A_HREF_OPEN_END + name + A_HREF_CLOSE;
+    }
+
+    final public static String generateSimpleLinkTo(final String url) {
+        return generateNamedLinkTo(url, url);
     }
 
 }
