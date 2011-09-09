@@ -397,8 +397,8 @@ abstract public class FindFriend extends AbstractWidgetListener {
                                                                 .getHumanAuthenticationHash())
                                                 .get();
 
-                                        String htmlBody = getHTMLStringForOnlineFriendInvite(myinvitersName, myinvitee.getFullName());
-                                        htmlBody = htmlBody.replace(URL, activationURL);
+                                        String htmlBody = getHTMLStringForOnlineFriendInvite(myinviter, myinvitersName, myinvitee.getFullName());
+                                        htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
                                         htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Your temporary password is " + randomPassword);
                                         htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Make sure you change it.");
 
@@ -443,7 +443,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
      * @param invitee
      * @return
      */
-    final String getHTMLStringForOnlineFriendInvite(final String inviter, final String invitee) {
+    final String getHTMLStringForOnlineFriendInvite(final HumanId inviteEmail, final String inviter, final String invitee) {
         try {
 
             final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + Controller.USER_PROPERTY_EMAIL_XHTML);
@@ -452,7 +452,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
             $$(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), "http://www.ilikeplaces.com");
 
 
-            final String profilePhotoUrl = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(inviter)).returnValueBadly();
+            final String profilePhotoUrl = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(inviteEmail).returnValueBadly();
 
             $$(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(),
                     UserProperty.formatProfilePhotoUrlStatic(profilePhotoUrl));

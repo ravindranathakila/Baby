@@ -72,7 +72,9 @@ final public class LogNull {
     }
 
     /**
-     * This converts the given Throwable to a RuntimeException and returns it
+     * This converts the given Throwable to a RuntimeException and returns it.
+     * Note that you might lose the exact line on which the exception was thrown.
+     * Most of the time, instead, you'll get the line on which this method was called.
      *
      * @return RuntimeException
      */

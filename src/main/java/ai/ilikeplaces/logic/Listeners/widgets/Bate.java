@@ -31,8 +31,6 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
-import javax.xml.transform.TransformerException;
-import java.text.MessageFormat;
 import java.util.*;
 
 /**
@@ -194,7 +192,7 @@ abstract public class Bate extends AbstractWidgetListener {
 
                                     String htmlBody = getHTMLStringForOfflineFriendInvite("I Like Places", email.getObj());
 
-                                    htmlBody = htmlBody.replace(URL, activationURL);
+                                    htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
                                     htmlBody = htmlBody.replace(PASSWORD_ADVICE, "");
                                     htmlBody = htmlBody.replace(PASSWORD_DETAILS, "");
 
@@ -308,7 +306,7 @@ abstract public class Bate extends AbstractWidgetListener {
 
                                     String htmlBody = getHTMLStringForOfflineFriendInvite(myinvitersName, myinvitee.getFullName());
 
-                                    htmlBody = htmlBody.replace(URL, activationURL);
+                                    htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
                                     htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
                                     htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it. ");
 
