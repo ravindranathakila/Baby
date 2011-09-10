@@ -33,7 +33,7 @@ import java.io.IOException;
 public class WallWidgetHumansWall extends WallWidget {
 
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
-    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs","wallMutes");
+    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs", "wallMutes");
     private static final RefreshSpec REFRESH_SPEC_EMPTY = new RefreshSpec();
 
 
@@ -64,11 +64,8 @@ public class WallWidgetHumansWall extends WallWidget {
             };
         }
 
-        if (wall.getWallMutes().contains(currUserAsVisitor)) {
-            $$(Controller.Page.wallMute).setTextContent(WallWidget.LISTEN);
-        } else {
-            $$(Controller.Page.wallMute).setTextContent(WallWidget.MUTE);
-        }
+        $$displayWallAsMuted($$(Controller.Page.wallMute), wall.getWallMutes().contains(currUserAsVisitor));
+
     }
 
 

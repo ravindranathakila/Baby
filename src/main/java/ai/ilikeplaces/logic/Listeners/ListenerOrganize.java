@@ -48,7 +48,6 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
     private static final String ORGANIZE_MAIN_TITLE_TITLE = "organize.main.title.title";
     private static final String ORGANIZE_MAIN_INTRO = "organize.main.intro";
     private static final String ORGANIZE_MAIN_INTRO_TITLE = "organize.main.intro.title";
-    private static final String LOCATIONS = "Locations";
     private static final String EQUALS = "=";
     private static final String QMARK = "?";
     private static final String ARROW_LEFT_GIF = "arrow-left.gif";
@@ -177,14 +176,15 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                                         }
                                                         setBackButton:
                                                         {
-                                                            new Button(request__, $(Skeleton_center_skeleton), LOCATIONS, false) {
+                                                            //Planned for removal. The link makes the UI ugly. Browser has a back button. Left navigation links help. We also can have more intuitive navigation later.
+                                                            /*new Button(request__, $(Skeleton_center_skeleton), LOCATIONS, false) {
                                                                 @Override
                                                                 protected void init(final Object... initArgs) {
                                                                     $$(Controller.Page.GenericButtonLink).setAttribute(MarkupTag.A.href(), Controller.Page.Organize.getURL() + QMARK
                                                                             + Controller.Page.DocOrganizeCategory + EQUALS + 0);
                                                                     $$(Controller.Page.GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + ARROW_LEFT_GIF);
                                                                 }
-                                                            };
+                                                            };*/
                                                         }
                                                         attachPrivateLocationAsRolesPermit(request__, $(Skeleton_center_skeleton), r.returnValue(), false, true);
                                                     } catch (
@@ -219,14 +219,15 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                             }
                                             SetBackButton:
                                             {
-                                                new Button(request__, $(Skeleton_center_skeleton), LOCATIONS, false) {
+                                                //Planned for removal. The link makes the UI ugly. Browser has a back button. Left navigation links help. We also can have more intuitive navigation later.
+                                                /*new Button(request__, $(Skeleton_center_skeleton), LOCATIONS, false) {
                                                     @Override
                                                     protected void init(final Object... initArgs) {
                                                         $$(Controller.Page.GenericButtonLink).setAttribute(MarkupTag.A.href(), Controller.Page.Organize.getURL() + QMARK
                                                                 + Controller.Page.DocOrganizeCategory + EQUALS + 0);
                                                         $$(Controller.Page.GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + ARROW_LEFT_GIF);
                                                     }
-                                                };
+                                                };*/
                                             }
                                             ShowEvent:
                                             {

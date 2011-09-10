@@ -36,13 +36,12 @@ abstract public class FriendAdd extends AbstractWidgetListener {
     HumanId caller = null;
 
     /**
-     *
      * @param request__
      * @param appendToElement__
      * @param addee
      * @param caller
      */
-    public FriendAdd(final ItsNatServletRequest request__,  final Element appendToElement__, final HumanId addee, final HumanId caller) {
+    public FriendAdd(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId addee, final HumanId caller) {
         super(request__, Controller.Page.FriendAdd, appendToElement__, addee, caller);
     }
 
@@ -75,7 +74,7 @@ abstract public class FriendAdd extends AbstractWidgetListener {
                 Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doNTxAddHumansNetPeople(mycaller, myaddee);
                 if (r.returnStatus() == 0) {
                     logger.debug("{}", r.toString());
-                    $$(Controller.Page.friendAddAddButton).setTextContent("Added!");
+                    $$displayNone($$(Controller.Page.friendAddAddButton));
                     final Human adder = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(mycaller.getObj());
                     final Human addee = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(mycaller.getObj());
                     if (!addee.isFriend(adder.getHumanId())) {

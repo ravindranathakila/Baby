@@ -7,46 +7,49 @@
 <body>
 <div class="use100 nty" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
     <script type="text/javascript">
-            shareurlskeleton = "http:%2F%2Fwww.ilikeplaces.com%2Fpage%2F_share%3Ftype=PHOTO%26title=I LIKE PLACES%26url=";
+        shareurlskeleton = "http:%2F%2Fwww.ilikeplaces.com%2Fpage%2F_share%3Ftype=PHOTO%26title=I LIKE PLACES%26url=";
     </script>
     <div class="use100">
         <div class="use100 height_5">
             <span>&nbsp;</span>
         </div>
         <div class="use100">
-            <span>&nbsp;</span>
-        </div>
-        <div class="use100">
-            <div class="use100 pd inherit_colors" id="close" style="display:block;">
-                <div class="use20">
-                    <span id="pd_photo_sequence_number">&nbsp;</span>
-                </div>
-                <div class="use20">
-                    <a target="_blank" onclick="javascript:this.href='http://www.addthis.com/bookmark.php?title=http://www.ilikeplaces.com url='+ shareurlskeleton +this.href;">Share</a>
-                </div>
-                <div class="use20">
-                    <span>Download</span>
-                </div>
-                <div class="use20">
-                    <span>Email</span>
-                </div>
-                <div class="use20">
-                    <div class="use100" id="pd_photo_delete" style="display:none;">
-                        <span>Delete</span>
+            <div class="use100 pd inherit_colors" id="pd">
+                <div class="use100 pd inherit_colors" id="close" style="display:block;cursor:pointer;">
+                    <div class="use20">
+                        <span id="pd_photo_sequence_number">&nbsp;</span>
+                    </div>
+                    <div class="use20">
+                        <div style="visibility:hidden;">
+                            <a target="_blank"
+                               onclick="javascript:this.href='http://www.addthis.com/bookmark.php?title=http://www.ilikeplaces.com url='+ shareurlskeleton +this.href;">Share</a>
+                        </div>
+                    </div>
+                    <div class="use20">
+                        <span style="visibility:hidden;">Download</span>
+                    </div>
+                    <div class="use20">
+                        <span style="visibility:hidden;">Email</span>
+                    </div>
+                    <div class="use15 use5p">
+                        <div class="use100" id="pd_photo_delete" style="display:none;">
+                            <img class="use100" src="/images/Delete_button.png" alt="DELETE"/>
+                            <!--<span style="font-weight:900;">DELETE!</span>-->
+                        </div>
+                    </div>
+                    <div class="use20">
+                        <span>&nbsp;</span>
                     </div>
                 </div>
-                <div class="use20">
-                    <span>&nbsp;</span>
-                </div>
-            </div>
-            <hr class="blank"/>
-            <div class="use100 pd inherit_colors" id="pd">
+                <hr class="blank"/>
+
                 <div class="use100 inherit_colors center">
                     <div class="use100 inherit_colors">
                         <a id="pd_photo_permalink" href="#" target="_blank" class="vtip"
                            title="Click here to share this photo with your friends!"
                            onclick="javascript:this.href='http://www.addthis.com/bookmark.php?title=http://www.ilikeplaces.com url='+ shareurlskeleton +this.href;">
-                            <img width="100%" id="pd_photo" class="ajax_image" src="/images/hover.png" style="float:left;"
+                            <img width="100%" id="pd_photo" class="ajax_image" src="/images/hover.png"
+                                 style="float:left;"
                                  alt="Mouse over me to load photo" title=""/>
                         </a>
                     <span id="pd_photo_description" class="fg_blue">
