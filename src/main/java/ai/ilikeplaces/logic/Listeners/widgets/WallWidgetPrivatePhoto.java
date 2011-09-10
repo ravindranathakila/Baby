@@ -96,11 +96,7 @@ public class WallWidgetPrivatePhoto extends WallWidget {
             );
         }
 
-        if (wall.getWallMutes().contains(humanId)) {
-            $$(Controller.Page.wallMute).setTextContent(LISTEN);
-        } else {
-            $$(Controller.Page.wallMute).setTextContent(MUTE);
-        }
+        $$displayWallAsMuted($$(Controller.Page.wallMute), wall.getWallMutes().contains(humanId));
     }
 
     @Override
