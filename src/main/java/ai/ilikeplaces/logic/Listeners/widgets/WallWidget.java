@@ -52,21 +52,11 @@ abstract public class WallWidget extends AbstractWidgetListener {
                     }
                 }
 
-                @Override
-                public void finalize() throws Throwable {
-                    Loggers.finalized(this.getClass().getName());
-                    super.finalize();
-                }
             }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
         }
     }
 
 
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
-    }
 
     void $$displayWallAsMuted(final Event evt_, final boolean doMute) {
         $$displayWallAsMuted($$(evt_), doMute);

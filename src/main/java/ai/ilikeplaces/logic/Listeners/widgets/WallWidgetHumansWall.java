@@ -148,12 +148,12 @@ public class WallWidgetHumansWall extends WallWidget {
 
                 if (DB.getHumanCrudWallLocal(true).readWall(myrequestedProfile, new Obj<HumanId>(currUserAsVisitor), REFRESH_SPEC_EMPTY).returnValueBadly().getWallMutes().contains(mycurrUserAsVisitor)) {
                     if (DB.getHumanCrudWallLocal(true).unmuteWall(myrequestedProfile, mycurrUserAsVisitor, new Obj<HumanId>(currUserAsVisitor)).returnStatus() == 0) {
-                        $$(evt_).setTextContent(WallWidget.MUTE);
+                        $$displayWallAsMuted(evt_, false);
                     }
 
                 } else {
                     if (DB.getHumanCrudWallLocal(true).muteWall(myrequestedProfile, mycurrUserAsVisitor, new Obj<HumanId>(currUserAsVisitor)).returnStatus() == 0) {
-                        $$(evt_).setTextContent(WallWidget.LISTEN);
+                        $$displayWallAsMuted(evt_, true);
                     }
                 }
             }

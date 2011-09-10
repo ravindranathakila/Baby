@@ -126,11 +126,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
             }
         }
 
-        if (aReturn.returnValueBadly().getWallMutes().contains(humanId)) {
-            $$(Controller.Page.wallMute).setTextContent(LISTEN);
-        } else {
-            $$(Controller.Page.wallMute).setTextContent(MUTE);
-        }
+        $$displayWallAsMuted($$(Controller.Page.wallMute), aReturn.returnValueBadly().getWallMutes().contains(humanId));
     }
 
 
@@ -228,11 +224,11 @@ public class WallWidgetPrivateEvent extends WallWidget {
 
                 if (DB.getHumanCrudPrivateEventLocal(true).readWall(myhumanId, new Obj<Long>(myprivateEventId), REFRESH_SPEC).returnValueBadly().getWallMutes().contains(myhumanId)) {
                     DB.getHumanCrudPrivateEventLocal(true).unmuteWall(myhumanId, myhumanId, new Obj<Long>(myprivateEventId));
-                    $$displayWallAsMuted(evt_, true);
+                    $$displayWallAsMuted(evt_, false);
 
                 } else {
                     DB.getHumanCrudPrivateEventLocal(true).muteWall(myhumanId, myhumanId, new Obj<Long>(myprivateEventId));
-                    $$displayWallAsMuted(evt_, false);
+                    $$displayWallAsMuted(evt_, true);
                 }
             }
 
