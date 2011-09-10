@@ -77,7 +77,7 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
                                     //$$(pd_photo).setAttribute("src", "_");
                                     $$(pd_photo).setAttribute("title", imageURL);
 
-                                     displayBlock($$(Controller.Page.pd_photo_delete));
+                                    displayBlock($$(Controller.Page.pd_photo_delete));
                                 }
 
                                 @Override
@@ -92,34 +92,27 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
                                         @Override
                                         public void handleEvent(final Event evt_) {
                                             DB.getHumanCRUDPrivatePhotoLocal(true).dPrivatePhoto(mymyhumanId, mymyprivatePhoto.getPrivatePhotoId());
+                                            $$sendJS(JSCodeToSend.jqueryHide($$getId(Controller.Page.pd)));
                                         }
 
-                                        @Override
-                                        public void finalize() throws Throwable {
-                                            Loggers.finalized(this.getClass().getName());
-                                            super.finalize();
-                                        }
                                     }, false);
 
-                                    itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.pd_photo), EventType.ONMOUSEOVER.toString(), new EventListener() {
+                                    //Planned for removal. Now jquery handles loading the image
+                                    /*                itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.pd_photo), EventType.ONMOUSEOVER.toString(), new EventListener() {
 
-                                        boolean imageLoaded = false;
+                                       boolean imageLoaded = false;
 
-                                        @Override
-                                        public void handleEvent(final Event evt_) {
-                                            if (!imageLoaded) {
-                                                $$(evt_).setAttribute(MarkupTag.IMG.src(), $$(evt_).getAttribute(MarkupTag.DIV.title()));
-                                                imageLoaded = true;//safety measure 1
-                                            }
-                                            remove(evt_.getTarget(), EventType.ONMOUSEOVER, this); //safety measure 2
-                                        }
+                                       @Override
+                                       public void handleEvent(final Event evt_) {
+                                           if (!imageLoaded) {
+                                               $$(evt_).setAttribute(MarkupTag.IMG.src(), $$(evt_).getAttribute(MarkupTag.DIV.title()));
+                                               imageLoaded = true;//safety measure 1
+                                           }
+                                           remove(evt_.getTarget(), EventType.ONMOUSEOVER, this); //safety measure 2
+                                       }
 
-                                        @Override
-                                        public void finalize() throws Throwable {
-                                            Loggers.finalized(this.getClass().getName());
-                                            super.finalize();
-                                        }
-                                    }, false);
+
+                                   }, false);*/
                                 }
                             };
                         }

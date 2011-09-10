@@ -37,7 +37,7 @@ import java.io.IOException;
 public class WallWidgetPrivateEvent extends WallWidget {
 
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
-    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs","wallMutes");
+    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs", "wallMutes");
 
     HumanId humanId;
     Long privateEventId = null;
@@ -215,12 +215,6 @@ public class WallWidgetPrivateEvent extends WallWidget {
                 }
             }
 
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
         }, false);
 
 
@@ -234,21 +228,16 @@ public class WallWidgetPrivateEvent extends WallWidget {
 
                 if (DB.getHumanCrudPrivateEventLocal(true).readWall(myhumanId, new Obj<Long>(myprivateEventId), REFRESH_SPEC).returnValueBadly().getWallMutes().contains(myhumanId)) {
                     DB.getHumanCrudPrivateEventLocal(true).unmuteWall(myhumanId, myhumanId, new Obj<Long>(myprivateEventId));
-                    $$(evt_).setTextContent(MUTE);
+                    $$displayWallAsMuted(evt_, true);
 
                 } else {
                     DB.getHumanCrudPrivateEventLocal(true).muteWall(myhumanId, myhumanId, new Obj<Long>(myprivateEventId));
-                    $$(evt_).setTextContent(LISTEN);
+                    $$displayWallAsMuted(evt_, false);
                 }
             }
 
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
         }, false);
 
     }
+
 }

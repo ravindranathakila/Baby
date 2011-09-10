@@ -32,7 +32,7 @@ abstract public class WallWidget extends AbstractWidgetListener {
     protected static final String ORGANIZE_SECTION = "organize";
 
 
-    public WallWidget(final ItsNatServletRequest request__,  final Element appendToElement__, final Object... initArgs) {
+    public WallWidget(final ItsNatServletRequest request__, final Element appendToElement__, final Object... initArgs) {
         super(request__, Page.WallHandler, appendToElement__, initArgs);
 
         UCProcessWallText:
@@ -66,5 +66,21 @@ abstract public class WallWidget extends AbstractWidgetListener {
     public void finalize() throws Throwable {
         Loggers.finalized(this.getClass().getName());
         super.finalize();
+    }
+
+    void $$displayWallAsMuted(final Event evt_, final boolean doMute) {
+        $$displayWallAsMuted($$(evt_), doMute);
+    }
+
+    void $$displayWallAsMuted(final Element element, final boolean doMute) {
+        if (doMute) {
+            element.setAttribute(
+                    MarkupTag.IMG.src(),
+                    element.getAttribute(MarkupTag.IMG.src()).replace("mute.png", "listen.png"));
+        } else {
+            element.setAttribute(
+                    MarkupTag.IMG.src(),
+                    element.getAttribute(MarkupTag.IMG.src()).replace("listen.png", "mute.png"));
+        }
     }
 }

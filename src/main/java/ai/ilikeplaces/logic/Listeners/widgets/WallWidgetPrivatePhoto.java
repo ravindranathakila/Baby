@@ -44,7 +44,7 @@ import java.util.Map;
 public class WallWidgetPrivatePhoto extends WallWidget {
 
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
-    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs","wallMutes");
+    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs", "wallMutes");
 
     HumanId humanId;
 
@@ -171,20 +171,15 @@ public class WallWidgetPrivatePhoto extends WallWidget {
 
                 if (DB.getHumanCRUDPrivatePhotoLocal(true).readWall(myhumanId, (Obj) new Obj<Long>(myprivatePhotoId).getSelfAsValid(), REFRESH_SPEC).returnValueBadly().getWallMutes().contains(myhumanId)) {
                     DB.getHumanCRUDPrivatePhotoLocal(true).unmuteWall(myhumanId, myhumanId, (Obj) new Obj<Long>(myprivatePhotoId).getSelfAsValid());
-                    $$(evt_).setTextContent(MUTE);
+                    $$displayWallAsMuted(evt_, false);
 
                 } else {
                     DB.getHumanCRUDPrivatePhotoLocal(true).muteWall(myhumanId, myhumanId, (Obj) new Obj<Long>(myprivatePhotoId).getSelfAsValid());
-                    $$(evt_).setTextContent(LISTEN);
+                    $$displayWallAsMuted(evt_, true);
                 }
             }
 
 
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
         }, false);
 
     }
