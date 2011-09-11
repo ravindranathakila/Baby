@@ -149,6 +149,9 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                     if (!alertedUserWithConfirm.getObj()) {
                         Loggers.USER.info(myhumanId.getObj() + " clicked delete for private event " + myprivateEventId);
                         alertedUserWithConfirm.setObjAsValid(true);
+                        $$(evt_).setAttribute(MarkupTag.IMG.src(),
+                                $$(evt_).getAttribute(MarkupTag.IMG.src()).replace("delete.png", "confirm.png")
+                        );
                         //$$(evt_).setTextContent("Confirm Delete!");
                     } else {
                         Loggers.USER.info(myhumanId.getObj() + " clicked delete after confirmation for private event " + myprivateEventId);
@@ -156,6 +159,9 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                         if (r.returnStatus() == 0) {
                             Loggers.USER.info(humanId.getObj() + " clicked deleted private event " + r.returnValue());
                             remove(evt_.getTarget(), EventType.CLICK, this);
+                            $$sendJS(
+                                    JSCodeToSend.redirectPageWithURL("/page/_org")
+                            );
                             clear($$(privateEventDeleteNotice));
                         } else {
                             $$(privateEventDelete).setTextContent(r.returnMsg());
@@ -165,12 +171,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
                 }
 
-                @Override
-                public void finalize() throws Throwable {
-                    Loggers.finalized(this.getClass().getName());
-                    super.finalize();
-                }
-            }, false, JSCodeToSend.RefreshPage);
+            }, false);
         }
 
         final HumansNetPeople user = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);
@@ -218,7 +219,8 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                             return returnVal;
 
                         }
-                    }) {
+                    }
+            ) {
             };
         }
         AddRemoveVisitors:
@@ -260,7 +262,8 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                             return returnVal;
 
                         }
-                    }) {
+                    }
+            ) {
             };
             AddRemoveInvitee:
             {
@@ -301,14 +304,9 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                                 }
                                 return returnVal;
                             }
-                        });
+                        }
+                );
             }
         }
-    }
-
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
     }
 }
