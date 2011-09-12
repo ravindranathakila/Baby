@@ -65,6 +65,7 @@ final public class SmartLogger extends Thread {
 
     private static final String LOGGER_HAS_ALREADY_BEEN_COMPLETED = "Logger has already been completed!";
     private static final String LOGGER_HAS_ALREADY_BEEN_COMPLETED_UNDER_TIMEOUT_LOGGING = "Logger has already been completed under timeout logging.";
+    private static final String SORRY_I_POSSIBLY_FAILED_TO_LOG = "SORRY! I POSSIBLY FAILED TO LOG:";
     final Loggers.LEVEL level;
     boolean recordedAtLeastOneError = false;
     String logmsg;
@@ -111,7 +112,7 @@ final public class SmartLogger extends Thread {
             }
         }
 
-        this.logmsg = logMessage;
+        this.logmsg = logMessage != null ? logMessage : EMPTY;//I think this is cool, especially since null caused a bug which delayed a release by one day and...
         this.sleep = timeout;
         this.level = logLevel;
 
@@ -119,7 +120,7 @@ final public class SmartLogger extends Thread {
 
             @Override
             public void uncaughtException(Thread t, Throwable e) {
-                Loggers.log(LEVEL.ERROR, "SORRY! I POSSIBLY FAILED TO LOG:" + logMessage, e);
+                Loggers.log(LEVEL.ERROR, SORRY_I_POSSIBLY_FAILED_TO_LOG + logMessage, e);
             }
         });
 
@@ -176,7 +177,7 @@ final public class SmartLogger extends Thread {
         logmsg += PIPE + stringToBeAppended;
     }
 
-    private void appendToLogMSG(final String errorDescription , final Throwable t) {
+    private void appendToLogMSG(final String errorDescription, final Throwable t) {
         logmsg += PIPE + errorDescription;
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
@@ -189,7 +190,6 @@ final public class SmartLogger extends Thread {
     }
 
     /**
-     *
      * @param stringToBeAppended
      */
     public void l(final String stringToBeAppended) {
@@ -197,7 +197,6 @@ final public class SmartLogger extends Thread {
     }
 
     /**
-     *
      * @param objectWithToStringOverridden
      */
     public void l(final Object objectWithToStringOverridden) {
@@ -205,7 +204,6 @@ final public class SmartLogger extends Thread {
     }
 
     /**
-     *
      * @param errorDescription
      * @param throwableErrorToBeLogged
      */
@@ -250,11 +248,11 @@ final public class SmartLogger extends Thread {
     }
 
     /**
-     *
      * @param completeLevels
      * @param completeStatus
      */
-    public void multiComplete(final LEVEL[] completeLevels, final Object completeStatus) {
+    public void multiComplete(final LEVEL[] completeLevels, Object completeStatus) {
+        completeStatus = completeStatus != null ? completeStatus : "";
         if (sleep == 0) {
             if (!status()) {
                 for (final LEVEL completeLevel : completeLevels) {
