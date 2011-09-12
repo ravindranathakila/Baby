@@ -84,7 +84,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
         if (privateEventReturn.returnStatus() == 0) {
             $$(privateEventDeleteName).setTextContent(privateEventReturn.returnValue().getPrivateEventName());
             $$(privateEventDeleteInfo).setTextContent(privateEventReturn.returnValue().getPrivateEventInfo());
-            new Button(request, $$(privateEventDeleteLink), "Link to " + privateEventReturn.returnValue().getPrivateEventName(), false, privateEventReturn.returnValue()) {
+            new Button(request, $$(privateEventDeleteLink), privateEventReturn.returnValue().getPrivateEventName(), false, privateEventReturn.returnValue()) {
                 PrivateEvent privateEvent = null;
 
                 @Override
@@ -155,16 +155,17 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                         //$$(evt_).setTextContent("Confirm Delete!");
                     } else {
                         Loggers.USER.info(myhumanId.getObj() + " clicked delete after confirmation for private event " + myprivateEventId);
+                        alertedUserWithConfirm.setObjAsValid(false); //needed because chrome or itsnat seems to be resending the event.
                         final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dPrivateEvent(myhumanId, myprivateEventId);
                         if (r.returnStatus() == 0) {
-                            Loggers.USER.info(humanId.getObj() + " clicked deleted private event " + r.returnValue());
-                            remove(evt_.getTarget(), EventType.CLICK, this);
+                            Loggers.USER.info(myhumanId.getObj() + " deleted private event " + r.returnValue());
+                            remove(evt_.getTarget(), EventType.CLICK, this, false);
                             $$sendJS(
                                     JSCodeToSend.redirectPageWithURL("/page/_org")
                             );
-                            clear($$(privateEventDeleteNotice));
+                            //clear($$(privateEventDeleteNotice));
                         } else {
-                            $$(privateEventDelete).setTextContent(r.returnMsg());
+                            $$(privateEventDeleteNotice).setTextContent(r.returnMsg());
                         }
                     }
 
