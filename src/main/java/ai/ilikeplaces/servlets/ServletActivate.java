@@ -169,31 +169,39 @@ final public class ServletActivate extends HttpServlet {
                                 userSession_.invalidate();
                                 logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0002"));
                                 Loggers.USER.info(existingUser.getHumanId() + " comes with wrong activation hash.");
-                                response__.sendRedirect(request__.getHeader(HEADER_REFERER));
+                                redirectToProfilePage(request__, response__);
                                 break doActivate;
                             }
                         } else {/*There is no such user. Ask if he forgot username or whether to create a new account :)*/
                             logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0003"));
-                            response__.sendRedirect(request__.getHeader(HEADER_REFERER));
+                            redirectToProfilePage(request__, response__);
                             break doActivate;
                         }
 
                     } catch (final Exception ex) {
                         logger.error(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0004"), ex);
-                        response__.sendRedirect(request__.getHeader(HEADER_REFERER));
+                        redirectToProfilePage(request__, response__);
                         break doActivate;
                     }
                 } else {/*Why was the user sent here without either username or password or both(by the page)? Send him back!*/
                     logger.warn(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0009") + request__.getRequestURL().toString());
-                    response__.sendRedirect(request__.getHeader(HEADER_REFERER));
+                    redirectToProfilePage(request__, response__);
                     break doActivate;
                 }
 
             } else {/*Why did the user come to this page if he was already logged on? Send him back!*/
                 logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0005") + ((SessionBoundBadRefWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).boundInstance.getHumanUserId());
-                response__.sendRedirect(request__.getHeader(HEADER_REFERER));
+                redirectToProfilePage(request__, response__);
             }
         }
+    }
+
+    private void redirectToProfilePage(HttpServletRequest request__, HttpServletResponse response__) throws IOException {
+        //response__.sendRedirect(request__.getHeader(HEADER_REFERER));
+        /**
+         * DO NOT CHANGE THIS AS SOME USERS ARE HAVING ISSUES ACTIVATING THEIR ACCOUNTS DUE TO HTML ISSUES IN HASH.
+         */
+        response__.sendRedirect(Controller.Page.Profile.getURL());
     }
 
     private boolean isSignOnPermitted() {

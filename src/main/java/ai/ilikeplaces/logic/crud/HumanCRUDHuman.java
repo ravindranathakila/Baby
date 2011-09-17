@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.exception.DBDishonourException;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.*;
@@ -441,8 +442,14 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     }
 
 
-    public Return<Boolean> doUActivateHuman(final RefObj<String> username) throws DBDishonourCheckedException {
-        return new ReturnImpl<Boolean>(uHumanLocal.doUActivateHuman(username.getObjectAsValid()), "Activate Profile Successful.");
+    public Return<Boolean> doUActivateHuman(final RefObj<String> username){
+        Return<Boolean> r;
+        try {
+            r = new ReturnImpl<Boolean>(uHumanLocal.doUActivateHuman(username.getObjectAsValid()), "Activate Profile Successful.");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Boolean>(t, "Activate Profile FAILED!", true);
+        }
+        return r;
     }
 
     /*END OF PREPERATOR METHODS*/

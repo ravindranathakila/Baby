@@ -57,7 +57,7 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
             LoggerFactory.getLogger(PrivateLocationView.class.getName()).debug("Setting values");
             $$(privateLocationViewName).setTextContent(r.returnValue().getPrivateLocationName());
             $$(privateLocationViewInfo).setTextContent(r.returnValue().getPrivateLocationInfo());
-            new Button(request, $$(privateLocationViewLink), "Link to " + r.returnValue().getPrivateLocationName(), false, r.returnValue()) {
+            new Button(request, $$(privateLocationViewLink), "Visit " + r.returnValue().getPrivateLocationName(), false, r.returnValue()) {
                 PrivateLocation privateLocation = null;
 
                 @Override

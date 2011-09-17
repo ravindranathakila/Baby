@@ -415,7 +415,6 @@ $(document).ready(function(){
                         } else {
                             $.prompt.goToState('impromtuHowWeGoAboutIt1');
                             $('#impromtuHowWeGoAboutIt1img1').attr('src','/images/purpose_find_a_good_place.JPG');
-                            alert('done');
                         }
                         return false;
                     }
