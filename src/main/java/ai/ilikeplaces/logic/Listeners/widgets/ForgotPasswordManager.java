@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.HumansAuthentication;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.Email;
@@ -56,7 +57,7 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
      * @param appendToElement__
      * @param httpSession__
      */
-    public ForgotPasswordManager(final ItsNatServletRequest request__,  final Element appendToElement__, final HttpSession httpSession__) {
+    public ForgotPasswordManager(final ItsNatServletRequest request__, final Element appendToElement__, final HttpSession httpSession__) {
         super(request__, Page.ForgotPasswordChange, appendToElement__, httpSession__);
     }
 
@@ -291,6 +292,17 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
                         if (r.returnStatus() == 0) {
                             if (r.returnValue()) {
                                 $$(ProfileForgotPasswordNotice).setTextContent("Password Updated Successfully!");
+
+                                AttemptToUnlockAccountForPeopleWhoFailedToDoSoWithEmail:
+                                {
+                                    final Return<Boolean> rAct = DB.getHumanCRUDHumanLocal(true).doUActivateHuman(new HumanId(myhumanId.getHumanId()).getSelfAsValid());
+                                    if (rAct.returnStatus() == 0 && rAct.returnValue()) {
+                                        //Please DO NOT CHANGE THIS unless you know what you are doing!
+                                    } else {
+                                        $$(ProfileForgotPasswordNotice).setTextContent("Password Updated Successfully But Something Went Wrong!");
+                                    }
+                                }
+
                             } else {
                                 $$(ProfileForgotPasswordNotice).setTextContent("Sorry! something went wrong.");
                             }
