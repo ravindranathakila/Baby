@@ -1,7 +1,9 @@
 package ai.ilikeplaces.logic.Listeners;
 
+import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
@@ -16,16 +18,14 @@ import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.util.HumanIdEq;
-import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.MarkupTag;
-import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.html.HTMLDocument;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
@@ -100,10 +100,26 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                         try {
                                             UCIntroduction:
                                             {
+
+                                                /*//We are abandonning this to use an image instead
                                                 $(SkeletonCPageTitle).setTextContent(GUI.getString(ORGANIZE_MAIN_TITLE));
                                                 $(SkeletonCPageTitle).setAttribute(MarkupTag.GENERIC.title(), GUI.getString(ORGANIZE_MAIN_TITLE_TITLE));
                                                 $(SkeletonCPageIntro).setTextContent(GUI.getString(ORGANIZE_MAIN_INTRO));
                                                 $(SkeletonCPageTitle).setAttribute(MarkupTag.GENERIC.title(), GUI.getString(ORGANIZE_MAIN_INTRO_TITLE));
+                                                */
+
+                                                @DOCUMENTATION(
+                                                        TODO = {
+                                                                @TODO("Move this to a widget to ease themeing etc.")
+                                                        }
+                                                )
+                                                final Node unnecessaryVariable = $(Skeleton_center_skeleton).appendChild(
+                                                        ElementComposer.compose(
+                                                                $(MarkupTag.IMG)
+                                                        ).$ElementSetAttribute(MarkupTag.IMG.src(),"/images/create_moment.png")
+                                                                .$ElementSetAttribute(MarkupTag.IMG.style(),"width:100%;").get()
+                                                );
+
                                             }
                                             UCListOfActions:
                                             {

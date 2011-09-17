@@ -26,6 +26,16 @@
                         you can hold many events at 'Home' and invite people to them.">&nbsp;</span></h4>
 
                     <div class="use100 last">&nbsp;</div>
+                    <div class="use60 use20p use20a last">
+                         <a id="privateLocationViewLink" href="#" >
+                            <img id="pay_a_visit" src="/images/pay_a_visit.png" style="width:100%;" alt="Pay a Visit!"/>
+                         </a>
+                         <script type="text/javascript">
+                             if(window.location.href.indexOf("location") != -1){//We are in this specific locations page, hopefully :D
+                                document.getElementById('pay_a_visit').style.display='none';
+                             }
+                         </script>
+                    </div>
                 </div>
                 <div class="use100 black_fg">
                     <span id="privateLocationViewNotice" class="use100 last black_fg"></span>
@@ -48,15 +58,15 @@
             <span id="privateLocationViewVisitor"></span>
         </div>
         <div class="use100 last black_fg">
-            <div id="privateLocationViewLink" class="use40 use30p use30a">
+            <div class="use40 use30p use30a">
             </div>
             <div class="use100 last">&nbsp;</div>
         </div>
     </div>
-    <div class="use100 center" style="font-size:17px;">
-       Moments here...
+    <div class="use30 use35p use35a center">
+       <img src="/images/list_of_moments.png" alt="Moments" style="width:100%;"/>
     </div>
-    <UL id="privateLocationViewEventList" style="list-style-type:none;font-size:15px;font-weight:900;text-decoration:underline;" class="use40 use30p use30a center">
+    <UL id="privateLocationViewEventList" style="list-style-image:url('/images/cursor_hand_filled_up.png');list-style-position:inside;font-size:19px;color:#000000;" class="use40 use30p use30a center">
     </UL>
     <hr/>
 </div>

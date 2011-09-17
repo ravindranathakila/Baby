@@ -36,7 +36,7 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
      * @param privateLocationId__
      * @param appendToElement__
      */
-    public PrivateLocationView(final ItsNatServletRequest request__,  final Element appendToElement__, final String humanId__, final long privateLocationId__) {
+    public PrivateLocationView(final ItsNatServletRequest request__, final Element appendToElement__, final String humanId__, final long privateLocationId__) {
         super(request__, Page.PrivateLocationView, appendToElement__, humanId__, privateLocationId__);
     }
 
@@ -54,32 +54,18 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
         LoggerFactory.getLogger(PrivateLocationView.class.getName()).debug(r.toString());
 
         if (r.returnStatus() == 0) {
-            LoggerFactory.getLogger(PrivateLocationView.class.getName()).debug("Setting values");
             $$(privateLocationViewName).setTextContent(r.returnValue().getPrivateLocationName());
             $$(privateLocationViewInfo).setTextContent(r.returnValue().getPrivateLocationInfo());
-            new Button(request, $$(privateLocationViewLink), "Visit " + r.returnValue().getPrivateLocationName(), false, r.returnValue()) {
-                PrivateLocation privateLocation = null;
+            setLink:
+            {
+                $$(privateLocationViewLink).setAttribute(MarkupTag.A.href(),
+                        new Parameter(Organize.getURL())
+                                .append(DocOrganizeCategory, 2, true)
+                                .append(DocOrganizeLocation, r.returnValue().getPrivateLocationId())
+                                .get());
+            }
 
-                @Override
-                protected void init(final Object... initArgs) {
-                    privateLocation = (PrivateLocation) (((Object[]) initArgs[2])[0]);
-                    SetLocationLink:
-                    {
-                        setLink:
-                        {
-                            $$(GenericButtonLink).setAttribute(MarkupTag.A.href(),
-                                    new Parameter(Organize.getURL())
-                                            .append(DocOrganizeCategory, 2, true)
-                                            .append(DocOrganizeLocation, privateLocation.getPrivateLocationId())
-                                            .get());
-                        }
-                        setImage:
-                        {
-                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + "arrow-right.gif");
-                        }
-                    }
-                }
-            };
+
             SetEventList:
             {
                 for (final PrivateEvent pe : r.returnValue().getPrivateEvents())
