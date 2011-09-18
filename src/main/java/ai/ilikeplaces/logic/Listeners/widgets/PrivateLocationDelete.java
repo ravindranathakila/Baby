@@ -34,18 +34,20 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 abstract public class PrivateLocationDelete extends AbstractWidgetListener {
+// ------------------------------ FIELDS ------------------------------
 
-
-    final private Logger logger = LoggerFactory.getLogger(PrivateLocationDelete.class.getName());
-
-    private HumanId humanId = null;
-    private Long privateLocationId = null;
-    Return<PrivateLocation> r;
-    List<HumansNetPeople> possibilities;
     private static final String HAS_ADDED_YOU_AS_AN_OWNER_OF = " has added you as an Owner of ";
     private static final String HAS_REMOVED_YOU_AS_AN_OWNER_OF = " has removed you as an Owner of ";
     private static final String HAS_ADDED_YOU_AS_AN_VISITOR_OF = " has added you as an Visitor of ";
     private static final String HAS_REMOVED_YOU_AS_AN_VISITOR_OF = " has removed you as an Visitor of ";
+    Return<PrivateLocation> r;
+    List<HumansNetPeople> possibilities;
+
+
+    private HumanId humanId = null;
+    private Long privateLocationId = null;
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     public PrivateLocationDelete(final ItsNatServletRequest request__, final Element appendToElement__, final String humanId__, final long privateLocationId__) {
         super(request__, Page.PrivateLocationDelete, appendToElement__, humanId__, privateLocationId__);
@@ -107,7 +109,6 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
         } else {
             $$(privateLocationDeleteNotice).setTextContent(r.returnMsg());
         }
-
     }
 
     @Override
@@ -115,32 +116,26 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
         delete:
         {
             itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationDelete), EventType.CLICK.toString(), new EventListener() {
-
                 final HumanId myhumanId = humanId;
                 final Long myprivateLocationId = privateLocationId;
 
                 @Override
                 public void handleEvent(final Event evt_) {
-                    logger.debug("{}", "HELLO! CLICKED DELETE.");
 
                     final Return<Boolean> r = DB.getHumanCrudPrivateLocationLocal(true).dPrivateLocation(myhumanId, myprivateLocationId);
+                    logger.debug("DELETED. DB REPLY:" + r.returnValue());
+
                     if (r.returnStatus() == 0) {
-                        logger.debug("{}", "HELLO! DELETED. DB REPLY:" + r.returnValue());
+
                         remove(evt_.getTarget(), EventType.CLICK, this);
-                        logger.debug("{}", "HELLO! REMOVED CLICK.");
+                        logger.debug("REMOVED CLICK.");
+
                         clear($$(privateLocationDeleteNotice));
                     } else {
                         $$(privateLocationDelete).setTextContent(r.returnMsg());
                     }
-
-
                 }
 
-                @Override
-                public void finalize() throws Throwable {
-                    Loggers.finalized(this.getClass().getName());
-                    super.finalize();
-                }
             }, false, JSCodeToSend.RefreshPage);
         }
 
@@ -155,7 +150,6 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
                     possibilities,
                     r.returnValue().getPrivateLocationOwners(),
                     new Save<Return<PrivateLocation>>() {
-
                         final long myprivateLocationId = r.returnValue().getPrivateLocationId();
 
                         @Override
@@ -170,7 +164,6 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
                         }
                     },
                     new Save<Return<PrivateLocation>>() {
-
                         final long myprivateLocationId = r.returnValue().getPrivateLocationId();
 
                         @Override
@@ -184,7 +177,8 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
 
                             return returnVal;
                         }
-                    }) {
+                    }
+            ) {
             };
         }
         AddRemoveVisitors:
@@ -195,12 +189,10 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
                     possibilities,
                     r.returnValue().getPrivateLocationViewers(),
                     new Save<Return<PrivateLocation>>() {
-
                         final long myprivateLocationId = r.returnValue().getPrivateLocationId();
 
                         @Override
                         public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
-
                             final Return<PrivateLocation> returnVal = DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationAddVisitor(humanId, myprivateLocationId, humansFriend);
                             if (returnVal.returnStatus() == 0) {
                                 SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
@@ -208,16 +200,13 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
                                         humanId.getObj() + HAS_ADDED_YOU_AS_AN_VISITOR_OF + returnVal.returnValue().getPrivateLocationName());
                             }
                             return returnVal;
-
                         }
                     },
                     new Save<Return<PrivateLocation>>() {
-
                         final long myprivateLocationId = r.returnValue().getPrivateLocationId();
 
                         @Override
                         public Return<PrivateLocation> save(final HumanId humanId, final HumansFriend humansFriend) {
-
                             final Return<PrivateLocation> returnVal = DB.getHumanCrudPrivateLocationLocal(true).uPrivateLocationRemoveVisitor(humanId, myprivateLocationId, humansFriend);
                             if (returnVal.returnStatus() == 0) {
                                 SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
@@ -225,16 +214,10 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
                                         humanId.getObj() + HAS_REMOVED_YOU_AS_AN_VISITOR_OF + returnVal.returnValue().getPrivateLocationName());
                             }
                             return returnVal;
-
                         }
-                    }) {
+                    }
+            ) {
             };
         }
-    }
-
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
     }
 }

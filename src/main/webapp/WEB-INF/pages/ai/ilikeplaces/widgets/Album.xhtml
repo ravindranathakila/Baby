@@ -10,7 +10,6 @@
 </head>
 <body>
 <div class="use100" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
-    <hr class="space"/>
       <div class="use100 center list_style_type_none">
         <div class="use100 black_fg">
             <span id="AlbumNotice" class="use100 black_fg"></span>
@@ -29,21 +28,23 @@
       <div class="use100 center list_style_type_none" style="display:block;">
         <div class="use100 black_fg" id="AlbumOwner" style="display:none;">
             <form id="file_upload_form" method="post" target="upload_target" enctype="multipart/form-data" action="/gfg?type=2">
-                <input name="file" id="file" size="27" type="file"/><br/><br/>
-                <input type="submit" name="action" value="Upload Photo To Album" class="bg_a9abf1"/><br/>
+                <input name="file" id="file" size="27" type="file"
+                       onchange="javascript:$('#file').hide();$('#uploading').show();$('#file_upload_form').submit();"/><br/><br/>
                 <input type="hidden" name="type" value="2"/>
                 <input type="hidden" name="AlbumPivateEventId" id="AlbumPivateEventId"/>
+                <img id="uploading" style="display:none;" src="/images/circle.gif" alt="Uploading..." />
             </form>
             <iframe id="upload_target" name="upload_target" src="" target="_blank" style="width:0;height:0;border:0px solid #fff;display:none;"
                     onload="javascript:
                   var reply = frames['upload_target'].document.getElementsByTagName('body')[0].innerHTML.toString().replace('{','').replace('}','');
                   if( reply != '' && reply != undefined){
                     if(reply.split(',',3)[0] == 'ok'){
-                        if(confirm('Done! '+reply.split(',',3)[1]+'\nRefresh page to update?')){
+                        //if(confirm('Done! '+reply.split(',',3)[1]+'\nRefresh page to update?')){
                             window.location = window.location;
-                        }
+                        //}
                     }else{
                         alert('Failed! '+reply.split(',',3)[1]);
+                        window.location = window.location;
                     }
                   }else{
                     //alert('initial load');
