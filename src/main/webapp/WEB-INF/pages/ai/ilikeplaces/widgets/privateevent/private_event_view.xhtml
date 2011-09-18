@@ -8,34 +8,38 @@
         <div class="use100" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
             <script type="text/javascript"
             src="http://s7.addthis.com/js/250/addthis_widget.js#username=ravindranathakila"></script>
-            <hr/>
             <div style="list-style-type:none;" class="use100 center">
                 <div class="use60">
                     <div class="use100 black_fg">
                         <div class="use100 black_fg">
-                            <!--<div class="use100">&nbsp;</div>-->
-                            <h3><span  id="privateEventViewName" class="use100 fg_orange bold vtip"
-                                    title="You can invite friends to this event.">&nbsp;</span></h3>
+                            <span  id="privateEventViewName" class="use100 fg_orange bold vtip"
+                                       style="font-size:17px;"
+                                    title="You can invite friends to this event.">&nbsp;</span>
                         </div>
                         <div class="use100 black_fg">
-                            <h4><span id="privateEventViewInfo" class="use100 fg_orange vtip"
-                                    title="You can invite friends to this event.">&nbsp;</span></h4>
+                            <span id="privateEventViewInfo" class="use100 fg_orange vtip"
+                                    title="You can invite friends to this event.">&nbsp;</span>
                             <div class="use100">&nbsp;</div>
                         </div>
                     </div>
                 </div>
                 <div class="use40">
+                    <div class="use100" style="height:40px;">
+                        &nbsp;
+                    </div>
                     <img id="privateEventViewLocationMap" src="http://maps.google.com/maps/api/staticmap?sensor=false&center=48.85567989976907,2.3545074462890625&size=230x250&format=jpg&markers=color:0x7fe2ff|label:S|48.85567989976907,2.3545074462890625&path=fillcolor:0xAA000033|color:0xFFFFFF00" alt="Loading..."
+                         style="padding: 2px 2px 2px 2px; background-color:#eeeeee;"
                      class="use100 cursor_link vtip"
                      title="Click to Get Directions!"
                      onclick="javascript:window.open(this.src.replace('http://maps.google.com/maps/api/staticmap?sensor=false&','/?').replace('center','toLatLng'));"
                             />
                 </div>
-                <hr class="space"/>
+                <div class="use100" style="height:10px;">
+                    &nbsp;
+                </div>
                 <div class="use100 black_fg">
                     <span id="privateEventViewNotice" class="use100 black_fg"></span>
                 </div>
-                <hr class="space"/>
                 <div class="use100 black_fg">
                   <div id="privateEventViewWall">
                   </div>
@@ -62,8 +66,7 @@
                     </div>
                     <div class="use100 black_fg" id="privateEventViewInvites"></div>
                 </div>
-                <hr class="space"/>
-                <div class="use100 black_fg">
+                <div class="use100 black_fg" style="display:none;">
                   <div id="privateEventViewLink" class="use30 use35p use35a">
                   </div>
                   <div class="use100">&nbsp;</div>
