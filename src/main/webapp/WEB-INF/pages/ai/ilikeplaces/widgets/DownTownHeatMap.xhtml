@@ -123,7 +123,7 @@ function setActionLink(text, title, onclickActions, doClear){//WARNING! used in 
         $('#take_action_link').click(onclickActions);//since if not clear, some not-so-important actions are to follow and this is the most important out of them
     }
     $('#mapCustomControlsActionLinks').append(
-        '<div class=\'by\'><a style=\'font-size:16px;margin-right:0px;font-weight:900;cursor:pointer;color:#aa4400;text-decoration:underline;\' class=\'\'>'+text+'</a></div>');
+        '<div class=\'by\'><a style=\'font-size:18px;margin-right:0px;font-weight:900;cursor:pointer;color:#aa4400;text-decoration:underline;\' class=\'\'>'+text+'</a></div>');
     $('#mapCustomControlsActionLinks').children(':last').click(onclickActions);
     $('#mapCustomControlsActionLinks').append(
         '<div class=\'by\' style=\'height:7px;\'>&nbsp;</div>');
@@ -819,7 +819,7 @@ function setMapToLocation(value){
             <div class="by">
                 <div class="use100">
                     <div class="use100" style="color:#bb0022;text-align:center;">
-                        <h2 id="mapCustomControlsActionLinksTitle">&nbsp;</h2>
+                        <h2 id="mapCustomControlsActionLinksTitle" style="font-size:22px;">&nbsp;</h2>
                     </div>
                     <div class="use60 use20p use20a">
                         <div class="use100" style="height:5px;">
