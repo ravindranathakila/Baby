@@ -120,9 +120,10 @@ function setActionLink(text, title, onclickActions, doClear){//WARNING! used in 
     if(doClear){
         $('#mapCustomControlsActionLinks').empty();
         $('#mapCustomControlsActionLinksTitle').empty().text(title);
+        $('#take_action_link').click(onclickActions);//since if not clear, some not-so-important actions are to follow and this is the most important out of them
     }
     $('#mapCustomControlsActionLinks').append(
-        '<div class=\'by\'><a style=\'font-size:14px;margin-right:0px;cursor:pointer;background-color:#ffffff;color:#000000;text-decoration:underline;\' class=\'\'>'+text+'</a></div>');
+        '<div class=\'by\'><a style=\'font-size:16px;margin-right:0px;font-weight:900;cursor:pointer;color:#aa4400;text-decoration:underline;\' class=\'\'>'+text+'</a></div>');
     $('#mapCustomControlsActionLinks').children(':last').click(onclickActions);
     $('#mapCustomControlsActionLinks').append(
         '<div class=\'by\' style=\'height:7px;\'>&nbsp;</div>');
@@ -539,7 +540,7 @@ function initialize_DownTownHeatMap_map(){
                 setNotification("Great! You've selected a place. Check Actions!");
 
                 setActionLink(
-                    "Add this place to your event planner!",
+                    "Add this place to my moments!",
                     "",
                     function(){
                         alert('We\'re gonna send you to Down&darr;Town. Don\'t worry, we\'ve got you covered!');
@@ -712,28 +713,30 @@ function setMapToLocation(value){
             <input type="text" class="by center" id="DownTownHeatMapBB" value="0,0" readonly="readonly" style="background-color:transparent;color:transparent;border:none;"/>
         </div>
     </div>
-    <div id="mapCustomControlsPersonIntros" style="width:30.9%;" class="lose_attn">
-        <div class="use100" id="impromptuRealityAmandaPopupLink" style="cursor:pointer;">
-            <div class="use191">
-                <img src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG" class="use90 use5p use5a" alt=" "/>
+    <div style="display:none;">
+        <div id="mapCustomControlsPersonIntros" style="width:30.9%;" class="lose_attn">
+            <div class="use100" id="impromptuRealityAmandaPopupLink" style="cursor:pointer;">
+                <div class="use191">
+                    <img src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG" class="use90 use5p use5a" alt=" "/>
+                </div>
+                <div class="use618" style="font-size:14px;font-weight:900;">
+                    Find out how Jenniffer planned a family party!
+                </div>
+                <div class="use191">
+                    &nbsp;
+                </div>
             </div>
-            <div class="use618" style="font-size:14px;font-weight:900;">
-                Find out how Jenniffer planned a family party!
-            </div>
-            <div class="use191">
-                &nbsp;
-            </div>
-        </div>
-        <div class="use100" style="height:5px;">&nbsp;</div>
-        <div class="use100">
-            <div class="use191">
-                <img src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG" class="use90 use5p use5a" alt=" "/>
-            </div>
-            <div class="use618" style="font-size:14px;font-weight:900;">
-               This is how Justin organized a trip with his friends!
-            </div>
-            <div class="use191">
-                &nbsp;
+            <div class="use100" style="height:5px;">&nbsp;</div>
+            <div class="use100">
+                <div class="use191">
+                    <img src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG" class="use90 use5p use5a" alt=" "/>
+                </div>
+                <div class="use618" style="font-size:14px;font-weight:900;">
+                   This is how Justin organized a trip with his friends!
+                </div>
+                <div class="use191">
+                    &nbsp;
+                </div>
             </div>
         </div>
     </div>
@@ -815,15 +818,20 @@ function setMapToLocation(value){
             <div class="by" style="height:5px;">&nbsp;</div>
             <div class="by">
                 <div class="use100">
-                    <div class="by" style="color:#000000;text-align:center;">
+                    <div class="use100" style="color:#bb0022;text-align:center;">
                         <h2 id="mapCustomControlsActionLinksTitle">&nbsp;</h2>
                     </div>
-                    <div id="mapCustomControlsActionLinks" class="by" style="color:#000000;text-align:center;">
+                    <div class="use60 use20p use20a">
+                        <div class="use100" style="height:5px;">
+                            &nbsp;
+                        </div>
+                        <div id="mapCustomControlsActionLinks" class="use100" style="text-align:center;">
+                        </div>
+                        <div class="use100" style="height:5px;">
+                            &nbsp;
+                        </div>
                     </div>
-                    <div class="by" style="height:5px;">
-                        &nbsp;
-                    </div>
-                    <div class="by bold" >
+                    <div class="use100 bold" id="take_action_link" style="cursor:pointer;">
                         <img id="img_take_action" src="/images/circle.gif" alt="Take Action" class="use100"/>
                     </div>
                 </div>
