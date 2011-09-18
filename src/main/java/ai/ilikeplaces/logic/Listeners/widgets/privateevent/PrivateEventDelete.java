@@ -84,31 +84,31 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
         if (privateEventReturn.returnStatus() == 0) {
             $$(privateEventDeleteName).setTextContent(privateEventReturn.returnValue().getPrivateEventName());
             $$(privateEventDeleteInfo).setTextContent(privateEventReturn.returnValue().getPrivateEventInfo());
-            new Button(request, $$(privateEventDeleteLink), privateEventReturn.returnValue().getPrivateEventName(), false, privateEventReturn.returnValue()) {
-                PrivateEvent privateEvent = null;
-
-                @Override
-                protected void init(final Object... initArgs) {
-                    privateEvent = (PrivateEvent) (((Object[]) initArgs[2])[0]);
-                    SetLocationLink:
-                    {
-                        setLink:
-                        {
-                            $$(GenericButtonLink).setAttribute(MarkupTag.A.href(),
-                                    new Parameter(Organize.getURL())
-                                            .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
-                                            .append(DocOrganizeLocation, privateEventReturn.returnValue().getPrivateLocation().getPrivateLocationId())
-                                            .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
-                                            .get()
-                            );
-                        }
-                        setImage:
-                        {
-                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + ARROW_RIGHT_GIF);
-                        }
-                    }
-                }
-            };
+//            new Button(request, $$(privateEventDeleteLink), privateEventReturn.returnValue().getPrivateEventName(), false, privateEventReturn.returnValue()) {
+//                PrivateEvent privateEvent = null;
+//
+//                @Override
+//                protected void init(final Object... initArgs) {
+//                    privateEvent = (PrivateEvent) (((Object[]) initArgs[2])[0]);
+//                    SetLocationLink:
+//                    {
+//                        setLink:
+//                        {
+//                            $$(GenericButtonLink).setAttribute(MarkupTag.A.href(),
+//                                    new Parameter(Organize.getURL())
+//                                            .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
+//                                            .append(DocOrganizeLocation, privateEventReturn.returnValue().getPrivateLocation().getPrivateLocationId())
+//                                            .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
+//                                            .get()
+//                            );
+//                        }
+//                        setImage:
+//                        {
+//                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + ARROW_RIGHT_GIF);
+//                        }
+//                    }
+//                }
+//            };
             if ((Boolean) initArgs[2]) {
                 new WallWidgetPrivateEvent(request, $$(Page.privateEventDeleteWall), humanId, privateEventReturn.returnValue().getPrivateEventId());
                 new AlbumManager(request, $$(Page.privateEventDeleteAlbum), humanId, privateEventReturn.returnValue());

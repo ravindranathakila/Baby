@@ -133,11 +133,7 @@ public class AlbumManager extends AbstractWidgetListener {
                                     remove(evt_.getTarget(), EventType.ONMOUSEOVER, this); //safety measure 2
                                 }
 
-                                @Override
-                                public void finalize() throws Throwable {
-                                    Loggers.finalized(this.getClass().getName());
-                                    super.finalize();
-                                }
+
                             }, false);
                         }
                     };
@@ -215,29 +211,27 @@ public class AlbumManager extends AbstractWidgetListener {
 
                     remove(evt_.getTarget(), EventType.CLICK, this, false);
                     confirmed = false;
-                    $$(evt_).setTextContent(RBGet.gui().getString(BUTTONTEXT_EMAIL_FORWARDED));
+                    //$$(evt_).setTextContent(RBGet.gui().getString(BUTTONTEXT_EMAIL_FORWARDED));
+                     $$(evt_).setAttribute(MarkupTag.IMG.src(),
+                                                        $$(evt_).getAttribute(MarkupTag.IMG.src()).replace("confirm_forward_album_to_friends.png", "forwarded_forward_album_to_friends.png")
+                        );
                 } else {
                     if (!(albumReturn.returnValue().getAlbumPhotos().size() == 0)) {
+
                         confirmed = true;
-                        $$(evt_).setTextContent(RBGet.gui().getString(BUTTONTEXT_CLICK_TO_CONFIRM));
+                        $$(evt_).setAttribute(MarkupTag.IMG.src(),
+                                                        $$(evt_).getAttribute(MarkupTag.IMG.src()).replace("forward_album_to_friends.png", "confirm_forward_album_to_friends.png")
+                        );
+                        //$$(evt_).setTextContent(RBGet.gui().getString(BUTTONTEXT_CLICK_TO_CONFIRM));
                     }else{
-                        $$(evt_).setTextContent(RBGet.gui().getString(NO_PHOTOS_IN_ALBUM));
+                        //@TODO
+                        //$$(evt_).setTextContent(RBGet.gui().getString(NO_PHOTOS_IN_ALBUM));
                     }
 
                 }
             }
 
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
-        }, false);
-    }
 
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
+        }, false);
     }
 }

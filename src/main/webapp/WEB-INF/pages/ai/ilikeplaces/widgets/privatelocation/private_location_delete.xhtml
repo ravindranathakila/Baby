@@ -11,38 +11,39 @@
             <div class="use60 black_fg">
                 <div class="use100 last black_fg">
                     <div class="use100">&nbsp;</div>
-                    <h3><span id="privateLocationDeleteName" class="use100 last fg_orange bold vtip"
-                              title="By sharing this place, you can invite friends to events held here.<br/><br/>
-                                A place can have many events held throughout its' lifetime.<br/><br/>
+                    <span id="privateLocationDeleteName" class="use100 last fg_orange bold vtip"
+                          style="font-size:17px;"
+                              title="By sharing this place, you can invite friends to moments held here.<br/><br/>
+                                A place can have many moments held throughout its' lifetime.<br/><br/>
                                 An example would be 'Home'. By creating a places called 'Home', <br/>
-                                you can hold many events at 'Home' and invite people to them.">&nbsp;</span></h3>
+                                you can hold many moments at 'Home' and invite people to them.">&nbsp;</span>
                 </div>
                 <div class="use100 black_fg">
-                    <h4><span id="privateLocationDeleteInfo" class="use100 last fg_orange vtip"
-                              title="By sharing this place, you can invite friends to events held here.<br/><br/>
-                                A place can have many events held throughout its' lifetime.<br/><br/>
+                    <span id="privateLocationDeleteInfo" class="use100 last fg_orange vtip"
+                                style="font-size:15px;"
+                              title="By sharing this place, you can invite friends to moments held here.<br/><br/>
+                                A place can have many moments held throughout its' lifetime.<br/><br/>
                                 An example would be 'Home'. By creating a places called 'Home', <br/>
-                                you can hold many events at 'Home' and invite people to them.">&nbsp;</span></h4>
+                                you can hold many moments at 'Home' and invite people to them.">&nbsp;</span>
 
                     <div class="use100">&nbsp;</div>
                 </div>
                 <div class="use100 black_fg">
                     <span id="privateLocationDeleteNotice" class="use100 last black_fg"></span>
                 </div>
-                <div class="use100 black_fg">
-                    <div class="use20 use40p use40a">
-                        <a id="privateLocationDelete" class="btn vtip cursor_link" title="You CANNOT UNDO a delete!">
-                            &nbsp; Delete
-                            &nbsp;</a>
-                    </div>
+                <div class="use30 use35p use35a black_fg vtip" title="You CANNOT UNDO a delete!" style="cursor:pointer;">
+                        <img class="use50 use25p use25a" id="privateLocationDelete" src="/images/delete.png" alt="Delete"/>
                 </div>
             </div>
             <div class="use40">
+                <div class="use100" style="height:40px;">
+                    &nbsp;
+                </div>
                 <img id="privateLocationDeleteLocationMap"
                      src="http://maps.google.com/maps/api/staticmap?sensor=false center=48.85567989976907,2.3545074462890625 size=230x250 format=jpg markers=color:0x7fe2ff|label:S|48.85567989976907,2.3545074462890625 path=fillcolor:0xAA000033|color:0xFFFFFF00"
                      alt="Loading..."
                      class="use100 vtip"
-                     style="cursor:pointer;"
+                     style="padding: 2px 2px 2px 2px; background-color:#eeeeee;"
                      title="Click to Get Directions!"
                      onclick="javascript:window.open(this.src.replace('http://maps.google.com/maps/api/staticmap?sensor=false ','/?').replace('center','toLatLng'));"
                         />

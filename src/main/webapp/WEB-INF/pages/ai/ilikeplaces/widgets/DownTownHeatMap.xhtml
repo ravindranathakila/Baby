@@ -221,7 +221,9 @@ function setClearForLastNotification(){
                         directionsDisplay.setDirections(response);
                         setNotification("Did you know you can drag direction markers?");
                     }else{
-                        alert('Couldn\'t find the place you gave :-(');
+                        if(confirm('Couldn\'t find a route to the place you gave :-( . Retry?')){
+                            renderRoute(toLat,toLng);
+                        }
                     }
                 }
          );

@@ -45,7 +45,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
     private static final String SPACE = " ";
     private static final String NOT_LOGGED_IN_NOTICE = "Hmmmm... Why have you not logged in?!";
     boolean initStatus = false;
-    private static final String TALK = "Talk!";
+    private static final String TALK = "Get chatty...";
 
     /**
      * @param request_
