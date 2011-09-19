@@ -46,6 +46,7 @@ import java.util.*;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class DownTownHeatMap extends AbstractWidgetListener {
+// ------------------------------ FIELDS ------------------------------
 
     private static final String WOEIDUPDATE_TOKEN = "WOEIDUPDATE_TOKEN";
     private static final String OPEN_BRACKET = "(";
@@ -117,6 +118,8 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private Email email;
     private Password password;
 
+// --------------------------- CONSTRUCTORS ---------------------------
+
     /**
      * @param request__                request__
      * @param appendToElement__        appendToElement__
@@ -129,7 +132,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
     @Override
     protected void init(final Object... initArgs) {
-
         elementToUpdateWithWOEID = (Element) initArgs[0];
         humanId = new HumanId((String) initArgs[1]);//Value set will be null if user is not logged in
         email = new Email("");
@@ -158,11 +160,9 @@ public class DownTownHeatMap extends AbstractWidgetListener {
      */
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
-
         UCSignup:
         {
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapSignupEmail), EventType.BLUR.toString(), new EventListener() {
-
                 final Validator v = new Validator();
                 final Email myemail = email;
 
@@ -177,7 +177,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 }
             }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapSignupPassword), EventType.BLUR.toString(), new EventListener() {
-
                 final Validator v = new Validator();
                 final Password mypassword = password;
 
@@ -193,7 +192,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
             }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapSignupButton), EventType.CLICK.toString(), new EventListener() {
-
                 final Validator v = new Validator();
                 final Email myemail = email;
                 final Password mypassword = password;
@@ -203,14 +201,12 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                     if (myemail.validate(v) == 0 && mypassword.validate(v) == 0) {
                         if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
                             try {
-
                                 final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
                                         new HumanId().setObjAsValid(email.getObj()),
                                         mypassword,
                                         myemail);
 
                                 if (humanCreateReturn.returnValue()) {
-
                                     final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
                                             .append(ServletLogin.Username, myemail.getObj(), true)
                                             .append(ServletLogin.Password,
@@ -228,7 +224,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                                             mail);
                                     $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
                                 }
-
                             } catch (DBDishonourCheckedException e) {
                                 $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email was taken meanwhile!:(");
                             }
@@ -238,13 +233,11 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                     } else {
                         //Ignored as the individual validators would've reported the error by now
                     }
-
                 }
             }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
         }
 
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapWOEID), EventType.BLUR.toString(), new EventListener() {
-
             final Validator v = new Validator();
             RefObj<String> woeid;
 
@@ -261,7 +254,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
 
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapBB), EventType.BLUR.toString(), new EventListener() {
-
             final Validator v = new Validator();
             final GeoCoord geoCoordSW = new GeoCoord();
             final GeoCoord geoCoordNE = new GeoCoord();
@@ -270,7 +262,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
             @Override
             public void handleEvent(final Event evt_) {
-
                 final GeoCoord[] geoCoord = GeoCoord.getGeoCoordsByBounds(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
 
                 if (geoCoord[0].validate(v) == 0 && geoCoord[1].validate(v) == 0) {
@@ -284,7 +275,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
                     final Set<Rawspot> rs = new HashSet<Rawspot>() {//Initializing HashSet as an anonymous class. God speed!
                         /*StaticBlockInsideSetToAddElementsEasily*/ {
-
                             UCILikePlacesPlaces:
                             {
                                 final List<PrivateEvent> privateEvents__ = DB.getHumanCrudPrivateEventLocal(true).doRPrivateEventsByBoundsAsSystem(
@@ -303,7 +293,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
                             UCGooglePlaces:
                             {
-
                                 try {
                                     final double latitudeAverage = (latitudeLB +
                                             latitudeTR) / 2;
@@ -324,7 +313,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                                                         new W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
                                                         placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
                                     }
-
                                 } catch (final Exception e) {
                                     Loggers.ERROR.error(FAILED_TO_FETCH_GOOGLE_PLACES_DATA, e);
                                 }
@@ -351,7 +339,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                             final W3CPoint coords = yaw.getCoordinates();
 
                             if (yaw.getCoordinates() != null) {
-
                                 foundAnySpots = true;
 
                                 final Double latitude = coords.getLatitude();
@@ -383,7 +370,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                         final List<PrivateLocation> usersOwnPrivateLocations = DB.getHumanCRUDHumanLocal(false).doDirtyRHumansPrivateLocation(humanId).returnValue().getPrivateLocationsOwned();
 
                         for (final PrivateLocation userOwnPrivateLocation : usersOwnPrivateLocations) {
-
                             generateMyMarker(userOwnPrivateLocation.getPrivateLocationLatitude(),
                                     userOwnPrivateLocation.getPrivateLocationLongitude(),
                                     userOwnPrivateLocation.getPrivateLocationName().replaceAll("'","\\'"),
@@ -433,21 +419,19 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                     } else {
                         $$sendJSStmt(NOTIFY_USER_NEGATIVE);
                     }
-
-
                 } else {
-
                 }
             }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+    }
 
-
+    public static JSONObject getGooglePlaces(final double latitude, final double longitude, final long radiusInMeters, final String placeTypes) throws JSONException {
+        final Map<String, String> params = new HashMap<String, String>();
+        params.put(LOCATION, latitude + "," + longitude);
+        params.put(RADIUS, Double.toString(radiusInMeters));
+        params.put(PLACE_TYPES, placeTypes);
+        params.put(SENSOR, TRUE);
+        return GOOGLE_API_CLIENT_FACTORY.getInstance(GOOGLE_PLACES_JSON_ENDPOINT).get("", params);
     }
 
     private void generateMarker(Double latitude, Double longitude, String commonName, long hits) {
@@ -475,7 +459,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     }
 
     private void generateMarkerEvents(final W3CPoint coords, String commonName, long hits) {
-
         $$sendJSStmt(generateGoogleMarkerEvent(
                 LIST_OF_HOT_SPOTS_0,
                 CLICK,
@@ -501,24 +484,12 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                         CLOSE_BRACKET +
                         SEMI_COLON)
         ));
-
-    }
-
-
-    public static JSONObject getGooglePlaces(final double latitude, final double longitude, final long radiusInMeters, final String placeTypes) throws JSONException {
-        final Map<String, String> params = new HashMap<String, String>();
-        params.put(LOCATION, latitude + "," + longitude);
-        params.put(RADIUS, Double.toString(radiusInMeters));
-        params.put(PLACE_TYPES, placeTypes);
-        params.put(SENSOR, TRUE);
-        return GOOGLE_API_CLIENT_FACTORY.getInstance(GOOGLE_PLACES_JSON_ENDPOINT).get("", params);
     }
 
     private String generateGoogleMarkerEvent(final String elementToWhichToAssociateEvent, final String eventType, final String javascriptCallbackFunctionContent) {
         return GOOGLE_MAPS_EVENT_ADD_LISTENER + OPEN_BRACKET + elementToWhichToAssociateEvent + COMMA + SINGLE_QUOTE + eventType + SINGLE_QUOTE + COMMA + FUNCTION + OPEN_BRACKET + CLOSE_BRACKET + OPEN_BRACE +
                 javascriptCallbackFunctionContent +
                 CLOSE_BRACE + CLOSE_BRACKET + SEMI_COLON;
-
     }
 }
 
