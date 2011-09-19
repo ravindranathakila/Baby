@@ -369,7 +369,19 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                     if (humanId.validate() == 0) {//User is logged in
                         final List<PrivateLocation> usersOwnPrivateLocations = DB.getHumanCRUDHumanLocal(false).doDirtyRHumansPrivateLocation(humanId).returnValue().getPrivateLocationsOwned();
 
-                        for (final PrivateLocation userOwnPrivateLocation : usersOwnPrivateLocations) {
+                        List<PrivateLocation> usersOwnPrivateLocationsWithinBounds = new ArrayList<PrivateLocation>();
+
+                        UCFindLocationsWithinBounds:
+                        {
+                            for(final PrivateLocation privateLocation: usersOwnPrivateLocations){
+                                final W3CPoint w3CPoint = new W3CPoint(privateLocation.getPrivateLocationLatitude(), privateLocation.getPrivateLocationLongitude());
+                                if(bb.bounds(w3CPoint)){
+                                   usersOwnPrivateLocationsWithinBounds.add(privateLocation);
+                                }
+                            }
+                        }
+
+                        for (final PrivateLocation userOwnPrivateLocation : usersOwnPrivateLocationsWithinBounds) {
                             generateMyMarker(userOwnPrivateLocation.getPrivateLocationLatitude(),
                                     userOwnPrivateLocation.getPrivateLocationLongitude(),
                                     userOwnPrivateLocation.getPrivateLocationName().replaceAll("'","\\'"),
