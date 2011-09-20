@@ -28,6 +28,7 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 abstract public class PasswordManager extends AbstractWidgetListener {
+// ------------------------------ FIELDS ------------------------------
 
     HumanId humanId = null;
     Obj<Boolean> current;
@@ -39,6 +40,8 @@ abstract public class PasswordManager extends AbstractWidgetListener {
     Password newConfirmPass;
 
     HttpSession httpSession;
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     /**
      * @param itsNatDocument__
@@ -75,7 +78,6 @@ abstract public class PasswordManager extends AbstractWidgetListener {
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(ProfilePasswordCurrent), EventType.BLUR.toString(), new EventListener() {
-
             private HumanId myhumanId = humanId;
             private Obj<Boolean> mycurrent = current;
 
@@ -105,7 +107,6 @@ abstract public class PasswordManager extends AbstractWidgetListener {
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(ProfilePasswordNew), EventType.BLUR.toString(), new EventListener() {
-
             private HumanId myhumanId = humanId;
             private Obj<Boolean> mycurrent = current;
             private Obj<Boolean> mynewSet = newSet;
@@ -126,7 +127,6 @@ abstract public class PasswordManager extends AbstractWidgetListener {
                         $$(ProfilePasswordNotice).setTextContent("Sorry! You have to provide the current password first.");
                     }
                 }
-
             }
 
             @Override
@@ -137,7 +137,6 @@ abstract public class PasswordManager extends AbstractWidgetListener {
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(ProfilePasswordNewConfirm), EventType.BLUR.toString(), new EventListener() {
-
             private HumanId myhumanId = humanId;
             private Obj<Boolean> mycurrent = current;
             private Obj<Boolean> mynewSet = newSet;
@@ -162,7 +161,6 @@ abstract public class PasswordManager extends AbstractWidgetListener {
                             mynewConfirmSet.setObj(false);
                             $$(ProfilePasswordNotice).setTextContent("Sorry! Confirmation Wrong.");
                         }
-
                     } else {
                         $$(ProfilePasswordNotice).setTextContent("Sorry! You have to provide the current password first.");
                     }
@@ -177,7 +175,6 @@ abstract public class PasswordManager extends AbstractWidgetListener {
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(ProfilePasswordSave), EventType.CLICK.toString(), new EventListener() {
-
             private HumanId myhumanId = humanId;
             private Obj<Boolean> mycurrent = current;
             private Obj<Boolean> mynewSet = newSet;
@@ -212,25 +209,9 @@ abstract public class PasswordManager extends AbstractWidgetListener {
                         } else {
                             $$(ProfilePasswordNotice).setTextContent(Return.YIKES_SOMETHING_WENT_WRONG);
                         }
-
                     }
                 }
-
-            }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
             }
         }, false);
-
-
-    }
-
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
     }
 }

@@ -23,10 +23,12 @@ import org.w3c.dom.html.HTMLDocument;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class Profile extends AbstractWidgetListener {
+// ------------------------------ FIELDS ------------------------------
 
     HumanId humanId = null;
     ProfileUrl url = null;
 
+// --------------------------- CONSTRUCTORS ---------------------------
 
     /**
      * @param request__
@@ -49,9 +51,7 @@ public class Profile extends AbstractWidgetListener {
     }
 
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
-
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.ProfileURL), EventType.BLUR.toString(), new EventListener() {
-
             final HumanId myhumanId = humanId;
             final ProfileUrl myurl = url;
 
@@ -63,16 +63,9 @@ public class Profile extends AbstractWidgetListener {
                     myurl.setObj(" ");//Moving this before calling getviolations will throw an exception
                 }
             }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.ProfileURLUpdate), EventType.CLICK.toString(), new EventListener() {
-
             final HumanId myhumanId = humanId;
             final ProfileUrl myurl = url;
 
@@ -86,19 +79,6 @@ public class Profile extends AbstractWidgetListener {
                     myurl.setObj("");//Moving this before calling getviolations will throw an exception
                 }
             }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
-
-    }
-
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
     }
 }
