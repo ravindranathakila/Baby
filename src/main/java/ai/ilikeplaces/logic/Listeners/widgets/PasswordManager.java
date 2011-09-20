@@ -98,12 +98,6 @@ abstract public class PasswordManager extends AbstractWidgetListener {
                     }
                 }
             }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(ProfilePasswordNew), EventType.BLUR.toString(), new EventListener() {
@@ -127,12 +121,6 @@ abstract public class PasswordManager extends AbstractWidgetListener {
                         $$(ProfilePasswordNotice).setTextContent("Sorry! You have to provide the current password first.");
                     }
                 }
-            }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
@@ -165,12 +153,6 @@ abstract public class PasswordManager extends AbstractWidgetListener {
                         $$(ProfilePasswordNotice).setTextContent("Sorry! You have to provide the current password first.");
                     }
                 }
-            }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
