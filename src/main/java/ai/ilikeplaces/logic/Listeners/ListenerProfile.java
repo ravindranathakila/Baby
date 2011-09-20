@@ -51,10 +51,11 @@ public class ListenerProfile implements ItsNatServletRequestListener {
                 if (getUsername() != null) {
                     try {
                         {
+                            new Profile(request__, $(Skeleton_center_content), new HumanId(getUsernameAsValid()));
+
                             new PasswordManager(request__, $(Skeleton_center_content), new HumanId(getUsernameAsValid()), ((ItsNatHttpSession) request__.getItsNatSession()).getHttpSession()) {
                             };
 
-                            new Profile(request__, $(Skeleton_center_content), new HumanId(getUsernameAsValid()));
                         }
 
                     } catch (final Throwable t) {
