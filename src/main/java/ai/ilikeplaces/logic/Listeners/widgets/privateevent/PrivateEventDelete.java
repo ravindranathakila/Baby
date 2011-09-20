@@ -178,22 +178,24 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
         final HumansNetPeople user = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);
         this.possibilities = user.getHumansNetPeoples();
 
+        final PrivateEvent privateEvent = privateEventReturn.returnValue();
+
         AddRemoveOwners:
         {
             new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
                     request, $$(privateEventDeleteOwners),
                     user.getHumansNet(),
                     possibilities,
-                    privateEventReturn.returnValue().getPrivateEventOwners(),
+                    privateEvent.getPrivateEventOwners(),
                     new Save<Return<PrivateEvent>>() {
 
-                        final long myprivateEventId = privateEventReturn.returnValue().getPrivateEventId();
+                        final long myprivateEventId = privateEvent.getPrivateEventId();
 
                         @Override
                         public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
 
 
-                            final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddOwnerWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, privateEventReturn.returnValue().getPrivateLocation().getPrivateLocationId());
+                            final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddOwnerWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, privateEvent.getPrivateLocation().getPrivateLocationId());
                             if (returnVal.returnStatus() == 0) {
                                 SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
                                         humanId.getObj(),
@@ -205,7 +207,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                     },
                     new Save<Return<PrivateEvent>>() {
 
-                        final long myprivateEventId = privateEventReturn.returnValue().getPrivateEventId();
+                        final long myprivateEventId = privateEvent.getPrivateEventId();
 
                         @Override
                         public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
@@ -230,15 +232,15 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                     request, $$(privateEventDeleteVisitors),
                     user.getHumansNet(),
                     possibilities,
-                    privateEventReturn.returnValue().getPrivateEventViewers(),
+                    privateEvent.getPrivateEventViewers(),
                     new Save<Return<PrivateEvent>>() {
 
-                        final long myprivateEventId = privateEventReturn.returnValue().getPrivateEventId();
+                        final long myprivateEventId = privateEvent.getPrivateEventId();
 
                         @Override
                         public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
 
-                            final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddVisitorWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, privateEventReturn.returnValue().getPrivateLocation().getPrivateLocationId());
+                            final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddVisitorWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, privateEvent.getPrivateLocation().getPrivateLocationId());
                             if (returnVal.returnStatus() == 0) {
                                 SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
                                         humanId.getObj(),
@@ -250,7 +252,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                     },
                     new Save<Return<PrivateEvent>>() {
 
-                        final long myprivateEventId = privateEventReturn.returnValue().getPrivateEventId();
+                        final long myprivateEventId = privateEvent.getPrivateEventId();
 
                         @Override
                         public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
@@ -272,15 +274,15 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                         request, $$(privateEventDeleteInvitees),
                         user.getHumansNet(),
                         possibilities,
-                        privateEventReturn.returnValue().getPrivateEventInvites(),
+                        privateEvent.getPrivateEventInvites(),
                         new Save<Return<PrivateEvent>>() {
 
-                            final long myprivateEventId = privateEventReturn.returnValue().getPrivateEventId();
+                            final long myprivateEventId = privateEvent.getPrivateEventId();
 
                             @Override
                             public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
 
-                                final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddInviteWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, privateEventReturn.returnValue().getPrivateLocation().getPrivateLocationId());
+                                final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddInviteWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, privateEvent.getPrivateLocation().getPrivateLocationId());
                                 if (returnVal.returnStatus() == 0) {
                                     SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
                                             humanId.getObj(),
@@ -293,7 +295,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                         },
                         new Save<Return<PrivateEvent>>() {
 
-                            final long myprivateEventId = privateEventReturn.returnValue().getPrivateEventId();
+                            final long myprivateEventId = privateEvent.getPrivateEventId();
 
                             @Override
                             public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
