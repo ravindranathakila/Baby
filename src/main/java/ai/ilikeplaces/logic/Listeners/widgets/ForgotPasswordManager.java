@@ -38,6 +38,7 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
         "if a hacker obtains this info, he still does not have access to this widgets local copy of that code. " +
         "Hence, he has to get the code and also forge the users http session on the server, which is very hard.")
 abstract public class ForgotPasswordManager extends AbstractWidgetListener {
+// ------------------------------ FIELDS ------------------------------
 
     HumanId humanId;
     ForgotPasswordCode code;
@@ -51,6 +52,8 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
     Password newConfirmPass;
 
     HttpSession httpSession;
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     /**
      * @param itsNatDocument__
@@ -86,9 +89,7 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
-
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(ProfileForgotPasswordEmailAddress), EventType.BLUR.toString(), new EventListener() {
-
             private Email myemail = email;
             private Obj<Boolean> myemailset = emailset;
 
@@ -102,18 +103,10 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
                 } else {
                     $$(ProfileForgotPasswordNotice).setTextContent("Duh! enter a proper email address!");
                 }
-
-            }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(ProfileForgotPasswordCodeMail), EventType.CLICK.toString(), new EventListener() {
-
             private Email myemail = email;
             private Obj<Boolean> myemailset = emailset;
             private HumanId myhumanId = humanId;
@@ -147,19 +140,11 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
                 } else {
                     $$(ProfileForgotPasswordNotice).setTextContent("Enter a proper email address to send the code to!");
                 }
-
-            }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
             }
         }, false);
 
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(ProfileForgotPasswordEmailedCode), EventType.BLUR.toString(), new EventListener() {
-
             private Email myemail = email;
             private ForgotPasswordCode mycode = code;
             private Obj<Boolean> mycodeCorrect = codeCorrect;
@@ -178,18 +163,10 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
                 } else {
                     $$(ProfileForgotPasswordNotice).setTextContent(usersValue.getViolationAsString());
                 }
-
-            }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(ProfileForgotPasswordNew), EventType.BLUR.toString(), new EventListener() {
-
             private HumanId myhumanId = humanId;
             private Obj<Boolean> mycodeCorrect = codeCorrect;
             private Password mynewPass = newPass;
@@ -212,19 +189,11 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
                         $$(ProfileForgotPasswordNotice).setTextContent("Sorry! You have to provide the code first.");
                     }
                 }
-
-            }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(ProfileForgotPasswordNewConfirm), EventType.BLUR.toString(), new EventListener() {
-
             private HumanId myhumanId = humanId;
             private Obj<Boolean> mycodeCorrect = codeCorrect;
             private Obj<Boolean> mynewSet = newSet;
@@ -249,23 +218,15 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
                             mynewConfirmSet.setObj(false);
                             $$(ProfileForgotPasswordNotice).setTextContent("Sorry! Confirmation Wrong.");
                         }
-
                     } else {
                         $$(ProfileForgotPasswordNotice).setTextContent("Sorry! You have to provide the code first.");
                     }
                 }
             }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(ProfileForgotPasswordSave), EventType.CLICK.toString(), new EventListener() {
-
             private HumanId myhumanId = humanId;
             private Obj<Boolean> mycodeCorrect = codeCorrect;
             private Obj<Boolean> mynewSet = newSet;
@@ -302,33 +263,15 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
                                         $$(ProfileForgotPasswordNotice).setTextContent("Password Updated Successfully But Something Went Wrong!");
                                     }
                                 }
-
                             } else {
                                 $$(ProfileForgotPasswordNotice).setTextContent("Sorry! something went wrong.");
                             }
                         } else {
                             $$(ProfileForgotPasswordNotice).setTextContent("Sorry! something went wrong.");
                         }
-
                     }
                 }
-
-            }
-
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
             }
         }, false);
-
-
-    }
-
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
     }
 }
