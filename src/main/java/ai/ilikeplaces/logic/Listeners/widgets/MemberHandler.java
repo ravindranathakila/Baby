@@ -30,19 +30,23 @@ import java.util.Set;
 @TODO(task = "Operation fail notification target should be sent in with object creation as parameter so that notifications can be appended")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>, RETURN_TYPE> extends AbstractWidgetListener {
+// ------------------------------ FIELDS ------------------------------
+
+    final static public String Added = " is added";
+    final static public String Removed = " is not added";
 
 
     private static final String NEGATIVE = "negative";
     private static final String POSITIVE = "positive";
-    final private Logger logger = LoggerFactory.getLogger(MemberHandler.class.getName());
-    final static public String Added = " is added";
-    final static public String Removed = " is not added";
 
     M m;
     T poss;
     Set<String> existAll;
     Save<RETURN_TYPE> saveAdd;
     Save<RETURN_TYPE> saveRemove;
+    final private Logger logger = LoggerFactory.getLogger(MemberHandler.class.getName());
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     /**
      * @param request__
@@ -66,7 +70,6 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
         super(request__, Controller.Page.FriendList, appendToElement__, m, possibilities, existingAll, saveAdd, saveRemove);
     }
 
-
     @Override
     protected void init(final Object... initArgs) {
         m = (M) initArgs[0];
@@ -84,7 +87,6 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
         for (final HumansFriend possibility : poss) {
-
 //            final Element li = $$(MarkupTag.LI);
 //            li.setTextContent(possibility.getHuman().getDisplayName() + (existAll.contains(possibility.getHumanId()) ? Added : Removed));
 //
@@ -132,19 +134,7 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
                         }
                     }
                 }
-
-                @Override
-                public void finalize() throws Throwable {
-                    Loggers.finalized(this.getClass().getName());
-                    super.finalize();
-                }
             }, false);
         }
-    }
-
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
     }
 }
