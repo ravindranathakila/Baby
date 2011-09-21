@@ -3,6 +3,8 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.logic.role.HumanUserLocal;
+import ai.ilikeplaces.security.face.SingletonHashingFace;
 import ai.ilikeplaces.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -241,4 +243,53 @@ final public class DB implements DBLocal {
         return h != null ? h : (HumanCRUDWallLocal) LogNull.logThrow();
 
     }
+
+    @Override
+    public SingletonHashingFace getSingletonHashingFaceLocal() {
+        isOK();
+        SingletonHashingFace h = null;
+        try {
+            h = (SingletonHashingFace) Context_.lookup(SingletonHashingFace.NAME);
+        } catch (NamingException ex) {
+            logger.error(NAMING_EXCEPTION, ex);
+        }
+        return h != null ? h : (SingletonHashingFace) LogNull.logThrow();
+
+    }
+
+    public static SingletonHashingFace getSingletonHashingFaceLocal(final boolean nonInjected) {
+        SingletonHashingFace h = null;
+        try {
+            h = ((DBLocal) Context_.lookup(DBLocal.NAME)).getSingletonHashingFaceLocal();
+        } catch (NamingException ex) {
+            logger.error(NAMING_EXCEPTION, ex);
+        }
+        return h != null ? h : (SingletonHashingFace) LogNull.logThrow();
+
+    }
+
+    @Override
+    public HumanUserLocal getHumanUserLocal() {
+        isOK();
+        HumanUserLocal h = null;
+        try {
+            h = (HumanUserLocal) Context_.lookup(HumanUserLocal.NAME);
+        } catch (NamingException ex) {
+            logger.error(NAMING_EXCEPTION, ex);
+        }
+        return h != null ? h : (HumanUserLocal) LogNull.logThrow();
+
+    }
+
+    public static HumanUserLocal getHumanUserLocal(final boolean nonInjected) {
+        HumanUserLocal h = null;
+        try {
+            h = ((DBLocal) Context_.lookup(DBLocal.NAME)).getHumanUserLocal();
+        } catch (NamingException ex) {
+            logger.error(NAMING_EXCEPTION, ex);
+        }
+        return h != null ? h : (HumanUserLocal) LogNull.logThrow();
+
+    }
+
 }

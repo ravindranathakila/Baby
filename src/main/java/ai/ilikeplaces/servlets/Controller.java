@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -34,6 +35,7 @@ final public class
 
     public static final String LOCATION_HUB = "/page/Earth_of_Earth?WOEID=1";
     public static final String WEB_INF_PAGES = "WEB-INF/pages/";
+    public static String USER_PROPERTY_EMAIL_XHTML = "ai/ilikeplaces/widgets/UserProperty_email.xhtml";
 
     /**
      * This Map is static as Id's in html documents should be universally identical, i.e. as htmldocname_elementId
@@ -138,11 +140,12 @@ final public class
 
 
         Bate("ai/ilikeplaces/widgets/bate.xhtml",
-               Controller.Page.BateSignupEmail,
-               Controller.Page.BateSignupPassword,
-               Controller.Page.BateSignupNotifications,
-               Controller.Page.BateSignupButton,
-               Controller.Page.BateImportResults
+                Controller.Page.BateSignupEmail,
+                Controller.Page.BateSignupPassword,
+                Controller.Page.BateSignupNotifications,
+                Controller.Page.BateSignupButton,
+                Controller.Page.BateImportResults,
+                Controller.Page.BateIntroduction
         ) {
             @Override
             public String toString() {
@@ -796,7 +799,7 @@ final public class
         },
         Photo$Description(
                 "ai/ilikeplaces/widgets/Photo-Description.xhtml",
-//                Controller.Page.pd,
+                Controller.Page.pd,
                 Controller.Page.close,
                 Controller.Page.pd_photo_permalink,
                 Controller.Page.pd_photo,
@@ -855,7 +858,11 @@ final public class
                 "ai/ilikeplaces/widgets/SignInOn.xhtml",
                 Controller.Page.signinon_login,
                 Controller.Page.signinon_signup,
-                Controller.Page.signinon_logon
+                Controller.Page.signinon_logon,
+                Controller.Page.signinonUsername,
+                Controller.Page.signinonPassword,
+                Controller.Page.signinonSubmit,
+                Controller.Page.signinonNotice
         ) {
             @Override
             public String getURL() {
@@ -886,6 +893,7 @@ final public class
         final static public String BateSignupNotifications = "BateSignupNotifications";
         final static public String BateSignupButton = "BateSignupButton";
         final static public String BateImportResults = "BateImportResults";
+        final static public String BateIntroduction = "BateIntroduction";
 
         /*Album Page*/
         final static public String DocAlbum = "DocAlbum";
@@ -1149,7 +1157,7 @@ final public class
         final static public String privateLocationDelete = "privateLocationDelete";
 
         /*Photo Descrition Specific IDs*/
-//        final static public String pd = "pd";
+        final static public String pd = "pd";
         final static public String close = "close";
         final static public String pd_photo_permalink = "pd_photo_permalink";
         final static public String pd_photo = "pd_photo";
@@ -1218,6 +1226,10 @@ final public class
         final static public String signinon_login = "signinon_login";
         final static public String signinon_signup = "signinon_signup";
         final static public String signinon_logon = "signinon_logon";
+        final static public String signinonUsername = "signinonUsername";
+        final static public String signinonPassword = "signinonPassword";
+        final static public String signinonSubmit = "signinonSubmit";
+        final static public String signinonNotice = "signinonNotice";
 
 
         /*Common IDs that should be present in any page*/
@@ -1455,10 +1467,13 @@ final public class
      */
     private static void pathResolver(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
         final String pathInfo = ((HttpServletRequest) request__.getServletRequest()).getPathInfo();
-        final String URL__ = pathInfo == null ? "" : ((HttpServletRequest) request__.getServletRequest()).getPathInfo().substring(1);//Removes preceding slash
+        String URL__ = pathInfo == null ? "" : ((HttpServletRequest) request__.getServletRequest()).getPathInfo().substring(1);//Removes preceding slash
+
+        URL__ = URL__.split("\\?")[0].split("#")[0];
+
         if (isHomePage(URL__)) {
-            Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
-            Loggers.INFO.info(((HttpServletRequest) request__.getServletRequest()).getRequestURL().toString()
+            Loggers.DEBUG.debug(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
+            Loggers.DEBUG.debug(((HttpServletRequest) request__.getServletRequest()).getRequestURL().toString()
                     + (((HttpServletRequest) request__.getServletRequest()).getQueryString() != null
                     ? ((HttpServletRequest) request__.getServletRequest()).getQueryString()
                     : ""));
@@ -1475,6 +1490,9 @@ final public class
 //                    Loggers.EXCEPTION.error("", e);
 //                }
 //            }
+        } else if (isDownTownPage(URL__)) {
+            response__.addCodeToSend(JSCodeToSend.redirectPageWithURL("/page/_org"));
+            return;//let's be paranoid
         } else {
             if (isNonLocationPage(URL__)) {/*i.e. starts with underscore*/
                 final HttpSession httpSession = ((HttpServletRequest) request__.getServletRequest()).getSession(false);
@@ -1546,9 +1564,9 @@ final public class
             } else if (isCorrectLocationFormat(URL__)) {
                 request__.getServletRequest().setAttribute("location", URL__);
                 request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocLocation);/*Framework specific*/
-                Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0009") + URL__);
+                Loggers.DEBUG.debug(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0009") + URL__);
             } else {/*Divert to home page*/
-                Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
+                Loggers.DEBUG.debug(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
                 request__.getServletRequest().setAttribute("location", "");
                 request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
             }
@@ -1565,6 +1583,10 @@ final public class
      */
     static private boolean isHomePage(final String URL__) {
         return URL__.length() == 0;
+    }
+
+    static private boolean isDownTownPage(final String URL_) {
+        return (URL_.startsWith("dt") || URL_.startsWith("downtown"));
     }
 
     static private boolean isNonLocationPage(final String URL_) {

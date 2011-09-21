@@ -1,6 +1,8 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.logic.role.HumanUserLocal;
+import ai.ilikeplaces.security.face.SingletonHashingFace;
 
 import javax.ejb.Local;
 
@@ -29,5 +31,9 @@ public interface DBLocal {
     public HumanCRUDPrivateLocationLocal getHumanCrudPrivateLocationLocal();
 
     public HumanCRUDWallLocal getHumanCrudWallLocal();
+
+    public SingletonHashingFace getSingletonHashingFaceLocal();
+
+    public HumanUserLocal getHumanUserLocal();
 
 }

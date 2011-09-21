@@ -62,6 +62,8 @@ public abstract class AbstractWidgetListener<T> {
     private static final String BLOCK = "block";
     private static final String NONE = "none";
     private static final String EMPTY = "";
+    private static final String THE_ELEMENT_GIVEN_T0_REGISTER_FOR_NOTIFICATIONS_IS_NULL = "THE ELEMENT GIVEN T0 REGISTER FOR NOTIFICATIONS IS NULL!";
+    private static final String NOTIFIER_ELEMENT_HAS_NOT_BEEN_INITIALIZED = "NOTIFIER ELEMENT HAS NOT BEEN INITIALIZED!";
     protected final ItsNatDocument itsNatDocument_;
     private final HTMLDocument hTMLDocument_;
     private final ItsNatHTMLDocument itsNatHTMLDocument_;
@@ -87,6 +89,8 @@ public abstract class AbstractWidgetListener<T> {
      * Per request refresh needs to be verified.
      */
     final protected ItsNatServletRequest request;
+
+    private Element notifier = null;
 
 
     final static private String NPE_1 = "SORRY! THIS DOCUMENT APPEARS NOT TO HAVE BEEN REGISTERED. PLEASE VERIFY THIS FIRST.(CAUSE OF NPE COULD BE DIFFERENT)";
@@ -534,5 +538,36 @@ public abstract class AbstractWidgetListener<T> {
         return $$getId($$(elementOfWhichIdIsRequired));
     }
 
+
+    /**
+     * Use this method to register an element which will be used to notify the user.
+     * The element sent in should support {@link Element#setTextContent(String)}, as in, should show text in it, as in
+     * should not be something like an IMG element.
+     *
+     * @param elementToUseForUserNotifications
+     * @return the element sent in
+     */
+    final protected Element registerUserNotifier(final Element elementToUseForUserNotifications){
+        if(elementToUseForUserNotifications != null){
+            notifier = elementToUseForUserNotifications;
+            return notifier;
+        }else{
+            throw new NullPointerException(THE_ELEMENT_GIVEN_T0_REGISTER_FOR_NOTIFICATIONS_IS_NULL);
+        }
+    }
+
+    /**
+     * Use in conjunction with {@link #registerUserNotifier(org.w3c.dom.Element)}
+     *
+     * @param message Message to be displayed to the user
+     * @return the notifier element
+     */
+    final protected Element notifyUser(final String message){
+        if(notifier == null){
+            throw new IllegalStateException(NOTIFIER_ELEMENT_HAS_NOT_BEEN_INITIALIZED);
+        }
+        notifier.setTextContent(message);
+        return notifier;
+    }
 
 }
