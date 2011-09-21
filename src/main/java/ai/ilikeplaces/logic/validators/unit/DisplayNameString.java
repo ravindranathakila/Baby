@@ -16,6 +16,10 @@ import net.sf.oval.constraint.NotNull;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class DisplayNameString extends RefObj<String> {
+// --------------------------- CONSTRUCTORS ---------------------------
+
+    public DisplayNameString() {
+    }
 
     /**
      * 
@@ -24,6 +28,8 @@ public class DisplayNameString extends RefObj<String> {
     public DisplayNameString(final String displayNameToBeSet) {
         this.obj = displayNameToBeSet;
     }
+
+// ------------------------ ACCESSORS / MUTATORS ------------------------
 
     @IsInvariant
     @NotNull(message = "Sorry! You must enter a value.")

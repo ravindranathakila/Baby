@@ -9,8 +9,17 @@
     <title>Show/Update Display Name</title>
 </head>
 <body>
-    <P id="DisplayNameDisplay" class="vtip" title="Click to Change Display Name" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat" onclick="javascript:setDisplayName();">
-        &nbsp;
-    </P>
+<div class="use100 last" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
+    <div class="use100">
+        <span id="DisplayNameNotice">&nbsp; </span>
+    </div>
+    <div class="use100">
+        <span id="DisplayNameDisplay">&nbsp; </span>
+    </div>
+    <div class="use100">
+        <input id="DisplayNameInput" type="text"/>
+        <a id="DisplayNameSave" href="#">Update</a>
+    </div>
+</div>
 </body>
 </html>

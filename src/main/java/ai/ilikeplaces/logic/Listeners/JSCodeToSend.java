@@ -8,11 +8,7 @@ import ai.ilikeplaces.util.ExceptionCache;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class JSCodeToSend {
-    private static final String WINDOW_LOCATION_HREF_WINDOW_LOCATION_HREF = "window.location.href=window.location.href";
-
-    private JSCodeToSend() throws IllegalAccessException {
-        throw ExceptionCache.STATIC_USAGE_ONLY_EXCEPTION;
-    }
+// ------------------------------ FIELDS ------------------------------
 
     final static public String FnEventMonitor = "\ndocument.monitor = new EventMonitor();document.getItsNatDoc().addEventMonitor(document.monitor);";
     final static public String LocationId = "locationId";
@@ -22,18 +18,38 @@ final public class JSCodeToSend {
     final static public String FnSetTitle = "\ndocument.title=\"Escape to \"+getLocationName()+\"!\";\n";
     final static public String RefreshPage = "\nwindow.location.href=window.location.href;\n";
     final static public String ClosePage = "\nif(confirm('Done! Close page?')){window.close();}\n";
+    private static final String WINDOW_LOCATION_HREF_WINDOW_LOCATION_HREF = "window.location.href=window.location.href";
 
+// --------------------------- CONSTRUCTORS ---------------------------
+
+    private JSCodeToSend() throws IllegalAccessException {
+        throw ExceptionCache.STATIC_USAGE_ONLY_EXCEPTION;
+    }
+
+// -------------------------- OTHER METHODS --------------------------
+
+    public static String clearContent(final String elementId, final int timeout) {
+        final String statement = "$(\\'#" + elementId + "\\').empty();";
+        return embedThisInTimeout(statement, timeout);
+    }
+
+    public static String embedThisInTimeout(final String statement, final int timeout) {
+        return "setTimeout('" + statement + "'" + "," + timeout + ");\n";
+    }
+
+    public static String jqueryHide(final String elementToAnimateHide) {
+        return "\n$('#" + elementToAnimateHide + "').hide('slow');\n";
+    }
 
     /**
-     * Uses window.location.href = window.location.href + 'stringToBeAppended'
+     * Uses window.location.href = 'urlTobeRedirectedTo';
      * Might turn out to be buggy if there are outer quotes. Verify with firebug for safety.
      *
-     * @param stringToBeAppended
+     * @param urlTobeRedirectedTo
      * @return
      */
-    public static String refreshPageWith(final String stringToBeAppended) {
-        return WINDOW_LOCATION_HREF_WINDOW_LOCATION_HREF + "+" + "'" + stringToBeAppended + "';\n";
-
+    public static String redirectPageWithURL(final String urlTobeRedirectedTo) {
+        return "\nwindow.location.href = '" + urlTobeRedirectedTo + "';\n";
     }
 
     /**
@@ -46,22 +62,16 @@ final public class JSCodeToSend {
      */
     public static String refreshPageIn(final int timeout) {
         return "setTimeout('" + WINDOW_LOCATION_HREF_WINDOW_LOCATION_HREF + "'" + "," + timeout + ");\n";
-
     }
 
     /**
-     * Uses window.location.href = 'urlTobeRedirectedTo';
+     * Uses window.location.href = window.location.href + 'stringToBeAppended'
      * Might turn out to be buggy if there are outer quotes. Verify with firebug for safety.
      *
-     * @param urlTobeRedirectedTo
+     * @param stringToBeAppended
      * @return
      */
-    public static String redirectPageWithURL(final String urlTobeRedirectedTo) {
-        return "\nwindow.location.href = '" + urlTobeRedirectedTo + "';\n";
-
-    }
-
-    public static String jqueryHide(final String elementToAnimateHide) {
-        return "\n$('#" + elementToAnimateHide + "').hide('slow');\n";
+    public static String refreshPageWith(final String stringToBeAppended) {
+        return WINDOW_LOCATION_HREF_WINDOW_LOCATION_HREF + "+" + "'" + stringToBeAppended + "';\n";
     }
 }

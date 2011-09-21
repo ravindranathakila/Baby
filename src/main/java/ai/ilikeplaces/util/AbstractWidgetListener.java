@@ -1,6 +1,7 @@
 package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall;
 import ai.ilikeplaces.servlets.Controller;
@@ -545,13 +546,14 @@ public abstract class AbstractWidgetListener<T> {
      * should not be something like an IMG element.
      *
      * @param elementToUseForUserNotifications
+     *
      * @return the element sent in
      */
-    final protected Element registerUserNotifier(final Element elementToUseForUserNotifications){
-        if(elementToUseForUserNotifications != null){
+    final protected Element registerUserNotifier(final Element elementToUseForUserNotifications) {
+        if (elementToUseForUserNotifications != null) {
             notifier = elementToUseForUserNotifications;
             return notifier;
-        }else{
+        } else {
             throw new NullPointerException(THE_ELEMENT_GIVEN_T0_REGISTER_FOR_NOTIFICATIONS_IS_NULL);
         }
     }
@@ -562,11 +564,12 @@ public abstract class AbstractWidgetListener<T> {
      * @param message Message to be displayed to the user
      * @return the notifier element
      */
-    final protected Element notifyUser(final String message){
-        if(notifier == null){
+    final protected Element notifyUser(final String message) {
+        if (notifier == null) {
             throw new IllegalStateException(NOTIFIER_ELEMENT_HAS_NOT_BEEN_INITIALIZED);
         }
         notifier.setTextContent(message);
+        $$sendJS(JSCodeToSend.clearContent(notifier.getAttribute(MarkupTag.GENERIC.id()), 10000));
         return notifier;
     }
 

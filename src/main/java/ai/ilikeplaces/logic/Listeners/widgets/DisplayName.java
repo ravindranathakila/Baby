@@ -2,18 +2,21 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.DisplayNameString;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
-import ai.ilikeplaces.util.AbstractWidgetListener;
-import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
+import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
 import javax.servlet.ServletRequest;
@@ -23,53 +26,79 @@ import javax.servlet.ServletRequest;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-abstract public class DisplayName extends AbstractWidgetListener {
+public class DisplayName extends AbstractWidgetListener {
 // ------------------------------ FIELDS ------------------------------
 
-    private static final String DISPLAYNAME = "displayname";
     private static final String CHANGED_DISPLAY_NAME_TO_SAME_AS_OLD_ONE = "changed display name to same as old one";
+
+    private DisplayNameString displayname = null;
+    private HumanId humanId = null;
 
 // --------------------------- CONSTRUCTORS ---------------------------
 
     /**
-     *
      * @param request__
      * @param appendToElement__
      * @param humanId
      * @param request
      */
-    public DisplayName(final ItsNatServletRequest request__,  final Element appendToElement__, final HumanId humanId, final ServletRequest request) {
+    public DisplayName(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId) {
         super(
                 request__, Page.DisplayName, appendToElement__,
-                humanId,
-                request.getParameter(DISPLAYNAME)
+                humanId
         );
     }
 
-// ------------------------ OVERRIDING METHODS ------------------------
+    // ------------------------ OVERRIDING METHODS ------------------------
     @Override
     protected void init(final Object... initArgs) {
-        final HumanId humanId = (HumanId) initArgs[0];
-        final String displayname = (String) initArgs[1];
+        registerUserNotifier($$(Page.DisplayNameNotice));
+
+        humanId = (HumanId) initArgs[0];
+
+        displayname = new DisplayNameString();
+
         @WARNING(warning = "You can change this to inside the IF clause. " +
                 "How ever, upon name change with an invalid displayname, the exception thrown makes the next call to " +
                 "the dirty read return a empty(or null, not sure) value.")
         final String currentDisplayName = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(humanId).getDisplayName();
-        if (displayname == null) {
-            $$(Controller.Page.DisplayNameDisplay).setTextContent(currentDisplayName);
-        } else {
-            final DisplayNameString update = new DisplayNameString(displayname);
-            if (!currentDisplayName.equals(displayname) && update.validate() == 0) {
-                final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doNTxUDisplayName(humanId, new DisplayNameString(displayname));
-                $$(Controller.Page.DisplayNameDisplay).setTextContent(DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(humanId).getDisplayName());
-            } else {
-                Loggers.userError(humanId.getObj(), currentDisplayName.equals(displayname) ? CHANGED_DISPLAY_NAME_TO_SAME_AS_OLD_ONE : update.getViolationAsString());
-                $$(Controller.Page.DisplayNameDisplay).setTextContent(currentDisplayName);
-            }
-        }
+
+        $$(Page.DisplayNameDisplay).setTextContent("Hello " + currentDisplayName);
     }
 
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.DisplayNameInput), EventType.BLUR.toString(), new EventListener() {
+            private DisplayNameString mydisplayname = displayname;
+            private DisplayNameString tempDisplayNameString = new DisplayNameString();
 
+            @Override
+            public void handleEvent(final Event evt_) {
+                tempDisplayNameString.setObj($$(evt_).getAttribute(MarkupTag.INPUT.value()));
+                if (tempDisplayNameString.validate() == 0) {
+                    mydisplayname.setObjAsValid(tempDisplayNameString.getObjectAsValid());
+                } else {
+                    notifyUser("Something wrong with your name :D");
+                }
+            }
+        }, false, new NodePropertyTransport(MarkupTag.INPUT.value()));
+
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.DisplayNameSave), EventType.CLICK.toString(), new EventListener() {
+            private DisplayNameString mydisplayname = displayname;
+            private HumanId myhumanId = humanId;
+
+            @Override
+            public void handleEvent(final Event evt_) {
+                if (mydisplayname.validate() == 0) {
+                    final Return<Boolean> booleanReturn = DB.getHumanCRUDHumanLocal(true).doNTxUDisplayName(myhumanId, mydisplayname);
+                    if (booleanReturn.returnValue()) {
+                        $$(Page.DisplayNameDisplay).setTextContent("Hello " + mydisplayname.getObjectAsValid());
+                    } else {
+                        notifyUser("Something went wrong :-( Nothing we did! Something you did! Try trying again...");
+                    }
+                } else {
+                    //the onblur of the display name will handle this
+                }
+            }
+        }, false);
     }
 }

@@ -286,7 +286,10 @@ final public class
             }
         },
         DisplayName("ai/ilikeplaces/widgets/DisplayName.xhtml",
-                Controller.Page.DisplayNameDisplay) {
+                Controller.Page.DisplayNameDisplay,
+                Controller.Page.DisplayNameInput,
+                Controller.Page.DisplayNameSave,
+                Controller.Page.DisplayNameNotice) {
             @Override
             public String toString() {
                 return DocDisplayName;
@@ -965,6 +968,9 @@ final public class
         final static public String DocDisplayName = "DocDisplayName";
         /*DisplayName IDs*/
         final static public String DisplayNameDisplay = "DisplayNameDisplay";
+        final static public String DisplayNameInput = "DisplayNameInput";
+        final static public String DisplayNameSave = "DisplayNameSave";
+        final static public String DisplayNameNotice = "DisplayNameNotice";
 
         /*Private Event Page*/
         final static public String DocPrivateEventView = "PrivateEventView";
