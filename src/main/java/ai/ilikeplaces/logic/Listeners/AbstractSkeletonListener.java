@@ -33,7 +33,6 @@ import static ai.ilikeplaces.util.Loggers.EXCEPTION;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class AbstractSkeletonListener extends AbstractListener {
-
     public static final String TITLE = "Hey ";
     private static final String NO_LOGIN = "NoLogin";
     private static final String BN = "bn";
@@ -106,25 +105,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                     Loggers.DEBUG.debug(t.getMessage());
                 }
             }
-            signOnDisplayLink:
-            {
-                try {
-                    if (getUsername() != null) {
-                        final Element usersName = $(MarkupTag.P);
-                        usersName.setTextContent(GUI.getString(AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004) + getUsernameAsValid());
-                        //$(Skeleton_othersidebar_identity).appendChild(usersName);
-                        new DisplayName(request__, $(Skeleton_othersidebar_identity), new HumanId(getUsernameAsValid()), request__.getServletRequest()) {
-                        };
-                    } else {
-                        final Element locationElem = $(MarkupTag.P);
-                        locationElem.setTextContent(GUI.getString(NO_LOGIN));
-                        $(Skeleton_othersidebar_identity).appendChild(locationElem);
-                    }
-                } catch (final Throwable t) {
-                    EXCEPTION.error("{}", t);
-                }
 
-            }
             setProfileLink:
             {
                 try {
@@ -135,7 +116,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                     }
                 } catch (final Throwable t) {
                     EXCEPTION.error("{}", t);
-
                 }
             }
             setProfileDataLink:
@@ -155,7 +135,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                     }
                 } catch (final Throwable t) {
                     EXCEPTION.error("{}", t);
-
                 }
             }
             sideBarFriends:
@@ -165,7 +144,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                         final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(getUsernameAsValid()).getSelfAsValid());
 
                         for (final HumansNetPeople friend : humansNetPeople.getHumansNetPeoples()) {
-
                             new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
                                 protected void init(final Object... initArgs) {
                                     $$(Controller.Page.user_property_sidebar_content).appendChild(
@@ -177,7 +155,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                     }
                 } catch (final Throwable t) {
                     EXCEPTION.error("{}", t);
-
                 }
             }
             signinupActionNotice:
@@ -189,12 +166,10 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                     }
                 } catch (final Throwable t) {
                     EXCEPTION.error("{}", t);
-
                 }
             }
         }
     }
-
 
     /**
      * Use ItsNatHTMLDocument variable stored in the AbstractListener class
@@ -210,7 +185,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_, final ItsNatDocument itsNatDocument__) {
     }
-
 
     protected void setLoginWidget(final ItsNatServletRequest request__) {
         initStatus = true;
@@ -232,7 +206,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                 $(skeletonTitle).setTextContent(
                         TITLE +
                                 RBGet.globalConfig.getString(BN));
-
             }
             setMetaDescription:
             {
@@ -243,27 +216,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
         } catch (final Throwable t) {
             Loggers.DEBUG.debug(t.getMessage());
         }
-    }
-
-    protected void signOnDisplayLink(final ItsNatServletRequest request__) {
-        initStatus = true;
-
-        try {
-            if (getUsername() != null) {
-                final Element usersName = $(MarkupTag.P);
-                usersName.setTextContent(GUI.getString(AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004) + getUsernameAsValid());
-                //$(Skeleton_othersidebar_identity).appendChild(usersName);
-                new DisplayName(request__, $(Skeleton_othersidebar_identity), new HumanId(getUsernameAsValid()), request__.getServletRequest()) {
-                };
-            } else {
-                final Element locationElem = $(MarkupTag.P);
-                locationElem.setTextContent(GUI.getString(NO_LOGIN));
-                $(Skeleton_othersidebar_identity).appendChild(locationElem);
-            }
-        } catch (final Throwable t) {
-            EXCEPTION.error("{}", t);
-        }
-
     }
 
     protected void setProfileLink() {
@@ -277,7 +229,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
             }
         } catch (final Throwable t) {
             EXCEPTION.error("{}", t);
-
         }
     }
 
@@ -296,7 +247,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
             }
         } catch (final Throwable t) {
             EXCEPTION.error("{}", t);
-
         }
     }
 
@@ -308,7 +258,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                 final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(getUsernameAsValid()).getSelfAsValid());
 
                 for (final HumansNetPeople friend : humansNetPeople.getHumansNetPeoples()) {
-
                     new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
                         protected void init(final Object... initArgs) {
                             $$(Controller.Page.user_property_sidebar_content).setTextContent(TALK);
@@ -318,7 +267,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
             }
         } catch (final Throwable t) {
             EXCEPTION.error("{}", t);
-
         }
     }
 }

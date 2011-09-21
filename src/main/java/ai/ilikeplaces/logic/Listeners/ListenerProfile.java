@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -51,6 +52,8 @@ public class ListenerProfile implements ItsNatServletRequestListener {
                 if (getUsername() != null) {
                     try {
                         {
+                            new DisplayName(request__, $(Skeleton_center_content), new HumanId(getUsernameAsValid()));
+
                             new Profile(request__, $(Skeleton_center_content), new HumanId(getUsernameAsValid()));
 
                             new PasswordManager(request__, $(Skeleton_center_content), new HumanId(getUsernameAsValid()), ((ItsNatHttpSession) request__.getItsNatSession()).getHttpSession()) {
