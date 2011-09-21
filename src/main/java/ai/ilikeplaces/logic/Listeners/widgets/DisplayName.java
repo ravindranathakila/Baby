@@ -24,8 +24,12 @@ import javax.servlet.ServletRequest;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class DisplayName extends AbstractWidgetListener {
+// ------------------------------ FIELDS ------------------------------
+
     private static final String DISPLAYNAME = "displayname";
     private static final String CHANGED_DISPLAY_NAME_TO_SAME_AS_OLD_ONE = "changed display name to same as old one";
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     /**
      *
@@ -42,6 +46,7 @@ abstract public class DisplayName extends AbstractWidgetListener {
         );
     }
 
+// ------------------------ OVERRIDING METHODS ------------------------
     @Override
     protected void init(final Object... initArgs) {
         final HumanId humanId = (HumanId) initArgs[0];
@@ -66,11 +71,5 @@ abstract public class DisplayName extends AbstractWidgetListener {
 
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
 
-    }
-
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
     }
 }
