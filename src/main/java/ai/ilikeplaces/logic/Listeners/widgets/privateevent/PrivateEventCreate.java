@@ -32,8 +32,10 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 abstract public class PrivateEventCreate extends AbstractWidgetListener {
+// ------------------------------ FIELDS ------------------------------
 
     private static final String SAVING = "Saving...";
+    private static final String WAS_CREATED = " was created!";
     RefObj<String> privateEventName = null;
 
     RefObj<String> privateEventInfo = null;
@@ -43,7 +45,8 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
     Long privateLocationId = null;
 
     final private Logger logger = LoggerFactory.getLogger(PrivateEventCreate.class.getName());
-    private static final String WAS_CREATED = " was created!";
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     /**
      * @param request__
@@ -55,6 +58,7 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
         super(request__, Page.PrivateEventCreate, appendToElement__, humanId__, privateLocationId);
     }
 
+// ------------------------ OVERRIDING METHODS ------------------------
     /**
      *
      */
@@ -70,9 +74,7 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
-
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventCreateName), EventType.BLUR.toString(), new EventListener() {
-
             final RefObj<String> myprivateEventName = privateEventName;
             final Validator v = new Validator();
             RefObj<String> name;
@@ -98,7 +100,6 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventCreateInfo), EventType.BLUR.toString(), new EventListener() {
-
             final RefObj<String> myprivateEventInfo = privateEventInfo;
             final Validator v = new Validator();
             RefObj<String> info;
@@ -115,12 +116,6 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
                     $$(privateEventCreateNotice).setTextContent(info.getViolationAsString());
                 }
             }
-
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
 
@@ -132,7 +127,6 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
         }, false);
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventCreateSave), EventType.CLICK.toString(), new EventListener() {
-
             final HumanId myhumanId = humanId;
             final RefObj<String> myprivateEventName = privateEventName;
             final RefObj<String> myprivateEventInfo = privateEventInfo;
@@ -141,9 +135,7 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
 
             @Override
             public void handleEvent(final Event evt_) {
-
                 if (myprivateEventName.validate(v) == 0 && myprivateEventInfo.validate(v) == 0) {
-
                     final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).cPrivateEvent(myhumanId.getObj(), myprivateLocationId, myprivateEventName.getObjectAsValid(), myprivateEventInfo.getObjectAsValid(), "TODO DATE", "TODO DATE");
                     if (r.returnStatus() == 0) {
                         remove(evt_.getTarget(), EventType.CLICK, this);
@@ -163,11 +155,5 @@ abstract public class PrivateEventCreate extends AbstractWidgetListener {
                 }
             }
         }, false);
-    }
-
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
     }
 }

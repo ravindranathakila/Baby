@@ -37,24 +37,26 @@ import java.util.List;
                 "This issue was not fixed despite much effort.")
 )
 public class AlbumManager extends AbstractWidgetListener {
-
+// ------------------------------ FIELDS ------------------------------
 
     private static final String ALBUM__PHOTOS = "ALBUM_PHOTOS";
     private static final String BUTTONTEXT_EMAIL_FORWARDED = "buttontext.email.forwarded";
     private static final String BUTTONTEXT_CLICK_TO_CONFIRM = "buttontext.click.to.confirm";
     private static final String SLASH = "/";
     private static final String NO_PHOTOS_IN_ALBUM = "No photos in album!";
-    final private Logger logger = LoggerFactory.getLogger(AlbumManager.class.getName());
-    private HumanId humanId = null;
-    private PrivateEvent privateEvent;
     //private Return<PrivateEvent> privateEventReturn = null;
 
     final static private RefreshSpec REFRESH_SPEC_INIT = new RefreshSpec("albumPhotos");
     final static private RefreshSpec REFRESH_SPEC_REGISTER = new RefreshSpec("albumPhotos");
+
+    List<HumansIdentity> wallProspects;
+    final private Logger logger = LoggerFactory.getLogger(AlbumManager.class.getName());
+    private HumanId humanId = null;
+    private PrivateEvent privateEvent;
     private HumansIdentity humansIdentity;
     private Return<Album> albumReturn;
 
-    List<HumansIdentity> wallProspects;
+// --------------------------- CONSTRUCTORS ---------------------------
 
     public AlbumManager(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId__, final PrivateEvent privateEvent) {
         super(request__, Page.Album, appendToElement__, humanId__, privateEvent);
@@ -94,7 +96,6 @@ public class AlbumManager extends AbstractWidgetListener {
 
                 for (final PrivatePhoto privatePhoto__ : album.getAlbumPhotos()) {
                     new Photo$Description(request, $$(Controller.Page.AlbumPhotos), photoSequenceNumber++, wallProspects) {
-
                         @Override
                         protected void init(final Object... initArgs) {
                             final Integer photoSequenceNumber = (Integer) initArgs[0];
@@ -114,26 +115,20 @@ public class AlbumManager extends AbstractWidgetListener {
                             new WallWidgetPrivatePhoto(request, $$(Controller.Page.pd_photo_wall), humanId, privatePhoto__.getPrivatePhotoId(), mywallProspects);
                         }
 
-
                         @Override
                         protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
-
                             itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.pd_photo), EventType.ONMOUSEOVER.toString(), new EventListener() {
-
                                 boolean imageLoaded = false;
 
                                 @Override
                                 public void handleEvent(final Event evt_) {
                                     if (!imageLoaded) {
-
                                         $$(evt_).setAttribute(MarkupTag.IMG.src(), $$(evt_).getAttribute(MarkupTag.IMG.title()));
 
                                         imageLoaded = true;//safety measure 1
                                     }
                                     remove(evt_.getTarget(), EventType.ONMOUSEOVER, this); //safety measure 2
                                 }
-
-
                             }, false);
                         }
                     };
@@ -157,15 +152,11 @@ public class AlbumManager extends AbstractWidgetListener {
                 $$(Controller.Page.AlbumNotice).setTextContent(ro.returnMsg());
             }
         }
-
-
     }
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
-
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.AlbumForward), EventType.CLICK.toString(), new EventListener() {
-
             final HumanId myhumanId = humanId;
             final Long myprivateEventId = privateEvent.getPrivateEventId();
             boolean confirmed = false;
@@ -212,26 +203,22 @@ public class AlbumManager extends AbstractWidgetListener {
                     remove(evt_.getTarget(), EventType.CLICK, this, false);
                     confirmed = false;
                     //$$(evt_).setTextContent(RBGet.gui().getString(BUTTONTEXT_EMAIL_FORWARDED));
-                     $$(evt_).setAttribute(MarkupTag.IMG.src(),
-                                                        $$(evt_).getAttribute(MarkupTag.IMG.src()).replace("confirm_forward_album_to_friends.png", "forwarded_forward_album_to_friends.png")
-                        );
+                    $$(evt_).setAttribute(MarkupTag.IMG.src(),
+                            $$(evt_).getAttribute(MarkupTag.IMG.src()).replace("confirm_forward_album_to_friends.png", "forwarded_forward_album_to_friends.png")
+                    );
                 } else {
                     if (!(albumReturn.returnValue().getAlbumPhotos().size() == 0)) {
-
                         confirmed = true;
                         $$(evt_).setAttribute(MarkupTag.IMG.src(),
-                                                        $$(evt_).getAttribute(MarkupTag.IMG.src()).replace("forward_album_to_friends.png", "confirm_forward_album_to_friends.png")
+                                $$(evt_).getAttribute(MarkupTag.IMG.src()).replace("forward_album_to_friends.png", "confirm_forward_album_to_friends.png")
                         );
                         //$$(evt_).setTextContent(RBGet.gui().getString(BUTTONTEXT_CLICK_TO_CONFIRM));
-                    }else{
-                        //@TODO
-                        //$$(evt_).setTextContent(RBGet.gui().getString(NO_PHOTOS_IN_ALBUM));
+                    } else {
+                        //Why are we displaying the button in the first place if the album doesn't contain photos? To imply photos can be uploaded and forwarded
+                        $$displayNone($$(Controller.Page.AlbumForward));
                     }
-
                 }
             }
-
-
         }, false);
     }
 }

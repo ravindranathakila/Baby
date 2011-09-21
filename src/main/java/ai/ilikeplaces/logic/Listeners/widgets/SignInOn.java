@@ -2,78 +2,142 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.entities.Human;
+import ai.ilikeplaces.entities.HumansAuthentication;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
+import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.role.HumanUser;
+import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.logic.validators.unit.Password;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
-import ai.ilikeplaces.util.AbstractWidgetListener;
-import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
+import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
+import org.itsnat.core.http.ItsNatHttpSession;
 import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class SignInOn extends AbstractWidgetListener {
+// ------------------------------ FIELDS ------------------------------
+
     private static final String TRUE = "true";
 
     private static final String ISSIGNUP = "issignup";
 
+    private HumanId username = null;
+    private Password password = null;
+
+// --------------------------- CONSTRUCTORS ---------------------------
+
     /**
-     *
      * @param request__
      * @param appendToElement__
      * @param humanId
      * @param request
      */
-    public SignInOn(final ItsNatServletRequest request__,  final Element appendToElement__, final HumanId humanId, final ServletRequest request) {
-        super(request__, Page.SignInOn, appendToElement__, humanId, isSignUp(request));
+    public SignInOn(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId, final ServletRequest request) {
+        super(request__, Page.SignInOn, appendToElement__, humanId);
     }
 
+    // ------------------------ OVERRIDING METHODS ------------------------
     @WARNING(warning = "During work ont this class, from time to time you'll want to make it a WEB 2.0 login." +
             "However, remember that having a login on a separate servlet is better for security.  HTTPS support." +
             "Also, note that we have a policy of redirecting the user to the refer. " +
             "You will also have to make sure both online and offline modes are available.")
     @Override
     protected void init(final Object... initArgs) {
-        final HumanId humanId = (HumanId) initArgs[0];
-        @WARNING(warning = "Check for humanid first, as upon successful signup, the user is redirected to the calling address. " +
-                "This means, the signup parameter might still be present.")
-        final boolean signup = (Boolean) initArgs[1];
-        if (humanId.validate() == 0) {
-            displayBlock($$(Controller.Page.signinon_logon));
-            displayNone($$(Controller.Page.signinon_login));
-            displayNone($$(Controller.Page.signinon_signup));
+        registerUserNotifier($$(Page.signinonNotice));
+
+        username = (HumanId) initArgs[0];
+        password = new Password();
+
+        if (username.validate() == 0) {
+            UCShowHideWidgets:
+            {
+                $$displayBlock($$(Controller.Page.signinon_logon));
+                $$displayNone($$(Controller.Page.signinon_login));
+                $$displayNone($$(Controller.Page.signinon_signup));
+            }
         } else {
-            if (!signup) {
-                displayBlock($$(Controller.Page.signinon_login));
-                displayNone($$(Controller.Page.signinon_logon));
-                displayNone($$(Controller.Page.signinon_signup));
-            } else {
-                displayBlock($$(Controller.Page.signinon_signup));
-                displayNone($$(Controller.Page.signinon_logon));
-                displayNone($$(Controller.Page.signinon_login));
+            UCShowHIdeWIdgets:
+            {
+                $$displayBlock($$(Controller.Page.signinon_login));
+                $$displayNone($$(Controller.Page.signinon_logon));
+                $$displayNone($$(Controller.Page.signinon_signup));
+            }
+            UCShowPleaseLoginMessage:
+            {
+                $$(Page.signinonNotice).setTextContent("Please login..");
             }
         }
     }
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
-    }
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.signinonUsername), EventType.BLUR.toString(), new EventListener() {
+            private HumanId myusername = username;
 
-    static public boolean isSignUp(final ServletRequest request) {
-        final String issignup = request.getParameter(ISSIGNUP);
-        return issignup != null && issignup.equals(TRUE);
-    }
+            @Override
+            public void handleEvent(final Event evt_) {
+                myusername.setObj($$(evt_).getAttribute(MarkupTag.INPUT.value()));
+            }
+        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.signinonPassword), EventType.BLUR.toString(), new EventListener() {
+            private Password mypassword = password;
+
+            @Override
+            public void handleEvent(final Event evt_) {
+                mypassword.setObj($$(evt_).getAttribute(MarkupTag.INPUT.value()));
+            }
+        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.signinonSubmit), EventType.CLICK.toString(), new EventListener() {
+            private HumanId myusername = username;
+            private Password mypassword = password;
+
+            @Override
+            public void handleEvent(final Event evt_) {
+                final HttpSession userSession_ = ((ItsNatHttpSession) request.getItsNatSession()).getHttpSession();
+
+                if (userSession_.getAttribute(HumanUserLocal.NAME) == null) {
+                    /*Ok the session does not have the bean, initialize it with the user with email id and password*/
+                    Human existingUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(myusername.getObjectAsValid());
+                    if (existingUser != null && existingUser.getHumanAlive()) {/*Ok user name valid but now we check for password*/
+                        final HumansAuthentication humansAuthentications = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(myusername).returnValue();
+
+                        if (humansAuthentications.getHumanAuthenticationHash().equals(DB.getSingletonHashingFaceLocal(true).getHash(mypassword.getObjectAsValid(), humansAuthentications.getHumanAuthenticationSalt()))) {
+                            final HumanUserLocal humanUserLocal = DB.getHumanUserLocal(true);
+
+                            humanUserLocal.setHumanUserId(myusername.getObjectAsValid());
+
+                            userSession_.setAttribute(HumanUserLocal.NAME, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
+                            $$sendJS(JSCodeToSend.refreshPageIn(0));
+                        } else {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
+                            notifyUser("Haha wrong password!");
+                        }
+                    } else {/*There is no such user. Ask if he forgot username or whether to create a new account :)*/
+                        notifyUser(myusername.getObj() + " is not a user of this website");
+                    }
+                } else {
+                    //We just ignore since the form is not visible and this cannot happen, or a hacker is trying something ;)
+                }
+            }
+        }, false);
     }
 }

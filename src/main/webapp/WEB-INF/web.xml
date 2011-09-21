@@ -90,9 +90,18 @@
         <url-pattern>*.gif</url-pattern>
     </servlet-mapping>
 
+    <!--########### BASICALLY ITSNAT HANDLES EVERYTHING ELSE #############-->
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/page/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Home</servlet-name>
+        <url-pattern>/downton</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Home</servlet-name>
+        <url-pattern>/dt</url-pattern>
     </servlet-mapping>
     <!-- ##################### END OF SERVLET MAPPINGS ####################-->
 

@@ -43,13 +43,14 @@ abstract public class WallWidget extends AbstractWidgetListener {
                 @Override
                 public void handleEvent(final Event evt_) {
                     wallAppend.setObj(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
-                    if (wallAppend.validate() == 0) {
+                    //We are removing validation here since it is understood text is supposed to be entered
+                    /*if (wallAppend.validate() == 0) {
                         wallAppend.setObj(wallAppend.getObj());
                         $$clear($$(Page.wallNotice));
                     } else {
                         $$(Page.wallNotice).setTextContent(wallAppend.getViolationAsString());
                         wallAppend.setObj("");
-                    }
+                    }*/
                 }
 
             }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
