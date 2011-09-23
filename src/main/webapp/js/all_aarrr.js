@@ -368,6 +368,8 @@ $(document).ready(function(){
     $('#impromptuLoginForm').remove();
     var impromtuWhyWeAreDoingThis = $('#impromtuWhyWeAreDoingThis').html();
     $('#impromtuWhyWeAreDoingThis').remove();
+    var impromtuWhyWeAreDoingThis1 = $('#impromtuWhyWeAreDoingThis1').html();
+    $('#impromtuWhyWeAreDoingThis1').remove();
 
     var impromtuTour1 = $('#impromtuTour1').html();
     $('#impromtuTour1').remove();
@@ -388,13 +390,22 @@ $(document).ready(function(){
         state0: {
             html: impromtuWhyWeAreDoingThis,
             buttons:{
-                "How can I do this?":2, 
-                "Learn hints!":1, 
-                "X":0
+                "I don't!":3,
+                "I do!":4,
+                "Close":0
             },
             focus: 1,
             submit:function(v,m,f){
                 switch(v){
+                    case 3:{
+                        alert('To hell with your attitude! BYE!');
+                        window.close();
+                        return false;
+                    }
+                    case 4:{
+                        $.prompt.goToState('impromtuWhyWeAreDoingThis1');
+                        return false;
+                    }
                     case 1: {
                         if(getCookie("quick_tour_state") == "2"){
                             $.prompt.goToState('impromtuTour2');
@@ -425,6 +436,55 @@ $(document).ready(function(){
                 }
             }
         },
+
+        impromtuWhyWeAreDoingThis1: {//Actions prompt
+            html: impromtuWhyWeAreDoingThis1,
+            buttons: {
+                'Hints': 1,
+                'Tour': 2,
+                'Yes, Invite!':3,
+                'Nope':4
+            },
+            focus: 1,
+            submit:function(v,m,f){
+
+                switch(v){
+                    case 1: {
+                        if(getCookie("quick_tour_state") == "2"){
+                            $.prompt.goToState('impromtuTour2');
+                        } else
+                        if(getCookie("quick_tour_state") == "3"){
+                            $.prompt.goToState('impromtuTour3');
+                        } else {
+                            $.prompt.goToState('impromtuTour1');
+                        }
+                        return false;
+                    }
+                    case 2: {
+                        if(getCookie("purpose_state") == "impromtuHowWeGoAboutIt2"){
+                            $.prompt.goToState('impromtuHowWeGoAboutIt2');
+                        } else
+                        if(getCookie("purpose_state") == "impromtuHowWeGoAboutIt3"){
+                            $.prompt.goToState('impromtuHowWeGoAboutIt3');
+                        } else {
+                            $.prompt.goToState('impromtuHowWeGoAboutIt1');
+                            $('#impromtuHowWeGoAboutIt1img1').attr('src','/images/purpose_find_a_good_place.JPG');
+                        }
+                        return false;
+                    }
+                    case 3: {
+                        window.location.href = '/page/_muster';
+                        return false;
+                    }
+                    case 4: {
+                        alert('See you around...');
+                        window.close();
+                        return false;
+                    }
+                }
+            }
+        },
+
         impromtuTour1: {//Search Widget
             html: impromtuTour1,
             buttons: {
@@ -488,7 +548,7 @@ $(document).ready(function(){
         impromtuHowWeGoAboutIt3: {
             html: impromtuHowWeGoAboutIt3,
             buttons: {
-                'Okay, I will help others out too...': 0, 
+                'Okay, I will help others out too...': 0,
                 'Give me more hints on how to get started': 1
             },
             focus: 1,
