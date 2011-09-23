@@ -33,18 +33,11 @@ import static ai.ilikeplaces.util.Loggers.EXCEPTION;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class AbstractSkeletonListener extends AbstractListener {
-    public static final String TITLE = "Hey ";
-    private static final String NO_LOGIN = "NoLogin";
     private static final String BN = "bn";
-    private static final String PROFILE_PHOTOS = "PROFILE_PHOTOS";
-    private static final String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004 = "ai.ilikeplaces.logic.Listeners.ListenerMain.0004";
     protected static final ResourceBundle GUI = RBGet.gui();
-    private static final String CODENAME = "codename:";
     private static final String CODENAME_KEY = "codename";
-    private static final String SPACE = " ";
-    private static final String NOT_LOGGED_IN_NOTICE = "Hmmmm... Why have you not logged in?!";
     boolean initStatus = false;
-    private static final String TALK = "Get chatty...";
+    private static final String TALK = "Get in touch";
 
     /**
      * @param request_
@@ -147,7 +140,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                             new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
                                 protected void init(final Object... initArgs) {
                                     $$(Controller.Page.user_property_sidebar_content).appendChild(
-                                            ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(TALK).$ElementSetHref("#").get()
+                                            ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(TALK).$ElementSetHref(ProfileRedirect.PROFILE_URL + friend.getHumanId()).get()
                                     );
                                 }
                             };
@@ -161,8 +154,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
             {
                 try {
                     if (getUsername() == null) {
-                        $(Controller.Page.SkeletonCPageNotice).setTextContent(
-                                NOT_LOGGED_IN_NOTICE);
+                        //We do nothing now
                     }
                 } catch (final Throwable t) {
                     EXCEPTION.error("{}", t);
@@ -203,15 +195,11 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
         try {
             setMainTitle:
             {
-                $(skeletonTitle).setTextContent(
-                        TITLE +
-                                RBGet.globalConfig.getString(BN));
+                $(skeletonTitle).setTextContent(RBGet.globalConfig.getString(BN));
             }
             setMetaDescription:
             {
-                $(skeletonTitle).setAttribute(MarkupTag.META.namee(),
-                        TITLE +
-                                RBGet.globalConfig.getString(BN));
+                $(skeletonTitle).setAttribute(MarkupTag.META.namee(),RBGet.globalConfig.getString(BN));
             }
         } catch (final Throwable t) {
             Loggers.DEBUG.debug(t.getMessage());
