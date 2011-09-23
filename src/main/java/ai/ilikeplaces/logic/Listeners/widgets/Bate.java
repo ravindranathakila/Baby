@@ -20,8 +20,10 @@ import ai.ilikeplaces.util.*;
 import com.google.gdata.data.Person;
 import net.sf.oval.Validator;
 import org.itsnat.core.ItsNatServletRequest;
+import org.itsnat.core.ItsNatSession;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
+import org.itsnat.core.http.ItsNatHttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -31,6 +33,7 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -49,6 +52,7 @@ abstract public class Bate extends AbstractWidgetListener {
     private static final String PASSWORD_DETAILS = "_passwordDetails";
     private static final String PASSWORD_ADVICE = "_passwordAdvice";
     private static final String URL = "_url";
+    private static final String OMG_GOOGLE_INVITE = "omg_gi";
     private Email email;
     private Password password;
 
@@ -63,6 +67,15 @@ abstract public class Bate extends AbstractWidgetListener {
     RefObj<List<HumansIdentity>> matches = null;
 
     Set<Email> emails;
+
+    /**
+     * Thank you for not refactoring to "inviteCount" and not confusing the coder that it is the number of invites
+     * that a user has available instead of the number of invites he sent.
+     */
+    private Integer invitedCount = 0;
+
+    private Element bate = null;
+    private ItsNatHttpSession userSession;
 
 
     /**
@@ -84,6 +97,14 @@ abstract public class Bate extends AbstractWidgetListener {
         emails = new HashSet<Email>();
         email = new Email("");
         password = new Password("");
+        bate = $$(Controller.Page.BateSignup);
+
+        userSession = ((ItsNatHttpSession) request.getItsNatSession());
+
+        if (userSession.getAttribute(OMG_GOOGLE_INVITE) != null && (Boolean) userSession.getAttribute(OMG_GOOGLE_INVITE)) {
+            $$sendJS("alert('OMG!');");
+        }
+
 
         UCAttemptToRecognizeGoogleContactImportRedirect:
         {
@@ -144,6 +165,7 @@ abstract public class Bate extends AbstractWidgetListener {
                     }
                 }
             }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.BateSignupPassword), EventType.BLUR.toString(), new EventListener() {
 
                 final Validator v = new Validator();
@@ -215,7 +237,22 @@ abstract public class Bate extends AbstractWidgetListener {
                     }
 
                 }
-            }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+            }, false);
+        }
+
+        UCOmg:
+        {
+            itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.BateOmg), EventType.CLICK.toString(), new EventListener() {
+
+                final Validator v = new Validator();
+                final Password mypassword = password;
+                final ItsNatHttpSession myuserSession = userSession;
+
+                @Override
+                public void handleEvent(final Event evt_) {
+                    myuserSession.setAttribute(OMG_GOOGLE_INVITE, Boolean.TRUE);
+                }
+            }, false);
         }
     }
 
@@ -251,6 +288,9 @@ abstract public class Bate extends AbstractWidgetListener {
                         currentUser,
                         importedContact)) {
 
+            private Integer myinvitedCount = invitedCount;
+            private Element mybate = bate;
+
             protected void init(final Object... initArgs) {
 
                 new Button(
@@ -265,6 +305,9 @@ abstract public class Bate extends AbstractWidgetListener {
                     private HumanId inviter;
                     private ImportedContact invitee;
                     private String invitersName;
+                    private Integer mymyinvitedCount = myinvitedCount;
+                    private Element mymybate = mybate;
+
 
                     @Override
                     protected void init(final ButtonCriteria buttonCriteria) {
@@ -280,6 +323,9 @@ abstract public class Bate extends AbstractWidgetListener {
                             private HumanId myinviter = inviter;
                             private ImportedContact myinvitee = invitee;
                             private String myinvitersName = invitersName;
+                            private Integer mymymyinvitedCount = mymyinvitedCount;
+                            private Element mymymybate = mymybate;
+
 
                             @Override
                             public void handleEvent(final Event evt) {
@@ -314,6 +360,16 @@ abstract public class Bate extends AbstractWidgetListener {
                                             myinvitee.getHumanId(),
                                             "Invitation from " + myinvitersName,
                                             htmlBody);
+
+                                    /**
+                                     * What happens if I do mymymyinvitedCount++ ? Will the referenc be updated? or do I get a new int? No time to check that :)
+                                     */
+                                    mymymyinvitedCount = mymymyinvitedCount + 1;
+
+                                    if (mymymyinvitedCount > 1) {
+                                        $$displayBlock(mymymybate);
+                                    }
+
                                 } catch (final Throwable t) {
                                     Loggers.error("Error sending email", t);
                                 }

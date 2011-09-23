@@ -140,12 +140,14 @@ final public class
 
 
         Bate("ai/ilikeplaces/widgets/bate.xhtml",
+                Controller.Page.BateSignup,
                 Controller.Page.BateSignupEmail,
                 Controller.Page.BateSignupPassword,
                 Controller.Page.BateSignupNotifications,
                 Controller.Page.BateSignupButton,
                 Controller.Page.BateImportResults,
-                Controller.Page.BateIntroduction
+                Controller.Page.BateIntroduction,
+                Controller.Page.BateOmg
         ) {
             @Override
             public String toString() {
@@ -891,12 +893,14 @@ final public class
         /*Bate Page*/
         final static public String DocBate = "DocBate";
         /*Bate IDs*/
+        final static public String BateSignup = "BateSignup";
         final static public String BateSignupEmail = "BateSignupEmail";
         final static public String BateSignupPassword = "BateSignupPassword";
         final static public String BateSignupNotifications = "BateSignupNotifications";
         final static public String BateSignupButton = "BateSignupButton";
         final static public String BateImportResults = "BateImportResults";
         final static public String BateIntroduction = "BateIntroduction";
+        final static public String BateOmg = "BateOmg";
 
         /*Album Page*/
         final static public String DocAlbum = "DocAlbum";
