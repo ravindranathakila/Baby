@@ -18,6 +18,11 @@ try{
 // EO PROGRESSIVE-1
 
 
+// SET STATIC MAP
+
+function ilp_setStaticGmapImg(id, place){
+    document.getElementById(id).src = 'http://maps.google.com/maps/api/staticmap?center=' + place + '&size=640x300&maptype=roadmap&sensor=false&format=jpg&markers=color:blue|label:S|'+place+ '&path=fillcolor:0xAA000033|color:0xFFFFFF00|enc:encoded_data';
+}
 
 // IMPROMPTU
 
