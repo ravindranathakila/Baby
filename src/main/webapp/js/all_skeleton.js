@@ -664,7 +664,7 @@ $(document).ready(function(){
 
       //LOSE ATTN
     $('.gain_attn').mouseenter(function() {
-       $('.lose_attn').fadeTo("fast",0.1);
+       $('.lose_attn').fadeTo("fast",0.6);
     });
 
 
