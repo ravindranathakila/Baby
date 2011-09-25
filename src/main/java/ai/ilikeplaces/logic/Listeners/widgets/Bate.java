@@ -101,15 +101,6 @@ abstract public class Bate extends AbstractWidgetListener {
 
         final boolean omged = userSession.getAttribute(OMG_GOOGLE_INVITE) != null && (Boolean) userSession.getAttribute(OMG_GOOGLE_INVITE);
 
-        if (omged) {
-            //$$sendJS("alert('OMG!');");
-
-//            UCCleaningUpForNextTimeIfEver:
-//            {
-//                userSession.setAttribute(OMG_GOOGLE_INVITE, false);
-//            }
-        }
-
 
         UCAttemptToRecognizeGoogleContactImportRedirect:
         {
@@ -146,8 +137,22 @@ abstract public class Bate extends AbstractWidgetListener {
                         if (!omged) {
                             generateFriendInviteWidgetFor(importedContact, humanId, humansName);
                         } else {
-                            final Return<Boolean> booleanReturn = sendInviteToOfflineInvite(humanId, humansName.getObjectAsValid(), importedContact);
-                            $$displayBlock(bate);
+                            UCDisplayOmgSuccessMessage:
+                            {
+                             $$displayBlock($$(Controller.Page.BateOmgSuccessMsg));
+                            }
+                            UCSendInviteMails:
+                            {
+                                final Return<Boolean> booleanReturn = sendInviteToOfflineInvite(humanId, humansName.getObjectAsValid(), importedContact);
+                            }
+                            UCCleaningUpForNextTimeIfEver:
+                            {
+                                userSession.setAttribute(OMG_GOOGLE_INVITE, false);
+                            }
+                            UCNotifyAndDisplaySignupWidget:
+                            {
+                                $$displayBlock(bate);
+                            }
                         }
                     }
                 }
