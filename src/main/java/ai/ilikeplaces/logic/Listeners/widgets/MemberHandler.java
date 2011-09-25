@@ -88,7 +88,7 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
         for (final HumansFriend possibility : poss) {
 //            final Element li = $$(MarkupTag.LI);
-//            li.setTextContent(possibility.getHuman().getDisplayName() + (existAll.contains(possibility.getHumanId()) ? Added : Removed));
+//            li.setTextContent(possibility.getHuman().getInviterDisplayName() + (existAll.contains(possibility.getHumanId()) ? Added : Removed));
 //
 //            $$(Controller.Page.FriendListList).appendChild(li);
 

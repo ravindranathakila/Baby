@@ -51,7 +51,7 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
             $$(Page.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.src(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
 
             /*  fetchToEmail(//WARNING! This does not append the content.
-            hi.getHuman().getDisplayName(),
+            hi.getHuman().getInviterDisplayName(),
             formatProfileUrl(ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl(), true),
             formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));*/
         } else {
