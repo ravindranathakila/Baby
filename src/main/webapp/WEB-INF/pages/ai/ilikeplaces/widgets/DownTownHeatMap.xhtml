@@ -29,7 +29,6 @@
     featureType: "transit",
     elementType: "all",
     stylers: [
-
     ]
   },{
     featureType: "road",
@@ -65,11 +64,48 @@ focusLng = 0;
 zoom = 5;
 
 lastSelectedLocation = {
-        name:'',
+            name:'',
         desc:'',
         lat:undefined,
         lng:undefined
     };
+
+function clearLastSelectedLocation(){
+    lastSelectedLocation = {
+            name:'',
+            desc:'',
+            lat:undefined,
+            lng:undefined
+        };
+}
+
+
+//NEVER USE THIS DIRECTLY. USE getLastSelectionInfoWindow()
+lastSelectionInfoWindow = undefined;//to be intialized after google map loads
+lastSelectionInfoWindowConent = "<div id=\'lastSelectionInfoWindowTitle\'>Title</div><br/><div id=\'lastSelectionInfoWindowContent\'>Content</div>"
+
+function getLastSelectionInfoWindow(){
+    if(!lastSelectionInfoWindow){
+        lastSelectionInfoWindow = new google.maps.InfoWindow({
+                content: lastSelectionInfoWindowConent,
+                maxWidth:200,
+                disableAutoPan: false
+            });
+        lastSelectionInfoWindow.open(GAIA);
+    }
+    if(lastSelectionInfoWindow.getMap() == undefined){
+            lastSelectionInfoWindow.setContent(lastSelectionInfoWindowConent);
+            lastSelectionInfoWindow.open(GAIA);
+    }
+    return lastSelectionInfoWindow;
+}
+
+
+function setLastSelectionInfoWindow(latLng, title, content){
+    getLastSelectionInfoWindow().setPosition(latLng);
+    $('#lastSelectionInfoWindowTitle').empty().text(title);
+    $('#lastSelectionInfoWindowContent').empty().text(content);
+}
 
 geocoder = undefined;
 
@@ -134,7 +170,16 @@ function setNotificationFetchNegative(){//WARNING! used in java
    setNotification('Puff puff!!.. Nothing here for us... Nobody\'s been here in ages!');
 }
 
+simpleMomentAlertCount = 0;
+
 function setNotification(text){//WARNING! used in java
+    simpleMomentAlertCount++;
+    if(simpleMomentAlertCount > 2){
+        $('#CurrentActivityNotificationBox').append('<span style=\'color:#c615af;font-size:15px;background-color:#ffffff;opacity:0.7;filter:alpha(opacity=70);\'>'+'Click on a marker or anywhere on map to start a Moment'+'<br/></span>');
+        setTimeout('setClearForLastNotification()',9000);
+        simpleMomentAlertCount = 0;
+    }
+
     $('#CurrentActivityNotificationBox').append('<span style=\'background-color:#ffffff;opacity:0.7;filter:alpha(opacity=70);\'>'+text+'<br/></span>');
     setTimeout('setClearForLastNotification()',9000);
 }
@@ -173,15 +218,22 @@ function setClearForLastNotification(){
 
     setNotification("Great! You've selected a place. Check Actions!");
 
+    clearLastSelectedLocation();
+
     lastSelectedLocation.name = hotspotClickDetails.commonName;
     lastSelectedLocation.lat =  hotspotClickDetails.latitude;
     lastSelectedLocation.lng =  hotspotClickDetails.longitude;
+
+    var position = new google.maps.LatLng(hotspotClickDetails.latitude,hotspotClickDetails.longitude);
+
     getAddress(
-        new google.maps.LatLng(hotspotClickDetails.latitude,hotspotClickDetails.longitude),
+        position,
         function(desc){
             lastSelectedLocation.desc = desc;
         }
     );
+
+    setLastSelectionInfoWindow(position, 'You selected '+hotspotClickDetails.commonName, 'Check Actions on Bottom Right of Page!');
 
     setActionLink(
         "Create a Moment",
@@ -216,6 +268,12 @@ function setClearForLastNotification(){
  }
 
  function renderRoute(toLat,toLng){
+
+         try{
+           $.prompt.close();
+         }catch(err){
+             //nah we ignore this
+         }
 
          setUpDirectionStuff();
 
@@ -511,6 +569,13 @@ function initialize_DownTownHeatMap_map(){
 
     //infowindow.open(map,placeMarker);
 
+    //WE NEED TO DO THIS HERE BECAUSE SOMETIMES THIS ISN'T INITIALIZED UPON FIRST CALL AT getLastSelectionInfoWindow()
+    lastSelectionInfoWindow = new google.maps.InfoWindow({
+            content: lastSelectionInfoWindowConent,
+            maxWidth:200,
+            disableAutoPan: false
+        });
+    lastSelectionInfoWindow.open(GAIA);
 
     geoCodeToNotifications = function(){
         if(GAIA.getZoom() > 13){
@@ -538,6 +603,8 @@ function initialize_DownTownHeatMap_map(){
             if(confirm("We don't want your friends to end up next doors do we... \nMark this as exact place of event?")){
                 setNotification("That's the place you selected!");
 
+                clearLastSelectedLocation();
+
                 lastSelectedLocation.lat =   GAIA.getCenter().lat();
                 lastSelectedLocation.lng =   GAIA.getCenter().lng();
 
@@ -545,10 +612,15 @@ function initialize_DownTownHeatMap_map(){
                     GAIA.getCenter(),
                     function(address){
                         setNotification('You selected ' + address);
+                        $('#mapCustomControlsActionLinksTitle').empty().text(address);//hack to our own code due to late network loading :'(
+                        $('#lastSelectionInfoWindowTitle').empty().text(address);
                         lastSelectedLocation.desc = address;
                         lastSelectedLocation.name = address;
                     }
                 );
+
+                setLastSelectionInfoWindow(GAIA.getCenter(),lastSelectedLocation.name, 'Check Actions on Bottom Right of Page!');
+
                 setNotification("Great! You've selected a place. Check Actions!");
 
                 setActionLink(
@@ -737,27 +809,19 @@ function setMapToLocation(value){
         <div id="mapCustomControlsPersonIntros" style="width:30.9%;" class="lose_attn">
             <div class="use100" id="impromptuRealityAmandaPopupLink" style="cursor:pointer;">
                 <div class="use191">
-                    <img src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG" class="use90 use5p use5a" alt=" "/>
+                    <img src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG" class="use90 use5p use5a ajax_image" alt="Loading..." title="/images/amanda_jane_profile_pic_th.jpg"/>
                 </div>
-                <div class="use618" style="font-size:14px;font-weight:900;">
-                    Find out how Jenniffer planned a family party!
+                <div class="use618" style="font-size:16px;font-weight:900;text-transform: uppercase;color:#919090;">
+                    Amanda Jane
+                </div>
+                <div class="use618" style="font-size:12px;font-weight:900;">
+                    Her trip to Cudillero!
                 </div>
                 <div class="use191">
                     &nbsp;
                 </div>
             </div>
             <div class="use100" style="height:5px;">&nbsp;</div>
-            <div class="use100">
-                <div class="use191">
-                    <img src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG" class="use90 use5p use5a" alt=" "/>
-                </div>
-                <div class="use618" style="font-size:14px;font-weight:900;">
-                   This is how Justin organized a trip with his friends!
-                </div>
-                <div class="use191">
-                    &nbsp;
-                </div>
-            </div>
         </div>
     </div>
     <div style="display:none;">

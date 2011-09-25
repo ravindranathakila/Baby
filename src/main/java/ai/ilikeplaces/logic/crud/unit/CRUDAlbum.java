@@ -84,14 +84,14 @@ public class CRUDAlbum extends AbstractSLBCallbacks implements CRUDAlbumLocal {
          */
         final PrivatePhoto managedPrivatePhoto__ = cPrivatePhotoLocal_.doCPrivatePhotoLocal(humanId, photoUrl);
 
-        final HumansPrivatePhoto MhumansPrivatePhoto__ = rHumanLocal_.doRHuman(humanId).getHumansPrivatePhoto();
-        final List<PrivatePhoto> MprivatePhotos__ = MhumansPrivatePhoto__.getPrivatePhotos();//Eager
-
-        WiringBothSides:
-        {
-            MprivatePhotos__.add(managedPrivatePhoto__);
-            managedPrivatePhoto__.setHumansPrivatePhoto(MhumansPrivatePhoto__);
-        }
+//        final HumansPrivatePhoto MhumansPrivatePhoto__ = rHumanLocal_.doRHuman(humanId).getHumansPrivatePhoto();
+//        final List<PrivatePhoto> MprivatePhotos__ = MhumansPrivatePhoto__.getPrivatePhotos();//Eager
+//
+//        WiringBothSides:
+//        {
+//            MprivatePhotos__.add(managedPrivatePhoto__);
+//            managedPrivatePhoto__.setHumansPrivatePhoto(MhumansPrivatePhoto__);
+//        }
 
         ////////////////////////////////////////////////////////
 
