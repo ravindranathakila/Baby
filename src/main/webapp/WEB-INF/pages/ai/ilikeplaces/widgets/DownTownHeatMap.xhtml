@@ -82,7 +82,7 @@ function clearLastSelectedLocation(){
 
 //NEVER USE THIS DIRECTLY. USE getLastSelectionInfoWindow()
 lastSelectionInfoWindow = undefined;//to be intialized after google map loads
-lastSelectionInfoWindowConent = "<div id=\'lastSelectionInfoWindowTitle\' style=\'width:100%;font-weight:900;height:30px;\'>Title</div><div id=\'lastSelectionInfoWindowContent\'style=\'height:30px;\'>Content</div>"
+lastSelectionInfoWindowConent = "<div id=\'lastSelectionInfoWindowTitle\' style=\'width:100%;font-weight:900;height:30px;text-align:right;\'>Title</div><div id=\'lastSelectionInfoWindowContent\'style=\'height:40px;text-align:right;\'>Content</div>"
 
 function getLastSelectionInfoWindow(){
     if(!lastSelectionInfoWindow){
@@ -811,7 +811,7 @@ function setMapToLocation(value){
         <div></div>
         <div class="by center" style="cursor:pointer;">
             <a href="/page/Earth_of_Earth?WOEID=1" style="text-decoration:none;">
-             <img src="/images/circle.gif" alt="Loading..." />
+             <img src="/images/circle.gif" style="width:30px;" alt="Loading..." />
             </a>
         </div>
         <div></div>
@@ -907,10 +907,16 @@ function setMapToLocation(value){
                 <div class="use5">&nbsp;</div>
                 <div class="use90">
                     <div class="by bold">
-                        <img id="img_on_the_map" src="/images/circle.gif" alt="On the Map" class="use100"/>
+                        <img id="img_on_the_map" src="/images/circle.gif" alt="On the Map"
+                             style="cursor:pointer;"
+                             class="use100 vtip" onclick="javascript:$('#mapCustomControlsSolidLinks').slideToggle();$('#mapCustomControlsHiddenNoti').slideToggle();"
+                             title="Click to show hide"/>
                     </div>
                     <div class="by" style="height:3px;">
                         &nbsp;
+                    </div>
+                    <div class="by center" style="height:10px;display:none;" id="mapCustomControlsHiddenNoti">
+                        Hidden! Click above to show.
                     </div>
                     <div class="use191" style="background-color:transparent;">&nbsp;</div>
                     <div id="mapCustomControlsSolidLinks" class="bold use618 center" style="color:#000000;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">
