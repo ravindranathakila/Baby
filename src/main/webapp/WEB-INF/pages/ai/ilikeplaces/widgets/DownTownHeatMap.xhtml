@@ -77,6 +77,29 @@ function getGeocoder(){
     return geocoder = geocoder != undefined ? geocoder : new google.maps.Geocoder();
 }
 
+function getAddress(latLng, callback){
+    getGeocoder().geocode(
+        {
+            location:latLng
+        },
+        function(geocoderResult,geocoderStatus){
+            if(geocoderStatus == google.maps.GeocoderStatus.OK){
+                var locationString = '';
+                    for(var j in geocoderResult[0].address_components){
+                        locationString += geocoderResult[0].address_components[j].long_name + ' ';
+                        if(j>1){
+                            break;
+                        }
+                    }
+                 locationString;
+                 callback(locationString);
+            }else{
+                 getAddressReturnVal =  '';
+            }
+        }
+    );
+}
+
 
 
 listOfHotSpots = new Array();
@@ -153,24 +176,10 @@ function setClearForLastNotification(){
     lastSelectedLocation.name = hotspotClickDetails.commonName;
     lastSelectedLocation.lat =  hotspotClickDetails.latitude;
     lastSelectedLocation.lng =  hotspotClickDetails.longitude;
-
-    getGeocoder().geocode(
-        {
-            location:new google.maps.LatLng(hotspotClickDetails.latitude,hotspotClickDetails.longitude)
-        },
-        function(geocoderResult,geocoderStatus){
-            if(geocoderStatus == google.maps.GeocoderStatus.OK){
-                var locationString = '';
-                    for(var j in geocoderResult[0].address_components){
-                        locationString += geocoderResult[0].address_components[j].long_name + ' ';
-                        if(j>1){
-                            break;
-                        }
-                    }
-                 lastSelectedLocation.desc = locationString;
-            }else{
-                //hmmmm... B-/
-            }
+    getAddress(
+        new google.maps.LatLng(hotspotClickDetails.latitude,hotspotClickDetails.longitude),
+        function(desc){
+            lastSelectedLocation.desc = desc;
         }
     );
 
@@ -487,18 +496,18 @@ function initialize_DownTownHeatMap_map(){
         google.maps.event.removeListener(initialGmapLoadListener);
     });
 
-    placeMarker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-        title:"Is it here? if so, click on this marker!!!",
-        icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=|11|eee|glyphish_map-marker|16|000000|000000"
-    });
-
-
-    infowindow = new google.maps.InfoWindow({
-        content: "Zoom to street level & Point marker to EXACT place. Click the marker to confirm!",
-        maxWidth:400
-    });
+    //placeMarker = new google.maps.Marker({
+    //    position: myLatlng,
+    //    map: map,
+    //    title:"Is it here? if so, click on this marker!!!",
+    //    icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=|11|eee|glyphish_map-marker|16|000000|000000"
+    //});
+    //
+    //
+    //infowindow = new google.maps.InfoWindow({
+    //    content: "Zoom to street level & Point marker to EXACT place. Click the marker to confirm!",
+    //    maxWidth:400
+    //});
 
     //infowindow.open(map,placeMarker);
 
@@ -506,23 +515,13 @@ function initialize_DownTownHeatMap_map(){
     geoCodeToNotifications = function(){
         if(GAIA.getZoom() > 13){
             setNotification("Wait for me...");
-            getGeocoder().geocode(
-                {
-                    location:GAIA.getCenter()
-                },
-                function(geocoderResult,geocoderStatus){
-                    if(geocoderStatus == google.maps.GeocoderStatus.OK){
-                        var locationString = '';
-                            for(var j in geocoderResult[0].address_components){
-                                locationString += geocoderResult[0].address_components[j].long_name + ' ';
-                                if(j>1){
-                                    break;
-                                }
-                            }
-                        setNotification("We are somewhere near.. " + locationString);
-                    }else{
-                        setNotification("Hey where are we?!!");
-                    }
+
+            getAddress(
+                GAIA.getCenter(),
+                function(locationString){
+                    locationString = (locationString == '' || locationString == undefined ?  'Hey where are we?!!' : 'We are somewhere near.. ' + locationString );
+
+                    setNotification(locationString);
                 }
             );
         }
@@ -538,17 +537,40 @@ function initialize_DownTownHeatMap_map(){
 
             if(confirm("We don't want your friends to end up next doors do we... \nMark this as exact place of event?")){
                 setNotification("That's the place you selected!");
-                setNotification(placeMarker.getPosition());
+
+                lastSelectedLocation.lat =   GAIA.getCenter().lat();
+                lastSelectedLocation.lng =   GAIA.getCenter().lng();
+
+                getAddress(
+                    GAIA.getCenter(),
+                    function(address){
+                        setNotification('You selected ' + address);
+                        lastSelectedLocation.desc = address;
+                        lastSelectedLocation.name = address;
+                    }
+                );
                 setNotification("Great! You've selected a place. Check Actions!");
 
                 setActionLink(
-                    "Add this place to my moments!",
-                    "",
+                    "Create a Moment",
+                    lastSelectedLocation.name,
                     function(){
-                        alert('We\'re gonna send you to Down&darr;Town. Don\'t worry, we\'ve got you covered!');
-                        window.location.href = "/page/_org?category=143&woehint=" + placeMarker.getPosition().lat() + "," + placeMarker.getPosition().lng();
+                        //@TODO check if this is a users private location
+                        var placename = prompt('What do you call this place?', lastSelectedLocation.name);
+                        placename = placename.substring(0,29);
+                        var placedetails = prompt('Short description of this place?', lastSelectedLocation.desc);
+                        placedetails = placedetails.substring(0,499);
+                        window.location.href = '/page/_org?category=143' + '&woehint=' + GAIA.getCenter().lat() + ',' + GAIA.getCenter().lng() + '&placename=' + placename + '&placedetails=' + placedetails;
                     },
                     true
+                );
+                setActionLink(
+                    "Find Directions",
+                    "",
+                    function(){
+                        renderRoute(lastSelectedLocation.lat, lastSelectedLocation.lng);
+                    },
+                    false
                 );
             }
         }else{
@@ -556,10 +578,6 @@ function initialize_DownTownHeatMap_map(){
             setActionLink("Zoom a bit more","",function(){GAIA.setZoom(GAIA.getZoom() + 1);},true);
         }
     };
-
-    google.maps.event.addListener(placeMarker, 'click', function() {
-        alertWithPlaceMarkBox();
-    });
 
     runIfNotDblClick = function(event){
         if(singleClick){
@@ -581,9 +599,9 @@ function initialize_DownTownHeatMap_map(){
         singleClick = false;
     });
 
-    google.maps.event.addListener(map, 'center_changed', function() {
-        placeMarker.setPosition(GAIA.getCenter());
-    });
+    //google.maps.event.addListener(map, 'center_changed', function() {
+    //    placeMarker.setPosition(GAIA.getCenter());
+    //});
 
     google.maps.event.addListener(map, 'idle', function() {
         geoCodeToNotifications();

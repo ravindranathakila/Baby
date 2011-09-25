@@ -352,7 +352,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
                                 .setMetadata(
                                         ((InviteCriteria) initArgs[1]).getInviter(),
                                         ((InviteCriteria) initArgs[1]).getInvitee(),
-                                        ((InviteCriteria) initArgs[1]).getDisplayName()))) {
+                                        ((InviteCriteria) initArgs[1]).getInviterDisplayName()))) {
 
                     private HumanId inviter;
                     private ImportedContact invitee;

@@ -20,7 +20,6 @@ import ai.ilikeplaces.util.*;
 import com.google.gdata.data.Person;
 import net.sf.oval.Validator;
 import org.itsnat.core.ItsNatServletRequest;
-import org.itsnat.core.ItsNatSession;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.itsnat.core.http.ItsNatHttpSession;
@@ -33,7 +32,6 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
-import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -101,8 +99,15 @@ abstract public class Bate extends AbstractWidgetListener {
 
         userSession = ((ItsNatHttpSession) request.getItsNatSession());
 
-        if (userSession.getAttribute(OMG_GOOGLE_INVITE) != null && (Boolean) userSession.getAttribute(OMG_GOOGLE_INVITE)) {
-            $$sendJS("alert('OMG!');");
+        final boolean omged = userSession.getAttribute(OMG_GOOGLE_INVITE) != null && (Boolean) userSession.getAttribute(OMG_GOOGLE_INVITE);
+
+        if (omged) {
+            //$$sendJS("alert('OMG!');");
+
+//            UCCleaningUpForNextTimeIfEver:
+//            {
+//                userSession.setAttribute(OMG_GOOGLE_INVITE, false);
+//            }
         }
 
 
@@ -138,7 +143,12 @@ abstract public class Bate extends AbstractWidgetListener {
 
                 for (final ImportedContact importedContact : whoppingImportedContacts) {
                     if (!existingUsersFromDB.contains(importedContact)) {
-                        generateFriendInviteWidgetFor(importedContact, humanId, humansName);
+                        if (!omged) {
+                            generateFriendInviteWidgetFor(importedContact, humanId, humansName);
+                        } else {
+                            final Return<Boolean> booleanReturn = sendInviteToOfflineInvite(humanId, humansName.getObjectAsValid(), importedContact);
+                            $$displayBlock(bate);
+                        }
                     }
                 }
             }
@@ -282,7 +292,7 @@ abstract public class Bate extends AbstractWidgetListener {
                 $$(Page.BateImportResults),
                 ElementComposer.compose($$(MarkupTag.BR)).get(),
                 new UserProperty.InviteCriteria(
-                        importedContact.getFullName(),//This name is of the person being invited(invitee), not the inviter
+                        humansName.getObjectAsValid(),//This name is of the person being invited(invitee), not the inviter
                         "#",
                         "#",
                         currentUser,
@@ -293,14 +303,15 @@ abstract public class Bate extends AbstractWidgetListener {
 
             protected void init(final Object... initArgs) {
 
+                final InviteCriteria myInviteCritria = (InviteCriteria) initArgs[1];
                 new Button(
                         request,
                         $$(Page.user_property_content),
                         (new ButtonCriteria(false, "Invite", "#", "padding-left:0%; width:20%; padding-right:80%;")
                                 .setMetadata(
-                                        ((InviteCriteria) initArgs[1]).getInviter(),
-                                        ((InviteCriteria) initArgs[1]).getInvitee(),
-                                        ((InviteCriteria) initArgs[1]).getDisplayName()))) {
+                                        myInviteCritria.getInviter(),
+                                        myInviteCritria.getInvitee(),
+                                        myInviteCritria.getInviterDisplayName()))) {
 
                     private HumanId inviter;
                     private ImportedContact invitee;
@@ -330,37 +341,9 @@ abstract public class Bate extends AbstractWidgetListener {
                             @Override
                             public void handleEvent(final Event evt) {
 
-                                try {
+                                final Return<Boolean> booleanReturn = sendInviteToOfflineInvite(myinviter, invitersName, myinvitee);
 
-                                    final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
-
-                                    final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
-                                            new HumanId().setObjAsValid(myinvitee.getEmail()),
-                                            new Password(randomPassword),
-                                            new Email(myinvitee.getEmail()));
-
-                                    UserIntroduction.createIntroData(new HumanId(myinvitee.getEmail()));
-
-                                    final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
-                                            .append(ServletLogin.Username, myinvitee.getEmail(), true)
-                                            .append(ServletLogin.Password,
-                                                    DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myinvitee.getEmail()))
-                                                            .returnValue()
-                                                            .getHumanAuthenticationHash())
-                                            .get();
-
-
-                                    String htmlBody = getHTMLStringForOfflineFriendInvite(myinvitersName, myinvitee.getFullName());
-
-                                    htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-                                    htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
-                                    htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it. ");
-
-                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
-                                            myinvitee.getHumanId(),
-                                            "Invitation from " + myinvitersName,
-                                            htmlBody);
-
+                                if (booleanReturn.returnStatus() == 0 && booleanReturn.returnValue()) {
                                     /**
                                      * What happens if I do mymymyinvitedCount++ ? Will the referenc be updated? or do I get a new int? No time to check that :)
                                      */
@@ -370,13 +353,12 @@ abstract public class Bate extends AbstractWidgetListener {
                                         $$displayBlock(mymymybate);
                                     }
 
-                                } catch (final Throwable t) {
-                                    Loggers.error("Error sending email", t);
+                                    $$(Page.GenericButtonText).setTextContent("Invited!");
+
+                                    $$remove(evt, EventType.CLICK, this);
+                                } else {
+                                    $$(Page.GenericButtonText).setTextContent("Failed! Retry..");
                                 }
-
-                                $$(Page.GenericButtonText).setTextContent("Invited!");
-
-                                $$remove(evt, EventType.CLICK, this);
                             }
                         }, false);
                     }
@@ -437,6 +419,46 @@ abstract public class Bate extends AbstractWidgetListener {
         } catch (final Throwable e) {
             throw LogNull.getRuntimeException(e);
         }
+
+    }
+
+    final Return<Boolean> sendInviteToOfflineInvite(final HumanId inviter, final String invitersName, final ImportedContact inviteee) {
+        Return<Boolean> returnVal;
+        try {
+            final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
+
+            final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                    new HumanId().setObjAsValid(inviteee.getEmail()),
+                    new Password(randomPassword),
+                    new Email(inviteee.getEmail()));
+
+            UserIntroduction.createIntroData(new HumanId(inviteee.getEmail()));
+
+            final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                    .append(ServletLogin.Username, inviteee.getEmail(), true)
+                    .append(ServletLogin.Password,
+                            DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(inviteee.getEmail()))
+                                    .returnValue()
+                                    .getHumanAuthenticationHash())
+                    .get();
+
+
+            String htmlBody = getHTMLStringForOfflineFriendInvite(invitersName, inviteee.getFullName());
+
+            htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
+            htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
+            htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it. ");
+
+            final Return<Boolean> mailReturn = SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                    inviteee.getHumanId(),
+                    "Invitation from " + invitersName,
+                    htmlBody);
+
+            returnVal = new ReturnImpl<Boolean>(true, "User Creation and Email Send Successful!");
+        } catch (final Throwable t) {
+            returnVal = new ReturnImpl<Boolean>(t, "User Creation and Email Send FAILED!", true);
+        }
+        return returnVal;
 
     }
 
