@@ -82,13 +82,12 @@ function clearLastSelectedLocation(){
 
 //NEVER USE THIS DIRECTLY. USE getLastSelectionInfoWindow()
 lastSelectionInfoWindow = undefined;//to be intialized after google map loads
-lastSelectionInfoWindowConent = "<div id=\'lastSelectionInfoWindowTitle\'>Title</div><br/><div id=\'lastSelectionInfoWindowContent\'>Content</div>"
+lastSelectionInfoWindowConent = "<div id=\'lastSelectionInfoWindowTitle\' style=\'width:100%;font-weight:900;height:30px;\'>Title</div><div id=\'lastSelectionInfoWindowContent\'style=\'height:30px;\'>Content</div>"
 
 function getLastSelectionInfoWindow(){
     if(!lastSelectionInfoWindow){
         lastSelectionInfoWindow = new google.maps.InfoWindow({
                 content: lastSelectionInfoWindowConent,
-                maxWidth:200,
                 disableAutoPan: false
             });
         lastSelectionInfoWindow.open(GAIA);
@@ -242,6 +241,7 @@ function setClearForLastNotification(){
             //@TODO check if this is a users private location
             var placename = prompt('What do you call this place?', lastSelectedLocation.name);
             var placedetails = prompt('Short description of this place?', lastSelectedLocation.desc.substring(0,29));
+            setNotification("Be patient while you are taken to the place you just created!");
             window.location.href = hotspotClickDetails.url + '&placename=' + placename + '&placedetails=' + placedetails.substring(0,30);
         },
         true
@@ -628,10 +628,11 @@ function initialize_DownTownHeatMap_map(){
                     lastSelectedLocation.name,
                     function(){
                         //@TODO check if this is a users private location
-                        var placename = prompt('What do you call this place?', lastSelectedLocation.name);
+                        var placename = promptForPlaceName(lastSelectedLocation.name);
                         placename = placename.substring(0,29);
-                        var placedetails = prompt('Short description of this place?', lastSelectedLocation.desc);
+                        var placedetails = promptForPlaceDesc(lastSelectedLocation.desc);
                         placedetails = placedetails.substring(0,499);
+                        setNotification("Be patient while you are taken to the place you just created!");
                         window.location.href = '/page/_org?category=143' + '&woehint=' + GAIA.getCenter().lat() + ',' + GAIA.getCenter().lng() + '&placename=' + placename + '&placedetails=' + placedetails;
                     },
                     true
@@ -650,6 +651,28 @@ function initialize_DownTownHeatMap_map(){
             setActionLink("Zoom a bit more","",function(){GAIA.setZoom(GAIA.getZoom() + 1);},true);
         }
     };
+
+    function promptForPlaceName(defaultValue){
+      var returnVal;
+      while(true){
+           returnVal = prompt('What do you call this place?', defaultValue)
+           if(returnVal != undefined && returnVal != ''){
+                break;
+           }
+      }
+      return returnVal;
+    }
+
+    function promptForPlaceDesc(defaultValue){
+      var returnVal;
+      while(true){
+           returnVal = prompt('Short description of this place?', defaultValue );
+           if(returnVal != undefined && returnVal != ''){
+                break;
+           }
+      }
+      return returnVal;
+    }
 
     runIfNotDblClick = function(event){
         if(singleClick){
@@ -806,15 +829,15 @@ function setMapToLocation(value){
         </div>
     </div>
     <div style="display:none;">
-        <div id="mapCustomControlsPersonIntros" style="width:30.9%;" class="lose_attn">
+        <div id="mapCustomControlsPersonIntros" style="width:19.1%;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);padding: 5px 5px 5px 5px;" class="lose_attn">
             <div class="use100" id="impromptuRealityAmandaPopupLink" style="cursor:pointer;">
-                <div class="use191">
-                    <img src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG" class="use90 use5p use5a ajax_image" alt="Loading..." title="/images/amanda_jane_profile_pic_th.jpg"/>
+                <div class="use191 center">
+                    <img src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG" class="use90 use5p use5a ajax_image" alt="Loading..." title="/images/amanda_jane_profile_pic_th.jpg" style="padding: 3px 3px 3px 3px; background-color:#eeeeee;"/>
                 </div>
-                <div class="use618" style="font-size:16px;font-weight:900;text-transform: uppercase;color:#919090;">
+                <div class="use618 center" style="font-size:16px;font-weight:900;text-transform: uppercase;color:#919090;padding: 5px 0px 0px 0px;">
                     Amanda Jane
                 </div>
-                <div class="use618" style="font-size:12px;font-weight:900;">
+                <div class="use618 center" style="font-size:12px;font-weight:900;padding: 5px 0px 0px 0px;">
                     Her trip to Cudillero!
                 </div>
                 <div class="use191">
