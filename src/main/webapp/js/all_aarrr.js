@@ -540,7 +540,7 @@ $(document).ready(function(){
             buttons:{
                 "I don't!":3,
                 "I do!":4,
-                "Close":0
+                "Hide":0
             },
             focus: 1,
             submit:function(v,m,f){
@@ -591,7 +591,7 @@ $(document).ready(function(){
                 'Hints': 1,
                 'Tour': 2,
                 'Yes, Invite!':3,
-                'Nope':4
+                'Hide':4
             },
             focus: 1,
             submit:function(v,m,f){
@@ -625,8 +625,7 @@ $(document).ready(function(){
                         return false;
                     }
                     case 4: {
-                        alert('See you around...');
-                        window.close();
+                        $.prompt.close();
                         return false;
                     }
                 }
