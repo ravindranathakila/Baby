@@ -93,11 +93,6 @@ public class ListenerI implements ItsNatServletRequestListener {
                                     setLoginWidget((ItsNatServletRequest) initArgs[0]);
                                 }
 
-                                setTitle:
-                                {
-                                    setTitle((ItsNatServletRequest) initArgs[0]);
-                                }
-
                                 signOnDisplayLink:
                                 {
                                     $(Skeleton_othersidebar_identity).setTextContent(DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(requestedProfile).getDisplayName());
@@ -142,6 +137,13 @@ public class ListenerI implements ItsNatServletRequestListener {
                                                     };
                                                 }
                                             };
+
+                                            setTitle:
+                                            {
+                                                super.setTitle(me.getDisplayName());
+                                            }
+                                        } else {
+
                                         }
                                     } catch (final Throwable t) {
                                         EXCEPTION.error("{}", t);

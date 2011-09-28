@@ -189,17 +189,25 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
         }
     }
 
-    protected void setTitle(final ItsNatServletRequest request__) {
+    protected void setTitle(final String customTitle) {
         initStatus = true;
 
         try {
             setMainTitle:
             {
-                $(skeletonTitle).setTextContent(RBGet.globalConfig.getString(BN));
+                if (customTitle != null) {
+                    $(skeletonTitle).setTextContent(customTitle);
+                } else {
+                    $(skeletonTitle).setTextContent(RBGet.globalConfig.getString(BN));
+                }
             }
             setMetaDescription:
             {
-                $(skeletonTitle).setAttribute(MarkupTag.META.namee(),RBGet.globalConfig.getString(BN));
+                if (customTitle != null) {
+                    $(skeletonTitle).setAttribute(MarkupTag.META.namee(),customTitle);
+                } else {
+                    $(skeletonTitle).setAttribute(MarkupTag.META.namee(), RBGet.globalConfig.getString(BN));
+                }
             }
         } catch (final Throwable t) {
             Loggers.DEBUG.debug(t.getMessage());

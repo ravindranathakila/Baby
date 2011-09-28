@@ -114,23 +114,6 @@ public class AlbumManager extends AbstractWidgetListener {
 
                             new WallWidgetPrivatePhoto(request, $$(Controller.Page.pd_photo_wall), humanId, privatePhoto__.getPrivatePhotoId(), mywallProspects);
                         }
-
-                        @Override
-                        protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
-                            itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.pd_photo), EventType.ONMOUSEOVER.toString(), new EventListener() {
-                                boolean imageLoaded = false;
-
-                                @Override
-                                public void handleEvent(final Event evt_) {
-                                    if (!imageLoaded) {
-                                        $$(evt_).setAttribute(MarkupTag.IMG.src(), $$(evt_).getAttribute(MarkupTag.IMG.title()));
-
-                                        imageLoaded = true;//safety measure 1
-                                    }
-                                    remove(evt_.getTarget(), EventType.ONMOUSEOVER, this); //safety measure 2
-                                }
-                            }, false);
-                        }
                     };
                 }
             } else {

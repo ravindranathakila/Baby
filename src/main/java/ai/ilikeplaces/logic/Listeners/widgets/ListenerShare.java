@@ -36,6 +36,8 @@ public class ListenerShare implements ItsNatServletRequestListener {
     private static final String TYPE = "type";
     private static final String SORRY_I_FAILED_TO_DISPLAY_THIS_SHARE = "SORRY! I FAILED TO DISPLAY THIS SHARE:";
     private static final String YIKES_SOMETHING_WENT_WRONG = "YIKES_SOMETHING_WENT_WRONG";
+    private static final String PROFILE_PHOTO_DEFAULT = "PROFILE_PHOTO_DEFAULT";
+    private static final String LOADING = "Loading...";
 
     public enum ShareType {
         PHOTO
@@ -69,8 +71,8 @@ public class ListenerShare implements ItsNatServletRequestListener {
                         case PHOTO:
                             SetTitle:
                             {
-                                final String title = request__.getServletRequest().getParameter(TITLE);
-                                $(Controller.Page.skeletonTitle).setTextContent(title != null ? title : LET_S_GET_YOU_SOCIALIZED);
+                                //final String title = request__.getServletRequest().getParameter(TITLE);
+                                super.setTitle(LET_S_GET_YOU_SOCIALIZED);//Not using custom title because it can be used for spamming :-)
                             }
 
                             AppendPhoto:
@@ -89,10 +91,9 @@ public class ListenerShare implements ItsNatServletRequestListener {
 
                                     @Override
                                     protected void init(final Object... initArgs) {
-                                        final String imageURL =  url != null ? url : RBGet.globalConfig.getString("PROFILE_PHOTO_DEFAULT");
-                                        $$(pd_photo_permalink).setAttribute("href", imageURL);
-                                        $$(pd_photo).setAttribute("src", imageURL);
-                                        $$(pd_photo).setAttribute("alt", "Loading...");
+                                        final String imageURL =  url != null ? url : RBGet.globalConfig.getString(PROFILE_PHOTO_DEFAULT);
+                                        $$(pd_photo).setAttribute(MarkupTag.IMG.alt(), LOADING);
+                                        $$(pd_photo).setAttribute(MarkupTag.IMG.title(), imageURL);
                                     }
                                 };
 
