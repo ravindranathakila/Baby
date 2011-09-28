@@ -84,8 +84,9 @@ public class UHumansNetPeople extends AbstractSLBCallbacks implements UHumansNet
     public boolean doNTxIsHumansNetPeople(final String checker, final String checkeee) {
         final HumansNetPeople cker = rHumansNetPeopleLocal_.doRHumansNetPeople(checker);
         final HumansNetPeople ckeee = rHumansNetPeopleLocal_.doRHumansNetPeople(checkeee);
-        Loggers.DEBUG.debug("Is friend:" + cker.getHumansNetPeoples().contains(ckeee));
-        return cker.getHumansNetPeoples().contains(ckeee);
+        final boolean contains = cker.getHumansNetPeoples().contains(ckeee);
+        Loggers.DEBUG.debug("Is friend:" + contains);
+        return contains;
     }
 
     @Override
@@ -93,7 +94,8 @@ public class UHumansNetPeople extends AbstractSLBCallbacks implements UHumansNet
     public boolean doDirtyIsHumansNetPeople(final String adderHumanId, final String addeeHumanId) {
         final HumansNetPeople adder = rHumansNetPeopleLocal_.doRHumansNetPeople(adderHumanId);
         final HumansNetPeople addee = rHumansNetPeopleLocal_.doRHumansNetPeople(addeeHumanId);
-        Loggers.DEBUG.debug("Is friend:" + adder.getHumansNetPeoples().contains(addee));
-        return adder.getHumansNetPeoples().contains(addee);
+        final boolean contains = adder.getHumansNetPeoples().contains(addee);
+        Loggers.DEBUG.debug("Is friend:" + contains);
+        return contains;
     }
 }
