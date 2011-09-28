@@ -82,18 +82,18 @@ function clearLastSelectedLocation(){
 
 //NEVER USE THIS DIRECTLY. USE getLastSelectionInfoWindow()
 lastSelectionInfoWindow = undefined;//to be intialized after google map loads
-lastSelectionInfoWindowConent = "<div id=\'lastSelectionInfoWindowTitle\' style=\'width:100%;font-weight:900;height:30px;text-align:right;\'>Title</div><div id=\'lastSelectionInfoWindowContent\'style=\'height:40px;text-align:right;\'>Content</div>"
+lastSelectionInfoWindowContent = "<div id=\'lastSelectionInfoWindowTitle\' style=\'width:100%;overflow:hidden;font-weight:900;height:30px;text-align:right;\'>Title</div><div id=\'lastSelectionInfoWindowContent\'style=\'height:60px;text-align:right;\'>Content</div>"
 
 function getLastSelectionInfoWindow(){
     if(!lastSelectionInfoWindow){
         lastSelectionInfoWindow = new google.maps.InfoWindow({
-                content: lastSelectionInfoWindowConent,
+                content: lastSelectionInfoWindowContent,
                 disableAutoPan: false
             });
         lastSelectionInfoWindow.open(GAIA);
     }
     if(lastSelectionInfoWindow.getMap() == undefined){
-            lastSelectionInfoWindow.setContent(lastSelectionInfoWindowConent);
+            lastSelectionInfoWindow.setContent(lastSelectionInfoWindowContent);
             lastSelectionInfoWindow.open(GAIA);
     }
     return lastSelectionInfoWindow;
@@ -174,7 +174,7 @@ simpleMomentAlertCount = 0;
 function setNotification(text){//WARNING! used in java
     simpleMomentAlertCount++;
     if(simpleMomentAlertCount > 2){
-        $('#CurrentActivityNotificationBox').append('<span style=\'color:#c615af;font-size:15px;background-color:#ffffff;opacity:0.7;filter:alpha(opacity=70);\'>'+'Click on a marker or anywhere on map to start a Moment'+'<br/></span>');
+        $('#CurrentActivityNotificationBox').append('<span style=\'color:#c615af;font-size:18px;background-color:#ffffff;opacity:0.7;filter:alpha(opacity=70);\'>'+'Click on a marker or anywhere on map to start a Moment'+'<br/></span>');
         setTimeout('setClearForLastNotification()',9000);
         simpleMomentAlertCount = 0;
     }
@@ -200,28 +200,32 @@ function setClearForLastNotification(){
    $('#CurrentActivityNotificationBox').children(':first').remove();
 }
 
+function alertAndZoomIn(zoomTo){
+        alert('You clicked on a place while too high up in sky.\nWe\'re going to zoom you in.\nThen click on a more precise place.');
+        setNotification("Zooming you in on this place because you're way too high up.");
+        setNotification("Once you get a better view, click on the place.");
+        GAIA.setCenter(new google.maps.LatLng(lastSelectedLocation.lat,lastSelectedLocation.lng));
+        GAIA.setZoom(zoomTo);
+}
+
 //setInterval("clearNotificationArea()",7000);
 
  directionWorker = undefined;
  directionsDisplay = undefined;
 
  function hotSpotClicked(hotspotClickDetails){//WARNING! used in java
-    if(GAIA.getZoom() < 14){
-        alert('You clicked on a place while too high up in sky.\nWe\'re going to zoom you in.\nThen click on a more precise place.');
-        setNotification("Zooming you in on this place because you're way too high up.");
-        setNotification("Once you get a better view, click on the place.");
-        GAIA.setCenter(new google.maps.LatLng(hotspotClickDetails.latitude,hotspotClickDetails.longitude));
-        GAIA.setZoom(14);
-        return;
-    }
-
-    setNotification("Great! You've selected a place. Check Actions!");
-
     clearLastSelectedLocation();
 
     lastSelectedLocation.name = hotspotClickDetails.commonName;
     lastSelectedLocation.lat =  hotspotClickDetails.latitude;
     lastSelectedLocation.lng =  hotspotClickDetails.longitude;
+
+    if(GAIA.getZoom() < 14){
+        alertAndZoomIn(14);
+        return;
+    }
+
+    setNotification("Great! You've selected a place. Check Actions!");
 
     var position = new google.maps.LatLng(hotspotClickDetails.latitude,hotspotClickDetails.longitude);
 
@@ -571,7 +575,7 @@ function initialize_DownTownHeatMap_map(){
 
     //WE NEED TO DO THIS HERE BECAUSE SOMETIMES THIS ISN'T INITIALIZED UPON FIRST CALL AT getLastSelectionInfoWindow()
     lastSelectionInfoWindow = new google.maps.InfoWindow({
-            content: lastSelectionInfoWindowConent,
+            content: lastSelectionInfoWindowContent,
             maxWidth:200,
             disableAutoPan: false
         });
@@ -595,7 +599,10 @@ function initialize_DownTownHeatMap_map(){
     alertWithPlaceMarkBox = function(){
         if(GAIA.getZoom() > 10 ){
             if(18 > GAIA.getZoom()){
-                if(!confirm("Not yet in street level. " + (18 - GAIA.getZoom()) + " more levels to go. Ingore and continue?")){
+                if(confirm("Not yet in street level.  Zoom a bit more?")){
+                    GAIA.setZoom(GAIA.getZoom() + 2)
+                    return;
+                }else{
                     return;
                 }
             }
@@ -607,6 +614,11 @@ function initialize_DownTownHeatMap_map(){
 
                 lastSelectedLocation.lat =   GAIA.getCenter().lat();
                 lastSelectedLocation.lng =   GAIA.getCenter().lng();
+
+                if(GAIA.getZoom() < 14){
+                    alertAndZoomIn(14);
+                    return;
+                }
 
                 getAddress(
                     GAIA.getCenter(),
