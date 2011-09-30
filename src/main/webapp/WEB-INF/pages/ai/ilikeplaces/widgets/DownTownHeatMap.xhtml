@@ -201,8 +201,7 @@ function setClearForLastNotification(){
 }
 
 function alertAndZoomIn(zoomTo){
-        alert('You clicked on a place while too high up in sky.\nWe\'re going to zoom you in.\nThen click on a more precise place.');
-        setNotification("Zooming you in on this place because you're way too high up.");
+        setNotification("<span style=\'color:#B02;font-size:18px;background-color:#ffffff;opacity:0.7;filter:alpha(opacity=70);\'>'Zooming you in on this place because you're way too high up.</span>");
         setNotification("Once you get a better view, click on the place.");
         GAIA.setCenter(new google.maps.LatLng(lastSelectedLocation.lat,lastSelectedLocation.lng));
         GAIA.setZoom(zoomTo);
@@ -239,25 +238,28 @@ function alertAndZoomIn(zoomTo){
     setLastSelectionInfoWindow(position, 'You selected '+hotspotClickDetails.commonName, 'Check Actions on Bottom Right of Page!');
 
     setActionLink(
-        "Create a Moment",
+        "CREAT A MOMENT",
         hotspotClickDetails.commonName,
         function(){
             //@TODO check if this is a users private location
-            var placename = prompt('What do you call this place?', lastSelectedLocation.name);
-            var placedetails = prompt('Short description of this place?', lastSelectedLocation.desc.substring(0,29));
-            setNotification("Be patient while you are taken to the place you just created!");
-            window.location.href = hotspotClickDetails.url + '&placename=' + placename + '&placedetails=' + placedetails.substring(0,30);
+            //var placename = prompt('What do you call this place?', lastSelectedLocation.name);
+            //var placedetails = prompt('Short description of this place?', lastSelectedLocation.desc.substring(0,29));
+            //setNotification("Be patient while you are taken to the place you just created!");
+            //window.location.href = hotspotClickDetails.url + '&placename=' + placename + '&placedetails=' + placedetails.substring(0,30);
+            $.prompt(impromptuPlaceDetailsPopup);
+            $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
+            $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
         },
         true
     );
-    setActionLink(
-        "Find Directions",
-        "",
-        function(){
-            renderRoute(hotspotClickDetails.latitude,hotspotClickDetails.longitude);
-        },
-        false
-    );
+    <!--setActionLink(-->
+        <!--"Find Directions",-->
+        <!--"",-->
+        <!--function(){-->
+            <!--renderRoute(hotspotClickDetails.latitude,hotspotClickDetails.longitude);-->
+        <!--},-->
+        <!--false-->
+    <!--);-->
  }
 
  function renderRouteFromURL(){
@@ -636,27 +638,24 @@ function initialize_DownTownHeatMap_map(){
                 setNotification("Great! You've selected a place. Check Actions!");
 
                 setActionLink(
-                    "Create a Moment",
+                    "CREATE A MOMENT",
                     lastSelectedLocation.name,
                     function(){
-                        //@TODO check if this is a users private location
-                        var placename = promptForPlaceName(lastSelectedLocation.name);
-                        placename = placename.substring(0,29);
-                        var placedetails = promptForPlaceDesc(lastSelectedLocation.desc);
-                        placedetails = placedetails.substring(0,499);
-                        setNotification("Be patient while you are taken to the place you just created!");
-                        window.location.href = '/page/_org?category=143' + '&woehint=' + GAIA.getCenter().lat() + ',' + GAIA.getCenter().lng() + '&placename=' + placename + '&placedetails=' + placedetails;
+                       $.prompt(impromptuPlaceDetailsPopup);
+                       $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
+                       $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
                     },
                     true
                 );
-                setActionLink(
-                    "Find Directions",
-                    "",
-                    function(){
-                        renderRoute(lastSelectedLocation.lat, lastSelectedLocation.lng);
-                    },
-                    false
-                );
+                <!--setActionLink(-->
+                    <!--"Find Directions",-->
+                    <!--"",-->
+                    <!--function(){-->
+                        <!--renderRoute(lastSelectedLocation.lat, lastSelectedLocation.lng);-->
+                    <!--},-->
+                    <!--false-->
+                    <!--false-->
+                <!--);-->
             }
         }else{
             setNotification("Zoom to Street Level! "+ (18-(GAIA.getZoom())) + " levels more to go...");
@@ -918,11 +917,13 @@ function setMapToLocation(value){
             <div class="by">
                 <div class="use5">&nbsp;</div>
                 <div class="use90">
-                    <div class="by bold">
-                        <img id="img_on_the_map" src="/images/circle.gif" alt="On the Map"
-                             style="cursor:pointer;"
-                             class="use100 vtip" onclick="javascript:$('#mapCustomControlsSolidLinks').slideToggle();$('#mapCustomControlsHiddenNoti').slideToggle();"
-                             title="Click to show hide"/>
+                    <div class="by bold center">
+                        <span id="img_on_the_map"
+                             style="cursor:pointer;font-size:20px;text-decoration:underline;font-weight:900;letter-spacing:-1px;"
+                             class="use100 vtip center" onclick="javascript:$('#mapCustomControlsSolidLinks').slideToggle();$('#mapCustomControlsHiddenNoti').slideToggle();"
+                             title="Click to show hide">
+                            WHAT'S ON THE MAP?
+                        </span>
                     </div>
                     <div class="by" style="height:3px;">
                         &nbsp;
@@ -946,7 +947,7 @@ function setMapToLocation(value){
                     <div class="use100" style="color:#bb0022;text-align:center;">
                         <h2 id="mapCustomControlsActionLinksTitle" style="font-size:22px;">&nbsp;</h2>
                     </div>
-                    <div class="use60 use20p use20a">
+                    <div class="use80 use10p use10a">
                         <div class="use100" style="height:5px;">
                             &nbsp;
                         </div>
@@ -956,8 +957,11 @@ function setMapToLocation(value){
                             &nbsp;
                         </div>
                     </div>
-                    <div class="use100 bold" id="take_action_link" style="cursor:pointer;">
-                        <img id="img_take_action" src="/images/circle.gif" alt="Take Action" class="use100"/>
+                    <div class="use100 bold center" id="take_action_link" style="cursor:pointer;">
+                        <hr/>
+                        <span class="center" style="font-size:20px;font-weight:900;letter-spacing:-1px;">
+                            ACTIONS
+                        </span>
                     </div>
                 </div>
             </div>
@@ -966,8 +970,10 @@ function setMapToLocation(value){
         <div id="mapCustomControlsDownTownLink" class="center" style="width:19.1%;overflow:hidden;">
             <img id="down_town_home_logo" src="/images/circle.gif" alt="Down Town" class="use100" style="cursor:pointer;" onclick="javascript:window.location.href = '/page/_org';"/>
         </div>
-        <div id="mapCustomControlsShowHide" style="width:140px;" class="lose_attn">
+        <div id="mapCustomControlsShowHide" style="width:140px;;" class="lose_attn">
+            <div style="display:none;">
                     <img id="img_show_pics" src="/images/circle.gif" alt="Show Pics" class="use100"/>
+            </div>
         </div>
         <div id="mapCustomControlsNEWS" class="by5" style="height:200px;width:144px;">
 			<div class="by" style="height:135px;">
