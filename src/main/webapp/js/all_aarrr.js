@@ -539,10 +539,6 @@ $(document).ready(function(){
     impromptuPlaceDetailsPopup = {
         state0: {
             html:impromptuPlaceDetails,
-            loaded:function(){
-              $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
-              $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
-            },
             buttons:{
                 "Create":0,
                 "Cancel":1

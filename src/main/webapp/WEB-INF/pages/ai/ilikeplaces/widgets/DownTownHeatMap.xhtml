@@ -187,7 +187,7 @@ function setActionLink(text, title, onclickActions, doClear){//WARNING! used in 
     if(doClear){
         $('#mapCustomControlsActionLinks').empty();
         $('#mapCustomControlsActionLinksTitle').empty().text(title);
-        $('#take_action_link').click(onclickActions);//since if not clear, some not-so-important actions are to follow and this is the most important out of them
+        //$('#take_action_link').click(onclickActions);//since if not clear, some not-so-important actions are to follow and this is the most important out of them
     }
     $('#mapCustomControlsActionLinks').append(
         '<div class=\'by\'><a style=\'font-size:18px;margin-right:0px;font-weight:900;cursor:pointer;color:#aa4400;text-decoration:underline;\' class=\'\'>'+text+'</a></div>');
@@ -232,13 +232,16 @@ function alertAndZoomIn(zoomTo){
         position,
         function(desc){
             lastSelectedLocation.desc = desc;
+            $.prompt(impromptuPlaceDetailsPopup);
+            $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
+            $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
         }
     );
 
     setLastSelectionInfoWindow(position, 'You selected '+hotspotClickDetails.commonName, 'Check Actions on Bottom Right of Page!');
 
     setActionLink(
-        "CREAT A MOMENT",
+        "CREATE A MOMENT",
         hotspotClickDetails.commonName,
         function(){
             //@TODO check if this is a users private location
@@ -841,7 +844,7 @@ function setMapToLocation(value){
     </div>
     <div style="display:none;">
         <div id="mapCustomControlsPersonIntros" style="width:19.1%;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);padding: 5px 5px 5px 5px;" class="lose_attn">
-            <div class="use100" id="impromptuRealityAmandaPopupLink" style="cursor:pointer;">
+            <div class="use100" id="impromptuRealityAmandaPopupLink" style="cursor:pointer;display:none;">
                 <div class="use191 center">
                     <img src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG" class="use90 use5p use5a ajax_image" alt="Loading..." title="/images/amanda_jane_profile_pic_th.jpg" style="padding: 3px 3px 3px 3px; background-color:#eeeeee;"/>
                 </div>
