@@ -533,14 +533,45 @@ $(document).ready(function(){
     var impromtuHowWeGoAboutIt3 = $('#impromtuHowWeGoAboutIt3').html();
     $('#impromtuHowWeGoAboutIt3').remove();
 
+    var impromptuPlaceDetails = $('#impromptuPlaceDetails').html();
+    $('#impromptuPlaceDetails').remove();
+
+    impromptuPlaceDetailsPopup = {
+        state0: {
+            html:impromptuPlaceDetails,
+            loaded:function(){
+              $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
+              $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
+            },
+            buttons:{
+                "Create":0,
+                "Cancel":1
+            },
+            focus: 0,
+            submit:function(v,m,f){
+                switch(v){
+                    case 0:{
+                        var placename = $("#impromptuPlaceDetailsPlaceName").attr('value');
+                        placename = placename.substring(0,29);
+                        var placedetails = $("#impromptuPlaceDetailsPlaceDetails").attr('value');
+                        placedetails = placedetails.substring(0,499);
+                        setNotification("Be patient while you are taken to the place you just created!");
+                        window.location.href = '/page/_org?category=143' + '&woehint=' + GAIA.getCenter().lat() + ',' + GAIA.getCenter().lng() + '&placename=' + placename + '&placedetails=' + placedetails;
+                        return false;
+                    }
+                    case 1:{
+                        $.prompt.close();
+                        return false;
+                    }
+                }
+            }
+        }
+    }
 
     popup = {
         state0: {
             html: impromtuWhyWeAreDoingThis,
             buttons:{
-                "I don't!":3,
-                "I do!":4,
-                "Hide":0
             },
             focus: 1,
             submit:function(v,m,f){
@@ -809,8 +840,8 @@ $(document).ready(function(){
     //Now lets load those bulky images
 
     $('#img_show_pics').attr('src','/images/Show Pics_Button.png');
-    $('#img_on_the_map').attr('src','/images/On The Map_Button.png');
-    $('#img_take_action').attr('src','/images/Take Action.png');
+    //$('#img_on_the_map').attr('src','/images/On The Map_Button.png');
+    //$('#img_take_action').attr('src','/images/Take Action.png');
     $('#down_town_home_logo').attr('src','/images/downtown_logo_home_page_2t.png');
     $('#img_signup').attr('src','/images/Sign Up_Button.png');
     $('#img_go_fetch').attr('src','/images/Go Fetch_Button.png');
