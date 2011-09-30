@@ -552,7 +552,7 @@ $(document).ready(function(){
                         var placedetails = $("#impromptuPlaceDetailsPlaceDetails").attr('value');
                         placedetails = placedetails.substring(0,499);
                         setNotification("Be patient while you are taken to the place you just created!");
-                        window.location.href = '/page/_org?category=143' + '&woehint=' + GAIA.getCenter().lat() + ',' + GAIA.getCenter().lng() + '&placename=' + placename + '&placedetails=' + placedetails;
+                        window.location.href = '/page/_org?category=143' + '&woehint=' + lastSelectedLocation.lat + ',' + lastSelectedLocation.lng + '&placename=' + placename + '&placedetails=' + placedetails;
                         return false;
                     }
                     case 1:{
