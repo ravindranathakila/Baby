@@ -226,7 +226,7 @@ function alertAndZoomIn(zoomTo){
 
     setNotification("Great! You've selected a place. Check Actions!");
 
-    var position = new google.maps.LatLng(hotspotClickDetails.latitude,hotspotClickDetails.longitude);
+    var position = new google.maps.LatLng(lastSelectedLocation.lat,lastSelectedLocation.lng);
 
     getAddress(
         position,
@@ -665,28 +665,6 @@ function initialize_DownTownHeatMap_map(){
             setActionLink("Zoom a bit more","",function(){GAIA.setZoom(GAIA.getZoom() + 1);},true);
         }
     };
-
-    function promptForPlaceName(defaultValue){
-      var returnVal;
-      while(true){
-           returnVal = prompt('What do you call this place?', defaultValue)
-           if(returnVal != undefined && returnVal != ''){
-                break;
-           }
-      }
-      return returnVal;
-    }
-
-    function promptForPlaceDesc(defaultValue){
-      var returnVal;
-      while(true){
-           returnVal = prompt('Short description of this place?', defaultValue );
-           if(returnVal != undefined && returnVal != ''){
-                break;
-           }
-      }
-      return returnVal;
-    }
 
     runIfNotDblClick = function(event){
         if(singleClick){
