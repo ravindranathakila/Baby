@@ -39,28 +39,40 @@
     </div>
 
     <div style="display:none;">
-        <div id="impromptuPlaceDetails">
-            <div class="use100 center">
-                <div class="use100">
-                    <div style="font-size:18px;font-weight:900;">
-                       I CALL THIS PLACE
-                    </div>
-                    <div>
-                        <input type="text" id="impromptuPlaceDetailsPlaceName" maxlength="30" value="" style="text-align:center;height:24px;font-size:20px;font-weight:900;"/>
-                    </div>
+    <div id="impromptuPlaceDetails">
+        <div class="use100 center">
+            <div class="use100">
+                <div class="use100" style="font-size:18px;font-weight:900;color:#919090;">
+                    PLACE NAME?
+                </div>
+
+                <div class="use100" style="height:10px;">
+                    &nbsp;
+                </div>
+                <div class="use40 use30p use30a">
+                    <input class="use100" type="text" id="impromptuPlaceDetailsPlaceName" maxlength="30" value=""
+                           style="text-align:center;height:24px;font-size:16px;font-weight:900;border:4px solid #dddddd;"/>
+                </div>
+            </div>
+            <div class="use100" style="height:10px;">
+                &nbsp;
+            </div>
+            <div class="use100">
+                <div class="use100" style="font-size:18px;font-weight:900;color:#919090;">
+                    PLACE DESCRIPTION?
                 </div>
                 <div class="use100" style="height:10px;">
                     &nbsp;
                 </div>
-                <div class="use100">
-                    <div style="font-size:18px;font-weight:900;">
-                       DETAILS ABOUT THIS PLACE
-                    </div>
-                    <div>
-                        <input type="text" id="impromptuPlaceDetailsPlaceDetails" maxlength="100" value="" style="text-align:center;height:24px;font-size:20px;font-weight:900;"/>
-                    </div>
+                <div class="use60 use20p use20a">
+                    <input class="use100" type="text" id="impromptuPlaceDetailsPlaceDetails" maxlength="100" value=""
+                           style="text-align:center;height:24px;font-size:16px;font-weight:900;border:4px solid #dddddd;"/>
                 </div>
             </div>
+            <div class="use100" style="height:10px;">
+                &nbsp;
+            </div>
+        </div>
         </div>
         <div id="impromptuLoginForm">
             <a>Coming Soon!</a>
@@ -74,12 +86,13 @@
                     <div class="use100" style="height:5px;background-color:#000000;">&nbsp;</div>
                     <div class="use100" style="height:10px;">&nbsp;</div>
                     <span class="layer_4 grabber center" style="color:#333333;font-size:18px;">
-                        <i>PICK PLACES</i> for socializing. <i>CREATE MOMENTS</i> to socialize.<br/>
-                        MARKERS are places others chose to socialize<br/>
+                        2 SOCIALIZE<br/>
+                        <i>PICK A PLACES</i> and <i>CREATE A MOMENT</i><br/>
+                        MARKERS are places others chose<br/>
                     </span>
                     <div class="use100" style="height:10px;">&nbsp;</div>
                     <div class="use618 use191p use191a">
-                        <input type="text" id="popupSearchBox" style="width:100%;height:30px;font-size:28px;text-align:center;font-weight:900;" onchange="javascript:$('#searchboxmap').attr('value',this.value);setMapToLocation(document.getElementById('popupSearchBox').value);$.prompt.close();"/>
+                        <input type="text" id="popupSearchBox" style="width:100%;height:30px;font-size:16px;text-align:center;font-weight:900;" value="" onclick="javascript:this.value = '';" onchange="javascript:$('#searchboxmap').attr('value',this.value);setMapToLocation(document.getElementById('popupSearchBox').value);$.prompt.close();"/>
                     </div>
                     <div class="use100" style="height:5px;">&nbsp;</div>
                     <div class="use618 use191p use191a">
@@ -265,9 +278,5 @@
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
         <script type="text/javascript" src="/js/miniquarry/all_aarrr.js"></script>
-        <script type="text/javascript">
-            $.prompt.defaults.opacity = 1.0;
-        </script>
-
     </body>
 </html>
