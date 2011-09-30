@@ -823,9 +823,11 @@ $(document).ready(function(){
             focusLng = data.geoplugin_longitude;
             focusLat = data.geoplugin_latitude;
             zoom = data.geoplugin_city != null ? 11 : (data.geoplugin_region != null ? 9 : (data.geoplugin_countryName ? 6 : 2 ) );
-            document.getElementById('searchboxmap').value = (data.geoplugin_city != null ? data.geoplugin_city + ',': '')
+            browserLocation = (data.geoplugin_city != null ? data.geoplugin_city + ',': '')
             + (data.geoplugin_region != null ? data.geoplugin_region + ',' : '')
             + (data.geoplugin_countryName != null ? data.geoplugin_countryName : '');
+            document.getElementById('searchboxmap').value = browserLocation;
+            document.getElementById('popupSearchBox').value = browserLocation;
         });
     }catch(err){
         alert(err);

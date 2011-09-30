@@ -201,7 +201,7 @@ function setClearForLastNotification(){
 }
 
 function alertAndZoomIn(zoomTo){
-        setNotification("<span style=\'color:#B02;font-size:18px;background-color:#ffffff;opacity:0.7;filter:alpha(opacity=70);\'>'Zooming you in on this place because you're way too high up.</span>");
+        setNotification("<span style=\'color:#B02;font-size:18px;background-color:#ffffff;opacity:1.0;filter:alpha(opacity=100);\'>'Zooming you in on this place because you're way too high up.</span>");
         setNotification("Once you get a better view, click on the place.");
         GAIA.setCenter(new google.maps.LatLng(lastSelectedLocation.lat,lastSelectedLocation.lng));
         GAIA.setZoom(zoomTo);
