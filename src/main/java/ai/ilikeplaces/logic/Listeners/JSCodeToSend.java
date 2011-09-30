@@ -29,7 +29,7 @@ final public class JSCodeToSend {
 // -------------------------- OTHER METHODS --------------------------
 
     public static String clearContent(final String elementId, final int timeout) {
-        final String statement = "$(\\'#" + elementId + "\\').empty();";
+        final String statement = "$(\\'#" + elementId + "\\').empty().text('&nbsp;');";
         return embedThisInTimeout(statement, timeout);
     }
 
