@@ -78,10 +78,13 @@ abstract public class FriendAdd extends AbstractWidgetListener {
                     final Human adder = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(mycaller.getObj());
                     final Human addee = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(mycaller.getObj());
                     if (!addee.isFriend(adder.getHumanId())) {
-                        SendMail.getSendMailLocal().sendAsSimpleText(myaddee.getObj(),
+                        SendMail.getSendMailLocal().sendAsHTMLAsynchronously(myaddee.getObj(),
                                 adder.getDisplayName(),
-                                adder.getDisplayName() + " has added you as a friend. You can add " + adder.getDisplayName() + " back as your friend at "
-                                        + "http://www.ilikeplaces.com/i/" + DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPublicURL(mycaller).returnValue());
+                                UserProperty.getUserPropertyHtmlFor(
+                                        new HumanId(adder.getHumanId()),
+                                        myaddee.getObjectAsValid(),
+                                        "I added you as a friend. You can add me back as your friend at "
+                                                + "http://www.ilikeplaces.com/i/" + DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPublicURL(mycaller).returnValue()));
                     }
                     remove(evt_.getTarget(), EventType.CLICK, this);
                 } else {

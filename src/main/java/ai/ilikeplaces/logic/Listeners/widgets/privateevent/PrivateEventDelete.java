@@ -8,14 +8,12 @@ import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.AlbumManager;
-import ai.ilikeplaces.logic.Listeners.widgets.Button;
 import ai.ilikeplaces.logic.Listeners.widgets.MemberHandler;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatServletRequest;
@@ -53,12 +51,6 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
     List<HumansNetPeople> possibilities;
 
-    private static final String HAS_ADDED_YOU_AS_AN_OWNER_OF = " has added you as an Owner of ";
-    private static final String HAS_REMOVED_YOU_AS_AN_OWNER_OF = " has removed you as an Owner of ";
-    private static final String HAS_ADDED_YOU_AS_A_VISITOR_OF = " has added you as a Visitor of ";
-    private static final String HAS_REMOVED_YOU_AS_A_VISITOR_OF = " has removed you as a Visitor of ";
-    private static final String HAS_INVITED_YOU_TO = " has invited you to ";
-    private static final String HAS_CANCELLED_YOUR_INVITATION_TO = " has cancelled your invitation to ";
     private static final String ARROW_RIGHT_GIF = "arrow-right.gif";
 
     /**
@@ -197,9 +189,13 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
                             final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddOwnerWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, privateEvent.getPrivateLocation().getPrivateLocationId());
                             if (returnVal.returnStatus() == 0) {
-                                SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
+                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
                                         humanId.getObj(),
-                                        humanId.getObj() + HAS_ADDED_YOU_AS_AN_OWNER_OF + returnVal.returnValue().getPrivateEventName());
+                                        ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
+                                                new HumanId(humanId.getHumanId()),
+                                                humansFriend.getHumanId(),
+                                                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + " has added you as an Owner of moment " + returnVal.returnValue().getPrivateEventName()
+                                        ));
                             }
                             return returnVal;
 
@@ -215,9 +211,13 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
                             final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveOwner(humanId, myprivateEventId, humansFriend);
                             if (returnVal.returnStatus() == 0) {
-                                SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
+                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
                                         humanId.getObj(),
-                                        humanId.getObj() + HAS_REMOVED_YOU_AS_AN_OWNER_OF + returnVal.returnValue().getPrivateEventName());
+                                        ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
+                                                new HumanId(humanId.getHumanId()),
+                                                humansFriend.getHumanId(),
+                                                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + " has removed you as an Owner of moment " + returnVal.returnValue().getPrivateEventName()
+                                        ));
                             }
                             return returnVal;
 
@@ -242,9 +242,13 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
                             final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddVisitorWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, privateEvent.getPrivateLocation().getPrivateLocationId());
                             if (returnVal.returnStatus() == 0) {
-                                SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
+                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
                                         humanId.getObj(),
-                                        humanId.getObj() + HAS_ADDED_YOU_AS_A_VISITOR_OF + returnVal.returnValue().getPrivateEventName());
+                                        ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
+                                                new HumanId(humanId.getHumanId()),
+                                                humansFriend.getHumanId(),
+                                                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + " has added you as an attendee of moment " + returnVal.returnValue().getPrivateEventName()
+                                        ));
                             }
                             return returnVal;
 
@@ -258,9 +262,13 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                         public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
                             final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveVisitor(humanId, myprivateEventId, humansFriend);
                             if (returnVal.returnStatus() == 0) {
-                                SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
+                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
                                         humanId.getObj(),
-                                        humanId.getObj() + HAS_REMOVED_YOU_AS_A_VISITOR_OF + returnVal.returnValue().getPrivateEventName());
+                                        ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
+                                                new HumanId(humanId.getHumanId()),
+                                                humansFriend.getHumanId(),
+                                                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + " has removed you as an attendee of moment " + returnVal.returnValue().getPrivateEventName()
+                                        ));
                             }
                             return returnVal;
 
@@ -268,7 +276,8 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                     }
             ) {
             };
-            AddRemoveInvitee://INVITEES JUST GET NOTIFICATIONS. AS OF 2011-10-01 THESE GUYS CANNOT VIEW THE EVENT. HENCE IT IS HIDDEN.
+            AddRemoveInvitee:
+//INVITEES JUST GET NOTIFICATIONS. AS OF 2011-10-01 THESE GUYS CANNOT VIEW THE EVENT. HENCE IT IS HIDDEN.
             {
                 new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
                         request, $$(privateEventDeleteInvitees),
@@ -284,9 +293,13 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
                                 final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddInviteWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, privateEvent.getPrivateLocation().getPrivateLocationId());
                                 if (returnVal.returnStatus() == 0) {
-                                    SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
+                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
                                             humanId.getObj(),
-                                            humanId.getObj() + HAS_INVITED_YOU_TO + returnVal.returnValue().getPrivateEventName());
+                                            ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
+                                                    new HumanId(humanId.getHumanId()),
+                                                    humansFriend.getHumanId(),
+                                                    ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + " has invited you to moment " + returnVal.returnValue().getPrivateEventName()
+                                            ));
                                 }
                                 return returnVal;
 
@@ -301,9 +314,13 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                             public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
                                 final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveInvite(humanId, myprivateEventId, humansFriend);
                                 if (returnVal.returnStatus() == 0) {
-                                    SendMail.getSendMailLocal().sendAsSimpleTextAsynchronously(humansFriend.getHumanId(),
+                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
                                             humanId.getObj(),
-                                            humanId.getObj() + HAS_CANCELLED_YOUR_INVITATION_TO + returnVal.returnValue().getPrivateEventName());
+                                            ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
+                                                    new HumanId(humanId.getHumanId()),
+                                                    humansFriend.getHumanId(),
+                                                    ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + " has cancelled your invitation of moment " + returnVal.returnValue().getPrivateEventName()
+                                            ));
                                 }
                                 return returnVal;
                             }

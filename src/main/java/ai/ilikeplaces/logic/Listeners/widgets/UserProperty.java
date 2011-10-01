@@ -35,6 +35,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
     private static final String WEBSITE = "WEBSITE";
     private static final String HASH = "#";
     private static final String EXT_GIF = ".gif";
+    public static final String SENDER_NAME = "_senderName_";
 
     /**
      * Shows the profile belonging to humanId
@@ -276,5 +277,47 @@ abstract public class UserProperty extends AbstractWidgetListener {
         public ImportedContact getInvitee() {
             return invitee;
         }
+    }
+
+    /**
+     * Online, implies that the receiver is online
+     *
+     * @param sender
+     * @param receiver
+     * @param withNonHtmlContent Use _senderName_ identified by {@link #SENDER_NAME} in places you need the display name of the sender to be addd
+     * @return
+     */
+    final static public String getUserPropertyHtmlFor(final HumanId sender, final String receiver, final String withNonHtmlContent) {
+        try {
+
+            final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + Controller.USER_PROPERTY_EMAIL_XHTML);
+
+            final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(sender);
+            final HumansIdentity hi = r.returnValue();
+
+            final String displayName = hi.getHuman().getDisplayName();
+            $$static(Controller.Page.user_property_name, document).setTextContent(displayName);
+            $$static(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(),
+                    "http://www.ilikeplaces.com" + ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+            $$static(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(),
+                    formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+
+
+            $$static(Controller.Page.user_property_content, document).appendChild(
+                    document.importNode(
+                            ElementComposer.compose(
+                                    document.createElement(MarkupTag.DIV.toString())
+                            ).$ElementSetText(
+                                    withNonHtmlContent.replace(SENDER_NAME, displayName)
+                            ).getAsNode(),
+                            true)
+            );
+
+
+            return HTMLDocParser.convertNodeToHtml($$static(Page.user_property_widget, document));
+        } catch (final Throwable e) {
+            throw LogNull.getRuntimeException(e);
+        }
+
     }
 }
