@@ -68,7 +68,7 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
 
             SetEventList:
             {
-                for (final PrivateEvent pe : r.returnValue().getPrivateEvents())
+                for (final PrivateEvent pe : r.returnValue().getPrivateEvents()) {
                     if (DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventIsViewer(humanId, pe.getPrivateEventId()).returnValue()) {
                         $$(privateLocationViewEventList).appendChild(
                                 ElementComposer.compose($$(MarkupTag.LI))
@@ -86,6 +86,12 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
                                         )
                                         .get());
                     }
+                }
+                if (r.returnValue().getPrivateEvents().size() == 0) {
+                    $$(privateLocationViewEventList).appendChild(
+                            ElementComposer.compose($$(MarkupTag.LI)).$ElementSetText("No moments started here yet...")
+                                    .get());
+                }
             }
 
 
@@ -115,11 +121,5 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
         //No events as this is just a view widget/ Edit button???
-    }
-
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
     }
 }
