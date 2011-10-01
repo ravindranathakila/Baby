@@ -627,6 +627,18 @@ function initialize_DownTownHeatMap_map(){
             }
         );
 
+        var position = new google.maps.LatLng(lastSelectedLocation.lat,lastSelectedLocation.lng);
+
+        getAddress(
+            position,
+            function(desc){
+                lastSelectedLocation.desc = desc;
+                $.prompt(impromptuPlaceDetailsPopup);
+                $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
+                $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
+            }
+        );
+
         setLastSelectionInfoWindow(GAIA.getCenter(),lastSelectedLocation.name, 'Check Actions on Bottom Right of Page!');
 
         setNotification("Great! You've selected a place. Check Actions!");
