@@ -296,7 +296,7 @@ abstract public class Bate extends AbstractWidgetListener {
                 request,
                 $$(Page.BateImportResults),
                 ElementComposer.compose($$(MarkupTag.BR)).get(),
-                new UserProperty.InviteCriteria(
+                new InviteCriteria(
                         humansName.getObjectAsValid(),//This name is of the person being invited(invitee), not the inviter
                         "#",
                         "#",

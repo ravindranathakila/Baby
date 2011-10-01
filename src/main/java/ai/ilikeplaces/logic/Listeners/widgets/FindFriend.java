@@ -67,6 +67,8 @@ abstract public class FindFriend extends AbstractWidgetListener {
 
     HumanId humanId;
 
+    HumansIdentity humansIdentity;
+
     RefObj<List<HumansIdentity>> matches = null;
 
     Set<Email> emails;
@@ -89,6 +91,8 @@ abstract public class FindFriend extends AbstractWidgetListener {
         } else {
             throw new ConstraintsViolatedException(((HumanId) initArgs[0]).getViolations());
         }
+
+        humansIdentity = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(humanId).returnValueBadly();
 
         final HumansNetPeople herExistingFriends = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);//First important variable to notice
 
@@ -273,36 +277,79 @@ abstract public class FindFriend extends AbstractWidgetListener {
                     for (final Email email : myemails) {
                         if (!matchedEmailList.contains(email)) {
 
-                            new Button(request, $$(Controller.Page.friendFindSearchInvites), "Invite " + email, false) {
-                                private HumanId mymyhumanId = myhumanId;
-                                private Email mymyemail = email;
+                            final Element userPropertyContent = ElementComposer.compose($$(MarkupTag.A))
+                                    .$ElementSetHref("#")
+                                    .$ElementSetText("Invite").get();
+
+                            new UserProperty(request, $$(Controller.Page.friendFindSearchInvites), userPropertyContent,
+                                    new InviteCriteria(
+                                            email.getObjectAsValid(), "http://www.ilikeplaces.com", "#", myhumanId,
+                                            new ImportedContact().setEmailR(email.getObjectAsValid()).setFullNameR(email.getObjectAsValid())
+                                    )) {
+                                final HumanId mymyhumanId = myhumanId;
+                                final Email myemail = email;
 
                                 @Override
-                                protected void init(final Object... initArgs) {
-                                    setBluePrintCSSSpan(14, 0, 0, true);
+                                protected void init(Object... initArgs) {
                                 }
 
                                 @Override
-                                protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
-                                    itsNatDocument_.addEventListener((EventTarget) $$(Controller.Page.GenericButtonLink), EventType.CLICK.toString(), new EventListener() {
+                                protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+                                    itsNatDocument_.addEventListener((EventTarget) $$(Page.user_property_content), EventType.CLICK.toString(), new EventListener() {
                                         @Override
                                         public void handleEvent(final Event evt_) {
                                             final SmartLogger inviteSL = SmartLogger.start(Loggers.LEVEL.USER,
-                                                    mymyhumanId.getObj() + " sending join social network invitation to " + mymyemail.getObj(),
+                                                    mymyhumanId.getObj() + " sending join social network invitation to " + myemail.getObj(),
                                                     60000,
                                                     null,
                                                     true);
-                                            SendMail.getSendMailLocal().sendAsSimpleText(
-                                                    mymyemail.getObj(),
-                                                    "On behalf of " + mymyhumanId.getObj(),
-                                                    "Hey, try out I Like Places(http://www.ilikeplaces.com). I've joined too.");
-                                            $$(Controller.Page.GenericButtonLink).setTextContent("Okay, Invitation Sent.");
+                                            SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                                    myemail.getObjectAsValid(),
+                                                    humansIdentity.getHuman().getDisplayName(),
+                                                    UserProperty.getUserPropertyHtmlFor(mymyhumanId, myemail.getObjectAsValid(),
+                                                            "I think you should get on-board DOWN TOWN. It's for offline socializing. Invite your friends and get invited back in! http://www.ilikeplaces.com"
+                                                    )
+                                            );
                                             inviteSL.complete(Loggers.LEVEL.USER, Loggers.DONE);
+                                            $$clear($$(Page.user_property_content));
+                                            $$(Page.user_property_content).setTextContent("Invited!");
                                             remove(evt_.getTarget(), EventType.CLICK, this);
                                         }
                                     }, false);
                                 }
                             };
+
+
+//                            new Button(request, $$(Controller.Page.friendFindSearchInvites), "Invite " + email, false) {
+//                                private HumanId mymyhumanId = myhumanId;
+//                                private Email mymyemail = email;
+//
+//                                @Override
+//                                protected void init(final Object... initArgs) {
+//                                    setBluePrintCSSSpan(14, 0, 0, true);
+//                                }
+//
+//                                @Override
+//                                protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
+//                                    itsNatDocument_.addEventListener((EventTarget) $$(Controller.Page.GenericButtonLink), EventType.CLICK.toString(), new EventListener() {
+//                                        @Override
+//                                        public void handleEvent(final Event evt_) {
+//                                            final SmartLogger inviteSL = SmartLogger.start(Loggers.LEVEL.USER,
+//                                                    mymyhumanId.getObj() + " sending join social network invitation to " + mymyemail.getObj(),
+//                                                    60000,
+//                                                    null,
+//                                                    true);
+//                                            SendMail.getSendMailLocal().sendAsSimpleText(
+//                                                    mymyemail.getObj(),
+//                                                    "On behalf of " + mymyhumanId.getObj(),
+//                                                    "Hey, try out I Like Places(http://www.ilikeplaces.com). I've joined too.");
+//                                            $$(Controller.Page.GenericButtonLink).setTextContent("Okay, Invitation Sent.");
+//                                            inviteSL.complete(Loggers.LEVEL.USER, Loggers.DONE);
+//                                            remove(evt_.getTarget(), EventType.CLICK, this);
+//                                        }
+//                                    }, false);
+//                                }
+//                            };
                         }
                     }
                     sl.complete(Loggers.LEVEL.USER, Loggers.DONE);
@@ -336,7 +383,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
                 request,
                 $$(Page.friendFindSearchInvites),
                 ElementComposer.compose($$(MarkupTag.BR)).get(),
-                new UserProperty.InviteCriteria(
+                new InviteCriteria(
                         importedContact.getFullName(),//This name is of the person being invited(invitee), not the inviter
                         "#",
                         "#",

@@ -115,27 +115,31 @@ abstract public class SignInOn extends AbstractWidgetListener {
             public void handleEvent(final Event evt_) {
                 final HttpSession userSession_ = ((ItsNatHttpSession) request.getItsNatSession()).getHttpSession();
 
-                if (userSession_.getAttribute(HumanUserLocal.NAME) == null) {
-                    /*Ok the session does not have the bean, initialize it with the user with email id and password*/
-                    Human existingUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(myusername.getObjectAsValid());
-                    if (existingUser != null && existingUser.getHumanAlive()) {/*Ok user name valid but now we check for password*/
-                        final HumansAuthentication humansAuthentications = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(myusername).returnValue();
+                if (myusername.validate() == 0 && mypassword.validate() == 0) {
+                    if (userSession_.getAttribute(HumanUserLocal.NAME) == null) {
+                        /*Ok the session does not have the bean, initialize it with the user with email id and password*/
+                        Human existingUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(myusername.getObjectAsValid());
+                        if (existingUser != null && existingUser.getHumanAlive()) {/*Ok user name valid but now we check for password*/
+                            final HumansAuthentication humansAuthentications = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(myusername).returnValue();
 
-                        if (humansAuthentications.getHumanAuthenticationHash().equals(DB.getSingletonHashingFaceLocal(true).getHash(mypassword.getObjectAsValid(), humansAuthentications.getHumanAuthenticationSalt()))) {
-                            final HumanUserLocal humanUserLocal = DB.getHumanUserLocal(true);
+                            if (humansAuthentications.getHumanAuthenticationHash().equals(DB.getSingletonHashingFaceLocal(true).getHash(mypassword.getObjectAsValid(), humansAuthentications.getHumanAuthenticationSalt()))) {
+                                final HumanUserLocal humanUserLocal = DB.getHumanUserLocal(true);
 
-                            humanUserLocal.setHumanUserId(myusername.getObjectAsValid());
+                                humanUserLocal.setHumanUserId(myusername.getObjectAsValid());
 
-                            userSession_.setAttribute(HumanUserLocal.NAME, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
-                            $$sendJS(JSCodeToSend.refreshPageIn(0));
-                        } else {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
-                            notifyUser("Haha wrong password!");
+                                userSession_.setAttribute(HumanUserLocal.NAME, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
+                                $$sendJS(JSCodeToSend.refreshPageIn(0));
+                            } else {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
+                                notifyUser("Ha ha wrong password!");
+                            }
+                        } else {/*There is no such user. Ask if he forgot username or whether to create a new account :)*/
+                            notifyUser(myusername.getObj() + " is not a user of this website");
                         }
-                    } else {/*There is no such user. Ask if he forgot username or whether to create a new account :)*/
-                        notifyUser(myusername.getObj() + " is not a user of this website");
+                    } else {
+                        //We just ignore since the form is not visible and this cannot happen, or a hacker is trying something ;)
                     }
                 } else {
-                    //We just ignore since the form is not visible and this cannot happen, or a hacker is trying something ;)
+                    notifyUser("Oops! Login failed!");
                 }
             }
         }, false);

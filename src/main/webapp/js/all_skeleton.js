@@ -680,6 +680,8 @@ $(document).ready(function(){
     );
 
 
+    $('#SignInOn').attr('style','display:block');
+
 });
 
 
