@@ -102,7 +102,7 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
                     BufferedImage bi = loadImage(newFile);
 
                     sl.appendToLogMSG(SCALING_IMAGE);
-                    bi = scaleImage(bi, 190); //Reducing size of image to blueprintcss span-5 just to save bandwidth for the user.
+                    bi = scaleImage(bi, 300); //Reducing size of image to blueprintcss span-5 just to save bandwidth for the user.
 
                     sl.appendToLogMSG(SAVING_SCALED_IMAGE);
                     saveImage(bi, newFile);
