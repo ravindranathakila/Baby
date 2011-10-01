@@ -1142,12 +1142,10 @@ li a{font-weight:900;}
 
 .positive{
     color:#119900;
-    text-decoration:underline;
 }
 
 .negative{
     color:#aa0000;
-    text-decoration:underline;
 }
 
 /*Global reset for IE*/
@@ -1224,3 +1222,16 @@ div.jqi button.jqidefaultbutton{
 }
 
 /* EO AARRR */
+
+
+/* COMMON */
+.cursor_link{
+    cursor:pointer;
+}
+
+.cursor_pointer{
+    cursor:pointer;
+}
+
+/* EO COMMON */
+
