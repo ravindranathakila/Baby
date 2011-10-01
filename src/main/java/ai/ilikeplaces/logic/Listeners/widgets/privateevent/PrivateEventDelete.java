@@ -268,7 +268,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                     }
             ) {
             };
-            AddRemoveInvitee:
+            AddRemoveInvitee://INVITEES JUST GET NOTIFICATIONS. AS OF 2011-10-01 THESE GUYS CANNOT VIEW THE EVENT. HENCE IT IS HIDDEN.
             {
                 new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
                         request, $$(privateEventDeleteInvitees),

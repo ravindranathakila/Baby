@@ -15,6 +15,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
+import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -40,6 +41,7 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
     private static final String OWNER = "Owner";
     private static final String VISITOR = "Visitor";
     private static final String INVITEE = "Invitee";
+    private static final String TALK = "Get in touch";
 
     /**
      * @param request__
@@ -80,11 +82,11 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
                         setLink:
                         {
                             $$(GenericButtonLink).setAttribute(MarkupTag.A.href(),
-                                                               new Parameter(Organize.getURL())
-                                                                       .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
-                                                                       .append(DocOrganizeLocation, r.returnValue().getPrivateLocation().getPrivateLocationId())
-                                                                       .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
-                                                                       .get()
+                                    new Parameter(Organize.getURL())
+                                            .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
+                                            .append(DocOrganizeLocation, r.returnValue().getPrivateLocation().getPrivateLocationId())
+                                            .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
+                                            .get()
                             );
                         }
                         setImage:
@@ -97,20 +99,20 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
             if ((Boolean) initArgs[2]) {
                 new WallWidgetPrivateEvent(request, $$(Page.privateEventViewWall), humanId, r.returnValue().getPrivateEventId());
                 new AlbumManager(request, $$(Controller.Page.privateEventViewAlbum), humanId, r.returnValue());
-                
+
                 final GeoCoord gc = new GeoCoord();
                 gc.setObj(r.returnValue().getPrivateLocation().getPrivateLocationLatitude() + "," + r.returnValue().getPrivateLocation().getPrivateLocationLongitude());
                 gc.validateThrow();
 
                 $$(Controller.Page.privateEventViewLocationMap).setAttribute(MarkupTag.IMG.src(),
-                                                               new Parameter("http://maps.google.com/maps/api/staticmap")
-                                                                       .append("sensor", "false", true)
-                                                                       .append("center", gc.toString())
-                                                                       .append("size", "230x250")
-                                                                       .append("format", "jpg")
-                                                                       .append("markers", "color:0x7fe2ff|label:S|path=fillcolor:0xAA000033|color:0xFFFFFF00|"
-                                                                               + gc.toString())
-                                                                       .get());
+                        new Parameter("http://maps.google.com/maps/api/staticmap")
+                                .append("sensor", "false", true)
+                                .append("center", gc.toString())
+                                .append("size", "230x250")
+                                .append("format", "jpg")
+                                .append("markers", "color:0x7fe2ff|label:S|path=fillcolor:0xAA000033|color:0xFFFFFF00|"
+                                        + gc.toString())
+                                .get());
             }
 
             UCShowOwners:
@@ -118,7 +120,9 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
                 for (final HumansPrivateEvent hpe : r.returnValue().getPrivateEventOwners()) {
                     new UserProperty(request, $$(Controller.Page.privateEventViewOwners), new HumanId(hpe.getHumanId())) {
                         protected void init(final Object... initArgs) {
-                            $$(Controller.Page.user_property_content).setTextContent(OWNER);
+                            $$(Controller.Page.user_property_sidebar_content).appendChild(
+                                    ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(TALK).$ElementSetHref(ProfileRedirect.PROFILE_URL + hpe.getHumanId()).get()
+                            );
                         }
                     };
                 }
@@ -129,7 +133,9 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
                 for (final HumansPrivateEvent hpe : r.returnValue().getPrivateEventViewers()) {
                     new UserProperty(request, $$(Controller.Page.privateEventViewVisitors), new HumanId(hpe.getHumanId())) {
                         protected void init(final Object... initArgs) {
-                            $$(Controller.Page.user_property_content).setTextContent(VISITOR);
+                            $$(Controller.Page.user_property_sidebar_content).appendChild(
+                                    ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(TALK).$ElementSetHref(ProfileRedirect.PROFILE_URL + hpe.getHumanId()).get()
+                            );
                         }
                     };
                 }
@@ -156,9 +162,4 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
     }
 
-    @Override
-    public void finalize() throws Throwable {
-        Loggers.finalized(this.getClass().getName());
-        super.finalize();
-    }
 }
