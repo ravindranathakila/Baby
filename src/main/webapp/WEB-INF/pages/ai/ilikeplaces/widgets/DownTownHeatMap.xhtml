@@ -244,11 +244,6 @@ function alertAndZoomIn(zoomTo){
         "CREATE A MOMENT",
         hotspotClickDetails.commonName,
         function(){
-            //@TODO check if this is a users private location
-            //var placename = prompt('What do you call this place?', lastSelectedLocation.name);
-            //var placedetails = prompt('Short description of this place?', lastSelectedLocation.desc.substring(0,29));
-            //setNotification("Be patient while you are taken to the place you just created!");
-            //window.location.href = hotspotClickDetails.url + '&placename=' + placename + '&placedetails=' + placedetails.substring(0,30);
             $.prompt(impromptuPlaceDetailsPopup);
             $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
             $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
@@ -602,68 +597,50 @@ function initialize_DownTownHeatMap_map(){
     };
 
     alertWithPlaceMarkBox = function(){
-        if(GAIA.getZoom() > 10 ){
-            if(18 > GAIA.getZoom()){
-                if(confirm("Not yet in street level.  Zoom a bit more?")){
-                    GAIA.setZoom(GAIA.getZoom() + 2)
-                    return;
-                }else{
-                    return;
-                }
-            }
-
-            if(confirm("We don't want your friends to end up next doors do we... \nMark this as exact place of event?")){
-                setNotification("That's the place you selected!");
-
-                clearLastSelectedLocation();
-
-                lastSelectedLocation.lat =   GAIA.getCenter().lat();
-                lastSelectedLocation.lng =   GAIA.getCenter().lng();
-
-                if(GAIA.getZoom() < 14){
-                    alertAndZoomIn(14);
-                    return;
-                }
-
-                getAddress(
-                    GAIA.getCenter(),
-                    function(address){
-                        setNotification('You selected ' + address);
-                        $('#mapCustomControlsActionLinksTitle').empty().text(address);//hack to our own code due to late network loading :'(
-                        $('#lastSelectionInfoWindowTitle').empty().text(address);
-                        lastSelectedLocation.desc = address;
-                        lastSelectedLocation.name = address;
-                    }
-                );
-
-                setLastSelectionInfoWindow(GAIA.getCenter(),lastSelectedLocation.name, 'Check Actions on Bottom Right of Page!');
-
-                setNotification("Great! You've selected a place. Check Actions!");
-
-                setActionLink(
-                    "CREATE A MOMENT",
-                    lastSelectedLocation.name,
-                    function(){
-                       $.prompt(impromptuPlaceDetailsPopup);
-                       $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
-                       $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
-                    },
-                    true
-                );
-                <!--setActionLink(-->
-                    <!--"Find Directions",-->
-                    <!--"",-->
-                    <!--function(){-->
-                        <!--renderRoute(lastSelectedLocation.lat, lastSelectedLocation.lng);-->
-                    <!--},-->
-                    <!--false-->
-                    <!--false-->
-                <!--);-->
-            }
-        }else{
-            setNotification("Zoom to Street Level! "+ (18-(GAIA.getZoom())) + " levels more to go...");
-            setActionLink("Zoom a bit more","",function(){GAIA.setZoom(GAIA.getZoom() + 1);},true);
+        if(18 > GAIA.getZoom()){
+            setNotification("<span style=\'color:#B02;font-size:18px;background-color:#ffffff;opacity:1.0;filter:alpha(opacity=100);\'>To mark new places on map you need to zoom to street level</span>");
+            setNotification("<span style=\'color:#B02;font-size:18px;background-color:#ffffff;opacity:1.0;filter:alpha(opacity=100);\'>Zooming you in. Then you can select a PRECISE PLACE.</span>");
+            GAIA.setZoom(GAIA.getZoom() + 2);
+            return;
         }
+
+        setNotification("That's the place you selected!");
+
+        clearLastSelectedLocation();
+
+        lastSelectedLocation.lat =   GAIA.getCenter().lat();
+        lastSelectedLocation.lng =   GAIA.getCenter().lng();
+
+        if(GAIA.getZoom() < 14){
+            alertAndZoomIn(14);
+            return;
+        }
+
+        getAddress(
+            GAIA.getCenter(),
+            function(address){
+                setNotification('You selected ' + address);
+                $('#mapCustomControlsActionLinksTitle').empty().text(address);//hack to our own code due to late network loading :'(
+                $('#lastSelectionInfoWindowTitle').empty().text(address);
+                lastSelectedLocation.desc = address;
+                lastSelectedLocation.name = address;
+            }
+        );
+
+        setLastSelectionInfoWindow(GAIA.getCenter(),lastSelectedLocation.name, 'Check Actions on Bottom Right of Page!');
+
+        setNotification("Great! You've selected a place. Check Actions!");
+
+        setActionLink(
+            "CREATE A MOMENT",
+            lastSelectedLocation.name,
+            function(){
+               $.prompt(impromptuPlaceDetailsPopup);
+               $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
+               $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
+            },
+            true
+        );
     };
 
     runIfNotDblClick = function(event){
