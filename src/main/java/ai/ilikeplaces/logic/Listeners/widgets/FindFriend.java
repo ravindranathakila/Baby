@@ -279,7 +279,10 @@ abstract public class FindFriend extends AbstractWidgetListener {
 
                             final Element userPropertyContent = ElementComposer.compose($$(MarkupTag.A))
                                     .$ElementSetHref("#")
-                                    .$ElementSetText("Invite").get();
+                                    .$ElementSetText("Invite")
+                                    .$ElementSetClasses("cursor_link")
+                                    .$ElementSetAttribute("style","text-decoration:underline;")
+                                    .get();
 
                             new UserProperty(request, $$(Controller.Page.friendFindSearchInvites), userPropertyContent,
                                     new InviteCriteria(
