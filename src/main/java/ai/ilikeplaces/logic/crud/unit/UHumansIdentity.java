@@ -20,13 +20,11 @@ import javax.ejb.TransactionAttributeType;
 public class UHumansIdentity extends AbstractSLBCallbacks implements UHumansIdentityLocal {
 
     @EJB
-    private CrudServiceLocal<HumansIdentity> hiCrudServiceLocal_;
-
-    @EJB
     private RHumansIdentityLocal rHumansIdentityLocal_;
 
     @EJB
     private CrudServiceLocal<Url> urlCrudServiceLocal_;
+
     public static final DBDishonourCheckedException DB_DISHONOUR_CHECKED_EXCEPTION = new DBDishonourCheckedException("Updating to same value is absurd");
 
     public UHumansIdentity() {
@@ -36,7 +34,7 @@ public class UHumansIdentity extends AbstractSLBCallbacks implements UHumansIden
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     @Override
     public HumansIdentity doUHumansProfilePhoto(final String humanId, final String url) throws DBDishonourCheckedException {
-        final HumansIdentity humansIdentity = hiCrudServiceLocal_.findBadly(HumansIdentity.class, humanId);
+        final HumansIdentity humansIdentity = rHumansIdentityLocal_.doRHumansIdentity(humanId);
         humansIdentity.setHumansIdentityProfilePhoto(url);
         return humansIdentity;
     }
@@ -48,13 +46,13 @@ public class UHumansIdentity extends AbstractSLBCallbacks implements UHumansIden
         doUHumansPublicURLDelete(humanId);
         doUHumansPublicURLAdd(humanId,url);
 
-       return hiCrudServiceLocal_.findBadly(HumansIdentity.class, humanId);
+       return rHumansIdentityLocal_.doRHumansIdentity(humanId);
     }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     @Override
     public void doUHumansPublicURLDelete(final String humanId) throws DBDishonourCheckedException {
-        final String oldUrl =  rHumansIdentityLocal_.doDirtyRHumansIdentity(humanId).getUrl().getUrl();
+        final String oldUrl =  rHumansIdentityLocal_.doRHumansIdentity(humanId).getUrl().getUrl();
         urlCrudServiceLocal_.delete(Url.class,oldUrl);
     }
 
@@ -62,6 +60,6 @@ public class UHumansIdentity extends AbstractSLBCallbacks implements UHumansIden
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     @Override
     public void doUHumansPublicURLAdd(final String humanId, final String url) throws DBDishonourCheckedException {
-        hiCrudServiceLocal_.findBadly(HumansIdentity.class, humanId).setUrl(new Url().setUrlR(url).setMetadataR(humanId).setTypeR(Url.typeHUMAN));
+        rHumansIdentityLocal_.doRHumansIdentity(humanId).setUrl(new Url().setUrlR(url).setMetadataR(humanId).setTypeR(Url.typeHUMAN));
     }
 }

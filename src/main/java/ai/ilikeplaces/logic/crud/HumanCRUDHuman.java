@@ -314,7 +314,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     }
 
 
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Return<HumansIdentity> doUHumansPublicURL(final RefObj<String> humanId, final String url) {
         Return<HumansIdentity> r;
         try {

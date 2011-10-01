@@ -72,7 +72,10 @@ public class Profile extends AbstractWidgetListener {
             @Override
             public void handleEvent(final Event evt_) {
                 if (myurl.validate() == 0) {
-                    DB.getHumanCRUDHumanLocal(true).doUHumansPublicURL(myhumanId, myurl.getObj());
+                    Loggers.debug("myhumanId:" + myhumanId);
+                    Loggers.debug("myurl.getObjectAsValid():" + myurl.getObjectAsValid());
+
+                    DB.getHumanCRUDHumanLocal(true).doUHumansPublicURL(myhumanId, myurl.getObjectAsValid());
                     $$clear($$(Page.ProfileNotice));
                 } else {
                     $$(Page.ProfileNotice).setTextContent(myurl.getViolationAsString());

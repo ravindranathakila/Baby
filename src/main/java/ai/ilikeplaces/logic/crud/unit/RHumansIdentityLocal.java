@@ -24,6 +24,8 @@ public interface RHumansIdentityLocal {
 
     public HumansIdentity doDirtyRHumansIdentity(final String humanId) throws DBDishonourCheckedException;
 
+    public HumansIdentity doRHumansIdentity(final String humanId) throws DBDishonourCheckedException;
+
     public String doDirtyProfileFromURL(final String url);    
 
     public String test(final String emails);
