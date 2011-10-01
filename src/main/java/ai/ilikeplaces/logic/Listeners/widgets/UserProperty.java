@@ -2,7 +2,6 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
-import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
@@ -170,6 +169,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
     }
 
     /**
+     * You can also use {@link #getUserPropertyHtmlFor(ai.ilikeplaces.logic.validators.unit.HumanId, String, String)}
      * @param usersName
      * @param usersUrl
      * @param usersPhoto
@@ -232,55 +232,9 @@ abstract public class UserProperty extends AbstractWidgetListener {
         return makeAbsolute ? RBGet.globalConfig.getString(WEBSITE) + relativeURL : relativeURL;
     }
 
-    static class InviteCriteria {
-        private final String displayName;
-        private final String profileUrl;
-        private final String profilePhoto;
-        private final HumanId inviter;
-        private final ImportedContact invitee;
-
-        /**
-         * @param displayName
-         * @param inviteesProfileUrl
-         * @param inviteesProfilePhoto
-         * @param inviter
-         * @param invitee
-         */
-        InviteCriteria(final String displayName,
-                       final String inviteesProfileUrl,
-                       final String inviteesProfilePhoto,
-                       final HumanId inviter,
-                       final ImportedContact invitee) {
-            this.displayName = displayName;
-            this.profileUrl = inviteesProfileUrl;
-            this.profilePhoto = inviteesProfilePhoto;
-            this.inviter = inviter;
-            this.invitee = invitee;
-        }
-
-        public String getInviterDisplayName() {
-            return displayName;
-        }
-
-        public String getProfileUrl() {
-            return profileUrl;
-        }
-
-        public String getProfilePhoto() {
-            return profilePhoto;
-        }
-
-        public HumanId getInviter() {
-            return inviter;
-        }
-
-        public ImportedContact getInvitee() {
-            return invitee;
-        }
-    }
-
     /**
      * Online, implies that the receiver is online
+     * You can also use {@link #fetchToEmailStatically(String, String, String, org.w3c.dom.Element)}
      *
      * @param sender
      * @param receiver

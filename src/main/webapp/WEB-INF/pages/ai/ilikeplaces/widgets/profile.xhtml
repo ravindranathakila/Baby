@@ -24,7 +24,7 @@
         </div>
         <div class="use100 last black_fg">
             <form id="file_upload_form" method="post" target="upload_target" enctype="multipart/form-data" action="/gfg?type=1">
-                <input name="file" id="file" size="27" type="file" onchange="javascript:$('#file').hide();$('#uploading').show();$('#file_upload_form').submit();"/><br/><br/>
+                <input name="file" id="file" size="27" type="file" onchange="javascript:$('#file').hide();$('#uploading').show();$('#file_upload_form').submit();" style="border:4px solid #dddddd;"/><br/><br/>
                 <input type="hidden" name="type" value="1"/>
                 <img id="uploading" style="display:none;" src="/images/circle.gif" alt="Uploading..." />
             </form>

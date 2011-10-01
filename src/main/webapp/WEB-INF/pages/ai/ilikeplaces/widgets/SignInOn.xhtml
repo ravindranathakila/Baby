@@ -5,50 +5,50 @@
         <title>Sign On Off</title>
     </head>
     <body>
-    <div class="use100" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
-        <div class="use100 inherit_height" id="signinon_login" style="display:none;overflow:hidden;height:100%;">
+    <div class="use100" id="SignInOn" style="display:none;" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
+        <div class="use100 inherit_height" id="signinon_login" style="display:none;overflow:hidden;height:50px;">
             <form method="post" id="Html_login" action="/login" >
                 <div class="use15 inherit_height bg_a9abf1" style="overflow:hidden;">
                     <div class="use100 inherit_height line_height_50 center" style="font-size:13px;color:#dddddd;font-weight:900;">
-                        &nbsp;&nbsp;Email:&nbsp;&nbsp;
+                        &nbsp;&nbsp;EMAIL:&nbsp;
                     </div>
                 </div>
                 <div class="use25 inherit_height line_height_50 vtip" style="overflow:hidden;" title="Hi, enter your email address here" >
-                    <div class="use100" style="height:10%;">&nbsp;</div>
-                    <div class="use100" style="height:30%;">
+                    <div class="use100" style="height:20%;">&nbsp;</div>
+                    <div class="use100" style="height:60%;">
                         <input class="use100 inherit_height" style="height:100%;border:none;background-color:#eeeeee;font-weight:900;" id="signinonUsername"
                                name="Username" maxlength="255" type="text"/>
                     </div>
-                    <div class="use100" style="height:10%;">&nbsp;</div>
+                    <div class="use100" style="height:20%;">&nbsp;</div>
                 </div>
                 <div class="use15 inherit_height bg_a9abf1" style="overflow:hidden;">
                     <div class="use100 inherit_height line_height_50 center" style="font-size:13px;color:#dddddd;font-weight:900;">
-                        &nbsp;&nbsp;Password:&nbsp;&nbsp;
+                        &nbsp;PASSWORD:&nbsp;
                     </div>
                 </div>
                 <div class="use25 inherit_height line_height_50  vtip" style="overflow:hidden;" title="Hi, enter your email address here" >
-                    <div class="use100" style="height:10%;">&nbsp;</div>
-                    <div class="use100" style="height:30%;">
+                    <div class="use100" style="height:20%;">&nbsp;</div>
+                    <div class="use100" style="height:60%;">
                         <input class="use100 bold vtip" style="height:100%;border:none;background-color:#eeeeee;font-weight:900;" id="signinonPassword"
                                name="Password" maxlength="255" type="password"  title="Hi, enter your password here. If you remember right, it was 8 or more characters long."/>
                     </div>
-                    <div class="use100" style="height:10%;">&nbsp;</div>
+                    <div class="use100" style="height:20%;">&nbsp;</div>
                 </div>
 
                 <div class="use20 inherit_height bg_a9abf1 vtip center" style="overflow:hidden;" title="Hi, enter your email, and password, and click here to login. To signup for a new account, click the sign up  button and then select an email and a password.">
                     <div class="use90 use5p use5a inherit_height line_height_50 center cursor_link">
-                        <div class="use100" style="height:10%;">&nbsp;</div>
-                        <div class="use100 intensity_3" style="height:30%;">
+                        <div class="use100" style="height:20%;">&nbsp;</div>
+                        <div class="use100 intensity_3" style="height:60%;">
                             <a
-                               class=""><img id="signinonSubmit" src="/images/login_button.png" alt="Login" style="width:100%;"/></a>
+                               class=""><img id="signinonSubmit" src="/images/login_button.png" alt="Login" style="height:100%;"/></a>
                         </div>
-                        <div class="use100" style="height:10%;">&nbsp;</div>
+                        <div class="use100" style="height:20%;">&nbsp;</div>
                     </div>
                 </div>
             </form>
         </div>
         <!-- Only one of these 3 divs are visible -->
-        <div class="use100 inherit_height" id="signinon_logon" style="display:none;height:100%;">
+        <div class="use100 inherit_height" id="signinon_logon" style="display:none;overflow:hidden;height:50px;">
             <div class="use85" style="height:100%;">
                 &nbsp;
             </div>
@@ -63,7 +63,7 @@
             </div>
         </div>
         <!-- Only one of these 3 divs are visible -->
-        <div class="use100  inherit_height" id="signinon_signup" style="display:none;">
+        <div class="use100  inherit_height" id="signinon_signup" style="display:none;overflow:hidden;height:50px;">
             <form method="post" id="Html_signup" action="/signup">
                 <div>
                     <input id="SignUpUsername"
@@ -74,17 +74,17 @@
             </form>
         </div>
         <!-- Notification Footer of Header -->
-        <div class="use100 center">
-            <div class="use85 center" style="overflow:hidden;" title="Hi, click here to sign up for a free account">
-                <span id="signinonNotice" style="font-size:13px;color:#dddddd;font-weight:900;">&nbsp;</span>
+        <div class="use100 center" style="height:28px;">
+            <div class="use85 center" style="overflow:hidden;">
+                <span id="signinonNotice" style="white-space:pre;font-size:13px;color:#dddddd;font-weight:900;">&nbsp;</span>
             </div>
-            <div class="use15 center" style="overflow:hidden;" title="Hi, click here to sign up for a free account">
+            <div class="use15 center" style="overflow:hidden;">
                 <div class="use90 center cursor_link">
                     <div class="use100 intensity_3" style="height:20px;">
                         <a href="/page/_profile"
-                           class=""><img src="/images/Settings.png" alt="Recover" style="width:100%;"/></a>
+                           class=""><img src="/images/Settings.png" alt="Recover" style="width:100%;height:100%;"/></a>
                     </div>
-                    <div class="use100" style="height:10px;">&nbsp;</div>
+                    <div class="use100" style="height:8px;">&nbsp;</div>
                 </div>
             </div>
         </div>
