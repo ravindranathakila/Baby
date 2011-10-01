@@ -540,7 +540,7 @@ $(document).ready(function(){
         state0: {
             html:impromptuPlaceDetails,
             buttons:{
-                "Create":0,
+                "ADD PLACE":0,
                 "Cancel":1
             },
             focus: 0,
@@ -737,6 +737,8 @@ $(document).ready(function(){
             }
         }
     };
+
+    $.prompt.defaults.opacity = 1.0;
 
     if(getCookie("quick_tour_state") != "last"){
         $.prompt(popup);
