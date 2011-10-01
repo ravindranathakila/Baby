@@ -68,6 +68,12 @@ public class RHumansIdentity extends AbstractSLBCallbacks implements RHumansIden
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public HumansIdentity doRHumansIdentity(final String humanId) throws DBDishonourCheckedException {
+        return humansIdentityCrudServiceLocal_.findBadly(HumansIdentity.class, humanId);
+    }
+
+    @Override
     public String doDirtyProfileFromURL(final String url) {
         final Url loadedUrl = urlCrudServiceLocal.find(Url.class, url);
         return loadedUrl == null ? null : loadedUrl.getMetadata();
