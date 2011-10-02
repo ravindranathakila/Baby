@@ -1,3 +1,5 @@
+/*UPTODATE AS OF 20111001 LAUNCH*/
+
 drop table ilp.privatelocation;
 drop table ilp.privateevent;
 drop table ilp.album;

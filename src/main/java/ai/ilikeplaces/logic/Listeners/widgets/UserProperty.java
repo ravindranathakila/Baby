@@ -131,7 +131,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
      */
     public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final Element content, final InviteCriteria inviteCriteria) {
         super(request__, Page.UserProperty, appendToElement__, content, inviteCriteria);
-        $$(Controller.Page.user_property_name).setTextContent(inviteCriteria.getInviterDisplayName());
+        $$(Controller.Page.user_property_name).setTextContent(inviteCriteria.getInvitee().getFullName());
         $$(Controller.Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + inviteCriteria.getProfileUrl());
         $$(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(inviteCriteria.getProfilePhoto()));
         $$(Controller.Page.user_property_content).appendChild(content);
