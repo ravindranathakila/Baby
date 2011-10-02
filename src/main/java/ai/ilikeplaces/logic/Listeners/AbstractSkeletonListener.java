@@ -68,7 +68,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
 
         final ItsNatServletRequest request__ = (ItsNatServletRequest) initArgs[0];
 
-        itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor);
+        //itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor);
 
         layoutNeededForAllPages:
         {
