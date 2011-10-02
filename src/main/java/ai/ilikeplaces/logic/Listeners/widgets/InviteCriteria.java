@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
+import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 
@@ -37,6 +38,7 @@ public class InviteCriteria {
         this.invitee = invitee;
     }
 
+    @FIXME("Verify that this is true")
     public String getInviterDisplayName() {
         return displayName;
     }
