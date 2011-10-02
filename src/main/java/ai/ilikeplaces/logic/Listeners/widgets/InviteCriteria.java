@@ -4,6 +4,8 @@ import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 
 /**
+ * Given a requirement to invite someone onboard, this class is a container of the information required to do the invite
+ *
 * Created by IntelliJ IDEA.
 * User: Ravindranath Akila
 * Date: 10/2/11
