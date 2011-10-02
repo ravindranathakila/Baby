@@ -346,7 +346,7 @@ abstract public class Bate extends AbstractWidgetListener {
                             @Override
                             public void handleEvent(final Event evt) {
 
-                                final Return<Boolean> booleanReturn = sendInviteToOfflineInvite(myinviter, invitersName, myinvitee);
+                                final Return<Boolean> booleanReturn = sendInviteToOfflineInvite(myinviter, myinvitersName, myinvitee);
 
                                 if (booleanReturn.returnStatus() == 0 && booleanReturn.returnValue()) {
                                     /**
