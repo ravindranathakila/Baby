@@ -133,9 +133,11 @@ abstract public class FindFriend extends AbstractWidgetListener {
                     }
                 }
 
+                final String invitersDisplayName = humansIdentity.getHuman().getDisplayName();
+
                 for (final ImportedContact importedContact : whoppingImportedContacts) {
                     if (!herExistingFriends.getHumansNetPeoples().contains(importedContact)) {
-                        generateFriendInviteWidgetFor(importedContact, humanId);
+                        generateFriendInviteWidgetFor(importedContact, humanId, invitersDisplayName);
                     }
                 }
             }
@@ -381,13 +383,13 @@ abstract public class FindFriend extends AbstractWidgetListener {
     }
 
 
-    private void generateFriendInviteWidgetFor(final ImportedContact importedContact, final HumanId currentUser) {
+    private void generateFriendInviteWidgetFor(final ImportedContact importedContact, final HumanId currentUser, final String invitersName) {
         new UserProperty(
                 request,
                 $$(Page.friendFindSearchInvites),
                 ElementComposer.compose($$(MarkupTag.BR)).get(),
                 new InviteCriteria(
-                        importedContact.getFullName(),//This name is of the person being invited(invitee), not the inviter
+                        invitersName,
                         "#",
                         "#",
                         currentUser,
@@ -449,8 +451,8 @@ abstract public class FindFriend extends AbstractWidgetListener {
 
                                         String htmlBody = getHTMLStringForOnlineFriendInvite(myinviter, myinvitersName, myinvitee.getFullName());
                                         htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-                                        htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Your temporary password is " + randomPassword);
-                                        htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Make sure you change it.");
+                                        htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
+                                        htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it.");
 
                                         SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
                                                 myinvitee.getHumanId(),
@@ -487,22 +489,22 @@ abstract public class FindFriend extends AbstractWidgetListener {
     }
 
     /**
-     * Online, implies that the inviter is online
+     * Online, implies that the inviterName is online
      *
-     * @param inviter
-     * @param invitee
+     * @param inviterName
+     * @param inviteeeName
      * @return
      */
-    final String getHTMLStringForOnlineFriendInvite(final HumanId inviteEmail, final String inviter, final String invitee) {
+    final String getHTMLStringForOnlineFriendInvite(final HumanId inviterEmail, final String inviterName, final String inviteeeName) {
         try {
 
             final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + Controller.USER_PROPERTY_EMAIL_XHTML);
 
-            $$(Controller.Page.user_property_name, document).setTextContent(inviter);
+            $$(Controller.Page.user_property_name, document).setTextContent(inviterName);
             $$(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), "http://www.ilikeplaces.com");
 
 
-            final String profilePhotoUrl = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(inviteEmail).returnValueBadly();
+            final String profilePhotoUrl = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(inviterEmail).returnValueBadly();
 
             $$(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(),
                     UserProperty.formatProfilePhotoUrlStatic(profilePhotoUrl));
@@ -513,11 +515,11 @@ abstract public class FindFriend extends AbstractWidgetListener {
                             ElementComposer.compose(
                                     document.createElement(MarkupTag.DIV.toString())
                             ).$ElementSetText(
-                                    "Hey! " + inviter + " has just invited you to I LIKE PLACES! " +
+                                    "Hey! " + inviterName + " has just invited you to I LIKE PLACES! " +
                                             "The website is for meeting people you care at interesting places. " +
                                             "In it, you can find interesting places and organize moments with your friends and family. " +
                                             "You can join I Like Places only through an invite. " +
-                                            "Now that " + inviter + " has gotten you in, use the following link to access I Like Places. " +
+                                            "Now that " + inviterName + " has gotten you in, use the following link to access I Like Places. " +
                                             URL + " . " +
                                             PASSWORD_DETAILS + " " +
                                             PASSWORD_ADVICE + " " +
