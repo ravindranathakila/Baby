@@ -16,6 +16,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -51,6 +52,14 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
     public Return<Wall> readWall(final HumanId humanId, final Obj wallOwnerId__, final RefreshSpec refreshSpec__) {
         Return<Wall> r;
         r = new ReturnImpl<Wall>(crudHumansWallLocal_.doRHumansWall(humanId.getObj()).getWall(), READ_WALL_SUCCESSFUL);
+        return r;
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Return<List<Msg>> readWallLastEntries(final HumanId humanId, final Obj wallOwnerId__, final Integer numberOfEntriesToFetch, final RefreshSpec refreshSpec__) {
+        Return<List<Msg>> r;
+        r = new ReturnImpl<List<Msg>>(crudHumansWallLocal_.doRHumansWallLastEntries(humanId.getObj(), numberOfEntriesToFetch), READ_WALL_SUCCESSFUL);
         return r;
 
     }

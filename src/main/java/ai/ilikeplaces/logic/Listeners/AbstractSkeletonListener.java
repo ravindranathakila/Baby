@@ -13,6 +13,7 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -140,7 +141,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                             new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
                                 protected void init(final Object... initArgs) {
                                     $$(Controller.Page.user_property_sidebar_content).appendChild(
-                                            ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(TALK).$ElementSetHref(ProfileRedirect.PROFILE_URL + friend.getHumanId()).get()
+                                            ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(DB.getHumanCrudWallLocal(false).readWallLastEntries(new HumanId(friend.getHumanId()), new Obj<HumanId>(new HumanId(getUsernameAsValid())), 1, new RefreshSpec()).returnValue().get(0).getMsgContent()).$ElementSetHref(ProfileRedirect.PROFILE_URL + friend.getHumanId()).get()
                                     );
                                 }
                             };
@@ -204,7 +205,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
             setMetaDescription:
             {
                 if (customTitle != null) {
-                    $(skeletonTitle).setAttribute(MarkupTag.META.namee(),customTitle);
+                    $(skeletonTitle).setAttribute(MarkupTag.META.namee(), customTitle);
                 } else {
                     $(skeletonTitle).setAttribute(MarkupTag.META.namee(), RBGet.globalConfig.getString(BN));
                 }

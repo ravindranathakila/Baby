@@ -8,11 +8,11 @@ import javax.persistence.*;
 
 /**
  * Okay, we need to
- *
+ * <p/>
  * 1. Remember that entries to this entity will be foreign keys. That is, so that anybody can use this entity.
- *
+ * <p/>
  * 2. This entity should be super efficient since it will be used everywhere.
- *
+ * <p/>
  * Created by IntelliJ IDEA.
  * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Jan 25, 2010
@@ -20,10 +20,15 @@ import javax.persistence.*;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
+@NamedQuery(name = "FindWallEntriesByWallIdOrderByIdDesc",
+        query = "SELECT msg FROM Msg msg WHERE msg.msgId IN (SELECT wall.wallMsgs FROM Wall wall WHERE wall.wallId = :wallId) order by msg.msgId DESC")
 public class Msg {
 
     public Long msgId;
     public static final String msgIdCOL = "msgId";
+
+    final static public String FindWallEntriesByWallIdOrderByIdDesc = "FindWallEntriesByWallIdOrderByIdDesc";
+
 
     public Integer msgType;//Wall, Personal
 
@@ -44,6 +49,7 @@ public class Msg {
     public void setMsgId(final Long msgId) {
         this.msgId = msgId;
     }
+
     public Msg setMsgIdR(final Long msgId) {
         this.msgId = msgId;
         return this;
@@ -70,6 +76,7 @@ public class Msg {
     public void setMsgContent(final String msgContent) {
         this.msgContent = msgContent;
     }
+
     public Msg setMsgContentR(final String msgContent) {
         this.msgContent = msgContent;
         return this;
@@ -82,6 +89,7 @@ public class Msg {
     public void setMsgMetadata(final String msgMetadata) {
         this.msgMetadata = msgMetadata;
     }
+
     public Msg setMsgMetadataR(final String msgMetadata) {
         this.msgMetadata = msgMetadata;
         return this;

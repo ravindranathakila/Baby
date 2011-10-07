@@ -20,6 +20,7 @@ import java.util.List;
         "This approach was taken to reduce TTM.")
 public class Wall implements Clearance, Refreshable<Wall> {
     public Long wallId = null;
+    public static String wallIdCOL = "wallId";
     public Long clearance = 0L;
     public String wallContent = null;
 

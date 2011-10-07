@@ -2,9 +2,12 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansWall;
+import ai.ilikeplaces.entities.Msg;
+import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.ilikeplaces.util.jpa.RefreshException;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
@@ -15,6 +18,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import java.util.List;
 
 /**
  * @author Ravindranath Akila
@@ -26,6 +30,12 @@ public class CRUDHumansWall extends AbstractSLBCallbacks implements CRUDHumansWa
 
     @EJB
     private CrudServiceLocal<HumansWall> humansWallCrudServiceLocal_;
+
+    @EJB
+    private CrudServiceLocal<Wall> wallCrudServiceLocal_;
+
+    @EJB
+    private CrudServiceLocal<Msg> crudServiceMsg_;
 
     public CRUDHumansWall() {
     }
@@ -51,6 +61,18 @@ public class CRUDHumansWall extends AbstractSLBCallbacks implements CRUDHumansWa
         humansWall.getWall().getWallMsgs().size();
         humansWall.getWall().getWallMutes().size();
         return humansWall;
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Msg> doRHumansWallLastEntries(final String humanId, final Integer numberOfEntriesToFetch) {
+        final HumansWall humansWall = humansWallCrudServiceLocal_.find(HumansWall.class, humanId);
+        final Long humansWallId = humansWall.getWall().getWallId();
+
+        final List<Msg> lastWallEntryInList = crudServiceMsg_.findWithNamedQuery(Msg.FindWallEntriesByWallIdOrderByIdDesc,
+                QueryParameter.newInstance().add(Wall.wallIdCOL, humansWallId).parameters(), numberOfEntriesToFetch);
+
+        return lastWallEntryInList;
     }
 
     public Long doDirtyRHumansWallID(final String humanId) throws DBDishonourCheckedException {
