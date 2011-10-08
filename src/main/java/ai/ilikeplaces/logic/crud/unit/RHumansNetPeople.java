@@ -3,7 +3,10 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.HumansNetPeople;
+import ai.ilikeplaces.entities.Msg;
+import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import org.slf4j.Logger;
@@ -13,6 +16,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import java.util.List;
 
 /**
  * @author Ravindranath Akila
@@ -31,14 +35,20 @@ public class RHumansNetPeople extends AbstractSLBCallbacks implements RHumansNet
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public HumansNetPeople doDirtyRHumansNetPeople(String humanId) {
+    public HumansNetPeople doDirtyRHumansNetPeople(final String humanId) {
         return crudServiceLocal_.find(HumansNetPeople.class, humanId);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public HumansNetPeople doRHumansNetPeople(String humanId) {
+    public HumansNetPeople doRHumansNetPeople(final String humanId) {
         return crudServiceLocal_.find(HumansNetPeople.class, humanId);
+    }
+
+    @Override
+    public List<HumansNetPeople> doDirtyRHumansBefriends(final String humanId) {
+        return crudServiceLocal_.findWithNamedQuery(HumansNetPeople.FindHumansNetPeoplesWhoHaveMeAsAFriend,
+                QueryParameter.newInstance().add(HumansNetPeople.humanIdCOL, humanId).parameters());
     }
 
 

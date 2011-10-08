@@ -95,5 +95,7 @@ public interface HumanCRUDHumanLocal extends Verify {
 
     public Return<String> doDirtyProfileFromURL(final String url);
 
+    public Return<List<HumansNetPeople>> doDirtyRHumansBefriends(final  RefObj<String> humanId);
+
 }
 
