@@ -300,4 +300,45 @@ abstract public class UserProperty extends AbstractWidgetListener {
             throw LogNull.getRuntimeException(e);
         }
     }
+
+    /**
+     * Online, implies that the receiver is online
+     * You can also use {@link #fetchToEmailStatically(String, String, String, org.w3c.dom.Element)}
+     *
+     * @param sender
+     * @param receiver
+     * @param htmlContent
+     * @return
+     */
+    final static public String getUserPropertyHtmlFor(final HumanId sender, final String receiver, final Element htmlContent) {
+        try {
+            final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + Controller.USER_PROPERTY_EMAIL_XHTML);
+
+            final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(sender);
+            final HumansIdentity hi = r.returnValue();
+
+            final String displayName = hi.getHuman().getDisplayName();
+            $$static(Controller.Page.user_property_name, document).setTextContent(displayName);
+            $$static(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(),
+                    "http://www.ilikeplaces.com" + ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+            $$static(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(),
+                    formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+
+
+            $$static(Controller.Page.user_property_content, document).appendChild(
+                    document.importNode(
+                            ElementComposer.compose(
+                                    document.createElement(MarkupTag.DIV.toString())
+                            ).wrapThis(
+                                    (Element) document.importNode(htmlContent, true)
+                            ).getAsNode(),
+                            true)
+            );
+
+
+            return HTMLDocParser.convertNodeToHtml($$static(Page.user_property_widget, document));
+        } catch (final Throwable e) {
+            throw LogNull.getRuntimeException(e);
+        }
+    }
 }
