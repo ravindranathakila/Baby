@@ -2,9 +2,10 @@ package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
-import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall;
+import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.servlets.Controller;
+import ai.ilikeplaces.servlets.ServletLogin;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServlet;
 import org.itsnat.core.ItsNatServletRequest;
@@ -14,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.css.CSSStyleDeclaration;
 import org.w3c.dom.css.ElementCSSInlineStyle;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
@@ -65,6 +65,10 @@ public abstract class AbstractWidgetListener<T> {
     private static final String EMPTY = "";
     private static final String THE_ELEMENT_GIVEN_T0_REGISTER_FOR_NOTIFICATIONS_IS_NULL = "THE ELEMENT GIVEN T0 REGISTER FOR NOTIFICATIONS IS NULL!";
     private static final String NOTIFIER_ELEMENT_HAS_NOT_BEEN_INITIALIZED = "NOTIFIER ELEMENT HAS NOT BEEN INITIALIZED!";
+    public static final String STR_FATAL_ERROR_IN_WIDGET_THIS_SHOULD_NOT_HAPPEN_DETAILS_AS_FOLLOWS = "FATAL ERROR IN WIDGET. THIS SHOULD NOT HAPPEN DETAILS AS FOLLOWS:";
+    public static final String STR_PAGE = "\npage:";
+    public static final String STR_APPEND_TO_ELEMENT = "\nappendToElement: ";
+    public static final String STR_HUMAN_ID = "\nhumanId: ";
     protected final ItsNatDocument itsNatDocument_;
     private final HTMLDocument hTMLDocument_;
     private final ItsNatHTMLDocument itsNatHTMLDocument_;
@@ -106,7 +110,7 @@ public abstract class AbstractWidgetListener<T> {
     /**
      * Check for null before use. Null if not initialized
      */
-    public String fetchToEmail = null;
+    public String fetchToEmail = "";
 
 
     /**
@@ -137,7 +141,6 @@ public abstract class AbstractWidgetListener<T> {
             "which runs as super, init, registereventlisteners and THEN the remainder of the constructer.")
     @Deprecated
     public AbstractWidgetListener(final ItsNatServletRequest request__, final Page page__, final Element appendToElement__, final Object... initArgs) {
-
         request = request__;
         instanceId = InstanceCounter_++;
         page = page__;
@@ -148,22 +151,43 @@ public abstract class AbstractWidgetListener<T> {
         final ItsNatServlet itsNatServlet_ = itsNatDocument_.getItsNatDocumentTemplate().getItsNatServlet();
         final ItsNatHTMLDocFragmentTemplate inhdft_ = (ItsNatHTMLDocFragmentTemplate) itsNatServlet_.getItsNatDocFragmentTemplate(page__.toString());
 
-        //@todo needs to be removed.
-        try {
-            if (!inhdft_.isOnLoadCacheStaticNodes()) {
-                inhdft_.setOnLoadCacheStaticNodes(false);
-                Loggers.DEBUG.debug("Set static for fragment to false");
-            }
-        } catch (final Exception e) {
-            Loggers.EXCEPTION.error("Possible is setting static mode for fragment.");
-        }
+//        //@todo needs to be removed.
+//        try {
+//            if (!inhdft_.isOnLoadCacheStaticNodes()) {
+//                inhdft_.setOnLoadCacheStaticNodes(false);
+//                Loggers.DEBUG.debug("Set static for fragment to false");
+//            }
+//        } catch (final Exception e) {
+//            Loggers.EXCEPTION.error("Possible is setting static mode for fragment.");
+//        }
 
         LogNull.logThrow(inhdft_, NPE_1);//Do not remove unless performance degrade is evident.
         appendToElement__.appendChild(inhdft_.loadDocumentFragmentBody(itsNatDocument_));
 
         setWidgetElementIds(Controller.GlobalPageIdRegistry.get(page));
-        init(initArgs);
-        registerEventListeners(itsNatHTMLDocument_, hTMLDocument_);
+
+        try {
+            init(initArgs);
+            registerEventListeners(itsNatHTMLDocument_, hTMLDocument_);
+        } catch (final Throwable throwable) {//allowing the website to proceed with the remaining portions of the UI
+            Loggers.ERROR.error(STR_FATAL_ERROR_IN_WIDGET_THIS_SHOULD_NOT_HAPPEN_DETAILS_AS_FOLLOWS +
+                    STR_PAGE + page__ +
+                    STR_APPEND_TO_ELEMENT + (appendToElement__ != null ? appendToElement__.getAttribute(MarkupTag.GENERIC.id()) : null) +
+                    STR_HUMAN_ID + getHumanIdFromRequest(request__), throwable);
+        }
+    }
+
+    public static String getHumanIdFromRequest(final ItsNatServletRequest request_) {
+        final Object attribute__ = request_.getItsNatSession().getAttribute(ServletLogin.HumanUser);
+        SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper =
+                attribute__ == null ?
+                        null : (!((SessionBoundBadRefWrapper<HumanUserLocal>) attribute__).isAlive() ?
+                        null : ((SessionBoundBadRefWrapper<HumanUserLocal>) attribute__));
+
+        return sessionBoundBadRefWrapper != null ?
+                (sessionBoundBadRefWrapper.isAlive() ?
+                        sessionBoundBadRefWrapper.boundInstance.getHumanUserId() : null) : null;
+
     }
 
     /**
@@ -173,7 +197,6 @@ public abstract class AbstractWidgetListener<T> {
      * @param appendToElement__
      */
     public AbstractWidgetListener(final ItsNatServletRequest request__, final Page page__, final T t, final Element appendToElement__) {
-
         request = request__;
         instanceId = InstanceCounter_++;
         page = page__;
@@ -184,23 +207,31 @@ public abstract class AbstractWidgetListener<T> {
         final ItsNatServlet itsNatServlet_ = itsNatDocument_.getItsNatDocumentTemplate().getItsNatServlet();
         final ItsNatHTMLDocFragmentTemplate inhdft_ = (ItsNatHTMLDocFragmentTemplate) itsNatServlet_.getItsNatDocFragmentTemplate(page__.toString());
 
-        //@todo needs to be removed.
-        try {
-            if (!inhdft_.isOnLoadCacheStaticNodes()) {
-                inhdft_.setOnLoadCacheStaticNodes(false);
-                Loggers.DEBUG.debug("Set static for fragment to false");
-            }
-        } catch (final Exception e) {
-            Loggers.EXCEPTION.error("Possible is setting static mode for fragment.");
-        }
+//        //@todo needs to be removed.
+//        try {
+//            if (!inhdft_.isOnLoadCacheStaticNodes()) {
+//                inhdft_.setOnLoadCacheStaticNodes(false);
+//                Loggers.DEBUG.debug("Set static for fragment to false");
+//            }
+//        } catch (final Exception e) {
+//            Loggers.EXCEPTION.error("Possible is setting static mode for fragment.");
+//        }
 
         LogNull.logThrow(inhdft_, NPE_1);//Do not remove unless performance degrade is evident.
         appendToElement__.appendChild(inhdft_.loadDocumentFragmentBody(itsNatDocument_));
 
         setWidgetElementIds(Controller.GlobalPageIdRegistry.get(page));
-        init(t);
-        init(new Object[]{t});//In case the invoker overrides. Reflection mandates getMethod methods should be public, hence we cant detect an override at runtime :'( boohooohoo
-        registerEventListeners(itsNatHTMLDocument_, hTMLDocument_);
+
+        try {
+            init(t);
+            init(new Object[]{t});//In case the invoker overrides. Reflection mandates getMethod methods should be public, hence we cant detect an override at runtime :'( boohooohoo
+            registerEventListeners(itsNatHTMLDocument_, hTMLDocument_);
+        } catch (final Throwable throwable) {//allowing the website to proceed with the remaining portions of the UI
+            Loggers.ERROR.error(STR_FATAL_ERROR_IN_WIDGET_THIS_SHOULD_NOT_HAPPEN_DETAILS_AS_FOLLOWS +
+                    STR_PAGE + page__ +
+                    STR_APPEND_TO_ELEMENT + appendToElement__ != null ? appendToElement__.getAttribute(MarkupTag.GENERIC.id()) : null +
+                    STR_HUMAN_ID + getHumanIdFromRequest(request__), throwable);
+        }
     }
 
     /**
