@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.HumansNetPeople;
+import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.logic.Listeners.widgets.DisplayName;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
@@ -21,6 +22,7 @@ import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
@@ -259,9 +261,24 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                 for (final HumansNetPeople friend : humansNetPeople.getHumansNetPeoples()) {
                     new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
                         protected void init(final Object... initArgs) {
-                            $$(Controller.Page.user_property_sidebar_content).appendChild(
-                                    ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(DB.getHumanCrudWallLocal(false).readWallLastEntries(new HumanId(friend.getHumanId()), new Obj<HumanId>(new HumanId(getUsernameAsValid())), 1, new RefreshSpec()).returnValue().get(0).getMsgContent()).$ElementSetHref(ProfileRedirect.PROFILE_URL + friend.getHumanId()).get()
-                            );
+
+                            final Msg lastWallEntry = DB.getHumanCrudWallLocal(false).readWallLastEntries(new HumanId(friend.getHumanId()), new Obj<HumanId>(new HumanId(getUsernameAsValid())), 1, new RefreshSpec()).returnValue().get(0);
+
+                            final Element appendToElement__ = $$(Controller.Page.user_property_sidebar_content);
+
+                            new UserPropertySidebar(request__, appendToElement__, new HumanId(lastWallEntry.getMsgMetadata())) {
+                                final Msg mylastWallEntry = lastWallEntry;
+
+                                protected void init(final Object... initArgs) {
+                                    try {
+                                        $$(Controller.Page.user_property_sidebar_content).appendChild(
+                                                ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(lastWallEntry.getMsgContent()).$ElementSetHref(ProfileRedirect.PROFILE_URL + friend.getHumanId()).get()
+                                        );
+                                    } catch (final Throwable t) {
+                                        Loggers.ERROR.error("ERROR IN APPENDING LAST WALL UPDATE", t);
+                                    }
+                                }
+                            };
                         }
                     };
                 }
