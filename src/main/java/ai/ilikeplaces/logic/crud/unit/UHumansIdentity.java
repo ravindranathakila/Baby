@@ -49,15 +49,14 @@ public class UHumansIdentity extends AbstractSLBCallbacks implements UHumansIden
        return rHumansIdentityLocal_.doRHumansIdentity(humanId);
     }
 
-    @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
+    @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     @Override
     public void doUHumansPublicURLDelete(final String humanId) throws DBDishonourCheckedException {
-        final String oldUrl =  rHumansIdentityLocal_.doRHumansIdentity(humanId).getUrl().getUrl();
-        urlCrudServiceLocal_.delete(Url.class,oldUrl);
+         rHumansIdentityLocal_.doRHumansIdentity(humanId).setUrl(null);
     }
 
 
-    @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
+    @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     @Override
     public void doUHumansPublicURLAdd(final String humanId, final String url) throws DBDishonourCheckedException {
         rHumansIdentityLocal_.doRHumansIdentity(humanId).setUrl(new Url().setUrlR(url).setMetadataR(humanId).setTypeR(Url.typeHUMAN));

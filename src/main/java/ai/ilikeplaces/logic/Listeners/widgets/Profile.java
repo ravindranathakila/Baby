@@ -47,7 +47,7 @@ public class Profile extends AbstractWidgetListener {
     @Override
     protected void init(final Object... initArgs) {
         this.humanId = (HumanId) initArgs[0];
-        this.url = new ProfileUrl("");
+        this.url = new ProfileUrl(null);
     }
 
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
@@ -60,7 +60,7 @@ public class Profile extends AbstractWidgetListener {
                 myurl.setObj($$(evt_).getAttribute(MarkupTag.TEXTAREA.value()));
                 if (myurl.validate() != 0) {
                     $$(Page.ProfileNotice).setTextContent(myurl.getViolationAsString());
-                    myurl.setObj(" ");//Moving this before calling getviolations will throw an exception
+                    myurl.setObj(null);//Moving this before calling getviolations will throw an exception
                 }
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
@@ -79,7 +79,7 @@ public class Profile extends AbstractWidgetListener {
                     $$clear($$(Page.ProfileNotice));
                 } else {
                     $$(Page.ProfileNotice).setTextContent(myurl.getViolationAsString());
-                    myurl.setObj("");//Moving this before calling getviolations will throw an exception
+                    myurl.setObj(null);//Moving this before calling getviolations will throw an exception
                 }
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
