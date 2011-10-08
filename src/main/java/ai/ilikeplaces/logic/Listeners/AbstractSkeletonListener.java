@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.Listeners;
 
+import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.HumansNetPeople;
@@ -33,6 +34,7 @@ import static ai.ilikeplaces.util.Loggers.EXCEPTION;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@FIXME("The protected methods to be used by extended classes an be used for setting values in this class. It seems the code is dupliated but need to be checked carefully before changing the code.")
 abstract public class AbstractSkeletonListener extends AbstractListener {
     private static final String BN = "bn";
     protected static final ResourceBundle GUI = RBGet.gui();
@@ -257,7 +259,9 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                 for (final HumansNetPeople friend : humansNetPeople.getHumansNetPeoples()) {
                     new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
                         protected void init(final Object... initArgs) {
-                            $$(Controller.Page.user_property_sidebar_content).setTextContent(TALK);
+                            $$(Controller.Page.user_property_sidebar_content).appendChild(
+                                    ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(DB.getHumanCrudWallLocal(false).readWallLastEntries(new HumanId(friend.getHumanId()), new Obj<HumanId>(new HumanId(getUsernameAsValid())), 1, new RefreshSpec()).returnValue().get(0).getMsgContent()).$ElementSetHref(ProfileRedirect.PROFILE_URL + friend.getHumanId()).get()
+                            );
                         }
                     };
                 }
