@@ -271,13 +271,9 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                                 final Msg mylastWallEntry = lastWallEntry;
 
                                 protected void init(final Object... initArgs) {
-                                    try {
                                         $$(Controller.Page.user_property_sidebar_content).appendChild(
                                                 ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(lastWallEntry.getMsgContent()).$ElementSetHref(ProfileRedirect.PROFILE_URL + friend.getHumanId()).get()
                                         );
-                                    } catch (final Throwable t) {
-                                        Loggers.ERROR.error("ERROR IN APPENDING LAST WALL UPDATE", t);
-                                    }
                                 }
                             };
                         }
