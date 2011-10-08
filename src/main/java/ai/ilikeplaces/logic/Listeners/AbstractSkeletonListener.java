@@ -139,17 +139,18 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
             {
                 try {
                     if (getUsername() != null) {
-                        final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(getUsernameAsValid()).getSelfAsValid());
-
-                        for (final HumansNetPeople friend : humansNetPeople.getHumansNetPeoples()) {
-                            new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
-                                protected void init(final Object... initArgs) {
-                                    $$(Controller.Page.user_property_sidebar_content).appendChild(
-                                            ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(DB.getHumanCrudWallLocal(false).readWallLastEntries(new HumanId(friend.getHumanId()), new Obj<HumanId>(new HumanId(getUsernameAsValid())), 1, new RefreshSpec()).returnValue().get(0).getMsgContent()).$ElementSetHref(ProfileRedirect.PROFILE_URL + friend.getHumanId()).get()
-                                    );
-                                }
-                            };
-                        }
+                        setSideBarFriends(request__);
+//                        final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(getUsernameAsValid()).getSelfAsValid());
+//
+//                        for (final HumansNetPeople friend : humansNetPeople.getHumansNetPeoples()) {
+//                            new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
+//                                protected void init(final Object... initArgs) {
+//                                    $$(Controller.Page.user_property_sidebar_content).appendChild(
+//                                            ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(DB.getHumanCrudWallLocal(false).readWallLastEntries(new HumanId(friend.getHumanId()), new Obj<HumanId>(new HumanId(getUsernameAsValid())), 1, new RefreshSpec()).returnValue().get(0).getMsgContent()).$ElementSetHref(ProfileRedirect.PROFILE_URL + friend.getHumanId()).get()
+//                                    );
+//                                }
+//                            };
+//                        }
                     }
                 } catch (final Throwable t) {
                     EXCEPTION.error("{}", t);
