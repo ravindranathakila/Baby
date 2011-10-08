@@ -8,6 +8,7 @@ import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.AlbumManager;
+import ai.ilikeplaces.logic.Listeners.widgets.Button;
 import ai.ilikeplaces.logic.Listeners.widgets.MemberHandler;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent;
 import ai.ilikeplaces.logic.crud.DB;
@@ -40,6 +41,7 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
 
+    private static final String EVENT_NAME = "_eventName_";
     final private Logger logger = LoggerFactory.getLogger(PrivateEventDelete.class.getName());
 
     private HumanId humanId = null;
@@ -52,6 +54,8 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
     List<HumansNetPeople> possibilities;
 
     private static final String ARROW_RIGHT_GIF = "arrow-right.gif";
+
+    private String eventLink = "";
 
     /**
      * @param request__
@@ -76,31 +80,13 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
         if (privateEventReturn.returnStatus() == 0) {
             $$(privateEventDeleteName).setTextContent(privateEventReturn.returnValue().getPrivateEventName());
             $$(privateEventDeleteInfo).setTextContent(privateEventReturn.returnValue().getPrivateEventInfo());
-//            new Button(request, $$(privateEventDeleteLink), privateEventReturn.returnValue().getPrivateEventName(), false, privateEventReturn.returnValue()) {
-//                PrivateEvent privateEvent = null;
-//
-//                @Override
-//                protected void init(final Object... initArgs) {
-//                    privateEvent = (PrivateEvent) (((Object[]) initArgs[2])[0]);
-//                    SetLocationLink:
-//                    {
-//                        setLink:
-//                        {
-//                            $$(GenericButtonLink).setAttribute(MarkupTag.A.href(),
-//                                    new Parameter(Organize.getURL())
-//                                            .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
-//                                            .append(DocOrganizeLocation, privateEventReturn.returnValue().getPrivateLocation().getPrivateLocationId())
-//                                            .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
-//                                            .get()
-//                            );
-//                        }
-//                        setImage:
-//                        {
-//                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + ARROW_RIGHT_GIF);
-//                        }
-//                    }
-//                }
-//            };
+
+            eventLink = new Parameter("http://www.ilikeplaces.com" + Organize.getURL())
+                    .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
+                    .append(DocOrganizeLocation, privateEventReturn.returnValue().getPrivateLocation().getPrivateLocationId())
+                    .append(DocOrganizeEvent, privateEventReturn.returnValue().getPrivateEventId())
+                    .get();
+
             if ((Boolean) initArgs[2]) {
                 new WallWidgetPrivateEvent(request, $$(Page.privateEventDeleteWall), humanId, privateEventReturn.returnValue().getPrivateEventId());
                 new AlbumManager(request, $$(Page.privateEventDeleteAlbum), humanId, privateEventReturn.returnValue());
@@ -182,6 +168,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                     new Save<Return<PrivateEvent>>() {
 
                         final long myprivateEventId = privateEvent.getPrivateEventId();
+                        final String myeventLink = eventLink;
 
                         @Override
                         public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
@@ -194,7 +181,10 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                                         ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
                                                 new HumanId(humanId.getHumanId()),
                                                 humansFriend.getHumanId(),
-                                                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + " has added you as an Owner of moment " + returnVal.returnValue().getPrivateEventName()
+                                                ElementComposer.compose($$(MarkupTag.A))
+                                                        .$ElementSetHref(myeventLink)
+                                                        .$ElementSetText("I added you as an manager of moment" + returnVal.returnValue().getPrivateEventName())
+                                                        .get()
                                         ));
                             }
                             return returnVal;
@@ -216,7 +206,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                                         ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
                                                 new HumanId(humanId.getHumanId()),
                                                 humansFriend.getHumanId(),
-                                                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + " has removed you as an Owner of moment " + returnVal.returnValue().getPrivateEventName()
+                                                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + " has removed you as an manager of moment " + returnVal.returnValue().getPrivateEventName()
                                         ));
                             }
                             return returnVal;
@@ -236,6 +226,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                     new Save<Return<PrivateEvent>>() {
 
                         final long myprivateEventId = privateEvent.getPrivateEventId();
+                        final String myeventLink = eventLink;
 
                         @Override
                         public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
@@ -247,7 +238,10 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                                         ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
                                                 new HumanId(humanId.getHumanId()),
                                                 humansFriend.getHumanId(),
-                                                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + " has added you as an attendee of moment " + returnVal.returnValue().getPrivateEventName()
+                                                ElementComposer.compose($$(MarkupTag.A))
+                                                        .$ElementSetHref(myeventLink)
+                                                        .$ElementSetText("I added you as an attendee of moment" + returnVal.returnValue().getPrivateEventName())
+                                                        .get()
                                         ));
                             }
                             return returnVal;
@@ -257,6 +251,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                     new Save<Return<PrivateEvent>>() {
 
                         final long myprivateEventId = privateEvent.getPrivateEventId();
+
 
                         @Override
                         public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
