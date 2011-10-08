@@ -48,7 +48,7 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
             final HumansIdentity hi = r.returnValue();
             $$(Page.user_property_sidebar_name).setTextContent(hi.getHuman().getDisplayName());
             $$(Page.user_property_sidebar_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-            $$(Page.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.src(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+            $$(Page.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.title(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
 
             /*  fetchToEmail(//WARNING! This does not append the content.
             hi.getHuman().getInviterDisplayName(),
@@ -75,7 +75,7 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
             final HumansIdentity hi = r.returnValue();
             $$(Page.user_property_sidebar_name).setTextContent(hi.getHuman().getDisplayName());
             $$(Page.user_property_sidebar_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-            $$(Page.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.src(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+            $$(Page.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.title(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
             $$(Page.user_property_sidebar_content).appendChild(content);
 
             fetchToEmail(
