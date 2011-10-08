@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
+import ai.ilikeplaces.exception.AbstractEjbApplicationRuntimeException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBDishonourException;
 import ai.ilikeplaces.logic.crud.unit.*;
@@ -45,6 +46,8 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     private static final String PROFILE_URL_UPDATE_FAILED = "Profile URL Update FAILED!";
     private static final String PROFILE_URL_READ_SUCCESSFUL = "Profile URL Read Successful.";
     private static final String PROFILE_URL_READ_FAILED = "Profile URL Read FAILED!";
+    private static final String READ_HUMANS_BEFRIENDS_SUCCESSFUL = "Read Humans Befriends Successful!";
+    private static final String READ_HUMANS_BEFRIENDS_FAILED = "Read Humans Befriends FAILED!";
     @EJB
     private RHumanLocal rHumanLocal_;
 
@@ -442,7 +445,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     }
 
 
-    public Return<Boolean> doUActivateHuman(final RefObj<String> username){
+    public Return<Boolean> doUActivateHuman(final RefObj<String> username) {
         Return<Boolean> r;
         try {
             r = new ReturnImpl<Boolean>(uHumanLocal.doUActivateHuman(username.getObjectAsValid()), "Activate Profile Successful.");
@@ -450,6 +453,18 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
             r = new ReturnImpl<Boolean>(t, "Activate Profile FAILED!", true);
         }
         return r;
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<List<HumansNetPeople>> doDirtyRHumansBefriends(final RefObj<String> humanId) {
+        Return<List<HumansNetPeople>> r;
+        try {
+            r = new ReturnImpl<List<HumansNetPeople>>(rHumansNetPeopleLocal_.doDirtyRHumansBefriends(humanId.getObj()), READ_HUMANS_BEFRIENDS_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationRuntimeException t) {
+            r = new ReturnImpl<List<HumansNetPeople>>(t, READ_HUMANS_BEFRIENDS_FAILED, true);
+        }
+        return r;
+
     }
 
     /*END OF PREPERATOR METHODS*/
@@ -549,4 +564,5 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         }
         return returnVal;
     }
+
 }

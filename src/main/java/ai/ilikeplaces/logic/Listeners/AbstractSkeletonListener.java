@@ -257,9 +257,10 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
 
         try {
             if (getUsername() != null) {
-                final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(getUsernameAsValid()).getSelfAsValid());
+                //final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(getUsernameAsValid()).getSelfAsValid());
+                final Return<List<HumansNetPeople>> humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansBefriends(new HumanId(getUsernameAsValid()).getSelfAsValid());
 
-                for (final HumansNetPeople friend : humansNetPeople.getHumansNetPeoples()) {
+                for (final HumansNetPeople friend : humansNetPeople.returnValue()) {
                     new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
                         protected void init(final Object... initArgs) {
 
