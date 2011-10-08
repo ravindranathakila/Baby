@@ -70,7 +70,7 @@ public class UserIntroduction {
                     newUser,
                     newUser,
                     new Obj<HumanId>(newUser),
-                    "I just joined I Like Places - Down Town!");
+                    "Just joined Down Town!");//Not using "I" because when seen on sidebar, says something like "John Steven - Just joined Down Town!"
         }
 
     }
