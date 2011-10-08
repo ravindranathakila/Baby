@@ -29,7 +29,7 @@ import java.util.List;
                                 "WHERE humansNetPeople.humanId " +
                                 "IN(" +
                                 "SELECT humansNetPeople2 FROM HumansNetPeople humansNetPeople2, HumansNetPeople humansNetPeople3 " +
-                                "WHERE humansNetPeople3.humanId = :humanId AND humansNetPeople3 MEMBER OF humansNetPeople2.humansNetPeoples)"
+                                "WHERE humansNetPeople3.humanId = :humanId AND humansNetPeople3 MEMBER OF humansNetPeople2.humansNetPeoples)"//Don't ask me how I did it. It took me hours! Weather wasn't ideal either
                 )
         }
 )
