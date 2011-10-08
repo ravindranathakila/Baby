@@ -21,14 +21,29 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
+@NamedQueries(
+        {
+                @NamedQuery(
+                        name = "FindHumansNetPeoplesWhoHaveMeAsAFriend",
+                        query = "SELECT humansNetPeople FROM HumansNetPeople humansNetPeople " +
+                                "WHERE humansNetPeople.humanId " +
+                                "IN(" +
+                                "SELECT humansNetPeople2 FROM HumansNetPeople humansNetPeople2, HumansNetPeople humansNetPeople3 " +
+                                "WHERE humansNetPeople3.humanId = :humanId AND humansNetPeople3 MEMBER OF humansNetPeople2.humansNetPeoples)"
+                )
+        }
+)
 public class HumansNetPeople extends HumanEquals implements HumansFriend {
     public String humanId;
+    public final static String humanIdCOL = "humanId";
     public HumansNet humansNet;
     public List<HumansNetPeople> humansNetPeoples;
     private static final String HUMANS_NET_PEOPLE = "HumansNetPeople{";
     private static final String HUMAN_ID = "humanId='";
     private static final char CHAR = '}';
     private static final char BACKSLASH = '\'';
+
+    public final static String FindHumansNetPeoplesWhoHaveMeAsAFriend = "FindHumansNetPeoplesWhoHaveMeAsAFriend";
 
     @Id
     public String getHumanId() {
@@ -74,7 +89,7 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend {
 
     @Override
     public boolean notFriend(final String friendsHumanId) {
-        return !isFriend(friendsHumanId);        
+        return !isFriend(friendsHumanId);
     }
 
     @NOTE(note = "MANY IS THE OWNING SIDE, HENCE REFRESH. SINCE THIS IS SELF REFERENTIAL, A REFRESH WITH SELF SHOULD NOT HAPPEN.")
