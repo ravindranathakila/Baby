@@ -15,6 +15,7 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.cache.SmartCache;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
@@ -43,6 +44,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
     private static final String CODENAME_KEY = "codename";
     boolean initStatus = false;
     private static final String TALK = "Get in touch";
+    final static private SmartCache<String,HumansNetPeople> SINGLE_ENTRY_HUMANS_NET_PEOPLE  = new SmartCache<String, HumansNetPeople>();
 
     /**
      * @param request_

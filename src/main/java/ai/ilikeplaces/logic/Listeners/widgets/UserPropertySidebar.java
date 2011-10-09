@@ -2,13 +2,12 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
-import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.cache.SmartCache;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Document;
@@ -29,6 +28,9 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
     private static final String USER_PROPERTY_EMAIL_XHTML = "ai/ilikeplaces/widgets/UserProperty_email.xhtml";
     protected String profilePhotoURLFinal = "#";
 
+    final static SmartCache<String, HumansIdentity> HUMANS_IDENTITY_SIDEBAR_CACHE = UserProperty.HUMANS_IDENTITY_CACHE;
+
+
     /**
      * Shows the profile belonging to humanId
      * <p/>
@@ -43,21 +45,18 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
      */
     public UserPropertySidebar(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId, final Object... params) {
         super(request__, Page.UserPropertySidebar, appendToElement__, humanId, params);
-        final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(humanId);
-        if (r.returnStatus() == 0) {
-            final HumansIdentity hi = r.returnValue();
-            $$(Page.user_property_sidebar_name).setTextContent(hi.getHuman().getDisplayName());
-            $$(Page.user_property_sidebar_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-            $$(Page.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.title(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
 
-            /*  fetchToEmail(//WARNING! This does not append the content.
-            hi.getHuman().getInviterDisplayName(),
-            formatProfileUrl(ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl(), true),
-            formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));*/
-        } else {
-            final String error = RBGet.gui().getString("YIKES_SOMETHING_WENT_WRONG");
-            $$(Page.user_property_sidebar_name).setTextContent(error);
-        }
+        final HumansIdentity hi = HUMANS_IDENTITY_SIDEBAR_CACHE.get(new String(humanId.getHumanId()));
+
+        $$(Page.user_property_sidebar_name).setTextContent(hi.getHuman().getDisplayName());
+        $$(Page.user_property_sidebar_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+        $$(Page.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.title(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+
+        /*  fetchToEmail(//WARNING! This does not append the content.
+        hi.getHuman().getInviterDisplayName(),
+        formatProfileUrl(ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl(), true),
+        formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));*/
+
     }
 
     /**
@@ -70,23 +69,18 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
      */
     public UserPropertySidebar(final ItsNatServletRequest request__, final Element appendToElement__, final Element content, final HumanId humanId, final Object... params) {
         super(request__, Page.UserProperty, appendToElement__, humanId, params);
-        final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(humanId);
-        if (r.returnStatus() == 0) {
-            final HumansIdentity hi = r.returnValue();
-            $$(Page.user_property_sidebar_name).setTextContent(hi.getHuman().getDisplayName());
-            $$(Page.user_property_sidebar_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-            $$(Page.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.title(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
-            $$(Page.user_property_sidebar_content).appendChild(content);
+        final HumansIdentity hi = HUMANS_IDENTITY_SIDEBAR_CACHE.get(new String(humanId.getHumanId()));
+        $$(Page.user_property_sidebar_name).setTextContent(hi.getHuman().getDisplayName());
+        $$(Page.user_property_sidebar_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+        $$(Page.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.title(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+        $$(Page.user_property_sidebar_content).appendChild(content);
 
-            fetchToEmail(
-                    hi.getHuman().getDisplayName(),
-                    formatProfileUrl(ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl(), true),
-                    formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()),
-                    content);
-        } else {
-            final String error = RBGet.gui().getString("YIKES_SOMETHING_WENT_WRONG");
-            $$(Page.user_property_sidebar_name).setTextContent(error);
-        }
+        fetchToEmail(
+                hi.getHuman().getDisplayName(),
+                formatProfileUrl(ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl(), true),
+                formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()),
+                content);
+
     }
 
     /**

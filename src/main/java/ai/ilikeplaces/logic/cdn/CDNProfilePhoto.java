@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.cdn;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.exception.DBOperationException;
+import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -130,8 +131,12 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
                             } else {
                                 final Return<HumansIdentity> dbr = DB.getHumanCRUDHumanLocal(true).doUHumansProfilePhoto(humanId, cdnFileName);
                                 r = dbr.returnStatus() == 0 ?
-                                    new ReturnImpl<File>(newFile, PROFILE_PHOTO_UPLOAD_SUCCESSFUL)
-                                                            : new ReturnImpl<File>(new DBOperationException(dbr.returnError()), PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES, true);
+                                        new ReturnImpl<File>(newFile, PROFILE_PHOTO_UPLOAD_SUCCESSFUL)
+                                        : new ReturnImpl<File>(new DBOperationException(dbr.returnError()), PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES, true);
+
+                                if (dbr.returnStatus() == 0) {
+                                    UserProperty.HUMANS_IDENTITY_CACHE.MAP.put(new String(dbr.returnValue().getHumanId()), dbr.returnValue());
+                                }
                             }
                         } else {
                             r = new ReturnImpl<File>(ExceptionCache.CDN_FILE_UPLOAD_FAILED, PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES, true);

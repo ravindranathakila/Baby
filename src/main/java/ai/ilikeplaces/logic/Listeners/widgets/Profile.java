@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.ProfileUrl;
@@ -76,6 +77,8 @@ public class Profile extends AbstractWidgetListener {
                     Loggers.debug("myurl.getObjectAsValid():" + myurl.getObjectAsValid());
 
                     DB.getHumanCRUDHumanLocal(true).doUHumansPublicURL(myhumanId, myurl.getObjectAsValid());
+                    final HumansIdentity humansIdentity = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(myhumanId).returnValue();
+                    UserProperty.HUMANS_IDENTITY_CACHE.MAP.put(new String(humansIdentity.getHumanId()), humansIdentity);
                     $$clear($$(Page.ProfileNotice));
                 } else {
                     $$(Page.ProfileNotice).setTextContent(myurl.getViolationAsString());

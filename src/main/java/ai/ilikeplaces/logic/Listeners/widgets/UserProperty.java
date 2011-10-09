@@ -9,6 +9,7 @@ import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.cache.SmartCache;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.DOMException;
@@ -19,6 +20,9 @@ import org.xml.sax.SAXException;
 
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * @author Ravindranath Akila
@@ -36,6 +40,14 @@ abstract public class UserProperty extends AbstractWidgetListener {
     private static final String EXT_GIF = ".gif";
     public static final String SENDER_NAME = "_senderName_";
 
+    final static public SmartCache<String, HumansIdentity> HUMANS_IDENTITY_CACHE = new SmartCache<String, HumansIdentity>(new SmartCache.RecoverWith<String, HumansIdentity>() {
+
+        @Override
+        public HumansIdentity getValue(final String s) {
+            return DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(new HumanId(s)).returnValue();
+        }
+    });
+
     /**
      * Shows the profile belonging to humanId
      * <p/>
@@ -51,21 +63,17 @@ abstract public class UserProperty extends AbstractWidgetListener {
     public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanIdWhosProfileToShow, final Object... params) {
         super(request__, Page.UserProperty, appendToElement__, humanIdWhosProfileToShow, params);
         try {
-            final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(humanIdWhosProfileToShow);
-            if (r.returnStatus() == 0) {
-                final HumansIdentity hi = r.returnValue();
-                $$(Page.user_property_name).setTextContent(hi.getHuman().getDisplayName());
-                $$(Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-                $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+            final HumansIdentity hi = HUMANS_IDENTITY_CACHE.get(new String(humanIdWhosProfileToShow.getHumanId()));
 
-                /*  fetchToEmail(//WARNING! This does not append the content.
-                hi.getHuman().getInviterDisplayName(),
-                formatProfileUrl(ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl(), true),
-                formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));*/
-            } else {
-                final String error = RBGet.gui().getString(YIKES__SOMETHING__WENT__WRONG);
-                $$(Page.user_property_name).setTextContent(error);
-            }
+            $$(Page.user_property_name).setTextContent(hi.getHuman().getDisplayName());
+            $$(Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+            $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+
+            /*  fetchToEmail(//WARNING! This does not append the content.
+            hi.getHuman().getInviterDisplayName(),
+            formatProfileUrl(ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl(), true),
+            formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));*/
+
         } catch (final Throwable t) {
             Loggers.ERROR.error(STR_FATAL_ERROR_IN_WIDGET_THIS_SHOULD_NOT_HAPPEN_DETAILS_AS_FOLLOWS +
                     STR_PAGE + Page.UserProperty +
@@ -86,23 +94,20 @@ abstract public class UserProperty extends AbstractWidgetListener {
     public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final Element content, final HumanId humanIdWhosProfileToShow, final Object... params) {
         super(request__, Page.UserProperty, appendToElement__, humanIdWhosProfileToShow, params);
         try {
-            final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(humanIdWhosProfileToShow);
-            if (r.returnStatus() == 0) {
-                final HumansIdentity hi = r.returnValue();
-                $$(Page.user_property_name).setTextContent(hi.getHuman().getDisplayName());
-                $$(Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-                $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
-                $$(Page.user_property_content).appendChild(content);
+            final HumansIdentity hi = HUMANS_IDENTITY_CACHE.get(new String(humanIdWhosProfileToShow.getHumanId()));
 
-                this.fetchToEmail(
-                        hi.getHuman().getDisplayName(),
-                        formatProfileUrl(ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl(), true),
-                        formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()),
-                        content); //http://blog.ilikeplaces.com/
-            } else {
-                final String error = RBGet.gui().getString(YIKES__SOMETHING__WENT__WRONG);
-                $$(Page.user_property_name).setTextContent(error);
-            }
+
+            $$(Page.user_property_name).setTextContent(hi.getHuman().getDisplayName());
+            $$(Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+            $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+            $$(Page.user_property_content).appendChild(content);
+
+            this.fetchToEmail(
+                    hi.getHuman().getDisplayName(),
+                    formatProfileUrl(ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl(), true),
+                    formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()),
+                    content); //http://blog.ilikeplaces.com/
+
         } catch (final Throwable t) {
             Loggers.ERROR.error(STR_FATAL_ERROR_IN_WIDGET_THIS_SHOULD_NOT_HAPPEN_DETAILS_AS_FOLLOWS +
                     STR_PAGE + Page.UserProperty +
