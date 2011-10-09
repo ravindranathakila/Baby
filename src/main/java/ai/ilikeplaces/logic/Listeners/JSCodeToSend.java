@@ -18,6 +18,7 @@ final public class JSCodeToSend {
     final static public String FnSetTitle = "\ndocument.title=\"Escape to \"+getLocationName()+\"!\";\n";
     final static public String RefreshPage = "\nwindow.location.href=window.location.href;\n";
     final static public String ClosePage = "\nif(confirm('Done! Close page?')){window.close();}\n";
+    final static public String ClosePageOrRefresh = "\nif(confirm('Done! Close page?')){window.close();}else{window.location.href = window.location.href;}\n";
     private static final String WINDOW_LOCATION_HREF_WINDOW_LOCATION_HREF = "window.location.href=window.location.href";
 
 // --------------------------- CONSTRUCTORS ---------------------------
