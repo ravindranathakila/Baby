@@ -938,7 +938,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1307245389165" FOLDED="true" ID="ID_310356034" MODIFIED="1315237060484" POSITION="left" TEXT="The Four Usual Suspects(FUS) - The Bars We Set The Highest">
+<node CREATED="1307245389165" ID="ID_310356034" MODIFIED="1317838245281" POSITION="left" TEXT="The Four Usual Suspects(FUS) - The Bars We Set The Highest">
 <icon BUILTIN="wizard"/>
 <node CREATED="1307245411745" ID="ID_944727217" MODIFIED="1307246182542" TEXT="Analyzing the problem, it&apos;s boundaries and limitations.(FUS1)"/>
 <node CREATED="1307245454483" ID="ID_1892067123" MODIFIED="1307245962697" TEXT="Least effort to solution(FUS2)">
@@ -1218,7 +1218,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1315235257015" ID="ID_1421917318" MODIFIED="1315235787234" POSITION="right" TEXT="0.6 Launch Marketing Plan">
+<node CREATED="1315235257015" ID="ID_1421917318" MODIFIED="1317837994718" POSITION="right" TEXT="0.6 Launch Marketing Plan">
 <node CREATED="1315235920109" ID="ID_1845104154" MODIFIED="1315237387406" TEXT="Resources">
 <icon BUILTIN="password"/>
 <node CREATED="1315235922703" ID="ID_1879092931" MODIFIED="1315235929062" TEXT="Self Email Invites"/>
