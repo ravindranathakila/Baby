@@ -113,7 +113,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
             if (loadWallPageAfterAnEmailWallSubmit) {
                 itsNatDocument_.addCodeToSend(JSCodeToSend.refreshPageWith(WALL_ENTRY_CONSUMED_STATUES));//
             } else {
-                itsNatDocument_.addCodeToSend(JSCodeToSend.ClosePage);//
+                itsNatDocument_.addCodeToSend(JSCodeToSend.ClosePageOrRefresh);//
             }
 
         } else {//Moves on with the wall without refresh
