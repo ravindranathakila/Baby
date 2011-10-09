@@ -2,10 +2,12 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.ProfileUrl;
 import ai.ilikeplaces.servlets.Controller.Page;
+import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.EventType;
 import ai.ilikeplaces.util.Loggers;
@@ -79,7 +81,7 @@ public class Profile extends AbstractWidgetListener {
                     DB.getHumanCRUDHumanLocal(true).doUHumansPublicURL(myhumanId, myurl.getObjectAsValid());
                     final HumansIdentity humansIdentity = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(myhumanId).returnValue();
                     UserProperty.HUMANS_IDENTITY_CACHE.MAP.put(new String(humansIdentity.getHumanId()), humansIdentity);
-                    $$clear($$(Page.ProfileNotice));
+                    $$sendJS(JSCodeToSend.redirectPageWithURL(ProfileRedirect.PROFILE_URL + humansIdentity.getUrl().getUrl()));
                 } else {
                     $$(Page.ProfileNotice).setTextContent(myurl.getViolationAsString());
                     myurl.setObj(null);//Moving this before calling getviolations will throw an exception
