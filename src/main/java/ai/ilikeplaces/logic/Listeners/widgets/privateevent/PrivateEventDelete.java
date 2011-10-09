@@ -183,7 +183,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                                                 humansFriend.getHumanId(),
                                                 ElementComposer.compose($$(MarkupTag.A))
                                                         .$ElementSetHref(myeventLink)
-                                                        .$ElementSetText("I added you as an manager of moment" + returnVal.returnValue().getPrivateEventName())
+                                                        .$ElementSetText("I added you as an manager of moment " + returnVal.returnValue().getPrivateEventName())
                                                         .get()
                                         ));
                             }
@@ -240,7 +240,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                                                 humansFriend.getHumanId(),
                                                 ElementComposer.compose($$(MarkupTag.A))
                                                         .$ElementSetHref(myeventLink)
-                                                        .$ElementSetText("I added you as an attendee of moment" + returnVal.returnValue().getPrivateEventName())
+                                                        .$ElementSetText("I added you as an attendee of moment " + returnVal.returnValue().getPrivateEventName())
                                                         .get()
                                         ));
                             }
