@@ -47,6 +47,8 @@ abstract public class UserProperty extends AbstractWidgetListener {
             return DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(new HumanId(s)).returnValue();
         }
     });
+    private static final String SPACED_HYPHEN = " - ";
+    private static final String EMPTY = "";
 
     /**
      * Shows the profile belonging to humanId
@@ -159,14 +161,16 @@ abstract public class UserProperty extends AbstractWidgetListener {
         super(request__, Page.UserProperty, appendToElement__, content, inviteCriteria);
 
         try {
-            $$(Page.user_property_name).setTextContent(inviteCriteria.getInvitee().getFullName());
+            String fullName = inviteCriteria.getInvitee().getFullName();
+            fullName = fullName != null ? fullName + SPACED_HYPHEN : EMPTY;
+            $$(Page.user_property_name).setTextContent(fullName + inviteCriteria.getInvitee().getEmail());
             $$(Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + inviteCriteria.getProfileUrl());
             $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(inviteCriteria.getProfilePhoto()));
             $$(Page.user_property_content).appendChild(content);
 
             this.fetchToEmail(
                     inviteCriteria.getInviterDisplayName(),
-                    "#",
+                    HASH,
                     formatProfilePhotoUrl(inviteCriteria.getProfilePhoto()),
                     content); //http://blog.ilikeplaces.com/
         } catch (final Throwable t) {
