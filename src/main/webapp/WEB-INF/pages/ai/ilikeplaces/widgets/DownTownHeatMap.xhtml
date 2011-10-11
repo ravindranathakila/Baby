@@ -175,12 +175,12 @@ function setNotification(text){//WARNING! used in java
     simpleMomentAlertCount++;
     if(simpleMomentAlertCount > 2){
         $('#CurrentActivityNotificationBox').append('<span style=\'color:#c615af;font-size:18px;background-color:#ffffff;opacity:0.7;filter:alpha(opacity=70);\'>'+'Click on a marker or anywhere on map to start a Moment'+'<br/></span>');
-        setTimeout('setClearForLastNotification()',9000);
+        setTimeout('setClearForLastNotification()',5000);
         simpleMomentAlertCount = 0;
     }
 
     $('#CurrentActivityNotificationBox').append('<span style=\'background-color:#ffffff;opacity:0.7;filter:alpha(opacity=70);\'>'+text+'<br/></span>');
-    setTimeout('setClearForLastNotification()',9000);
+    setTimeout('setClearForLastNotification()',5000);
 }
 
 function setActionLink(text, title, onclickActions, doClear){//WARNING! used in java
@@ -197,7 +197,11 @@ function setActionLink(text, title, onclickActions, doClear){//WARNING! used in 
 }
 
 function setClearForLastNotification(){
-   $('#CurrentActivityNotificationBox').children(':first').remove();
+   try{
+    $('#CurrentActivityNotificationBox').children(':first').remove();
+   }catch(err){
+    //ignoring since this will get cleared onclick too
+   }
 }
 
 function alertAndZoomIn(zoomTo){
@@ -453,6 +457,7 @@ function initialize_DownTownHeatMap_map(){
 
      document.getElementById('mapCustomControlsSearchBox').index = 1;
      GAIA.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById('mapCustomControlsSearchBox'));
+     $('#CurrentActivityNotificationBox').mouseenter(function(){$(this).empty();});
 
      GAIA.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('mapCustomControlsSolidLinksWidget'));
 
@@ -1050,6 +1055,8 @@ function setMapToLocation(value){
                         <div class="use5" style="height:89px;">&nbsp;</div>
                     </div>
                     <div id="CurrentActivityNotificationBox" class="bold" style="text-align:center;color:#000000;">&nbsp;</div>
+        </div>
+        <div id="mapCustomControlsSignInOn" style="width:38.2%;padding-left:30.9%;padding-right:30.9%;overflow:hidden;">
         </div>
     </div>
 </div>

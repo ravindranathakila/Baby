@@ -791,7 +791,8 @@ final public class
         Aarrr(
                 "ai/ilikeplaces/AARRR.xhtml",
                 Controller.Page.AarrrDownTownHeatMap,
-                Controller.Page.AarrrWOEID
+                Controller.Page.AarrrWOEID,
+                Controller.Page.AarrrHeader
         ) {
             @Override
             public String getURL() {
@@ -1184,6 +1185,7 @@ final public class
         /*Aarrr Specific IDs*/
         final static public String AarrrDownTownHeatMap = "AarrrDownTownHeatMap";
         final static public String AarrrWOEID = "AarrrWOEID";
+        final static public String AarrrHeader = "AarrrHeader";
 
 
         /*DocLocation Page*/
