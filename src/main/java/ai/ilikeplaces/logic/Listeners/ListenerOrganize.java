@@ -123,11 +123,11 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                             }
                                             UCListOfActions:
                                             {
+                                                new PrivateLocationCreate(request__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
+                                                };
                                                 for (final PrivateLocation prvLoc : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPrivateLocation(new HumanId(getUsernameAsValid())).returnValue().getPrivateLocationsViewed()) {
                                                     attachPrivateLocationAsRolesPermit(request__, $(Skeleton_center_skeleton), prvLoc, true, false);
                                                 }
-                                                new PrivateLocationCreate(request__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
-                                                };
                                             }
                                         } catch (final Throwable t) {
                                             EXCEPTION.error("{}", t);
