@@ -33,6 +33,7 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 @OK
 abstract public class PrivateLocationDelete extends AbstractWidgetListener {
     private static final String PLD_LIST_ITEM = "PLDListItem";
+    private static final String NO_MOMENTS_STARTED_HERE_YET = "No moments started here yet!";
     // ------------------------------ FIELDS ------------------------------
 
     Return<PrivateLocation> r;
@@ -86,7 +87,7 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
                 }
                 if (r.returnValue().getPrivateEvents().size() == 0) {
                     $$(privateLocationDeleteEventList).appendChild(
-                            ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText("No moments started here yet...")
+                            ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(NO_MOMENTS_STARTED_HERE_YET)
                                     .get());
                 }
             }

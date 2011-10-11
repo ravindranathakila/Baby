@@ -9,47 +9,31 @@
     <hr/>
     <div style="list-style-type:none;" class="use100 last center">
         <div class="use100 last black_fg">
-            <div class="use60 black_fg">
-                    <div class="use100 black_fg">
-                        <div class="use100">&nbsp;</div>
-                        <span id="privateLocationViewName" class="use100 bold vtip"
-                                  style="font-size:23px;letter-spacing:-1px;color:#550000;"
-                                  title="By sharing this place, you can invite friends to moments held here.<br/><br/>
-                            A place can have many moments held throughout its' lifetime.<br/><br/>
-                            An example would be 'Home'. By creating a places called 'Home', <br/>
-                            you can hold many moments at 'Home' and invite people to them.">&nbsp;</span>
-                    </div>
-                    <div class="use100 black_fg">
-                        <span id="privateLocationViewInfo" class="use100 vtip"
-                                  style="font-size:15px;color:#550000;"
-                                  title="By sharing this place, you can invite friends to moments held here.<br/><br/>
-                            A place can have many moments held throughout its' lifetime.<br/><br/>
-                            An example would be 'Home'. By creating a places called 'Home', <br/>
-                            you can hold many moments at 'Home' and invite people to them.">&nbsp;</span>
-
-                        <div class="use100 last">&nbsp;</div>
-                    </div>
-                    <div class="use100 black_fg" style="display:none;">
-                        <span class="use100"
-                                  style="font-size:12px;color:#001100;text-align:right;font-style:italic;font-weight:900;">Pay a Visit &rarr;</span>
-
-                        <div class="use100 last">&nbsp;</div>
-                    </div>
-                <div class="use100 black_fg">
-                    <span id="privateLocationViewNotice" class="use100 last black_fg"></span>
-                </div>
-
-    <div class="use618 use191p use191a center">
-       <img src="/images/list_of_moments.png" alt="Moments" style="width:100%;"/>
-    </div>
-        <div id="privateLocationViewEventList" style="font-size:25px;color:#000000;" class="use100 center">
-    </div>
+            <div class="use100 black_fg">
+                <div class="use100">&nbsp;</div>
+                <span id="privateLocationViewName" class="use100 bold vtip"
+                          style="font-size:23px;letter-spacing:-1px;color:#000000;text-transform: uppercase;"
+                          title="By sharing this place, you can invite friends to moments held here.<br/><br/>
+                    A place can have many moments held throughout its' lifetime.<br/><br/>
+                    An example would be 'Home'. By creating a places called 'Home', <br/>
+                    you can hold many moments at 'Home' and invite people to them.">&nbsp;</span>
+            </div>
+            <div class="use100 black_fg">
+                <span id="privateLocationViewInfo" class="use100 vtip"
+                          style="font-size:15px;color:#000000;"
+                          title="By sharing this place, you can invite friends to moments held here.<br/><br/>
+                    A place can have many moments held throughout its' lifetime.<br/><br/>
+                    An example would be 'Home'. By creating a places called 'Home', <br/>
+                    you can hold many moments at 'Home' and invite people to them.">&nbsp;</span>
             </div>
             <div class="use40 last">
-                <div class="use100" style="height:40px;">
+                <div class="use100" style="height:30px;">
                     &nbsp;
                 </div>
-                <a id="privateLocationViewLink" href="#" style="text-decoration:none;">&nbsp;</a>
+                <a id="privateLocationViewLink" class="use100" href="#" style="text-decoration:none;">
+                        <span class="use100" style="font-size:10px;"><i>Click Map to Visit this Place</i>
+                        </span>
+                </a>
                 <img id="privateLocationViewLocationMap"
                      src="http://maps.google.com/maps/api/staticmap?sensor=false center=48.85567989976907,2.3545074462890625 size=230x250 format=jpg markers=color:0x7fe2ff|label:S|48.85567989976907,2.3545074462890625 path=fillcolor:0xAA000033|color:0xFFFFFF00"
                      alt="Loading..."
@@ -62,6 +46,29 @@
                         onclick="javascript:window.location = $(this).prev().attr('src').replace('http://maps.google.com/maps/api/staticmap?sensor=false&','/?').replace('center','toLatLng');"
                         >
                     Get Road Directions &rarr;
+                </div>
+            </div>
+            <div class="use60 black_fg">
+                    <div class="use100 black_fg" style="display:none;">
+                        <span class="use100"
+                                  style="font-size:12px;color:#001100;text-align:right;font-style:italic;font-weight:900;">Pay a Visit &rarr;</span>
+
+                        <div class="use100 last">&nbsp;</div>
+                    </div>
+                <div class="use100 black_fg">
+                    <span id="privateLocationViewNotice" class="use100 last black_fg"></span>
+                </div>
+
+                <div class="use618 use191p use191a center">
+                   <img src="/images/list_of_moments.png" alt="Moments" style="width:100%;"/>
+                </div>
+                <div class="use100">
+                    <span style="font-size:10px;"><i>Click a Moment to Visit It</i></span>
+                </div>
+                <div class="use100" style="height:10px;">
+                    &nbsp;
+                </div>
+                    <div id="privateLocationViewEventList" style="font-size:25px;color:#000000;" class="use100 center">
                 </div>
             </div>
         </div>
