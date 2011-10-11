@@ -59,6 +59,10 @@ public class BBWithSpots extends Pair<BoundingBox, RawspotElasticArray> {
     @TODO(tasks = {"Use random fetching for large datasets", "Greedy fetching of nearby locations"})
     final String modeName() {
 
+        if(getValue().array.length < 2){
+            return "Unpopular";
+        }
+
 
         final Map<Integer, Pair<String, Integer>> index = new HashMap<Integer, Pair<String, Integer>>();
 
