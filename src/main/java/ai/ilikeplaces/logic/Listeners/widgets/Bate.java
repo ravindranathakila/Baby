@@ -139,7 +139,7 @@ abstract public class Bate extends AbstractWidgetListener {
                         } else {
                             UCDisplayOmgSuccessMessage:
                             {
-                             $$displayBlock($$(Controller.Page.BateOmgSuccessMsg));
+                                $$displayBlock($$(Controller.Page.BateOmgSuccessMsg));
                             }
                             UCSendInviteMails:
                             {
@@ -437,29 +437,33 @@ abstract public class Bate extends AbstractWidgetListener {
                     new Password(randomPassword),
                     new Email(inviteee.getEmail()));
 
-            UserIntroduction.createIntroData(new HumanId(inviteee.getEmail()));
+            if (humanCreateReturn.returnValue() == true) {
 
-            final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
-                    .append(ServletLogin.Username, inviteee.getEmail(), true)
-                    .append(ServletLogin.Password,
-                            DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(inviteee.getEmail()))
-                                    .returnValue()
-                                    .getHumanAuthenticationHash())
-                    .get();
+                UserIntroduction.createIntroData(new HumanId(inviteee.getEmail()));
+
+                final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                        .append(ServletLogin.Username, inviteee.getEmail(), true)
+                        .append(ServletLogin.Password,
+                                DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(inviteee.getEmail()))
+                                        .returnValue()
+                                        .getHumanAuthenticationHash())
+                        .get();
 
 
-            String htmlBody = getHTMLStringForOfflineFriendInvite(invitersName, inviteee.getFullName());
+                String htmlBody = getHTMLStringForOfflineFriendInvite(invitersName, inviteee.getFullName());
 
-            htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-            htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
-            htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it. ");
+                htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
+                htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
+                htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it. ");
 
-            final Return<Boolean> mailReturn = SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
-                    inviteee.getHumanId(),
-                    "Invitation from " + invitersName,
-                    htmlBody);
-
-            returnVal = new ReturnImpl<Boolean>(true, "User Creation and Email Send Successful!");
+                final Return<Boolean> mailReturn = SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                        inviteee.getHumanId(),
+                        "Invitation from " + invitersName,
+                        htmlBody);
+                returnVal = new ReturnImpl<Boolean>(true, "User Creation and Email Send Successful!");
+            } else {
+                returnVal = new ReturnImpl<Boolean>(true, "User Creation and Email Send FAILED!");
+            }
         } catch (final Throwable t) {
             returnVal = new ReturnImpl<Boolean>(t, "User Creation and Email Send FAILED!", true);
         }
