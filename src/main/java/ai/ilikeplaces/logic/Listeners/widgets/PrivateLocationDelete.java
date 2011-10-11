@@ -32,7 +32,8 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 abstract public class PrivateLocationDelete extends AbstractWidgetListener {
-// ------------------------------ FIELDS ------------------------------
+    private static final String PLD_LIST_ITEM = "PLDListItem";
+    // ------------------------------ FIELDS ------------------------------
 
     Return<PrivateLocation> r;
     List<HumansNetPeople> possibilities;
@@ -66,7 +67,8 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
                 for (final PrivateEvent pe : r.returnValue().getPrivateEvents()) {
                     if (DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventIsViewer(humanId, pe.getPrivateEventId()).returnValue()) {
                         $$(privateLocationDeleteEventList).appendChild(
-                                ElementComposer.compose($$(MarkupTag.LI))
+                                ElementComposer.compose($$(MarkupTag.DIV))
+                                        .$ElementSetClasses(PLD_LIST_ITEM)
                                         .wrapThis(
                                                 ElementComposer.compose($$(MarkupTag.A))
                                                         .$ElementSetText(pe.getPrivateEventName())
@@ -84,7 +86,7 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
                 }
                 if (r.returnValue().getPrivateEvents().size() == 0) {
                     $$(privateLocationDeleteEventList).appendChild(
-                            ElementComposer.compose($$(MarkupTag.LI)).$ElementSetText("No moments started here yet...")
+                            ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText("No moments started here yet...")
                                     .get());
                 }
             }

@@ -38,6 +38,8 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
 
     private static final String NEGATIVE = "negative";
     private static final String POSITIVE = "positive";
+    private static final String STR_ALIGN_POSITIVE = "align_positive";
+    private static final String STR_ALIGN_NEGATIVE = "align_negative";
 
     M m;
     T poss;
@@ -92,26 +94,30 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
 //
 //            $$(Controller.Page.FriendListList).appendChild(li);
 
-            final Element li = $$(MarkupTag.DIV);
-            li.setAttribute(MarkupTag.DIV.classs(), "vtip");
-            li.setAttribute(MarkupTag.DIV.style(), "cursor:pointer;");
-            li.setAttribute(MarkupTag.DIV.title(), "Click to Toggle Subscription");
+            final Element div = $$(MarkupTag.DIV);
+            div.setAttribute(MarkupTag.DIV.classs(), "vtip");
+            div.setAttribute(MarkupTag.DIV.style(), "cursor:pointer;");
+            div.setAttribute(MarkupTag.DIV.title(), "Click to Toggle Subscription");
             final boolean isExists = existAll.contains(possibility.getHumanId());
-            li.setTextContent(possibility.getHuman().getDisplayName() + (isExists ? Added : Removed));
+            div.setTextContent(possibility.getHuman().getDisplayName() + (isExists ? Added : Removed));
 
-            final String existingClasses = "" + li.getAttribute(MarkupTag.GENERIC.classs());
-            li.setAttribute(MarkupTag.GENERIC.classs(), existingClasses + " " + (isExists ? POSITIVE : NEGATIVE));
+            final String existingClasses = "" + div.getAttribute(MarkupTag.GENERIC.classs());
+            div.setAttribute(MarkupTag.GENERIC.classs(), existingClasses + " " + (isExists ? POSITIVE : NEGATIVE));
 
-            $$(Controller.Page.FriendListList).appendChild(li);
+            $$(Controller.Page.FriendListList).appendChild(div);
 
-            new UserProperty(request, $$(Controller.Page.FriendListList), new HumanId(possibility.getHumanId())) {
+            final UserProperty userProperty = new UserProperty(request, $$(Controller.Page.FriendListList), new HumanId(possibility.getHumanId())) {
                 protected void init(final Object... initArgs) {
-                    $$(Controller.Page.user_property_content).appendChild(li);
+                    $$(Controller.Page.user_property_content).appendChild(div);
                 }
             };
 
-            itsNatHTMLDocument__.addEventListener((EventTarget) li, EventType.CLICK.toString(), new EventListener() {
+            $$setClass(userProperty.$$(Controller.Page.user_property_widget), (isExists ? STR_ALIGN_POSITIVE : STR_ALIGN_NEGATIVE), false);
+
+
+            itsNatHTMLDocument__.addEventListener((EventTarget) div, EventType.CLICK.toString(), new EventListener() {
                 Boolean positive = existAll.contains(possibility.getHumanId());
+                final UserProperty myuserProperty = userProperty;
 
                 @Override
                 public void handleEvent(final Event evt_) {
@@ -123,7 +129,9 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
                             ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getHuman().getDisplayName() + Added);
                             final String existingClasses = "" + $$(evt_).getAttribute(MarkupTag.GENERIC.classs());
                             $$(evt_).setAttribute(MarkupTag.GENERIC.classs(), existingClasses.replace(NEGATIVE, "") + " " + POSITIVE);
+                            $$setClass(myuserProperty.$$(Controller.Page.user_property_widget), STR_ALIGN_POSITIVE, true);
                         }
+
                     } else {
                         @WARNING(warning = "Assuming return type to be Return. Check Save as it is generic.")
                         final Return r = (Return) saveRemove.save(new HumanId(m.getHumanId()).getSelfAsValid(), possibility);
@@ -131,6 +139,7 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
                             ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getHuman().getDisplayName() + Removed);
                             final String existingClasses = "" + $$(evt_).getAttribute(MarkupTag.GENERIC.classs());
                             $$(evt_).setAttribute(MarkupTag.GENERIC.classs(), existingClasses.replace(POSITIVE, "") + " " + NEGATIVE);
+                            $$setClass(myuserProperty.$$(Controller.Page.user_property_widget), STR_ALIGN_NEGATIVE, true);
                         }
                     }
                 }

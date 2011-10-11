@@ -30,6 +30,7 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 abstract public class PrivateLocationView extends AbstractWidgetListener {
 
 
+    private static final String PLV_LIST_ITEM = "PLVListItem";
     final private Logger logger = LoggerFactory.getLogger(PrivateLocationView.class.getName());
 
     /**
@@ -71,7 +72,8 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
                 for (final PrivateEvent pe : r.returnValue().getPrivateEvents()) {
                     if (DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventIsViewer(humanId, pe.getPrivateEventId()).returnValue()) {
                         $$(privateLocationViewEventList).appendChild(
-                                ElementComposer.compose($$(MarkupTag.LI))
+                                ElementComposer.compose($$(MarkupTag.DIV))
+                                        .$ElementSetClasses(PLV_LIST_ITEM)
                                         .wrapThis(
                                                 ElementComposer.compose($$(MarkupTag.A))
                                                         .$ElementSetText(pe.getPrivateEventName())
@@ -89,7 +91,7 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
                 }
                 if (r.returnValue().getPrivateEvents().size() == 0) {
                     $$(privateLocationViewEventList).appendChild(
-                            ElementComposer.compose($$(MarkupTag.LI)).$ElementSetText("No moments started here yet...")
+                            ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText("No moments started here yet...")
                                     .get());
                 }
             }

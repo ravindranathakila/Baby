@@ -158,7 +158,7 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
         RenderWOEIDGrabber:
         {
-            new WOEIDGrabber(request, $$(privateLocationCreateWOEIDGrabber), $$(privateLocationCreateWOEID));
+            //new WOEIDGrabber(request, $$(privateLocationCreateWOEIDGrabber), $$(privateLocationCreateWOEID));
         }
 //        itsNatDocument_.addCodeToSend(
 //                privateLocationCreateWOEIDUpdate.replace(
@@ -170,53 +170,30 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateName), EventType.BLUR.toString(), new EventListener() {
-
-            final RefObj<String> myprivateLocationName = privateLocationName;
-            final Validator v = new Validator();
-            RefObj<String> name;
-
-            @Override
-            public void handleEvent(final Event evt_) {
-                name = new SimpleName(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
-                logger.debug("{}", name);
-
-                logger.debug("{}", $$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
-
-                if (name.validate(v) == 0) {
-                    myprivateLocationName.setObj(name.getObj());
-                    $$clear($$(PrivateLocationCreateCNotice));
-                } else {
-                    $$(PrivateLocationCreateCNotice).setTextContent(name.getViolationAsString());
-                }
-            }
-
-        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
-
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateInfo), EventType.BLUR.toString(), new EventListener() {
-
-            final RefObj<String> myprivateLocationInfo = privateLocationInfo;
-            final Validator v = new Validator();
-            RefObj<String> info;
-
-            @Override
-            public void handleEvent(final Event evt_) {
-                info = new Info(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
-                logger.debug("{}", info);
-                logger.debug("{}", $$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
-
-                if (info.validate(v) == 0) {
-                    myprivateLocationInfo.setObj(info.getObj());
-                    clear($$(PrivateLocationCreateCNotice));
-                } else {
-                    $$(PrivateLocationCreateCNotice).setTextContent(info.getViolationAsString());
-                }
-            }
-
-
-        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
-
-//        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateWOEID), EventType.BLUR.toString(), new EventListener() {
+//        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateName), EventType.BLUR.toString(), new EventListener() {
+//
+//            final RefObj<String> myprivateLocationName = privateLocationName;
+//            final Validator v = new Validator();
+//            RefObj<String> name;
+//
+//            @Override
+//            public void handleEvent(final Event evt_) {
+//                name = new SimpleName(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+//                logger.debug("{}", name);
+//
+//                logger.debug("{}", $$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
+//
+//                if (name.validate(v) == 0) {
+//                    myprivateLocationName.setObj(name.getObj());
+//                    $$clear($$(PrivateLocationCreateCNotice));
+//                } else {
+//                    $$(PrivateLocationCreateCNotice).setTextContent(name.getViolationAsString());
+//                }
+//            }
+//
+//        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+//
+//        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateInfo), EventType.BLUR.toString(), new EventListener() {
 //
 //            final RefObj<String> myprivateLocationInfo = privateLocationInfo;
 //            final Validator v = new Validator();
@@ -236,66 +213,89 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 //                }
 //            }
 //
-//            @Override
-//            public void finalize() throws Throwable {
-//                Loggers.finalized(this.getClass().getName());
-//                super.finalize();
-//            }
+//
 //        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
-
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateSave), EventType.CLICK.toString(), new EventListener() {
-            @Override
-            public void handleEvent(final Event evt_) {
-                $$(PrivateLocationCreateCNotice).setTextContent(SAVING);
-            }
-        }, false);
-
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateSave), EventType.CLICK.toString(), new EventListener() {
-
-            final HumanId myhumanId = humanId;
-            final RefObj<String> myprivateLocationName = privateLocationName;
-            final RefObj<String> myprivateLocationInfo = privateLocationInfo;
-            final Validator v = new Validator();
-            final GeoCoord mywoeid = woeid;
-
-            @Override
-            public void handleEvent(final Event evt_) {
-                final SmartLogger sl;
-                logger.debug("{}", $$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
-                mywoeid.setObj($$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
-
-                if (myprivateLocationName.validate(v) == 0 && myprivateLocationInfo.validate(v) == 0 && mywoeid.validate(v) == 0) {
-                    sl = SmartLogger.start(Loggers.LEVEL.DEBUG, SAVING_PRIVATE_LOCATION, 10000, null, true);
-                    final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).cPrivateLocation(
-                            myhumanId,
-                            myprivateLocationName,
-                            myprivateLocationInfo,
-                            mywoeid);
-                    if (r.returnStatus() == 0) {
-                        remove(evt_.getTarget(), EventType.CLICK, this);
-                        $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationName.getObj() + WAS_CREATED);
-                        itsNatDocument_.addCodeToSend(JSCodeToSend.redirectPageWithURL(
-                                new Parameter(Controller.Page.Organize.getURL())
-                                        .append(Controller.Page.DocOrganizeCategory, 2, true)
-                                        .append(Controller.Page.DocOrganizeLocation, r.returnValue().getPrivateLocationId())
-                                        .get()
-                        ));//
-
-                        sl.complete(Loggers.DONE + r.returnMsg());
-                    } else {
-                        $$(PrivateLocationCreateCNotice).setTextContent(r.returnMsg());
-                        sl.complete(r.returnMsg());
-                    }
-                } else {
-                    if (myprivateLocationName.validate(v) != 0) {
-                        $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationName.getViolationAsString());
-                    } else if (myprivateLocationInfo.validate(v) != 0) {
-                        $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationInfo.getViolationAsString());
-                    } else if (mywoeid.validate(v) != 0) {
-                        $$(PrivateLocationCreateCNotice).setTextContent(mywoeid.getViolationAsString());
-                    }
-                }
-            }
-        }, false);
+//
+////        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateWOEID), EventType.BLUR.toString(), new EventListener() {
+////
+////            final RefObj<String> myprivateLocationInfo = privateLocationInfo;
+////            final Validator v = new Validator();
+////            RefObj<String> info;
+////
+////            @Override
+////            public void handleEvent(final Event evt_) {
+////                info = new Info(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+////                logger.debug("{}", info);
+////                logger.debug("{}", $$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
+////
+////                if (info.validate(v) == 0) {
+////                    myprivateLocationInfo.setObj(info.getObj());
+////                    clear($$(PrivateLocationCreateCNotice));
+////                } else {
+////                    $$(PrivateLocationCreateCNotice).setTextContent(info.getViolationAsString());
+////                }
+////            }
+////
+////            @Override
+////            public void finalize() throws Throwable {
+////                Loggers.finalized(this.getClass().getName());
+////                super.finalize();
+////            }
+////        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+//
+//        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateSave), EventType.CLICK.toString(), new EventListener() {
+//            @Override
+//            public void handleEvent(final Event evt_) {
+//                $$(PrivateLocationCreateCNotice).setTextContent(SAVING);
+//            }
+//        }, false);
+//
+//        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateSave), EventType.CLICK.toString(), new EventListener() {
+//
+//            final HumanId myhumanId = humanId;
+//            final RefObj<String> myprivateLocationName = privateLocationName;
+//            final RefObj<String> myprivateLocationInfo = privateLocationInfo;
+//            final Validator v = new Validator();
+//            final GeoCoord mywoeid = woeid;
+//
+//            @Override
+//            public void handleEvent(final Event evt_) {
+//                final SmartLogger sl;
+//                logger.debug("{}", $$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
+//                mywoeid.setObj($$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
+//
+//                if (myprivateLocationName.validate(v) == 0 && myprivateLocationInfo.validate(v) == 0 && mywoeid.validate(v) == 0) {
+//                    sl = SmartLogger.start(Loggers.LEVEL.DEBUG, SAVING_PRIVATE_LOCATION, 10000, null, true);
+//                    final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).cPrivateLocation(
+//                            myhumanId,
+//                            myprivateLocationName,
+//                            myprivateLocationInfo,
+//                            mywoeid);
+//                    if (r.returnStatus() == 0) {
+//                        remove(evt_.getTarget(), EventType.CLICK, this);
+//                        $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationName.getObj() + WAS_CREATED);
+//                        itsNatDocument_.addCodeToSend(JSCodeToSend.redirectPageWithURL(
+//                                new Parameter(Controller.Page.Organize.getURL())
+//                                        .append(Controller.Page.DocOrganizeCategory, 2, true)
+//                                        .append(Controller.Page.DocOrganizeLocation, r.returnValue().getPrivateLocationId())
+//                                        .get()
+//                        ));//
+//
+//                        sl.complete(Loggers.DONE + r.returnMsg());
+//                    } else {
+//                        $$(PrivateLocationCreateCNotice).setTextContent(r.returnMsg());
+//                        sl.complete(r.returnMsg());
+//                    }
+//                } else {
+//                    if (myprivateLocationName.validate(v) != 0) {
+//                        $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationName.getViolationAsString());
+//                    } else if (myprivateLocationInfo.validate(v) != 0) {
+//                        $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationInfo.getViolationAsString());
+//                    } else if (mywoeid.validate(v) != 0) {
+//                        $$(PrivateLocationCreateCNotice).setTextContent(mywoeid.getViolationAsString());
+//                    }
+//                }
+//            }
+//        }, false);
     }
 }

@@ -69,6 +69,8 @@ public abstract class AbstractWidgetListener<T> {
     public static final String STR_PAGE = "\npage:";
     public static final String STR_APPEND_TO_ELEMENT = "\nappendToElement: ";
     public static final String STR_HUMAN_ID = "\nhumanId: ";
+    private static final String STR_CSS_CLASS = "class";
+    private static final String STR_SPACE = " ";
     protected final ItsNatDocument itsNatDocument_;
     private final HTMLDocument hTMLDocument_;
     private final ItsNatHTMLDocument itsNatHTMLDocument_;
@@ -309,7 +311,7 @@ public abstract class AbstractWidgetListener<T> {
      * @param key__
      * @return Element
      */
-    final protected Element $$(final String key__) {
+    final public Element $$(final String key__) {
         return getWidgetElementById(key__);
     }
 
@@ -434,6 +436,16 @@ public abstract class AbstractWidgetListener<T> {
 
     protected final void $$displayNone(final Element element__) {
         ((ElementCSSInlineStyle) element__).getStyle().setProperty(DISPLAY, NONE, EMPTY);
+    }
+
+    protected final void $$setStyle(final Element element__, final String property, final String value) {
+        ((ElementCSSInlineStyle) element__).getStyle().setProperty(property, value, EMPTY);
+    }
+
+
+    protected final void $$setClass(final Element element__, final String classToSet, final boolean clearClasses) {
+        final String existingClasses = element__.getAttribute(STR_CSS_CLASS);
+        element__.setAttribute(STR_CSS_CLASS, existingClasses.isEmpty() ? STR_CSS_CLASS : (clearClasses ? classToSet : existingClasses + STR_SPACE + classToSet));
     }
 
     final protected Element $$(MarkupTagFace tagNameInAllCaps) {
