@@ -31,6 +31,11 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
 
 
     private static final String PLV_LIST_ITEM = "PLVListItem";
+    private static final String NO_MOMENTS_STARTED_HERE_YET = "No moments started here yet!";
+    private static final String START_A_MOMENT = "START A MOMENT!";
+    private static final String START_A_MOMENT_LINK = "start_a_moment_link";
+    private static final String PRIVATE_EVENT_CREATE_ANCHOR = "#PrivateEventCreateAnchor";
+    private static final String TEXT_DECORATION_UNDERLINE = "text-decoration:underline;";
     final private Logger logger = LoggerFactory.getLogger(PrivateLocationView.class.getName());
 
     /**
@@ -57,13 +62,14 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
         if (r.returnStatus() == 0) {
             $$(privateLocationViewName).setTextContent(r.returnValue().getPrivateLocationName());
             $$(privateLocationViewInfo).setTextContent(r.returnValue().getPrivateLocationInfo());
+            final String privateLocationLink = new Parameter(Organize.getURL())
+                    .append(DocOrganizeCategory, 2, true)
+                    .append(DocOrganizeLocation, r.returnValue().getPrivateLocationId())
+                    .get();
             setLink:
             {
                 $$(privateLocationViewLink).setAttribute(MarkupTag.A.href(),
-                        new Parameter(Organize.getURL())
-                                .append(DocOrganizeCategory, 2, true)
-                                .append(DocOrganizeLocation, r.returnValue().getPrivateLocationId())
-                                .get());
+                        privateLocationLink);
             }
 
 
@@ -90,9 +96,19 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
                     }
                 }
                 if (r.returnValue().getPrivateEvents().size() == 0) {
-                    $$(privateLocationViewEventList).appendChild(
-                            ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText("No moments started here yet...")
-                                    .get());
+                    if (r.returnValue().getPrivateLocationOwners().contains(humanId)) {
+                        $$(privateLocationViewEventList).appendChild(
+                                ElementComposer.compose($$(MarkupTag.A))
+                                        .$ElementSetHref(privateLocationLink + PRIVATE_EVENT_CREATE_ANCHOR)
+                                        .$ElementSetText(START_A_MOMENT)
+                                        .$ElementSetClasses(START_A_MOMENT_LINK)
+                                        .$ElementSetAttribute(MarkupTag.A.style(), TEXT_DECORATION_UNDERLINE)
+                                        .get());
+                    } else {
+                        $$(privateLocationViewEventList).appendChild(
+                                ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(NO_MOMENTS_STARTED_HERE_YET)
+                                        .get());
+                    }
                 }
             }
 
