@@ -128,6 +128,7 @@ abstract public class SignInOn extends AbstractWidgetListener {
                                 humanUserLocal.setHumanUserId(myusername.getObjectAsValid());
 
                                 userSession_.setAttribute(HumanUserLocal.NAME, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
+                                notifyUser("Logging you in...");
                                 $$sendJS(JSCodeToSend.refreshPageIn(0));
                             } else {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
                                 notifyUser("Ha ha wrong password!");

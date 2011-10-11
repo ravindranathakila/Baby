@@ -312,6 +312,10 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                                                 new Rawspot(
                                                         new W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
                                                         placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
+                                        add(
+                                                new Rawspot(
+                                                        new W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
+                                                        placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
                                     }
                                 } catch (final Exception e) {
                                     Loggers.ERROR.error(FAILED_TO_FETCH_GOOGLE_PLACES_DATA, e);

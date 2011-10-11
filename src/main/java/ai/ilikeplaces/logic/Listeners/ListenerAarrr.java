@@ -2,6 +2,8 @@ package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.logic.Listeners.widgets.DownTownHeatMap;
+import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractListener;
@@ -16,6 +18,8 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.html.HTMLDocument;
 
 import java.util.ResourceBundle;
+
+import static ai.ilikeplaces.servlets.Controller.Page.Skeleton_login_widget;
 
 /**
  * @author Ravindranath Akila
@@ -47,7 +51,11 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
                 final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
 
-                new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
+
+                    new SignInOn(request__, $(Controller.Page.AarrrHeader), new HumanId(getUsername()), request__.getServletRequest()) {
+                    };
+
+                    new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
 //                new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
 
                 sl.complete(Loggers.LEVEL.SERVER_STATUS, Loggers.DONE);
