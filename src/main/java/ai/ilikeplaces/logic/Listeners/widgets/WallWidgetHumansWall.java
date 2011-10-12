@@ -64,6 +64,8 @@ public class WallWidgetHumansWall extends WallWidget {
             };
         }
 
+        DB.getHumanCRUDHumansUnseenLocal(false).removeEntry(currUserAsVisitor.getObjectAsValid(), wall.getWallId());
+
         $$displayWallAsMuted($$(Controller.Page.wallMute), wall.getWallMutes().contains(currUserAsVisitor));
 
     }
@@ -128,6 +130,7 @@ public class WallWidgetHumansWall extends WallWidget {
                             for (final HumansNetPeople hpe : hnps.getHumansNetPeoples()) {
                                 if (!wall.getWallMutes().contains(hpe)) {
                                     SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), hnps.getDisplayName(), fetchToEmail + b.toString());
+                                    DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), wall.getWallId());
                                 }
                             }
                         } else {

@@ -292,4 +292,29 @@ final public class DB implements DBLocal {
 
     }
 
+
+    @Override
+    public HumanCRUDHumansUnseenLocal getHumanCRUDHumansUnseenLocal() {
+        isOK();
+        HumanCRUDHumansUnseenLocal h = null;
+        try {
+            h = (HumanCRUDHumansUnseenLocal) Context_.lookup(HumanCRUDHumansUnseenLocal.NAME);
+        } catch (NamingException ex) {
+            logger.error(NAMING_EXCEPTION, ex);
+        }
+        return h != null ? h : (HumanCRUDHumansUnseenLocal) LogNull.logThrow();
+
+    }
+
+    public static HumanCRUDHumansUnseenLocal getHumanCRUDHumansUnseenLocal(final boolean nonInjected) {
+        HumanCRUDHumansUnseenLocal h = null;
+        try {
+            h = ((DBLocal) Context_.lookup(DBLocal.NAME)).getHumanCRUDHumansUnseenLocal();
+        } catch (NamingException ex) {
+            logger.error(NAMING_EXCEPTION, ex);
+        }
+        return h != null ? h : (HumanCRUDHumansUnseenLocal) LogNull.logThrow();
+
+    }
+
 }

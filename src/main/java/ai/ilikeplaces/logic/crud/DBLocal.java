@@ -36,4 +36,6 @@ public interface DBLocal {
 
     public HumanUserLocal getHumanUserLocal();
 
+    public HumanCRUDHumansUnseenLocal getHumanCRUDHumansUnseenLocal();
+
 }
