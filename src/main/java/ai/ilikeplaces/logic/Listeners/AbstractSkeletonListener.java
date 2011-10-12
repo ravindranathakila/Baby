@@ -44,7 +44,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
     private static final String CODENAME_KEY = "codename";
     boolean initStatus = false;
     private static final String TALK = "Get in touch";
-    final static private SmartCache<String,HumansNetPeople> SINGLE_ENTRY_HUMANS_NET_PEOPLE  = new SmartCache<String, HumansNetPeople>();
+    final static private SmartCache<String, HumansNetPeople> SINGLE_ENTRY_HUMANS_NET_PEOPLE = new SmartCache<String, HumansNetPeople>();
 
     /**
      * @param request_
@@ -168,6 +168,16 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                     EXCEPTION.error("{}", t);
                 }
             }
+            SetNotifications:
+            {
+                try {
+                    if (getUsername() != null) {
+                        $(Controller.Page.Skeleton_notifications).setTextContent("Wall Changes - " + DB.getHumanCRUDHumansUnseenLocal(false).readEntries(getUsernameAsValid()).size());
+                    }
+                } catch (final Throwable t) {
+                    EXCEPTION.error("{}", t);
+                }
+            }
         }
     }
 
@@ -274,9 +284,9 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                                 final Msg mylastWallEntry = lastWallEntry;
 
                                 protected void init(final Object... initArgs) {
-                                        $$(Controller.Page.user_property_sidebar_content).appendChild(
-                                                ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(lastWallEntry.getMsgContent()).$ElementSetHref(ProfileRedirect.PROFILE_URL + friend.getHumanId()).get()
-                                        );
+                                    $$(Controller.Page.user_property_sidebar_content).appendChild(
+                                            ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(lastWallEntry.getMsgContent()).$ElementSetHref(ProfileRedirect.PROFILE_URL + friend.getHumanId()).get()
+                                    );
                                 }
                             };
                         }

@@ -42,6 +42,7 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
     private static final String PLACENAME = "placename";
     private static final String PLACEDETAILS = "placedetails";
     private static final String WOEHINT = "woehint";
+    private static final String PRIVATE_EVENT_CREATE_ANCHOR = "#PrivateEventCreateAnchor";
     RefObj<String> privateLocationName = null;
 
     RefObj<String> privateLocationInfo = null;
@@ -144,7 +145,7 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
                             itsNatDocument_.addCodeToSend(JSCodeToSend.redirectPageWithURL(
                                     new Parameter(Controller.Page.Organize.getURL())
                                             .append(Controller.Page.DocOrganizeCategory, 2, true)
-                                            .append(Controller.Page.DocOrganizeLocation, r.returnValue().getPrivateLocationId())
+                                            .append(Controller.Page.DocOrganizeLocation, r.returnValue().getPrivateLocationId() + PRIVATE_EVENT_CREATE_ANCHOR)
                                             .get()
                             ));//
                         } else {
