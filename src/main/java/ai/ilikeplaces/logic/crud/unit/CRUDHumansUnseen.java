@@ -79,9 +79,14 @@ public class CRUDHumansUnseen extends AbstractSLBCallbacks implements CRUDHumans
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Set<Wall> readEntries(final String humanId) {
-        return getHumansUnseen(humanId).getUnseenWalls();
+        HumansUnseen humansUnseen = humansUnseenCrudServiceLocal_.find(HumansUnseen.class, humanId);
+        if (humansUnseen == null) {
+            humansUnseenCrudServiceLocal_.create(new HumansUnseen().setHumanIdR(humanId));
+            humansUnseen = humansUnseenCrudServiceLocal_.findBadly(HumansUnseen.class, humanId);
+        }
+        return humansUnseen.getUnseenWalls();
     }
 
     @Override

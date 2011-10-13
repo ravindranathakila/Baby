@@ -45,11 +45,13 @@ public class ElementComposer {
     }
 
     /**
-     * @param elementToBeWrapped
+     * @param elementToBeWrapped and null if nothing needs to be wrapped(ignored)
      * @return ElementComposer
      */
     public ElementComposer wrapThis(final Element elementToBeWrapped) {
-        element.appendChild(elementToBeWrapped);
+        if (elementToBeWrapped != null) {
+            element.appendChild(elementToBeWrapped);
+        }
         return this;
     }
 

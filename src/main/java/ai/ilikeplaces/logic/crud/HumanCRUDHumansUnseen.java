@@ -62,7 +62,7 @@ public class HumanCRUDHumansUnseen extends AbstractSLBCallbacks implements Human
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Set<Wall> readEntries(final String humanId) {
         return crudHumansUnseenLocal_.readEntries(humanId);
     }
