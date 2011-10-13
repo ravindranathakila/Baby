@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
 public enum MarkupTag implements MarkupTagFace {
 
     P() {
-
         @Override
         public String toString() {
             return P_TAG;
@@ -28,7 +27,6 @@ public enum MarkupTag implements MarkupTagFace {
 
     },
     INPUT() {
-
         @Override
         public String toString() {
             return INPUT_TAG;
@@ -114,7 +112,7 @@ public enum MarkupTag implements MarkupTagFace {
     },
 
     UL() {
-         @Override
+        @Override
         public String toString() {
             return UL_TAG;
         }
@@ -125,10 +123,12 @@ public enum MarkupTag implements MarkupTagFace {
         public String toString() {
             return LI_TAG;
         }
+
         @Override
         public String ul() {
             return UL_TAG;
         }
+
         @Override
         public String ol() {
             return OL;
@@ -136,7 +136,6 @@ public enum MarkupTag implements MarkupTagFace {
     },
 
     DIV() {
-
         @Override
         public String toString() {
             return DIV_TAG;
@@ -144,10 +143,18 @@ public enum MarkupTag implements MarkupTagFace {
 
     },
 
+
+    SPAN() {
+        @Override
+        public String toString() {
+            return SPAN_TAG;
+        }
+
+    },
+
     BR() {
         @Override
-        public String toString
-                () {
+        public String toString() {
             return BR_TAG;
         }
     },
@@ -164,31 +171,36 @@ public enum MarkupTag implements MarkupTagFace {
     },
 
     GENERIC() {
-
         @Override
         public String value() {
             return VALUE;
         }
+
         @Override
         public String type() {
             return TYPE;
         }
+
         @Override
         public String typeValueText() {
             return TEXT;
         }
+
         @Override
         public String typeValueSelect() {
             return SELECT;
         }
+
         @Override
         public String typeValueHidden() {
             return HIDDEN;
         }
+
         @Override
         public String href() {
             return HREF;
         }
+
         @Override
         public String alt() {
             return ALT;
@@ -203,14 +215,18 @@ public enum MarkupTag implements MarkupTagFace {
         public String ul() {
             return UL_TAG;
         }
+
         @Override
         public String ol() {
             return OL;
         }
+
         @Override
         public String classs() {
             return CLASS;
-        }};
+        }
+    };
+    private static final String SPAN_TAG = "SPAN";
     private static final String CONTENT = "content";
     private static final String NAME = "name";
     private static final String UL_TAG = "UL";

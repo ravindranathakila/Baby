@@ -105,6 +105,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
             for (final HumansPrivateEvent hpe : pe.getPrivateEventViewers()) {
                 if (!hpe.getHumanId().equals(humanId.getObj())) {
                     SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), pe.getPrivateEventName(), fetchToEmail + b.toString());
+                    DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), aReturn.returnValue().getWallId());
                 }
             }
 
@@ -125,6 +126,8 @@ public class WallWidgetPrivateEvent extends WallWidget {
                 };//No use of fetching email content or initializing it
             }
         }
+
+        DB.getHumanCRUDHumansUnseenLocal(false).removeEntry(humanId.getObjectAsValid(), aReturn.returnValue().getWallId());
 
         $$displayWallAsMuted($$(Controller.Page.wallMute), aReturn.returnValueBadly().getWallMutes().contains(humanId));
     }
@@ -202,6 +205,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
                             for (final HumansPrivateEvent hpe : pe.getPrivateEventViewers()) {
                                 if (!wall.getWallMutes().contains(hpe)) {
                                     SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), pe.getPrivateEventName(), fetchToEmail + b.toString());
+                                    DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), wall.getWallId());
                                 }
                             }
                         } else {

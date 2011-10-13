@@ -4,19 +4,21 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
-import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 
@@ -73,26 +75,45 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
             }
 
 
+            final Set<Long> notifyingWalls;
+            GetHumansWallNotificationSubscriptions:
+            {
+                final Set<Wall> notifyingWallEntities = DB.getHumanCRUDHumansUnseenLocal(false).readEntries(humanId.getObjectAsValid());
+
+                notifyingWalls = new HashSet<Long>(notifyingWallEntities.size());
+                for (final Wall wall : notifyingWallEntities) {
+                    notifyingWalls.add(wall.getWallId());
+                }
+            }
+
+
             SetEventList:
             {
                 for (final PrivateEvent pe : r.returnValue().getPrivateEvents()) {
                     if (DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventIsViewer(humanId, pe.getPrivateEventId()).returnValue()) {
-                        $$(privateLocationViewEventList).appendChild(
-                                ElementComposer.compose($$(MarkupTag.DIV))
-                                        .$ElementSetClasses(PLV_LIST_ITEM)
-                                        .wrapThis(
-                                                ElementComposer.compose($$(MarkupTag.A))
-                                                        .$ElementSetText(pe.getPrivateEventName())
-                                                        .$ElementSetHref(
-                                                                new Parameter(Organize.getURL())
-                                                                        .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
-                                                                        .append(DocOrganizeLocation, r.returnValue().getPrivateLocationId())
-                                                                        .append(DocOrganizeEvent, pe.getPrivateEventId())
-                                                                        .get()
-                                                        )
-                                                        .get()
-                                        )
-                                        .get());
+                        final Long wallId = pe.getPrivateEventWall().getWallId();
+
+                        final Element eventHref = ElementComposer.compose($$(MarkupTag.DIV))
+                                .$ElementSetClasses(PLV_LIST_ITEM)
+                                .wrapThis(
+                                        ElementComposer.compose($$(MarkupTag.A))
+                                                .$ElementSetText(pe.getPrivateEventName())
+                                                .$ElementSetHref(
+                                                        new Parameter(Organize.getURL())
+                                                                .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
+                                                                .append(DocOrganizeLocation, r.returnValue().getPrivateLocationId())
+                                                                .append(DocOrganizeEvent, pe.getPrivateEventId())
+                                                                .get()
+                                                )
+                                                .get()
+                                )
+                                .get();
+
+
+                        $$(privateLocationViewEventList).appendChild(eventHref);
+
+                        new Notification(request, new NotificationCriteria(new NotificationActionJS(EventType.CLICK, "alert('Notified!');"), notifyingWalls.contains(pe.getPrivateEventWall().getWallId()) ? "!" : ""), eventHref);
+
                     }
                 }
                 if (r.returnValue().getPrivateEvents().size() == 0) {

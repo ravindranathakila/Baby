@@ -57,6 +57,7 @@ final public class
     //    final PageFace photoCRUD = Page.PhotoCRUD;
     final PageFace photo$Description = Page.Photo$Description;
     final PageFace signInOn = Page.SignInOn;
+    final PageFace notification = Page.Notification;
 
     final PageFace privateLocationCreate = Page.PrivateLocationCreate;
     final PageFace privateLocationView = Page.PrivateLocationView;
@@ -879,7 +880,21 @@ final public class
 
             @Override
             public String toString() {
-                return "DocSignInOn";
+                return DocSignInOn;
+            }
+        },
+        Notification(
+                "ai/ilikeplaces/widgets/notification.xhtml",
+                Controller.Page.notification_simple
+        ) {
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocNotification;
             }
         };
         private static final String APP_ROOT = RBGet.getGlobalConfigKey("AppRoot");
@@ -1247,6 +1262,12 @@ final public class
         final static public String signinonSubmit = "signinonSubmit";
         final static public String signinonNotice = "signinonNotice";
 
+        /*SignInOn Page*/
+        final static public String DocNotification= "Notification";
+
+        /*SignInOn Specific IDs*/
+        final static public String notification_simple = "notification_simple";
+
 
         /*Common IDs that should be present in any page*/
         final static public String CPageTitle = "PageTitle";
@@ -1387,6 +1408,8 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(photo$Description.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(photo$Description));
 
             inhs__.registerItsNatDocFragmentTemplate(signInOn.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(signInOn));
+
+            inhs__.registerItsNatDocFragmentTemplate(notification.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(notification));
 
             inhs__.registerItsNatDocFragmentTemplate(privateLocationCreate.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateLocationCreate));
 
