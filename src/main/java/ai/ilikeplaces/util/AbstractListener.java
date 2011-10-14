@@ -310,4 +310,22 @@ public abstract class AbstractListener {
         }
         return sessionBoundBadRefWrapper.boundInstance.getHumanUserId();
     }
+
+    /**
+     * Get the Username of the Logged in user, or throw exception.
+     * This is a call by prevention where the calls will be made to this method after one
+     * validation that the user is logged in. This is the safe approach to code that assumes logged in.
+     * When code gets bulky, at times calls to just getUserName might trigger null if not used in this form.
+     * With this approach, we expect to throw an exception immediately instead of late discovery.
+     *
+     * @return The Username of the Logged in user, and null, if not logged in
+     */
+    final protected HumanUserLocal getHumanUserAsValid() {
+        if (sessionBoundBadRefWrapper == null) {
+            throw ILLEGAL_STATE_EXCEPTION;
+        } else if (!sessionBoundBadRefWrapper.isAlive()) {//(Defensive)This is checked in the constructor of this class
+            throw ILLEGAL_STATE_EXCEPTION;
+        }
+        return sessionBoundBadRefWrapper.boundInstance;
+    }
 }

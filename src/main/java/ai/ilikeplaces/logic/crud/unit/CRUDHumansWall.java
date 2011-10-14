@@ -75,6 +75,8 @@ public class CRUDHumansWall extends AbstractSLBCallbacks implements CRUDHumansWa
         return lastWallEntryInList;
     }
 
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Long doDirtyRHumansWallID(final String humanId) throws DBDishonourCheckedException {
         return humansWallCrudServiceLocal_.findBadly(HumansWall.class, humanId).getWall().getWallId();
     }

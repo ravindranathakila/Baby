@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.crud.unit.CRUDHumansWallLocal;
 import ai.ilikeplaces.logic.crud.unit.CRUDWallLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -31,6 +32,8 @@ import java.util.List;
 public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWallLocal {
 
 
+    private static final String READ_WALL_ID_SUCCESSFUL = "Read Wall Id Successful!";
+    private static final String READ_WALL_ID_FAILED = "Read Wall Id FAILED!";
     @WARNING(warning = "Try not to use CRUDWallLocal because CRUDHumansWallLocal suffices. Pay special attention to performance issues here. Walls are bulky")
     @EJB
     private CRUDHumansWallLocal crudHumansWallLocal_;
@@ -60,6 +63,18 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
     public Return<List<Msg>> readWallLastEntries(final HumanId humanId, final Obj wallOwnerId__, final Integer numberOfEntriesToFetch, final RefreshSpec refreshSpec__) {
         Return<List<Msg>> r;
         r = new ReturnImpl<List<Msg>>(crudHumansWallLocal_.doRHumansWallLastEntries(humanId.getObj(), numberOfEntriesToFetch), READ_WALL_SUCCESSFUL);
+        return r;
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Return<Long> readWallId(final HumanId humanId, final Obj wallOwnerId__) {
+        Return<Long> r;
+        try {
+            r = new ReturnImpl<Long>(crudHumansWallLocal_.doDirtyRHumansWallID(humanId.getObj()), READ_WALL_ID_SUCCESSFUL);
+        } catch (DBDishonourCheckedException e) {
+            r = new ReturnImpl<Long>(e, READ_WALL_ID_FAILED, true);
+        }
         return r;
 
     }

@@ -5,11 +5,10 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.entities.Msg;
-import ai.ilikeplaces.logic.Listeners.widgets.DisplayName;
-import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
-import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
-import ai.ilikeplaces.logic.Listeners.widgets.UserPropertySidebar;
+import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
@@ -23,8 +22,10 @@ import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 import static ai.ilikeplaces.util.Loggers.EXCEPTION;
@@ -44,7 +45,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
     private static final String CODENAME_KEY = "codename";
     boolean initStatus = false;
     private static final String TALK = "Get in touch";
-    final static private SmartCache<String, HumansNetPeople> SINGLE_ENTRY_HUMANS_NET_PEOPLE = new SmartCache<String, HumansNetPeople>();
 
     /**
      * @param request_
@@ -172,7 +172,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
             {
                 try {
                     if (getUsername() != null) {
-                        $(Controller.Page.Skeleton_notifications).setTextContent("Wall Changes - " + DB.getHumanCRUDHumansUnseenLocal(false).readEntries(getUsernameAsValid()).size());
+                        $(Controller.Page.Skeleton_notifications).setTextContent("NOTIFICATIONS - " + DB.getHumanCRUDHumansUnseenLocal(false).readEntries(getUsernameAsValid()).size());
                     }
                 } catch (final Throwable t) {
                     EXCEPTION.error("{}", t);
@@ -267,16 +267,43 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
     protected void setSideBarFriends(final ItsNatServletRequest request__) {
         initStatus = true;
 
-        try {
-            if (getUsername() != null) {
-                //final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(getUsernameAsValid()).getSelfAsValid());
-                final Return<List<HumansNetPeople>> humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansBefriends(new HumanId(getUsernameAsValid()).getSelfAsValid());
+        final String currentUser = getUsername();
 
-                for (final HumansNetPeople friend : humansNetPeople.returnValue()) {
+        try {
+            if (currentUser != null) {
+                //final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(getUsernameAsValid()).getSelfAsValid());
+
+                final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) getHumanUserAsValid().cache(HumanUserLocal.CACHE_KEY.BE_FRIENDS,
+                        new SmartCache.RecoverWith<String, Object>() {
+                            @Override
+                            public Object getValue(String s) {
+                                return DB.getHumanCRUDHumanLocal(true).doDirtyRHumansBefriends(new HumanId(currentUser).getSelfAsValid()).returnValueBadly();
+                            }
+                        }
+                );
+
+                final Set<Wall> notifiedWalls = DB.getHumanCRUDHumansUnseenLocal(false).readEntries(currentUser);
+
+                final Set<Long> notifiedWallLongs = new HashSet<Long>(notifiedWalls.size());
+                for (final Wall wall : notifiedWalls) {
+                    notifiedWallLongs.add(wall.getWallId());
+                }
+
+                for (final HumansNetPeople friend : beFriends) {
                     new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
                         protected void init(final Object... initArgs) {
 
-                            final Msg lastWallEntry = DB.getHumanCrudWallLocal(false).readWallLastEntries(new HumanId(friend.getHumanId()), new Obj<HumanId>(new HumanId(getUsernameAsValid())), 1, new RefreshSpec()).returnValue().get(0);
+                            final Long friendWallId = WallWidget.HUMANS_WALL_ID.get(
+                                    new String(friend.getHumanId()),
+                                    new SmartCache.RecoverWith<String, Long>() {
+                                        @Override
+                                        public Long getValue(String s) {
+                                            return DB.getHumanCrudWallLocal(false).readWallId(new HumanId(friend.getHumanId()), new Obj<String>(currentUser)).returnValueBadly();
+                                        }
+                                    }
+                            );
+
+                            final Msg lastWallEntry = DB.getHumanCrudWallLocal(false).readWallLastEntries(new HumanId(friend.getHumanId()), new Obj<HumanId>(new HumanId(currentUser)), 1, new RefreshSpec()).returnValue().get(0);
 
                             final Element appendToElement__ = $$(Controller.Page.user_property_sidebar_content);
 
@@ -284,9 +311,11 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                                 final Msg mylastWallEntry = lastWallEntry;
 
                                 protected void init(final Object... initArgs) {
-                                    $$(Controller.Page.user_property_sidebar_content).appendChild(
-                                            ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(lastWallEntry.getMsgContent()).$ElementSetHref(ProfileRedirect.PROFILE_URL + friend.getHumanId()).get()
-                                    );
+                                    final Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(lastWallEntry.getMsgContent()).$ElementSetHref(ProfileRedirect.PROFILE_URL + friend.getHumanId()).get();
+                                    $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
+                                    if (notifiedWallLongs.contains(friendWallId)) {
+                                        new Notification(request__, new NotificationCriteria("!"), commentHref);
+                                    }
                                 }
                             };
                         }

@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.role;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.util.DelegatedObservable;
+import ai.ilikeplaces.util.cache.SmartCache;
 
 import javax.ejb.Local;
 import javax.servlet.http.HttpSessionBindingListener;
@@ -18,6 +19,10 @@ public interface HumanUserLocal extends HttpSessionBindingListener, Serializable
 
     final static public String NAME = HumanUserLocal.class.getSimpleName();
 
+    static public enum CACHE_KEY{
+        BE_FRIENDS
+    }
+
     /**
      * @return
      */
@@ -27,5 +32,9 @@ public interface HumanUserLocal extends HttpSessionBindingListener, Serializable
      * @param loggedOnUserId
      */
     public HumanUserLocal setHumanUserId(String loggedOnUserId);
+
+    public Object cache(final CACHE_KEY key, final SmartCache.RecoverWith<String, Object> recoveryMechanism);
+
+    public Object cacheAndUpdateWith(final CACHE_KEY key, final Object valueToUpdateWith);
 
 }
