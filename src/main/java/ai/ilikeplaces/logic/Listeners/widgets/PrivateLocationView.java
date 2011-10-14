@@ -112,7 +112,7 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
 
                         $$(privateLocationViewEventList).appendChild(eventHref);
 
-                        new Notification(request, new NotificationCriteria(new NotificationActionJS(EventType.CLICK, "alert('Notified!');"), notifyingWalls.contains(pe.getPrivateEventWall().getWallId()) ? "!" : ""), eventHref);
+                        new Notification(request, new NotificationCriteria(new NotificationActionJS(EventType.CLICK, "alert('Notified!');"), notifyingWalls.contains(pe.getPrivateEventWall().getWallId()) ? "!!!" : ""), eventHref);
 
                     }
                 }

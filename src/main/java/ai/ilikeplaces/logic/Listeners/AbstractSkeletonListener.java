@@ -273,14 +273,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
             if (currentUser != null) {
                 //final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(getUsernameAsValid()).getSelfAsValid());
 
-                final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) getHumanUserAsValid().cache(HumanUserLocal.CACHE_KEY.BE_FRIENDS,
-                        new SmartCache.RecoverWith<String, Object>() {
-                            @Override
-                            public Object getValue(String s) {
-                                return DB.getHumanCRUDHumanLocal(true).doDirtyRHumansBefriends(new HumanId(currentUser).getSelfAsValid()).returnValueBadly();
-                            }
-                        }
-                );
+                final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) getHumanUserAsValid().cache(currentUser);
 
                 final Set<Wall> notifiedWalls = DB.getHumanCRUDHumansUnseenLocal(false).readEntries(currentUser);
 
@@ -293,15 +286,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                     new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
                         protected void init(final Object... initArgs) {
 
-                            final Long friendWallId = WallWidget.HUMANS_WALL_ID.get(
-                                    new String(friend.getHumanId()),
-                                    new SmartCache.RecoverWith<String, Long>() {
-                                        @Override
-                                        public Long getValue(String s) {
-                                            return DB.getHumanCrudWallLocal(false).readWallId(new HumanId(friend.getHumanId()), new Obj<String>(currentUser)).returnValueBadly();
-                                        }
-                                    }
-                            );
+                            final Long friendWallId = WallWidgetHumansWall.HUMANS_WALL_ID.get(new Pair<String, String>(new String(currentUser), new String(friend.getHumanId())));
 
                             final Msg lastWallEntry = DB.getHumanCrudWallLocal(false).readWallLastEntries(new HumanId(friend.getHumanId()), new Obj<HumanId>(new HumanId(currentUser)), 1, new RefreshSpec()).returnValue().get(0);
 
@@ -314,7 +299,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                                     final Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(lastWallEntry.getMsgContent()).$ElementSetHref(ProfileRedirect.PROFILE_URL + friend.getHumanId()).get();
                                     $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
                                     if (notifiedWallLongs.contains(friendWallId)) {
-                                        new Notification(request__, new NotificationCriteria("!"), commentHref);
+                                        new Notification(request__, new NotificationCriteria("!!!"), commentHref);
                                     }
                                 }
                             };

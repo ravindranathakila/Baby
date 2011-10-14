@@ -33,7 +33,7 @@ public interface HumanUserLocal extends HttpSessionBindingListener, Serializable
      */
     public HumanUserLocal setHumanUserId(String loggedOnUserId);
 
-    public Object cache(final CACHE_KEY key, final SmartCache.RecoverWith<String, Object> recoveryMechanism);
+    public Object cache(final String key);
 
     public Object cacheAndUpdateWith(final CACHE_KEY key, final Object valueToUpdateWith);
 

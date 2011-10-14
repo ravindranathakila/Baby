@@ -4,6 +4,8 @@ import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache;
@@ -164,11 +166,16 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
      * @return
      */
     private SmartCache<String, Object> getCache() {
-        return cache == null ? cache = new SmartCache<String, Object>() : cache;
+        return cache == null ? cache = new SmartCache<String, Object>(new SmartCache.RecoverWith<String, Object>() {
+            @Override
+            public Object getValue(final String s) {
+                return DB.getHumanCRUDHumanLocal(true).doDirtyRHumansBefriends(new HumanId(s).getSelfAsValid()).returnValueBadly();
+            }
+        }) : cache;
     }
 
-    public Object cache(final CACHE_KEY key, final SmartCache.RecoverWith<String, Object> recoveryMechanism) {
-        return getCache().get(new String(key.name()), recoveryMechanism);//DO NOT REMOVE NEW STRING, WILL NOT ALLOW GC AS A WEAK REFERENCE IF SO
+    public Object cache(final String key) {
+        return getCache().get(new String(key));//DO NOT REMOVE NEW STRING, WILL NOT ALLOW GC AS A WEAK REFERENCE IF SO
     }
 
     public Object cacheAndUpdateWith(final CACHE_KEY key, final Object valueToUpdateWith) {

@@ -22,6 +22,9 @@ import ai.ilikeplaces.doc.License;
  * </code>
  * <p/>
  * <p/>
+ * <p/>
+ * {@link #equals(Object)} checks only on key for equality
+ * <p/>
  * Created by IntelliJ IDEA.
  * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Oct 10, 2010
@@ -107,5 +110,28 @@ public class Pair<K, V> {
         System.out.println(new Pair<String, Integer>().setKey("Susan Boyle").setValue(1).toString());
 
         System.out.println(new Pair<String, Integer>("Susan Boyle", 1).toString());
+    }
+
+    /**
+     * Matches checked only on key
+     *
+     * @param o
+     * @return
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Pair pair = (Pair) o;
+
+        if (key != null ? !key.equals(pair.key) : pair.key != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return key != null ? key.hashCode() : 0;
     }
 }

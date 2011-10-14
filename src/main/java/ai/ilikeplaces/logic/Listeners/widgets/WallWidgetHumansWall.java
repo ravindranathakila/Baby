@@ -9,6 +9,7 @@ import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.cache.SmartCache;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -35,6 +36,13 @@ public class WallWidgetHumansWall extends WallWidget {
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
     private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs", "wallMutes");
     private static final RefreshSpec REFRESH_SPEC_EMPTY = new RefreshSpec();
+
+    final static public SmartCache<Pair<String, String>, Long> HUMANS_WALL_ID = new SmartCache<Pair<String, String>, Long>(new SmartCache.RecoverWith<Pair<String, String>, Long>() {
+        @Override
+        public Long getValue(final Pair<String, String> current_friend) {
+            return DB.getHumanCrudWallLocal(false).readWallId(new HumanId(current_friend.getValue()), new Obj<String>(current_friend.getKey())).returnValueBadly();
+        }
+    });
 
 
     HumanId requestedProfile;
