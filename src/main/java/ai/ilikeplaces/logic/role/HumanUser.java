@@ -6,6 +6,7 @@ import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.cache.SmartCache;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -14,6 +15,7 @@ import javax.ejb.PrePassivate;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.servlet.http.HttpSessionBindingEvent;
+import java.io.Serializable;
 import java.util.Observer;
 
 /**
@@ -22,7 +24,7 @@ import java.util.Observer;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateful
-public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, ManageObservers {
+public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, ManageObservers, Serializable {
 
     private String humanUserId_ = null;
     @FIXME(issue = "transient",
@@ -30,6 +32,12 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
                     "Will this field make the session variable huge? There could be millions of users!"})
     @WARNING(warning = "DO NOT MAKE TRANSIENT AS PASSIVATION MAKES THE VALUE OF THIS NULL.")
     private DelegatedObservable delegatedObservable;
+
+    /**
+     * DO NOT USE CACHE DIRECTLY. IT MIGHT BE JUST OUT OF DE-SERIALIZATION AND BE NULL. Use {@link #getCache()} TO DO THIS.
+     * DO NOT REMOVE transient SINCE THIS IS A CACHE, AND WILL GET VERY BULKY.
+     */
+    private transient SmartCache<String, Object> cache;
 
     /**
      * @return
@@ -148,5 +156,22 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
     @Override
     public void deleteObserver(Observer o) {
         delegatedObservable.deleteObserver(o);
+    }
+
+    /**
+     * DO NOT USE CACHE DIRECTLY. IT MIGHT BE JUST OUT OF DE-SERIALIZATION AND BE NULL;
+     *
+     * @return
+     */
+    private SmartCache<String, Object> getCache() {
+        return cache == null ? cache = new SmartCache<String, Object>() : cache;
+    }
+
+    public Object cache(final CACHE_KEY key, final SmartCache.RecoverWith<String, Object> recoveryMechanism) {
+        return getCache().get(new String(key.name()), recoveryMechanism);//DO NOT REMOVE NEW STRING, WILL NOT ALLOW GC AS A WEAK REFERENCE IF SO
+    }
+
+    public Object cacheAndUpdateWith(final CACHE_KEY key, final Object valueToUpdateWith) {
+        return getCache().MAP.put(new String(key.name()), valueToUpdateWith);//DO NOT REMOVE NEW STRING, WILL NOT ALLOW GC AS A WEAK REFERENCE IF SO
     }
 }

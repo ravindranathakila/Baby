@@ -3,10 +3,8 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.logic.validators.unit.WallEntry;
 import ai.ilikeplaces.servlets.Controller.Page;
-import ai.ilikeplaces.util.AbstractWidgetListener;
-import ai.ilikeplaces.util.EventType;
-import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.MarkupTag;
+import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.cache.SmartCache;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
@@ -30,6 +28,8 @@ abstract public class WallWidget extends AbstractWidgetListener {
     public static final String LISTEN = "Listen";
     protected static final String WALL_SUBMIT_WIDGET = "wall_submit_widget";
     protected static final String ORGANIZE_SECTION = "organize";
+
+    final static public SmartCache<String, Long> HUMANS_WALL_ID = new SmartCache<String, Long>();
 
 
     public WallWidget(final ItsNatServletRequest request__, final Element appendToElement__, final Object... initArgs) {

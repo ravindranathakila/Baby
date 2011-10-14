@@ -22,4 +22,8 @@ public class NotificationCriteria {
         this.notificationActionJS = notificationActionJS;
         this.notificationText = notificationText;
     }
+
+    public NotificationCriteria(String notificationText) {
+        this.notificationText = notificationText;
+    }
 }
