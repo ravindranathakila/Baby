@@ -20,6 +20,9 @@ import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
 import java.util.HashSet;
@@ -294,13 +297,27 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
 
                             new UserPropertySidebar(request__, appendToElement__, new HumanId(lastWallEntry.getMsgMetadata())) {
                                 final Msg mylastWallEntry = lastWallEntry;
+                                private String href;
 
                                 protected void init(final Object... initArgs) {
-                                    final Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(lastWallEntry.getMsgContent()).$ElementSetHref(ProfileRedirect.PROFILE_URL + friend.getHumanId()).get();
+                                    $$displayBlock($$(Controller.Page.user_property_talk));
+                                    href = ProfileRedirect.PROFILE_URL + friend.getHumanId();
+                                    Element commentHref  = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(lastWallEntry.getMsgContent()).$ElementSetHref(href).get();
                                     $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
                                     if (notifiedWallLongs.contains(friendWallId)) {
                                         new Notification(request__, new NotificationCriteria("!!!"), commentHref);
                                     }
+                                }
+
+                                @Override
+                                protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+
+                                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_talk), EventType.CLICK.toString(), new EventListener() {
+                                        @Override
+                                        public void handleEvent(final Event evt_) {
+                                            $$sendJS(JSCodeToSend.redirectPageWithURL(href));
+                                        }
+                                    }, false);
                                 }
                             };
                         }
