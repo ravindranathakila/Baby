@@ -79,7 +79,7 @@ public class CRUDHumansUnseen extends AbstractSLBCallbacks implements CRUDHumans
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Set<Wall> readEntries(final String humanId) {
         HumansUnseen humansUnseen = humansUnseenCrudServiceLocal_.find(HumansUnseen.class, humanId);
         if (humansUnseen == null) {
