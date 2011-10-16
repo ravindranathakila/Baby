@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 
 /**
@@ -279,8 +278,11 @@ final public class
                 Controller.Page.wallAppend,
                 Controller.Page.wallSubmit,
                 Controller.Page.wallNotice,
-                Controller.Page.wallMute
-        ) {
+                Controller.Page.wallMute,
+                Controller.Page.wallTitle,
+                Controller.Page.wallProfilePhoto,
+                Controller.Page.wallProfileName
+                ) {
             @Override
             public String toString() {
                 return DocWall;
@@ -1007,6 +1009,9 @@ final public class
         final static public String wallSubmit = "wallSubmit";
         final static public String wallNotice = "wallNotice";
         final static public String wallMute = "wallMute";
+        final static public String wallTitle = "wallTitle";
+        final static public String wallProfilePhoto = "wallProfilePhoto";
+        final static public String wallProfileName = "wallProfileName";
 
         /*DisplayName Page*/
         final static public String DocDisplayName = "DocDisplayName";
@@ -1284,12 +1289,12 @@ final public class
         final static public String signinonNotice = "signinonNotice";
 
         /*Notification Page*/
-        final static public String DocNotification= "DocNotification";
+        final static public String DocNotification = "DocNotification";
         /*Notification Specific IDs*/
         final static public String notification_simple = "notification_simple";
 
         /*DocDownTownFlow Page*/
-        final static public String DocDownTownFlow= "DocDownTownFlow";
+        final static public String DocDownTownFlow = "DocDownTownFlow";
         /*DocDownTownFlow Specific IDs*/
         final static public String DownTownFlowWidget = "DownTownFlowWidget";
         final static public String DownTownFlowTalks = "DownTownFlowTalks";

@@ -9,6 +9,7 @@ import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
@@ -20,6 +21,7 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +47,7 @@ public class WallWidgetPrivatePhoto extends WallWidget {
 
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
     private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs", "wallMutes");
+    private static final String TALK_ON_THIS_PHOTO = "talk.on.this.photo";
 
     HumanId humanId;
 
@@ -95,6 +98,12 @@ public class WallWidgetPrivatePhoto extends WallWidget {
                     }.fetchToEmail
             );
         }
+
+        final HumansIdentity currUserAsVisitorHI = UserProperty.HUMANS_IDENTITY_CACHE.get(new String(humanId.getHumanId()));
+
+        super.setWallProfileName(currUserAsVisitorHI.getHuman().getDisplayName());
+        super.setWallProfilePhoto(UserProperty.formatProfilePhotoUrl(currUserAsVisitorHI.getHumansIdentityProfilePhoto()));
+        super.setWallTitle(RBGet.gui().getString(TALK_ON_THIS_PHOTO));
 
         $$displayWallAsMuted($$(Controller.Page.wallMute), wall.getWallMutes().contains(humanId));
     }

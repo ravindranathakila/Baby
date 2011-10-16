@@ -1,12 +1,14 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache;
@@ -23,6 +25,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.text.MessageFormat;
 
 /**
  * Created by IntelliJ IDEA.
@@ -43,6 +46,7 @@ public class WallWidgetHumansWall extends WallWidget {
             return DB.getHumanCrudWallLocal(false).readWallId(new HumanId(current_friend.getValue()), new Obj<String>(current_friend.getKey())).returnValueBadly();
         }
     });
+    private static final String TALK_AT_DOWN_TOWN_ER_0_S = "talk.at.down.town.er.0.s";
 
 
     HumanId requestedProfile;
@@ -59,6 +63,13 @@ public class WallWidgetHumansWall extends WallWidget {
     protected void init(final Object... initArgs) {
         this.requestedProfile = ((HumanId) initArgs[0]).getSelfAsValid();
         this.currUserAsVisitor = ((HumanId) initArgs[1]).getSelfAsValid();
+
+        final HumansIdentity currUserAsVisitorHI = UserProperty.HUMANS_IDENTITY_CACHE.get(new String(currUserAsVisitor.getHumanId()));
+        final HumansIdentity requestedProfileHI = UserProperty.HUMANS_IDENTITY_CACHE.get(new String(requestedProfile.getHumanId()));
+
+        super.setWallProfileName(currUserAsVisitorHI.getHuman().getDisplayName());
+        super.setWallProfilePhoto(UserProperty.formatProfilePhotoUrl(currUserAsVisitorHI.getHumansIdentityProfilePhoto()));
+        super.setWallTitle(MessageFormat.format(RBGet.gui().getString(TALK_AT_DOWN_TOWN_ER_0_S), requestedProfileHI.getHuman().getDisplayName()));
 
         fetchToEmail();
 

@@ -1,15 +1,13 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.HumansPrivateEvent;
-import ai.ilikeplaces.entities.Msg;
-import ai.ilikeplaces.entities.PrivateEvent;
-import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.WallEntry;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
@@ -25,6 +23,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.text.MessageFormat;
 
 /**
  * Created by IntelliJ IDEA.
@@ -38,6 +37,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
 
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
     private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs", "wallMutes");
+    private static final String TALK_AT_0 = "talk.at.0";
 
     HumanId humanId;
     Long privateEventId = null;
@@ -128,6 +128,13 @@ public class WallWidgetPrivateEvent extends WallWidget {
         }
 
         DB.getHumanCRUDHumansUnseenLocal(false).removeEntry(humanId.getObjectAsValid(), aReturn.returnValue().getWallId());
+
+
+        final HumansIdentity currUserAsVisitorHI = UserProperty.HUMANS_IDENTITY_CACHE.get(new String(humanId.getHumanId()));
+
+        super.setWallProfileName(currUserAsVisitorHI.getHuman().getDisplayName());
+        super.setWallProfilePhoto(UserProperty.formatProfilePhotoUrl(currUserAsVisitorHI.getHumansIdentityProfilePhoto()));
+        super.setWallTitle(MessageFormat.format(RBGet.gui().getString(TALK_AT_0), pe.getPrivateEventName()));
 
         $$displayWallAsMuted($$(Controller.Page.wallMute), aReturn.returnValueBadly().getWallMutes().contains(humanId));
     }

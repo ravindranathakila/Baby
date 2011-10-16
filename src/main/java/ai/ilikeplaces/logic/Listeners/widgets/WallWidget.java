@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.logic.validators.unit.WallEntry;
+import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache;
@@ -58,7 +59,6 @@ abstract public class WallWidget extends AbstractWidgetListener {
     }
 
 
-
     void $$displayWallAsMuted(final Event evt_, final boolean doMute) {
         $$displayWallAsMuted($$(evt_), doMute);
     }
@@ -73,5 +73,17 @@ abstract public class WallWidget extends AbstractWidgetListener {
                     MarkupTag.IMG.src(),
                     element.getAttribute(MarkupTag.IMG.src()).replace("listen.png", "mute.png"));
         }
+    }
+
+    void setWallProfilePhoto(final String profilePhotoUrl) {
+        $$(Page.wallProfilePhoto).setAttribute(MarkupTag.IMG.title(), profilePhotoUrl);
+    }
+
+    void setWallTitle(final String wallTitle) {
+        $$(Page.wallTitle).setTextContent(wallTitle);
+    }
+
+    void setWallProfileName(final String wallProfileName) {
+        $$(Page.wallProfileName).setTextContent(wallProfileName);
     }
 }
