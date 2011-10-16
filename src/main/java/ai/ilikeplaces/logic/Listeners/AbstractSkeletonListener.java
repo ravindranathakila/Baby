@@ -285,44 +285,55 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                     notifiedWallLongs.add(wall.getWallId());
                 }
 
-                for (final HumansNetPeople friend : beFriends) {
-                    new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
-                        protected void init(final Object... initArgs) {
+                new DownTownFlow(
+                        request__,
+                        new DownTownFlowCriteria().setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS),
+                        $(Controller.Page.Skeleton_sidebar)) {
+                    @Override
+                    protected void init(DownTownFlowCriteria downTownFlowCriteria) {
+                        for (final HumansNetPeople friend : beFriends) {
 
-                            final Long friendWallId = WallWidgetHumansWall.HUMANS_WALL_ID.get(new Pair<String, String>(new String(currentUser), new String(friend.getHumanId())));
-
-                            final Msg lastWallEntry = DB.getHumanCrudWallLocal(false).readWallLastEntries(new HumanId(friend.getHumanId()), new Obj<HumanId>(new HumanId(currentUser)), 1, new RefreshSpec()).returnValue().get(0);
-
-                            final Element appendToElement__ = $$(Controller.Page.user_property_sidebar_content);
-
-                            new UserPropertySidebar(request__, appendToElement__, new HumanId(lastWallEntry.getMsgMetadata())) {
-                                final Msg mylastWallEntry = lastWallEntry;
-                                private String href;
-
+                            new UserPropertySidebar(request__, $$(Controller.Page.DownTownFlowTalksFriends), new HumanId(friend.getHumanId())) {
                                 protected void init(final Object... initArgs) {
-                                    $$displayBlock($$(Controller.Page.user_property_talk));
-                                    href = ProfileRedirect.PROFILE_URL + friend.getHumanId();
-                                    Element commentHref  = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(lastWallEntry.getMsgContent()).$ElementSetHref(href).get();
-                                    $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
-                                    if (notifiedWallLongs.contains(friendWallId)) {
-                                        new Notification(request__, new NotificationCriteria("!!!"), commentHref);
-                                    }
-                                }
 
-                                @Override
-                                protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+                                    final Long friendWallId = WallWidgetHumansWall.HUMANS_WALL_ID.get(new Pair<String, String>(new String(currentUser), new String(friend.getHumanId())));
 
-                                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_talk), EventType.CLICK.toString(), new EventListener() {
-                                        @Override
-                                        public void handleEvent(final Event evt_) {
-                                            $$sendJS(JSCodeToSend.redirectPageWithURL(href));
+                                    final Msg lastWallEntry = DB.getHumanCrudWallLocal(false).readWallLastEntries(new HumanId(friend.getHumanId()), new Obj<HumanId>(new HumanId(currentUser)), 1, new RefreshSpec()).returnValue().get(0);
+
+                                    final Element appendToElement__ = $$(Controller.Page.user_property_sidebar_content);
+
+                                    new UserPropertySidebar(request__, appendToElement__, new HumanId(lastWallEntry.getMsgMetadata())) {
+                                        final Msg mylastWallEntry = lastWallEntry;
+                                        private String href;
+
+                                        protected void init(final Object... initArgs) {
+                                            $$displayBlock($$(Controller.Page.user_property_talk));
+                                            href = ProfileRedirect.PROFILE_URL + friend.getHumanId();
+                                            Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(lastWallEntry.getMsgContent()).$ElementSetHref(href).get();
+                                            $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
+                                            if (notifiedWallLongs.contains(friendWallId)) {
+                                                new Notification(request__, new NotificationCriteria("!!!"), commentHref);
+                                            }
                                         }
-                                    }, false);
+
+                                        @Override
+                                        protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+
+                                            itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_talk), EventType.CLICK.toString(), new EventListener() {
+                                                @Override
+                                                public void handleEvent(final Event evt_) {
+                                                    $$sendJS(JSCodeToSend.redirectPageWithURL(href));
+                                                }
+                                            }, false);
+                                        }
+                                    };
                                 }
                             };
                         }
-                    };
-                }
+                    }
+                };
+
+
             }
         } catch (final Throwable t) {
             EXCEPTION.error("{}", t);

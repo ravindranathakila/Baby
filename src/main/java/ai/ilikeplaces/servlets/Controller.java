@@ -58,6 +58,7 @@ final public class
     final PageFace photo$Description = Page.Photo$Description;
     final PageFace signInOn = Page.SignInOn;
     final PageFace notification = Page.Notification;
+    final PageFace downTownFlow = Page.DownTownFlow;
 
     final PageFace privateLocationCreate = Page.PrivateLocationCreate;
     final PageFace privateLocationView = Page.PrivateLocationView;
@@ -897,7 +898,25 @@ final public class
             public String toString() {
                 return DocNotification;
             }
+        },
+        DownTownFlow(
+                "ai/ilikeplaces/widgets/DownTownFlow.xhtml",
+                Controller.Page.DownTownFlowWidget,
+                Controller.Page.DownTownFlowTalks,
+                Controller.Page.DownTownFlowMoments,
+                Controller.Page.DownTownFlowTalksFriends
+        ) {
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocDownTownFlow;
+            }
         };
+
         private static final String APP_ROOT = RBGet.getGlobalConfigKey("AppRoot");
 
         /*TermsOfServices Page*/
@@ -1264,11 +1283,18 @@ final public class
         final static public String signinonSubmit = "signinonSubmit";
         final static public String signinonNotice = "signinonNotice";
 
-        /*SignInOn Page*/
-        final static public String DocNotification= "Notification";
-
-        /*SignInOn Specific IDs*/
+        /*Notification Page*/
+        final static public String DocNotification= "DocNotification";
+        /*Notification Specific IDs*/
         final static public String notification_simple = "notification_simple";
+
+        /*DocDownTownFlow Page*/
+        final static public String DocDownTownFlow= "DocDownTownFlow";
+        /*DocDownTownFlow Specific IDs*/
+        final static public String DownTownFlowWidget = "DownTownFlowWidget";
+        final static public String DownTownFlowTalks = "DownTownFlowTalks";
+        final static public String DownTownFlowMoments = "DownTownFlowMoments";
+        final static public String DownTownFlowTalksFriends = "DownTownFlowTalksFriends";
 
 
         /*Common IDs that should be present in any page*/
@@ -1412,6 +1438,8 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(signInOn.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(signInOn));
 
             inhs__.registerItsNatDocFragmentTemplate(notification.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(notification));
+
+            inhs__.registerItsNatDocFragmentTemplate(downTownFlow.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(downTownFlow));
 
             inhs__.registerItsNatDocFragmentTemplate(privateLocationCreate.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateLocationCreate));
 
