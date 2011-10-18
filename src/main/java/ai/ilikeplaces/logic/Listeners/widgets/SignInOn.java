@@ -10,6 +10,7 @@ import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
+import ai.ilikeplaces.logic.validators.unit.SimpleString;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
@@ -42,6 +43,10 @@ abstract public class SignInOn extends AbstractWidgetListener {
     private HumanId username = null;
     private Password password = null;
 
+    private SimpleString dbHash = null;
+    private SimpleString dbSalt = null;
+    private Obj<Boolean> userOk = null;
+
 // --------------------------- CONSTRUCTORS ---------------------------
 
     /**
@@ -65,6 +70,9 @@ abstract public class SignInOn extends AbstractWidgetListener {
 
         username = (HumanId) initArgs[0];
         password = new Password();
+        dbHash = new SimpleString("");
+        dbSalt = new SimpleString("");
+        userOk = new Obj<Boolean>(false);
 
         if (username.validate() == 0) {
             UCShowHideWidgets:
@@ -91,10 +99,26 @@ abstract public class SignInOn extends AbstractWidgetListener {
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.signinonUsername), EventType.BLUR.toString(), new EventListener() {
             private HumanId myusername = username;
+            private SimpleString mydbHash = dbHash;
+            private SimpleString mydbSalt = dbSalt;
+            private Obj<Boolean> myuserOk = userOk;
 
             @Override
             public void handleEvent(final Event evt_) {
                 myusername.setObj($$(evt_).getAttribute(MarkupTag.INPUT.value()));
+
+                if (myusername.validate() == 0) {
+                    Human existingUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(myusername.getObjectAsValid());
+                    if (existingUser != null && existingUser.getHumanAlive()) {/*Ok user name valid but now we check for password*/
+                        final HumansAuthentication humansAuthentication = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(myusername).returnValue();
+                        mydbHash.setObj(humansAuthentication.getHumanAuthenticationHash());
+                        mydbSalt.setObj(humansAuthentication.getHumanAuthenticationSalt());
+                        myuserOk.setObj(true);
+                    } else {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
+                        myuserOk.setObj(false);
+                        notifyUser(myusername.getObj() + " is not a user of this website");
+                    }
+                }
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
@@ -110,6 +134,9 @@ abstract public class SignInOn extends AbstractWidgetListener {
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.signinonSubmit), EventType.CLICK.toString(), new EventListener() {
             private HumanId myusername = username;
             private Password mypassword = password;
+            private SimpleString mydbHash = dbHash;
+            private SimpleString mydbSalt = dbSalt;
+            private Obj<Boolean> myuserOk = userOk;
 
             @Override
             public void handleEvent(final Event evt_) {
@@ -118,16 +145,15 @@ abstract public class SignInOn extends AbstractWidgetListener {
                 if (myusername.validate() == 0 && mypassword.validate() == 0) {
                     if (userSession_.getAttribute(HumanUserLocal.NAME) == null) {
                         /*Ok the session does not have the bean, initialize it with the user with email id and password*/
-                        Human existingUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(myusername.getObjectAsValid());
-                        if (existingUser != null && existingUser.getHumanAlive()) {/*Ok user name valid but now we check for password*/
-                            final HumansAuthentication humansAuthentications = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(myusername).returnValue();
+                        if (myuserOk.getObj()) {/*Ok user name valid but now we check for password*/
 
-                            if (humansAuthentications.getHumanAuthenticationHash().equals(DB.getSingletonHashingFaceLocal(true).getHash(mypassword.getObjectAsValid(), humansAuthentications.getHumanAuthenticationSalt()))) {
+                            if (mydbHash.getObj().equals(DB.getSingletonHashingFaceLocal(true).getHash(mypassword.getObjectAsValid(), mydbSalt.getObj()))) {
                                 final HumanUserLocal humanUserLocal = DB.getHumanUserLocal(true);
 
                                 humanUserLocal.setHumanUserId(myusername.getObjectAsValid());
 
                                 userSession_.setAttribute(HumanUserLocal.NAME, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
+
                                 notifyUser("Logging you in...");
                                 $$sendJS(JSCodeToSend.refreshPageIn(0));
                             } else {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
