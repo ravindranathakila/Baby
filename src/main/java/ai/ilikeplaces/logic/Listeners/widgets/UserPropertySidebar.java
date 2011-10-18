@@ -28,7 +28,7 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
     private static final String USER_PROPERTY_EMAIL_XHTML = "ai/ilikeplaces/widgets/UserProperty_email.xhtml";
     protected String profilePhotoURLFinal = "#";
 
-    final static SmartCache<String, HumansIdentity> HUMANS_IDENTITY_SIDEBAR_CACHE = UserProperty.HUMANS_IDENTITY_CACHE;
+    public final static SmartCache<String, HumansIdentity> HUMANS_IDENTITY_SIDEBAR_CACHE = UserProperty.HUMANS_IDENTITY_CACHE;
 
 
     /**
