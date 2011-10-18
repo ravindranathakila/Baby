@@ -144,14 +144,30 @@ public class WallWidgetHumansWall extends WallWidget {
                                 }.fetchToEmail);
                             }
 
-                            final HumansNetPeople hnps = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(myrequestedProfile);
+                            new Thread(new Runnable() {
 
-                            for (final HumansNetPeople hpe : hnps.getHumansNetPeoples()) {
-                                if (!wall.getWallMutes().contains(hpe)) {
-                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), hnps.getDisplayName(), fetchToEmail + b.toString());
-                                    DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), wall.getWallId());
+                                private HumanId mymyrequestedProfile = myrequestedProfile;
+                                private HumanId mycurrUserAsVisitor = currUserAsVisitor;
+                                private String myfetchToEmail = fetchToEmail;
+                                private StringBuilder myb = b;
+                                private Wall mywall = wall;
+
+
+                                @Override
+                                public void run() {
+                                    final HumansNetPeople hnps = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(mymyrequestedProfile);
+
+                                    for (final HumansNetPeople hpe : hnps.getHumansNetPeoples()) {
+                                        if (!wall.getWallMutes().contains(hpe)) {
+                                            SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), hnps.getDisplayName(), myfetchToEmail + myb.toString());
+                                            DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), mywall.getWallId());
+                                        }
+                                    }
+
                                 }
-                            }
+                            }).start();
+
+
                         } else {
                             $$(Controller.Page.wallNotice).setTextContent(r.returnMsg());
                         }
