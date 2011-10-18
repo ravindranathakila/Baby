@@ -308,7 +308,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
 
                                         protected void init(final Object... initArgs) {
                                             $$displayBlock($$(Controller.Page.user_property_talk));
-                                            href = ProfileRedirect.PROFILE_URL + friend.getHumanId();
+                                            href = ProfileRedirect.PROFILE_URL + HUMANS_IDENTITY_SIDEBAR_CACHE.get(new String(friend.getHumanId())).getUrl().getUrl();
                                             Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(lastWallEntry.getMsgContent()).$ElementSetHref(href).get();
                                             $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
                                             if (notifiedWallLongs.contains(friendWallId)) {
