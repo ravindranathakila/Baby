@@ -11,6 +11,7 @@ import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.ForgotPasswordCode;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
+import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
@@ -56,7 +57,7 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
 // --------------------------- CONSTRUCTORS ---------------------------
 
     /**
-     * @param itsNatDocument__
+     * @param request__
      * @param appendToElement__
      * @param httpSession__
      */
@@ -120,11 +121,15 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
                             final Return<HumansAuthentication> rha = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()));
                             if (rha.returnStatus() == 0) {
                                 code.setObj(UUID.randomUUID().toString());
-                                final Return<Boolean> mailsent = SendMail.getSendMailLocal().sendAsSimpleText(myemail.getObj(), "I LIke Places code(paste on website now)", code.getObj());
+                                final Return<Boolean> mailsent = SendMail.getSendMailLocal().sendAsSimpleText(myemail.getObj(),
+                                        "I Like Places code(paste on website now)",
+                                        code.getObj());
                                 if (mailsent.returnStatus() == 0 && mailsent.returnValue()) {
                                     myhumanId.setObj(myemail.getObj());
-                                    $$(ProfileForgotPasswordNotice).setTextContent("Okay we've emailed you the confirmation code. Paste it here now.");
-                                    remove(evt_.getTarget(), EventType.CLICK, this);
+                                    $$(ProfileForgotPasswordNotice).setTextContent("We've emailed you a code. Paste it here. Don't leave this page.");
+                                    $$displayNone($$(Controller.Page.ProfileForgotPasswordEmailAddressSection));
+                                    $$displayBlock($$(Page.ProfileForgotPasswordEmailRecoverySection));
+                                    remove(evt_.getCurrentTarget(), EventType.CLICK, this);
                                 } else {
                                     $$(ProfileForgotPasswordNotice).setTextContent(Return.YIKES_SOMETHING_WENT_WRONG);
                                 }
@@ -158,7 +163,9 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
                         $$(ProfileForgotPasswordNotice).setTextContent("Good, that is the code we emailed you. Now select a new password.");
                     } else {
                         mycodeCorrect.setObj(false);//defensive as this value is set above
-                        $$(ProfileForgotPasswordNotice).setTextContent("Oh! That isn't the code we emailed you.");
+                        $$(ProfileForgotPasswordNotice).setTextContent("Oh! That isn't the code we emailed you. Try again");
+                        $$displayBlock($$(Controller.Page.ProfileForgotPasswordEmailAddressSection));
+                        $$displayNone($$(Page.ProfileForgotPasswordEmailRecoverySection));
                     }
                 } else {
                     $$(ProfileForgotPasswordNotice).setTextContent(usersValue.getViolationAsString());
