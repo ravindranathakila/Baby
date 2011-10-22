@@ -84,6 +84,7 @@ final public class
     final PageFace photos = Page.Photos;
     final PageFace legal = Page.Legal;
     final PageFace muster = Page.Muster;
+    final PageFace helpPage = Page.HelpPage;
 
     final PageFace findFriendWidget = Page.FindFriend;
     final PageFace friendAdd = Page.FriendAdd;
@@ -110,6 +111,7 @@ final public class
     final PageFace termsOfServices = Page.TermsOfServices;
     final PageFace privacyPolicy = Page.PrivacyPolicy;
     final PageFace bate = Page.Bate;
+    final PageFace help = Page.Help;
 
 // -------------------------- ENUMERATIONS --------------------------
 
@@ -155,6 +157,20 @@ final public class
             @Override
             public String toString() {
                 return DocBate;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
+
+        Help("ai/ilikeplaces/widgets/help.xhtml"
+        ) {
+            @Override
+            public String toString() {
+                return DocHelp;
             }
 
             @Override
@@ -529,6 +545,20 @@ final public class
             @Override
             public String toString() {
                 return DocMuster;
+            }
+        },
+
+
+        HelpPage(null
+        ) {
+            @Override
+            public String getURL() {
+                return APP_ROOT + "page/_help";
+            }
+
+            @Override
+            public String toString() {
+                return DocHelpPage;
             }
         },
 
@@ -961,6 +991,11 @@ final public class
         final static public String BateOmg = "BateOmg";
         final static public String BateOmgSuccessMsg = "BateOmgSuccessMsg";
 
+        /*DocHelp Page*/
+        final static public String DocHelp = "DocHelp";
+        /*DocHelp IDs*/
+        //Nothing here
+
         /*Album Page*/
         final static public String DocAlbum = "DocAlbum";
         /*Album IDs*/
@@ -1152,6 +1187,9 @@ final public class
 
         /*Muster Page*/
         final static public String DocMuster = "DocMuster";
+
+        /*Help Page*/
+        final static public String DocHelpPage = "DocHelpPage";
 
         /*TemplateGeneric Pages*/
         final static public String DocPublic = "DocPublic";
@@ -1454,6 +1492,8 @@ final public class
 
             inhs__.registerItsNatDocumentTemplate(muster.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerMuster());
 
+            inhs__.registerItsNatDocumentTemplate(helpPage.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerHelp());
+
             inhs__.registerItsNatDocumentTemplate(geoBusiness.toString(), "text/html", new TemplateSourceGeoBusiness()).addItsNatServletRequestListener(new ListenerGeoBusiness());
 
             inhs__.registerItsNatDocumentTemplate(templateGeneric.toString(), "text/html", new TemplateGeneric(true));
@@ -1520,6 +1560,8 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(privacyPolicy.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privacyPolicy));
 
             inhs__.registerItsNatDocFragmentTemplate(bate.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(bate));
+
+            inhs__.registerItsNatDocFragmentTemplate(help.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(help));
         }
     }
 
@@ -1657,6 +1699,9 @@ final public class
                 } else if (isMusterPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocMuster);/*Framework specific*/
                     Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0023"));
+                }  else if (isHelpPage(URL__)) {
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocHelpPage);/*Framework specific*/
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0024"));
                 } else {/*Divert to home page*/
                     Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
                     request__.getServletRequest().setAttribute("location", "");
@@ -1756,6 +1801,10 @@ final public class
 
     static private boolean isMusterPage(final String URL_) {
         return (URL_.startsWith("_muster"));
+    }
+
+    static private boolean isHelpPage(final String URL_) {
+        return (URL_.startsWith("_help"));
     }
 
     /**
