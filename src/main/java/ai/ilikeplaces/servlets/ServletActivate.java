@@ -3,10 +3,12 @@ package ai.ilikeplaces.servlets;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.exception.ConstructorInvokationException;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
@@ -158,11 +160,26 @@ final public class ServletActivate extends HttpServlet {
                 if (request__.getParameter(Username) != null && request__.getParameter(Password) != null) {/*We need both these to sign in a user*/
                     try {
                         Human existingUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(request__.getParameter(Username));
-                        if (existingUser != null) {/*Ok user name valid but now we check for password*/
+                        @WARNING("THIS CHECK IS VERY IMPORTANT. IF DB IS HASHES ARE COMPROMISED, ONLY NON-ACTIVE PROFILES CAN BE HACKED.")
+                        final Boolean humanAlive = existingUser.getHumanAlive();
+                        if (existingUser != null && !humanAlive) {/*Ok user name valid but now we check for password*/
                             final HumansAuthentication humansAuthentications = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(request__.getParameter(Username))).returnValue();
 
                             if (humansAuthentications.getHumanAuthenticationHash().equals(request__.getParameter(Password))) {
                                 DB.getHumanCRUDHumanLocal(true).doUActivateHuman(new HumanId(existingUser.getHumanId()).getSelfAsValid());
+
+                                final HumanUserLocal humanUserLocal = (HumanUserLocal) context.lookup(HumanUserLocal.NAME);
+                                humanUserLocal.setHumanUserId(request__.getParameter(Username));
+                                userSession_.setAttribute(HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
+                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                        humanUserLocal.getHumanUserId(),
+                                        "Access Activated!",
+                                        "You have activated access to I LIKE PLACES - DOWN TOWN. " +
+                                                "In case you need to recover your password, " +
+                                                "please visit: <a href='http://www.ilikeplaces.com/page/_profile'>  http://www.ilikeplaces.com/page/_profile</a>. " +
+                                                "Adios!"
+                                        );
+
                                 response__.sendRedirect(organize.getURL());
                                 break doActivate;/*This is unnecessary but lets not leave chance for introducing bugs*/
                             } else {/*Ok password wrong. What do we do with this guy? First lets make his session object null*/

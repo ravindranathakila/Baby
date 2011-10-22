@@ -259,7 +259,8 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
                         final Return<Boolean> r = ServletLogin.changePassword(myhumanId, mynewPass);
                         if (r.returnStatus() == 0) {
                             if (r.returnValue()) {
-                                $$(ProfileForgotPasswordNotice).setTextContent("Password Updated Successfully!");
+                                $$(ProfileForgotPasswordNotice).setTextContent("Password Updated Successfully! Please login.");
+                                $$displayNone($$(Page.ProfileForgotPasswordEmailRecoverySection));
 
                                 AttemptToUnlockAccountForPeopleWhoFailedToDoSoWithEmail:
                                 {
