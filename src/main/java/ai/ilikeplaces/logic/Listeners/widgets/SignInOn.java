@@ -6,16 +6,13 @@ import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
-import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -46,6 +43,7 @@ abstract public class SignInOn extends AbstractWidgetListener {
     private SimpleString dbHash = null;
     private SimpleString dbSalt = null;
     private Obj<Boolean> userOk = null;
+    private Obj<Boolean> existButNotActive = null;
 
 // --------------------------- CONSTRUCTORS ---------------------------
 
@@ -73,6 +71,7 @@ abstract public class SignInOn extends AbstractWidgetListener {
         dbHash = new SimpleString("");
         dbSalt = new SimpleString("");
         userOk = new Obj<Boolean>(false);
+        existButNotActive = new Obj<Boolean>(false);
 
         if (username.validate() == 0) {
             UCShowHideWidgets:
@@ -102,6 +101,7 @@ abstract public class SignInOn extends AbstractWidgetListener {
             private SimpleString mydbHash = dbHash;
             private SimpleString mydbSalt = dbSalt;
             private Obj<Boolean> myuserOk = userOk;
+            private Obj<Boolean> myexistButNotActive = existButNotActive;
 
             @Override
             public void handleEvent(final Event evt_) {
@@ -114,9 +114,11 @@ abstract public class SignInOn extends AbstractWidgetListener {
                         mydbHash.setObj(humansAuthentication.getHumanAuthenticationHash());
                         mydbSalt.setObj(humansAuthentication.getHumanAuthenticationSalt());
                         myuserOk.setObj(true);
-                    } else {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
+                    } else if (existingUser != null && !existingUser.getHumanAlive()) {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
                         myuserOk.setObj(false);
-                        notifyUser(myusername.getObj() + " is not a user of this website");
+                        myexistButNotActive.setObj(true);
+                        $$sendJS(JSCodeToSend.redirectPageWithURL("/page/_profile"));
+                        notifyUser("Please activate your account.");
                     }
                 }
             }
@@ -137,6 +139,8 @@ abstract public class SignInOn extends AbstractWidgetListener {
             private SimpleString mydbHash = dbHash;
             private SimpleString mydbSalt = dbSalt;
             private Obj<Boolean> myuserOk = userOk;
+            private Obj<Boolean> myexistButNotActive = existButNotActive;
+
 
             @Override
             public void handleEvent(final Event evt_) {
@@ -155,18 +159,25 @@ abstract public class SignInOn extends AbstractWidgetListener {
                                 userSession_.setAttribute(HumanUserLocal.NAME, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
 
                                 notifyUser("Logging you in...");
+
                                 $$sendJS(JSCodeToSend.refreshPageIn(0));
                             } else {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
                                 notifyUser("Ha ha wrong password!");
                             }
                         } else {/*There is no such user. Ask if he forgot username or whether to create a new account :)*/
-                            notifyUser(myusername.getObj() + " is not a user of this website");
+
+                            if (myexistButNotActive.getObj()) {
+                                $$sendJS(JSCodeToSend.redirectPageWithURL("/page/_profile"));
+                                notifyUser("Please activate your account.");
+                            }else{
+                                notifyUser(myusername.getObj() + " is not a user of this website");
+                            }
                         }
                     } else {
                         //We just ignore since the form is not visible and this cannot happen, or a hacker is trying something ;)
                     }
                 } else {
-                    notifyUser("Oops! Login failed!");
+                    notifyUser("Login failed! Retry or Click Settings");
                 }
             }
         }, false);
