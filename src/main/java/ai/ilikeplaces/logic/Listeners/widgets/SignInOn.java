@@ -90,7 +90,7 @@ abstract public class SignInOn extends AbstractWidgetListener {
             }
             UCShowPleaseLoginMessage:
             {
-                $$(Page.signinonNotice).setTextContent("Please login..");
+                $$(Page.signinonNotice).setTextContent("Login!");
             }
         }
     }

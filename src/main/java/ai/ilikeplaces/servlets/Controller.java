@@ -58,6 +58,7 @@ final public class
     final PageFace signInOn = Page.SignInOn;
     final PageFace notification = Page.Notification;
     final PageFace downTownFlow = Page.DownTownFlow;
+    final PageFace tribeHome = Page.TribeHome;
 
     final PageFace privateLocationCreate = Page.PrivateLocationCreate;
     final PageFace privateLocationView = Page.PrivateLocationView;
@@ -243,7 +244,10 @@ final public class
                 Controller.Page.ProfileForgotPasswordEmailedCode,
                 Controller.Page.ProfileForgotPasswordNew,
                 Controller.Page.ProfileForgotPasswordNewConfirm,
-                Controller.Page.ProfileForgotPasswordSave
+                Controller.Page.ProfileForgotPasswordSave ,
+                Controller.Page. ProfileForgotPasswordEmailRecoverySection,
+                Controller.Page. ProfileForgotPasswordEmailAddressSection
+
         ) {
             @Override
             public String toString() {
@@ -282,7 +286,7 @@ final public class
                 Controller.Page.wallTitle,
                 Controller.Page.wallProfilePhoto,
                 Controller.Page.wallProfileName
-                ) {
+        ) {
             @Override
             public String toString() {
                 return DocWall;
@@ -917,6 +921,20 @@ final public class
             public String toString() {
                 return DocDownTownFlow;
             }
+        },
+        TribeHome(
+                "ai/ilikeplaces/widgets/TribeHome.xhtml",
+                Page.TribeHomeWidget
+        ) {
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocTribeHome;
+            }
         };
 
         private static final String APP_ROOT = RBGet.getGlobalConfigKey("AppRoot");
@@ -989,6 +1007,8 @@ final public class
         final static public String ProfileForgotPasswordNew = "ProfileForgotPasswordNew";
         final static public String ProfileForgotPasswordNewConfirm = "ProfileForgotPasswordNewConfirm";
         final static public String ProfileForgotPasswordSave = "ProfileForgotPasswordSave";
+        final static public String ProfileForgotPasswordEmailAddressSection = "ProfileForgotPasswordEmailAddressSection";
+        final static public String ProfileForgotPasswordEmailRecoverySection = "ProfileForgotPasswordEmailRecoverySection";
 
 
         /*Password Page*/
@@ -1301,6 +1321,11 @@ final public class
         final static public String DownTownFlowMoments = "DownTownFlowMoments";
         final static public String DownTownFlowTalksFriends = "DownTownFlowTalksFriends";
 
+        /*TribeHome Page*/
+        final static public String DocTribeHome = "DocTribeHome";
+        /*TribeHome Specific IDs*/
+        final static public String TribeHomeWidget = "TribeHomeWidget";
+
 
         /*Common IDs that should be present in any page*/
         final static public String CPageTitle = "PageTitle";
@@ -1361,8 +1386,8 @@ final public class
 
         final ItsNatServletConfig itsNatServletConfig = inhs__.getItsNatServletConfig();
 
-        itsNatServletConfig.setDebugMode(true);
-        itsNatServletConfig.setClientErrorMode(ClientErrorMode.SHOW_SERVER_AND_CLIENT_ERRORS);
+        itsNatServletConfig.setDebugMode(false);
+        itsNatServletConfig.setClientErrorMode(ClientErrorMode.NOT_SHOW_ERRORS);
         itsNatServletConfig.setLoadScriptInline(true);
         itsNatServletConfig.setUseGZip(UseGZip.MARKUP);
         itsNatServletConfig.setCommMode(CommMode.XHR_ASYNC_HOLD);
@@ -1445,6 +1470,8 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(notification.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(notification));
 
             inhs__.registerItsNatDocFragmentTemplate(downTownFlow.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(downTownFlow));
+
+            inhs__.registerItsNatDocFragmentTemplate(tribeHome.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(tribeHome));
 
             inhs__.registerItsNatDocFragmentTemplate(privateLocationCreate.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateLocationCreate));
 
