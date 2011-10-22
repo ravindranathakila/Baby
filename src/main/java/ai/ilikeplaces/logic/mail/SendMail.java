@@ -41,6 +41,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
     static private Context Context_ = null;
     static private boolean OK_ = false;
     final static private String ICF = RBGet.globalConfig.getString("oejb.LICF");
+    private static final String M_A_I_L_S_E_R_V_E_R = RBGet.globalConfig.getString("mail.server");
 
     static {
         try {
@@ -83,7 +84,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
     public void postConstruct() {
         props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
-        props.setProperty("mail.host", "smtp.emailsrvr.com");
+        props.setProperty("mail.host", M_A_I_L_S_E_R_V_E_R);
         props.setProperty("mail.user", U_S_E_R_N_A_M_E);
         props.setProperty("mail.password", P_A_S_S_W_O_R_D);
         mailSession = Session.getDefaultInstance(props, null);
