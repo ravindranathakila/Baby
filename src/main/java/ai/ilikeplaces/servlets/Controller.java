@@ -222,7 +222,7 @@ final public class
                 Controller.Page.user_property_sidebar_name,
                 Controller.Page.user_property_sidebar_widget,
                 Controller.Page.user_property_sidebar_content,
-                Controller.Page.user_property_talk
+                Controller.Page.user_property_sidebar_talk
 
         ) {
             @Override
@@ -1038,7 +1038,7 @@ final public class
         final static public String user_property_sidebar_name = "user_property_sidebar_name";
         final static public String user_property_sidebar_widget = "user_property_sidebar_widget";
         final static public String user_property_sidebar_content = "user_property_sidebar_content";
-        final static public String user_property_talk = "user_property_talk";
+        final static public String user_property_sidebar_talk = "user_property_sidebar_talk";
 
 
         /*ProfileWidget Page*/

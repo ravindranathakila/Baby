@@ -120,7 +120,7 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
                 for (final HumansPrivateEvent hpe : r.returnValue().getPrivateEventOwners()) {
                     new UserProperty(request, $$(Controller.Page.privateEventViewOwners), new HumanId(hpe.getHumanId())) {
                         protected void init(final Object... initArgs) {
-                            $$(Controller.Page.user_property_sidebar_content).appendChild(
+                            $$(Controller.Page.user_property_content).appendChild(
                                     ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(TALK).$ElementSetHref(ProfileRedirect.PROFILE_URL + hpe.getHumanId()).get()
                             );
                         }
@@ -133,7 +133,7 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
                 for (final HumansPrivateEvent hpe : r.returnValue().getPrivateEventViewers()) {
                     new UserProperty(request, $$(Controller.Page.privateEventViewVisitors), new HumanId(hpe.getHumanId())) {
                         protected void init(final Object... initArgs) {
-                            $$(Controller.Page.user_property_sidebar_content).appendChild(
+                            $$(Page.user_property_content).appendChild(
                                     ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(TALK).$ElementSetHref(ProfileRedirect.PROFILE_URL + hpe.getHumanId()).get()
                             );
                         }

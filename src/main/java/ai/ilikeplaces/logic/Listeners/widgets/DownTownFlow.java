@@ -20,15 +20,12 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
-import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria.DownTownFlowDisplayComponent;
-import static ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria.DownTownFlowDisplayComponent.MOMENTS;
-import static ai.ilikeplaces.servlets.Controller.Page.user_property_talk;
+import static ai.ilikeplaces.servlets.Controller.Page.user_property_sidebar_talk;
 
 /**
  * Created by IntelliJ IDEA.
@@ -90,7 +87,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
                             private String href;
 
                             protected void init(final Object... initArgs) {
-                                $$displayBlock($$(Controller.Page.user_property_talk));
+                                $$displayBlock($$(Controller.Page.user_property_sidebar_talk));
                                 href = ProfileRedirect.PROFILE_URL + HUMANS_IDENTITY_SIDEBAR_CACHE.get(new String(friend.getHumanId())).getUrl().getUrl();
                                 Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(lastWallEntry.getMsgContent()).$ElementSetHref(href).get();
                                 $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
@@ -102,7 +99,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
                             @Override
                             protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
 
-                                itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_talk), EventType.CLICK.toString(), new EventListener() {
+                                itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
                                     @Override
                                     public void handleEvent(final Event evt_) {
                                         $$sendJS(JSCodeToSend.redirectPageWithURL(href));

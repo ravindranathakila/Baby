@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Human;
+import ai.ilikeplaces.entities.HumansPrivateEvent;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
@@ -32,8 +33,8 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
     @EJB
     private CrudServiceLocal<PrivateEvent> privateEventCrudServiceLocal_;
 
-//    @EJB
-//    private CrudServiceLocal<HumansPrivateEvent> humansPrivateEventCrudServiceLocal_;
+    @EJB
+    private CrudServiceLocal<HumansPrivateEvent> humansPrivateEventCrudServiceLocal_;
 
     @EJB
     private CrudServiceLocal<Human> humanCrudServiceLocal_;
@@ -144,6 +145,16 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
         }
 
         return privateEvent_;
+    }
+
+    @Override
+    @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
+    public List<PrivateEvent> doRPrivateEventsOfHuman(final String humanId){
+       final HumansPrivateEvent humansPrivateEvent_ = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, humanId);
+
+        humansPrivateEvent_.getPrivateEventsViewed().size();
+
+        return humansPrivateEvent_.getPrivateEventsViewed();
     }
 
     @Override
