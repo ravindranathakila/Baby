@@ -3,8 +3,10 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.HumansFriend;
+import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.util.Obj;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
@@ -42,6 +44,13 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall {
      * @return
      */
     public Return<PrivateEvent> dirtyRPrivateEventAsAny(final String humanId, final long privateEventId);
+
+    /**
+     * @param humanId
+     * @param privateEventId
+     * @return
+     */
+    public Return<PrivateEvent> dirtyRPrivateEventInfoAsAny(final String humanId, final long privateEventId);
 
     /**
      * @param humanId
@@ -208,5 +217,13 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall {
      */
     public Return<List<PrivateEvent>> doRPrivateEventsByBoundsAsSystem(final double latitudeSouth, final double latitudeNorth, final double longitudeWest, final double longitudeEast);
 
+
+
+    /**
+     * @param wallId
+     * @param numberOfEntriesToFetch
+     * @return
+     */
+    public Return<List<Msg>> readWallLastEntries(final HumanId humanId, final Obj<Long> wallId, final Integer numberOfEntriesToFetch, final RefreshSpec refreshSpec__);
 
 }
