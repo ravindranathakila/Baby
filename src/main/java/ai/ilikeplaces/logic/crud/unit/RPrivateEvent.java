@@ -65,10 +65,27 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
+    public PrivateEvent doRPrivateEventBasicAsAny(final String humanId, final long privateEventId) throws DBDishonourCheckedException, DBFetchDataException {
+        final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).refresh();
+
+        final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
+
+        securityChecks:
+        {
+            if (!(privateEvent_.getPrivateEventOwners().contains(human) || privateEvent_.getPrivateEventViewers().contains(human))) {
+                throw new NoPrivilegesException(humanId, VIEW_PRIVATE_LOCATION + privateEvent_.toString());
+            }
+        }
+
+        return privateEvent_;
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public PrivateEvent doRPrivateEventAsSystem(final long privateEventId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException {
         return eager ?
-               privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).refresh() :
-               privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId);
+                privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).refresh() :
+                privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId);
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
