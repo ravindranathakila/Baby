@@ -158,7 +158,7 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
             public void handleEvent(final Event evt_) {
                 final ForgotPasswordCode usersValue = new ForgotPasswordCode($$(evt_).getAttribute(MarkupTag.TEXTAREA.value()));
                 if (usersValue.validate() == 0) {
-                    if (usersValue.getObj().equals(mycode.getObj())) {
+                    if (usersValue.getObj().equals(mycode.getObj()) || usersValue.getObj().trim().equals(mycode.getObj())) {
                         mycodeCorrect.setObj(true);
                         $$(ProfileForgotPasswordNotice).setTextContent("Good, that is the code we emailed you. Now select a new password.");
                     } else {
