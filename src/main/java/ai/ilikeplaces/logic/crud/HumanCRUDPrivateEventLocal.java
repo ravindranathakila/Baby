@@ -226,4 +226,11 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall {
      */
     public Return<List<Msg>> readWallLastEntries(final HumanId humanId, final Obj<Long> wallId, final Integer numberOfEntriesToFetch, final RefreshSpec refreshSpec__);
 
+    /**
+     *
+     * @param humanId
+     * @return
+     */
+    public Return<List<PrivateEvent>> doDirtyRPrivateEventsOfHuman(final HumanId humanId);
+
 }

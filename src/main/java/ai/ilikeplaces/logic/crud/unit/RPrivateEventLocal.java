@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -104,4 +105,6 @@ public interface RPrivateEventLocal {
             final double latitudeNorth,
             final double longitudeWest,
             final double longitudeEast) throws DBFetchDataException, DBDishonourCheckedException;
+
+    public List<PrivateEvent> doRPrivateEventsOfHuman(final String humanId);
 }

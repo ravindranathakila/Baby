@@ -11,7 +11,6 @@ import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
-import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatServletRequest;
@@ -105,7 +104,7 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
                         mylastWallEntry = (Msg) ((Object[]) initArgs[1])[0];
                         myhref = (String) ((Object[]) initArgs[1])[1];
 
-                        $$displayBlock($$(Controller.Page.user_property_talk));
+                        $$displayBlock($$(Controller.Page.user_property_sidebar_talk));
                         Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(mylastWallEntry.getMsgContent()).$ElementSetHref(myhref).get();
                         $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
                     }
@@ -113,7 +112,7 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
                     @Override
                     protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
 
-                        itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_talk), EventType.CLICK.toString(), new EventListener() {
+                        itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
                             @Override
                             public void handleEvent(final Event evt_) {
                                 $$sendJS(JSCodeToSend.redirectPageWithURL(myhref));

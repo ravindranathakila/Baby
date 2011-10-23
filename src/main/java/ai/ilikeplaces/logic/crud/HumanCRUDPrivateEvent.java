@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
+import ai.ilikeplaces.exception.AbstractEjbApplicationRuntimeException;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.*;
@@ -336,6 +337,19 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
             r = new ReturnImpl<PrivateEvent>(rPrivateEventLocal_.doRPrivateEventAsAny(humanId, privateEventId), VIEW_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateEvent>(t, VIEW_PRIVATE_EVENT_FAILED, true);
+        }
+        return r;
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
+    public Return<List<PrivateEvent>> doDirtyRPrivateEventsOfHuman(final HumanId humanId){
+        Return<List<PrivateEvent>> r;
+        try {
+            r = new ReturnImpl<List<PrivateEvent>>(rPrivateEventLocal_.doRPrivateEventsOfHuman(humanId.getObj()), VIEW_PRIVATE_EVENT_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationRuntimeException t) {
+            r = new ReturnImpl<List<PrivateEvent>>(t, VIEW_PRIVATE_EVENT_FAILED, true);
         }
         return r;
 
