@@ -1,12 +1,14 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.HumansWall;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Mute;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.ilikeplaces.util.Loggers;
@@ -32,6 +34,9 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
 
     @EJB
     private CrudServiceLocal<Wall> crudServiceLocal_;
+
+    @EJB
+    private CrudServiceLocal<Msg> msgCrudServiceLocal_;
 
     public CRUDWall() {
     }
@@ -141,4 +146,13 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
     }
 
 
-}            
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Msg> doRHumansWallLastEntries(final long wallId, final Integer numberOfEntriesToFetch) {
+
+        final List<Msg> lastWallEntryInList = msgCrudServiceLocal_.findWithNamedQuery(Msg.FindWallEntriesByWallIdOrderByIdDesc,
+                QueryParameter.newInstance().add(Wall.wallIdCOL, wallId).parameters(), numberOfEntriesToFetch);
+
+        return lastWallEntryInList;
+    }
+}

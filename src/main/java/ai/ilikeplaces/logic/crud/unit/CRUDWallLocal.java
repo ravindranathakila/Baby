@@ -1,12 +1,14 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
+import java.util.List;
 
 /**
  * @author Ravindranath Akila
@@ -70,4 +72,6 @@ public interface CRUDWallLocal {
      * @param wallId
      */
     public void doNTxDWall(final long wallId);
+
+    public List<Msg> doRHumansWallLastEntries(final long wallId, final Integer numberOfEntriesToFetch);
 }

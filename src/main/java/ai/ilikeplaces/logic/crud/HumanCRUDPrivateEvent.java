@@ -2,10 +2,7 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.Album;
-import ai.ilikeplaces.entities.HumansFriend;
-import ai.ilikeplaces.entities.PrivateEvent;
-import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -322,12 +319,34 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         return r;
     }
 
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Return<List<Msg>> readWallLastEntries(final HumanId humanId, final Obj<Long> wallId, final Integer numberOfEntriesToFetch, final RefreshSpec refreshSpec__) {
+        Return<List<Msg>> r;
+        r = new ReturnImpl<List<Msg>>(crudWallLocal_.doRHumansWallLastEntries(wallId.getObj(), numberOfEntriesToFetch), READ_WALL_SUCCESSFUL);
+        return r;
+
+    }
+
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     @Override
     public Return<PrivateEvent> dirtyRPrivateEventAsAny(final String humanId, final long privateEventId) {
         Return<PrivateEvent> r;
         try {
             r = new ReturnImpl<PrivateEvent>(rPrivateEventLocal_.doRPrivateEventAsAny(humanId, privateEventId), VIEW_PRIVATE_EVENT_SUCCESSFUL);
+        } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<PrivateEvent>(t, VIEW_PRIVATE_EVENT_FAILED, true);
+        }
+        return r;
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    @Override
+    public Return<PrivateEvent> dirtyRPrivateEventInfoAsAny(final String humanId, final long privateEventId){
+        Return<PrivateEvent> r;
+        try {
+            r = new ReturnImpl<PrivateEvent>(rPrivateEventLocal_.doRPrivateEventBasicAsAny(humanId, privateEventId), VIEW_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateEvent>(t, VIEW_PRIVATE_EVENT_FAILED, true);
         }
