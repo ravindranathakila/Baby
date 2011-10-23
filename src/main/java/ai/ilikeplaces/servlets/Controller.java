@@ -67,6 +67,7 @@ final public class
     final PageFace privateEventCreate = Page.PrivateEventCreate;
     final PageFace privateEventView = Page.PrivateEventView;
     final PageFace privateEventDelete = Page.PrivateEventDelete;
+    final PageFace privateEventViewSidebar = Page.PrivateEventViewSidebar;
 
     final PageFace wOIEDGrabber = Page.WOEIDGrabber;
 
@@ -260,9 +261,9 @@ final public class
                 Controller.Page.ProfileForgotPasswordEmailedCode,
                 Controller.Page.ProfileForgotPasswordNew,
                 Controller.Page.ProfileForgotPasswordNewConfirm,
-                Controller.Page.ProfileForgotPasswordSave ,
-                Controller.Page. ProfileForgotPasswordEmailRecoverySection,
-                Controller.Page. ProfileForgotPasswordEmailAddressSection
+                Controller.Page.ProfileForgotPasswordSave,
+                Controller.Page.ProfileForgotPasswordEmailRecoverySection,
+                Controller.Page.ProfileForgotPasswordEmailAddressSection
 
         ) {
             @Override
@@ -390,6 +391,23 @@ final public class
             @Override
             public String toString() {
                 return DocPrivateEventDelete;
+            }
+        },
+
+
+        PrivateEventViewSidebar("ai/ilikeplaces/widgets/privateevent/private_event_view_sidebar.xhtml",
+                Controller.Page.private_event_view_sidebar_name,
+                Controller.Page.private_event_view_sidebar_content,
+                Controller.Page.private_event_view_sidebar_profile_photo
+                ) {
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocPrivateEventViewSidebar;
             }
         },
 
@@ -1113,6 +1131,14 @@ final public class
         final static public String privateEventDeleteAlbum = "privateEventDeleteAlbum";
         final static public String privateEventDeleteLocationMap = "privateEventDeleteLocationMap";
 
+
+        /*Private Event View Sidebar Page*/
+        final static public String DocPrivateEventViewSidebar = "DocPrivateEventViewSidebar";
+        /*Private Event View Sidebar IDs*/
+        final static public String private_event_view_sidebar_name = "private_event_view_sidebar_name";
+        final static public String private_event_view_sidebar_content = "private_event_view_sidebar_content";
+        final static public String private_event_view_sidebar_profile_photo = "private_event_view_sidebar_profile_photo";
+
         /*WOIEDGrabber Page*/
         final static public String DocWOEIDGrabber = "DocWOEIDGrabber";
         /*WOIEDGrabber IDs*/
@@ -1525,6 +1551,8 @@ final public class
 
             inhs__.registerItsNatDocFragmentTemplate(privateEventDelete.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateEventDelete));
 
+            inhs__.registerItsNatDocFragmentTemplate(privateEventViewSidebar.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateEventViewSidebar));
+
             inhs__.registerItsNatDocFragmentTemplate(wOIEDGrabber.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(wOIEDGrabber));
 
             inhs__.registerItsNatDocFragmentTemplate(downTownHeatMap.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(downTownHeatMap));
@@ -1699,7 +1727,7 @@ final public class
                 } else if (isMusterPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocMuster);/*Framework specific*/
                     Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0023"));
-                }  else if (isHelpPage(URL__)) {
+                } else if (isHelpPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocHelpPage);/*Framework specific*/
                     Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0024"));
                 } else {/*Divert to home page*/
