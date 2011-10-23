@@ -29,6 +29,17 @@ public interface RPrivateEventLocal {
     public PrivateEvent doRPrivateEventAsAny(final String humanId, final long privateEventId) throws DBDishonourCheckedException, DBFetchDataException;
 
     /**
+     * Returns an un-refreshed {@link java.awt.event.PaintEvent}
+     *
+     * @param humanId
+     * @param privateEventId
+     * @return
+     * @throws DBDishonourCheckedException
+     * @throws DBFetchDataException
+     */
+    public PrivateEvent doRPrivateEventBasicAsAny(final String humanId, final long privateEventId) throws DBDishonourCheckedException, DBFetchDataException;
+
+    /**
      * @param privateEventId
      * @param eager
      * @return
