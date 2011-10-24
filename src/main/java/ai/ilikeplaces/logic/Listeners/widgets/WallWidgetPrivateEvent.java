@@ -10,6 +10,8 @@ import ai.ilikeplaces.logic.validators.unit.WallEntry;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.cache.SmartCache;
+import ai.ilikeplaces.util.cache.SmartCache2;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -24,6 +26,7 @@ import org.xml.sax.SAXException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,6 +44,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
 
     HumanId humanId;
     Long privateEventId = null;
+    Long wallId = null;
     private static final String WALL_ENTRY_CONSUMED_STATUES = "&wall_entry_consumed=true";
     private static final String WALL_ENTRY_CONSUMED = "wall_entry_consumed";
     private static final String TRUE = "true";
@@ -52,6 +56,23 @@ public class WallWidgetPrivateEvent extends WallWidget {
     private static final String CATEGORY = "category";
     private static final String LOCATION = "location";
     private static final String EVENT = "event";
+
+    final static public SmartCache2<Long, Msg, String> LAST_WALL_ENTRY = new SmartCache2<Long, Msg, String>(
+            new SmartCache2.RecoverWith<Long, Msg, String>() {
+
+                @Override
+                public Msg getValue(final Long whichWall, final String requester) {
+                    final List<Msg> msgs = DB.getHumanCrudPrivateEventLocal(false).readWallLastEntries(new HumanId(requester), new Obj<Long>(whichWall), 1, new RefreshSpec()).returnValue();
+                    final Msg returnVal;
+                    if (msgs.isEmpty()) {
+                        returnVal = null;
+                    } else {
+                        returnVal = msgs.get(0);
+                    }
+                    return returnVal;
+                }
+            }
+    );
 
     public WallWidgetPrivateEvent(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId, final long privateEventId__) {
         super(request__, appendToElement__, humanId, privateEventId__);
@@ -66,6 +87,8 @@ public class WallWidgetPrivateEvent extends WallWidget {
         this.privateEventId = (Long) initArgs[1];
 
         final PrivateEvent pe = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(humanId.getObjectAsValid(), privateEventId).returnValueBadly();
+
+        this.wallId = pe.getPrivateEventWall().getWallId();
 
         fetchToEmail(pe.getPrivateLocation().getPrivateLocationId(),
                 pe.getPrivateEventId());
@@ -174,6 +197,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
 
             private HumanId myhumanId = humanId;
             private Long myprivateEventId = privateEventId;
+            private Long mywallId = wallId;
 
             @Override
             public void handleEvent(final Event evt_) {
@@ -194,6 +218,8 @@ public class WallWidgetPrivateEvent extends WallWidget {
                         if (r.returnStatus() == 0) {
                             $$(Controller.Page.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
                             wallAppend.setObj("");
+
+                            LAST_WALL_ENTRY.MAP.put(mywallId, null);
 
                             clear($$(Controller.Page.wallContent));
                             final Wall wall = (DB.getHumanCrudPrivateEventLocal(true).readWall(myhumanId, new Obj<Long>(myprivateEventId), REFRESH_SPEC).returnValueBadly());

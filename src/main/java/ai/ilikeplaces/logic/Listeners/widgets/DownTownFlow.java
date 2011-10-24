@@ -78,7 +78,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
 
                         final Long friendWallId = WallWidgetHumansWall.HUMANS_WALL_ID.get(new Pair<String, String>(new String(currentUser), new String(friend.getHumanId())));
 
-                        final Msg lastWallEntry = DB.getHumanCrudWallLocal(false).readWallLastEntries(new HumanId(friend.getHumanId()), new Obj<HumanId>(new HumanId(currentUser)), 1, new RefreshSpec()).returnValue().get(0);
+                        final Msg lastWallEntry = WallWidgetHumansWall.LAST_WALL_ENTRY.get(new String(friend.getHumanId()), new String(currentUser));
 
                         final Element appendToElement__ = $$(Controller.Page.user_property_sidebar_content);
 

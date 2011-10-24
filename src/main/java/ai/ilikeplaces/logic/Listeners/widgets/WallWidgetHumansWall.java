@@ -12,6 +12,7 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache;
+import ai.ilikeplaces.util.cache.SmartCache2;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -46,6 +47,17 @@ public class WallWidgetHumansWall extends WallWidget {
             return DB.getHumanCrudWallLocal(false).readWallId(new HumanId(current_friend.getValue()), new Obj<String>(current_friend.getKey())).returnValueBadly();
         }
     });
+
+    final static public SmartCache2<String, Msg, String> LAST_WALL_ENTRY = new SmartCache2<String, Msg, String>(
+            new SmartCache2.RecoverWith<String, Msg, String>() {
+
+                @Override
+                public Msg getValue(final String whosWall, final String visitor) {
+                    return DB.getHumanCrudWallLocal(false).readWallLastEntries(new HumanId(whosWall), new Obj<String>(visitor), 1, new RefreshSpec()).returnValue().get(0);//Guaranteed not to fail since wall has atleast one entry
+                }
+            }
+    );
+
     private static final String TALK_AT_DOWN_TOWN_ER_0_S = "talk.at.down.town.er.0.s";
 
 
@@ -132,6 +144,7 @@ public class WallWidgetHumansWall extends WallWidget {
                         if (r.returnStatus() == 0) {
                             $$(Controller.Page.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
                             wallAppend.setObj("");
+                            LAST_WALL_ENTRY.MAP.put(new String(myrequestedProfile.getHumanId()), null);
 
                             clear($$(Controller.Page.wallContent));
                             final Wall wall = DB.getHumanCrudWallLocal(true).readWall(requestedProfile, new Obj<HumanId>(currUserAsVisitor), REFRESH_SPEC).returnValue();
