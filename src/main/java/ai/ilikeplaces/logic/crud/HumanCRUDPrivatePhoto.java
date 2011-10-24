@@ -142,12 +142,12 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
 
 
     @Override
-    public Return<Wall> addEntryToWall(final HumanId operator__, final HumanId msgOwner__, final Obj wallOwnerId__, final String contentToBeAppended) {
+    public Return<Wall> addEntryToWall(final HumanId whosWall__, final HumanId msgOwner__, final Obj requester__, final String contentToBeAppended) {
 
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doUAddEntry(rPrivatePhoto(operator__, wallOwnerId__, REFRESH_SPEC).returnValueBadly().getPrivatePhotoWall().getWallId(),
+                    .doUAddEntry(rPrivatePhoto(whosWall__, requester__, REFRESH_SPEC).returnValueBadly().getPrivatePhotoWall().getWallId(),
                             msgOwner__.getObj(),
                             contentToBeAppended), WRITE_WALL_SUCCESSFUL);
         } catch (final Throwable t) {
@@ -159,12 +159,12 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
     }
 
     @Override
-    public Return<Wall> muteWall(final HumanId operator__, final HumanId mutee, final Obj wallOwnerId__) {
+    public Return<Wall> muteWall(final HumanId operator__, final HumanId mutee, final Obj requester__) {
 
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doUAddMuteEntry(rPrivatePhoto(operator__, wallOwnerId__, REFRESH_SPEC).returnValueBadly().getPrivatePhotoWall().getWallId(),
+                    .doUAddMuteEntry(rPrivatePhoto(operator__, requester__, REFRESH_SPEC).returnValueBadly().getPrivatePhotoWall().getWallId(),
                             mutee.getObj()), MUTE_WALL_SUCCESSFUL);
         } catch (final Throwable t) {
             r = new ReturnImpl<Wall>(t, MUTE_WALL_FAILED, true);
@@ -175,12 +175,12 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
     }
 
     @Override
-    public Return<Wall> unmuteWall(final HumanId operator__, final HumanId mutee, final Obj wallOwnerId__) {
+    public Return<Wall> unmuteWall(final HumanId operator__, final HumanId mutee, final Obj requester__) {
 
         Return<Wall> r;
         try {
             r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doURemoveMuteEntry(rPrivatePhoto(operator__, wallOwnerId__, REFRESH_SPEC).returnValueBadly().getPrivatePhotoWall().getWallId(),
+                    .doURemoveMuteEntry(rPrivatePhoto(operator__, requester__, REFRESH_SPEC).returnValueBadly().getPrivatePhotoWall().getWallId(),
                             mutee.getObj()), UNMUTE_WALL_SUCCESSFUL);
         } catch (final Throwable t) {
             r = new ReturnImpl<Wall>(t, UNMUTE_WALL_FAILED, true);
@@ -192,11 +192,11 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
 
 
     @Override
-    public Return<Wall> readWall(final HumanId operator__, final Obj wallOwnerId__, RefreshSpec refreshSpec__) {
+    public Return<Wall> readWall(final HumanId whosWall__, final Obj requester__, RefreshSpec refreshSpec__) {
 
         Return<Wall> r;
         try {
-            final PrivatePhoto privatePhoto = rPrivatePhoto(operator__, wallOwnerId__, REFRESH_SPEC).returnValueBadly();
+            final PrivatePhoto privatePhoto = rPrivatePhoto(whosWall__, requester__, REFRESH_SPEC).returnValueBadly();
             final Wall privatePhotoWall = privatePhoto.getPrivatePhotoWall();
             r = new ReturnImpl<Wall>(crudWallLocal_
                     .doRWall(privatePhotoWall.getWallId(), refreshSpec__), READ_WALL_SUCCESSFUL);

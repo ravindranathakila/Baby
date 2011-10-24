@@ -52,26 +52,26 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public Return<Wall> readWall(final HumanId humanId, final Obj wallOwnerId__, final RefreshSpec refreshSpec__) {
+    public Return<Wall> readWall(final HumanId whosWall, final Obj requester, final RefreshSpec refreshSpec__) {
         Return<Wall> r;
-        r = new ReturnImpl<Wall>(crudHumansWallLocal_.doRHumansWall(humanId.getObj()).getWall(), READ_WALL_SUCCESSFUL);
+        r = new ReturnImpl<Wall>(crudHumansWallLocal_.doRHumansWall(whosWall.getObj()).getWall(), READ_WALL_SUCCESSFUL);
         return r;
 
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public Return<List<Msg>> readWallLastEntries(final HumanId humanId, final Obj wallOwnerId__, final Integer numberOfEntriesToFetch, final RefreshSpec refreshSpec__) {
+    public Return<List<Msg>> readWallLastEntries(final HumanId whosWall, final Obj requester, final Integer numberOfEntriesToFetch, final RefreshSpec refreshSpec__) {
         Return<List<Msg>> r;
-        r = new ReturnImpl<List<Msg>>(crudHumansWallLocal_.doRHumansWallLastEntries(humanId.getObj(), numberOfEntriesToFetch), READ_WALL_SUCCESSFUL);
+        r = new ReturnImpl<List<Msg>>(crudHumansWallLocal_.doRHumansWallLastEntries(whosWall.getObj(), numberOfEntriesToFetch), READ_WALL_SUCCESSFUL);
         return r;
 
     }
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Return<Long> readWallId(final HumanId humanId, final Obj wallOwnerId__) {
+    public Return<Long> readWallId(final HumanId whosWall, final Obj requester) {
         Return<Long> r;
         try {
-            r = new ReturnImpl<Long>(crudHumansWallLocal_.doDirtyRHumansWallID(humanId.getObj()), READ_WALL_ID_SUCCESSFUL);
+            r = new ReturnImpl<Long>(crudHumansWallLocal_.doDirtyRHumansWallID(whosWall.getObj()), READ_WALL_ID_SUCCESSFUL);
         } catch (DBDishonourCheckedException e) {
             r = new ReturnImpl<Long>(e, READ_WALL_ID_FAILED, true);
         }
@@ -82,8 +82,8 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
     @WARNING(warning = "Please not that the underlaying rHumansWall method assumes transaction scope REQUIRED, which is used here.")
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Return<Wall> addEntryToWall(final HumanId humanId__, final HumanId msgOwner__, Obj wallOwnerId__, final String contentToBeAppended) {
-        final Wall wall = crudHumansWallLocal_.doRHumansWall(humanId__.getObj()).getWall();
+    public Return<Wall> addEntryToWall(final HumanId whosWall, final HumanId msgOwner__, Obj requester__, final String contentToBeAppended) {
+        final Wall wall = crudHumansWallLocal_.doRHumansWall(whosWall.getObj()).getWall();
 
         wall.getWallMsgs().size();//refreshing
         wall.getWallMsgs().add(new Msg()
@@ -96,7 +96,7 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
     }
 
     @Override
-    public Return<Wall> muteWall(final HumanId operator__, final HumanId mutee, Obj wallOwnerId__) {
+    public Return<Wall> muteWall(final HumanId operator__, final HumanId mutee, Obj requester) {
 
         Return<Wall> r;
         try {
@@ -112,7 +112,7 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
     }
 
     @Override
-    public Return<Wall> unmuteWall(final HumanId operator__, final HumanId mutee, Obj wallOwnerId__) {
+    public Return<Wall> unmuteWall(final HumanId operator__, final HumanId mutee, Obj requester) {
 
         Return<Wall> r;
         try {

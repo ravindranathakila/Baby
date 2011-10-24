@@ -56,15 +56,15 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
 
         if (r.returnStatus() == 0) {
 
-            final Obj<Long> wallId = (Obj<Long>) new Obj<Long>().setObjAsValid(r.returnValue().getPrivateEventWall().getWallId()).getSelfAsValid();
+//            final Obj<Long> wallId = (Obj<Long>) new Obj<Long>().setObjAsValid(r.returnValue().getPrivateEventWall().getWallId()).getSelfAsValid();
+//
+//            final List<Msg> msgs = DB.getHumanCrudPrivateEventLocal(false).readWallLastEntries(
+//                    humanId,
+//                    wallId,
+//                    1,
+//                    new RefreshSpec()).returnValue();
 
-            final List<Msg> msgs = DB.getHumanCrudPrivateEventLocal(false).readWallLastEntries(
-                    humanId,
-                    wallId,
-                    1,
-                    new RefreshSpec()).returnValue();
-
-            final Msg lastWallEntry = msgs.isEmpty() ? null : msgs.get(0);
+            final Msg lastWallEntry = WallWidgetPrivateEvent.LAST_WALL_ENTRY.get(r.returnValue().getPrivateEventWall().getWallId(), humanId.getHumanId());
 
             final String href = new Parameter(Organize.getURL())
                     .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
