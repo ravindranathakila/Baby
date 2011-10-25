@@ -92,7 +92,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
             throw new ConstraintsViolatedException(((HumanId) initArgs[0]).getViolations());
         }
 
-        humansIdentity = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(humanId).returnValueBadly();
+        humansIdentity = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(humanId).returnValueBadly();//DO NOT USE CACHE HERE AT IT MIGHT SPOIL THE CACHE BY NON CRTICAL DATA
 
         final HumansNetPeople herExistingFriends = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);//First important variable to notice
 

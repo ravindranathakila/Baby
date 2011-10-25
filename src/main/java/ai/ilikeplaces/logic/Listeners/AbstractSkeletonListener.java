@@ -71,103 +71,44 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
         {
             setLoginWidget:
             {
-                try {
-                    new SignInOn(request__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
-                    };
-                } catch (final Throwable t) {
-                    EXCEPTION.error("{}", t);
-                }
+                setLoginWidget(request__);
             }
+
             setTitle:
             {
-                try {
-                    setMainTitle:
-                    {
-                        $(skeletonTitle).setTextContent(
-                                RBGet.globalConfig.getString(CODENAME_KEY));
-                    }
-                    setMetaDescription:
-                    {
-                        $(skeletonTitle).setAttribute(MarkupTag.META.namee(),
-                                RBGet.globalConfig.getString(CODENAME_KEY));
-                    }
-                } catch (final Throwable t) {
-                    Loggers.DEBUG.debug(t.getMessage());
-                }
+                setTitle(RBGet.globalConfig.getString(CODENAME_KEY));
             }
 
             setProfileLink:
             {
-                try {
-                    if (getUsername() != null) {
-                        $(Skeleton_othersidebar_profile_link).setAttribute(MarkupTag.A.href(), Controller.Page.Profile.getURL());
-                    } else {
-                        $(Skeleton_othersidebar_profile_link).setAttribute(MarkupTag.A.href(), Controller.Page.signup.getURL());
-                    }
-                } catch (final Throwable t) {
-                    EXCEPTION.error("{}", t);
-                }
+                setProfileLink();
             }
             setProfileDataLink:
             {
-                try {
-                    if (getUsername() != null) {
-                        final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(new HumanId(getUsername()).getSelfAsValid());
-                        if (r.returnStatus() == 0) {
-                            final HumansIdentity hi = r.returnValue();
-                            String profilePhotoURL = hi.getHumansIdentityProfilePhoto();
-                            $(Skeleton_profile_photo).setAttribute(
-                                    MarkupTag.IMG.src(),
-                                    ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrlStatic(profilePhotoURL)
-                            );
-                            $(Skeleton_othersidebar_wall_link).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-                        }
-                    }
-                } catch (final Throwable t) {
-                    EXCEPTION.error("{}", t);
-                }
+                setProfileDataLink();
             }
             sideBarFriends:
             {
-                try {
-                    if (getUsername() != null) {
-                        setSideBarFriends(request__);
-//                        final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(getUsernameAsValid()).getSelfAsValid());
-//
-//                        for (final HumansNetPeople friend : humansNetPeople.getHumansNetPeoples()) {
-//                            new UserPropertySidebar(request__, $(Controller.Page.Skeleton_sidebar), new HumanId(friend.getHumanId())) {
-//                                protected void init(final Object... initArgs) {
-//                                    $$(Controller.Page.user_property_sidebar_content).appendChild(
-//                                            ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(DB.getHumanCrudWallLocal(false).readWallLastEntries(new HumanId(friend.getHumanId()), new Obj<HumanId>(new HumanId(getUsernameAsValid())), 1, new RefreshSpec()).returnValue().get(0).getMsgContent()).$ElementSetHref(ProfileRedirect.PROFILE_URL + friend.getHumanId()).get()
-//                                    );
-//                                }
-//                            };
-//                        }
-                    }
-                } catch (final Throwable t) {
-                    EXCEPTION.error("{}", t);
-                }
+                setSideBarFriends(request__, DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS);
             }
             signinupActionNotice:
             {
-                try {
-                    if (getUsername() == null) {
-                        //We do nothing now
-                    }
-                } catch (final Throwable t) {
-                    EXCEPTION.error("{}", t);
-                }
+                //We do nothing now
             }
             SetNotifications:
             {
-                try {
-                    if (getUsername() != null) {
-                        $(Controller.Page.Skeleton_notifications).setTextContent("NOTIFICATIONS - " + DB.getHumanCRUDHumansUnseenLocal(false).readEntries(getUsernameAsValid()).size());
-                    }
-                } catch (final Throwable t) {
-                    EXCEPTION.error("{}", t);
-                }
+                setNotifications();
             }
+        }
+    }
+
+    protected void setNotifications() {
+        try {
+            if (getUsername() != null) {
+                $(Controller.Page.Skeleton_notifications).setTextContent("NOTIFICATIONS - " + DB.getHumanCRUDHumansUnseenLocal(false).readEntries(getUsernameAsValid()).size());
+            }
+        } catch (final Throwable t) {
+            EXCEPTION.error("{}", t);
         }
     }
 
@@ -239,22 +180,23 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
     protected void setProfileDataLink() {
         initStatus = true;
 
-
         try {
             if (getUsername() != null) {
-                final Return<HumansIdentity> r = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(new HumanId(getUsername()).getSelfAsValid());
-                if (r.returnStatus() == 0) {
-                    final HumansIdentity hi = r.returnValue();
-                    $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(), ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
-                    $(Skeleton_othersidebar_wall_link).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-                }
+
+                final HumansIdentity hi = ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(new String(getUsernameAsValid()));
+                String profilePhotoURL = hi.getHumansIdentityProfilePhoto();
+                $(Skeleton_profile_photo).setAttribute(
+                        MarkupTag.IMG.src(),
+                        ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrlStatic(profilePhotoURL)
+                );
+                $(Skeleton_othersidebar_wall_link).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
             }
         } catch (final Throwable t) {
             EXCEPTION.error("{}", t);
         }
     }
 
-    protected void setSideBarFriends(final ItsNatServletRequest request__) {
+    protected void setSideBarFriends(final ItsNatServletRequest request__, final DownTownFlowCriteria.DownTownFlowDisplayComponent type) {
         initStatus = true;
 
         final String currentUser = getUsername();
@@ -267,7 +209,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                 new DownTownFlow(
                         request__,
                         new DownTownFlowCriteria()
-                                .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.MOMENTS)
+                                .setDownTownFlowDisplayComponent(type)
                                 .setHumanId(new HumanId(currentUser))
                                 .setHumanUserLocal(getHumanUserAsValid()),
                         $(Controller.Page.Skeleton_sidebar));
@@ -275,5 +217,9 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
         } catch (final Throwable t) {
             EXCEPTION.error("{}", t);
         }
+    }
+
+    protected void setSideBarFriends(final ItsNatServletRequest request__) {
+        setSideBarFriends(request__, DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS);
     }
 }

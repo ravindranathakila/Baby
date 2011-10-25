@@ -7,10 +7,7 @@ import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
-import ai.ilikeplaces.logic.Listeners.widgets.Button;
-import ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationCreate;
-import ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationDelete;
-import ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationView;
+import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventCreate;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventView;
@@ -79,7 +76,40 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
             @Override
             @SuppressWarnings("unchecked")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
-                super.init(itsNatHTMLDocument__, hTMLDocument__, itsNatDocument__, initArgs);
+
+                layoutNeededForAllPages:
+                {
+                    setLoginWidget:
+                    {
+                        setLoginWidget(request__);
+                    }
+
+                    setTitle:
+                    {
+                        //set below
+                    }
+
+                    setProfileLink:
+                    {
+                        setProfileLink();
+                    }
+                    setProfileDataLink:
+                    {
+                        setProfileDataLink();
+                    }
+                    sideBarFriends:
+                    {
+                        setSideBarFriends(request__, DownTownFlowCriteria.DownTownFlowDisplayComponent.MOMENTS);
+                    }
+                    signinupActionNotice:
+                    {
+                        //We do nothing now
+                    }
+                    SetNotifications:
+                    {
+                        setNotifications();
+                    }
+                }
 
                 if (getUsername() != null) {
                     handleRequestType:
@@ -116,8 +146,8 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                                 final Node unnecessaryVariable = $(Skeleton_center_skeleton).appendChild(
                                                         ElementComposer.compose(
                                                                 $(MarkupTag.IMG)
-                                                        ).$ElementSetAttribute(MarkupTag.IMG.src(),"/images/create_moment.png")
-                                                                .$ElementSetAttribute(MarkupTag.IMG.style(),"width:100%;").get()
+                                                        ).$ElementSetAttribute(MarkupTag.IMG.src(), "/images/create_moment.png")
+                                                                .$ElementSetAttribute(MarkupTag.IMG.style(), "width:100%;").get()
                                                 );
 
                                             }
