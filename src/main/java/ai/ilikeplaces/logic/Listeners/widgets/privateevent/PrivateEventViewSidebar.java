@@ -12,6 +12,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.cache.SmartCache2;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -35,6 +36,16 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 @OK
 public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEventViewSidebarCriteria> {
 
+    public static final SmartCache2<Long, PrivateEvent, HumanId> PRIVATE_EVENT_BASIC_INFO_CACHE = new SmartCache2<Long, PrivateEvent, HumanId>(
+
+            new SmartCache2.RecoverWith<Long, PrivateEvent, HumanId>() {
+                @Override
+                public PrivateEvent getValue(final Long privateEventId, HumanId humanId) {
+                    return DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventInfoAsAny(humanId.getObjectAsValid(), privateEventId).returnValueBadly();
+                }
+            }
+    );
+
 
     public PrivateEventViewSidebar(final ItsNatServletRequest request__, final PrivateEventViewSidebarCriteria privateEventViewSidebarCriteria, final Element appendToElement__) {
         super(request__, Page.PrivateEventViewSidebar, privateEventViewSidebarCriteria, appendToElement__);
@@ -49,12 +60,6 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
         final HumanId humanId = new HumanId(privateEventViewSidebarCriteria.getHumanId__());
         final long privateEventId = privateEventViewSidebarCriteria.getPrivateEventId__();
 
-        final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventInfoAsAny(humanId.getObjectAsValid(), privateEventId);
-
-
-        LoggerFactory.getLogger(PrivateEventViewSidebar.class.getName()).debug(r.toString());
-
-        if (r.returnStatus() == 0) {
 
 //            final Obj<Long> wallId = (Obj<Long>) new Obj<Long>().setObjAsValid(r.returnValue().getPrivateEventWall().getWallId()).getSelfAsValid();
 //
@@ -64,65 +69,97 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
 //                    1,
 //                    new RefreshSpec()).returnValue();
 
-            final Msg lastWallEntry = WallWidgetPrivateEvent.LAST_WALL_ENTRY.get(r.returnValue().getPrivateEventWall().getWallId(), humanId.getHumanId());
+        final PrivateEvent privateEvent = PRIVATE_EVENT_BASIC_INFO_CACHE.get(privateEventId, humanId);
 
-            final String href = new Parameter(Organize.getURL())
-                    .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
-                    .append(DocOrganizeLocation, r.returnValue().getPrivateLocation().getPrivateLocationId())
-                    .append(DocOrganizeEvent, r.returnValue().getPrivateEventId())
-                    .get();
+        final Msg lastWallEntry = WallWidgetPrivateEvent.LAST_WALL_ENTRY.get(privateEvent.getPrivateEventWall().getWallId(), humanId.getHumanId());
+
+        final String href = new Parameter(Organize.getURL())
+                .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
+                .append(DocOrganizeLocation, privateEvent.getPrivateLocation().getPrivateLocationId())
+                .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
+                .get();
 
 
-            final GeoCoord gc = new GeoCoord();
-            gc.setObj(r.returnValue().getPrivateLocation().getPrivateLocationLatitude() + "," + r.returnValue().getPrivateLocation().getPrivateLocationLongitude());
-            gc.validateThrow();
-            $$(Page.private_event_view_sidebar_name).setTextContent(r.returnValue().getPrivateEventName());
+        final GeoCoord gc = new GeoCoord();
+        gc.setObj(privateEvent.getPrivateLocation().getPrivateLocationLatitude() + "," + privateEvent.getPrivateLocation().getPrivateLocationLongitude());
+        gc.validateThrow();
+        $$(Page.private_event_view_sidebar_name).setTextContent(privateEvent.getPrivateEventName());
 
-            $$(Page.private_event_view_sidebar_profile_photo).setAttribute(MarkupTag.IMG.title(),
-                    new Parameter("http://maps.google.com/maps/api/staticmap")
-                            .append("sensor", "false", true)
-                            .append("center", gc.toString())
-                            .append("size", "122x200")
-                            .append("format", "jpg")
-                            .append("markers", "color:0x7fe2ff|label:S|path=fillcolor:0xAA000033|color:0xFFFFFF00|"
-                                    + gc.toString())
-                            .get());
+        $$(Page.private_event_view_sidebar_profile_photo).setAttribute(MarkupTag.IMG.title(),
+                new Parameter("http://maps.google.com/maps/api/staticmap")
+                        .append("sensor", "false", true)
+                        .append("center", gc.toString())
+                        .append("size", "122x200")
+                        .append("format", "jpg")
+                        .append("markers", "color:0x7fe2ff|label:S|path=fillcolor:0xAA000033|color:0xFFFFFF00|"
+                                + gc.toString())
+                        .get());
 
-            if (lastWallEntry != null) {
-                new UserPropertySidebar(
-                        request,
-                        $$(Page.private_event_view_sidebar_content),
-                        new HumanId(lastWallEntry.getMsgMetadata()),
-                        lastWallEntry,
-                        href) {
+        if (lastWallEntry != null) {
+            new UserPropertySidebar(
+                    request,
+                    $$(Page.private_event_view_sidebar_content),
+                    new HumanId(lastWallEntry.getMsgMetadata()),
+                    lastWallEntry,
+                    href) {
 
-                    private Msg mylastWallEntry;
-                    private String myhref;
+                private Msg mylastWallEntry;
+                private String myhref;
 
-                    protected void init(final Object... initArgs) {
+                protected void init(final Object... initArgs) {
 
-                        mylastWallEntry = (Msg) ((Object[]) initArgs[1])[0];
-                        myhref = (String) ((Object[]) initArgs[1])[1];
+                    mylastWallEntry = (Msg) ((Object[]) initArgs[1])[0];
+                    myhref = (String) ((Object[]) initArgs[1])[1];
 
-                        $$displayBlock($$(Controller.Page.user_property_sidebar_talk));
-                        Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(mylastWallEntry.getMsgContent()).$ElementSetHref(myhref).get();
-                        $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
-                    }
+                    $$displayBlock($$(Controller.Page.user_property_sidebar_talk));
+                    Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(mylastWallEntry.getMsgContent()).$ElementSetHref(myhref).get();
+                    $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
+                }
 
-                    @Override
-                    protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+                @Override
+                protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
 
-                        itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
-                            @Override
-                            public void handleEvent(final Event evt_) {
-                                $$sendJS(JSCodeToSend.redirectPageWithURL(myhref));
-                            }
-                        }, false);
-                    }
-                };
-            }
+                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
+                        @Override
+                        public void handleEvent(final Event evt_) {
+                            $$sendJS(JSCodeToSend.redirectPageWithURL(myhref));
+                        }
+                    }, false);
+                }
+            };
+        } else {
+            new UserPropertySidebar(
+                    request,
+                    $$(Page.private_event_view_sidebar_content),
+                    humanId,
+                    "",
+                    href) {
+
+                private String myhref;
+
+                protected void init(final Object... initArgs) {
+
+                    myhref = (String) ((Object[]) initArgs[1])[1];
+
+                    $$displayBlock($$(Controller.Page.user_property_sidebar_talk));
+                    Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText("").$ElementSetHref(myhref).get();
+                    $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
+                }
+
+                @Override
+                protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+
+                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
+                        @Override
+                        public void handleEvent(final Event evt_) {
+                            $$sendJS(JSCodeToSend.redirectPageWithURL(myhref));
+                        }
+                    }, false);
+                }
+            };
 
         }
+
     }
 
     @Override
