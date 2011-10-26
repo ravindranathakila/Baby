@@ -1,4 +1,4 @@
-<map version="0.8.1">
+<map version="0.9.0">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
 <node CREATED="1299394012234" ID="Freemind_Link_988220771" MODIFIED="1299938994700" STYLE="bubble" TEXT="Events(Party, Event, Gathering)">
 <node CREATED="1299394105546" ID="_" MODIFIED="1299394126515" POSITION="right" STYLE="bubble" TEXT="List of Events">
@@ -44,7 +44,7 @@
 </node>
 </node>
 <node CREATED="1299761323906" ID="Freemind_Link_1770925216" MODIFIED="1299761327609" POSITION="right" TEXT="Cherishing"/>
-<node CREATED="1299761370140" FOLDED="true" ID="Freemind_Link_1355221918" MODIFIED="1299939051763" POSITION="left" TEXT="Types of Events">
+<node CREATED="1299761370140" FOLDED="true" ID="Freemind_Link_1355221918" MODIFIED="1319101295015" POSITION="left" TEXT="Types of Events">
 <node CREATED="1299939053201" FOLDED="true" ID="Freemind_Link_1197377035" LINK="http://www.google.com/search?hl=en&amp;q=define%3Aceremony&amp;btnG=Search" MODIFIED="1299939745432" TEXT="Ceremony">
 <node CREATED="1299939731729" ID="Freemind_Link_1140289876" MODIFIED="1299939737213" TEXT="a formal event performed on a special occasion; &quot;a ceremony commemorating Pearl Harbor&quot;&#xa;any activity that is performed in an especially solemn elaborate or formal way; &quot;the ceremony of smelling the cork and tasting the wine&quot;; &quot;he makes a ceremony of addressing his golf ball&quot;; &quot;he disposed of it without ceremony&quot;&#xa;the proper or conventional behavior on some solemn occasion; &quot;an inaugural ceremony&quot;&#xa;wordnetweb.princeton.edu/perl/webwn">
 <icon BUILTIN="help"/>
