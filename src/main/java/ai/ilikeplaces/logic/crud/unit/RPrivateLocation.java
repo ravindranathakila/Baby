@@ -59,7 +59,7 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
             /**
              * Should be either an owner of visitor
              */
-            if (!(privateLocation_.getPrivateLocationOwners().contains(human) || privateLocation_.getPrivateLocationViewers().contains(human))) {
+            if (!(privateLocation_.getPrivateLocationViewers().contains(human) || privateLocation_.getPrivateLocationOwners().contains(human))) {
                 throw new NoPrivilegesException(humanId, VIEW_PRIVATE_LOCATION + privateLocation_.toString());
             }
         }
