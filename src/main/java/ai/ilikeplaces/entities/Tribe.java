@@ -1,9 +1,6 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.BIDIRECTIONAL;
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.OK;
-import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.util.ExceptionCache;
 import ai.ilikeplaces.util.jpa.Refresh;
@@ -81,6 +78,66 @@ public class Tribe implements Serializable, Refreshable<Tribe> {
     public Album tribeAlbum;
 
     public Set<HumansTribe> tribeMembers;
+
+// ------------------------ ACCESSORS / MUTATORS ------------------------
+
+    @UNIDIRECTIONAL
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    public Album getTribeAlbum() {
+        return tribeAlbum;
+    }
+
+    public void setTribeAlbum(final Album tribeAlbum) {
+        this.tribeAlbum = tribeAlbum;
+    }
+
+    public Long getTribeId() {
+        return tribeId;
+    }
+
+    public void setTribeId(final Long tribeId) {
+        this.tribeId = tribeId;
+    }
+
+    @WARNING(warning = "Owner because once an tribe needs to be deleted, deleting this tribe is easier if owner." +
+            "If this tribe is not the owner, individual owner viewer accepteee rejectee will have to delete their tribes individually.")
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    public Set<HumansTribe> getTribeMembers() {
+        return tribeMembers;
+    }
+
+    public void setTribeMembers(final Set<HumansTribe> tribeMembers) {
+        this.tribeMembers = tribeMembers;
+    }
+
+    @Column(nullable = false, length = 255)
+    public String getTribeName() {
+        return tribeName;
+    }
+
+    public void setTribeName(String tribeName) {
+        this.tribeName = tribeName;
+    }
+
+    @Column(nullable = false, length = 1000)
+    public String getTribeStory() {
+        return tribeStory;
+    }
+
+    public void setTribeStory(final String tribeStory) {
+        this.tribeStory = tribeStory;
+    }
+
+    @UNIDIRECTIONAL
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    public Wall getTribeWall() {
+        return tribeWall;
+    }
+
+    public void setTribeWall(final Wall tribeWall) {
+        this.tribeWall = tribeWall;
+    }
 
 // ------------------------ INTERFACE METHODS ------------------------
 

@@ -50,6 +50,27 @@ final public class
     private final static Map<PageFace, String> PrettyURLMap_ = new IdentityHashMap<PageFace, String>();//Please read javadoc before making any changes to this implementation
     final static private Logger staticLogger = LoggerFactory.getLogger(Controller.class.getName());
     private static final String ITSNAT_DOC_NAME = "itsnat_doc_name";
+    private static final String DT = "dt";
+    private static final String DOWNTOWN = "downtown";
+    private static final String UNDERSCORE = "_";
+    private static final String HASH = "#";
+    private static final String _SO = "_so";
+    private static final String _PHOTO_ = "_photo_";
+    private static final String EMPTY = "";
+    private static final String _ME = "_me";
+    private static final String _ORG = "_org";
+    private static final String FRIENDS = "_friends";
+    private static final String BOOK = "_book";
+    private static final String TRIBES = "_tribes";
+    private static final String PROFILE = "_profile";
+    private static final String I = "_i";
+    private static final String ACTIVATE = "_activate";
+    private static final String SHARE = "_share";
+    private static final String GEOBUSINESS = "_geobusiness";
+    private static final String PUBLIC = "_public";
+    private static final String LEGAL = "_legal";
+    private static final String MUSTER = "_muster";
+    private static final String HELP = "_help";
 
     final PageFace locationMain = Page.LocationMain;
     final PageFace aarrr = Page.Aarrr;
@@ -77,6 +98,7 @@ final public class
     final PageFace organize = Page.Organize;
     final PageFace findFriend = Page.Friends;
     final PageFace book = Page.Bookings;
+    final PageFace tribes = Page.Tribes;
     final PageFace profile = Page.Profile;
     final PageFace i = Page.I;
     final PageFace activate = Page.Activate;
@@ -690,6 +712,18 @@ final public class
                 return DocBook;
             }
         },
+        Tribes(null
+        ) {
+            @Override
+            public String getURL() {
+                return APP_ROOT + "page/_tribes";
+            }
+
+            @Override
+            public String toString() {
+                return DocTribes;
+            }
+        },
 
         Skeleton("ai/ilikeplaces/Skeleton.xhtml",
                 Controller.Page.skeletonTitle,
@@ -1238,6 +1272,9 @@ final public class
         /*Book Page*/
         final static public String DocBook = "DocBook";
 
+        /*Tribes Page*/
+        final static public String DocTribes = "DocTribes";
+
         /*Skeleton Page*/
         final static public String DocSkeleton = "DocPrivateLocationCreate";
         /*Skeleton Create IDs*/
@@ -1506,6 +1543,8 @@ final public class
 
             inhs__.registerItsNatDocumentTemplate(book.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerBookings());
 
+            inhs__.registerItsNatDocumentTemplate(tribes.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerTribes());
+
             inhs__.registerItsNatDocumentTemplate(profile.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerProfile());
 
             inhs__.registerItsNatDocumentTemplate(i.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerI());
@@ -1703,6 +1742,9 @@ final public class
                 } else if (isBookingsPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocBook);/*Framework specific*/
                     Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0015"));
+                } else if (isTribesPage(URL__)) {
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocTribes);/*Framework specific*/
+                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0025"));
                 } else if (isProfilePage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocProfile);/*Framework specific*/
                     Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0016"));
@@ -1760,79 +1802,83 @@ final public class
     }
 
     static private boolean isDownTownPage(final String URL_) {
-        return (URL_.startsWith("dt") || URL_.startsWith("downtown"));
+        return (URL_.startsWith(DT) || URL_.startsWith(DOWNTOWN));
     }
 
     static private boolean isNonLocationPage(final String URL_) {
-        return (URL_.startsWith("_") || URL_.startsWith("#"));
+        return (URL_.startsWith(UNDERSCORE) || URL_.startsWith(HASH));
     }
 
     static private boolean isSignOut(final String URL_) {
-        return (URL_.equals("_so"));
+        return (URL_.equals(_SO));
     }
 
     static private boolean isPhotoPage(final String URL_) {
-        return (URL_.startsWith("_photo_") && URL_.split("_").length == 4);
+        return (URL_.startsWith(_PHOTO_) && URL_.split(UNDERSCORE).length == 4);
     }
 
     static private String getPhotoLocation(final String URL_) {
-        return URL_.replace("_photo_", "").split("_")[0];
+        return URL_.replace(_PHOTO_, EMPTY).split(UNDERSCORE)[0];
     }
 
     static private String getPhotoURL(final String URL_) {
-        return URL_.replace("_photo_", "").split("_")[1];
+        return URL_.replace(_PHOTO_, EMPTY).split(UNDERSCORE)[1];
     }
 
     static private boolean isHumanPage(final String URL_) {
-        return (URL_.startsWith("_me"));
+        return (URL_.startsWith(_ME));
     }
 
     static private boolean isOrganizePage(final String URL_) {
-        return (URL_.startsWith("_org"));
+        return (URL_.startsWith(_ORG));
     }
 
     static private boolean isFriendsPage(final String URL_) {
-        return (URL_.startsWith("_friends"));
+        return (URL_.startsWith(FRIENDS));
     }
 
     static private boolean isBookingsPage(final String URL_) {
-        return (URL_.startsWith("_book"));
+        return (URL_.startsWith(BOOK));
+    }
+
+    static private boolean isTribesPage(final String URL_) {
+        return (URL_.startsWith(TRIBES));
     }
 
     static private boolean isProfilePage(final String URL_) {
-        return (URL_.startsWith("_profile"));
+        return (URL_.startsWith(PROFILE));
     }
 
     static private boolean isIPage(final String URL_) {
-        return (URL_.startsWith("_i"));
+        return (URL_.startsWith(I));
     }
 
     static private boolean isActivatePage(final String URL_) {
-        return (URL_.startsWith("_activate"));
+        return (URL_.startsWith(ACTIVATE));
     }
 
     static private boolean isSharePage(final String URL_) {
-        return (URL_.startsWith("_share"));
+        return (URL_.startsWith(SHARE));
     }
 
     static private boolean isGeoBusinessPage(final String URL_) {
-        return (URL_.startsWith("_geobusiness"));
+        return (URL_.startsWith(GEOBUSINESS));
     }
 
     static private boolean isTemplateGenericPage(final String URL_) {
-        return (URL_.startsWith("_public"));
+        return (URL_.startsWith(PUBLIC));
     }
 
     static private boolean isLegalPage(final String URL_) {
-        return (URL_.startsWith("_legal"));
+        return (URL_.startsWith(LEGAL));
     }
 
     static private boolean isMusterPage(final String URL_) {
-        return (URL_.startsWith("_muster"));
+        return (URL_.startsWith(MUSTER));
     }
 
     static private boolean isHelpPage(final String URL_) {
-        return (URL_.startsWith("_help"));
+        return (URL_.startsWith(HELP));
     }
 
     /**

@@ -35,7 +35,8 @@ public class DownTownFlowCriteria {
 
     public enum DownTownFlowDisplayComponent {
         TALKS,
-        MOMENTS
+        MOMENTS,
+        TRIBES
     }
 
     public HumanId getHumanId() {

@@ -49,6 +49,10 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
                 $$displayBlock($$(Controller.Page.DownTownFlowMoments));
                 break;
             }
+            case TRIBES: {
+                //$$displayBlock($$(Controller.Page.DownTownFlowMoments));
+                break;
+            }
             default: {
             }
         }

@@ -35,8 +35,7 @@ public class HumansTribe {
         return this;
     }
 
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @WARNING(warning = "Owning as deleting a location should automatically reflect in humans, not vice versa.")
+    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public Set<Tribe> getTribes() {
         return tribes;
