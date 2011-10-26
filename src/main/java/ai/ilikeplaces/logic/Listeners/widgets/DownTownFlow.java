@@ -52,76 +52,79 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
             default: {
             }
         }
-
     }
 
-    // ------------------------ OVERRIDING METHODS ------------------------
+// ------------------------ OVERRIDING METHODS ------------------------
     @Override
     protected void init(final DownTownFlowCriteria downTownFlowCriteria) {
+        switch (downTownFlowCriteria.getDownTownFlowDisplayComponent()) {
+            case TALKS: {
+                UCDownTownFlowFriends:
+                {
+                    final String currentUser = downTownFlowCriteria.getHumanId().getObj();
+                    final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) downTownFlowCriteria.getHumanUserLocal().cache(currentUser);
 
-        UCDownTownFlowFriends:
-        {
+                    final Set<Wall> notifiedWalls = DB.getHumanCRUDHumansUnseenLocal(false).readEntries(downTownFlowCriteria.getHumanId().getHumanId());
 
-            final String currentUser = downTownFlowCriteria.getHumanId().getObj();
-            final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) downTownFlowCriteria.getHumanUserLocal().cache(currentUser);
-
-            final Set<Wall> notifiedWalls = DB.getHumanCRUDHumansUnseenLocal(false).readEntries(downTownFlowCriteria.getHumanId().getHumanId());
-
-            final Set<Long> notifiedWallLongs = new HashSet<Long>(notifiedWalls.size());
-            for (final Wall wall : notifiedWalls) {
-                notifiedWallLongs.add(wall.getWallId());
-            }
-            for (final HumansNetPeople friend : beFriends) {
-
-                new UserPropertySidebar(request, $$(Controller.Page.DownTownFlowTalksFriends), new HumanId(friend.getHumanId())) {
-                    protected void init(final Object... initArgs) {
-
-                        final Long friendWallId = WallWidgetHumansWall.HUMANS_WALL_ID.get(new Pair<String, String>(new String(currentUser), new String(friend.getHumanId())));
-
-                        final Msg lastWallEntry = WallWidgetHumansWall.LAST_WALL_ENTRY.get(new String(friend.getHumanId()), new String(currentUser));
-
-                        final Element appendToElement__ = $$(Controller.Page.user_property_sidebar_content);
-
-                        new UserPropertySidebar(request, appendToElement__, new HumanId(lastWallEntry.getMsgMetadata())) {
-                            final Msg mylastWallEntry = lastWallEntry;
-                            private String href;
-
+                    final Set<Long> notifiedWallLongs = new HashSet<Long>(notifiedWalls.size());
+                    for (final Wall wall : notifiedWalls) {
+                        notifiedWallLongs.add(wall.getWallId());
+                    }
+                    for (final HumansNetPeople friend : beFriends) {
+                        new UserPropertySidebar(request, $$(Controller.Page.DownTownFlowTalksFriends), new HumanId(friend.getHumanId())) {
                             protected void init(final Object... initArgs) {
-                                $$displayBlock($$(Controller.Page.user_property_sidebar_talk));
-                                href = ProfileRedirect.PROFILE_URL + HUMANS_IDENTITY_SIDEBAR_CACHE.get(new String(friend.getHumanId())).getUrl().getUrl();
-                                Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(lastWallEntry.getMsgContent()).$ElementSetHref(href).get();
-                                $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
-                                if (notifiedWallLongs.contains(friendWallId)) {
-                                    new Notification(request, new NotificationCriteria("!!!"), commentHref);
-                                }
-                            }
+                                final Long friendWallId = WallWidgetHumansWall.HUMANS_WALL_ID.get(new Pair<String, String>(new String(currentUser), new String(friend.getHumanId())));
 
-                            @Override
-                            protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+                                final Msg lastWallEntry = WallWidgetHumansWall.LAST_WALL_ENTRY.get(new String(friend.getHumanId()), new String(currentUser));
 
-                                itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
-                                    @Override
-                                    public void handleEvent(final Event evt_) {
-                                        $$sendJS(JSCodeToSend.redirectPageWithURL(href));
+                                final Element appendToElement__ = $$(Controller.Page.user_property_sidebar_content);
+
+                                new UserPropertySidebar(request, appendToElement__, new HumanId(lastWallEntry.getMsgMetadata())) {
+                                    final Msg mylastWallEntry = lastWallEntry;
+                                    private String href;
+
+                                    protected void init(final Object... initArgs) {
+                                        $$displayBlock($$(Controller.Page.user_property_sidebar_talk));
+                                        href = ProfileRedirect.PROFILE_URL + HUMANS_IDENTITY_SIDEBAR_CACHE.get(new String(friend.getHumanId())).getUrl().getUrl();
+                                        Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(lastWallEntry.getMsgContent()).$ElementSetHref(href).get();
+                                        $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
+                                        if (notifiedWallLongs.contains(friendWallId)) {
+                                            new Notification(request, new NotificationCriteria("!!!"), commentHref);
+                                        }
                                     }
-                                }, false);
+
+                                    @Override
+                                    protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+                                        itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
+                                            @Override
+                                            public void handleEvent(final Event evt_) {
+                                                $$sendJS(JSCodeToSend.redirectPageWithURL(href));
+                                            }
+                                        }, false);
+                                    }
+                                };
                             }
                         };
                     }
-                };
+                }
+                break;
+            }
+
+            case MOMENTS: {
+                UCDownTownFlowMoments:
+                {
+                    for (final PrivateEvent privateEvent : DB.getHumanCrudPrivateEventLocal(false).doDirtyRPrivateEventsOfHuman(downTownFlowCriteria.getHumanId()).returnValue()) {
+                        new PrivateEventViewSidebar(
+                                request,
+                                new PrivateEventViewSidebarCriteria().setPrivateEventId__(privateEvent.getPrivateEventId()).setHumanId__(downTownFlowCriteria.getHumanId().getHumanId()),
+                                $$(Controller.Page.DownTownFlowMoments));
+                    }
+                }
+                break;
+            }
+            default: {
             }
         }
-
-        UCDownTownFlowMoments:
-        {
-            for (final PrivateEvent privateEvent : DB.getHumanCrudPrivateEventLocal(false).doDirtyRPrivateEventsOfHuman(downTownFlowCriteria.getHumanId()).returnValue()) {
-                new PrivateEventViewSidebar(
-                        request,
-                        new PrivateEventViewSidebarCriteria().setPrivateEventId__(privateEvent.getPrivateEventId()).setHumanId__(downTownFlowCriteria.getHumanId().getHumanId()),
-                        $$(Controller.Page.DownTownFlowMoments));
-            }
-        }
-
     }
 
     @Override
