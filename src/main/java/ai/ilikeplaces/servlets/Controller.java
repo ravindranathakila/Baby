@@ -59,18 +59,18 @@ final public class
     private static final String EMPTY = "";
     private static final String _ME = "_me";
     private static final String _ORG = "_org";
-    private static final String FRIENDS = "_friends";
-    private static final String BOOK = "_book";
-    private static final String TRIBES = "_tribes";
-    private static final String PROFILE = "_profile";
-    private static final String I = "_i";
-    private static final String ACTIVATE = "_activate";
-    private static final String SHARE = "_share";
-    private static final String GEOBUSINESS = "_geobusiness";
-    private static final String PUBLIC = "_public";
-    private static final String LEGAL = "_legal";
-    private static final String MUSTER = "_muster";
-    private static final String HELP = "_help";
+    private static final String _FRIENDS = "_friends";
+    private static final String _BOOK = "_book";
+    private static final String _TRIBES = "_tribes";
+    private static final String _PROFILE = "_profile";
+    private static final String _I = "_i";
+    private static final String _ACTIVATE = "_activate";
+    private static final String _SHARE = "_share";
+    private static final String _GEOBUSINESS = "_geobusiness";
+    private static final String _PUBLIC = "_public";
+    private static final String _LEGAL = "_legal";
+    private static final String _MUSTER = "_muster";
+    private static final String _HELP = "_help";
 
     final PageFace locationMain = Page.LocationMain;
     final PageFace aarrr = Page.Aarrr;
@@ -1834,51 +1834,51 @@ final public class
     }
 
     static private boolean isFriendsPage(final String URL_) {
-        return (URL_.startsWith(FRIENDS));
+        return (URL_.startsWith(_FRIENDS));
     }
 
     static private boolean isBookingsPage(final String URL_) {
-        return (URL_.startsWith(BOOK));
+        return (URL_.startsWith(_BOOK));
     }
 
     static private boolean isTribesPage(final String URL_) {
-        return (URL_.startsWith(TRIBES));
+        return (URL_.startsWith(_TRIBES));
     }
 
     static private boolean isProfilePage(final String URL_) {
-        return (URL_.startsWith(PROFILE));
+        return (URL_.startsWith(_PROFILE));
     }
 
     static private boolean isIPage(final String URL_) {
-        return (URL_.startsWith(I));
+        return (URL_.startsWith(_I));
     }
 
     static private boolean isActivatePage(final String URL_) {
-        return (URL_.startsWith(ACTIVATE));
+        return (URL_.startsWith(_ACTIVATE));
     }
 
     static private boolean isSharePage(final String URL_) {
-        return (URL_.startsWith(SHARE));
+        return (URL_.startsWith(_SHARE));
     }
 
     static private boolean isGeoBusinessPage(final String URL_) {
-        return (URL_.startsWith(GEOBUSINESS));
+        return (URL_.startsWith(_GEOBUSINESS));
     }
 
     static private boolean isTemplateGenericPage(final String URL_) {
-        return (URL_.startsWith(PUBLIC));
+        return (URL_.startsWith(_PUBLIC));
     }
 
     static private boolean isLegalPage(final String URL_) {
-        return (URL_.startsWith(LEGAL));
+        return (URL_.startsWith(_LEGAL));
     }
 
     static private boolean isMusterPage(final String URL_) {
-        return (URL_.startsWith(MUSTER));
+        return (URL_.startsWith(_MUSTER));
     }
 
     static private boolean isHelpPage(final String URL_) {
-        return (URL_.startsWith(HELP));
+        return (URL_.startsWith(_HELP));
     }
 
     /**
