@@ -8,6 +8,8 @@ import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.crud.unit.CRUDHumansWallLocal;
+import ai.ilikeplaces.logic.crud.unit.CRUDTribe;
+import ai.ilikeplaces.logic.crud.unit.CRUDTribeLocal;
 import ai.ilikeplaces.logic.crud.unit.CRUDWallLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
@@ -33,6 +35,9 @@ import java.util.Set;
 @Stateless
 @Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTribeLocal {
+
+    @EJB
+    private CRUDTribeLocal crudTribeLocal_;
 
     /**
      * Creates a Tribe and adds this user as a Tribe member of it
