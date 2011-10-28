@@ -80,6 +80,7 @@ final public class
     final PageFace notification = Page.Notification;
     final PageFace downTownFlow = Page.DownTownFlow;
     final PageFace tribeHome = Page.TribeHome;
+    final PageFace tribeCreateHome = Page.TribeCreateHome;
 
     final PageFace privateLocationCreate = Page.PrivateLocationCreate;
     final PageFace privateLocationView = Page.PrivateLocationView;
@@ -1006,7 +1007,7 @@ final public class
         },
         TribeHome(
                 "ai/ilikeplaces/widgets/TribeHome.xhtml",
-                Page.TribeHomeWidget
+                Page.tribeHomeWidget
         ) {
             @Override
             public String getURL() {
@@ -1016,6 +1017,23 @@ final public class
             @Override
             public String toString() {
                 return DocTribeHome;
+            }
+        },
+        TribeCreateHome(
+                "ai/ilikeplaces/widgets/TribeHomeCreate.xhtml",
+                Page.tribeHomeCreateWidget,
+                Page.tribeHomeCreateName,
+                Page.tribeHomeCreateStory,
+                Page.tribeHomeCreateSave
+        ) {
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocTribeCreateHome;
             }
         };
 
@@ -1425,7 +1443,15 @@ final public class
         /*TribeHome Page*/
         final static public String DocTribeHome = "DocTribeHome";
         /*TribeHome Specific IDs*/
-        final static public String TribeHomeWidget = "TribeHomeWidget";
+        final static public String tribeHomeWidget = "tribeHomeWidget";
+
+        /*TribeCreateHome Page*/
+        final static public String DocTribeCreateHome = "DocTribeCreateHome";
+        /*TribeCreateHome Specific IDs*/
+        final static public String tribeHomeCreateWidget = "tribeHomeCreateWidget";
+        final static public String tribeHomeCreateName  = "tribeHomeCreateName";
+        final static public String tribeHomeCreateStory = "tribeHomeCreateStory";
+        final static public String tribeHomeCreateSave  = "tribeHomeCreateSave";
 
 
         /*Common IDs that should be present in any page*/
@@ -1577,6 +1603,8 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(downTownFlow.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(downTownFlow));
 
             inhs__.registerItsNatDocFragmentTemplate(tribeHome.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(tribeHome));
+
+            inhs__.registerItsNatDocFragmentTemplate(tribeCreateHome.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(tribeCreateHome));
 
             inhs__.registerItsNatDocFragmentTemplate(privateLocationCreate.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateLocationCreate));
 

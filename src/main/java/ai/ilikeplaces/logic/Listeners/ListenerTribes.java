@@ -1,8 +1,6 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria;
-import ai.ilikeplaces.logic.Listeners.widgets.TribeWidget;
-import ai.ilikeplaces.logic.Listeners.widgets.TribeWidgetCriteria;
+import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.servlets.Controller;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
@@ -61,6 +59,7 @@ public class ListenerTribes implements ItsNatServletRequestListener {
                 if (getUsername() != null) {
 
                     new TribeWidget(request__, new TribeWidgetCriteria(), $(Controller.Page.Skeleton_center_content));
+                    new TribeCreateWidget(request__, new TribeCreateWidgetCriteria(), $(Controller.Page.Skeleton_center_content));
 
                 } else {
                     //WE COULD STILL GIVE A TRIBE CREATION WIDGET WITH USERS EMAIL AND FRIENDS EMAILS. ONCE USER SIGNS UP, THE TRIBE CAN BE CREATED.

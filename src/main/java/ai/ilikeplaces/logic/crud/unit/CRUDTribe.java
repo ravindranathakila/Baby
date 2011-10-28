@@ -122,7 +122,7 @@ public class CRUDTribe implements CRUDTribeLocal {
     public Set<Tribe> getHumansTribes(final String humanId) {
         final HumansTribe humansTribe = getHumansTribe(humanId);
 
-        humansTribe.getTribes().size();
+        humansTribe.getTribes().size();//refreshing if lazy
 
         return humansTribe.getTribes();
     }
