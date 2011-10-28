@@ -91,6 +91,13 @@ public class Tribe implements Serializable, Refreshable<Tribe> {
         this.tribeAlbum = tribeAlbum;
     }
 
+
+    @Transient
+    public Tribe setTribeAlbumR(final Album tribeAlbum) {
+        this.tribeAlbum = tribeAlbum;
+        return this;
+    }
+
     public Long getTribeId() {
         return tribeId;
     }
@@ -120,6 +127,12 @@ public class Tribe implements Serializable, Refreshable<Tribe> {
         this.tribeName = tribeName;
     }
 
+    @Transient
+    public Tribe setTribeNameR(String tribeName) {
+        this.tribeName = tribeName;
+        return this;
+    }
+
     @Column(nullable = false, length = 1000)
     public String getTribeStory() {
         return tribeStory;
@@ -127,6 +140,12 @@ public class Tribe implements Serializable, Refreshable<Tribe> {
 
     public void setTribeStory(final String tribeStory) {
         this.tribeStory = tribeStory;
+    }
+
+    @Transient
+    public Tribe setTribeStoryR(final String tribeStory) {
+        this.tribeStory = tribeStory;
+        return this;
     }
 
     @UNIDIRECTIONAL
@@ -137,6 +156,12 @@ public class Tribe implements Serializable, Refreshable<Tribe> {
 
     public void setTribeWall(final Wall tribeWall) {
         this.tribeWall = tribeWall;
+    }
+
+    @Transient
+    public Tribe setTribeWallR(final Wall tribeWall) {
+        this.tribeWall = tribeWall;
+        return this;
     }
 
 // ------------------------ INTERFACE METHODS ------------------------
