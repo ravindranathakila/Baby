@@ -35,6 +35,13 @@ public interface HumanCRUDTribeLocal extends GeneralCRUDWall {
      */
     public Tribe addToTribe(final HumanId humanId, final VLong tribeId);
 
+   /**
+     * @param humanId used to check permissions
+     * @param tribeId which to fetch
+     * @return Tribe
+     */
+    public Tribe getTribe(final HumanId humanId, final VLong tribeId);
+
     /**
      * @param humanId To be removed from the given Tribe
      * @param tribeId The tribe from which to remove the given user, and <b>if last member, removes the tribe too.</b>
@@ -47,4 +54,6 @@ public interface HumanCRUDTribeLocal extends GeneralCRUDWall {
      * @return The Tribes the given user is a member of
      */
     public Set<Tribe> getHumansTribes(final HumanId humanId);
+
+
 }

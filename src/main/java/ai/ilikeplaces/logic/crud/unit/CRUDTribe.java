@@ -72,6 +72,7 @@ public class CRUDTribe implements CRUDTribeLocal {
      * @return The Tribe
      */
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Tribe addToTribe(final String humanId, final Long tribeId) {
         final Tribe managedTribe = getTribe(tribeId);
 
@@ -99,6 +100,7 @@ public class CRUDTribe implements CRUDTribeLocal {
      * @return The Tribe
      */
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Tribe removeFromTribe(final String humanId, final Long tribeId) {
         final Tribe managedTribe = getTribe(tribeId);
 
@@ -118,6 +120,18 @@ public class CRUDTribe implements CRUDTribeLocal {
         }
 
         return managedTribe;
+    }
+
+
+    /**
+     * @param humanId whos permissions to be checked
+     * @param tribeId of which the given humanId should be a member of
+     * @return if the given humanId is a member of the given tribe
+     */
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public boolean isTribeMember(final String humanId, final Long tribeId) {
+        return getTribe(tribeId).getTribeMembers().contains(getHumansTribe(humanId));
     }
 
     /**

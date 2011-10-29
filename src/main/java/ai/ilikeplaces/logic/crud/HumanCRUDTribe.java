@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.crud.unit.CRUDTribeLocal;
+import ai.ilikeplaces.logic.crud.unit.CRUDWallLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.logic.validators.unit.VTribeName;
@@ -27,9 +28,85 @@ import java.util.Set;
 @Stateless
 @Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTribeLocal {
+// ------------------------------ FIELDS ------------------------------
+
+    private static final String WRITE_WALL_SUCCESSFUL = "Write Wall Successful!";
+    private static final String WRITE_WALL_FAILED = "Write Wall FAILED!";
+    private static final String MUTE_WALL_SUCCESSFUL = "Mute Wall Successful!";
+    private static final String MUTE_WALL_FAILED = "Mute Wall FAILED!";
+    private static final String UNMUTE_WALL_SUCCESSFUL = "Unmute Wall Successful!";
+    private static final String UNMUTE_WALL_FAILED = "Unmute Wall FAILED!";
+    private static final String READ_WALL_SUCCESSFUL = "Read Wall Successful!";
+    private static final String READ_WALL_FAILED = "Read Wall FAILED!";
+
+    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("privatePhotoWall");
+
 
     @EJB
     private CRUDTribeLocal crudTribeLocal_;
+
+    @EJB
+    private CRUDWallLocal crudWallLocal_;
+
+// ------------------------ INTERFACE METHODS ------------------------
+
+
+// --------------------- Interface GeneralCRUDWall ---------------------
+
+
+    @Override
+    public Return<Wall> addEntryToWall(final HumanId whosWall__, final HumanId msgOwner__, final Obj wallReference__, final String contentToBeAppended) {
+        Return<Wall> r;
+        try {
+            r = new ReturnImpl<Wall>(crudWallLocal_
+                    .doUAddEntry((getTribe(msgOwner__, (VLong) wallReference__).getTribeWall().getWallId()),
+                            msgOwner__.getObj(),
+                            contentToBeAppended), WRITE_WALL_SUCCESSFUL);
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Wall>(t, WRITE_WALL_FAILED, true);
+        }
+        return r;
+    }
+
+    @Override
+    public Return<Wall> muteWall(final HumanId operator__, final HumanId mutee, final Obj wallReference__) {
+        Return<Wall> r;
+        try {
+            r = new ReturnImpl<Wall>(crudWallLocal_
+                    .doUAddMuteEntry((getTribe(operator__, (VLong) wallReference__).getTribeWall().getWallId()),
+                            mutee.getObj()), MUTE_WALL_SUCCESSFUL);
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Wall>(t, MUTE_WALL_FAILED, true);
+        }
+        return r;
+    }
+
+    @Override
+    public Return<Wall> unmuteWall(final HumanId operator__, final HumanId mutee, final Obj wallReference__) {
+        Return<Wall> r;
+        try {
+            r = new ReturnImpl<Wall>(crudWallLocal_
+                    .doURemoveMuteEntry((getTribe(operator__, (VLong) wallReference__).getTribeWall().getWallId()),
+                            mutee.getObj()), UNMUTE_WALL_SUCCESSFUL);
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Wall>(t, UNMUTE_WALL_FAILED, true);
+        }
+        return r;
+    }
+
+    @Override
+    public Return<Wall> readWall(final HumanId whosWall__, final Obj requester__, RefreshSpec refreshSpec__) {
+        Return<Wall> r;
+        try {
+            r = new ReturnImpl<Wall>(crudWallLocal_
+                    .doRWall(getTribe(whosWall__, (VLong) requester__).getTribeWall().getWallId(), refreshSpec__), READ_WALL_SUCCESSFUL);
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Wall>(t, READ_WALL_FAILED, true);
+        }
+        return r;
+    }
+
+// --------------------- Interface HumanCRUDTribeLocal ---------------------
 
     /**
      * Creates a Tribe and adds this user as a Tribe member of it
@@ -48,8 +125,18 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
      * @return The Tribe
      */
     @Override
-    public Tribe addToTribe(HumanId humanId, VLong tribeId) {
-        return null;
+    public Tribe addToTribe(final HumanId humanId, final VLong tribeId) {
+        return crudTribeLocal_.addToTribe(humanId.getObjectAsValid(), tribeId.getObjectAsValid());
+    }
+
+    /**
+     * @param humanId used to check permissions
+     * @param tribeId which to fetch
+     * @return Tribe
+     */
+    @Override
+    public Tribe getTribe(final HumanId humanId, final VLong tribeId) {
+        return crudTribeLocal_.getTribe(tribeId.getObjectAsValid());
     }
 
     /**
@@ -58,8 +145,8 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
      * @return The Tribe
      */
     @Override
-    public Tribe removeFromTribe(HumanId humanId, VLong tribeId) {
-        return null;
+    public Tribe removeFromTribe(final HumanId humanId, final VLong tribeId) {
+        return crudTribeLocal_.removeFromTribe(humanId.getObjectAsValid(), tribeId.getObjectAsValid());
     }
 
     /**
@@ -67,35 +154,7 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
      * @return The Tribes the given user is a member of
      */
     @Override
-    public Set<Tribe> getHumansTribes(HumanId humanId) {
-        return null;
-    }
-
-    /**
-     * @param whosWall
-     * @param msgOwner__          The (usually non-living) entity which owns this wall.
-     *                            It is usually something like a {@link ai.ilikeplaces.entities.PrivateEvent PrivateEvent}
-     * @param requester
-     * @param contentToBeAppended
-     * @return
-     */
-    @Override
-    public Return<Wall> addEntryToWall(HumanId whosWall, HumanId msgOwner__, Obj requester, String contentToBeAppended) {
-        return null;
-    }
-
-    @Override
-    public Return<Wall> muteWall(HumanId operator, HumanId mutee__, Obj requester) {
-        return null;
-    }
-
-    @Override
-    public Return<Wall> unmuteWall(HumanId operator, HumanId mutee__, Obj requester) {
-        return null;
-    }
-
-    @Override
-    public Return<Wall> readWall(HumanId whosWall, Obj requester, RefreshSpec refreshSpec__) {
-        return null;
+    public Set<Tribe> getHumansTribes(final HumanId humanId) {
+        return crudTribeLocal_.getHumansTribes(humanId.getObjectAsValid());
     }
 }

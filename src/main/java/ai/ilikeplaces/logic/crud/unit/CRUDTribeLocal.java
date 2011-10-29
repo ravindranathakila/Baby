@@ -68,5 +68,13 @@ public interface CRUDTribeLocal {
      * @param tribeId The tribe from which to remove the given user, and <b>if last member, removes the tribe too.</b>
      * @return The Tribe
      */
-    public Tribe removeFromTribe(final String humanId, final Long tribeId);    
+    public Tribe removeFromTribe(final String humanId, final Long tribeId);
+
+    /**
+     *
+     * @param humanId whos permissions to be checked
+     * @param tribeId of which the given humanId should be a member of
+     * @return if the given humanId is a member of the given tribe
+     */
+    public boolean isTribeMember(final String humanId, final Long tribeId);
 }

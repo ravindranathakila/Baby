@@ -26,12 +26,16 @@ public interface CRUDWallLocal {
     /**
      * @param wallId
      * @return Wall
+     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
      */
     public Wall doDirtyRWall(final long wallId) throws DBDishonourCheckedException;
 
     /**
      * @param wallId
+     * @param refreshSpec
      * @return Wall
+     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
+     * @throws ai.ilikeplaces.exception.DBFetchDataException
      */
     public Wall doRWall(final long wallId, final RefreshSpec refreshSpec) throws DBDishonourCheckedException, DBFetchDataException;
 
@@ -39,32 +43,40 @@ public interface CRUDWallLocal {
      * @param wallId
      * @param contentToBeAppended
      * @return Wall
+     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
      */
     @Deprecated
     public Wall doNTxUAppendToWall(final long wallId, final String contentToBeAppended) throws DBDishonourCheckedException;
 
     /**
      * @param wallId
+     * @param humanId
      * @param contentToBeAppended
      * @return Wall
+     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
      */
     public Wall doUAddEntry(long wallId, final String humanId, String contentToBeAppended) throws DBDishonourCheckedException;
 
     /**
      * @param wallId
+     * @param mutee
      * @return Wall
+     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
      */
     public Wall doUAddMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException;
 
     /**
      * @param wallId
+     * @param mutee
      * @return Wall
+     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
      */
     public Wall doURemoveMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException;
 
     /**
      * @param wallId
      * @return Wall
+     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
      */
     public Wall doUClearWall(final long wallId) throws DBDishonourCheckedException;
 
