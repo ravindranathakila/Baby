@@ -1,6 +1,8 @@
 package ai.ilikeplaces.logic.Listeners;
 
+import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
+import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import org.itsnat.core.ItsNatDocument;
@@ -59,7 +61,10 @@ public class ListenerTribes implements ItsNatServletRequestListener {
 
                 if (getUsername() != null) {
 
-                    new TribeWidget(request__, new TribeWidgetCriteria(), $(Controller.Page.Skeleton_center_content));
+                    for (final Tribe tribe : DB.getHumanCRUDTribeLocal(false).getHumansTribes(new HumanId(getUsernameAsValid()))) {
+                        new TribeWidget(request__, new TribeWidgetCriteria(), $(Controller.Page.Skeleton_center_content));
+                    }
+
                     new TribeCreateWidget(request__, new TribeCreateWidgetCriteria(new HumanId(getUsernameAsValid())), $(Controller.Page.Skeleton_center_content));
 
                 } else {

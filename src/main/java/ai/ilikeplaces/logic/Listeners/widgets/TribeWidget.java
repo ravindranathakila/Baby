@@ -22,5 +22,6 @@ public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria> {
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
 
+        new WallWidgetTribe(request, new WallWidgetTribeCriteria().setHumanId(criteria.getHumanId()).setTribeId__(criteria.getTribeId().getObjectAsValid()), $$(Controller.Page.tribeHomeWall));
     }
 }
