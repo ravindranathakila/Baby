@@ -19,15 +19,15 @@ public interface GeneralCRUDWall {
      * @param whosWall
      * @param msgOwner__ The (usually non-living) entity which owns this wall.
      * It is usually something like a {@link ai.ilikeplaces.entities.PrivateEvent PrivateEvent}
-     * @param requester
+     * @param wallReference
      * @param contentToBeAppended
      * @return
      */
-    public Return<Wall> addEntryToWall(final HumanId whosWall, final HumanId msgOwner__, final Obj requester, final String contentToBeAppended);
+    public Return<Wall> addEntryToWall(final HumanId whosWall, final HumanId msgOwner__, final Obj wallReference, final String contentToBeAppended);
 
-    public Return<Wall> muteWall(final HumanId operator, final HumanId mutee__, final Obj requester);
+    public Return<Wall> muteWall(final HumanId operator, final HumanId mutee__, final Obj wallReference);
 
-    public Return<Wall> unmuteWall(final HumanId operator, final HumanId mutee__, final Obj requester);
+    public Return<Wall> unmuteWall(final HumanId operator, final HumanId mutee__, final Obj wallReference);
 
     public Return<Wall> readWall(final HumanId whosWall, final Obj requester, RefreshSpec refreshSpec__);
 }

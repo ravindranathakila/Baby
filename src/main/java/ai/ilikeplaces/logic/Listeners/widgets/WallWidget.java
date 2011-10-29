@@ -20,7 +20,7 @@ import org.w3c.dom.events.EventTarget;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-abstract public class WallWidget extends AbstractWidgetListener {
+abstract public class WallWidget<T> extends AbstractWidgetListener<T> {
 
     final static public String PARAM_WALL_ENTRY = "wall_entry";
 
@@ -35,6 +35,31 @@ abstract public class WallWidget extends AbstractWidgetListener {
 
     public WallWidget(final ItsNatServletRequest request__, final Element appendToElement__, final Object... initArgs) {
         super(request__, Page.WallHandler, appendToElement__, initArgs);
+
+        UCProcessWallText:
+        {
+
+            itsNatDocument_.addEventListener((EventTarget) $$(Page.wallAppend), EventType.BLUR.toString(), new EventListener() {
+
+                @Override
+                public void handleEvent(final Event evt_) {
+                    wallAppend.setObj(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+                    //We are removing validation here since it is understood text is supposed to be entered
+                    /*if (wallAppend.validate() == 0) {
+                        wallAppend.setObj(wallAppend.getObj());
+                        $$clear($$(Page.wallNotice));
+                    } else {
+                        $$(Page.wallNotice).setTextContent(wallAppend.getViolationAsString());
+                        wallAppend.setObj("");
+                    }*/
+                }
+
+            }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+        }
+    }
+
+    public WallWidget(final ItsNatServletRequest request__, final T t, final Element appendToElement__) {
+        super(request__, Page.WallHandler, t, appendToElement__);
 
         UCProcessWallText:
         {

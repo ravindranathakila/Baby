@@ -6,6 +6,7 @@ import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.logic.validators.unit.WallEntry;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
@@ -17,7 +18,6 @@ import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 import org.xml.sax.SAXException;
@@ -35,15 +35,28 @@ import java.util.List;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public class WallWidgetTribe extends WallWidget {
+public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
+// ------------------------------ FIELDS ------------------------------
+
+//    final static public SmartCache2<Long, Msg, String> LAST_WALL_ENTRY = new SmartCache2<Long, Msg, String>(
+//            new SmartCache2.RecoverWith<Long, Msg, String>() {
+//                @Override
+//                public Msg getValue(final Long whichWall, final String requester) {
+//                    final List<Msg> msgs = DB.getHumanCRUDTribeLocal(false).readWallLastEntries(new HumanId(requester), new Obj<Long>(whichWall), 1, new RefreshSpec()).returnValue();
+//                    final Msg returnVal;
+//                    if (msgs.isEmpty()) {
+//                        returnVal = null;
+//                    } else {
+//                        returnVal = msgs.get(0);
+//                    }
+//                    return returnVal;
+//                }
+//            }
+//    );
 
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
     private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs", "wallMutes");
     private static final String TALK_AT_0 = "talk.at.0";
-
-    HumanId humanId;
-    Long privateEventId = null;
-    Long wallId = null;
     private static final String WALL_ENTRY_CONSUMED_STATUES = "&wall_entry_consumed=true";
     private static final String WALL_ENTRY_CONSUMED = "wall_entry_consumed";
     private static final String TRUE = "true";
@@ -56,49 +69,33 @@ public class WallWidgetTribe extends WallWidget {
     private static final String LOCATION = "location";
     private static final String EVENT = "event";
 
-    final static public SmartCache2<Long, Msg, String> LAST_WALL_ENTRY = new SmartCache2<Long, Msg, String>(
-            new SmartCache2.RecoverWith<Long, Msg, String>() {
+// --------------------------- CONSTRUCTORS ---------------------------
 
-                @Override
-                public Msg getValue(final Long whichWall, final String requester) {
-                    final List<Msg> msgs = DB.getHumanCrudPrivateEventLocal(false).readWallLastEntries(new HumanId(requester), new Obj<Long>(whichWall), 1, new RefreshSpec()).returnValue();
-                    final Msg returnVal;
-                    if (msgs.isEmpty()) {
-                        returnVal = null;
-                    } else {
-                        returnVal = msgs.get(0);
-                    }
-                    return returnVal;
-                }
-            }
-    );
-
-    public WallWidgetTribe(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId, final long privateEventId__) {
-        super(request__, appendToElement__, humanId, privateEventId__);
+    public WallWidgetTribe(final ItsNatServletRequest request__, final WallWidgetTribeCriteria wallWidgetTribeCriteria, final Element appendToElement__) {
+        super(request__, wallWidgetTribeCriteria, appendToElement__);
     }
+
+// ------------------------ OVERRIDING METHODS ------------------------
 
     /**
      *
      */
     @Override
-    protected void init(final Object... initArgs) {
-        this.humanId = ((HumanId) initArgs[0]).getSelfAsValid();
-        this.privateEventId = (Long) initArgs[1];
+    protected void init(final WallWidgetTribeCriteria wallWidgetTribeCriteria) {
+        final Tribe tribe = DB.getHumanCRUDTribeLocal(true).getTribe(criteria.getHumanId(), new VLong(criteria.getTribeId()));
 
-        final PrivateEvent pe = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(humanId.getObjectAsValid(), privateEventId).returnValueBadly();
+        criteria.setWallId(tribe.getTribeWall().getWallId());
 
-        this.wallId = pe.getPrivateEventWall().getWallId();
-
-        fetchToEmail(pe.getPrivateLocation().getPrivateLocationId(),
-                pe.getPrivateEventId());
+        fetchToEmail(tribe.getTribeId(),
+                tribe.getTribeId());
 
         final String wall_entry = request.getServletRequest().getParameter(WallWidget.PARAM_WALL_ENTRY);
         final String wall_entry_consumed = request.getServletRequest().getParameter(WALL_ENTRY_CONSUMED);
         Loggers.DEBUG.debug(WALL_ENTRY + (wall_entry != null ? wall_entry : NULL));
 
 
-        final Return<Wall> aReturn = DB.getHumanCrudPrivateEventLocal(true).
-                readWall(humanId, new Obj<Long>(privateEventId), REFRESH_SPEC);
+        final Return<Wall> aReturn = DB.getHumanCRUDTribeLocal(true).
+                readWall(criteria.getHumanId(), new Obj<Long>(criteria.getTribeId()), REFRESH_SPEC);
 
         /**
          * If null, this means we have to check on if the wall entry parameter is available and update.
@@ -106,9 +103,9 @@ public class WallWidgetTribe extends WallWidget {
          */
         if ((wall_entry_consumed == null || !wall_entry_consumed.equals(TRUE)) && wall_entry != null) {//This will refresh or close the page after actions
             Loggers.DEBUG.debug(WALL_ENTRY_FROM_EMAIL_RECEIVED);
-            final Return<Wall> r = DB.getHumanCrudPrivateEventLocal(true).addEntryToWall(this.humanId,
-                    this.humanId,
-                    new Obj<Long>(this.privateEventId),
+            final Return<Wall> r = DB.getHumanCRUDTribeLocal(true).addEntryToWall(criteria.getHumanId(),
+                    criteria.getHumanId(),
+                    new Obj<Long>(criteria.getTribeId()),
                     new WallEntry().setObjAsValid(wall_entry).getObj());//Use of class scoped wall entry is not possible as it isn't initialized yet
             Loggers.log(Loggers.LEVEL.DEBUG, DERIVED_FROM_EMAIL, r.returnMsg());
             final StringBuilder b = new StringBuilder("");
@@ -124,9 +121,9 @@ public class WallWidgetTribe extends WallWidget {
                         }.fetchToEmail
                 );
             }
-            for (final HumansPrivateEvent hpe : pe.getPrivateEventViewers()) {
-                if (!hpe.getHumanId().equals(humanId.getObj())) {
-                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), pe.getPrivateEventName(), fetchToEmail + b.toString());
+            for (final HumansTribe hpe : tribe.getTribeMembers()) {
+                if (!hpe.getHumanId().equals(criteria.getHumanId().getObj())) {
+                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), tribe.getTribeName(), fetchToEmail + b.toString());
                     DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), aReturn.returnValue().getWallId());
                 }
             }
@@ -138,7 +135,6 @@ public class WallWidgetTribe extends WallWidget {
             } else {
                 itsNatDocument_.addCodeToSend(JSCodeToSend.ClosePageOrRefresh);//
             }
-
         } else {//Moves on with the wall without refresh
             for (final Msg msg : aReturn.returnValueBadly().getWallMsgs()) {
                 new UserProperty(request, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
@@ -149,18 +145,17 @@ public class WallWidgetTribe extends WallWidget {
             }
         }
 
-        DB.getHumanCRUDHumansUnseenLocal(false).removeEntry(humanId.getObjectAsValid(), aReturn.returnValue().getWallId());
+        DB.getHumanCRUDHumansUnseenLocal(false).removeEntry(criteria.getHumanId().getObjectAsValid(), aReturn.returnValue().getWallId());
 
 
-        final HumansIdentity currUserAsVisitorHI = UserProperty.HUMANS_IDENTITY_CACHE.get((humanId.getHumanId()),"");
+        final HumansIdentity currUserAsVisitorHI = UserProperty.HUMANS_IDENTITY_CACHE.get((criteria.getHumanId().getHumanId()), "");
 
         super.setWallProfileName(currUserAsVisitorHI.getHuman().getDisplayName());
         super.setWallProfilePhoto(UserProperty.formatProfilePhotoUrl(currUserAsVisitorHI.getHumansIdentityProfilePhoto()));
-        super.setWallTitle(MessageFormat.format(RBGet.gui().getString(TALK_AT_0), pe.getPrivateEventName()));
+        super.setWallTitle(MessageFormat.format(RBGet.gui().getString(TALK_AT_0), tribe.getTribeName()));
 
-        $$displayWallAsMuted($$(Controller.Page.wallMute), aReturn.returnValueBadly().getWallMutes().contains(humanId));
+        $$displayWallAsMuted($$(Controller.Page.wallMute), aReturn.returnValueBadly().getWallMutes().contains(criteria.getHumanId()));
     }
-
 
     /**
      * @param args
@@ -169,16 +164,14 @@ public class WallWidgetTribe extends WallWidget {
         try {
             final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + WALL_SUBIT_FROM_EMAIL);
 
-            displayBlock($$(ORGANIZE_SECTION, document));
+            displayNone(($$(ORGANIZE_SECTION, document)));
 
-
-            $$(CATEGORY, document).setAttribute(MarkupTag.INPUT.value(), Integer.toString(Controller.Page.DocOrganizeModeEvent));
-            $$(LOCATION, document).setAttribute(MarkupTag.INPUT.value(), args[0].toString());
-            $$(EVENT, document).setAttribute(MarkupTag.INPUT.value(), args[1].toString());
+            //$$(CATEGORY, document).setAttribute(MarkupTag.INPUT.value(), Integer.toString(Controller.Page.DocOrganizeModeEvent));
+            //$$(LOCATION, document).setAttribute(MarkupTag.INPUT.value(), args[0].toString());
+            //$$(EVENT, document).setAttribute(MarkupTag.INPUT.value(), args[1].toString());
 
 
             fetchToEmail = HTMLDocParser.convertNodeToHtml($$(WALL_SUBMIT_WIDGET, document));
-
         } catch (final TransformerException e) {
             Loggers.EXCEPTION.error("", e);
         } catch (final SAXException e) {
@@ -191,85 +184,72 @@ public class WallWidgetTribe extends WallWidget {
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
 
+        super.registerForClick($$(Controller.Page.wallSubmit),
+                new AIEventListener<WallWidgetTribeCriteria>() {
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.wallSubmit), EventType.CLICK.toString(), new EventListener() {
-
-            private HumanId myhumanId = humanId;
-            private Long myprivateEventId = privateEventId;
-            private Long mywallId = wallId;
-
-            @Override
-            public void handleEvent(final Event evt_) {
-
-                Loggers.USER.info(myhumanId.getObj() + ENTERS_TEXT + wallAppend.getObj());
-                if (wallAppend.validate() == 0) {
-                    if (!wallAppend.getObj().equals("")) {
-
-                        Loggers.USER.info(myhumanId.getObj() + ENTERS_TEXT + wallAppend.getObj());
+                    @Override
+                    public void onFire(final Event evt_) {
+                        Loggers.USER.info(criteria.getHumanId().getObj() + ENTERS_TEXT + wallAppend.getObj());
+                        if (wallAppend.validate() == 0) {
+                            if (!wallAppend.getObj().equals("")) {
+                                Loggers.USER.info(criteria.getHumanId().getObj() + ENTERS_TEXT + wallAppend.getObj());
 
 
-                        final Return<Wall> r = DB.getHumanCrudPrivateEventLocal(true).addEntryToWall(myhumanId,
-                                myhumanId,
-                                new Obj<Long>(myprivateEventId),
-                                wallAppend.getObj());
+                                final Return<Wall> r = DB.getHumanCRUDTribeLocal(true).addEntryToWall(criteria.getHumanId(),
+                                        criteria.getHumanId(),
+                                        new Obj<Long>(criteria.getTribeId()),
+                                        wallAppend.getObj());
 
 
-                        if (r.returnStatus() == 0) {
-                            $$(Controller.Page.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
-                            wallAppend.setObj("");
+                                if (r.returnStatus() == 0) {
+                                    $$(Controller.Page.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
+                                    wallAppend.setObj("");
 
-                            LAST_WALL_ENTRY.MAP.put(mywallId, null);
+                                    //LAST_WALL_ENTRY.MAP.put(criteria.getWallId(), null);
 
-                            clear($$(Controller.Page.wallContent));
-                            final Wall wall = (DB.getHumanCrudPrivateEventLocal(true).readWall(myhumanId, new Obj<Long>(myprivateEventId), REFRESH_SPEC).returnValueBadly());
-                            final StringBuilder b = new StringBuilder("");
-                            for (final Msg msg : wall.getWallMsgs()) {
-                                b.append(
-                                        new UserProperty(
-                                                request,
-                                                $$(Controller.Page.wallContent),
-                                                ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
-                                                new HumanId(msg.getMsgMetadata())) {
-                                        }.fetchToEmail
-                                );
-                            }
-                            final PrivateEvent pe = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(myhumanId.getObj(), myprivateEventId).returnValue();
-                            for (final HumansPrivateEvent hpe : pe.getPrivateEventViewers()) {
-                                if (!wall.getWallMutes().contains(hpe)) {
-                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), pe.getPrivateEventName(), fetchToEmail + b.toString());
-                                    DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), wall.getWallId());
+                                    clear($$(Controller.Page.wallContent));
+                                    final Wall wall = (DB.getHumanCRUDTribeLocal(true).readWall(criteria.getHumanId(), new Obj<Long>(criteria.getTribeId()), REFRESH_SPEC).returnValueBadly());
+                                    final StringBuilder b = new StringBuilder("");
+                                    for (final Msg msg : wall.getWallMsgs()) {
+                                        b.append(
+                                                new UserProperty(
+                                                        request,
+                                                        $$(Controller.Page.wallContent),
+                                                        ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
+                                                        new HumanId(msg.getMsgMetadata())) {
+                                                }.fetchToEmail
+                                        );
+                                    }
+                                    final Tribe tribe = DB.getHumanCRUDTribeLocal(true).getTribe(criteria.getHumanId(), new VLong(criteria.getTribeId()));
+                                    for (final HumansTribe hpe : tribe.getTribeMembers()) {
+                                        if (!wall.getWallMutes().contains(hpe)) {
+                                            SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), tribe.getTribeName(), fetchToEmail + b.toString());
+                                            DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), wall.getWallId());
+                                        }
+                                    }
+                                } else {
+                                    $$(Controller.Page.wallNotice).setTextContent(r.returnMsg());
                                 }
                             }
-                        } else {
-                            $$(Controller.Page.wallNotice).setTextContent(r.returnMsg());
                         }
                     }
-                }
-            }
-
-        }, false);
+                });
 
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.wallMute), EventType.CLICK.toString(), new EventListener() {
+        super.registerForClick($$(Controller.Page.wallMute),
 
-            private HumanId myhumanId = humanId;
-            private Long myprivateEventId = privateEventId;
+                new AIEventListener<WallWidgetTribeCriteria>() {
 
-            @Override
-            public void handleEvent(final Event evt_) {
-
-                if (DB.getHumanCrudPrivateEventLocal(true).readWall(myhumanId, new Obj<Long>(myprivateEventId), REFRESH_SPEC).returnValueBadly().getWallMutes().contains(myhumanId)) {
-                    DB.getHumanCrudPrivateEventLocal(true).unmuteWall(myhumanId, myhumanId, new Obj<Long>(myprivateEventId));
-                    $$displayWallAsMuted(evt_, false);
-
-                } else {
-                    DB.getHumanCrudPrivateEventLocal(true).muteWall(myhumanId, myhumanId, new Obj<Long>(myprivateEventId));
-                    $$displayWallAsMuted(evt_, true);
-                }
-            }
-
-        }, false);
-
+                    @Override
+                    public void onFire(final Event evt_) {
+                        if (DB.getHumanCRUDTribeLocal(true).readWall(criteria.getHumanId(), new Obj<Long>(criteria.getTribeId()), REFRESH_SPEC).returnValueBadly().getWallMutes().contains(criteria.getHumanId())) {
+                            DB.getHumanCRUDTribeLocal(true).unmuteWall(criteria.getHumanId(), criteria.getHumanId(), new Obj<Long>(criteria.getTribeId()));
+                            $$displayWallAsMuted(evt_, false);
+                        } else {
+                            DB.getHumanCRUDTribeLocal(true).muteWall(criteria.getHumanId(), criteria.getHumanId(), new Obj<Long>(criteria.getTribeId()));
+                            $$displayWallAsMuted(evt_, true);
+                        }
+                    }
+                });
     }
-
 }
