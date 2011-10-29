@@ -1007,7 +1007,12 @@ final public class
         },
         TribeHome(
                 "ai/ilikeplaces/widgets/TribeHome.xhtml",
-                Page.tribeHomeWidget
+                Page.tribeHomeWidget,
+                Page.tribeHomeName,
+                Page.tribeHomeInfo,
+                Page.tribeHomeNotice,
+                Page.tribeHomeWall,
+                Page.tribeHomeAlbum
         ) {
             @Override
             public String getURL() {
@@ -1444,6 +1449,12 @@ final public class
         final static public String DocTribeHome = "DocTribeHome";
         /*TribeHome Specific IDs*/
         final static public String tribeHomeWidget = "tribeHomeWidget";
+        final static public String tribeHomeWidget = "tribeHomeWidget";
+        final static public String tribeHomeName = "tribeHomeName";
+        final static public String tribeHomeInfo = "tribeHomeInfo";
+        final static public String tribeHomeNotice = "tribeHomeNotice";
+        final static public String tribeHomeWall = "tribeHomeWall";
+        final static public String tribeHomeAlbum = "tribeHomeAlbum"
 
         /*TribeCreateHome Page*/
         final static public String DocTribeCreateHome = "DocTribeCreateHome";
