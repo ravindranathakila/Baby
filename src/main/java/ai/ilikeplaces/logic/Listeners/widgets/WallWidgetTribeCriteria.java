@@ -21,23 +21,26 @@ public class WallWidgetTribeCriteria {
         return humanId;
     }
 
-    public void setHumanId(HumanId humanId) {
+    public WallWidgetTribeCriteria setHumanId(HumanId humanId) {
         this.humanId = humanId;
+        return this;
     }
 
     public Long getTribeId() {
         return tribeId__;
     }
 
-    public void setTribeId__(Long tribeId__) {
+    public WallWidgetTribeCriteria setTribeId__(Long tribeId__) {
         this.tribeId__ = tribeId__;
+        return this;
     }
 
     public Long getWallId() {
         return wallId;
     }
 
-    public void setWallId(Long wallId) {
+    public WallWidgetTribeCriteria setWallId(Long wallId) {
         this.wallId = wallId;
+        return this;
     }
 }

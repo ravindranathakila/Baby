@@ -1,5 +1,8 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
+import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.logic.validators.unit.VLong;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Ravindranath Akila
@@ -7,4 +10,30 @@ package ai.ilikeplaces.logic.Listeners.widgets;
  * Time: 8:51 PM
  */
 public class TribeWidgetCriteria {
+// ------------------------------ FIELDS ------------------------------
+
+    private HumanId humanId;
+    private VLong tribeId;
+
+// ------------------------ ACCESSORS / MUTATORS ------------------------
+
+    public HumanId getHumanId() {
+        return humanId;
+    }
+
+    public VLong getTribeId() {
+        return tribeId;
+    }
+
+// -------------------------- OTHER METHODS --------------------------
+
+    public TribeWidgetCriteria setHumanId(HumanId humanId) {
+        this.humanId = humanId;
+        return this;
+    }
+
+    public TribeWidgetCriteria setTribeId(VLong tribeId) {
+        this.tribeId = tribeId;
+        return this;
+    }
 }
