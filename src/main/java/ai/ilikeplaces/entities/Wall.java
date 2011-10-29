@@ -34,6 +34,7 @@ public class Wall implements Clearance, Refreshable<Wall> {
 
     final static public int wallTypeMISC = 0;
     final static public int wallTypeHuman = 1;
+    final static public int wallTypeTribe = 3;
 
 
     final static public int WALL_LENGTH = 10240;

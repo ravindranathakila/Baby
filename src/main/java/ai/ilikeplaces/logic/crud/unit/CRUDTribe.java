@@ -40,7 +40,7 @@ public class CRUDTribe implements CRUDTribeLocal {
                 new Tribe()
                         .setTribeNameR(tribeName)
                         .setTribeStoryR(tribeStory)
-                        .setTribeWallR(new Wall())
+                        .setTribeWallR(new Wall().setWallTypeR(Wall.wallTypeTribe))
                         .setTribeAlbumR(new Album()));
 
         final HumansTribe managedHumansTribe = getHumansTribe(humanId);
