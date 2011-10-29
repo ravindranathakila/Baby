@@ -56,8 +56,14 @@ public class CRUDTribe implements CRUDTribeLocal {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public HumansTribe getHumansTribe(String humanId) {
-        return humansTribeCrudServiceLocal__.find(HumansTribe.class, humanId);
+    public HumansTribe getHumansTribe(final String humanId) {
+        HumansTribe humansTribe = humansTribeCrudServiceLocal__.find(HumansTribe.class, humanId);
+
+        if (humansTribe == null) {
+            humansTribe = humansTribeCrudServiceLocal__.create(new HumansTribe().setHumanIdR(humanId));
+        }
+
+        return humansTribe;
     }
 
     /**
@@ -66,7 +72,7 @@ public class CRUDTribe implements CRUDTribeLocal {
      * @return The Tribe
      */
     @Override
-    public Tribe addToTribe(final String humanId,final Long tribeId) {
+    public Tribe addToTribe(final String humanId, final Long tribeId) {
         final Tribe managedTribe = getTribe(tribeId);
 
         final HumansTribe managedHumansTribe = getHumansTribe(humanId);

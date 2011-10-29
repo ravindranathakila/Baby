@@ -1,27 +1,19 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.entities.Wall;
-import ai.ilikeplaces.exception.AbstractEjbApplicationException;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.logic.crud.unit.CRUDHumansWallLocal;
-import ai.ilikeplaces.logic.crud.unit.CRUDTribe;
 import ai.ilikeplaces.logic.crud.unit.CRUDTribeLocal;
-import ai.ilikeplaces.logic.crud.unit.CRUDWallLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
+import ai.ilikeplaces.logic.validators.unit.VTribeName;
+import ai.ilikeplaces.logic.validators.unit.VTribeStory;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -46,8 +38,8 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
      * @return The created tribe
      */
     @Override
-    public Tribe createTribe(HumanId humanId) {
-        return null;  
+    public Tribe createTribe(final HumanId humanId, final VTribeName vTribeName, final VTribeStory vTribeStory) {
+        return crudTribeLocal_.doNTxCTribe(humanId.getHumanId(), vTribeName.getObjectAsValid(), vTribeStory.getObjectAsValid());
     }
 
     /**
@@ -57,7 +49,7 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
      */
     @Override
     public Tribe addToTribe(HumanId humanId, VLong tribeId) {
-        return null;  
+        return null;
     }
 
     /**
@@ -67,7 +59,7 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
      */
     @Override
     public Tribe removeFromTribe(HumanId humanId, VLong tribeId) {
-        return null;  
+        return null;
     }
 
     /**
@@ -76,7 +68,7 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
      */
     @Override
     public Set<Tribe> getHumansTribes(HumanId humanId) {
-        return null;  
+        return null;
     }
 
     /**
@@ -89,21 +81,21 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
      */
     @Override
     public Return<Wall> addEntryToWall(HumanId whosWall, HumanId msgOwner__, Obj requester, String contentToBeAppended) {
-        return null;  
+        return null;
     }
 
     @Override
     public Return<Wall> muteWall(HumanId operator, HumanId mutee__, Obj requester) {
-        return null;  
+        return null;
     }
 
     @Override
     public Return<Wall> unmuteWall(HumanId operator, HumanId mutee__, Obj requester) {
-        return null;  
+        return null;
     }
 
     @Override
     public Return<Wall> readWall(HumanId whosWall, Obj requester, RefreshSpec refreshSpec__) {
-        return null;  
+        return null;
     }
 }

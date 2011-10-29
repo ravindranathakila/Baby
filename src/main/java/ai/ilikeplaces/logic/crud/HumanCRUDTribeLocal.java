@@ -1,17 +1,13 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
-import ai.ilikeplaces.logic.verify.util.Verify;
-import ai.ilikeplaces.util.Obj;
-import ai.ilikeplaces.util.Return;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
+import ai.ilikeplaces.logic.validators.unit.VTribeName;
+import ai.ilikeplaces.logic.validators.unit.VTribeStory;
 
 import javax.ejb.Local;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,7 +26,7 @@ public interface HumanCRUDTribeLocal extends GeneralCRUDWall {
      * @param humanId To be added to the Tribe
      * @return The created tribe
      */
-    public Tribe createTribe(final HumanId humanId);
+    public Tribe createTribe(final HumanId humanId, final VTribeName vTribeName, final VTribeStory vTribeStory);
 
     /**
      * @param humanId To be added to the given Tribe

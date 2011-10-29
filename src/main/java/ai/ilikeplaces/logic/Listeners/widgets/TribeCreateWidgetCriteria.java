@@ -1,9 +1,8 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.util.RefObj;
-import net.sf.oval.configuration.annotation.IsInvariant;
-import net.sf.oval.constraint.NotNull;
+import ai.ilikeplaces.logic.validators.unit.VTribeName;
+import ai.ilikeplaces.logic.validators.unit.VTribeStory;
 
 /**
  * Created by IntelliJ IDEA.
@@ -38,31 +37,4 @@ public class TribeCreateWidgetCriteria {
         this.humanId = humanId;
     }
 
-    class VTribeName extends RefObj<String> {
-
-        @IsInvariant
-        @NotNull
-        @Override
-        public String getObj() {
-            return obj;
-        }
-
-        public RefObj<String> getSelfAsValid(final net.sf.oval.Validator... validator) {
-            return super.getSelfAsValid(validator);
-        }
-    }
-
-    class VTribeStory extends RefObj<String> {
-
-        @IsInvariant
-        @NotNull
-        @Override
-        public String getObj() {
-            return obj;
-        }
-
-        public RefObj<String> getSelfAsValid(final net.sf.oval.Validator... validator) {
-            return super.getSelfAsValid(validator);
-        }
-    }
 }
