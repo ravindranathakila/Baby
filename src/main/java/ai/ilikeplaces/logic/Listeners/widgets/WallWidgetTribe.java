@@ -185,7 +185,7 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
 
         super.registerForClick($$(Controller.Page.wallSubmit),
-                new AIEventListener<WallWidgetTribeCriteria>() {
+                new AIEventListener<WallWidgetTribeCriteria>(criteria) {
 
                     @Override
                     public void onFire(final Event evt_) {
@@ -238,7 +238,7 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
 
         super.registerForClick($$(Controller.Page.wallMute),
 
-                new AIEventListener<WallWidgetTribeCriteria>() {
+                new AIEventListener<WallWidgetTribeCriteria>(criteria) {
 
                     @Override
                     public void onFire(final Event evt_) {

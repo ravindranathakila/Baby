@@ -18,9 +18,6 @@ abstract public class AIEventListener<T> implements EventListener {
     private static final String COMMA_SEP_1 = ", ";
     protected T criteria;
 
-    protected AIEventListener() {
-    }
-
     protected AIEventListener(final T criteria) {
         this.criteria = criteria;
     }
