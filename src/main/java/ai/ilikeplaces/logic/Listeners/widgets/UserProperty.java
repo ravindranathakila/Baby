@@ -10,6 +10,7 @@ import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache;
+import ai.ilikeplaces.util.cache.SmartCache2String;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.DOMException;
@@ -40,10 +41,10 @@ abstract public class UserProperty extends AbstractWidgetListener {
     private static final String EXT_GIF = ".gif";
     public static final String SENDER_NAME = "_senderName_";
 
-    final static public SmartCache<String, HumansIdentity> HUMANS_IDENTITY_CACHE = new SmartCache<String, HumansIdentity>(new SmartCache.RecoverWith<String, HumansIdentity>() {
+    final static public SmartCache2String<HumansIdentity, String> HUMANS_IDENTITY_CACHE = new SmartCache2String<HumansIdentity, String>(new SmartCache2String.RecoverWith<HumansIdentity, String>() {
 
         @Override
-        public HumansIdentity getValue(final String s) {
+        public HumansIdentity getValue(final String s, final String runtimeValue) {
             return DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(new HumanId(s)).returnValue();
         }
     });
@@ -65,7 +66,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
     public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanIdWhosProfileToShow, final Object... params) {
         super(request__, Page.UserProperty, appendToElement__, humanIdWhosProfileToShow, params);
         try {
-            final HumansIdentity hi = HUMANS_IDENTITY_CACHE.get(new String(humanIdWhosProfileToShow.getHumanId()));
+            final HumansIdentity hi = HUMANS_IDENTITY_CACHE.get(humanIdWhosProfileToShow.getHumanId(), "");
 
             $$(Page.user_property_name).setTextContent(hi.getHuman().getDisplayName());
             $$(Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
@@ -96,7 +97,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
     public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final Element content, final HumanId humanIdWhosProfileToShow, final Object... params) {
         super(request__, Page.UserProperty, appendToElement__, humanIdWhosProfileToShow, params);
         try {
-            final HumansIdentity hi = HUMANS_IDENTITY_CACHE.get(new String(humanIdWhosProfileToShow.getHumanId()));
+            final HumansIdentity hi = HUMANS_IDENTITY_CACHE.get(humanIdWhosProfileToShow.getHumanId(),"");
 
 
             $$(Page.user_property_name).setTextContent(hi.getHuman().getDisplayName());

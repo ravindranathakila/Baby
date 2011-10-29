@@ -69,7 +69,7 @@ public class AlbumManager extends AbstractWidgetListener {
     protected void init(final Object... initArgs) {
         humanId = ((HumanId) initArgs[0]).getSelfAsValid();
         privateEvent = (PrivateEvent) initArgs[1];
-        humansIdentity = UserProperty.HUMANS_IDENTITY_CACHE.get(new String(humanId.getHumanId()));
+        humansIdentity = UserProperty.HUMANS_IDENTITY_CACHE.get(humanId.getHumanId(),"");
         //privateEventReturn = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(humanId.getObj(), privateEvent.getPrivateEventId());
 
         final List<Email> emails = new ArrayList<Email>(privateEvent.getPrivateEventOwners().size() + privateEvent.getPrivateEventViewers().size() + privateEvent.getPrivateEventInvites().size());

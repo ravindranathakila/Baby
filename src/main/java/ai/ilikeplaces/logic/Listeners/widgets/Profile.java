@@ -80,7 +80,7 @@ public class Profile extends AbstractWidgetListener {
 
                     DB.getHumanCRUDHumanLocal(true).doUHumansPublicURL(myhumanId, myurl.getObjectAsValid());
                     final HumansIdentity humansIdentity = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentity(myhumanId).returnValue();
-                    UserProperty.HUMANS_IDENTITY_CACHE.MAP.put(new String(humansIdentity.getHumanId()), humansIdentity);
+                    UserProperty.HUMANS_IDENTITY_CACHE.invalidate(humansIdentity.getHumanId());
                     $$sendJS(JSCodeToSend.redirectPageWithURL(ProfileRedirect.PROFILE_URL + humansIdentity.getUrl().getUrl()));
                 } else {
                     $$(Page.ProfileNotice).setTextContent(myurl.getViolationAsString());

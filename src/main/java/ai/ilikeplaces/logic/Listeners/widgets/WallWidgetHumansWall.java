@@ -76,8 +76,8 @@ public class WallWidgetHumansWall extends WallWidget {
         this.requestedProfile = ((HumanId) initArgs[0]).getSelfAsValid();
         this.currUserAsVisitor = ((HumanId) initArgs[1]).getSelfAsValid();
 
-        final HumansIdentity currUserAsVisitorHI = UserProperty.HUMANS_IDENTITY_CACHE.get(new String(currUserAsVisitor.getHumanId()));
-        final HumansIdentity requestedProfileHI = UserProperty.HUMANS_IDENTITY_CACHE.get(new String(requestedProfile.getHumanId()));
+        final HumansIdentity currUserAsVisitorHI = UserProperty.HUMANS_IDENTITY_CACHE.get((currUserAsVisitor.getHumanId()),"");
+        final HumansIdentity requestedProfileHI = UserProperty.HUMANS_IDENTITY_CACHE.get((requestedProfile.getHumanId()),"");
 
         super.setWallProfileName(currUserAsVisitorHI.getHuman().getDisplayName());
         super.setWallProfilePhoto(UserProperty.formatProfilePhotoUrl(currUserAsVisitorHI.getHumansIdentityProfilePhoto()));

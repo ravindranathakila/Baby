@@ -13,14 +13,14 @@ import org.w3c.dom.html.HTMLDocument;
  * Date: 10/20/11
  * Time: 8:50 PM
  */
-public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria>{
+public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria> {
 
     public TribeWidget(final ItsNatServletRequest request__, final TribeWidgetCriteria tribeWidgetCriteria, final Element appendToElement__) {
         super(request__, Controller.Page.TribeHome, tribeWidgetCriteria, appendToElement__);
     }
 
     @Override
-    protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+    protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
 
     }
 }
