@@ -30,7 +30,7 @@ public class WallWidgetTribeCriteria {
         return tribeId__;
     }
 
-    public WallWidgetTribeCriteria setTribeId__(Long tribeId__) {
+    public WallWidgetTribeCriteria setTribeId(Long tribeId__) {
         this.tribeId__ = tribeId__;
         return this;
     }

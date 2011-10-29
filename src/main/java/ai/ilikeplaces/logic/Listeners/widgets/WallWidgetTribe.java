@@ -95,7 +95,7 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
 
 
         final Return<Wall> aReturn = DB.getHumanCRUDTribeLocal(true).
-                readWall(criteria.getHumanId(), new Obj<Long>(criteria.getTribeId()), REFRESH_SPEC);
+                readWall(criteria.getHumanId(), new VLong(criteria.getTribeId()), REFRESH_SPEC);
 
         /**
          * If null, this means we have to check on if the wall entry parameter is available and update.
@@ -197,7 +197,7 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
 
                                 final Return<Wall> r = DB.getHumanCRUDTribeLocal(true).addEntryToWall(criteria.getHumanId(),
                                         criteria.getHumanId(),
-                                        new Obj<Long>(criteria.getTribeId()),
+                                        new VLong(criteria.getTribeId()),
                                         wallAppend.getObj());
 
 
@@ -208,7 +208,7 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
                                     //LAST_WALL_ENTRY.MAP.put(criteria.getWallId(), null);
 
                                     clear($$(Controller.Page.wallContent));
-                                    final Wall wall = (DB.getHumanCRUDTribeLocal(true).readWall(criteria.getHumanId(), new Obj<Long>(criteria.getTribeId()), REFRESH_SPEC).returnValueBadly());
+                                    final Wall wall = (DB.getHumanCRUDTribeLocal(true).readWall(criteria.getHumanId(), new VLong(criteria.getTribeId()), REFRESH_SPEC).returnValueBadly());
                                     final StringBuilder b = new StringBuilder("");
                                     for (final Msg msg : wall.getWallMsgs()) {
                                         b.append(
@@ -242,11 +242,11 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
 
                     @Override
                     public void onFire(final Event evt_) {
-                        if (DB.getHumanCRUDTribeLocal(true).readWall(criteria.getHumanId(), new Obj<Long>(criteria.getTribeId()), REFRESH_SPEC).returnValueBadly().getWallMutes().contains(criteria.getHumanId())) {
-                            DB.getHumanCRUDTribeLocal(true).unmuteWall(criteria.getHumanId(), criteria.getHumanId(), new Obj<Long>(criteria.getTribeId()));
+                        if (DB.getHumanCRUDTribeLocal(true).readWall(criteria.getHumanId(), new VLong(criteria.getTribeId()), REFRESH_SPEC).returnValueBadly().getWallMutes().contains(criteria.getHumanId())) {
+                            DB.getHumanCRUDTribeLocal(true).unmuteWall(criteria.getHumanId(), criteria.getHumanId(), new VLong(criteria.getTribeId()));
                             $$displayWallAsMuted(evt_, false);
                         } else {
-                            DB.getHumanCRUDTribeLocal(true).muteWall(criteria.getHumanId(), criteria.getHumanId(), new Obj<Long>(criteria.getTribeId()));
+                            DB.getHumanCRUDTribeLocal(true).muteWall(criteria.getHumanId(), criteria.getHumanId(), new VLong(criteria.getTribeId()));
                             $$displayWallAsMuted(evt_, true);
                         }
                     }

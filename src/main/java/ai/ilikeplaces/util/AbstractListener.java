@@ -2,6 +2,7 @@ package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.ServletLogin;
@@ -309,6 +310,24 @@ public abstract class AbstractListener {
             throw ILLEGAL_STATE_EXCEPTION;
         }
         return sessionBoundBadRefWrapper.boundInstance.getHumanUserId();
+    }
+
+    /**
+     * Get the Username of the Logged in user, or throw exception.
+     * This is a call by prevention where the calls will be made to this method after one
+     * validation that the user is logged in. This is the safe approach to code that assumes logged in.
+     * When code gets bulky, at times calls to just getUserName might trigger null if not used in this form.
+     * With this approach, we expect to throw an exception immediately instead of late discovery.
+     *
+     * @return The Username of the Logged in user, and null, if not logged in
+     */
+    final protected HumanId geHumanIdAsValid() {
+        if (sessionBoundBadRefWrapper == null) {
+            throw ILLEGAL_STATE_EXCEPTION;
+        } else if (!sessionBoundBadRefWrapper.isAlive()) {//(Defensive)This is checked in the constructor of this class
+            throw ILLEGAL_STATE_EXCEPTION;
+        }
+        return new HumanId(sessionBoundBadRefWrapper.boundInstance.getHumanUserId());
     }
 
     /**

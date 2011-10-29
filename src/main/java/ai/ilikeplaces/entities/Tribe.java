@@ -98,6 +98,8 @@ public class Tribe implements Serializable, Refreshable<Tribe> {
         return this;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getTribeId() {
         return tribeId;
     }

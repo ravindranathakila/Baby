@@ -19,9 +19,19 @@ public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria> {
         super(request__, Controller.Page.TribeHome, tribeWidgetCriteria, appendToElement__);
     }
 
+
+    /**
+     * Use this only in conjunction with {@link #AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.ilikeplaces.servlets.Controller.Page, Object, org.w3c.dom.Element)}
+     * GENERIC constructor.
+     *
+     * @param tribeWidgetCriteria
+     */
+    @Override
+    protected void init(final TribeWidgetCriteria tribeWidgetCriteria) {
+        new WallWidgetTribe(request, new WallWidgetTribeCriteria().setHumanId(criteria.getHumanId()).setTribeId(criteria.getTribeId().getObj()), $$(Controller.Page.tribeHomeWall));
+    }
+
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
-
-        new WallWidgetTribe(request, new WallWidgetTribeCriteria().setHumanId(criteria.getHumanId()).setTribeId__(criteria.getTribeId().getObjectAsValid()), $$(Controller.Page.tribeHomeWall));
     }
 }

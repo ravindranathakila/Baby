@@ -183,7 +183,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
         try {
             if (getUsername() != null) {
 
-                final HumansIdentity hi = ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(new String(getUsernameAsValid()));
+                final HumansIdentity hi = ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(getUsernameAsValid(), "");
                 String profilePhotoURL = hi.getHumansIdentityProfilePhoto();
                 $(Skeleton_profile_photo).setAttribute(
                         MarkupTag.IMG.src(),
