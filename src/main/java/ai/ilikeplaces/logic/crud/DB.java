@@ -208,7 +208,7 @@ final public class DB implements DBLocal {
 
     }
 
-    public static  HumanCRUDPrivateLocationLocal getHumanCrudPrivateLocationLocal(final boolean nonInjected) {
+    public static HumanCRUDPrivateLocationLocal getHumanCrudPrivateLocationLocal(final boolean nonInjected) {
         HumanCRUDPrivateLocationLocal h = null;
         try {
             h = ((DBLocal) Context_.lookup(DBLocal.NAME)).getHumanCrudPrivateLocationLocal();
@@ -314,6 +314,30 @@ final public class DB implements DBLocal {
             logger.error(NAMING_EXCEPTION, ex);
         }
         return h != null ? h : (HumanCRUDHumansUnseenLocal) LogNull.logThrow();
+
+    }
+
+    @Override
+    public HumanCRUDTribeLocal getHumanCRUDTribeLocal() {
+        isOK();
+        HumanCRUDTribeLocal h = null;
+        try {
+            h = (HumanCRUDTribeLocal) Context_.lookup(HumanCRUDTribeLocal.NAME);
+        } catch (NamingException ex) {
+            logger.error(NAMING_EXCEPTION, ex);
+        }
+        return h != null ? h : (HumanCRUDTribeLocal) LogNull.logThrow();
+
+    }
+
+    public static HumanCRUDTribeLocal getHumanCRUDTribeLocal(final boolean nonInjected) {
+        HumanCRUDTribeLocal h = null;
+        try {
+            h = ((DBLocal) Context_.lookup(DBLocal.NAME)).getHumanCRUDTribeLocal();
+        } catch (NamingException ex) {
+            logger.error(NAMING_EXCEPTION, ex);
+        }
+        return h != null ? h : (HumanCRUDTribeLocal) LogNull.logThrow();
 
     }
 

@@ -38,4 +38,6 @@ public interface DBLocal {
 
     public HumanCRUDHumansUnseenLocal getHumanCRUDHumansUnseenLocal();
 
+    public HumanCRUDTribeLocal getHumanCRUDTribeLocal();
+
 }

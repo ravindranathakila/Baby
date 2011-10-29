@@ -22,6 +22,8 @@ import java.util.Set;
 @Local
 public interface HumanCRUDTribeLocal extends GeneralCRUDWall {
 
+    final static public String NAME = HumanCRUDTribeLocal.class.getSimpleName();
+
     /**
      * Creates a Tribe and adds this user as a Tribe member of it
      *
