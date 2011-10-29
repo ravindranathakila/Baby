@@ -10,7 +10,6 @@ import ai.ilikeplaces.logic.validators.unit.WallEntry;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.cache.SmartCache;
 import ai.ilikeplaces.util.cache.SmartCache2;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatServletRequest;
@@ -36,7 +35,7 @@ import java.util.List;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public class WallWidgetPrivateEvent extends WallWidget {
+public class WallWidgetTribe extends WallWidget {
 
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
     private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs", "wallMutes");
@@ -74,7 +73,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
             }
     );
 
-    public WallWidgetPrivateEvent(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId, final long privateEventId__) {
+    public WallWidgetTribe(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId, final long privateEventId__) {
         super(request__, appendToElement__, humanId, privateEventId__);
     }
 
