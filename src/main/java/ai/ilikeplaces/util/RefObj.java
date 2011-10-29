@@ -145,6 +145,19 @@ public abstract class RefObj<T> {
      * being created
      *
      * @param validator
+     * @return true if valid or false if one or more errors are found
+     */
+    public boolean valid(final Validator... validator) {
+        final Validator v = validator.length == 0 ? new Validator() : validator[0];
+        constraintViolations = v.validate(this);
+        return constraintViolations.size() == 0;
+    }
+
+    /**
+     * validator is useful if you are using profiling or if you need to avoid lots of validator instances
+     * being created
+     *
+     * @param validator
      * @return 0 if no errors or number of errors
      */
     public T validateThrow(final Validator... validator) {

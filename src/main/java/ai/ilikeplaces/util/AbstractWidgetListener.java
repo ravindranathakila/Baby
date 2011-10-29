@@ -9,6 +9,7 @@ import ai.ilikeplaces.servlets.ServletLogin;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServlet;
 import org.itsnat.core.ItsNatServletRequest;
+import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.itsnat.core.tmpl.ItsNatHTMLDocFragmentTemplate;
 import org.slf4j.Logger;
@@ -75,6 +76,12 @@ public abstract class AbstractWidgetListener<T> {
     private final HTMLDocument hTMLDocument_;
     private final ItsNatHTMLDocument itsNatHTMLDocument_;
     private final Document document_;
+
+    /**
+     * This will be null if generics are not used!
+     */
+    protected final T criteria;
+
     /**
      * As a widget may have many instances within a document, we register each
      * instance with unique ids. i.e. the existing id is appended with the
@@ -146,6 +153,7 @@ public abstract class AbstractWidgetListener<T> {
         request = request__;
         instanceId = InstanceCounter_++;
         page = page__;
+        criteria = null;
         this.itsNatDocument_ = request__.getItsNatDocument();
         this.itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument_;
         this.hTMLDocument_ = itsNatHTMLDocument_.getHTMLDocument();
@@ -202,6 +210,7 @@ public abstract class AbstractWidgetListener<T> {
         request = request__;
         instanceId = InstanceCounter_++;
         page = page__;
+        criteria = t;
         this.itsNatDocument_ = request__.getItsNatDocument();
         this.itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument_;
         this.hTMLDocument_ = itsNatHTMLDocument_.getHTMLDocument();
@@ -271,6 +280,49 @@ public abstract class AbstractWidgetListener<T> {
      * @param hTMLDocument_
      */
     protected abstract void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_);
+
+
+    /**
+     * To be called only during initialization. If otherwise, not tested for functionality!
+     *
+     * @param element       registered for listening
+     * @param eventListener called when text changes
+     */
+    protected void registerForInputText(final Element element, final EventListener eventListener) {
+
+        itsNatHTMLDocument_.addEventListener((EventTarget) element, EventType.CHANGE.toString(), eventListener, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+    }
+
+    /**
+     * To be called only during initialization. If otherwise, not tested for functionality!
+     * DOES NOT SUPPORT TEXT INPUTS. USE {@link #registerForInputText(org.w3c.dom.Element, org.w3c.dom.events.EventListener)} INSTEAD
+     *
+     * @param element       registered for listening
+     * @param eventListener called when text changes
+     */
+    protected void registerForEvent(final Element element, final EventListener eventListener, final EventType eventType) {
+
+        itsNatHTMLDocument_.addEventListener((EventTarget) element, eventType.toString(), eventListener, false);
+    }
+
+    /**
+     * To be called only during initialization. If otherwise, not tested for functionality!
+     *
+     * @param element       registered for listening
+     * @param eventListener called when text changes
+     */
+    protected void registerForClick(final Element element, final EventListener eventListener) {
+
+        itsNatHTMLDocument_.addEventListener((EventTarget) element, EventType.CLICK.toString(), eventListener, false);
+    }
+
+    /**
+     * @param evt_ fired from client
+     * @return text of given events' target
+     */
+    protected String getTargetInputText(final Event evt_) {
+        return ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value());
+    }
 
     protected void fetchToEmail(final Object... args) {
         throw ExceptionCache.METHOD_NOT_IMPLEMENTED;
