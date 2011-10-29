@@ -73,7 +73,7 @@ public class TribeCreateWidget extends AbstractWidgetListener<TribeCreateWidgetC
                         Loggers.DEBUG.debug(this.criteria.getvTribeStory().getObj());
 
                         if (this.criteria.getvTribeName().valid() && this.criteria.getvTribeStory().valid()) {
-                            //DB.getHumanCRUDTribeLocal(false).createTribe()
+                            DB.getHumanCRUDTribeLocal(false).createTribe(criteria.getHumanId(), this.criteria.getvTribeName(), this.criteria.getvTribeStory());
                         }
 
                     }
