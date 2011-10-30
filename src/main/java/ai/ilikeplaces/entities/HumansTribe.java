@@ -1,8 +1,14 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.BIDIRECTIONAL;
+import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.UNIDIRECTIONAL;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.exception.DBException;
+import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
+import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -15,7 +21,7 @@ import java.util.Set;
  */
 @WARNING("THIS ENTITY IS NOT GUARANTEED TO 'BE' EVEN THOUGH A HUMAN IS SIGNED UP. SO CREATE IT IF NOT PRESENT!")
 @Entity
-public class HumansTribe implements HumansFriend{
+public class HumansTribe implements HumansFriend {
     public String humanId;
 
     public Set<Tribe> tribes;
@@ -26,23 +32,23 @@ public class HumansTribe implements HumansFriend{
     }
 
     @Override
-    public Human getHuman() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
     public String getDisplayName() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return UserProperty.HUMANS_IDENTITY_CACHE.get(getHumanId(), "").getHuman().getDisplayName();
     }
 
     @Override
-    public boolean isFriend(String friendsHumanId) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    @Transient
+    public boolean isFriend(final String friendsHumanId) {
+        final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doDirtyIsHumansNetPeople(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId));
+        if (r.returnStatus() != 0) {
+            throw new DBException(r.returnError());
+        }
+        return r.returnValue();
     }
 
     @Override
-    public boolean notFriend(String friendsHumanId) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    public boolean notFriend(final String friendsHumanId) {
+        return !isFriend(friendsHumanId);
     }
 
     public void setHumanId(final String humanId) {

@@ -16,8 +16,6 @@ public interface HumansFriend extends HumanIdFace {
 
     public String getHumanId();
 
-    public Human getHuman();
-
     @Transient
     public String getDisplayName();
 

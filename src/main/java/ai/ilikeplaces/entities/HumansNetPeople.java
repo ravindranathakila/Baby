@@ -54,12 +54,6 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend {
         this.humanId = humanId__;
     }
 
-    @Transient
-    @Override
-    public Human getHuman() {
-        return getHumansNet().getHuman();
-    }
-
     @OneToOne(cascade = CascadeType.REFRESH)
     @PrimaryKeyJoinColumn
     public HumansNet getHumansNet() {

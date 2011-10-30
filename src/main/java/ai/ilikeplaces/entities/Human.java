@@ -53,7 +53,6 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
     }
 
     @Transient
-    @Override
     public Human getHuman() {
         return this;
     }

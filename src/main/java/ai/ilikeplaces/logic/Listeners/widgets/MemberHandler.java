@@ -30,7 +30,7 @@ import java.util.Set;
 
 @TODO(task = "Operation fail notification target should be sent in with object creation as parameter so that notifications can be appended")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>, RETURN_TYPE> extends AbstractWidgetListener {
+public class MemberHandler<M extends HumansFriend, T extends Collection<HumansFriend>, RETURN_TYPE> extends AbstractWidgetListener {
 // ------------------------------ FIELDS ------------------------------
 
     final static public String Added = " is added";
@@ -100,7 +100,7 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
             div.setAttribute(MarkupTag.DIV.style(), "cursor:pointer;");
             div.setAttribute(MarkupTag.DIV.title(), "Click to Toggle Subscription");
             final boolean isExists = existAll.contains(possibility.getHumanId());
-            div.setTextContent(possibility.getHuman().getDisplayName() + (isExists ? Added : Removed));
+            div.setTextContent(possibility.getDisplayName() + (isExists ? Added : Removed));
 
             final String existingClasses = "" + div.getAttribute(MarkupTag.GENERIC.classs());
             div.setAttribute(MarkupTag.GENERIC.classs(), existingClasses + " " + (isExists ? POSITIVE : NEGATIVE));
@@ -127,7 +127,7 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
                         @WARNING(warning = "Assuming return type to be Return. Check Save as it is generic.")
                         final Return r = (Return) saveAdd.save(new HumanId(m.getHumanId()).getSelfAsValid(), possibility);
                         if (r.returnStatus() == 0) {
-                            ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getHuman().getDisplayName() + Added);
+                            ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getDisplayName() + Added);
                             final String existingClasses = "" + $$(evt_).getAttribute(MarkupTag.GENERIC.classs());
                             $$(evt_).setAttribute(MarkupTag.GENERIC.classs(), existingClasses.replace(NEGATIVE, "") + " " + POSITIVE);
                             $$setClass(myuserProperty.$$(Controller.Page.user_property_widget), STR_ALIGN_POSITIVE, true);
@@ -137,7 +137,7 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
                         @WARNING(warning = "Assuming return type to be Return. Check Save as it is generic.")
                         final Return r = (Return) saveRemove.save(new HumanId(m.getHumanId()).getSelfAsValid(), possibility);
                         if (r.returnStatus() == 0) {
-                            ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getHuman().getDisplayName() + Removed);
+                            ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getDisplayName() + Removed);
                             final String existingClasses = "" + $$(evt_).getAttribute(MarkupTag.GENERIC.classs());
                             $$(evt_).setAttribute(MarkupTag.GENERIC.classs(), existingClasses.replace(POSITIVE, "") + " " + NEGATIVE);
                             $$setClass(myuserProperty.$$(Controller.Page.user_property_widget), STR_ALIGN_NEGATIVE, true);
