@@ -61,9 +61,8 @@ public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria> {
                         @Override
                         public Return<Tribe> save(final HumanId humanId, final HumansFriend humansFriend) {
 
-                            final Return<Tribe> returnVal = DB.getHumanCRUDTribeLocal(false).addToTribe(humanId, new VLong(mytribeId));
+                            final Return<Tribe> returnVal = DB.getHumanCRUDTribeLocal(false).addToTribe(new HumanId(humansFriend.getHumanId()), new VLong(mytribeId));
 
-                            DB.getHumanCRUDTribeLocal(false).addToTribe(humanId, new VLong(mytribeId));
                             if (returnVal.returnStatus() == 0) {
                                 SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
                                         humanId.getObj(),
@@ -87,7 +86,9 @@ public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria> {
 
                         @Override
                         public Return<Tribe> save(final HumanId humanId, final HumansFriend humansFriend) {
-                            final Return<Tribe> returnVal = DB.getHumanCRUDTribeLocal(false).removeFromTribe(humanId, new VLong(mytribeId));
+
+                            final Return<Tribe> returnVal = DB.getHumanCRUDTribeLocal(false).removeFromTribe(new HumanId(humansFriend.getHumanId()), new VLong(mytribeId));
+
                             if (returnVal.returnStatus() == 0) {
                                 SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
                                         humanId.getObj(),
