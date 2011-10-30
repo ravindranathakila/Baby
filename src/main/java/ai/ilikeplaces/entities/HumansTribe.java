@@ -15,7 +15,7 @@ import java.util.Set;
  */
 @WARNING("THIS ENTITY IS NOT GUARANTEED TO 'BE' EVEN THOUGH A HUMAN IS SIGNED UP. SO CREATE IT IF NOT PRESENT!")
 @Entity
-public class HumansTribe {
+public class HumansTribe implements HumansFriend{
     public String humanId;
 
     public Set<Tribe> tribes;
@@ -23,6 +23,26 @@ public class HumansTribe {
     @Id
     public String getHumanId() {
         return humanId;
+    }
+
+    @Override
+    public Human getHuman() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String getDisplayName() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean isFriend(String friendsHumanId) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean notFriend(String friendsHumanId) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public void setHumanId(final String humanId) {

@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.logic.crud.unit.CRUDTribeLocal;
 import ai.ilikeplaces.logic.crud.unit.CRUDWallLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -40,6 +41,12 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
     private static final String READ_WALL_FAILED = "Read Wall FAILED!";
 
     private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("privatePhotoWall");
+    private static final String FETCH_TRIBE_SUCCESSFUL = "Fetch Tribe Successful!";
+    private static final String FETCH_TRIBE_FAILED = "Fetch Tribe FAILED!";
+    private static final String ADD_MEMBER_TO_TRIBE_SUCCESSFUL = "Add Member To Tribe Successful!";
+    private static final String ADD_MEMBER_TO_TRIBE_FAILED = "Add Member To Tribe FAILED!";
+    private static final String REMOVE_MEMBER_FROM_TRIBE_SUCCESSFUL = "Remove Member From Tribe Successful!";
+    private static final String REMOVE_MEMBER_FROM_TRIBE_FAILED = "Remove Member From Tribe FAILED!";
 
 
     @EJB
@@ -125,8 +132,30 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
      * @return The Tribe
      */
     @Override
-    public Tribe addToTribe(final HumanId humanId, final VLong tribeId) {
-        return crudTribeLocal_.addToTribe(humanId.getObjectAsValid(), tribeId.getObjectAsValid());
+    public Return<Tribe> addToTribe(final HumanId humanId, final VLong tribeId) {
+        Return<Tribe> r;
+        try {
+            r = new ReturnImpl<Tribe>(crudTribeLocal_.addToTribe(humanId.getObjectAsValid(), tribeId.getObjectAsValid()), ADD_MEMBER_TO_TRIBE_SUCCESSFUL);
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Tribe>(t, ADD_MEMBER_TO_TRIBE_FAILED, true);
+        }
+        return r;
+    }
+
+    /**
+     * @param humanId used to check permissions
+     * @param tribeId which to fetch
+     * @return Tribe
+     */
+    @Override
+    public Return<Tribe> getTribe(final HumanId humanId, final VLong tribeId, final boolean doRefresh) {
+        Return<Tribe> r;
+        try {
+            r = new ReturnImpl<Tribe>(crudTribeLocal_.getTribe(tribeId.getObjectAsValid()).refresh(), FETCH_TRIBE_SUCCESSFUL);
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Tribe>(t, FETCH_TRIBE_FAILED, true);
+        }
+        return r;
     }
 
     /**
@@ -145,13 +174,19 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
      * @return The Tribe
      */
     @Override
-    public Tribe removeFromTribe(final HumanId humanId, final VLong tribeId) {
-        return crudTribeLocal_.removeFromTribe(humanId.getObjectAsValid(), tribeId.getObjectAsValid());
+    public Return<Tribe> removeFromTribe(final HumanId humanId, final VLong tribeId) {
+        Return<Tribe> r;
+        try {
+            r = new ReturnImpl<Tribe>(crudTribeLocal_.removeFromTribe(humanId.getObjectAsValid(), tribeId.getObjectAsValid()), REMOVE_MEMBER_FROM_TRIBE_SUCCESSFUL);
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Tribe>(t, REMOVE_MEMBER_FROM_TRIBE_FAILED, true);
+        }
+        return r;
     }
 
     /**
      * @param humanId The humanId of whose to return all the Tribes she's member of
-     * @return The Tribes the given user is a member of
+     * @return The Tribes the given user is a member of, unrefreshed
      */
     @Override
     public Set<Tribe> getHumansTribes(final HumanId humanId) {

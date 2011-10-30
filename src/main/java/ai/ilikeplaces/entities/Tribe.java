@@ -65,7 +65,7 @@ import java.util.Set;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 @Entity
-public class Tribe implements Serializable, Refreshable<Tribe> {
+public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Tribe>{
 // ------------------------------ FIELDS ------------------------------
 
     public Long tribeId;
@@ -174,6 +174,19 @@ public class Tribe implements Serializable, Refreshable<Tribe> {
     @Override
     public Tribe refresh(RefreshSpec refreshSpec) throws RefreshException {
         throw ExceptionCache.METHOD_NOT_IMPLEMENTED;
+    }
+
+    /**
+     * Calling this method will refresh any lazily fetched lists in this entity making them availabe for use.
+     *
+     * @return T
+     * @throws ai.ilikeplaces.exception.DBFetchDataException
+     *          in case the entity fails to refresh something inside it
+     */
+    @Override
+    public Tribe refresh() throws DBFetchDataException {
+        this.getTribeMembers().size();
+        return this;
     }
 }
 
