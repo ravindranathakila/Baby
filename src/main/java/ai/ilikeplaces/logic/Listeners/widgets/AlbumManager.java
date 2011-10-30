@@ -105,7 +105,7 @@ public class AlbumManager extends AbstractWidgetListener {
 
                             $$(Controller.Page.pd_photo).setAttribute(MarkupTag.IMG.title(), imageURL);
 
-                            /* final String photoThumbURL = imageURL.substring(0, imageURL.lastIndexOf(SLASH) + 1) + CDNAlbum.THUMBNAIL + imageURL.substring(imageURL.lastIndexOf(SLASH) + 1, photoURL.length());
+                            /* final String photoThumbURL = imageURL.substring(0, imageURL.lastIndexOf(SLASH) + 1) + CDNAlbumPrivateEvent.THUMBNAIL + imageURL.substring(imageURL.lastIndexOf(SLASH) + 1, photoURL.length());
                            $$(Controller.Page.pd_photo).setAttribute(MarkupTag.IMG.src(), photoThumbURL);*/
 
                             $$(Controller.Page.pd_photo_sequence_number).setTextContent(photoSequenceNumber.toString());

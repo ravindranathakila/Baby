@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
+import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 
@@ -14,11 +15,20 @@ public class TribeWidgetCriteria {
 
     private HumanId humanId;
     private VLong tribeId;
+    private Tribe tribe;
 
 // ------------------------ ACCESSORS / MUTATORS ------------------------
 
     public HumanId getHumanId() {
         return humanId;
+    }
+
+    public Tribe getTribe() {
+        return tribe;
+    }
+
+    public void setTribe(final Tribe tribe) {
+        this.tribe = tribe;
     }
 
     public VLong getTribeId() {

@@ -232,7 +232,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return AlbumTribePhotos;
+                return DocAlbumTribe;
             }
 
             @Override
@@ -1104,7 +1104,7 @@ final public class
         final static public String DocAlbumTribe = "DocAlbumTribe";
         /*AlbumTribe IDs*/
         final static public String AlbumTribeNotice = "AlbumTribeNotice";
-        final static public String AlbumTribeTribeId = "AlbumTribeTribe";
+        final static public String AlbumTribeTribeId = "AlbumTribeTribeId";
         final static public String AlbumTribeOwner = "AlbumTribeOwner";
         final static public String AlbumTribeForward = "AlbumTribeForward";
         final static public String AlbumTribePhotos = "AlbumTribePhotos";

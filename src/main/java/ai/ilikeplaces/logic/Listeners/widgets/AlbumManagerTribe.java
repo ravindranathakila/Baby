@@ -59,7 +59,7 @@ public class AlbumManagerTribe extends AbstractWidgetListener {
 // --------------------------- CONSTRUCTORS ---------------------------
 
     public AlbumManagerTribe(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId__, final Tribe tribe) {
-        super(request__, Page.Album, appendToElement__, humanId__, tribe);
+        super(request__, Page.AlbumTribe, appendToElement__, humanId__, tribe);
     }
 
     /**
@@ -90,7 +90,7 @@ public class AlbumManagerTribe extends AbstractWidgetListener {
                 int photoSequenceNumber = 1;
 
                 for (final PrivatePhoto privatePhoto__ : album.getAlbumPhotos()) {
-                    new Photo$Description(request, $$(Page.AlbumPhotos), photoSequenceNumber++, wallProspects) {
+                    new Photo$Description(request, $$(Page.AlbumTribePhotos), photoSequenceNumber++, wallProspects) {
                         @Override
                         protected void init(final Object... initArgs) {
                             final Integer photoSequenceNumber = (Integer) initArgs[0];
@@ -100,7 +100,7 @@ public class AlbumManagerTribe extends AbstractWidgetListener {
 
                             $$(Page.pd_photo).setAttribute(MarkupTag.IMG.title(), imageURL);
 
-                            /* final String photoThumbURL = imageURL.substring(0, imageURL.lastIndexOf(SLASH) + 1) + CDNAlbum.THUMBNAIL + imageURL.substring(imageURL.lastIndexOf(SLASH) + 1, photoURL.length());
+                            /* final String photoThumbURL = imageURL.substring(0, imageURL.lastIndexOf(SLASH) + 1) + CDNAlbumPrivateEvent.THUMBNAIL + imageURL.substring(imageURL.lastIndexOf(SLASH) + 1, photoURL.length());
                            $$(Controller.Page.pd_photo).setAttribute(MarkupTag.IMG.src(), photoThumbURL);*/
 
                             $$(Page.pd_photo_sequence_number).setTextContent(photoSequenceNumber.toString());
@@ -112,17 +112,17 @@ public class AlbumManagerTribe extends AbstractWidgetListener {
                     };
                 }
             } else {
-                $$(Page.AlbumNotice).setTextContent(albumReturn.returnMsg());
+                $$(Page.AlbumTribeNotice).setTextContent(albumReturn.returnMsg());
             }
         }
 
-        $$(Page.AlbumPivateEventId).setAttribute(MarkupTag.INPUT.value(), tribe.getTribeId().toString());
+        $$(Page.AlbumTribeTribeId).setAttribute(MarkupTag.INPUT.value(), tribe.getTribeId().toString());
 
     }
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(Page.AlbumForward), EventType.CLICK.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(Page.AlbumTribeForward), EventType.CLICK.toString(), new EventListener() {
             final HumanId myhumanId = humanId;
             final Long mytribeId = tribe.getTribeId();
             boolean confirmed = false;
@@ -174,7 +174,7 @@ public class AlbumManagerTribe extends AbstractWidgetListener {
                         //$$(evt_).setTextContent(RBGet.gui().getString(BUTTONTEXT_CLICK_TO_CONFIRM));
                     } else {
                         //Why are we displaying the button in the first place if the album doesn't contain photos? To imply photos can be uploaded and forwarded
-                        $$displayNone($$(Page.AlbumForward));
+                        $$displayNone($$(Page.AlbumTribeForward));
                     }
                 }
             }

@@ -37,8 +37,10 @@ public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria> {
      */
     @Override
     protected void init(final TribeWidgetCriteria tribeWidgetCriteria) {
+        criteria.setTribe(DB.getHumanCRUDTribeLocal(false).getTribe(criteria.getHumanId(), criteria.getTribeId(), true).returnValueBadly());
+
         new WallWidgetTribe(request, new WallWidgetTribeCriteria().setHumanId(criteria.getHumanId()).setTribeId(criteria.getTribeId().getObj()), $$(Controller.Page.tribeHomeWall));
-        new AlbumManager(request, $$(Controller.Page.tribeHomeAlbum, humanId, privateEventReturn.returnValue());
+        new AlbumManagerTribe(request, $$(Controller.Page.tribeHomeAlbum), criteria.getHumanId(), criteria.getTribe());
 
     }
 
@@ -46,18 +48,16 @@ public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria> {
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
         AddRemoveVisitors:
         {
-            final Tribe tribe = DB.getHumanCRUDTribeLocal(false).getTribe(criteria.getHumanId(), criteria.getTribeId(), true).returnValueBadly();
-
             final HumansNetPeople user = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(criteria.getHumanId());
 
             new MemberHandler<HumansFriend, List<HumansFriend>, Return<Tribe>>(
                     request, $$(Controller.Page.tribeHomeMembers),
                     user,
                     user.getHumansNetPeoples(),
-                    tribe.getTribeMembers(),
+                    criteria.getTribe().getTribeMembers(),
                     new Save<Return<Tribe>>() {
 
-                        final long mytribeId = tribe.getTribeId();
+                        final long mytribeId = criteria.getTribe().getTribeId();
                         final String myeventLink = "#";
 
                         @Override
@@ -83,7 +83,7 @@ public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria> {
                     },
                     new Save<Return<Tribe>>() {
 
-                        final long mytribeId = tribe.getTribeId();
+                        final long mytribeId = criteria.getTribe().getTribeId();
 
 
                         @Override
