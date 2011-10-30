@@ -18,6 +18,7 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -66,7 +67,7 @@ public class MemberHandler<M extends HumansFriend, T extends List<HumansFriend>,
             @NOTE(note = "The list containing possible adds to be added.")
             final List<? extends HumansFriend> possibilities,
             @NOTE(note = "The list of existing users contains users this guy does not know.")
-            final List<? extends HumansFriend> existingAll,
+            final Collection<? extends HumansFriend> existingAll,
             final Save<RETURN_TYPE> saveAdd,
             final Save<RETURN_TYPE> saveRemove) {
         super(request__, Controller.Page.FriendList, appendToElement__, m, possibilities, existingAll, saveAdd, saveRemove);
