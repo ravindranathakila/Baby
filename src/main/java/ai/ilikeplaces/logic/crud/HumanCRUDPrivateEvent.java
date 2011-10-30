@@ -432,7 +432,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
     public Return<Album> uPrivateEventAddEntryToAlbum(final HumanId operator__, final long privateEventId__, final RefObj<String> cdnFileName) {
         Return<Album> r;
         try {
-            r = new ReturnImpl<Album>(crudAlbumLocal_.doUAlbumAddEntry(privateEventId__, operator__.getObjectAsValid(), cdnFileName.getObjectAsValid()), ADD_PHOTO_TO_ALBUM_SUCCESSFUL);
+            r = new ReturnImpl<Album>(crudAlbumLocal_.doUAlbumOfPrivateEventAddEntry(privateEventId__, operator__.getObjectAsValid(), cdnFileName.getObjectAsValid()), ADD_PHOTO_TO_ALBUM_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Album>(t, ADD_PHOTO_TO_ALBUM_FAILED, true);
         }

@@ -1,0 +1,64 @@
+<!--
+  ~ @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+  -->
+
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ai\ilikeplaces\widgets\Album.xhtml</title>
+</head>
+<body>
+<div class="use100" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
+      <div class="use100 center list_style_type_none">
+        <div class="use100 black_fg">
+            <span id="AlbumNotice" class="use100 black_fg"></span>
+            <div class="use100"><span>&nbsp;</span></div>
+        </div>
+      </div>
+      <div class="use100 center list_style_type_none">
+        <div class="use100" id="AlbumPhotos">
+        </div>
+      </div>
+      <div class="use100 center list_style_type_none">
+        <div class="use30 use35p use35a center vtip" title="Hint:Clicking here will email your friends the photos of this album">
+            <img id="AlbumForward" src="/images/forward_album_to_friends.png" alt="Forward album to friends" style="width:100%;cursor:pointer;"/>
+        </div>
+      </div>
+     <div class="use100" style="height:10px;">&nbsp;</div>
+      <div class="use100 center list_style_type_none" style="display:block;">
+        <div class="use100 black_fg" id="AlbumOwner" style="display:none;">
+            <div class="use100 center" style="font-size:17px;font-weight:900;">
+                Add Photos to Album
+            </div>
+            <form id="file_upload_form" method="post" target="upload_target" enctype="multipart/form-data" action="/gfg?type=2">
+                <input name="file" id="file" size="27" type="file"
+                       onchange="javascript:$('#file').hide();$('#uploading').show();$('#file_upload_form').submit();"/><br/><br/>
+                <input type="hidden" name="type" value="2"/>
+                <input type="hidden" name="AlbumPivateEventId" id="AlbumPivateEventId"/>
+                <img id="uploading" style="display:none;width:30px;" src="/images/circle.gif" alt="Uploading..." />
+            </form>
+            <iframe id="upload_target" name="upload_target" src="" target="_blank" style="width:0;height:0;border:0px solid #fff;display:none;"
+                    onload="javascript:
+                  var reply = frames['upload_target'].document.getElementsByTagName('body')[0].innerHTML.toString().replace('{','').replace('}','');
+                  if( reply != '' && reply != undefined){
+                    if(reply.split(',',3)[0] == 'ok'){
+                        //if(confirm('Done! '+reply.split(',',3)[1]+'\nRefresh page to update?')){
+                            window.location = window.location;
+                        //}
+                    }else{
+                        alert('Failed! '+reply.split(',',3)[1]);
+                        window.location = window.location;
+                    }
+                  }else{
+                    //alert('initial load');
+                    //This is the intial page load
+                  }
+                  ">
+            </iframe>
+        </div>
+      </div>
+    <hr class="space"/>
+</div>
+</body>
+</html>
