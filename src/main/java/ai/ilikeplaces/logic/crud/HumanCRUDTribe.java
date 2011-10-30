@@ -4,7 +4,10 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.exception.AbstractEjbApplicationException;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
+import ai.ilikeplaces.logic.crud.unit.CRUDAlbumLocal;
 import ai.ilikeplaces.logic.crud.unit.CRUDTribeLocal;
 import ai.ilikeplaces.logic.crud.unit.CRUDWallLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -12,6 +15,7 @@ import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.logic.validators.unit.VTribeName;
 import ai.ilikeplaces.logic.validators.unit.VTribeStory;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.jpa.RefreshException;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.EJB;
@@ -50,11 +54,20 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
     private static final String REMOVE_MEMBER_FROM_TRIBE_FAILED = "Remove Member From Tribe FAILED!";
 
 
+    private static final String READ_ALBUM_SUCCESSFUL = "Read album Successful!";
+    private static final String READ_ALBUM_FAILED = "Read album FAILED!";
+    private static final String ADD_PHOTO_TO_ALBUM_SUCCESSFUL = "Add photo to album Successful!";
+    private static final String ADD_PHOTO_TO_ALBUM_FAILED = "Add photo to album FAILED!";
+
+
     @EJB
     private CRUDTribeLocal crudTribeLocal_;
 
     @EJB
     private CRUDWallLocal crudWallLocal_;
+
+    @EJB
+    private CRUDAlbumLocal crudAlbumLocal_;
 
 // ------------------------ INTERFACE METHODS ------------------------
 
@@ -200,6 +213,17 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
             r = new ReturnImpl<Album>(crudTribeLocal_.rTribeReadAlbum(humanId.getHumanId(), tribeId.getObjectAsValid(), refreshSpecInit), "Read Album SUCCESSFUL!");
         } catch (final Throwable t) {
             r = new ReturnImpl<Album>(t, "Read Album FAILED!", true);
+        }
+        return r;
+    }
+
+    @Override
+    public Return<Album> uTribeAddEntryToAlbum(final HumanId operator__, final long tribeId__, final RefObj<String> cdnFileName) {
+        Return<Album> r;
+        try {
+            r = new ReturnImpl<Album>(crudAlbumLocal_.doUAlbumOfTribeAddEntry(tribeId__, operator__.getObjectAsValid(), cdnFileName.getObjectAsValid()), ADD_PHOTO_TO_ALBUM_SUCCESSFUL);
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Album>(t, ADD_PHOTO_TO_ALBUM_FAILED, true);
         }
         return r;
     }

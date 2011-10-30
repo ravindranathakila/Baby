@@ -7,6 +7,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.logic.validators.unit.VTribeName;
 import ai.ilikeplaces.logic.validators.unit.VTribeStory;
+import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 
@@ -68,11 +69,18 @@ public interface HumanCRUDTribeLocal extends GeneralCRUDWall {
 
 
     /**
-     *
      * @param humanId
      * @param tribeId
      * @param refreshSpecInit
      * @return
      */
-     public Return<Album> rTribeReadAlbum(final HumanId humanId, final VLong tribeId, final RefreshSpec refreshSpecInit);
+    public Return<Album> rTribeReadAlbum(final HumanId humanId, final VLong tribeId, final RefreshSpec refreshSpecInit);
+
+    /**
+     * @param operator__
+     * @param tribeId__
+     * @param cdnFileName
+     * @return
+     */
+    public Return<Album> uTribeAddEntryToAlbum(final HumanId operator__, final long tribeId__, final RefObj<String> cdnFileName);
 }

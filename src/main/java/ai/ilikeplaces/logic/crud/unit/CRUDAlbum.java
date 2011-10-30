@@ -39,7 +39,13 @@ public class CRUDAlbum extends AbstractSLBCallbacks implements CRUDAlbumLocal {
     private RPrivateEventLocal rPrivateEventLocal_;
 
     @EJB
+    private CRUDTribeLocal crudTribeLocal_;
+
+    @EJB
     private RHumanLocal rHumanLocal_;
+
+
+    final static private RefreshSpec REFRESH_SPEC_INIT = new RefreshSpec("albumPhotos");
 
 
     public CRUDAlbum() {
@@ -76,7 +82,7 @@ public class CRUDAlbum extends AbstractSLBCallbacks implements CRUDAlbumLocal {
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
-    public Album doUAlbumAddEntry(final long privateEventId, final String humanId, final String photoUrl) throws DBDishonourCheckedException, DBFetchDataException {
+    public Album doUAlbumOfPrivateEventAddEntry(final long privateEventId, final String humanId, final String photoUrl) throws DBDishonourCheckedException, DBFetchDataException {
 
 
         /**
@@ -135,6 +141,72 @@ public class CRUDAlbum extends AbstractSLBCallbacks implements CRUDAlbumLocal {
     public Album doRAlbumByPrivateEvent(final String humanId, final long privateEventId, final RefreshSpec refreshSpec) throws DBDishonourCheckedException, DBFetchDataException {
         try {
             return rPrivateEventLocal_.doRPrivateEventAsSystem(privateEventId, false).getPrivateEventAlbum().refresh(refreshSpec);
+        } catch (final RefreshException e) {
+            throw new DBFetchDataException(e);
+        }
+    }
+
+
+    /**
+     * Method for use with Albums where the album upload mode is shown to a privateevent owner who does direct uploads
+     * to the album of the privateevent, instead of individually uploading them and assigning them to the album.
+     * <p/>
+     * <p/>
+     * Adding a photo to an album actually consists of 2 steps which in the case, are done as 1.
+     * <p/>
+     * <p/>
+     * Usually, a use is supposed to upload photos and then allocate it to an album.
+     * 1. Upload photo.
+     * 2. Assign it to album
+     * <p/>
+     * <p/>
+     * Therefore,
+     * <p/>
+     * <p/>
+     * 1. Add the photo as belonging to the user. i.e. HumansPrivatePhoto.
+     * <p/>
+     * 2. Add the photo to the album. This is a two sided wiring.
+     *
+     * @param tribeId
+     * @param humanId
+     * @param photoUrl
+     * @return
+     * @throws DBDishonourCheckedException
+     */
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
+    public Album doUAlbumOfTribeAddEntry(final long tribeId, final String humanId, final String photoUrl) throws DBDishonourCheckedException, DBFetchDataException, RefreshException {
+
+
+        /**
+         * Adding photo to users
+         */
+        final PrivatePhoto managedPrivatePhoto__ = cPrivatePhotoLocal_.doCPrivatePhotoLocal(humanId, photoUrl);
+
+
+        final Album Malbum__ = crudTribeLocal_.rTribeReadAlbum(humanId, tribeId, REFRESH_SPEC_INIT);
+        WiringBothSides:
+        {
+            Malbum__.getAlbumPhotos().add(managedPrivatePhoto__);
+            managedPrivatePhoto__.getAlbums().add(Malbum__);
+        }
+        return Malbum__;
+
+    }
+
+
+    /**
+     * @param humanId
+     * @param tribeId     by which to fetch the album
+     * @param refreshSpec
+     * @return
+     * @throws DBDishonourCheckedException
+     */
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Album doRAlbumByTribe(final String humanId, final long tribeId, final RefreshSpec refreshSpec) throws DBDishonourCheckedException, DBFetchDataException {
+        try {
+            return crudTribeLocal_.rTribeReadAlbum(humanId, tribeId, REFRESH_SPEC_INIT);
         } catch (final RefreshException e) {
             throw new DBFetchDataException(e);
         }
