@@ -128,6 +128,7 @@ final public class
     final PageFace profileWidget = Page.ProfileWidget;
 
     final PageFace album = Page.Album;
+    final PageFace albumTribe = Page.AlbumTribe;
 
     final PageFace userProperty = Page.UserProperty;
     final PageFace userPropertySidebar = Page.UserPropertySidebar;
@@ -214,6 +215,24 @@ final public class
             @Override
             public String toString() {
                 return DocAlbum;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
+        AlbumTribe("ai/ilikeplaces/widgets/AlbumTribe.xhtml",
+                Controller.Page.AlbumTribeNotice,
+                Controller.Page.AlbumTribeTribeId,
+                Controller.Page.AlbumTribeOwner,
+                Controller.Page.AlbumTribeForward,
+                Controller.Page.AlbumTribePhotos
+        ) {
+            @Override
+            public String toString() {
+                return AlbumTribePhotos;
             }
 
             @Override
@@ -1081,6 +1100,15 @@ final public class
         final static public String AlbumForward = "AlbumForward";
         final static public String AlbumPhotos = "AlbumPhotos";
 
+        /*AlbumTribe Page*/
+        final static public String DocAlbumTribe = "DocAlbumTribe";
+        /*AlbumTribe IDs*/
+        final static public String AlbumTribeNotice = "AlbumTribeNotice";
+        final static public String AlbumTribeTribeId = "AlbumTribeTribe";
+        final static public String AlbumTribeOwner = "AlbumTribeOwner";
+        final static public String AlbumTribeForward = "AlbumTribeForward";
+        final static public String AlbumTribePhotos = "AlbumTribePhotos";
+
         /*ProfileWidget Page*/
         final static public String DocUserProperty = "DocUserProperty";
         /*ProfileWidget IDs*/
@@ -1657,6 +1685,8 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(profileWidget.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(profileWidget));
 
             inhs__.registerItsNatDocFragmentTemplate(album.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(album));
+
+            inhs__.registerItsNatDocFragmentTemplate(albumTribe.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(albumTribe));
 
             inhs__.registerItsNatDocFragmentTemplate(userProperty.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(userProperty));
 
