@@ -38,10 +38,10 @@ import java.util.Map;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
 @Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class})
-public class CDNAlbum extends CDN implements CDNAlbumLocal {
+public class CDNAlbumTribe extends CDN implements CDNAlbumTribeLocal {
 
     public static final String CONTAINER = "ALBUM_PHOTOS";
-    private static final String ALBUM_PIVATE_EVENT_ID = "AlbumPivateEventId";
+    private static final String ALBUM_TRIBE_ID = "AlbumTribeId";
     private static final String ALBUM_PHOTO_UPLOAD_FAILED_DUE_TO_CACHING_ISSUES = "Album Photo Upload Failed Due To Caching Issues!";
     private static final String ALBUM_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES = "Album Photo Upload Failed Due To I/O Issues!";
     private static final String ALBUM_PHOTO_UPLOAD_FAILED = "Album Photo Upload Failed";
@@ -55,15 +55,15 @@ public class CDNAlbum extends CDN implements CDNAlbumLocal {
     private static final String LOADING_IMAGE_AS_BUFFERED_IMAGE = "Loading Image As Buffered Image";
     public static final String THUMBNAIL = "th_";
 
-    public static CDNAlbumLocal getAlbumPhotoCDNLocal() {
+    public static CDNAlbumTribeLocal getAlbumTribeCDNLocal() {
         isOK();
-        CDNAlbumLocal h = null;
+        CDNAlbumTribeLocal h = null;
         try {
-            h = (CDNAlbumLocal) Context_.lookup(CDNAlbumLocal.NAME);
+            h = (CDNAlbumTribeLocal) Context_.lookup(CDNAlbumTribeLocal.NAME);
         } catch (NamingException ex) {
             Loggers.EXCEPTION.error("Naming Exception", ex);
         }
-        return h != null ? h : (CDNAlbumLocal) LogNull.logThrow();
+        return h != null ? h : (CDNAlbumTribeLocal) LogNull.logThrow();
     }
 
     @PostConstruct
@@ -131,7 +131,7 @@ public class CDNAlbum extends CDN implements CDNAlbumLocal {
                         if (uploaded && uploadedThumb) {
                             final boolean deleted = newFile.delete();
                             if (deleted) {
-                                final Return<Album> dbr = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddEntryToAlbum(humanId, Long.parseLong((String) parameterMap.get(ALBUM_PIVATE_EVENT_ID)), new Obj<String>(cdnFileName).getSelfAsValid());
+                                final Return<Album> dbr = DB.getHumanCRUDTribeLocal(true).uTribeAddEntryToAlbum(humanId, Long.parseLong((String) parameterMap.get(ALBUM_TRIBE_ID)), new Obj<String>(cdnFileName).getSelfAsValid());
                                 if (dbr.returnStatus() == 0) {
                                     sl.complete(Loggers.DONE);
                                     r = new ReturnImpl<File>(newFile, ALBUM_PHOTO_UPLOAD_SUCCESSFUL);

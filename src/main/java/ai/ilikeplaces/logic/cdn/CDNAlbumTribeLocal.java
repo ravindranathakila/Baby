@@ -14,7 +14,7 @@ import java.io.File;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Local
-public interface CDNTribeLocal extends FileUploadListenerFace<File>{
+public interface CDNAlbumTribeLocal extends FileUploadListenerFace<File>{
 
-    public static final String NAME = CDNTribeLocal.class.getSimpleName();
+    public static final String NAME = CDNAlbumTribeLocal.class.getSimpleName();
 }
