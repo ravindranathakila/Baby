@@ -1,12 +1,14 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.logic.validators.unit.VTribeName;
 import ai.ilikeplaces.logic.validators.unit.VTribeStory;
 import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
 import java.util.Set;
@@ -65,4 +67,12 @@ public interface HumanCRUDTribeLocal extends GeneralCRUDWall {
     public Set<Tribe> getHumansTribes(final HumanId humanId);
 
 
+    /**
+     *
+     * @param humanId
+     * @param tribeId
+     * @param refreshSpecInit
+     * @return
+     */
+     public Return<Album> rTribeReadAlbum(final HumanId humanId, final VLong tribeId, final RefreshSpec refreshSpecInit);
 }

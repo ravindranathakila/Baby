@@ -38,6 +38,8 @@ public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria> {
     @Override
     protected void init(final TribeWidgetCriteria tribeWidgetCriteria) {
         new WallWidgetTribe(request, new WallWidgetTribeCriteria().setHumanId(criteria.getHumanId()).setTribeId(criteria.getTribeId().getObj()), $$(Controller.Page.tribeHomeWall));
+        new AlbumManager(request, $$(Controller.Page.tribeHomeAlbum, humanId, privateEventReturn.returnValue());
+
     }
 
     @Override

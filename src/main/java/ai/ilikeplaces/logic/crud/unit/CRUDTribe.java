@@ -8,6 +8,8 @@ import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.jpa.CrudService;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.util.jpa.RefreshException;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.*;
 import java.util.Set;
@@ -150,5 +152,16 @@ public class CRUDTribe implements CRUDTribeLocal {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Tribe doRTribe(final Long tribeId) {
         return tribeCrudServiceLocal_.find(Tribe.class, tribeId);
+    }
+
+    /**
+     * @param humanId
+     * @param tribeId
+     * @param refreshSpecInit
+     * @return
+     */
+    @Override
+    public Album rTribeReadAlbum(final String humanId, final Long tribeId, final RefreshSpec refreshSpecInit) throws RefreshException {
+        return getTribe(tribeId).getTribeAlbum().refresh(refreshSpecInit);
     }
 }

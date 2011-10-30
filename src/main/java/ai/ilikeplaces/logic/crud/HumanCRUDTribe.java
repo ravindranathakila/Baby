@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.DBFetchDataException;
@@ -191,5 +192,15 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
     @Override
     public Set<Tribe> getHumansTribes(final HumanId humanId) {
         return crudTribeLocal_.getHumansTribes(humanId.getObjectAsValid());
+    }
+
+    public Return<Album> rTribeReadAlbum(final HumanId humanId, final VLong tribeId, final RefreshSpec refreshSpecInit) {
+        Return<Album> r;
+        try {
+            r = new ReturnImpl<Album>(crudTribeLocal_.rTribeReadAlbum(humanId.getHumanId(), tribeId.getObjectAsValid(), refreshSpecInit), "Read Album SUCCESSFUL!");
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Album>(t, "Read Album FAILED!", true);
+        }
+        return r;
     }
 }

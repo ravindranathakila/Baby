@@ -1,10 +1,13 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.HumansTribe;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
+import ai.ilikeplaces.util.jpa.RefreshException;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
 import java.util.Set;
@@ -77,4 +80,13 @@ public interface CRUDTribeLocal {
      * @return if the given humanId is a member of the given tribe
      */
     public boolean isTribeMember(final String humanId, final Long tribeId);
+
+    /**
+     *
+     * @param humanId
+     * @param tribeId
+     * @param refreshSpecInit
+     * @return
+     */
+    public Album rTribeReadAlbum(final String humanId, final Long tribeId, final RefreshSpec refreshSpecInit) throws RefreshException;
 }
