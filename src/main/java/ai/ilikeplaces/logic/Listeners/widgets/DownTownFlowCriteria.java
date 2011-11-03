@@ -10,28 +10,14 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
  * Time: 2:46 PM
  */
 public class DownTownFlowCriteria {
+// ------------------------------ FIELDS ------------------------------
 
     private DownTownFlowDisplayComponent downTownFlowDisplayComponent;
     private HumanId humanId;
     private HumanUserLocal humanUserLocal;
+    private InviteData inviteData;
 
-    public DownTownFlowDisplayComponent getDownTownFlowDisplayComponent() {
-        return downTownFlowDisplayComponent;
-    }
-
-    public DownTownFlowCriteria setDownTownFlowDisplayComponent(final DownTownFlowDisplayComponent downTownFlowDisplayComponent) {
-        this.downTownFlowDisplayComponent = downTownFlowDisplayComponent;
-        return this;
-    }
-
-    public HumanUserLocal getHumanUserLocal() {
-        return humanUserLocal;
-    }
-
-    public DownTownFlowCriteria setHumanUserLocal(final HumanUserLocal humanUserLocal) {
-        this.humanUserLocal = humanUserLocal;
-        return this;
-    }
+// -------------------------- ENUMERATIONS --------------------------
 
     public enum DownTownFlowDisplayComponent {
         TALKS,
@@ -39,12 +25,57 @@ public class DownTownFlowCriteria {
         TRIBES
     }
 
+// ------------------------ ACCESSORS / MUTATORS ------------------------
+
+    public DownTownFlowDisplayComponent getDownTownFlowDisplayComponent() {
+        return downTownFlowDisplayComponent;
+    }
+
     public HumanId getHumanId() {
         return humanId;
+    }
+
+    public HumanUserLocal getHumanUserLocal() {
+        return humanUserLocal;
+    }
+
+// -------------------------- OTHER METHODS --------------------------
+
+    public InviteData getInviteData() {
+        return inviteData == null ? (inviteData = new InviteData()) : inviteData;
+    }
+
+    public DownTownFlowCriteria setDownTownFlowDisplayComponent(final DownTownFlowDisplayComponent downTownFlowDisplayComponent) {
+        this.downTownFlowDisplayComponent = downTownFlowDisplayComponent;
+        return this;
     }
 
     public DownTownFlowCriteria setHumanId(final HumanId humanId) {
         this.humanId = humanId;
         return this;
+    }
+
+    public DownTownFlowCriteria setHumanUserLocal(final HumanUserLocal humanUserLocal) {
+        this.humanUserLocal = humanUserLocal;
+        return this;
+    }
+
+// -------------------------- INNER CLASSES --------------------------
+
+    public class InviteData {
+// ------------------------------ FIELDS ------------------------------
+
+        private String email;
+
+// ------------------------ ACCESSORS / MUTATORS ------------------------
+
+        public String getEmail() {
+            return email;
+        }
+
+        public InviteData setEmail(final String email) {
+            this.email = email;
+            return this;
+        }
     }
 }

@@ -21,8 +21,9 @@ public class ImportedContact extends HumanEquals {
         return email;
     }
 
-    public void setEmail(final String email) {
+    public ImportedContact setEmail(final String email) {
         this.email = email;
+        return this;
     }
     public ImportedContact setEmailR(final String email) {
         this.email = email;
@@ -37,8 +38,9 @@ public class ImportedContact extends HumanEquals {
         return fullName != null ? fullName : EMPTY;
     }
 
-    public void setFullName(final String fullName) {
+    public ImportedContact setFullName(final String fullName) {
         this.fullName = fullName;
+        return this;
     }
     public ImportedContact setFullNameR(final String fullName) {
         this.fullName = fullName;

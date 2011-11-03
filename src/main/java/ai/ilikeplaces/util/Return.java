@@ -33,6 +33,12 @@ public interface Return<T> {
 
     public String returnMsg();
 
+    /**
+     *
+     * @return true if value of {@link #returnStatus()} == 0
+     */
+    public boolean valid();
+
     @Override
     public String toString();
 }
