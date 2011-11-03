@@ -137,6 +137,10 @@ public class DownTownHeatMap extends AbstractWidgetListener {
         email = new Email("");
         password = new Password("");
 
+        if (humanId.notNull()) {
+            $$displayNone($$(Controller.Page.DownTownHeatMapSignupWidget));
+        }
+
         itsNatDocument_.addCodeToSend(
                 DownTownHeatMapWOEIDUpdate.replace(
                         WOEIDUPDATE_TOKEN,
@@ -201,7 +205,40 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                     if (myemail.validate(v) == 0 && mypassword.validate(v) == 0) {
                         if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
                             try {
+
                                 final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                                        new HumanId().setObjAsValid(email.getObj()),
+                                        mypassword,
+                                        myemail);
+
+                                if (humanCreateReturn.returnValue()) {
+
+                                    UserIntroduction.createIntroData(new HumanId(email.getObj()));
+
+                                    final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                                            .append(ServletLogin.Username, myemail.getObj(), true)
+                                            .append(ServletLogin.Password,
+                                                    DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
+                                                            .returnValue()
+                                                            .getHumanAuthenticationHash())
+                                            .get();
+
+
+                                    String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", email.getObj());
+
+                                    htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
+                                    htmlBody = htmlBody.replace(Bate.PASSWORD_ADVICE, "");
+                                    htmlBody = htmlBody.replace(Bate.PASSWORD_DETAILS, "");
+
+                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                            myemail.getObj(),
+                                            "I Like Places prides you with an Exclusive Invite!",
+                                            htmlBody);
+
+                                    $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+                                }
+
+                                /*final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
                                         new HumanId().setObjAsValid(email.getObj()),
                                         mypassword,
                                         myemail);
@@ -223,7 +260,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                                             RBGet.gui().getString("SIGNUP_HEADER"),
                                             mail);
                                     $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
-                                }
+                                }*/
                             } catch (DBDishonourCheckedException e) {
                                 $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email was taken meanwhile!:(");
                             }
@@ -377,10 +414,10 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
                         UCFindLocationsWithinBounds:
                         {
-                            for(final PrivateLocation privateLocation: usersOwnPrivateLocations){
+                            for (final PrivateLocation privateLocation : usersOwnPrivateLocations) {
                                 final W3CPoint w3CPoint = new W3CPoint(privateLocation.getPrivateLocationLatitude(), privateLocation.getPrivateLocationLongitude());
-                                if(bb.bounds(w3CPoint)){
-                                   usersOwnPrivateLocationsWithinBounds.add(privateLocation);
+                                if (bb.bounds(w3CPoint)) {
+                                    usersOwnPrivateLocationsWithinBounds.add(privateLocation);
                                 }
                             }
                         }
@@ -388,18 +425,18 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                         for (final PrivateLocation userOwnPrivateLocation : usersOwnPrivateLocationsWithinBounds) {
                             generateMyMarker(userOwnPrivateLocation.getPrivateLocationLatitude(),
                                     userOwnPrivateLocation.getPrivateLocationLongitude(),
-                                    userOwnPrivateLocation.getPrivateLocationName().replaceAll("'","\\'"),
+                                    userOwnPrivateLocation.getPrivateLocationName().replaceAll("'", "\\'"),
                                     1);//@TODO Hits needs to be fixed in an efficient way
 
                             generateMarkerEvents(
                                     new W3CPoint(userOwnPrivateLocation.getPrivateLocationLatitude(), userOwnPrivateLocation.getPrivateLocationLongitude()),
-                                    userOwnPrivateLocation.getPrivateLocationName().replaceAll("'","\\'"),
+                                    userOwnPrivateLocation.getPrivateLocationName().replaceAll("'", "\\'"),
                                     (long) 1);//@TODO Hits needs to be fixed in an efficient way
 
                             $$sendJSStmt(PROCESS_MARKER + OPEN_BRACKET +
                                     (OPEN_BRACE +
                                             (HTIS + COLON + THIS) + COMMA +
-                                            (COMMON_NAME + COLON + SINGLE_QUOTE + userOwnPrivateLocation.getPrivateLocationName().replaceAll("'","\\'") + SINGLE_QUOTE) + COMMA +
+                                            (COMMON_NAME + COLON + SINGLE_QUOTE + userOwnPrivateLocation.getPrivateLocationName().replaceAll("'", "\\'") + SINGLE_QUOTE) + COMMA +
                                             (LATITUDE + COLON + userOwnPrivateLocation.getPrivateLocationLatitude()) + COMMA +
                                             (LONGITUDE + COLON + userOwnPrivateLocation.getPrivateLocationLongitude()) + COMMA +
                                             (URL + COLON + SINGLE_QUOTE + new Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, 143, true).append(WOEIDGrabber.WOEHINT, userOwnPrivateLocation.getPrivateLocationLatitude() + COMMA + userOwnPrivateLocation.getPrivateLocationLongitude()).get() + SINGLE_QUOTE) +

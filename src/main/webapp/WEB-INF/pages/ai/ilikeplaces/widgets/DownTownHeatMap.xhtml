@@ -254,14 +254,6 @@ function alertAndZoomIn(zoomTo){
         },
         true
     );
-    <!--setActionLink(-->
-        <!--"Find Directions",-->
-        <!--"",-->
-        <!--function(){-->
-            <!--renderRoute(hotspotClickDetails.latitude,hotspotClickDetails.longitude);-->
-        <!--},-->
-        <!--false-->
-    <!--);-->
  }
 
  function renderRouteFromURL(){
@@ -563,20 +555,6 @@ function initialize_DownTownHeatMap_map(){
         google.maps.event.removeListener(initialGmapLoadListener);
     });
 
-    //placeMarker = new google.maps.Marker({
-    //    position: myLatlng,
-    //    map: map,
-    //    title:"Is it here? if so, click on this marker!!!",
-    //    icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=|11|eee|glyphish_map-marker|16|000000|000000"
-    //});
-    //
-    //
-    //infowindow = new google.maps.InfoWindow({
-    //    content: "Zoom to street level & Point marker to EXACT place. Click the marker to confirm!",
-    //    maxWidth:400
-    //});
-
-    //infowindow.open(map,placeMarker);
 
     //WE NEED TO DO THIS HERE BECAUSE SOMETIMES THIS ISN'T INITIALIZED UPON FIRST CALL AT getLastSelectionInfoWindow()
     lastSelectionInfoWindow = new google.maps.InfoWindow({
@@ -834,56 +812,58 @@ function setMapToLocation(value){
         </div>
     </div>
     <div style="display:none;">
-        <div id="mapCustomControlsSignupForm" style="width:30.9%;display:none;">
-            <div class="use80 use10a use10p">
-                <div class="use100" style="color:#000000;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
-                    Enter Your Email
-                </div>
-                <div class="use100">
-                    <input
-                            id="DownTownHeatMapSignupEmail"
-                            style="width:100%;color:#000000;height:34px;border:none;font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
-                    />
-                </div>
-                <div class="use100" style="height:5px;">
+        <div id="mapCustomControlsSignupForm" style="width:30.9%;display:block;">
+            <div id="DownTownHeatMapSignupWidget" class="use90 use5p use5a" style="padding:4px solid #dddddd;">
+                <div class="use80 use10a use10p">
+                    <div class="use100" style="color:#000000;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
+                        Enter Your Email
+                    </div>
+                    <div class="use100">
+                        <input
+                                id="DownTownHeatMapSignupEmail"
+                                style="width:100%;color:#000000;height:34px;border:4px solid #dddddd;font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
+                        />
+                    </div>
+                    <div class="use100" style="height:5px;">
 
-                </div>
-                <div class="use100" style="color:#000000;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
-                    Choose a Password
-                </div>
-                <div class="use100" style="color:#000000;font-size:10px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
-                    (we won't store it)
-                    (it should be at least 8 characters long)
-                </div>
-                <div class="use100">
-                    <input
-                            id="DownTownHeatMapSignupPassword"
-                            style="width:100%;color:#000000;height:34px;border:none;font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
-                            type="password"
-                    />
-                </div>
-                <div class="use100 center" >
-                    <span
-                            id="DownTownHeatMapSignupNotifications"
-                            style="width:100%;text-align:center;color:#000000;font-weight:900;">
+                    </div>
+                    <div class="use100" style="color:#000000;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
+                        Choose a Password
+                    </div>
+                    <div class="use100" style="color:#000000;font-size:10px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
+                        (we won't store it)
+                        (it should be at least 8 characters long)
+                    </div>
+                    <div class="use100">
+                        <input
+                                id="DownTownHeatMapSignupPassword"
+                                style="width:100%;color:#000000;height:34px;border:4px solid #dddddd;font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
+                                type="password"
+                        />
+                    </div>
+                    <div class="use100 center" >
+                        <span
+                                id="DownTownHeatMapSignupNotifications"
+                                style="width:100%;text-align:center;color:#000000;font-weight:900;">
+                            &nbsp;
+                        </span>
+                    </div>
+                    <div class="use90 use5a use5p"
+                           id="DownTownHeatMapSignupButton"
+                           style="height:28px;line-height:28px;;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;opacity:0.8;filter:alpha(opacity=80);">
+                         <img id="img_signup" src="/images/circle.gif" alt="Sign Up!" class="use100"/>
+                    </div>
+                    <div class="use100 center" style="height:10px;">
                         &nbsp;
-                    </span>
+                    </div>
+                    <div class="use100 center">
+                            <hr style="color:#000000;background-color:#000000;"/>
+                           <a href="https://www.pivotaltracker.com/projects/384415/overview"
+                              target="_blank"
+                              style="font-size:12px;font-weight:900;color:#000000;text-decoration:underline;">SUGGEST A FEATURE <img src="/images/bulb.gif" alt=" " style="height:12px;" title="Attribution: http://findicons.com/icon/179702/bulb_on?id=180061"/> OR REPORT A BUG <img src="/images/bug.gif" alt=" " style="height:12px;" title="Attribution: http://findicons.com/icon/64935/bug"/></a>
+                    </div>
                 </div>
-                <div class="use90 use5a use5p"
-                       id="DownTownHeatMapSignupButton"
-                       style="height:28px;line-height:28px;;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;opacity:0.8;filter:alpha(opacity=80);">
-                     <img id="img_signup" src="/images/circle.gif" alt="Sign Up!" class="use100"/>
                 </div>
-                <div class="use100 center" style="height:10px;">
-                    &nbsp;
-                </div>
-                <div class="use100 center">
-                        <hr style="color:#000000;background-color:#000000;"/>
-                       <a href="https://www.pivotaltracker.com/projects/304913/overview"
-                          target="_blank"
-                          style="font-size:12px;font-weight:900;color:#000000;text-decoration:underline;">beneath www.<img src="/favicon.png" alt="i" style="height:16px;"/>likeplaces.com</a>
-                </div>
-            </div>
         </div>
         <div id="mapCustomControlsAdUnit" class="by5" style="color:#000000;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">
         </div>
@@ -903,11 +883,11 @@ function setMapToLocation(value){
                     <div class="by" style="height:3px;">
                         &nbsp;
                     </div>
-                    <div class="by center" style="height:10px;display:none;" id="mapCustomControlsHiddenNoti">
+                    <div class="by center" style="height:10px;display:block;" id="mapCustomControlsHiddenNoti">
                         Hidden! Click above to show.
                     </div>
                     <div class="use191" style="background-color:transparent;">&nbsp;</div>
-                    <div id="mapCustomControlsSolidLinks" class="bold use618 center" style="color:#000000;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">
+                    <div id="mapCustomControlsSolidLinks" class="bold use618 center" style="color:#000000;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);display:none;">
                     </div>
                     <div class="use191" style="background-color:transparent;">&nbsp;</div>
                 </div>
@@ -1036,7 +1016,7 @@ function setMapToLocation(value){
                                 <div class="use100" style="height:34px;">
                                     <input class="vtip use100 center layer_2"
                                        id="searchboxmap"
-                                       style="color:#000000;height:34px;border:none;font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
+                                       style="color:#000000;height:34px;border:4px solid #dddddd; font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
                                        value="e.g. las vegas, united states"
                                        tabindex="1"
                                        onchange="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
