@@ -47,8 +47,8 @@ import java.util.*;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class Bate extends AbstractWidgetListener {
-    private static final String PASSWORD_DETAILS = "_passwordDetails";
-    private static final String PASSWORD_ADVICE = "_passwordAdvice";
+    public static final String PASSWORD_DETAILS = "_passwordDetails";
+    public static final String PASSWORD_ADVICE = "_passwordAdvice";
     private static final String URL = "_url";
     private static final String OMG_GOOGLE_INVITE = "omg_gi";
     private Email email;
@@ -393,15 +393,15 @@ abstract public class Bate extends AbstractWidgetListener {
      * @param invitee
      * @return
      */
-    final String getHTMLStringForOfflineFriendInvite(final String inviter, final String invitee) {
+    final static String getHTMLStringForOfflineFriendInvite(final String inviter, final String invitee) {
         try {
 
             final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + Controller.USER_PROPERTY_EMAIL_XHTML);
 
-            $$(Controller.Page.user_property_name, document).setTextContent(inviter);
-            $$(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), "http://www.ilikeplaces.com");
-            $$(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(), RBGet.getGlobalConfigKey("PROFILE_PHOTO_DEFAULT"));
-            $$(Controller.Page.user_property_content, document).appendChild(
+            $$static(Controller.Page.user_property_name, document).setTextContent(inviter);
+            $$static(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), "http://www.ilikeplaces.com");
+            $$static(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(), RBGet.getGlobalConfigKey("PROFILE_PHOTO_DEFAULT"));
+            $$static(Controller.Page.user_property_content, document).appendChild(
                     document.importNode(
                             ElementComposer.compose(
                                     document.createElement(MarkupTag.DIV.toString())
@@ -420,14 +420,14 @@ abstract public class Bate extends AbstractWidgetListener {
             );
 
 
-            return HTMLDocParser.convertNodeToHtml($$(Page.user_property_widget, document));
+            return HTMLDocParser.convertNodeToHtml($$static(Page.user_property_widget, document));
         } catch (final Throwable e) {
             throw LogNull.getRuntimeException(e);
         }
 
     }
 
-    final Return<Boolean> sendInviteToOfflineInvite(final HumanId inviter, final String invitersName, final ImportedContact inviteee) {
+    final static Return<Boolean> sendInviteToOfflineInvite(final HumanId inviter, final String invitersName, final ImportedContact inviteee) {
         Return<Boolean> returnVal;
         try {
             final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));

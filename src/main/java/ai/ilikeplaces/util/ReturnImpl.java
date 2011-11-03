@@ -96,6 +96,11 @@ final public class ReturnImpl<T> implements Return<T> {
     }
 
     @Override
+    public boolean valid(){
+        return returnStatus() == 0;
+    }
+
+    @Override
     public String toString() {
         return "Return{" +
                 "returnStatus=" + returnStatus +

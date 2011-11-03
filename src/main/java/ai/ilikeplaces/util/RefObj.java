@@ -218,6 +218,13 @@ public abstract class RefObj<T> {
         return validationMessages(constraintViolations);
     }
 
+    public boolean isNull(){
+        return obj == null;
+    }
+    public boolean notNull(){
+        return obj != null;
+    }
+
     @Override
     public String toString() {
         return obj != null ? obj.toString() : "null";

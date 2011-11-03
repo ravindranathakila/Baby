@@ -7,6 +7,7 @@ import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventViewSidebar;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventViewSidebarCriteria;
+import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
@@ -25,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static ai.ilikeplaces.servlets.Controller.Page.Bate;
 import static ai.ilikeplaces.servlets.Controller.Page.user_property_sidebar_talk;
 
 /**
@@ -134,5 +136,38 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
 
+        super.registerForInputText($$(Controller.Page.DownTownFlowInviteEmail),
+                new AIEventListener<DownTownFlowCriteria>(criteria) {
+                    /**
+                     * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+                     *
+                     * @param evt fired from client
+                     */
+                    @Override
+                    protected void onFire(Event evt) {
+                        criteria.getInviteData().setEmail($$(evt).getAttribute(MarkupTag.INPUT.value()));
+                    }
+                }
+        );
+
+        super.registerForClick($$(Controller.Page.DownTownFlowInviteClick),
+                new AIEventListener<DownTownFlowCriteria>(criteria) {
+
+                    /**
+                     * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+                     *
+                     * @param evt fired from client
+                     */
+                    @Override
+                    protected void onFire(Event evt) {
+                        final Return<Boolean> returnVal = ai.ilikeplaces.logic.Listeners.widgets.Bate.sendInviteToOfflineInvite(
+                                criteria.getHumanId(),
+                                UserProperty.HUMANS_IDENTITY_CACHE.get(criteria.getHumanId().getHumanId(), "").getHuman().getDisplayName(),
+                                new ImportedContact().setEmail(criteria.getInviteData().getEmail()).setFullName(""));
+                        if(returnVal.valid()){
+                            Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doNTxAddHumansNetPeople(criteria.getHumanId(), new HumanId(criteria.getInviteData().getEmail()));
+                        }
+                    }
+                });
     }
 }
