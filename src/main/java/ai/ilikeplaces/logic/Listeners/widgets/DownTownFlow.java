@@ -9,7 +9,9 @@ import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventViewSideb
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventViewSidebarCriteria;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
@@ -22,6 +24,7 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
+import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,7 +39,12 @@ import static ai.ilikeplaces.servlets.Controller.Page.user_property_sidebar_talk
  * Time: 2:28 PM
  */
 public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
-// --------------------------- CONSTRUCTORS ---------------------------
+    private static final String ENTER_A_VALID_EMAIL = "enter.a.valid.email";
+    private static final String INVITED_ADDED_0 = "invited.added.0";
+    private static final String COULD_NOT_INVITE_AND_ADD_TRY_AGAIN = "could.not.invite.and.add.try.again";
+    private static final String MESSAGE_ADDING_SELF_AS_FRIEND = "message.adding.self.as.friend";
+    private static final String IS_ALREADY_YOUR_FRIEND = "0.is.already.your.friend";
+    // --------------------------- CONSTRUCTORS ---------------------------
 
     public DownTownFlow(final ItsNatServletRequest request__, final DownTownFlowCriteria downTownFlowCriteria__, final Element appendToElement__) {
         super(request__, Controller.Page.DownTownFlow, downTownFlowCriteria__, appendToElement__);
@@ -145,7 +153,13 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
                      */
                     @Override
                     protected void onFire(Event evt) {
-                        criteria.getInviteData().setEmail($$(evt).getAttribute(MarkupTag.INPUT.value()));
+
+                        final Email email = new Email($$(evt).getAttribute(MarkupTag.INPUT.value()));
+                        if (email.valid()) {
+                            criteria.getInviteData().setEmail(email);
+                        } else {
+                            $$(Controller.Page.DownTownFlowInviteNoti).setTextContent(RBGet.gui().getString(ENTER_A_VALID_EMAIL));
+                        }
                     }
                 }
         );
@@ -160,12 +174,35 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
                      */
                     @Override
                     protected void onFire(Event evt) {
-                        final Return<Boolean> returnVal = ai.ilikeplaces.logic.Listeners.widgets.Bate.sendInviteToOfflineInvite(
-                                criteria.getHumanId(),
-                                UserProperty.HUMANS_IDENTITY_CACHE.get(criteria.getHumanId().getHumanId(), "").getHuman().getDisplayName(),
-                                new ImportedContact().setEmail(criteria.getInviteData().getEmail()).setFullName(""));
-                        if(returnVal.valid()){
-                            Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doNTxAddHumansNetPeople(criteria.getHumanId(), new HumanId(criteria.getInviteData().getEmail()));
+                        final Email email = criteria.getInviteData().getEmail();
+
+                        if (email.valid()) {
+                            if (!DB.getHumanCRUDHumanLocal(false).doDirtyCheckHuman(email.getObj()).returnValue()) {
+                                final Return<Boolean> returnVal = ai.ilikeplaces.logic.Listeners.widgets.Bate.sendInviteToOfflineInvite(
+                                        criteria.getHumanId(),
+                                        UserProperty.HUMANS_IDENTITY_CACHE.get(criteria.getHumanId().getHumanId(), "").getHuman().getDisplayName(),
+                                        new ImportedContact().setEmail(email.getObj()).setFullName(""));
+
+                            }
+
+                            if (!DB.getHumanCRUDHumanLocal(false).doDirtyIsHumansNetPeople(criteria.getHumanId(), new HumanId(email.getObj())).returnValue()) {
+                                if (!criteria.getHumanId().getHumanId().equals(email.getObj())) {
+                                    Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doNTxAddHumansNetPeople(criteria.getHumanId(), new HumanId(email.getObj()));
+                                    if (r.valid()) {
+                                        $$(Controller.Page.DownTownFlowInviteNoti).setTextContent(MessageFormat.format(RBGet.gui().getString(INVITED_ADDED_0), email));
+                                        $$(Controller.Page.DownTownFlowInviteEmail).setAttribute(MarkupTag.INPUT.value(), "");
+                                    } else {
+                                        $$(Controller.Page.DownTownFlowInviteNoti).setTextContent(RBGet.gui().getString(COULD_NOT_INVITE_AND_ADD_TRY_AGAIN));
+                                    }
+                                } else {
+                                    $$(Controller.Page.DownTownFlowInviteNoti).setTextContent(RBGet.gui().getString(MESSAGE_ADDING_SELF_AS_FRIEND));
+                                }
+                            } else {
+                                $$(Controller.Page.DownTownFlowInviteNoti).setTextContent(
+                                        MessageFormat.format(RBGet.gui().getString(IS_ALREADY_YOUR_FRIEND), UserProperty.HUMANS_IDENTITY_CACHE.get(email.getObj(), "").getHuman().getDisplayName()));
+                            }
+
+
                         }
                     }
                 });

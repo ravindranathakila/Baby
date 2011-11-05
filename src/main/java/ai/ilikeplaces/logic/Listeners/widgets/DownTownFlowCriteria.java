@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.logic.role.HumanUserLocal;
+import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 
 /**
@@ -65,15 +66,15 @@ public class DownTownFlowCriteria {
     public class InviteData {
 // ------------------------------ FIELDS ------------------------------
 
-        private String email;
+        private Email email;
 
 // ------------------------ ACCESSORS / MUTATORS ------------------------
 
-        public String getEmail() {
+        public Email getEmail() {
             return email;
         }
 
-        public InviteData setEmail(final String email) {
+        public InviteData setEmail(final Email email) {
             this.email = email;
             return this;
         }
