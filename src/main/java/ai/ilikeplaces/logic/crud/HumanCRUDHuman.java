@@ -9,10 +9,12 @@ import ai.ilikeplaces.exception.DBDishonourException;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.*;
+import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt;
 import ai.ilikeplaces.security.face.SingletonHashingFace;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.spam.mail.*;
 import net.sf.oval.exception.ConstraintsViolatedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +50,10 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     private static final String PROFILE_URL_READ_FAILED = "Profile URL Read FAILED!";
     private static final String READ_HUMANS_BEFRIENDS_SUCCESSFUL = "Read Humans Befriends Successful!";
     private static final String READ_HUMANS_BEFRIENDS_FAILED = "Read Humans Befriends FAILED!";
+    private static final String EMAIL = "Email ";
+    private static final String IS_NOT_FROM_A_VALID_DOMAIN = " is not from a valid domain";
+    private static final String ACTIVATE_PROFILE_SUCCESSFUL = "Activate Profile Successful.";
+    private static final String ACTIVATE_PROFILE_FAILED = "Activate Profile FAILED!";
     @EJB
     private RHumanLocal rHumanLocal_;
 
@@ -372,75 +378,80 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         if (doDirtyCheckHuman(humanId.getObjectAsValid()).returnValue()) {
             throw new DBDishonourCheckedException(RBGet.logMsgs.getString(AI_ILIKEPLACES_LOGIC_CRUD_HUMAN_CRUDHUMAN_0001) + humanId);
         }
-        final Human newUser = new Human();
-        newUser.setHumanId(humanId.getObjectAsValid());
-        newUser.setHumanAlive(false);//Wait for signup confirmation click by email
 
-        final HumansAuthentication ha = new HumansAuthentication();
-        ha.setHumanId(newUser.getHumanId());
-        ha.setHumanAuthenticationSalt(BCrypt.gensalt());
-        ha.setHumanAuthenticationHash(singletonHashingFace.getHash(password.getObjectAsValid(), ha.getHumanAuthenticationSalt()));
-        newUser.setHumansAuthentications(ha);
-        newUser.setHumanAlive(false);
+        if (ai.ilikeplaces.util.spam.mail.Email.isAddressValid(humanId.getObjectAsValid())) {
 
-        setHumansIdentityInfo:
-        {
-            final HumansIdentity hid = new HumansIdentity();
-            hid.setHumanId(newUser.getHumanId());
-            hid.setUrl(new Url().setUrlR(humanId.getObj()).setMetadataR(humanId.getObj()));//Yes, the default url is his/her email
+            final Human newUser = new Human();
+            newUser.setHumanId(humanId.getObjectAsValid());
+            newUser.setHumanAlive(false);//Wait for signup confirmation click by email
 
-            newUser.setHumansIdentity(hid);
+            final HumansAuthentication ha = new HumansAuthentication();
+            ha.setHumanId(newUser.getHumanId());
+            ha.setHumanAuthenticationSalt(BCrypt.gensalt());
+            ha.setHumanAuthenticationHash(singletonHashingFace.getHash(password.getObjectAsValid(), ha.getHumanAuthenticationSalt()));
+            newUser.setHumansAuthentications(ha);
+            newUser.setHumanAlive(false);
+
+            setHumansIdentityInfo:
+            {
+                final HumansIdentity hid = new HumansIdentity();
+                hid.setHumanId(newUser.getHumanId());
+                hid.setUrl(new Url().setUrlR(humanId.getObj()).setMetadataR(humanId.getObj()));//Yes, the default url is his/her email
+
+                newUser.setHumansIdentity(hid);
+            }
+
+            //HumansNet has as many internal primarykeyjoin entities
+            tricky:
+            {
+                final HumansNetPeople hnp = new HumansNetPeople();
+                hnp.setHumanId(newUser.getHumanId());
+
+                final HumansNet hn = new HumansNet();
+                hn.setDisplayName(newUser.getHumanId().split(SYMBOL_AT)[0]);
+                hn.setHumanId(newUser.getHumanId());
+
+                hn.setHumansNetPeople(hnp);
+
+                newUser.setHumansNet(hn);
+            }
+
+
+            final HumansPrivateLocation hpl = new HumansPrivateLocation();
+            hpl.setHumanId(newUser.getHumanId());
+            newUser.setHumansPrivateLocation(hpl);
+
+            final HumansPrivateEvent hpe = new HumansPrivateEvent();
+            hpe.setHumanId(newUser.getHumanId());
+            newUser.setHumansPrivateEvent(hpe);
+
+            final HumansAlbum hal = new HumansAlbum();
+            hal.setHumanId(newUser.getHumanId());
+            newUser.setHumansAlbum(hal);
+
+            final HumansPrivatePhoto hprp = new HumansPrivatePhoto();
+            hprp.setHumanId(newUser.getHumanId());
+            newUser.setHumansPrivatePhoto(hprp);
+
+            final HumansPublicPhoto hpup = new HumansPublicPhoto();
+            hpup.setHumanId(newUser.getHumanId());
+            newUser.setHumansPublicPhoto(hpup);
+
+            final HumansWall hw = new HumansWall();
+            hw.setHumanId(newUser.getHumanId());
+            hw.setWall(new Wall().setWallTypeR(Wall.wallTypeHuman));
+            newUser.setHumansWall(hw);
+
+            final HumansAlbum halbum = new HumansAlbum();
+            halbum.setHumanId(newUser.getHumanId());
+            newUser.setHumansAlbum(halbum);
+
+            doNTxCHuman(newUser);
+
+            r = new ReturnImpl<Boolean>(true, ADD_USER_SUCCESSFUL);
+        } else {
+            r = new ReturnImpl<Boolean>(new IllegalArgumentException(EMAIL + humanId.getObjectAsValid() + IS_NOT_FROM_A_VALID_DOMAIN), HumanCRUDHuman.ADD_USER_FAILED, true);
         }
-
-        //HumansNet has as many internal primarykeyjoin entities
-        tricky:
-        {
-            final HumansNetPeople hnp = new HumansNetPeople();
-            hnp.setHumanId(newUser.getHumanId());
-
-            final HumansNet hn = new HumansNet();
-            hn.setDisplayName(newUser.getHumanId().split(SYMBOL_AT)[0]);
-            hn.setHumanId(newUser.getHumanId());
-
-            hn.setHumansNetPeople(hnp);
-
-            newUser.setHumansNet(hn);
-        }
-
-
-        final HumansPrivateLocation hpl = new HumansPrivateLocation();
-        hpl.setHumanId(newUser.getHumanId());
-        newUser.setHumansPrivateLocation(hpl);
-
-        final HumansPrivateEvent hpe = new HumansPrivateEvent();
-        hpe.setHumanId(newUser.getHumanId());
-        newUser.setHumansPrivateEvent(hpe);
-
-        final HumansAlbum hal = new HumansAlbum();
-        hal.setHumanId(newUser.getHumanId());
-        newUser.setHumansAlbum(hal);
-
-        final HumansPrivatePhoto hprp = new HumansPrivatePhoto();
-        hprp.setHumanId(newUser.getHumanId());
-        newUser.setHumansPrivatePhoto(hprp);
-
-        final HumansPublicPhoto hpup = new HumansPublicPhoto();
-        hpup.setHumanId(newUser.getHumanId());
-        newUser.setHumansPublicPhoto(hpup);
-
-        final HumansWall hw = new HumansWall();
-        hw.setHumanId(newUser.getHumanId());
-        hw.setWall(new Wall().setWallTypeR(Wall.wallTypeHuman));
-        newUser.setHumansWall(hw);
-
-        final HumansAlbum halbum = new HumansAlbum();
-        halbum.setHumanId(newUser.getHumanId());
-        newUser.setHumansAlbum(halbum);
-
-        doNTxCHuman(newUser);
-
-
-        r = new ReturnImpl<Boolean>(true, ADD_USER_SUCCESSFUL);
         return r;
     }
 
@@ -448,9 +459,9 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     public Return<Boolean> doUActivateHuman(final RefObj<String> username) {
         Return<Boolean> r;
         try {
-            r = new ReturnImpl<Boolean>(uHumanLocal.doUActivateHuman(username.getObjectAsValid()), "Activate Profile Successful.");
+            r = new ReturnImpl<Boolean>(uHumanLocal.doUActivateHuman(username.getObjectAsValid()), ACTIVATE_PROFILE_SUCCESSFUL);
         } catch (final Throwable t) {
-            r = new ReturnImpl<Boolean>(t, "Activate Profile FAILED!", true);
+            r = new ReturnImpl<Boolean>(t, ACTIVATE_PROFILE_FAILED, true);
         }
         return r;
     }
