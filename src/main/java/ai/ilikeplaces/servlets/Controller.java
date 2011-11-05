@@ -472,6 +472,7 @@ final public class
         DownTownHeatMap("ai/ilikeplaces/widgets/DownTownHeatMap.xhtml",
                 Controller.Page.DownTownHeatMapWOEID,
                 Controller.Page.DownTownHeatMapBB,
+                Controller.Page.DownTownHeatMapSignupWidget,
                 Controller.Page.DownTownHeatMapSignupEmail,
                 Controller.Page.DownTownHeatMapSignupPassword,
                 Controller.Page.DownTownHeatMapSignupNotifications,
@@ -1012,7 +1013,10 @@ final public class
                 Controller.Page.DownTownFlowWidget,
                 Controller.Page.DownTownFlowTalks,
                 Controller.Page.DownTownFlowMoments,
-                Controller.Page.DownTownFlowTalksFriends
+                Controller.Page.DownTownFlowTalksFriends,
+                Controller.Page.DownTownFlowInviteNoti,
+                Controller.Page.DownTownFlowInviteEmail,
+                Controller.Page.DownTownFlowInviteClick
         ) {
             @Override
             public String getURL() {
@@ -1235,6 +1239,7 @@ final public class
         /*DownTownHeatMap IDs*/
         final static public String DownTownHeatMapWOEID = "DownTownHeatMapWOEID";
         final static public String DownTownHeatMapBB = "DownTownHeatMapBB";
+        final static public String DownTownHeatMapSignupWidget = "DownTownHeatMapSignupWidget";
         final static public String DownTownHeatMapSignupEmail = "DownTownHeatMapSignupEmail";
         final static public String DownTownHeatMapSignupPassword = "DownTownHeatMapSignupPassword";
         final static public String DownTownHeatMapSignupNotifications = "DownTownHeatMapSignupNotifications";
@@ -1473,6 +1478,9 @@ final public class
         final static public String DownTownFlowTalks = "DownTownFlowTalks";
         final static public String DownTownFlowMoments = "DownTownFlowMoments";
         final static public String DownTownFlowTalksFriends = "DownTownFlowTalksFriends";
+        final static public String DownTownFlowInviteNoti = "DownTownFlowInviteNoti";
+        final static public String DownTownFlowInviteEmail = "DownTownFlowInviteEmail";
+        final static public String DownTownFlowInviteClick = "DownTownFlowInviteClick";
 
         /*TribeHome Page*/
         final static public String DocTribeHome = "DocTribeHome";
@@ -1482,8 +1490,8 @@ final public class
         final static public String tribeHomeInfo = "tribeHomeInfo";
         final static public String tribeHomeNotice = "tribeHomeNotice";
         final static public String tribeHomeWall = "tribeHomeWall";
-        final static public String tribeHomeMembers = "tribeHomeAlbum";
-        final static public String tribeHomeAlbum = "tribeHomeMembers";
+        final static public String tribeHomeMembers = "tribeHomeMembers";
+        final static public String tribeHomeAlbum = "tribeHomeAlbum";
 
         /*TribeCreateHome Page*/
         final static public String DocTribeCreateHome = "DocTribeCreateHome";
