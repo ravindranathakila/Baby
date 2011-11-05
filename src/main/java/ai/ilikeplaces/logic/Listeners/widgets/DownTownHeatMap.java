@@ -211,7 +211,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                                         mypassword,
                                         myemail);
 
-                                if (humanCreateReturn.returnValue()) {
+                                if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
 
                                     UserIntroduction.createIntroData(new HumanId(email.getObj()));
 
@@ -236,6 +236,8 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                                             htmlBody);
 
                                     $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+                                }else{
+                                    $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email INVALID!");
                                 }
 
                                 /*final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
