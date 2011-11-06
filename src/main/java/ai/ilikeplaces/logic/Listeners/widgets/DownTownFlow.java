@@ -121,8 +121,8 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
                                         TrimMessageContentForReadabilityOnSidebar:
                                         {
                                             final int length = msgContent.length();
-                                            if (0 < length) {
-                                                msgContent = msgContent.substring(0, length % 50) + RBGet.gui().getString(READ_MORE);
+                                            if (40 < length) {
+                                                msgContent = msgContent.substring(0, 40) + RBGet.gui().getString(READ_MORE);
                                             }
                                         }
 
