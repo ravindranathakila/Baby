@@ -9,6 +9,7 @@ import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
@@ -35,28 +36,38 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEventViewSidebarCriteria> {
+// ------------------------------ FIELDS ------------------------------
+
+
+// ------------------------------ FIELDS STATIC --------------------------
 
     public static final SmartCache2<Long, PrivateEvent, HumanId> PRIVATE_EVENT_BASIC_INFO_CACHE = new SmartCache2<Long, PrivateEvent, HumanId>(
 
             new SmartCache2.RecoverWith<Long, PrivateEvent, HumanId>() {
                 @Override
                 public PrivateEvent getValue(final Long privateEventId, HumanId humanId) {
+
                     return DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventInfoAsAny(humanId.getObjectAsValid(), privateEventId).returnValueBadly();
                 }
             }
     );
+    
+    private static final String READ_MORE = "read.more";
 
-
+// --------------------------- CONSTRUCTORS ---------------------------
     public PrivateEventViewSidebar(final ItsNatServletRequest request__, final PrivateEventViewSidebarCriteria privateEventViewSidebarCriteria, final Element appendToElement__) {
+
         super(request__, Page.PrivateEventViewSidebar, privateEventViewSidebarCriteria, appendToElement__);
     }
 
+// ------------------------ OVERRIDING METHODS ------------------------
     /**
      * @param privateEventViewSidebarCriteria
      *
      */
     @Override
     protected void init(final PrivateEventViewSidebarCriteria privateEventViewSidebarCriteria) {
+
         final HumanId humanId = new HumanId(privateEventViewSidebarCriteria.getHumanId__());
         final long privateEventId = privateEventViewSidebarCriteria.getPrivateEventId__();
 
@@ -102,17 +113,26 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
                     new HumanId(lastWallEntry.getMsgMetadata()),
                     lastWallEntry,
                     href) {
-
                 private Msg mylastWallEntry;
                 private String myhref;
-
                 protected void init(final Object... initArgs) {
 
                     mylastWallEntry = (Msg) ((Object[]) initArgs[1])[0];
                     myhref = (String) ((Object[]) initArgs[1])[1];
 
                     $$displayBlock($$(Controller.Page.user_property_sidebar_talk));
-                    Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(mylastWallEntry.getMsgContent()).$ElementSetHref(myhref).get();
+
+                    String msgContent = lastWallEntry.getMsgContent();
+
+                    TrimMessageContentForReadabilityOnSidebar:
+                    {
+                        final int length = msgContent.length();
+                        if (0 < length) {
+                            msgContent = msgContent.substring(0, length % 50) + RBGet.gui().getString(READ_MORE);
+                        }
+                    }
+
+                    Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(msgContent).$ElementSetHref(myhref).get();
                     $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
                 }
 
@@ -122,6 +142,7 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
                     itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
                         @Override
                         public void handleEvent(final Event evt_) {
+
                             $$sendJS(JSCodeToSend.redirectPageWithURL(myhref));
                         }
                     }, false);
@@ -134,9 +155,7 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
                     humanId,
                     "",
                     href) {
-
                 private String myhref;
-
                 protected void init(final Object... initArgs) {
 
                     myhref = (String) ((Object[]) initArgs[1])[1];
@@ -152,14 +171,13 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
                     itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
                         @Override
                         public void handleEvent(final Event evt_) {
+
                             $$sendJS(JSCodeToSend.redirectPageWithURL(myhref));
                         }
                     }, false);
                 }
             };
-
         }
-
     }
 
     @Override
