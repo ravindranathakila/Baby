@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -72,6 +73,11 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
             {
                 $$(privateLocationViewLink).setAttribute(MarkupTag.A.href(),
                         privateLocationLink);
+            }
+
+            setTitleLink:
+            {
+                $$(privateLocationViewName).setAttribute(MarkupTag.GENERIC.onclick(), JSCodeToSend.redirectPageWithURL(privateLocationLink));
             }
 
 

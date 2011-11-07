@@ -37,7 +37,7 @@ public interface MarkupTagFace {
 
     public String alt();
 
-    public String title();    
+    public String title();
 
     public String src();
 
@@ -52,5 +52,7 @@ public interface MarkupTagFace {
     public String namee();
 
     public String content();
+
+    public String onclick();
 
 }

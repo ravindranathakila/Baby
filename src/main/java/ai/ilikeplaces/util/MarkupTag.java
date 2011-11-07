@@ -225,7 +225,13 @@ public enum MarkupTag implements MarkupTagFace {
         public String classs() {
             return CLASS;
         }
+
+        @Override
+        public String onclick() {
+            return ONCLICK;
+        }
     };
+    private static final String ONCLICK = "onclick";
     private static final String SPAN_TAG = "SPAN";
     private static final String CONTENT = "content";
     private static final String NAME = "name";
@@ -340,5 +346,12 @@ public enum MarkupTag implements MarkupTagFace {
     public String content() {
         throw new UnsupportedOperationException(ExceptionMsg);
     }
+
+
+    @Override
+    public String onclick() {
+        return ONCLICK;
+    }
+
 }
 
