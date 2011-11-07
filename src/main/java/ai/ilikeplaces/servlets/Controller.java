@@ -1013,6 +1013,7 @@ final public class
                 Controller.Page.DownTownFlowWidget,
                 Controller.Page.DownTownFlowTalks,
                 Controller.Page.DownTownFlowMoments,
+                Controller.Page.DownTownFlowMomentsMoments,
                 Controller.Page.DownTownFlowTalksFriends,
                 Controller.Page.DownTownFlowInviteNoti,
                 Controller.Page.DownTownFlowInviteEmail,
@@ -1477,6 +1478,7 @@ final public class
         final static public String DownTownFlowWidget = "DownTownFlowWidget";
         final static public String DownTownFlowTalks = "DownTownFlowTalks";
         final static public String DownTownFlowMoments = "DownTownFlowMoments";
+        final static public String DownTownFlowMomentsMoments = "DownTownFlowMomentsMoments";
         final static public String DownTownFlowTalksFriends = "DownTownFlowTalksFriends";
         final static public String DownTownFlowInviteNoti = "DownTownFlowInviteNoti";
         final static public String DownTownFlowInviteEmail = "DownTownFlowInviteEmail";

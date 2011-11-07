@@ -159,7 +159,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
                         new PrivateEventViewSidebar(
                                 request,
                                 new PrivateEventViewSidebarCriteria().setPrivateEventId__(privateEvent.getPrivateEventId()).setHumanId__(downTownFlowCriteria.getHumanId().getHumanId()),
-                                $$(Controller.Page.DownTownFlowMoments));
+                                $$(Controller.Page.DownTownFlowMomentsMoments));
                     }
                 }
                 break;
