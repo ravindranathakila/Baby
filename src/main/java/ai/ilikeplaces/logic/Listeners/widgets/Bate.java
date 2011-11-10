@@ -437,7 +437,7 @@ abstract public class Bate extends AbstractWidgetListener {
                     new Password(randomPassword),
                     new Email(inviteee.getEmail()));
 
-            if (humanCreateReturn.returnValue() == true) {
+            if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
 
                 UserIntroduction.createIntroData(new HumanId(inviteee.getEmail()));
 
@@ -462,7 +462,7 @@ abstract public class Bate extends AbstractWidgetListener {
                         htmlBody);
                 returnVal = new ReturnImpl<Boolean>(true, "User Creation and Email Send Successful!");
             } else {
-                returnVal = new ReturnImpl<Boolean>(true, "User Creation and Email Send FAILED!");
+                returnVal = new ReturnImpl<Boolean>(humanCreateReturn.returnError(), "User Creation and Email Send FAILED!", false);
             }
         } catch (final Throwable t) {
             returnVal = new ReturnImpl<Boolean>(t, "User Creation and Email Send FAILED!", true);
