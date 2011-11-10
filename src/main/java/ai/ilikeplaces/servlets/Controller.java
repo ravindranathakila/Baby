@@ -1037,7 +1037,10 @@ final public class
                 Page.tribeHomeNotice,
                 Page.tribeHomeWall,
                 Page.tribeHomeAlbum,
-                Page.tribeHomeMembers
+                Page.tribeHomeMembers,
+                Page.tribeHomeInviteNoti ,
+                Page.tribeHomeInviteEmail,
+                Page.tribeHomeInviteClick
         ) {
             @Override
             public String getURL() {
@@ -1494,6 +1497,9 @@ final public class
         final static public String tribeHomeWall = "tribeHomeWall";
         final static public String tribeHomeMembers = "tribeHomeMembers";
         final static public String tribeHomeAlbum = "tribeHomeAlbum";
+        final static public String tribeHomeInviteNoti = "tribeHomeInviteNoti";
+        final static public String tribeHomeInviteEmail = "tribeHomeInviteEmail";
+        final static public String tribeHomeInviteClick = "tribeHomeInviteClick";
 
         /*TribeCreateHome Page*/
         final static public String DocTribeCreateHome = "DocTribeCreateHome";
