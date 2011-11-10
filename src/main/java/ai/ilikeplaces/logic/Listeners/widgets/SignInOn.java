@@ -133,7 +133,7 @@ abstract public class SignInOn extends AbstractWidgetListener {
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.signinonSubmit), EventType.CLICK.toString(), new EventListener() {
+        final EventListener loginListener = new EventListener() {
             private HumanId myusername = username;
             private Password mypassword = password;
             private SimpleString mydbHash = dbHash;
@@ -169,7 +169,7 @@ abstract public class SignInOn extends AbstractWidgetListener {
                             if (myexistButNotActive.getObj()) {
                                 $$sendJS(JSCodeToSend.redirectPageWithURL("/page/_profile"));
                                 notifyUser("Please activate your account.");
-                            }else{
+                            } else {
                                 notifyUser(myusername.getObj() + " is not a user of this website");
                             }
                         }
@@ -180,6 +180,9 @@ abstract public class SignInOn extends AbstractWidgetListener {
                     notifyUser("Login failed! Retry or Click Settings");
                 }
             }
-        }, false);
+        };
+
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.signinonPassword), EventType.BLUR.toString(), loginListener, false);
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.signinonSubmit), EventType.CLICK.toString(), loginListener, false);
     }
 }
