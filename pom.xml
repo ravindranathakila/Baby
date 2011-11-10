@@ -24,7 +24,7 @@
         <dependency>
             <groupId>ai</groupId>
             <artifactId>ilikeplaces-util</artifactId>
-            <version>3.0</version>
+            <version>3.1</version>
         </dependency>
         <dependency>
             <groupId>Java</groupId>
