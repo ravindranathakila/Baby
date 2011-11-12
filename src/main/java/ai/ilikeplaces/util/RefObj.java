@@ -158,6 +158,17 @@ public abstract class RefObj<T> {
      * being created
      *
      * @param validator
+     * @return true if invalid or true if one or more errors are found
+     */
+    public boolean invalid(final Validator... validator) {
+        return !valid(validator);
+    }
+
+    /**
+     * validator is useful if you are using profiling or if you need to avoid lots of validator instances
+     * being created
+     *
+     * @param validator
      * @return 0 if no errors or number of errors
      */
     public T validateThrow(final Validator... validator) {
@@ -218,10 +229,11 @@ public abstract class RefObj<T> {
         return validationMessages(constraintViolations);
     }
 
-    public boolean isNull(){
+    public boolean isNull() {
         return obj == null;
     }
-    public boolean notNull(){
+
+    public boolean notNull() {
         return obj != null;
     }
 

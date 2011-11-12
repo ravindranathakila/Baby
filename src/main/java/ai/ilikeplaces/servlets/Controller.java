@@ -1076,7 +1076,8 @@ final public class
                 Page.tribeHomeCreateWidget,
                 Page.tribeHomeCreateName,
                 Page.tribeHomeCreateStory,
-                Page.tribeHomeCreateSave
+                Page.tribeHomeCreateSave,
+                Page.tribeHomeCreateNoti
         ) {
             @Override
             public String getURL() {
@@ -1542,6 +1543,7 @@ final public class
         final static public String tribeHomeCreateName = "tribeHomeCreateName";
         final static public String tribeHomeCreateStory = "tribeHomeCreateStory";
         final static public String tribeHomeCreateSave = "tribeHomeCreateSave";
+        final static public String tribeHomeCreateNoti = "tribeHomeCreateNoti";
 
 
         /*Common IDs that should be present in any page*/

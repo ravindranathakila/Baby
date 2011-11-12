@@ -4,6 +4,7 @@ import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.Validator;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
 import net.sf.oval.configuration.annotation.IsInvariant;
@@ -24,7 +25,10 @@ import java.util.logging.Logger;
  * Time: 8:50 PM
  */
 public class TribeCreateWidget extends AbstractWidgetListener<TribeCreateWidgetCriteria> {
-// --------------------------- CONSTRUCTORS ---------------------------
+    private static final String YIKES_SOMETHING_WENT_WRONG = "YIKES_SOMETHING_WENT_WRONG";
+    private static final String TRIBE_NAME_INVALID = "tribe.name.invalid";
+    private static final String TRIBE_STORY_INVALID = "tribe.story.invalid";
+    // --------------------------- CONSTRUCTORS ---------------------------
 
 
     public TribeCreateWidget(final ItsNatServletRequest request__, final TribeCreateWidgetCriteria tribeCreateWidgetCriteria, final Element appendToElement__) {
@@ -39,7 +43,7 @@ public class TribeCreateWidget extends AbstractWidgetListener<TribeCreateWidgetC
      */
     @Override
     protected void init(final TribeCreateWidgetCriteria tribeCreateWidgetCriteria) {
-
+        super.registerUserNotifier($$(Controller.Page.tribeHomeCreateNoti));
     }
 
     @Override
@@ -72,22 +76,31 @@ public class TribeCreateWidget extends AbstractWidgetListener<TribeCreateWidgetC
                         Loggers.DEBUG.debug(this.criteria.getvTribeStory().getObj());
 
                         if (this.criteria.getvTribeName().valid() && this.criteria.getvTribeStory().valid()) {
-                            final Tribe tribe = DB.getHumanCRUDTribeLocal(false).createTribe(criteria.getHumanId(), this.criteria.getvTribeName(), this.criteria.getvTribeStory());
-                            $$sendJSStmt(JSCodeToSend.redirectPageWithURL(
-                                    new Parameter(Controller.Page.Tribes.getURL())
-                                            .append(
-                                                    Controller.Page.DocTribesMode,
-                                                    Controller.Page.DocTribesModeView,
-                                                    true
-                                            )
-                                            .append(
-                                                    Controller.Page.DocTribesWhich,
-                                                    tribe.getTribeId()
-                                            )
-                                            .get()
-                            ));
+                            final Return<Tribe> tribeReturn = DB.getHumanCRUDTribeLocal(false).createTribe(criteria.getHumanId(), this.criteria.getvTribeName(), this.criteria.getvTribeStory());
+                            if (tribeReturn.valid()) {
+                                $$sendJSStmt(JSCodeToSend.redirectPageWithURL(
+                                        new Parameter(Controller.Page.Tribes.getURL())
+                                                .append(
+                                                        Controller.Page.DocTribesMode,
+                                                        Controller.Page.DocTribesModeView,
+                                                        true
+                                                )
+                                                .append(
+                                                        Controller.Page.DocTribesWhich,
+                                                        tribeReturn.returnValueBadly().getTribeId()
+                                                )
+                                                .get()
+                                ));
+                            } else {
+                                TribeCreateWidget.super.notifyUser(RBGet.gui().getString(YIKES_SOMETHING_WENT_WRONG));
+                            }
+                        } else {
+                            if (this.criteria.getvTribeStory().invalid()) {
+                                TribeCreateWidget.super.notifyUser(RBGet.gui().getString(TRIBE_STORY_INVALID));
+                            } else if (this.criteria.getvTribeName().invalid()) {
+                                TribeCreateWidget.super.notifyUser(RBGet.gui().getString(TRIBE_NAME_INVALID));
+                            }
                         }
-
                     }
                 });
     }

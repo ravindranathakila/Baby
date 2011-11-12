@@ -33,7 +33,7 @@ public interface HumanCRUDTribeLocal extends GeneralCRUDWall {
      * @param humanId To be added to the Tribe
      * @return The created tribe
      */
-    public Tribe createTribe(final HumanId humanId, final VTribeName vTribeName, final VTribeStory vTribeStory);
+    public Return<Tribe> createTribe(final HumanId humanId, final VTribeName vTribeName, final VTribeStory vTribeStory);
 
     /**
      * @param humanId To be added to the given Tribe
