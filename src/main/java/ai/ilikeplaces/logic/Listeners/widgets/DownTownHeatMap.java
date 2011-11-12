@@ -12,7 +12,6 @@ import ai.ilikeplaces.logic.hotspots.Rawspot;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.modules.Modules;
 import ai.ilikeplaces.logic.validators.unit.*;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
@@ -31,7 +30,6 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 import twitter4j.org.json.JSONException;
 
-import java.text.MessageFormat;
 import java.util.*;
 
 /**
@@ -55,6 +53,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String CLOSE_BRACE = "}";
     private static final String SEMI_COLON = ";";
     private static final String OPEN_BRACE = "{";
+    private static final String QUOTE = "\"";
     private static final String DownTownHeatMapWOEIDUpdate =
             "\nDownTownHeatMapWOEIDUpdate = function" + OPEN_BRACKET + "lat,lng" + CLOSE_BRACKET + OPEN_BRACE + "document.getElementById(" + SINGLE_QUOTE + WOEIDUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + ".value = " + SINGLE_QUOTE + "' + lat + ',' + lng" + SEMI_COLON + " document.getElementById" + OPEN_BRACKET + SINGLE_QUOTE + WOEIDUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + ".focus" + OPEN_BRACKET + CLOSE_BRACKET + SEMI_COLON + " return document.getElementById(" + SINGLE_QUOTE + WOEIDUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + SEMI_COLON + CLOSE_BRACE + "\n";
 
@@ -62,9 +61,9 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String DownTownHeatMapBBUpdate =
             "\nDownTownHeatMapBBUpdate = function" + OPEN_BRACKET + "swlat,swlng,nelat,nelng" + CLOSE_BRACKET + OPEN_BRACE + "document.getElementById(" + SINGLE_QUOTE + BBUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + ".value = " + SINGLE_QUOTE + "' + swlat + ',' + swlng + ',' + nelat + ',' + nelng" + SEMI_COLON + " document.getElementById" + OPEN_BRACKET + SINGLE_QUOTE + BBUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + ".focus" + OPEN_BRACKET + CLOSE_BRACKET + SEMI_COLON + " return document.getElementById(" + SINGLE_QUOTE + BBUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + SEMI_COLON + CLOSE_BRACE + "\n";
     private static final String COMMA = ",";
-    private static final String X1 = CLOSE_BRACKET + ", ";
+    private static final String COMMA_SPACE = ", ";
+    private static final String X1 = CLOSE_BRACKET + COMMA_SPACE;
     private static final String COLON = ":";
-    private static final String TITLE = "title" + COLON + SINGLE_QUOTE;
     private static final String MAP_MAP = "map" + COLON + " map, ";
     private static final String ICON_GET_COLORED_MARKER_WITH_INTENSITY = "icon" + COLON + " getColoredMarkerWithIntensity" + OPEN_BRACKET;
     private static final String ICON_GET_MY_COLORED_MARKER_WITH_INTENSITY = "icon" + COLON + " getMyColoredMarkerWithIntensity" + OPEN_BRACKET;
@@ -81,8 +80,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String LIST_OF_HOT_SPOTS_UNSHIFT_NEW_GOOGLE_MAPS_MARKER = "listOfHotSpots.unshift" + OPEN_BRACKET + "new google.maps.Marker(" + OPEN_BRACE + " ";
     private static final String POSITION_NEW_GOOGLE_MAPS_LAT_LNG = "position" + COLON + " new google.maps.LatLng" + OPEN_BRACKET;
     private static final String GOOGLE_MAPS_EVENT_ADD_LISTENER = "google.maps.event.addListener";
-    private static final String GOOGLE_MAPS_EVENT_ADD_LISTENER_LIST_OF_HOT_SPOTS_0_CLICK_FUNCTION = GOOGLE_MAPS_EVENT_ADD_LISTENER + OPEN_BRACKET + "listOfHotSpots[0], " + SINGLE_QUOTE + "click', function(" + CLOSE_BRACKET + " " + OPEN_BRACE + "\n";
-    private static final String X3 = SINGLE_QUOTE + ", ";
+    private static final String GOOGLE_MAPS_EVENT_ADD_LISTENER_LIST_OF_HOT_SPOTS_0_CLICK_FUNCTION = GOOGLE_MAPS_EVENT_ADD_LISTENER + OPEN_BRACKET + "listOfHotSpots[0], " + QUOTE + "click', function(" + CLOSE_BRACKET + " " + OPEN_BRACE + "\n";
     private static final String X4 = CLOSE_BRACE + CLOSE_BRACKET + SEMI_COLON;
     private static final String GOOGLE_PLACES_JSON_ENDPOINT = "https" + COLON + "//maps.googleapis.com/maps/api/place/search/json";
     private static final String FAILED_TO_FETCH_GOOGLE_PLACES_DATA = "Failed to fetch Google Places Data";
@@ -111,6 +109,9 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String PROCESS_MARKER = "processMarker";
     private static final String HTIS = "htis";
     private static final String THIS = "this";
+    private static final String APOSTROPHIE = "'";
+    private static final String JS_ESCAPTED_APOSTROPHIE = "\'";
+    private static final String TITLE = "title";
 
 
     private Element elementToUpdateWithWOEID;
@@ -236,7 +237,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                                             htmlBody);
 
                                     $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
-                                }else{
+                                } else {
                                     $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email INVALID!");
                                 }
 
@@ -387,7 +388,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                                 final Double latitude = coords.getLatitude();
                                 final Double longitude = coords.getLongitude();
 
-                                final String commonName = yaw.getCommonName();
+                                final String commonName = yaw.getCommonName().replace("\"", "'");
 
                                 final long hits = yaw.getHits();
 
@@ -398,10 +399,10 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                                 $$sendJSStmt(PROCESS_MARKER + OPEN_BRACKET +
                                         (OPEN_BRACE +
                                                 (HTIS + COLON + THIS) + COMMA +
-                                                (COMMON_NAME + COLON + SINGLE_QUOTE + commonName + SINGLE_QUOTE) + COMMA +
+                                                (COMMON_NAME + COLON + QUOTE + commonName + QUOTE) + COMMA +
                                                 (LATITUDE + COLON + coords.getLatitude()) + COMMA +
                                                 (LONGITUDE + COLON + coords.getLongitude()) + COMMA +
-                                                (URL + COLON + SINGLE_QUOTE + new Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, 143, true).append(WOEIDGrabber.WOEHINT, coords.getLatitude() + COMMA + coords.getLongitude()).get() + SINGLE_QUOTE) +
+                                                (URL + COLON + QUOTE + new Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, 143, true).append(WOEIDGrabber.WOEHINT, coords.getLatitude() + COMMA + coords.getLongitude()).get() + QUOTE) +
                                                 CLOSE_BRACE) +
                                         CLOSE_BRACKET
                                 );
@@ -438,10 +439,10 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                             $$sendJSStmt(PROCESS_MARKER + OPEN_BRACKET +
                                     (OPEN_BRACE +
                                             (HTIS + COLON + THIS) + COMMA +
-                                            (COMMON_NAME + COLON + SINGLE_QUOTE + userOwnPrivateLocation.getPrivateLocationName().replaceAll("'", "\\'") + SINGLE_QUOTE) + COMMA +
+                                            (COMMON_NAME + COLON + QUOTE + userOwnPrivateLocation.getPrivateLocationName().replaceAll("'", "\\'") + QUOTE) + COMMA +
                                             (LATITUDE + COLON + userOwnPrivateLocation.getPrivateLocationLatitude()) + COMMA +
                                             (LONGITUDE + COLON + userOwnPrivateLocation.getPrivateLocationLongitude()) + COMMA +
-                                            (URL + COLON + SINGLE_QUOTE + new Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, 143, true).append(WOEIDGrabber.WOEHINT, userOwnPrivateLocation.getPrivateLocationLatitude() + COMMA + userOwnPrivateLocation.getPrivateLocationLongitude()).get() + SINGLE_QUOTE) +
+                                            (URL + COLON + QUOTE + new Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, 143, true).append(WOEIDGrabber.WOEHINT, userOwnPrivateLocation.getPrivateLocationLatitude() + COMMA + userOwnPrivateLocation.getPrivateLocationLongitude()).get() + QUOTE) +
                                             CLOSE_BRACE) +
                                     CLOSE_BRACKET
                             );
@@ -496,9 +497,9 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 + COMMA
                 + longitude
                 + X1 +
-                TITLE + commonName + X3 +
+                TITLE + COLON + QUOTE + commonName + QUOTE + COMMA_SPACE +
                 MAP_MAP +
-                ICON_GET_COLORED_MARKER_WITH_INTENSITY + hits + COMMA + SQUOTE + commonName.replace(SPACE, URL_SPACE) + SQUOTE + X2);
+                ICON_GET_COLORED_MARKER_WITH_INTENSITY + hits + COMMA + QUOTE + commonName.replace(SPACE, URL_SPACE) + QUOTE + X2);
     }
 
     private void generateMyMarker(Double latitude, Double longitude, String commonName, long hits) {
@@ -508,9 +509,9 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 + COMMA
                 + longitude
                 + X1 +
-                TITLE + commonName + X3 +
+                TITLE + COLON + QUOTE + commonName + QUOTE + COMMA_SPACE +
                 MAP_MAP +
-                ICON_GET_MY_COLORED_MARKER_WITH_INTENSITY + hits + COMMA + SQUOTE + commonName.replace(SPACE, URL_SPACE) + SQUOTE + X2);
+                ICON_GET_MY_COLORED_MARKER_WITH_INTENSITY + hits + COMMA + QUOTE + commonName.replace(SPACE, URL_SPACE) + QUOTE + X2);
     }
 
     private void generateMarkerEvents(final W3CPoint coords, String commonName, long hits) {
@@ -520,10 +521,10 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 (HOT_SPOT_CLICKED + OPEN_BRACKET +
                         (OPEN_BRACE +
                                 (HTIS + COLON + THIS) + COMMA +
-                                (COMMON_NAME + COLON + SINGLE_QUOTE + commonName + SINGLE_QUOTE) + COMMA +
+                                (COMMON_NAME + COLON + QUOTE + commonName + QUOTE) + COMMA +
                                 (LATITUDE + COLON + coords.getLatitude()) + COMMA +
                                 (LONGITUDE + COLON + coords.getLongitude()) + COMMA +
-                                (URL + COLON + SINGLE_QUOTE + new Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, 143, true).append(WOEIDGrabber.WOEHINT, coords.getLatitude() + COMMA + coords.getLongitude()).get() + SINGLE_QUOTE) +
+                                (URL + COLON + QUOTE + new Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, 143, true).append(WOEIDGrabber.WOEHINT, coords.getLatitude() + COMMA + coords.getLongitude()).get() + QUOTE) +
                                 CLOSE_BRACE) + CLOSE_BRACKET + SEMI_COLON)
         ));
         $$sendJSStmt(generateGoogleMarkerEvent(
@@ -532,7 +533,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 (HOT_SPOT_MOUSE_ENTER + OPEN_BRACKET +
                         (OPEN_BRACE +
                                 (HTIS + COLON + THIS) + COMMA +
-                                (COMMON_NAME + COLON + SINGLE_QUOTE + commonName + SINGLE_QUOTE) + COMMA +
+                                (COMMON_NAME + COLON + QUOTE + commonName + QUOTE) + COMMA +
                                 (LATITUDE + COLON + coords.getLatitude()) + COMMA +
                                 (LONGITUDE + COLON + coords.getLongitude()) +
                                 CLOSE_BRACE) +
@@ -542,7 +543,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     }
 
     private String generateGoogleMarkerEvent(final String elementToWhichToAssociateEvent, final String eventType, final String javascriptCallbackFunctionContent) {
-        return GOOGLE_MAPS_EVENT_ADD_LISTENER + OPEN_BRACKET + elementToWhichToAssociateEvent + COMMA + SINGLE_QUOTE + eventType + SINGLE_QUOTE + COMMA + FUNCTION + OPEN_BRACKET + CLOSE_BRACKET + OPEN_BRACE +
+        return GOOGLE_MAPS_EVENT_ADD_LISTENER + OPEN_BRACKET + elementToWhichToAssociateEvent + COMMA + QUOTE + eventType + QUOTE + COMMA + FUNCTION + OPEN_BRACKET + CLOSE_BRACKET + OPEN_BRACE +
                 javascriptCallbackFunctionContent +
                 CLOSE_BRACE + CLOSE_BRACKET + SEMI_COLON;
     }
