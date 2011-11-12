@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Album;
+import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
@@ -20,7 +21,10 @@ import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -226,5 +230,13 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
             r = new ReturnImpl<Album>(t, ADD_PHOTO_TO_ALBUM_FAILED, true);
         }
         return r;
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Return<List<Msg>> readWallLastEntries(final HumanId humanId, final Obj<Long> wallId, final Integer numberOfEntriesToFetch, final RefreshSpec refreshSpec__) {
+        Return<List<Msg>> r;
+        r = new ReturnImpl<List<Msg>>(crudWallLocal_.doRHumansWallLastEntries(wallId.getObj(), numberOfEntriesToFetch), READ_WALL_SUCCESSFUL);
+        return r;
+
     }
 }

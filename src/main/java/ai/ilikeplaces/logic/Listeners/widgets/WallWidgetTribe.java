@@ -38,21 +38,21 @@ import java.util.List;
 public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
 // ------------------------------ FIELDS ------------------------------
 
-//    final static public SmartCache2<Long, Msg, String> LAST_WALL_ENTRY = new SmartCache2<Long, Msg, String>(
-//            new SmartCache2.RecoverWith<Long, Msg, String>() {
-//                @Override
-//                public Msg getValue(final Long whichWall, final String requester) {
-//                    final List<Msg> msgs = DB.getHumanCRUDTribeLocal(false).readWallLastEntries(new HumanId(requester), new Obj<Long>(whichWall), 1, new RefreshSpec()).returnValue();
-//                    final Msg returnVal;
-//                    if (msgs.isEmpty()) {
-//                        returnVal = null;
-//                    } else {
-//                        returnVal = msgs.get(0);
-//                    }
-//                    return returnVal;
-//                }
-//            }
-//    );
+    final static public SmartCache2<Long, Msg, String> LAST_WALL_ENTRY = new SmartCache2<Long, Msg, String>(
+            new SmartCache2.RecoverWith<Long, Msg, String>() {
+                @Override
+                public Msg getValue(final Long whichWall, final String requester) {
+                    final List<Msg> msgs = DB.getHumanCRUDTribeLocal(false).readWallLastEntries(new HumanId(requester), new Obj<Long>(whichWall), 1, new RefreshSpec()).returnValue();
+                    final Msg returnVal;
+                    if (msgs.isEmpty()) {
+                        returnVal = null;
+                    } else {
+                        returnVal = msgs.get(0);
+                    }
+                    return returnVal;
+                }
+            }
+    );
 
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
     private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs", "wallMutes");
