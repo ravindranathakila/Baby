@@ -1,9 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.entities.HumansNetPeople;
-import ai.ilikeplaces.entities.Msg;
-import ai.ilikeplaces.entities.PrivateEvent;
-import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventViewSidebar;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventViewSidebarCriteria;
@@ -52,11 +49,11 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
     private static final String READ_MORE = "read.more";
 
 // ------------------------------ FIELDS (NON-STATIC)--------------------
- 
+
 
     private String str;
 
-// --------------------------- CONSTRUCTORS ---------------------------
+    // --------------------------- CONSTRUCTORS ---------------------------
     public DownTownFlow(final ItsNatServletRequest request__, final DownTownFlowCriteria downTownFlowCriteria__, final Element appendToElement__) {
 
         super(request__, Controller.Page.DownTownFlow, downTownFlowCriteria__, appendToElement__);
@@ -72,7 +69,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
                 break;
             }
             case TRIBES: {
-                //$$displayBlock($$(Controller.Page.DownTownFlowMoments));
+                $$displayBlock($$(Controller.Page.DownTownFlowTribes));
                 break;
             }
             default: {
@@ -80,7 +77,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
         }
     }
 
-// ------------------------ OVERRIDING METHODS ------------------------
+    // ------------------------ OVERRIDING METHODS ------------------------
     @Override
     protected void init(final DownTownFlowCriteria downTownFlowCriteria) {
 
@@ -110,6 +107,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
                                 new UserPropertySidebar(request, appendToElement__, new HumanId(lastWallEntry.getMsgMetadata())) {
                                     final Msg mylastWallEntry = lastWallEntry;
                                     private String href;
+
                                     protected void init(final Object... initArgs) {
 
                                         $$displayBlock($$(Controller.Page.user_property_sidebar_talk));
@@ -160,6 +158,19 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
                                 request,
                                 new PrivateEventViewSidebarCriteria().setPrivateEventId__(privateEvent.getPrivateEventId()).setHumanId__(downTownFlowCriteria.getHumanId().getHumanId()),
                                 $$(Controller.Page.DownTownFlowMomentsMoments));
+                    }
+                }
+                break;
+            }
+
+            case TRIBES: {
+                UCDownTownFlowTRIBES:
+                {
+                    for (final Tribe tribe : DB.getHumanCRUDTribeLocal(false).getHumansTribes(downTownFlowCriteria.getHumanId())) {
+                        new TribeSidebar(
+                                request,
+                                new TribeSidebarCriteria().setTribeId(tribe.getTribeId()).setHumanId(downTownFlowCriteria.getHumanId().getHumanId()),
+                                $$(Controller.Page.DownTownFlowTribesTribes));
                     }
                 }
                 break;

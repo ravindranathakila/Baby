@@ -85,6 +85,7 @@ final public class
     final PageFace privateLocationCreate = Page.PrivateLocationCreate;
     final PageFace privateLocationView = Page.PrivateLocationView;
     final PageFace privateLocationDelete = Page.PrivateLocationDelete;
+    final PageFace tribeSidebar = Page.TribeSidebar;
 
     final PageFace privateEventCreate = Page.PrivateEventCreate;
     final PageFace privateEventView = Page.PrivateEventView;
@@ -450,6 +451,22 @@ final public class
             @Override
             public String toString() {
                 return DocPrivateEventViewSidebar;
+            }
+        },
+
+        TribeSidebar("ai/ilikeplaces/widgets/tribe_sidebar.xhtml",
+                Controller.Page.tribe_sidebar_name,
+                Controller.Page.tribe_sidebar_content,
+                Controller.Page.tribe_sidebar_profile_photo
+        ) {
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocTribeSidebar;
             }
         },
 
@@ -1014,6 +1031,8 @@ final public class
                 Controller.Page.DownTownFlowTalks,
                 Controller.Page.DownTownFlowMoments,
                 Controller.Page.DownTownFlowMomentsMoments,
+                Controller.Page.DownTownFlowTribes,
+                Controller.Page.DownTownFlowTribesTribes,
                 Controller.Page.DownTownFlowTalksFriends,
                 Controller.Page.DownTownFlowInviteNoti,
                 Controller.Page.DownTownFlowInviteEmail,
@@ -1232,6 +1251,13 @@ final public class
         final static public String private_event_view_sidebar_name = "private_event_view_sidebar_name";
         final static public String private_event_view_sidebar_content = "private_event_view_sidebar_content";
         final static public String private_event_view_sidebar_profile_photo = "private_event_view_sidebar_profile_photo";
+
+        /*Tribe Sidebar Page*/
+        final static public String DocTribeSidebar = "DocTribeSidebar";
+        /*Tribe Sidebar IDs*/
+        final static public String tribe_sidebar_name = "tribe_sidebar_name";
+        final static public String tribe_sidebar_content = "tribe_sidebar_content";
+        final static public String tribe_sidebar_profile_photo = "tribe_sidebar_profile_photo";
 
         /*WOIEDGrabber Page*/
         final static public String DocWOEIDGrabber = "DocWOEIDGrabber";
@@ -1488,6 +1514,8 @@ final public class
         final static public String DownTownFlowTalks = "DownTownFlowTalks";
         final static public String DownTownFlowMoments = "DownTownFlowMoments";
         final static public String DownTownFlowMomentsMoments = "DownTownFlowMomentsMoments";
+        final static public String DownTownFlowTribes = "DownTownFlowTribes";
+        final static public String DownTownFlowTribesTribes = "DownTownFlowTribesTribes";
         final static public String DownTownFlowTalksFriends = "DownTownFlowTalksFriends";
         final static public String DownTownFlowInviteNoti = "DownTownFlowInviteNoti";
         final static public String DownTownFlowInviteEmail = "DownTownFlowInviteEmail";
@@ -1681,6 +1709,8 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(privateEventDelete.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateEventDelete));
 
             inhs__.registerItsNatDocFragmentTemplate(privateEventViewSidebar.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateEventViewSidebar));
+
+            inhs__.registerItsNatDocFragmentTemplate(tribeSidebar.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(tribeSidebar));
 
             inhs__.registerItsNatDocFragmentTemplate(wOIEDGrabber.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(wOIEDGrabber));
 
