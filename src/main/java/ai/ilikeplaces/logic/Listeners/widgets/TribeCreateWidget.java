@@ -1,12 +1,11 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
+import ai.ilikeplaces.entities.Tribe;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.Validator;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.util.AIEventListener;
-import ai.ilikeplaces.util.AbstractWidgetListener;
-import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.RefObj;
+import ai.ilikeplaces.util.*;
 import net.sf.oval.configuration.annotation.IsInvariant;
 import net.sf.oval.constraint.NotNull;
 import org.itsnat.core.ItsNatServletRequest;
@@ -73,7 +72,19 @@ public class TribeCreateWidget extends AbstractWidgetListener<TribeCreateWidgetC
                         Loggers.DEBUG.debug(this.criteria.getvTribeStory().getObj());
 
                         if (this.criteria.getvTribeName().valid() && this.criteria.getvTribeStory().valid()) {
-                            DB.getHumanCRUDTribeLocal(false).createTribe(criteria.getHumanId(), this.criteria.getvTribeName(), this.criteria.getvTribeStory());
+                            final Tribe tribe = DB.getHumanCRUDTribeLocal(false).createTribe(criteria.getHumanId(), this.criteria.getvTribeName(), this.criteria.getvTribeStory());
+                            $$sendJSStmt(JSCodeToSend.redirectPageWithURL(
+                                    new Parameter(Controller.Page.Tribes.getURL())
+                                            .append(
+                                                    Controller.Page.DocTribesMode,
+                                                    Controller.Page.DocTribesModeView
+                                            )
+                                            .append(
+                                                    Controller.Page.DocTribesWhich,
+                                                    tribe.getTribeId()
+                                            )
+                                            .get()
+                            ));
                         }
 
                     }
