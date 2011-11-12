@@ -441,7 +441,7 @@ final public class
                 Controller.Page.private_event_view_sidebar_name,
                 Controller.Page.private_event_view_sidebar_content,
                 Controller.Page.private_event_view_sidebar_profile_photo
-                ) {
+        ) {
             @Override
             public String getURL() {
                 throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
@@ -1038,7 +1038,7 @@ final public class
                 Page.tribeHomeWall,
                 Page.tribeHomeAlbum,
                 Page.tribeHomeMembers,
-                Page.tribeHomeInviteNoti ,
+                Page.tribeHomeInviteNoti,
                 Page.tribeHomeInviteEmail,
                 Page.tribeHomeInviteClick
         ) {
@@ -1335,6 +1335,12 @@ final public class
 
         /*Tribes Page*/
         final static public String DocTribes = "DocTribes";
+        /*Organize Attributes*/
+        final static public String DocTribesMode = "mode";
+        final static public int DocTribesModeCreate = 0;
+        final static public int DocTribesModeView = 1;
+        final static public String DocTribesWhich = "which";
+
 
         /*Skeleton Page*/
         final static public String DocSkeleton = "DocPrivateLocationCreate";
@@ -1505,9 +1511,9 @@ final public class
         final static public String DocTribeCreateHome = "DocTribeCreateHome";
         /*TribeCreateHome Specific IDs*/
         final static public String tribeHomeCreateWidget = "tribeHomeCreateWidget";
-        final static public String tribeHomeCreateName  = "tribeHomeCreateName";
+        final static public String tribeHomeCreateName = "tribeHomeCreateName";
         final static public String tribeHomeCreateStory = "tribeHomeCreateStory";
-        final static public String tribeHomeCreateSave  = "tribeHomeCreateSave";
+        final static public String tribeHomeCreateSave = "tribeHomeCreateSave";
 
 
         /*Common IDs that should be present in any page*/
