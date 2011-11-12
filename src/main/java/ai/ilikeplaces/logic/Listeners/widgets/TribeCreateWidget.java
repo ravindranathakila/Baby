@@ -77,7 +77,8 @@ public class TribeCreateWidget extends AbstractWidgetListener<TribeCreateWidgetC
                                     new Parameter(Controller.Page.Tribes.getURL())
                                             .append(
                                                     Controller.Page.DocTribesMode,
-                                                    Controller.Page.DocTribesModeView
+                                                    Controller.Page.DocTribesModeView,
+                                                    true
                                             )
                                             .append(
                                                     Controller.Page.DocTribesWhich,
