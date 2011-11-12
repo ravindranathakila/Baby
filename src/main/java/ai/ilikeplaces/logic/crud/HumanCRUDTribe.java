@@ -62,6 +62,8 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
     private static final String READ_ALBUM_FAILED = "Read album FAILED!";
     private static final String ADD_PHOTO_TO_ALBUM_SUCCESSFUL = "Add photo to album Successful!";
     private static final String ADD_PHOTO_TO_ALBUM_FAILED = "Add photo to album FAILED!";
+    private static final String CREATE_TRIBE_FAILED = "Create Tribe FAILED!";
+    private static final String CREATE_TRIBE_SUCCESSFUL = "Create Tribe Successful!";
 
 
     @EJB
@@ -140,8 +142,14 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
      * @return The created tribe
      */
     @Override
-    public Tribe createTribe(final HumanId humanId, final VTribeName vTribeName, final VTribeStory vTribeStory) {
-        return crudTribeLocal_.doNTxCTribe(humanId.getHumanId(), vTribeName.getObjectAsValid(), vTribeStory.getObjectAsValid());
+    public Return<Tribe> createTribe(final HumanId humanId, final VTribeName vTribeName, final VTribeStory vTribeStory) {
+        Return<Tribe> r;
+        try {
+            r = new ReturnImpl<Tribe>(crudTribeLocal_.doNTxCTribe(humanId.getHumanId(), vTribeName.getObjectAsValid(), vTribeStory.getObjectAsValid()), CREATE_TRIBE_SUCCESSFUL);
+        } catch (final Throwable t) {
+            r = new ReturnImpl<Tribe>(t, CREATE_TRIBE_FAILED, true);
+        }
+        return r;
     }
 
     /**
