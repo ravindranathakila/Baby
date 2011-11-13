@@ -28,6 +28,7 @@ import java.util.Observer;
 @Stateful
 public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, ManageObservers, Serializable {
 
+    public static final IllegalStateException ILLEGAL_STATE_EXCEPTION = new IllegalStateException("SORRY! THE CODE REFLECTING THIS CALL SHOULD ONLY WORK IF THE USER IS LOGGED IN, BUT ACTUALLY IS NOT.");
     private String humanUserId_ = null;
     @FIXME(issue = "transient",
             issues = {"is marking this transient consistent?",
@@ -42,11 +43,34 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
     private transient SmartCache<String, Object> cache;
 
     /**
+     * Get the HumanId of the Logged in user, or throw exception.
+     * This is a call by prevention where the calls will be made to this method after one
+     * validation that the user is logged in. This is the safe approach to code that assumes logged in.
+     * When code gets bulky, at times calls to just getUserName might trigger null if not used in this form.
+     * With this approach, we expect to throw an exception immediately instead of late discovery.
+     *
+     * @param sessionBoundBadRefWrapper
+     * @return The HumanUserLocal of the Logged in user or throws a RuntimeException if not alive or null
+     */
+    static public HumanUserLocal getHumanUserAsValid(final SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper) {
+        if (sessionBoundBadRefWrapper == null) {
+            throw ILLEGAL_STATE_EXCEPTION;
+        } else if (!sessionBoundBadRefWrapper.isAlive()) {//(Defensive)This is checked in the constructor of this class
+            throw ILLEGAL_STATE_EXCEPTION;
+        }
+        return sessionBoundBadRefWrapper.boundInstance;
+    }
+
+    /**
      * @return
      */
     @Override
     public String getHumanUserId() {
         return humanUserId_;
+    }
+
+    public HumanId getHumanId() {
+        return (HumanId) new HumanId().setObjAsValid(getHumanUserId());
     }
 
     /**

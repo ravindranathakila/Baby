@@ -31,6 +31,10 @@
         <servlet-class>ai.ilikeplaces.servlets.ServletActivate</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ServletMobile</servlet-name>
+        <servlet-class>ai.ilikeplaces.servlets.ServletMobile</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AccessViewStatusMessages</servlet-name>
         <servlet-class>ch.qos.logback.access.ViewStatusMessagesServlet</servlet-class>
     </servlet>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>ServletActivate</servlet-name>
         <url-pattern>/activate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletMobile</servlet-name>
+        <url-pattern>/mobile</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
