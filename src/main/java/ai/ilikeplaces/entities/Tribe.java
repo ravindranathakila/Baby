@@ -188,5 +188,13 @@ public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Trib
         this.getTribeMembers().size();
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Tribe{" +
+                "tribeId=" + tribeId +
+                ", tribeName='" + tribeName + '\'' +
+                '}';
+    }
 }
 

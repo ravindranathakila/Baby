@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.role;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.DelegatedObservable;
 import ai.ilikeplaces.util.cache.SmartCache;
 
@@ -27,6 +28,11 @@ public interface HumanUserLocal extends HttpSessionBindingListener, Serializable
      * @return
      */
     public String getHumanUserId();
+
+    /**
+     * @return
+     */
+    public HumanId getHumanId();
 
     /**
      * @param loggedOnUserId

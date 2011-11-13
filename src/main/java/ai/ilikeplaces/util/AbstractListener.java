@@ -1,6 +1,7 @@
 package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
@@ -58,7 +59,6 @@ public abstract class AbstractListener {
 
     final private SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper;
     private static final IllegalArgumentException ILLEGAL_ARGUMENT_EXCEPTION = new IllegalArgumentException("SORRY! I RECEIVED A NUMBER OF PARAMETERS WHICH I CANNOT HANDLE.");
-    private static final IllegalStateException ILLEGAL_STATE_EXCEPTION = new IllegalStateException("SORRY! THE CODE REFLECTING THIS CALL SHOULD ONLY WORK IF THE USER IS LOGGED IN, BUT ACTUALLY IS NOT.");
 
     final protected SmartLogger sl;
     private static final String INITIALIZING_LISTENER = "Initializing page";
@@ -305,9 +305,9 @@ public abstract class AbstractListener {
      */
     final protected String getUsernameAsValid() {
         if (sessionBoundBadRefWrapper == null) {
-            throw ILLEGAL_STATE_EXCEPTION;
+            throw HumanUser.ILLEGAL_STATE_EXCEPTION;
         } else if (!sessionBoundBadRefWrapper.isAlive()) {//(Defensive)This is checked in the constructor of this class
-            throw ILLEGAL_STATE_EXCEPTION;
+            throw HumanUser.ILLEGAL_STATE_EXCEPTION;
         }
         return sessionBoundBadRefWrapper.boundInstance.getHumanUserId();
     }
@@ -323,28 +323,29 @@ public abstract class AbstractListener {
      */
     final protected HumanId geHumanIdAsValid() {
         if (sessionBoundBadRefWrapper == null) {
-            throw ILLEGAL_STATE_EXCEPTION;
+            throw HumanUser.ILLEGAL_STATE_EXCEPTION;
         } else if (!sessionBoundBadRefWrapper.isAlive()) {//(Defensive)This is checked in the constructor of this class
-            throw ILLEGAL_STATE_EXCEPTION;
+            throw HumanUser.ILLEGAL_STATE_EXCEPTION;
         }
         return new HumanId(sessionBoundBadRefWrapper.boundInstance.getHumanUserId());
     }
 
     /**
+     * Non-static wrapper for {@link ai.ilikeplaces.logic.role.HumanUser#getHumanUserAsValid(SessionBoundBadRefWrapper)}
+     *
+     * The contents of this method were moved to the static method to make the static method avaiable globally.
+     * This should later be shifted to most relevantly to {@link ai.ilikeplaces.logic.role.HumanUser}
+     *
      * Get the Username of the Logged in user, or throw exception.
      * This is a call by prevention where the calls will be made to this method after one
      * validation that the user is logged in. This is the safe approach to code that assumes logged in.
      * When code gets bulky, at times calls to just getUserName might trigger null if not used in this form.
      * With this approach, we expect to throw an exception immediately instead of late discovery.
      *
-     * @return The Username of the Logged in user, and null, if not logged in
+     * @return The HumanUserLocal of the Logged in user or throws an exception if null or not logged in
      */
     final protected HumanUserLocal getHumanUserAsValid() {
-        if (sessionBoundBadRefWrapper == null) {
-            throw ILLEGAL_STATE_EXCEPTION;
-        } else if (!sessionBoundBadRefWrapper.isAlive()) {//(Defensive)This is checked in the constructor of this class
-            throw ILLEGAL_STATE_EXCEPTION;
-        }
-        return sessionBoundBadRefWrapper.boundInstance;
+        return HumanUser.getHumanUserAsValid(sessionBoundBadRefWrapper);
     }
+
 }
