@@ -6,6 +6,7 @@ import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
+import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,8 +38,11 @@ public class ServletMobile extends HttpServlet {
 
             if (parameterMap.containsKey("tribeId")) {
                 final Tribe tribe = DB.getHumanCRUDTribeLocal(false).getTribe(humanUserAsValid.getHumanId(), new VLong(Long.parseLong(((String[]) parameterMap.get("tribeId"))[0])));
+
+                final Gson gson = new Gson();
+
                 resp.getWriter().flush();
-                resp.getWriter().append(tribe.toString());
+                resp.getWriter().append(gson.toJson(tribe));
             } else {
                 resp.getWriter().flush();
                 resp.getWriter().append(Arrays.toString(DB.getHumanCRUDTribeLocal(false).getHumansTribes(humanUserAsValid.getHumanId()).toArray()));
