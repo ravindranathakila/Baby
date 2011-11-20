@@ -55,7 +55,7 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
     );
 
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
-    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs", "wallMutes");
+    public static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs", "wallMutes");
     private static final String TALK_AT_0 = "talk.at.0";
     private static final String WALL_ENTRY_CONSUMED_STATUES = "&wall_entry_consumed=true";
     private static final String WALL_ENTRY_CONSUMED = "wall_entry_consumed";
