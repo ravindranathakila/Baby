@@ -393,7 +393,7 @@ abstract public class Bate extends AbstractWidgetListener {
      * @param invitee
      * @return
      */
-    final static String getHTMLStringForOfflineFriendInvite(final String inviter, final String invitee) {
+    final static public String getHTMLStringForOfflineFriendInvite(final String inviter, final String invitee) {
         try {
 
             final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + Controller.USER_PROPERTY_EMAIL_XHTML);
@@ -427,7 +427,7 @@ abstract public class Bate extends AbstractWidgetListener {
 
     }
 
-    final static Return<Boolean> sendInviteToOfflineInvite(final HumanId inviter, final String invitersName, final ImportedContact inviteee) {
+    final static public Return<Boolean> sendInviteToOfflineInvite(final HumanId inviter, final String invitersName, final ImportedContact inviteee) {
         Return<Boolean> returnVal;
         try {
             final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
