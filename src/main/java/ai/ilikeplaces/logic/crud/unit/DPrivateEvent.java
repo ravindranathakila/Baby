@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -32,7 +33,7 @@ public class DPrivateEvent extends AbstractSLBCallbacks implements DPrivateEvent
 
     @EJB
     private CrudServiceLocal<HumansPrivateEvent> humansPrivateEventCrudServiceLocal;
-    
+
     private static final String DELETE_THIS_EVENT = "delete this event.";
 
     @Override
@@ -49,9 +50,25 @@ public class DPrivateEvent extends AbstractSLBCallbacks implements DPrivateEvent
             @EXPECTNULL
             final PrivateEvent privateEvent = privateEventCrudServiceLocal_.find(PrivateEvent.class, privateEventId);
 
-            if (privateEvent.getPrivateEventOwners().contains(humansPrivateEvent)) {
-                privateEventCrudServiceLocal_.delete(PrivateEvent.class, privateEvent.getPrivateEventId());
-                returnVal = true;
+            final List<HumansPrivateEvent> privateEventOwners = privateEvent.getPrivateEventOwners();
+
+            if (privateEventOwners.contains(humansPrivateEvent)) {
+                if (privateEventOwners.size() == 1) {
+                    privateEventCrudServiceLocal_.delete(PrivateEvent.class, privateEvent.getPrivateEventId());
+                    returnVal = true;
+                } else {
+                    privateEventOwners.remove(humansPrivateEvent);
+
+                    final List<HumansPrivateEvent> privateEventViewers = privateEvent.getPrivateEventViewers();
+                    if (privateEventViewers.contains(humansPrivateEvent)) {
+                        privateEventViewers.remove(humansPrivateEvent);
+                    }
+
+                    final List<HumansPrivateEvent> privateEventInvites = privateEvent.getPrivateEventInvites();
+                    if (privateEventInvites.contains(humansPrivateEvent)) {
+                        privateEventInvites.remove(humansPrivateEvent);
+                    }
+                }
             } else {
                 throw new NoPrivilegesException(humanId, DELETE_THIS_EVENT);
             }
