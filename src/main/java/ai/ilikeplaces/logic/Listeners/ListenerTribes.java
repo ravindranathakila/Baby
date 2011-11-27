@@ -149,7 +149,7 @@ public class ListenerTribes implements ItsNatServletRequestListener {
                 } else {
                     //WE COULD STILL GIVE A TRIBE CREATION WIDGET WITH USERS EMAIL AND FRIENDS EMAILS. ONCE USER SIGNS UP, THE TRIBE CAN BE CREATED.
 
-                    new TeachTribe(request__, new TeachTribeCriteria(), $(Controller.Page.Skeleton_center_skeleton));
+                    new TeachTribe(request__, new TeachTribeCriteria(null), $(Controller.Page.Skeleton_center_skeleton));
                 }
             }
         };
