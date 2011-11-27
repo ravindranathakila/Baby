@@ -3,6 +3,7 @@ package ai.ilikeplaces.servlets;
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.logic.Listeners.*;
 import ai.ilikeplaces.logic.Listeners.templates.TemplateGeneric;
+import ai.ilikeplaces.logic.Listeners.widgets.AlbumManager;
 import ai.ilikeplaces.logic.Listeners.widgets.ListenerShare;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidget;
 import ai.ilikeplaces.rbs.RBGet;
@@ -128,6 +129,8 @@ final public class
     final PageFace forgotPasswordChange = Page.ForgotPasswordChange;
     final PageFace profileWidget = Page.ProfileWidget;
 
+    final PageFace teachTribe = Page.TeachTribe;
+
     final PageFace album = Page.Album;
     final PageFace albumTribe = Page.AlbumTribe;
 
@@ -206,12 +209,26 @@ final public class
         },
 
 
+        TeachTribe("ai/ilikeplaces/widgets/teach/teach_tribe.xhtml",
+                ai.ilikeplaces.logic.Listeners.widgets.teach.TeachTribe.TeachTribeIds.values()
+        ) {
+            @Override
+            public String toString() {
+                return DocTeachTribe;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
         Album("ai/ilikeplaces/widgets/Album.xhtml",
-                Controller.Page.AlbumNotice,
-                Controller.Page.AlbumPivateEventId,
-                Controller.Page.AlbumOwner,
-                Controller.Page.AlbumForward,
-                Controller.Page.AlbumPhotos
+                AlbumManager.AlbumManagerIds.AlbumNotice,
+                AlbumManager.AlbumManagerIds.AlbumPivateEventId,
+                AlbumManager.AlbumManagerIds.AlbumOwner,
+                AlbumManager.AlbumManagerIds.AlbumForward,
+                AlbumManager.AlbumManagerIds.AlbumPhotos
         ) {
             @Override
             public String toString() {
@@ -1114,19 +1131,18 @@ final public class
         final static public String BateOmg = "BateOmg";
         final static public String BateOmgSuccessMsg = "BateOmgSuccessMsg";
 
-        /*DocHelp Page*/
+        /*TeachTribe Page*/
+        final static public String DocTeachTribe = "DocTeachTribe";
+        /*TeachTribe IDs*/
+        //Nothing here
+
+        /*Help Page*/
         final static public String DocHelp = "DocHelp";
-        /*DocHelp IDs*/
+        /*Help IDs*/
         //Nothing here
 
         /*Album Page*/
         final static public String DocAlbum = "DocAlbum";
-        /*Album IDs*/
-        final static public String AlbumNotice = "AlbumNotice";
-        final static public String AlbumPivateEventId = "AlbumPivateEventId";
-        final static public String AlbumOwner = "AlbumOwner";
-        final static public String AlbumForward = "AlbumForward";
-        final static public String AlbumPhotos = "AlbumPhotos";
 
         /*AlbumTribe Page*/
         final static public String DocAlbumTribe = "DocAlbumTribe";
@@ -1565,7 +1581,7 @@ final public class
 /*End of common definitions*/
 
 
-        private Page(final String path__, final String... ids__) {
+        private Page(final String path__, final Object... ids__) {
             try {
                 Loggers.DEBUG.debug("HELLO, ENUM VAL:" + this.name());
                 Loggers.DEBUG.debug("HELLO, ENUM PATH:" + path__);
@@ -1738,6 +1754,8 @@ final public class
 
             inhs__.registerItsNatDocFragmentTemplate(profileWidget.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(profileWidget));
 
+            inhs__.registerItsNatDocFragmentTemplate(teachTribe.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(teachTribe));
+
             inhs__.registerItsNatDocFragmentTemplate(album.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(album));
 
             inhs__.registerItsNatDocFragmentTemplate(albumTribe.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(albumTribe));
@@ -1761,9 +1779,13 @@ final public class
 
 // -------------------------- STATIC METHODS --------------------------
 
-    private static void PutAllPageElementIdsByPage(final PageFace page__, final String... ids__) {
+    private static void PutAllPageElementIdsByPage(final PageFace page__, final Object... ids__) {
         final HashSet<String> ids_ = new HashSet<String>();
-        ids_.addAll(Arrays.asList(ids__));
+
+        for (final Object id__ : ids__) {
+            ids_.add(id__.toString());
+        }
+
         GlobalPageIdRegistry.put(page__, ids_);
     }
 
@@ -2024,14 +2046,14 @@ final public class
      *
      * @param ids__
      */
-    public final static void PutAllPageElementIds(final String... ids__) {
-        for (final String id_ : ids__) {
-            if (!GlobalHTMLIdRegistry.containsKey(id_)) {
+    public final static void PutAllPageElementIds(final Object... ids__) {
+        for (final Object id_ : ids__) {
+            if (!GlobalHTMLIdRegistry.containsKey(id_.toString())) {
                 /**
                  * Do not verify if element exists in "document" here as elements
                  * can be dynamically created
                  */
-                GlobalHTMLIdRegistry.put(id_, id_);
+                GlobalHTMLIdRegistry.put(id_.toString(), id_.toString());
             } else {
                 throw new SecurityException(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0011" + id_));
             }

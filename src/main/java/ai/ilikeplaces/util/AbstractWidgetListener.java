@@ -368,6 +368,16 @@ public abstract class AbstractWidgetListener<T> {
     }
 
     /**
+     * Wrapper to getWidgetElementById
+     *
+     * @param key__
+     * @return Element
+     */
+    final public Element $$(final WidgetIds key__) {
+        return getWidgetElementById(key__.toString());
+    }
+
+    /**
      * Fetches the element disregarding widget behavior. i.e. ignores dynamic nature of ID's
      *
      * @param key__
@@ -678,6 +688,10 @@ public abstract class AbstractWidgetListener<T> {
         notifier.setTextContent(message);
         $$sendJS(JSCodeToSend.clearContent(notifier.getAttribute(MarkupTag.GENERIC.id()), 10000));
         return notifier;
+    }
+
+    static public interface WidgetIds {
+        public String toString();
     }
 
 }

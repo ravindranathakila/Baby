@@ -39,6 +39,9 @@ import java.util.List;
 public class AlbumManager extends AbstractWidgetListener {
 // ------------------------------ FIELDS ------------------------------
 
+
+// ------------------------------ FIELDS STATIC --------------------------
+
     private static final String ALBUM__PHOTOS = "ALBUM_PHOTOS";
     private static final String BUTTONTEXT_EMAIL_FORWARDED = "buttontext.email.forwarded";
     private static final String BUTTONTEXT_CLICK_TO_CONFIRM = "buttontext.click.to.confirm";
@@ -49,6 +52,9 @@ public class AlbumManager extends AbstractWidgetListener {
     final static private RefreshSpec REFRESH_SPEC_INIT = new RefreshSpec("albumPhotos");
     final static private RefreshSpec REFRESH_SPEC_REGISTER = new RefreshSpec("albumPhotos");
 
+// ------------------------------ FIELDS (NON-STATIC)--------------------
+
+
     List<HumansIdentity> wallProspects;
     final private Logger logger = LoggerFactory.getLogger(AlbumManager.class.getName());
     private HumanId humanId = null;
@@ -56,20 +62,33 @@ public class AlbumManager extends AbstractWidgetListener {
     private HumansIdentity humansIdentity;
     private Return<Album> albumReturn;
 
-// --------------------------- CONSTRUCTORS ---------------------------
+// -------------------------- ENUMERATIONS --------------------------
 
+    public static enum AlbumManagerIds implements WidgetIds{
+        AlbumNotice,
+        AlbumPivateEventId,
+        AlbumOwner,
+        AlbumForward,
+        AlbumPhotos
+    }
+
+    // --------------------------- CONSTRUCTORS ---------------------------
     public AlbumManager(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId__, final PrivateEvent privateEvent) {
+
         super(request__, Page.Album, appendToElement__, humanId__, privateEvent);
     }
+
+// ------------------------ OVERRIDING METHODS ------------------------
 
     /**
      *
      */
     @Override
     protected void init(final Object... initArgs) {
+
         humanId = ((HumanId) initArgs[0]).getSelfAsValid();
         privateEvent = (PrivateEvent) initArgs[1];
-        humansIdentity = UserProperty.HUMANS_IDENTITY_CACHE.get(humanId.getHumanId(),"");
+        humansIdentity = UserProperty.HUMANS_IDENTITY_CACHE.get(humanId.getHumanId(), "");
         //privateEventReturn = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(humanId.getObj(), privateEvent.getPrivateEventId());
 
         final List<Email> emails = new ArrayList<Email>(privateEvent.getPrivateEventOwners().size() + privateEvent.getPrivateEventViewers().size() + privateEvent.getPrivateEventInvites().size());
@@ -95,9 +114,10 @@ public class AlbumManager extends AbstractWidgetListener {
                 int photoSequenceNumber = 1;
 
                 for (final PrivatePhoto privatePhoto__ : album.getAlbumPhotos()) {
-                    new Photo$Description(request, $$(Controller.Page.AlbumPhotos), photoSequenceNumber++, wallProspects) {
+                    new Photo$Description(request, $$(AlbumManagerIds.AlbumPhotos), photoSequenceNumber++, wallProspects) {
                         @Override
                         protected void init(final Object... initArgs) {
+
                             final Integer photoSequenceNumber = (Integer) initArgs[0];
                             List<HumansIdentity> mywallProspects = (List<HumansIdentity>) initArgs[1];
                             final String imageURL = RBGet.globalConfig.getString(ALBUM__PHOTOS) + privatePhoto__.getPrivatePhotoURLPath();
@@ -117,7 +137,7 @@ public class AlbumManager extends AbstractWidgetListener {
                     };
                 }
             } else {
-                $$(Controller.Page.AlbumNotice).setTextContent(albumReturn.returnMsg());
+                $$(AlbumManagerIds.AlbumNotice).setTextContent(albumReturn.returnMsg());
             }
         }
 
@@ -127,19 +147,20 @@ public class AlbumManager extends AbstractWidgetListener {
             final Return<Boolean> ro = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventIsOwner(humanId, privateEvent.getPrivateEventId());
             if (ro.returnStatus() == 0) {
                 if (ro.returnValue()) {//owner
-                    $$(Controller.Page.AlbumPivateEventId).setAttribute(MarkupTag.INPUT.value(), privateEvent.getPrivateEventId().toString());
-                    displayBlock($$(Controller.Page.AlbumOwner));
+                    $$(AlbumManagerIds.AlbumPivateEventId).setAttribute(MarkupTag.INPUT.value(), privateEvent.getPrivateEventId().toString());
+                    displayBlock($$(AlbumManagerIds.AlbumOwner));
                     //show hide operations
                 }
             } else {
-                $$(Controller.Page.AlbumNotice).setTextContent(ro.returnMsg());
+                $$(AlbumManagerIds.AlbumNotice).setTextContent(ro.returnMsg());
             }
         }
     }
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.AlbumForward), EventType.CLICK.toString(), new EventListener() {
+
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(AlbumManagerIds.AlbumForward), EventType.CLICK.toString(), new EventListener() {
             final HumanId myhumanId = humanId;
             final Long myprivateEventId = privateEvent.getPrivateEventId();
             boolean confirmed = false;
@@ -150,6 +171,7 @@ public class AlbumManager extends AbstractWidgetListener {
 
             @Override
             public void handleEvent(final Event evt_) {
+
                 if (confirmed) {
 //                    if (myprivateEventReturn.returnStatus() == 0) {
                     final PrivateEvent pe = myprivateEvent;// myprivateEventReturn.returnValue();
@@ -198,7 +220,7 @@ public class AlbumManager extends AbstractWidgetListener {
                         //$$(evt_).setTextContent(RBGet.gui().getString(BUTTONTEXT_CLICK_TO_CONFIRM));
                     } else {
                         //Why are we displaying the button in the first place if the album doesn't contain photos? To imply photos can be uploaded and forwarded
-                        $$displayNone($$(Controller.Page.AlbumForward));
+                        $$displayNone($$(AlbumManagerIds.AlbumForward));
                     }
                 }
             }
