@@ -44,6 +44,10 @@ import java.util.Properties;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @TODO(task = "USE A STATIC METHOD TO GET THE LOGGED ON USER INSTANCE.")
 final public class ServletActivate extends HttpServlet {
+// ------------------------------ FIELDS ------------------------------
+
+
+// ------------------------------ FIELDS STATIC --------------------------
 
     /**
      * Stateful Session Bean Containing User Data
@@ -58,20 +62,28 @@ final public class ServletActivate extends HttpServlet {
      * Password hash
      */
     public final static String Password = "Password";
+    private static final String HEADER_REFERER = "Referer";
+    public static final String NEXT = "next";
+    private static final String HOME = "/";
+
+// ------------------------------ FIELDS (NON-STATIC)--------------------
+
 
     final Logger logger = LoggerFactory.getLogger(ServletActivate.class.getName());
-    final private Properties p_ = new Properties();
-    private Context context = null;
-    private SingletonHashingFace singletonHashingFace = null;
-    private static final String HEADER_REFERER = "Referer";
 
     //final PageFace home = Page.home;
     final PageFace organize = Page.Organize;
     final PageFace signup = Page.signup;
+    final private Properties p_ = new Properties();
+    private Context context = null;
+    private SingletonHashingFace singletonHashingFace = null;
+    private PageFace tribes = Page.Tribes;
 
+    // ------------------------ OVERRIDING METHODS ------------------------
     @Override
     @SuppressWarnings("unchecked")
     public void init() {
+
         boolean initializeFailed = true;
         final StringBuilder log = new StringBuilder();
         init:
@@ -104,6 +116,21 @@ final public class ServletActivate extends HttpServlet {
         if (initializeFailed) {
             throw new ConstructorInvokationException(log.toString());
         }
+    }
+
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws javax.servlet.ServletException if a servlet-specific error occurs
+     * @throws java.io.IOException            if an I/O error occurs
+     */
+    @Override
+    protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
+            throws ServletException, IOException {
+
+        processRequest(request, response);
     }
 
     /**
@@ -178,9 +205,18 @@ final public class ServletActivate extends HttpServlet {
                                                 "In case you need to recover your password, " +
                                                 "please visit: <a href='http://www.ilikeplaces.com/page/_profile'>  http://www.ilikeplaces.com/page/_profile</a>. " +
                                                 "Adios!"
-                                        );
+                                );
 
-                                response__.sendRedirect(organize.getURL());
+                                final String next = request__.getParameter(NEXT);
+
+                                if (organize.getURL().equals(next)) {
+                                    response__.sendRedirect(organize.getURL());
+                                } else if (tribes.getURL().equals(next)) {
+                                    response__.sendRedirect(tribes.getURL());
+                                } else {
+                                    response__.sendRedirect(HOME);
+                                }
+
                                 break doActivate;/*This is unnecessary but lets not leave chance for introducing bugs*/
                             } else {/*Ok password wrong. What do we do with this guy? First lets make his session object null*/
                                 userSession_.invalidate();
@@ -194,7 +230,6 @@ final public class ServletActivate extends HttpServlet {
                             redirectToProfilePage(request__, response__);
                             break doActivate;
                         }
-
                     } catch (final Exception ex) {
                         logger.error(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0004"), ex);
                         redirectToProfilePage(request__, response__);
@@ -205,7 +240,6 @@ final public class ServletActivate extends HttpServlet {
                     redirectToProfilePage(request__, response__);
                     break doActivate;
                 }
-
             } else {/*Why did the user come to this page if he was already logged on? Send him back!*/
                 logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0005") + ((SessionBoundBadRefWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).boundInstance.getHumanUserId());
                 redirectToProfilePage(request__, response__);
@@ -213,7 +247,13 @@ final public class ServletActivate extends HttpServlet {
         }
     }
 
+    private boolean isSignOnPermitted() {
+
+        return RBGet.getGlobalConfigKey("signOnEnabled") != null && RBGet.getGlobalConfigKey("signOnEnabled").equals("true");
+    }
+
     private void redirectToProfilePage(HttpServletRequest request__, HttpServletResponse response__) throws IOException {
+
         //response__.sendRedirect(request__.getHeader(HEADER_REFERER));
         /**
          * DO NOT CHANGE THIS AS SOME USERS ARE HAVING ISSUES ACTIVATING THEIR ACCOUNTS DUE TO HTML ISSUES IN HASH.
@@ -221,24 +261,51 @@ final public class ServletActivate extends HttpServlet {
         response__.sendRedirect(Controller.Page.Profile.getURL());
     }
 
-    private boolean isSignOnPermitted() {
-        return RBGet.getGlobalConfigKey("signOnEnabled") != null && RBGet.getGlobalConfigKey("signOnEnabled").equals("true");
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws javax.servlet.ServletException if a servlet-specific error occurs
+     * @throws java.io.IOException            if an I/O error occurs
+     */
+    @Override
+    protected void doPost(final HttpServletRequest request, final HttpServletResponse response)
+            throws ServletException, IOException {
+
+        processRequest(request, response);
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
 
-    static public boolean isCorrectPassword(final HumanId humanId, final String password) {
-        final boolean isCorrect;
-        if (humanId.validate() == 0) {
-            final HumansAuthentication humansAuthentications = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(humanId).returnValue();
-            isCorrect = humansAuthentications.getHumanAuthenticationHash().equals(SingletonHashing.getSingletonHashingLocal().getHash(password, humansAuthentications.getHumanAuthenticationSalt()));
-        } else {
+        return "Nothing interesting here!";
+    }// </editor-fold>
+
+    // -------------------------- OTHER METHODS --------------------------
+    static public Return<Boolean> changePassword(final HumanId humanId, final Password newPass) {
+
+        Return<Boolean> returnVal;
+        if (humanId.validate() != 0) {
             throw new ConstraintsViolatedException(humanId.getViolations());
+        } else if (newPass.validate() != 0) {
+            throw new ConstraintsViolatedException(newPass.getViolations());
+        } else {
+            returnVal = DB.getHumanCRUDHumanLocal(true).doUHumanPassword(humanId, newPass);
+            if (returnVal.returnStatus() == 0 && returnVal.returnValue()) {
+                Loggers.USER.info("Password changed for user " + humanId.getObj());
+            }
         }
-        return isCorrect;
+        return returnVal;
     }
-
 
     static public Return<Boolean> changePassword(final HttpSession httpSession, final HumanId humanId, final Password currentPass, final Password newPass) {
+
         Return<Boolean> returnVal;
         if (humanId.validate() != 0) {
             throw new ConstraintsViolatedException(humanId.getViolations());
@@ -261,64 +328,21 @@ final public class ServletActivate extends HttpServlet {
                             Loggers.EXCEPTION.error("", e);
                         }
                     }
-
                 }
             }
         }
         return returnVal;
     }
 
-    static public Return<Boolean> changePassword(final HumanId humanId, final Password newPass) {
-        Return<Boolean> returnVal;
-        if (humanId.validate() != 0) {
-            throw new ConstraintsViolatedException(humanId.getViolations());
-        } else if (newPass.validate() != 0) {
-            throw new ConstraintsViolatedException(newPass.getViolations());
+    static public boolean isCorrectPassword(final HumanId humanId, final String password) {
+
+        final boolean isCorrect;
+        if (humanId.validate() == 0) {
+            final HumansAuthentication humansAuthentications = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(humanId).returnValue();
+            isCorrect = humansAuthentications.getHumanAuthenticationHash().equals(SingletonHashing.getSingletonHashingLocal().getHash(password, humansAuthentications.getHumanAuthenticationSalt()));
         } else {
-            returnVal = DB.getHumanCRUDHumanLocal(true).doUHumanPassword(humanId, newPass);
-            if (returnVal.returnStatus() == 0 && returnVal.returnValue()) {
-                Loggers.USER.info("Password changed for user " + humanId.getObj());
-            }
+            throw new ConstraintsViolatedException(humanId.getViolations());
         }
-        return returnVal;
+        return isCorrect;
     }
-
-
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws javax.servlet.ServletException if a servlet-specific error occurs
-     * @throws java.io.IOException            if an I/O error occurs
-     */
-    @Override
-    protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws javax.servlet.ServletException if a servlet-specific error occurs
-     * @throws java.io.IOException            if an I/O error occurs
-     */
-    @Override
-    protected void doPost(final HttpServletRequest request, final HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Nothing interesting here!";
-    }// </editor-fold>
 }

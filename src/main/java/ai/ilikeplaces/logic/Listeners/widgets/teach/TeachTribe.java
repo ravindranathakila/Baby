@@ -11,6 +11,7 @@ import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.servlets.Controller;
+import ai.ilikeplaces.servlets.ServletActivate;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatServletRequest;
@@ -140,6 +141,7 @@ public class TeachTribe extends AbstractWidgetListener<TeachTribeCriteria> {
                                                         DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
                                                                 .returnValue()
                                                                 .getHumanAuthenticationHash())
+                                                .append(ServletActivate.NEXT, Controller.Page.Tribes.getURL())
                                                 .get();
 
 
