@@ -2,6 +2,8 @@ package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
+import ai.ilikeplaces.logic.Listeners.widgets.teach.TeachTribe;
+import ai.ilikeplaces.logic.Listeners.widgets.teach.TeachTribeCriteria;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
@@ -146,6 +148,8 @@ public class ListenerTribes implements ItsNatServletRequestListener {
                     }
                 } else {
                     //WE COULD STILL GIVE A TRIBE CREATION WIDGET WITH USERS EMAIL AND FRIENDS EMAILS. ONCE USER SIGNS UP, THE TRIBE CAN BE CREATED.
+
+                    new TeachTribe(request__, new TeachTribeCriteria(), $(Controller.Page.Skeleton_center_skeleton));
                 }
             }
         };

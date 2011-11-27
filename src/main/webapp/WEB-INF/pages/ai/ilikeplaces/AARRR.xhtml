@@ -109,39 +109,83 @@
         <div id="impromptuLoginForm">
             <a>Coming Soon!</a>
         </div>
-        <div id="impromtuWhyWeAreDoingThis">
+        <div id="impromtuWhyWeAreDoingThis" class="center">
                 <div class="use100 center" style="background-color:#ffffff;">
-                    <div class="use100" style="height:10px;background-color:#000000;">&nbsp;</div>
-                    <div style="background-color:#000000;font-size:20px;" class="use60 use20p use20a grabber_subtitle">
-                        <a href="/page/_org"><img src="/images/Down%20Town%20Logo.png" alt="Down Town" style="width:100%;"/></a>
+                    <div class="use100 center" style="background-color:#000000;">
+                        <div class="use100" style="height:10px;">&nbsp;</div>
+                        <div style="font-size:20px;"
+                             class="use60 use20p use20a grabber_subtitle">
+                            <a href="/page/_org"><img src="/images/Down%20Town%20Logo.png" alt="Down Town"
+                                                      style="width:100%;"/></a>
+                        </div>
+                        <div class="use100" style="color:#999999;overflow:hidden;">SOCIALIZING
+                            OFFLINE!
+                        </div>
+                        <div class="use100" style="height:5px;background-color:#000000;">&nbsp;</div>
                     </div>
-                    <div class="use100" style="color:#999999;background-color:#000000;">SOCIALIZING OFFLINE!</div>
-                    <div class="use100" style="height:5px;background-color:#000000;">&nbsp;</div>
+                    <!-- End of Header-->
                     <div class="use100" style="height:10px;">&nbsp;</div>
-                    <span class="layer_4 grabber center" style="color:#333333;font-size:18px;">
-                        <b>1) PICK A PLACE</b>
-                        <br/>
-                    </span>
-                    <span class="layer_4 grabber center" style="color:#333333;font-size:18px;">
-                        <b>2) START A MOMENT</b><br/>
-                    </span>
-                    <span class="layer_4 grabber center" style="color:#333333;font-size:18px;">
-                        <b>3) INVITE UR FRIENDS</b><br/>
-                    </span>
+                    <div id="popupSelectSection">
+                        <div class="use100">
+                             <span class="layer_4 grabber center" style="color:#333333;font-size:18px;">
+                                 What would you like to do?
+                             </span>
+                        </div>
+                        <div class="use100" style="height:10px;">&nbsp;</div>
+                        <div class="use618 use191p use191a">
+                            <div class="use100" style="border:4px solid #950;">
+                                <span class="layer_4 grabber center" style="color:#950;font-size:20px; padding:5px;cursor:pointer;" onclick="$('#popupTribeSection').slideToggle();$('#popupSelectSection').slideToggle();">
+                                    START A TRIBE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="layer_4 grabber center" style="color:#950;font-size:12px;">
+                            A <i>TRIBE's</i> members has somethin' in common<br/>
+                        </span>
+                        <div class="use100" style="height:10px;">&nbsp;</div>
+                        <div class="use618 use191p use191a">
+                            <div class="use100" style="border:4px solid #ee00aa;">
+                                <span class="layer_4 grabber center" style="color:#ee00aa;font-size:20px; padding:5px;cursor:pointer;" onclick="$('#popupMomentSection').slideToggle();$('#popupSelectSection').slideToggle();">
+                                    START A MOMENT
+                                </span>
+                            </div>
+                        </div>
+                        <span class="layer_4 grabber center" style="color:#ee00aa;font-size:12px;">
+                            A <i>MOMENTs</i> an event, pubic or private<br/>
+                        </span>
+                    </div>
                     <div class="use100" style="height:10px;">&nbsp;</div>
-                    <div class="use618 use191p use191a">
-                        <input type="text" id="popupSearchBox" style="width:100%;height:30px;font-size:16px;text-align:center;font-weight:900;border:4px solid #dddddd;" value="" onclick="javascript:this.value = '';" onchange="javascript:$('#searchboxmap').attr('value',this.value);setMapToLocation(document.getElementById('popupSearchBox').value);$.prompt.close();"/>
+                    <div id="popupTribeSection" style="display:none;">
+                        <div class="use618 use191p use191a">
+                            To start a tribe
+                        </div>
+                        <div class="use100" style="height:5px;">&nbsp;</div>
+                        <div class="use618 use191p use191a">
+                            <input type="text" id="popupEmailBox" style="width:100%;height:30px;font-size:16px;text-align:center;font-weight:900;border:4px solid #dddddd;" value="" onclick="javascript:this.value = '';" onchange="javascript:$('#searchboxmap').attr('value',this.value);setMapToLocation(document.getElementById('popupSearchBox').value);$.prompt.close();"/>
+                        </div>
+                        <div class="use100" style="height:5px;">&nbsp;</div>
+                        <div class="use618 use191p use191a" style="cursor:pointer;">
+                            <img src="/images/Go Fetch_Button.png" alt="Go Fetch!" class="use618 use191p use191a" onclick="javascript:setMapToLocation(document.getElementById('popupSearchBox').value);$.prompt.close();"/>
+                        </div>
+                        <span class="layer_4 grabber center" style="color:#555555;font-size:12px;">
+                            Click <i>MARKERS</i> to choose places others chose<br/>
+                        </span>
                     </div>
-                    <div class="use100" style="height:5px;">&nbsp;</div>
-                    <div class="use618 use191p use191a">
-                        <i>Enter an area. e.g. Las Vegas, United States</i>
+                    <div id="popupMomentSection" style="display:none;">
+                        <div class="use618 use191p use191a">
+                            <input type="text" id="popupSearchBox" style="width:100%;height:30px;font-size:16px;text-align:center;font-weight:900;border:4px solid #dddddd;" value="" onclick="javascript:this.value = '';" onchange="javascript:$('#searchboxmap').attr('value',this.value);setMapToLocation(document.getElementById('popupSearchBox').value);$.prompt.close();"/>
+                        </div>
+                        <div class="use100" style="height:5px;">&nbsp;</div>
+                        <div class="use618 use191p use191a">
+                            <i>Enter an area. e.g. Las Vegas, United States</i>
+                        </div>
+                        <div class="use618 use191p use191a" style="cursor:pointer;">
+                            <img src="/images/Go Fetch_Button.png" alt="Go Fetch!" class="use618 use191p use191a" onclick="javascript:setMapToLocation(document.getElementById('popupSearchBox').value);$.prompt.close();"/>
+                        </div>
+                        <span class="layer_4 grabber center" style="color:#555555;font-size:12px;">
+                            Click <i>MARKERS</i> to choose places others chose<br/>
+                        </span>
                     </div>
-                    <div class="use618 use191p use191a" style="cursor:pointer;">
-                        <img src="/images/Go Fetch_Button.png" alt="Go Fetch!" class="use618 use191p use191a" onclick="javascript:setMapToLocation(document.getElementById('popupSearchBox').value);$.prompt.close();"/>
-                    </div>
-                    <span class="layer_4 grabber center" style="color:#555555;font-size:12px;">
-                        Click <i>MARKERS</i> to choose places others chose<br/>
-                    </span>
                     <div class="use100" style="height:24px;text-align:right;">
                         <span class="use100" style="font-size:12px;text-align:right;cursor:pointer;font-style:italic;text-decoration:none;" onclick="javascript:window.location.href = '/page/_muster'">It's FREE! It's Members Only!<br/></span>
                         <span class="use100" style="font-size:12px;text-align:right;cursor:pointer;font-style:italic;text-decoration:underline;" onclick="javascript:$.prompt.close();$('.ClassDownTownHeatMapSignupEmail').focus();">Get invited..</span>
