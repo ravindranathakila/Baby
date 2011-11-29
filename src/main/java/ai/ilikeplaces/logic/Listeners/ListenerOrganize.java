@@ -11,6 +11,8 @@ import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventCreate;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventView;
+import ai.ilikeplaces.logic.Listeners.widgets.teach.TeachMoment;
+import ai.ilikeplaces.logic.Listeners.widgets.teach.TeachMomentCriteria;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
@@ -310,6 +312,8 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                             USER_EXCEPTION.error("", e_);
                         }
                     }
+                } else {
+                    new TeachMoment(request__, new TeachMomentCriteria(null), $(Controller.Page.Skeleton_center_content));
                 }
                 sl.complete(LEVEL.DEBUG, Loggers.DONE);//Request completed within timeout. If not, goes to LEVEL.SERVER_STATUS
             }
