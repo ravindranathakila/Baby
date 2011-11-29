@@ -213,7 +213,9 @@ final public class ServletActivate extends HttpServlet {
                                     response__.sendRedirect(organize.getURL());
                                 } else if (tribes.getURL().equals(next)) {
                                     response__.sendRedirect(tribes.getURL());
-                                } else {
+                                } else if (next != null && !"".equals(next)) {
+                                    response__.sendRedirect(next);
+                                } else {//This condition eventually became useless, but a good fallback in case of an unseen scenario
                                     response__.sendRedirect(HOME);
                                 }
 

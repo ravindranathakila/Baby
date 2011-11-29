@@ -39,9 +39,9 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
 abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
     private static final String SAVING = "Saving...";
-    private static final String PLACENAME = "placename";
-    private static final String PLACEDETAILS = "placedetails";
-    private static final String WOEHINT = "woehint";
+    public static final String PLACENAME = "placename";
+    public static final String PLACEDETAILS = "placedetails";
+    public static final String WOEHINT = "woehint";
     private static final String PRIVATE_EVENT_CREATE_ANCHOR = "#PrivateEventCreateAnchor";
     RefObj<String> privateLocationName = null;
 

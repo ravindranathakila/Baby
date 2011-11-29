@@ -130,6 +130,7 @@ final public class
     final PageFace profileWidget = Page.ProfileWidget;
 
     final PageFace teachTribe = Page.TeachTribe;
+    final PageFace teachMoment= Page.TeachMoment;
 
     final PageFace album = Page.Album;
     final PageFace albumTribe = Page.AlbumTribe;
@@ -215,6 +216,20 @@ final public class
             @Override
             public String toString() {
                 return DocTeachTribe;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
+        TeachMoment("ai/ilikeplaces/widgets/teach/teach_moment.xhtml",
+                ai.ilikeplaces.logic.Listeners.widgets.teach.TeachMoment.TeachMomentIds.values()
+        ) {
+            @Override
+            public String toString() {
+                return DocTeachMoment;
             }
 
             @Override
@@ -1136,6 +1151,11 @@ final public class
         /*TeachTribe IDs*/
         //Nothing here
 
+        /*TeachTribe Page*/
+        final static public String DocTeachMoment = "DocTeachMoment";
+        /*TeachTribe IDs*/
+        //Nothing here
+
         /*Help Page*/
         final static public String DocHelp = "DocHelp";
         /*Help IDs*/
@@ -1755,6 +1775,8 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(profileWidget.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(profileWidget));
 
             inhs__.registerItsNatDocFragmentTemplate(teachTribe.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(teachTribe));
+
+            inhs__.registerItsNatDocFragmentTemplate(teachMoment.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(teachMoment));
 
             inhs__.registerItsNatDocFragmentTemplate(album.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(album));
 
