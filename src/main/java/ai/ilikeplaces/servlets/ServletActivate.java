@@ -1,9 +1,6 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.doc.FIXME;
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.TODO;
-import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.exception.ConstructorInvokationException;
@@ -208,7 +205,11 @@ final public class ServletActivate extends HttpServlet {
                                                 "Adios!"
                                 );
 
-                                final String next = URLDecoder.decode(request__.getParameter(NEXT),"UTF-8");
+                                @TESTS({
+                                        @TEST(scene = "Check for relative urls such as /page/_org", date = "20111130"),
+                                        @TEST(scene = "Full url with parameters", status = true, date = "20111130")
+                                })
+                                final String next = URLDecoder.decode(request__.getParameter(NEXT), "UTF-8");
 
                                 if (organize.getURL().equals(next)) {
                                     response__.sendRedirect(organize.getURL());
