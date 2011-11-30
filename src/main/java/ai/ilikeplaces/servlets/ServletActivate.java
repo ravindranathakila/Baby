@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.Properties;
 
@@ -207,7 +208,7 @@ final public class ServletActivate extends HttpServlet {
                                                 "Adios!"
                                 );
 
-                                final String next = request__.getParameter(NEXT);
+                                final String next = URLDecoder.decode(request__.getParameter(NEXT),"UTF-8");
 
                                 if (organize.getURL().equals(next)) {
                                     response__.sendRedirect(organize.getURL());

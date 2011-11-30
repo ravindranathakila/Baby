@@ -20,6 +20,8 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.html.HTMLDocument;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * Created by IntelliJ IDEA.
@@ -148,7 +150,7 @@ public class TeachMoment extends AbstractWidgetListener<TeachMomentCriteria> {
 
                                         final Parameter parameter;
                                         if (woehint != null && placeName != null && placeDetails != null) {
-                                            parameter = new Parameter("/page/_org?category=143")
+                                            parameter = new Parameter("http://www.ilikeplaces.com/page/_org?category=143")
                                                     .append(PrivateLocationCreate.WOEHINT,
                                                             woehint)
                                                     .append(PrivateLocationCreate.PLACENAME,
@@ -156,17 +158,22 @@ public class TeachMoment extends AbstractWidgetListener<TeachMomentCriteria> {
                                                     .append(PrivateLocationCreate.PLACEDETAILS,
                                                             placeDetails);
                                         } else {
-                                            parameter = new Parameter("/page/_org?category=143");
+                                            parameter = new Parameter("http://www.ilikeplaces.com/page/_org?category=143");
                                         }
 
-                                        final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
-                                                .append(ServletLogin.Username, myemail.getObj(), true)
-                                                .append(ServletLogin.Password,
-                                                        DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
-                                                                .returnValue()
-                                                                .getHumanAuthenticationHash())
-                                                .append(ServletActivate.NEXT, parameter.get())
-                                                .get();
+                                        final String activationURL;
+                                        try {
+                                            activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                                                    .append(ServletLogin.Username, myemail.getObj(), true)
+                                                    .append(ServletLogin.Password,
+                                                            DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
+                                                                    .returnValue()
+                                                                    .getHumanAuthenticationHash())
+                                                    .append(ServletActivate.NEXT, URLEncoder.encode(parameter.toURL(), "UTF8"))
+                                                            .get();
+                                        } catch (UnsupportedEncodingException e) {
+                                            throw new RuntimeException(e);
+                                        }
 
 
                                         String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());

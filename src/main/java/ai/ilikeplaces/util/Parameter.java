@@ -3,7 +3,11 @@ package ai.ilikeplaces.util;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
+import org.apache.commons.httpclient.URI;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -68,5 +72,15 @@ public class Parameter {
 
     public String get() {
         return parameterString.getObj();
+    }
+
+    public String toURL() {
+        try {
+            final URL url = new URL(parameterString.getObjectAsValid());
+            final URI returnVal = new URI(url.getProtocol(), null, url.getHost(), 80, url.getPath(), url.getQuery(), null);
+            return returnVal.toString();
+        } catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
