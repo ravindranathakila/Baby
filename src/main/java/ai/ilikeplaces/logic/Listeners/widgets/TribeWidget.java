@@ -280,7 +280,7 @@ public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria> {
                             humansFriend.getHumanId(),
                             ElementComposer.compose($$(MarkupTag.A))
                                     .$ElementSetHref("#")
-                                    .$ElementSetText("I added you as an member of tribe " + returnVal.returnValue().getTribeName())
+                                    .$ElementSetText("I added you as a member of tribe " + returnVal.returnValue().getTribeName())
                                     .get()
                     ));
         }
