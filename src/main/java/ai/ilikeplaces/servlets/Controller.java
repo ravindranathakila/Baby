@@ -5,6 +5,7 @@ import ai.ilikeplaces.logic.Listeners.*;
 import ai.ilikeplaces.logic.Listeners.templates.TemplateGeneric;
 import ai.ilikeplaces.logic.Listeners.widgets.AlbumManager;
 import ai.ilikeplaces.logic.Listeners.widgets.ListenerShare;
+import ai.ilikeplaces.logic.Listeners.widgets.TribeWidget;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidget;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
@@ -1082,16 +1083,7 @@ final public class
         },
         TribeHome(
                 "ai/ilikeplaces/widgets/TribeHome.xhtml",
-                Page.tribeHomeWidget,
-                Page.tribeHomeName,
-                Page.tribeHomeInfo,
-                Page.tribeHomeNotice,
-                Page.tribeHomeWall,
-                Page.tribeHomeAlbum,
-                Page.tribeHomeMembers,
-                Page.tribeHomeInviteNoti,
-                Page.tribeHomeInviteEmail,
-                Page.tribeHomeInviteClick
+                TribeWidget.TribeWidgetIds.values()
         ) {
             @Override
             public String getURL() {
@@ -1560,17 +1552,6 @@ final public class
 
         /*TribeHome Page*/
         final static public String DocTribeHome = "DocTribeHome";
-        /*TribeHome Specific IDs*/
-        final static public String tribeHomeWidget = "tribeHomeWidget";
-        final static public String tribeHomeName = "tribeHomeName";
-        final static public String tribeHomeInfo = "tribeHomeInfo";
-        final static public String tribeHomeNotice = "tribeHomeNotice";
-        final static public String tribeHomeWall = "tribeHomeWall";
-        final static public String tribeHomeMembers = "tribeHomeMembers";
-        final static public String tribeHomeAlbum = "tribeHomeAlbum";
-        final static public String tribeHomeInviteNoti = "tribeHomeInviteNoti";
-        final static public String tribeHomeInviteEmail = "tribeHomeInviteEmail";
-        final static public String tribeHomeInviteClick = "tribeHomeInviteClick";
 
         /*TribeCreateHome Page*/
         final static public String DocTribeCreateHome = "DocTribeCreateHome";
