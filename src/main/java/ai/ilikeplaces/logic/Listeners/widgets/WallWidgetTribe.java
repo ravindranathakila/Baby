@@ -220,12 +220,18 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
                                                 }.fetchToEmail
                                         );
                                     }
-                                    final Tribe tribe = DB.getHumanCRUDTribeLocal(true).getTribe(criteria.getHumanId(), new VLong(criteria.getTribeId()));
-                                    for (final HumansTribe hpe : tribe.getTribeMembers()) {
-                                        if (!wall.getWallMutes().contains(hpe)) {
-                                            SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), tribe.getTribeName(), fetchToEmail + b.toString());
-                                            DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), wall.getWallId());
+                                    final Return<Tribe> returnVal = DB.getHumanCRUDTribeLocal(true).getTribe(criteria.getHumanId(), new VLong(criteria.getTribeId()), true);
+
+                                    if (returnVal.valid()) {
+                                        final Tribe tribe = returnVal.returnValue();
+                                        for (final HumansTribe hpe : tribe.getTribeMembers()) {
+                                            if (!wall.getWallMutes().contains(hpe)) {
+                                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), tribe.getTribeName(), fetchToEmail + b.toString());
+                                                DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), wall.getWallId());
+                                            }
                                         }
+                                    } else {
+                                        $$(Controller.Page.wallNotice).setTextContent(r.returnMsg());
                                     }
                                 } else {
                                     $$(Controller.Page.wallNotice).setTextContent(r.returnMsg());
