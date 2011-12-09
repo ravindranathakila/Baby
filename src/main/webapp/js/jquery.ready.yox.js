@@ -50,7 +50,7 @@ $(document).ready(function(){
         dsq.src='http://ilikeplaces.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(dsq);
     }
-    setTimeout("runontime2();", 20000);
+    setTimeout("runontime2();", 10000);
 
     ilp_progress(85,'Checking Where On Earth ID...');
     $.getJSON(
@@ -74,7 +74,7 @@ $(document).ready(function(){
                                 $('#Main_location_photo').attr("src",data.photos[0].photo_file_url);
                                 $('#Main_othersidebar_identity').text(data.photos[0].photo_title);
                             }
-                            setTimeout("runontime();", 20000);
+                            setTimeout("runontime();", 10000);
                             $('body').css('background-attachment','fixed');
                             $('body').css('background-repeat','repeat');
                             $('body').css('background-size','100%');
@@ -147,10 +147,13 @@ $(document).ready(function(){
                     });
 
 
-				ilp_progress(100,'Almost at '+getLocationName()+' ..:)');//Have to do this due to a bug in gmap
+				//ilp_progress(100,'Almost at '+getLocationName()+' ..:)');//Have to do this due to a bug in gmap
 				//setTimeout("ilp_load_map()",30000);
 				ilp_load_map = function(){};//The definition of the following function will take time to initialize
                 ilp_load_map = function(){
+					$("#ilp_progress_block").hide();
+					$("#ilp_main_content").show();
+
                     $("#map_static").attr('src',
                     'http://maps.googleapis.com/maps/api/staticmap?center='
                     +y.place.centroid.latitude + ','+y.place.centroid.longitude
@@ -178,8 +181,6 @@ $(document).ready(function(){
 //						}]
 //					}
 //					);
-					$("#ilp_progress_block").hide();
-					$("#ilp_main_content").show();
 				};
             }catch(err){
                 $("#map").hide();
