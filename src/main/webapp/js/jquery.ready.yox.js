@@ -151,26 +151,33 @@ $(document).ready(function(){
 				//setTimeout("ilp_load_map()",30000);
 				ilp_load_map = function(){};//The definition of the following function will take time to initialize
                 ilp_load_map = function(){
-					$("#map").gMap(
-					{
-						zoom:ygeoarea(y.place['placeTypeName attrs'].code),
-						latitude:y.place.centroid.latitude,
-						longitude:y.place.centroid.longitude,
-						address:getLocationName(),
-						markers:[{
-							latitude:y.place.centroid.latitude,
-							longitude:y.place.centroid.longitude,
-							html:"<div class='center'><pre class='center' style='font-size:12px;color:purple;'>"
-							+getLocationName()
-							+"<br/><a href='http://travel.ilikeplaces.com?cid=317285' target='_blank'  style='font-weight:strong;'>Best Travel Deals</a>"
-							+"<br/>Call with Discount Code:317285"
-							+"<br/>US and Canada: 1-800-780-5733"
-							+"<br/>Europe: 00-800-11-20-11-40"
-							+"</pre></div>",
-							popup:true
-						}]
-					}
-					);
+                    $("#map_static").attr('src',
+                    'http://maps.googleapis.com/maps/api/staticmap?center='
+                    +y.place.centroid.latitude + ','+y.place.centroid.longitude
+                    +'&zoom='
+                    +ygeoarea(y.place['placeTypeName attrs'].code)
+                    +'&size=600x600&sensor=false');
+
+//					$("#map").gMap(
+//					{
+//						zoom:ygeoarea(y.place['placeTypeName attrs'].code),
+//						latitude:y.place.centroid.latitude,
+//						longitude:y.place.centroid.longitude,
+//						address:getLocationName(),
+//						markers:[{
+//							latitude:y.place.centroid.latitude,
+//							longitude:y.place.centroid.longitude,
+//							html:"<div class='center'><pre class='center' style='font-size:12px;color:purple;'>"
+//							+getLocationName()
+//							+"<br/><a href='http://travel.ilikeplaces.com?cid=317285' target='_blank'  style='font-weight:strong;'>Best Travel Deals</a>"
+//							+"<br/>Call with Discount Code:317285"
+//							+"<br/>US and Canada: 1-800-780-5733"
+//							+"<br/>Europe: 00-800-11-20-11-40"
+//							+"</pre></div>",
+//							popup:true
+//						}]
+//					}
+//					);
 					$("#ilp_progress_block").hide();
 					$("#ilp_main_content").show();
 				};
