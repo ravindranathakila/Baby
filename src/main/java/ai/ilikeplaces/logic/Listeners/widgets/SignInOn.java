@@ -133,6 +133,16 @@ abstract public class SignInOn extends AbstractWidgetListener {
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
+
+//        Lat time we checked, this did not work!
+//        super.registerForClick($$(Page.signinonSubmit), new EventListener() {
+//            @Override
+//            public void handleEvent(Event evt) {
+//                notifyUser("Trying to log you in...");
+//            }
+//        });
+
+
         final EventListener loginListener = new EventListener() {
             private HumanId myusername = username;
             private Password mypassword = password;
