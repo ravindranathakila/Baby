@@ -35,13 +35,15 @@
                     <div class="use100 center"><span id="wallProfileName" class="user_property_name" style="line-height:0.7;color:#919090;font-size:18px;text-transform:none;vertical-align:top;"></span><span class="user_property_name" style="color:#919090;font-size:18px;display:none;"> SAYS'</span></div>
                     <div class="use100" style="height:5px;">&nbsp;</div>
                     <TEXTAREA
+                            rows="5"
+                            cols="40"
                             id="wallAppend"
-                            class="use100 bold vtip"
-                            value=""
+                            class="use100 bold vtip font"
+                            value="Say something.."
+                            onclick="javascript:if(this.value == 'Say something..'){this.value='';this.style.color='#444444'};"
                             tabindex="1"
-                            style="height:78px;color:#000000;background-color:transparent;border:4px solid #dddddd;"
-                            title="Hint:Enter something and hit 'Talk'">
-                    </TEXTAREA>
+                            style="height:78px;color:#eeeeee;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';"
+                            title="Hint:Enter something and hit 'Talk'">Say something..</TEXTAREA>
                 </div>
                 <div class="use04">
                     &nbsp;
@@ -51,7 +53,7 @@
                 </div>
             </div>
             <div class="use100" style="height:5px;">&nbsp;</div>
-            <div id="wallSubmit" class="use20 use65p use15a">
+            <div id="wallSubmit" class="use20 use65p use15a" onclick="">
                 <img class="use70 use15p use15a" src="/images/Talk_Button.png" alt="Talk!"  style="cursor:pointer;"/>
             </div>
         </div>
