@@ -7,6 +7,7 @@ import ai.ilikeplaces.logic.Listeners.widgets.AlbumManager;
 import ai.ilikeplaces.logic.Listeners.widgets.ListenerShare;
 import ai.ilikeplaces.logic.Listeners.widgets.TribeWidget;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidget;
+import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
 import org.itsnat.core.*;
@@ -423,16 +424,7 @@ final public class
         },
 
         PrivateEventView("ai/ilikeplaces/widgets/privateevent/private_event_view.xhtml",
-                Controller.Page.privateEventViewNotice,
-                Controller.Page.privateEventViewName,
-                Controller.Page.privateEventViewInfo,
-                Controller.Page.privateEventViewOwners,
-                Controller.Page.privateEventViewVisitors,
-                Controller.Page.privateEventViewInvites,
-                Controller.Page.privateEventViewLink,
-                Controller.Page.privateEventViewWall,
-                Controller.Page.privateEventViewAlbum,
-                Controller.Page.privateEventViewLocationMap
+                ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventView.PrivateEventViewIds.values()
         ) {
             @Override
             public String getURL() {
@@ -447,17 +439,7 @@ final public class
 
 
         PrivateEventDelete("ai/ilikeplaces/widgets/privateevent/private_event_delete.xhtml",
-                Controller.Page.privateEventDeleteName,
-                Controller.Page.privateEventDeleteInfo,
-                Controller.Page.privateEventDeleteNotice,
-                Controller.Page.privateEventDelete,
-                Controller.Page.privateEventDeleteLink,
-                Controller.Page.privateEventDeleteOwners,
-                Controller.Page.privateEventDeleteVisitors,
-                Controller.Page.privateEventDeleteInvitees,
-                Controller.Page.privateEventDeleteWall,
-                Controller.Page.privateEventDeleteAlbum,
-                Controller.Page.privateEventDeleteLocationMap
+                ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete.PrivateEventDeleteIds.values()
         ) {
             @Override
             public String getURL() {
@@ -1238,17 +1220,6 @@ final public class
 
         /*Private Event Page*/
         final static public String DocPrivateEventView = "PrivateEventView";
-        /*Private Event Create IDs*/
-        final static public String privateEventViewNotice = "privateEventViewNotice";
-        final static public String privateEventViewName = "privateEventViewName";
-        final static public String privateEventViewInfo = "privateEventViewInfo";
-        final static public String privateEventViewOwners = "privateEventViewOwners";
-        final static public String privateEventViewVisitors = "privateEventViewVisitor";
-        final static public String privateEventViewInvites = "privateEventViewInvites";
-        final static public String privateEventViewLink = "privateEventViewLink";
-        final static public String privateEventViewWall = "privateEventViewWall";
-        final static public String privateEventViewAlbum = "privateEventViewAlbum";
-        final static public String privateEventViewLocationMap = "privateEventViewLocationMap";
 
         /*Private Event Page*/
         final static public String DocPrivateEventCreate = "PrivateEventCreate";
@@ -1260,18 +1231,6 @@ final public class
 
         /*Private Event Page*/
         final static public String DocPrivateEventDelete = "PrivateEventDelete";
-        /*Private Event Create IDs*/
-        final static public String privateEventDeleteName = "privateEventDeleteName";
-        final static public String privateEventDeleteInfo = "privateEventDeleteInfo";
-        final static public String privateEventDeleteNotice = "privateEventDeleteNotice";
-        final static public String privateEventDelete = "privateEventDelete";
-        final static public String privateEventDeleteLink = "privateEventDeleteLink";
-        final static public String privateEventDeleteOwners = "privateEventDeleteOwners";
-        final static public String privateEventDeleteVisitors = "privateEventDeleteVisitors";
-        final static public String privateEventDeleteInvitees = "privateEventDeleteInvitees";
-        final static public String privateEventDeleteWall = "privateEventDeleteWall";
-        final static public String privateEventDeleteAlbum = "privateEventDeleteAlbum";
-        final static public String privateEventDeleteLocationMap = "privateEventDeleteLocationMap";
 
 
         /*Private Event View Sidebar Page*/

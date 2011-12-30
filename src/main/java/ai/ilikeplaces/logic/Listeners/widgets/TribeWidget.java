@@ -17,15 +17,12 @@ import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
 import java.text.MessageFormat;
 import java.util.List;
 
-import static ai.ilikeplaces.servlets.Controller.Page.privateEventDelete;
-import static ai.ilikeplaces.servlets.Controller.Page.privateEventDeleteNotice;
+import static ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete.PrivateEventDeleteIds.privateEventDeleteNotice;
 
 /**
  * Created by IntelliJ IDEA.

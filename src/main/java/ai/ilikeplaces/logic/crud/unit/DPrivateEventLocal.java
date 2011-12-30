@@ -16,6 +16,20 @@ import javax.ejb.Local;
 @Local
 public interface DPrivateEventLocal {
 
+    /**
+     * Removes the {@link ai.ilikeplaces.entities.HumansPrivateEvent caller} from {@link ai.ilikeplaces.entities.PrivateEvent event} if is not the last {@link ai.ilikeplaces.entities.HumansPrivateEvent owner}.
+     * Does not delete the {@link ai.ilikeplaces.entities.PrivateEvent event}.
+     * <br/>
+     * <br/>
+     * Deletes the {@link ai.ilikeplaces.entities.PrivateEvent event} if the caller is last {@link ai.ilikeplaces.entities.HumansPrivateEvent Owner} .
+     * <br/>
+     * <br/>
+     * Removes the {@link ai.ilikeplaces.entities.HumansPrivateEvent caller} from {@link ai.ilikeplaces.entities.PrivateEvent event}.
+     * <br/>
+     * @param humanId
+     * @param privateEventId
+     * @return
+     */
     public boolean doNTxDPrivateEvent(final String humanId, final long privateEventId) throws NoPrivilegesException;
 
 }

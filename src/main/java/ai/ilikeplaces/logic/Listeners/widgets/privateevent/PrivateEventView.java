@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.HumansPrivateEvent;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.AlbumManager;
 import ai.ilikeplaces.logic.Listeners.widgets.Button;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
@@ -22,6 +23,9 @@ import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
@@ -43,6 +47,24 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
     private static final String INVITEE = "Invitee";
     private static final String TALK = "Get in touch";
 
+    private HumanId humanId = null;
+
+    private Long privateEventId = null;
+
+    public static enum PrivateEventViewIds implements WidgetIds {
+        privateEventViewNotice,
+        privateEventViewName,
+        privateEventViewInfo,
+        privateEventViewDelete,
+        privateEventViewOwners,
+        privateEventViewVisitors,
+        privateEventViewInvites,
+        privateEventViewLink,
+        privateEventViewWall,
+        privateEventViewAlbum,
+        privateEventViewLocationMap,
+    }
+
     /**
      * @param request__
      * @param appendToElement__
@@ -59,8 +81,8 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
      */
     @Override
     protected void init(final Object... initArgs) {
-        final HumanId humanId = new HumanId((String) initArgs[0]);
-        final long privateEventId = (Long) initArgs[1];
+        humanId = new HumanId((String) initArgs[0]);
+        privateEventId = (Long) initArgs[1];
 
         @WARNING("Underlying widgets expect a fully refreshed PrivateEvent with respect to owners, visitors and viewers")
         final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(humanId.getObjectAsValid(), privateEventId);
@@ -69,9 +91,9 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
         LoggerFactory.getLogger(PrivateEventView.class.getName()).debug(r.toString());
 
         if (r.returnStatus() == 0) {
-            $$(privateEventViewName).setTextContent(r.returnValue().getPrivateEventName());
-            $$(privateEventViewInfo).setTextContent(r.returnValue().getPrivateEventInfo());
-            new Button(request, $$(privateEventViewLink), "Link to " + r.returnValue().getPrivateEventName(), false, r.returnValue()) {
+            $$(PrivateEventViewIds.privateEventViewName).setTextContent(r.returnValue().getPrivateEventName());
+            $$(PrivateEventViewIds.privateEventViewInfo).setTextContent(r.returnValue().getPrivateEventInfo());
+            new Button(request, $$(PrivateEventViewIds.privateEventViewLink), "Link to " + r.returnValue().getPrivateEventName(), false, r.returnValue()) {
                 PrivateEvent privateEvent = null;
 
                 @Override
@@ -97,18 +119,19 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
                 }
             };
             if ((Boolean) initArgs[2]) {
-                new WallWidgetPrivateEvent(request, $$(Page.privateEventViewWall), humanId, r.returnValue().getPrivateEventId());
-                new AlbumManager(request, $$(Controller.Page.privateEventViewAlbum), humanId, r.returnValue());
+                new WallWidgetPrivateEvent(request, $$(PrivateEventViewIds.privateEventViewWall), humanId, r.returnValue().getPrivateEventId());
+                new AlbumManager(request, $$(PrivateEventViewIds.privateEventViewAlbum), humanId, r.returnValue());
 
                 final GeoCoord gc = new GeoCoord();
                 gc.setObj(r.returnValue().getPrivateLocation().getPrivateLocationLatitude() + "," + r.returnValue().getPrivateLocation().getPrivateLocationLongitude());
                 gc.validateThrow();
 
-                $$(Controller.Page.privateEventViewLocationMap).setAttribute(MarkupTag.IMG.src(),
+                $$(PrivateEventViewIds.privateEventViewLocationMap).setAttribute(MarkupTag.IMG.src(),
                         new Parameter("http://maps.google.com/maps/api/staticmap")
                                 .append("sensor", "false", true)
                                 .append("center", gc.toString())
-                                .append("size", "230x250")
+                                .append("zoom","14")
+                                .append("size", "150x150")
                                 .append("format", "jpg")
                                 .append("markers", "color:0x7fe2ff|label:S|path=fillcolor:0xAA000033|color:0xFFFFFF00|"
                                         + gc.toString())
@@ -118,7 +141,7 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
             UCShowOwners:
             {
                 for (final HumansPrivateEvent hpe : r.returnValue().getPrivateEventOwners()) {
-                    new UserProperty(request, $$(Controller.Page.privateEventViewOwners), new HumanId(hpe.getHumanId())) {
+                    new UserProperty(request, $$(PrivateEventViewIds.privateEventViewOwners), new HumanId(hpe.getHumanId())) {
                         protected void init(final Object... initArgs) {
                             $$(Controller.Page.user_property_content).appendChild(
                                     ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(TALK).$ElementSetHref(ProfileRedirect.PROFILE_URL + hpe.getHumanId()).get()
@@ -131,7 +154,7 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
             UCShowViewers:
             {
                 for (final HumansPrivateEvent hpe : r.returnValue().getPrivateEventViewers()) {
-                    new UserProperty(request, $$(Controller.Page.privateEventViewVisitors), new HumanId(hpe.getHumanId())) {
+                    new UserProperty(request, $$(PrivateEventViewIds.privateEventViewVisitors), new HumanId(hpe.getHumanId())) {
                         protected void init(final Object... initArgs) {
                             $$(Page.user_property_content).appendChild(
                                     ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(TALK).$ElementSetHref(ProfileRedirect.PROFILE_URL + hpe.getHumanId()).get()
@@ -144,7 +167,7 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
             UCShowInvites:
             {
                 for (final HumansPrivateEvent hpe : r.returnValue().getPrivateEventInvites()) {
-                    new UserProperty(request, $$(Controller.Page.privateEventViewInvites), new HumanId(hpe.getHumanId())) {
+                    new UserProperty(request, $$(PrivateEventViewIds.privateEventViewInvites), new HumanId(hpe.getHumanId())) {
                         protected void init(final Object... initArgs) {
                             $$(Controller.Page.user_property_content).setTextContent(INVITEE);
                         }
@@ -153,13 +176,52 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
             }
 
         } else {
-            $$(privateEventViewNotice).setTextContent(r.returnMsg());
+            $$(PrivateEventViewIds.privateEventViewNotice).setTextContent(r.returnMsg());
         }
 
     }
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
+
+        delete:
+        {
+            itsNatHTMLDocument__.addEventListener((EventTarget) $$(PrivateEventViewIds.privateEventViewDelete), EventType.CLICK.toString(), new EventListener() {
+
+                final HumanId myhumanId = humanId;
+                final Long myprivateEventId = privateEventId;
+                final Obj<Boolean> alertedUserWithConfirm = (Obj<Boolean>) new Obj<Boolean>().setObjAsValid(false);
+
+                @Override
+                public void handleEvent(final Event evt_) {
+                    if (!alertedUserWithConfirm.getObj()) {
+                        Loggers.USER.info(myhumanId.getObj() + " clicked delete for private event " + myprivateEventId);
+                        alertedUserWithConfirm.setObjAsValid(true);
+                        $$(evt_).setAttribute(MarkupTag.IMG.src(),
+                                $$(evt_).getAttribute(MarkupTag.IMG.src()).replace("delete.png", "confirm.png")
+                        );
+                        //$$(evt_).setTextContent("Confirm Delete!");
+                    } else {
+                        Loggers.USER.info(myhumanId.getObj() + " clicked delete after confirmation for private event " + myprivateEventId);
+                        alertedUserWithConfirm.setObjAsValid(false); //needed because chrome or itsnat seems to be resending the event.
+                        final Return<Boolean> r = DB.getHumanCrudPrivateEventLocal(true).dPrivateEvent(myhumanId, myprivateEventId);
+                        if (r.returnStatus() == 0) {
+                            Loggers.USER.info(myhumanId.getObj() + " deleted private event " + r.returnValue());
+                            remove(evt_.getTarget(), EventType.CLICK, this, false);
+                            $$sendJS(
+                                    JSCodeToSend.redirectPageWithURL("/page/_org")
+                            );
+                            //clear($$(privateEventDeleteNotice));
+                        } else {
+                            $$(PrivateEventViewIds.privateEventViewNotice).setTextContent(r.returnMsg());
+                        }
+                    }
+
+
+                }
+
+            }, false);
+        }
     }
 
 }

@@ -34,7 +34,7 @@ public class DPrivateEvent extends AbstractSLBCallbacks implements DPrivateEvent
     @EJB
     private CrudServiceLocal<HumansPrivateEvent> humansPrivateEventCrudServiceLocal;
 
-    private static final String DELETE_THIS_EVENT = "delete this event.";
+    private static final String DELETE_THIS_EVENT = "delete this event. Reason: Neither a Owner of Viewer. Probable cause is that the visual representation of Owners or Viewers are wrong!";
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
@@ -70,7 +70,12 @@ public class DPrivateEvent extends AbstractSLBCallbacks implements DPrivateEvent
                     }
                 }
             } else {
-                throw new NoPrivilegesException(humanId, DELETE_THIS_EVENT);
+                final List<HumansPrivateEvent> privateEventViewers = privateEvent.getPrivateEventViewers();
+                if(privateEventViewers.contains(humansPrivateEvent)){
+                    privateEventViewers.remove(humansPrivateEvent);
+                }else{
+                    throw new NoPrivilegesException(humanId, DELETE_THIS_EVENT);
+                }
             }
         }
         return returnVal;
