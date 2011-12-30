@@ -8,7 +8,6 @@ import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.AlbumManager;
-import ai.ilikeplaces.logic.Listeners.widgets.Button;
 import ai.ilikeplaces.logic.Listeners.widgets.MemberHandler;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent;
 import ai.ilikeplaces.logic.crud.DB;
@@ -57,6 +56,20 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
     private String eventLink = "";
 
+    public static enum PrivateEventDeleteIds implements WidgetIds {
+        privateEventDeleteName,
+        privateEventDeleteInfo,
+        privateEventDeleteNotice,
+        privateEventDelete,
+        privateEventDeleteLink,
+        privateEventDeleteOwners,
+        privateEventDeleteVisitors,
+        privateEventDeleteInvitees,
+        privateEventDeleteWall,
+        privateEventDeleteAlbum,
+        privateEventDeleteLocationMap,
+    }
+
     /**
      * @param request__
      * @param appendToElement__
@@ -78,8 +91,8 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
         privateEventReturn = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(humanId.getObj(), privateEventId);
         if (privateEventReturn.returnStatus() == 0) {
-            $$(privateEventDeleteName).setTextContent(privateEventReturn.returnValue().getPrivateEventName());
-            $$(privateEventDeleteInfo).setTextContent(privateEventReturn.returnValue().getPrivateEventInfo());
+            $$(PrivateEventDeleteIds.privateEventDeleteName).setTextContent(privateEventReturn.returnValue().getPrivateEventName());
+            $$(PrivateEventDeleteIds.privateEventDeleteInfo).setTextContent(privateEventReturn.returnValue().getPrivateEventInfo());
 
             eventLink = new Parameter("http://www.ilikeplaces.com" + Organize.getURL())
                     .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
@@ -88,18 +101,19 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                     .get();
 
             if ((Boolean) initArgs[2]) {
-                new WallWidgetPrivateEvent(request, $$(Page.privateEventDeleteWall), humanId, privateEventReturn.returnValue().getPrivateEventId());
-                new AlbumManager(request, $$(Page.privateEventDeleteAlbum), humanId, privateEventReturn.returnValue());
+                new WallWidgetPrivateEvent(request, $$(PrivateEventDeleteIds.privateEventDeleteWall), humanId, privateEventReturn.returnValue().getPrivateEventId());
+                new AlbumManager(request, $$(PrivateEventDeleteIds.privateEventDeleteAlbum), humanId, privateEventReturn.returnValue());
 
                 final GeoCoord gc = new GeoCoord();
                 gc.setObj(privateEventReturn.returnValue().getPrivateLocation().getPrivateLocationLatitude() + "," + privateEventReturn.returnValue().getPrivateLocation().getPrivateLocationLongitude());
                 gc.validateThrow();
 
-                $$(privateEventDeleteLocationMap).setAttribute(MarkupTag.IMG.src(),
+                $$(PrivateEventDeleteIds.privateEventDeleteLocationMap).setAttribute(MarkupTag.IMG.src(),
                         new Parameter("http://maps.google.com/maps/api/staticmap")
                                 .append("sensor", "false", true)
                                 .append("center", gc.toString())
-                                .append("size", "230x250")
+                                .append("zoom","14")
+                                .append("size", "150x150")
                                 .append("format", "jpg")
                                 .append("markers", "color:0x7fe2ff|label:S|path=fillcolor:0xAA000033|color:0xFFFFFF00|"
                                         + gc.toString())
@@ -107,7 +121,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
             }
 
         } else {
-            $$(privateEventDeleteNotice).setTextContent(privateEventReturn.returnMsg());
+            $$(PrivateEventDeleteIds.privateEventDeleteNotice).setTextContent(privateEventReturn.returnMsg());
         }
 
     }//init
@@ -116,7 +130,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
         delete:
         {
-            itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventDelete), EventType.CLICK.toString(), new EventListener() {
+            itsNatHTMLDocument__.addEventListener((EventTarget) $$(PrivateEventDeleteIds.privateEventDelete), EventType.CLICK.toString(), new EventListener() {
 
                 final HumanId myhumanId = humanId;
                 final Long myprivateEventId = privateEventId;
@@ -143,7 +157,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                             );
                             //clear($$(privateEventDeleteNotice));
                         } else {
-                            $$(privateEventDeleteNotice).setTextContent(r.returnMsg());
+                            $$(PrivateEventDeleteIds.privateEventDeleteNotice).setTextContent(r.returnMsg());
                         }
                     }
 
@@ -161,7 +175,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
         AddRemoveOwners:
         {
             new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
-                    request, $$(privateEventDeleteOwners),
+                    request, $$(PrivateEventDeleteIds.privateEventDeleteOwners),
                     user.getHumansNet(),
                     possibilities,
                     privateEvent.getPrivateEventOwners(),
@@ -219,7 +233,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
         AddRemoveVisitors:
         {
             new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
-                    request, $$(privateEventDeleteVisitors),
+                    request, $$(PrivateEventDeleteIds.privateEventDeleteVisitors),
                     user.getHumansNet(),
                     possibilities,
                     privateEvent.getPrivateEventViewers(),
@@ -275,7 +289,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 //INVITEES JUST GET NOTIFICATIONS. AS OF 2011-10-01 THESE GUYS CANNOT VIEW THE EVENT. HENCE IT IS HIDDEN.
             {
                 new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
-                        request, $$(privateEventDeleteInvitees),
+                        request, $$(PrivateEventDeleteIds.privateEventDeleteInvitees),
                         user.getHumansNet(),
                         possibilities,
                         privateEvent.getPrivateEventInvites(),

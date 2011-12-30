@@ -9,16 +9,13 @@
             <script type="text/javascript"
             src="http://s7.addthis.com/js/250/addthis_widget.js#username=ravindranathakila"></script>
 
-            <div class="use100" style="height:0px;">
-                &nbsp;
-            </div>
             <div style="list-style-type:none;" class="use100 center">
                 <div class="use100">
                     <div class="use100" style="background:url(/images/Metal.png) repeat-x; background-color:#fafafa;">
                         <div class="use100" style="height:10px;"> &nbsp;</div>
                         <div class="use100 black_fg">
                             <div class="use100" >
-                                <span  id="privateEventViewName" class="use100  bold vtip"
+                                <span  id="privateEventViewName" class="use100 bold vtip"
                                            style="font-size:23px;line-height:0.9;"
                                         title="You can invite friends to this event.">&nbsp;</span>
                             </div>
@@ -38,15 +35,25 @@
                     </div>
                     <div class="use60">
                         <div class="use100 center bold">
-                            <div class="use100 black_fg">
+                            <div class="use90 use5p use5a black_fg">
                                 <span id="privateEventViewInfo" class="use100 bold vtip"
                                       title="You can invite friends to this event.">&nbsp;</span>
                                 <div class="use100">&nbsp;</div>
                             </div>
+                            <div class="use100" style="display:none;">
+                                <div id="privateEventViewLink" class="use60">
+                                </div>
+                            </div>
+                            <div class="use100">&nbsp;</div>
+                            <div class="use618 use191p use191a">
+                                <a class="btn center vtip cursor_link" title="This cannot be undone!">
+                                    <img class="use382 use309p use309a" id="privateEventViewDelete" src="/images/delete.png" alt="Delete"/>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <div class="use20">
-                        <img class="use95" style="cursor:pointer;padding:2px;background-color:#eeeeee;" src="/images/Upload.gif" alt="Add Photo"/>
+                        &nbsp;
                     </div>
                 </div>
                 <div class="use100" style="height:10px;">
@@ -77,18 +84,13 @@
                                 MOMENT ATTENDEES
                             </h2>
                         </div>
-                    <div class="use100 black_fg" id="privateEventViewVisitor"></div>
+                    <div class="use100 black_fg" id="privateEventViewVisitors"></div>
                 </div>
                 <div class="use100 black_fg" style="display:none;">
                     <div class="use100">
                         <h4 class="use100 bold fg_orange vtip" title="Click Items To Change Status" style="font-size:18px;">Graces this moment:</h4>
                     </div>
                     <div class="use100 black_fg" id="privateEventViewInvites"></div>
-                </div>
-                <div class="use100 black_fg" style="display:none;">
-                  <div id="privateEventViewLink" class="use30 use35p use35a">
-                  </div>
-                  <div class="use100">&nbsp;</div>
                 </div>
             </div>
             <hr/>

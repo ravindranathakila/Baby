@@ -32,7 +32,7 @@
                 Add Photos to Album
             </div>
             <form id="file_upload_form" method="post" target="upload_target" enctype="multipart/form-data" action="/gfg?type=2">
-                <input name="file" id="file" size="27" type="file"
+                <input name="file" id="file" size="27" type="file" class="album_file_upload_input"
                        onchange="javascript:$('#file').hide();$('#uploading').show();$('#file_upload_form').submit();"/><br/><br/>
                 <input type="hidden" name="type" value="2"/>
                 <input type="hidden" name="AlbumPivateEventId" id="AlbumPivateEventId"/>

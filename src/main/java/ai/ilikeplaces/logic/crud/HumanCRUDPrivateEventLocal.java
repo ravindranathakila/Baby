@@ -158,6 +158,15 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall {
     public Return<PrivateEvent> uPrivateEventRemoveReject(final HumanId friend__, final long privateEventId__, final HumansFriend owner);
 
     /**
+     * Removes the {@link ai.ilikeplaces.entities.HumansPrivateEvent caller} from {@link PrivateEvent event} if is not the last {@link ai.ilikeplaces.entities.HumansPrivateEvent owner}.
+     * Does not delete the {@link PrivateEvent event}.
+     * <br/>
+     * <br/>
+     * Deletes the {@link PrivateEvent event} if the caller is last {@link ai.ilikeplaces.entities.HumansPrivateEvent Owner} .
+     * <br/>
+     * <br/>
+     * Removes the {@link ai.ilikeplaces.entities.HumansPrivateEvent caller} from {@link PrivateEvent event}.
+     * <br/>
      * @param operator__
      * @param privateEventId__
      * @return
