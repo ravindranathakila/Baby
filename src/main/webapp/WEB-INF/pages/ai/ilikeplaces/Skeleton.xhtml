@@ -14,6 +14,17 @@
     <link rel="stylesheet" href="/css/miniquarry/layout.css" type="text/css"/>
     <style type="text/css">
 
+        .use01{
+            width:1%;
+            position:relative;
+            float:left;
+        }
+
+        .use02{
+            width:2%;
+            position:relative;
+            float:left;
+        }
 
         .use083{
             width:8.3%;
@@ -97,6 +108,18 @@
 
         .use917{
             width:91.7%;
+            position:relative;
+            float:left;
+        }
+
+        .use96{
+            width:96%;
+            position:relative;
+            float:left;
+        }
+
+        .use99{
+            width:99%;
             position:relative;
             float:left;
         }
@@ -206,14 +229,14 @@
             <div class="use100" style="height:25px;">&nbsp;</div>
         </div>
         <div class="use20 inherit_height center" style="display:block;overflow:hidden;">
-            <a href="#" id="Skeleton_othersidebar_wall_link">
-                <img class="vtip cursor_link center"
-                     style="height:100%;vertical-align:middle;cursor:pointer;"
-                     title="Go back to www.ilikeplaces.com"
-                     onclick="javascript:window.location='/page/_';"
-                     src="/images/The Talk.png"
-                     alt="The Talk"
-                        />
+            <img class="vtip cursor_link center"
+                 style="height:100%;vertical-align:middle;cursor:pointer;"
+                 title="Go back to www.ilikeplaces.com"
+                 onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location=$('.profile_link').attr('href');});"
+                 src="/images/The Talk.png"
+                 alt="The Talk"
+                    />
+            <a href="#" class="profile_link" id="Skeleton_othersidebar_wall_link" style="display:none;">&nbsp;
             </a>
         </div>
         <div class="use20 inherit_height center" style="display:block;overflow:hidden;">
@@ -221,7 +244,7 @@
                  style="height:100%;vertical-align:middle;cursor:pointer;"
                  id="Skeleton_othersidebar_places_link"
                  title="Go back to www.ilikeplaces.com"
-                 onclick="javascript:window.location='/page/_tribes';"
+                 onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location='/page/_tribes';});"
                  src="/images/The Tribes.png"
                  alt="The Talk"
                     />
@@ -238,7 +261,7 @@
                     <img class="vtip cursor_link center"
                          style="height:100%;vertical-align:middle;cursor:pointer;"
                         title="Go back to www.ilikeplaces.com"
-                        onclick="javascript:window.location='/';"
+                        onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location='/';});"
                         src="/images/DT.png"
                         alt="Down Town"
                     />
@@ -256,7 +279,7 @@
                  style="height:100%;vertical-align:middle;cursor:pointer;"
                  id="Skeleton_othersidebar_organizer_link"
                  title="Go back to www.ilikeplaces.com"
-                 onclick="javascript:window.location='/page/_org';"
+                 onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location='/page/_org';});"
                  src="/images/The Moments.png"
                  alt="The Talk"
                     />
@@ -265,7 +288,7 @@
             <img class="vtip cursor_link center"
                  style="height:100%;vertical-align:middle;cursor:pointer;"
                  title="Go back to www.ilikeplaces.com"
-                 onclick="javascript:window.location='/page/_me';"
+                 onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location='/page/_me';});"
                  src="/images/The Snaps.png"
                  alt="The Talk"
                     />
@@ -311,7 +334,7 @@
     </div>
 </div>
 <div class="use100" style="background-color:#f5f5f5;">
-    <div class="use100">
+    <div class="use100 fade_out">
 
         <div class="use236" style="overflow:hidden;text-align:right;">
             <div class="use083" style="height:1000px;background-color:#cdcdcd;">
@@ -319,12 +342,6 @@
             </div>
 
             <div class="use917" id="Skeleton_sidebar">
-                &nbsp;
-            </div>
-            <div class="use100 center" style="height:10px;">
-                &nbsp;
-            </div>
-            <div class="use100 center" style="display:none;">
             </div>
         </div>
 
@@ -337,7 +354,14 @@
                         </div>
                     </div>
                     <div class="use572">
-                        <div class="use100" style="height:60px;background:url(/images/Metal.png) repeat-x; background-color:#fafafa"> &nbsp;</div>
+                        <!--<div class="use100" style="height:10px;"> &nbsp;</div>-->
+                        <div class="use100" style="background:url(/images/Metal_Title_Light.png) repeat; background-color:#fafafa">
+                            <div class="use100" style="height:10px;"> &nbsp;</div>
+                            <div class="use100">
+                                <span style="font-size:23px;line-height:0.9;">&nbsp;</span>
+                            </div>
+                            <div class="use100" style="height:10px;"> &nbsp;</div>
+                        </div>
                         <div class="use100" style="height:10px;"> &nbsp;</div>
                         <div class="use100">
                             <img src="http://c1798872.cdn.cloudfiles.rackspacecloud.com/1320896128829-03c38de3-46b8-4fe9-8597-0c0560227fd8.jpg" alt="" style="width:100%;"/>
@@ -393,7 +417,7 @@
                 </div>
             </div>
             <div class="use72" style="background-color:#ffffff;">
-
+                    <!--<div class="use100" style="height:10px;"> &nbsp;</div>-->
                 <div class="use100 ">
                     <div class="use100  center">
                         <span id="PageTitle" class="vtip" title="" style="font-size:25px;font-weight:900;"></span>
@@ -427,7 +451,14 @@
                         &nbsp;
                     </div>
                     <div class="use572" style="background-color:#ffffff;height:1000px;">
-                        <div class="use100" style="height:60px;background:url(/images/Metal.png) repeat-x; background-color:#fafafa"> &nbsp;</div>
+                        <!--<div class="use100" style="height:10px;"> &nbsp;</div>-->
+                        <div class="use100" style="background:url(/images/Metal_Title_Light.png) repeat; background-color:#fafafa">
+                            <div class="use100" style="height:10px;"> &nbsp;</div>
+                            <div class="use100">
+                                <span style="font-size:23px;line-height:0.9;">&nbsp;</span>
+                            </div>
+                            <div class="use100" style="height:10px;"> &nbsp;</div>
+                        </div>
                         <div class="use100" style="height:10px;"> &nbsp;</div>
                         <div class="use100">
                             <img src="http://c1924672.cdn.cloudfiles.rackspacecloud.com/1320297239149-78851fba-0952-469c-9b5a-742713e37e00.jpg" alt="" style="width:100%;"/>
@@ -462,7 +493,21 @@
             </div>
         </div>
         <div class="use236 lose_attn" id="Skeleton_othersidebar"  style="overflow:hidden;background-color:#f5f5f5;">
-            <div class="use917" style="visibility:hidden;">
+            <div class="use917">
+                <div class="use100">
+                    <div class="use80 use10p use10a center" style="background:url(/images/Metal_Title_Lighter.png) repeat; background-color:#fafafa">
+                        <div class="use100" style="height:10px;"> &nbsp;</div>
+                        <div class="use100">
+                            <span style="font-size:23px;line-height:0.9;letter-spacing:-3px;" class="bold">SEARCH MOMENTS</span>
+                        </div>
+                        <div class="use100" style="height:10px;"> &nbsp;</div>
+                    </div>
+                    <div class="use10">
+                        <span style="font-size:23px;line-height:0.9;" class="bold">&nbsp;</span>
+                    </div>
+                </div>
+            </div>
+            <div class="use917" style="display:none;">
                 <div class="use100" style="background-color:#6b6d6d;display:none;">
                     <div class="use100" style="cursor:pointer;padding-left:1%;padding-right:1%;padding-top:1%;padding-bottom:1%;">
                         <img id="Skeleton_profile_photo"
