@@ -38,8 +38,10 @@ public class CarouselThumb extends AbstractWidgetListener<CarouselThumbCriteria>
      */
     @Override
     protected void init(final CarouselThumbCriteria carouselThumbCriteria) {
-        final String imageURL = RBGet.globalConfig.getString(ALBUM__PHOTOS) + carouselThumbCriteria.getPrivatePhoto().getPrivatePhotoURLPath();
+        final String privatePhotoURLPath = carouselThumbCriteria.getPrivatePhoto().getPrivatePhotoURLPath();
+        final String imageURL = RBGet.globalConfig.getString(ALBUM__PHOTOS) + privatePhotoURLPath;
         $$(CarouselThumbIds.carouselThumbImage).setAttribute(MarkupTag.IMG.title(), imageURL);
+        $$(CarouselThumbIds.carouselThumbImage).setAttribute(MarkupTag.IMG.alt(), privatePhotoURLPath.replace("\\.jpg",""));
     }
 
     /**
