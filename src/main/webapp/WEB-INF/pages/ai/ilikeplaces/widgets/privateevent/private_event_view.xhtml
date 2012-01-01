@@ -10,64 +10,69 @@
             src="http://s7.addthis.com/js/250/addthis_widget.js#username=ravindranathakila"></script>
 
             <div class="use100 center">
-                <div class="use100">
-                    <div class="use100" style="background:url(/images/Metal_Title_Lighter.png) repeat;">
-                        <div class="use100" style="height:10px;"> &nbsp;</div>
-                        <div class="use100">
-                            <div class="use100" >
-                                <span  id="privateEventViewName" class="bold vtip"
-                                           style="font-size:23px;line-height:0.9;"
-                                        title="You can invite friends to this event.">&nbsp;</span>
-                            </div>
-                        </div>
-                        <div class="use100" style="height:3px;"> &nbsp;</div>
-                        <div class="use100" style="height:7px;background:url(/images/5_fade_vertical.png) repeat-x;"> &nbsp;</div>
-                    </div>
-                </div>
-                <div class="use100" style="height:10px;"> &nbsp;</div>
-                <div class="use100">
-                    <div class="use20" >
-                        <img id="privateEventViewLocationMap" src="http://maps.google.com/maps/api/staticmap?sensor=false&center=48.85567989976907,2.3545074462890625&size=230x230&format=jpg&markers=color:0x7fe2ff|label:S|48.85567989976907,2.3545074462890625&path=fillcolor:0xAA000033|color:0xFFFFFF00" alt="Loading..."
-                         class="use95 cursor_link vtip"
-                         style="cursor:pointer;padding:2px;background-color:#eeeeee;"
-                         title="Click to Get Directions!"
-                         onclick="javascript:window.location = this.src.replace('http://maps.google.com/maps/api/staticmap?sensor=false&','/?').replace('center','toLatLng');"
-                                />
-                    </div>
-                    <div class="use60">
-                        <div class="use100 center bold">
-                            <div class="use90 use5p use5a black_fg">
-                                <span id="privateEventViewInfo" class="use100 bold vtip"
-                                      style="font-size:14px;"
-                                      title="You can invite friends to this event.">&nbsp;</span>
-                                <div class="use100">&nbsp;</div>
-                            </div>
-                            <div class="use100" style="display:none;">
-                                <div id="privateEventViewLink" class="use60">
+                <div class="use100 carouselable">
+
+                    <div class="use100">
+                        <div class="use100" style="background:url(/images/Metal_Title_Lighter.png) repeat;">
+                            <div class="use100" style="height:10px;"> &nbsp;</div>
+                            <div class="use100">
+                                <div class="use100" >
+                                    <span  id="privateEventViewName" class="bold vtip"
+                                               style="font-size:23px;line-height:0.9;"
+                                            title="You can invite friends to this event.">&nbsp;</span>
                                 </div>
                             </div>
-                            <div class="use100">&nbsp;</div>
-                            <div class="use618 use191p use191a">
-                                <a class="btn center vtip cursor_link" title="This cannot be undone!">
-                                    <img class="use382 use309p use309a" id="privateEventViewDelete" src="/images/delete.png" alt="Delete"/>
-                                </a>
-                            </div>
+                            <div class="use100" style="height:3px;"> &nbsp;</div>
+                            <div class="use100" style="height:7px;background:url(/images/5_fade_vertical.png) repeat-x;"> &nbsp;</div>
                         </div>
                     </div>
-                    <div class="use20">
+                    <div class="use100" style="height:10px;"> &nbsp;</div>
+                    <div class="use100">
+                        <div class="use20" >
+                            <img id="privateEventViewLocationMap" src="http://maps.google.com/maps/api/staticmap?sensor=false&center=48.85567989976907,2.3545074462890625&size=230x230&format=jpg&markers=color:0x7fe2ff|label:S|48.85567989976907,2.3545074462890625&path=fillcolor:0xAA000033|color:0xFFFFFF00" alt="Loading..."
+                             class="use95 cursor_link vtip"
+                             style="cursor:pointer;padding:2px;background-color:#eeeeee;"
+                             title="Click to Get Directions!"
+                             onclick="javascript:window.location = this.src.replace('http://maps.google.com/maps/api/staticmap?sensor=false&','/?').replace('center','toLatLng');"
+                                    />
+                        </div>
+                        <div class="use60">
+                            <div class="use100 center bold">
+                                <div class="use90 use5p use5a black_fg">
+                                    <span id="privateEventViewInfo" class="use100 bold vtip"
+                                          style="font-size:14px;"
+                                          title="You can invite friends to this event.">&nbsp;</span>
+                                    <div class="use100">&nbsp;</div>
+                                </div>
+                                <div class="use100" style="display:none;">
+                                    <div id="privateEventViewLink" class="use60">
+                                    </div>
+                                </div>
+                                <div class="use100">&nbsp;</div>
+                                <div class="use618 use191p use191a">
+                                    <a class="btn center vtip cursor_link" title="This cannot be undone!">
+                                        <img class="use382 use309p use309a" id="privateEventViewDelete" src="/images/delete.png" alt="Delete"/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="use20">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="use100" style="height:10px;">
                         &nbsp;
                     </div>
+                    <div class="use100 black_fg">
+                        <span id="privateEventViewNotice" class="use100 black_fg"></span>
+                    </div>
+                    <div class="use100 black_fg">
+                      <div id="privateEventViewWall">
+                      </div>
+                    </div>
+
                 </div>
-                <div class="use100" style="height:10px;">
-                    &nbsp;
-                </div>
-                <div class="use100 black_fg">
-                    <span id="privateEventViewNotice" class="use100 black_fg"></span>
-                </div>
-                <div class="use100 black_fg">
-                  <div id="privateEventViewWall">
-                  </div>
-                </div>
+
                 <div class="use100 black_fg">
                   <div id="privateEventViewAlbum">
                   </div>
