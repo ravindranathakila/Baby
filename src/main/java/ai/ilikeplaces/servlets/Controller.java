@@ -7,6 +7,7 @@ import ai.ilikeplaces.logic.Listeners.widgets.AlbumManager;
 import ai.ilikeplaces.logic.Listeners.widgets.ListenerShare;
 import ai.ilikeplaces.logic.Listeners.widgets.TribeWidget;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidget;
+import ai.ilikeplaces.logic.Listeners.widgets.carousel.Carousel;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
@@ -134,6 +135,9 @@ final public class
     final PageFace teachTribe = Page.TeachTribe;
     final PageFace teachMoment= Page.TeachMoment;
 
+    final PageFace carousel = Page.Carousel;
+    final PageFace carouselThumb = Page.CarouselThumb;
+
     final PageFace album = Page.Album;
     final PageFace albumTribe = Page.AlbumTribe;
 
@@ -232,6 +236,34 @@ final public class
             @Override
             public String toString() {
                 return DocTeachMoment;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
+        Carousel("ai/ilikeplaces/widgets/carousel/carousel.xhtml",
+                ai.ilikeplaces.logic.Listeners.widgets.carousel.Carousel.CarouselIds.values()
+        ) {
+            @Override
+            public String toString() {
+                return DocCarousel;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
+        CarouselThumb("ai/ilikeplaces/widgets/carousel/carousel_thumb.xhtml",
+                ai.ilikeplaces.logic.Listeners.widgets.carousel.CarouselThumb.CarouselThumbIds.values()
+        ) {
+            @Override
+            public String toString() {
+                return DocCarouselThumb;
             }
 
             @Override
@@ -1135,6 +1167,12 @@ final public class
         /*Help IDs*/
         //Nothing here
 
+        /*Carousel*/
+        final static public String DocCarousel = "DocCarousel";
+
+        /*CarouselThumb*/
+        final static public String DocCarouselThumb = "DocCarouselThumb";
+
         /*Album Page*/
         final static public String DocAlbum = "DocAlbum";
 
@@ -1719,6 +1757,10 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(teachMoment.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(teachMoment));
 
             inhs__.registerItsNatDocFragmentTemplate(album.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(album));
+
+            inhs__.registerItsNatDocFragmentTemplate(carousel.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(carousel));
+
+            inhs__.registerItsNatDocFragmentTemplate(carouselThumb.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(carouselThumb));
 
             inhs__.registerItsNatDocFragmentTemplate(albumTribe.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(albumTribe));
 
