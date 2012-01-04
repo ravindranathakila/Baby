@@ -12,6 +12,7 @@ import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.rbs.RBGet;
+import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
@@ -105,6 +106,8 @@ public class AlbumManagerTribe extends AbstractWidgetListener {
                             $$(Page.pd_photo_permalink).setAttribute(MarkupTag.A.href(), imageURL);
 
                             $$(Page.pd_photo).setAttribute(MarkupTag.IMG.title(), imageURL);
+
+                            $$setClass($$(Page.pd), privatePhoto__.getPrivatePhotoURLPath(), false);
 
                             /* final String photoThumbURL = imageURL.substring(0, imageURL.lastIndexOf(SLASH) + 1) + CDNAlbumPrivateEvent.THUMBNAIL + imageURL.substring(imageURL.lastIndexOf(SLASH) + 1, photoURL.length());
                            $$(Controller.Page.pd_photo).setAttribute(MarkupTag.IMG.src(), photoThumbURL);*/
