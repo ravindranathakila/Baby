@@ -4,6 +4,8 @@ import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.logic.Listeners.widgets.carousel.Carousel;
+import ai.ilikeplaces.logic.Listeners.widgets.carousel.CarouselCriteria;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.Email;
@@ -89,7 +91,11 @@ public class AlbumManagerTribe extends AbstractWidgetListener {
 
                 int photoSequenceNumber = 1;
 
-                for (final PrivatePhoto privatePhoto__ : album.getAlbumPhotos()) {
+                final List<PrivatePhoto> albumPhotos = album.getAlbumPhotos();
+
+                new Carousel(request, new CarouselCriteria().setAlbumPhotos(albumPhotos), $(Page.Skeleton_right_column));
+
+                for (final PrivatePhoto privatePhoto__ : albumPhotos) {
                     new Photo$Description(request, $$(Page.AlbumTribePhotos), photoSequenceNumber++, wallProspects) {
                         @Override
                         protected void init(final Object... initArgs) {
