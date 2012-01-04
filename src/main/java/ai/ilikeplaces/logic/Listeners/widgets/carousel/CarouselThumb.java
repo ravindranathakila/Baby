@@ -18,6 +18,7 @@ import org.w3c.dom.html.HTMLDocument;
 public class CarouselThumb extends AbstractWidgetListener<CarouselThumbCriteria> {
 
     private static final String ALBUM__PHOTOS = "ALBUM_PHOTOS";
+    private static final String TH_ = "th_";
 
 
     public static enum CarouselThumbIds implements AbstractWidgetListener.WidgetIds {
@@ -39,9 +40,9 @@ public class CarouselThumb extends AbstractWidgetListener<CarouselThumbCriteria>
     @Override
     protected void init(final CarouselThumbCriteria carouselThumbCriteria) {
         final String privatePhotoURLPath = carouselThumbCriteria.getPrivatePhoto().getPrivatePhotoURLPath();
-        final String imageURL = RBGet.globalConfig.getString(ALBUM__PHOTOS) + privatePhotoURLPath;
+        final String imageURL = RBGet.globalConfig.getString(ALBUM__PHOTOS) + TH_ + privatePhotoURLPath;
         $$(CarouselThumbIds.carouselThumbImage).setAttribute(MarkupTag.IMG.title(), imageURL);
-        $$(CarouselThumbIds.carouselThumbImage).setAttribute(MarkupTag.IMG.alt(), privatePhotoURLPath.replace("\\.jpg",""));
+        $$(CarouselThumbIds.carouselThumbImage).setAttribute(MarkupTag.IMG.alt(), privatePhotoURLPath);
     }
 
     /**
