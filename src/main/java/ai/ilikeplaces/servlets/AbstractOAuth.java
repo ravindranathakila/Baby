@@ -77,6 +77,7 @@ public abstract class AbstractOAuth extends HttpServlet {
 
     private OAuthAuthorizationRequest oAuthAuthorizationRequest;
     private String oAuthEndpoint;
+    private String oAuthAuthorizationEndpoint;
 
     /**
      * @see <a href='http://hc.apache.org/httpclient-3.x/threading.html'>httpclient threading</a>
@@ -142,6 +143,7 @@ public abstract class AbstractOAuth extends HttpServlet {
                     "<a href='http://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-4.1.1'>http://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-4.1.1</a> . "))
     public AbstractOAuth() {
         this.oAuthEndpoint = oAuthProvider().oAuthEndpoint;
+        this.oAuthAuthorizationEndpoint = oAuthProvider().oAuthAuthorizationEndpoint;
         this.oAuthAuthorizationRequest = oAuthProvider().oAuthAuthorizationRequest;
         final MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
         threadSafeHttpClient = new HttpClient(connectionManager);
@@ -253,13 +255,15 @@ public abstract class AbstractOAuth extends HttpServlet {
 
     OAuthAccessTokenResponse getOAuthAccessTokenResponse(final OAuthAuthorizationResponse oAuthAuthorizationResponse, final ClientAuthentication clientAuthentication) {
         final Header[] oAuthAccessTokenResponseHeaders = getHttpHeaders(
-                oAuthEndpoint,
+                oAuthAuthorizationEndpoint,
                 new Parameter()
                         .append(code, oAuthAuthorizationResponse.code)
                         .append(client_id, clientAuthentication.client_id)
                         .append(client_secret, clientAuthentication.client_secret)
+                        .append(redirect_uri,"http://www.ilikeplaces.com/oauth2")
                         .get()
         );
+
         String name;
         String value;
 
@@ -374,6 +378,7 @@ public abstract class AbstractOAuth extends HttpServlet {
 
         final public OAuthAuthorizationRequest oAuthAuthorizationRequest;
         final public String oAuthEndpoint;
+        final public String oAuthAuthorizationEndpoint;
 
         /**
          * @param oAuthEndpoint             Such as facebook - https://www.facebook.com/dialog/oauth
@@ -381,8 +386,10 @@ public abstract class AbstractOAuth extends HttpServlet {
          */
         public OAuthProvider(
                 final String oAuthEndpoint,
+                final String oAuthAuthorizationEndpoint,
                 final OAuthAuthorizationRequest oAuthAuthorizationRequest) {
             this.oAuthEndpoint = oAuthEndpoint;
+            this.oAuthAuthorizationEndpoint = oAuthAuthorizationEndpoint;
             this.oAuthAuthorizationRequest = oAuthAuthorizationRequest;
         }
 
@@ -391,6 +398,7 @@ public abstract class AbstractOAuth extends HttpServlet {
             return "OAuthProvider{" +
                     "oAuthAuthorizationRequest=" + oAuthAuthorizationRequest +
                     ", oAuthEndpoint='" + oAuthEndpoint + '\'' +
+                    ", oAuthAuthorizationEndpoint='" + oAuthAuthorizationEndpoint + '\'' +
                     '}';
         }
     }
