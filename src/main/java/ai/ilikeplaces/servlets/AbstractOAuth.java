@@ -716,6 +716,18 @@ public abstract class AbstractOAuth extends HttpServlet {
             this.refresh_token = refresh_token != null ? refresh_token : "";
             this.parameters = parameters != null ? parameters : "";
         }
+
+
+        @Override
+        public String toString() {
+            return "OAuthAccessTokenResponse{" +
+                    "access_token='" + access_token + '\'' +
+                    ", token_type='" + token_type + '\'' +
+                    ", expires_in='" + expires_in + '\'' +
+                    ", refresh_token='" + refresh_token + '\'' +
+                    ", parameters='" + parameters + '\'' +
+                    '}';
+        }
     }
 
 // ------------------------ OVERRIDING METHODS ------------------------
