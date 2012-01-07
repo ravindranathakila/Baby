@@ -3,6 +3,7 @@ package ai.ilikeplaces.servlets;
 import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.LOGIC;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Parameter;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
@@ -48,6 +49,7 @@ public abstract class AbstractOAuth extends HttpServlet {
     static final RuntimeException RedirectToOAuthEndpointFailed = new RuntimeException("Redirect to OAuth Endpoint Failed!");
     static final String code = "code";
     static final String redirect_uri = "redirect_uri";
+    static final String client_secret = "client_secret";
     static final String client_id = "client_id";
     static final String response_type = "response_type";
     static final String scope = "scope";
@@ -178,8 +180,8 @@ public abstract class AbstractOAuth extends HttpServlet {
      * @param optionalAppend   All strings in array will be concatenated and appended
      * @return
      */
-    private String getHttpContent(final String endpointEndValue, final String... optionalAppend) {
-        final String toBeCalled = jsonEndpoint + endpointEndValue
+    String getHttpContent(final String endpointEndValue, final String... optionalAppend) {
+        final String toBeCalled = endpointEndValue
                 + QUESTION_MARK
                 + ((optionalAppend != null && optionalAppend.length != 0) ? Arrays.toString(optionalAppend).replace(OPEN_SQR_BRCKT, EMPTY).replace(CLOSE_SQR_BRCKT, EMPTY) : EMPTY);
 
@@ -227,7 +229,7 @@ public abstract class AbstractOAuth extends HttpServlet {
      * @param optionalAppend   All strings in array will be concatenated and appended
      * @return
      */
-    private Header getHttpHeader(final String endpointEndValue, final String headerName, final String... optionalAppend) {
+    Header getHttpHeader(final String endpointEndValue, final String headerName, final String... optionalAppend) {
         final String toBeCalled = jsonEndpoint + endpointEndValue
                 + QUESTION_MARK
                 + ((optionalAppend != null && optionalAppend.length != 0) ? Arrays.toString(optionalAppend).replace(OPEN_SQR_BRCKT, EMPTY).replace(CLOSE_SQR_BRCKT, EMPTY) : EMPTY);
@@ -249,10 +251,14 @@ public abstract class AbstractOAuth extends HttpServlet {
         return getMethod.getRequestHeader(headerName);
     }
 
-    OAuthAccessTokenResponse getOAuthAccessTokenResponse(final OAuthAuthorizationResponse oAuthAuthorizationResponse) {
+    OAuthAccessTokenResponse getOAuthAccessTokenResponse(final OAuthAuthorizationResponse oAuthAuthorizationResponse, final ClientAuthentication clientAuthentication) {
         final Header[] oAuthAccessTokenResponseHeaders = getHttpHeaders(
                 oAuthEndpoint,
-                new Parameter().append(code, oAuthAuthorizationResponse.code).get()
+                new Parameter()
+                        .append(code, oAuthAuthorizationResponse.code)
+                        .append(client_id, clientAuthentication.client_id)
+                        .append(client_secret, clientAuthentication.client_secret)
+                        .get()
         );
         String name;
         String value;
@@ -271,6 +277,9 @@ public abstract class AbstractOAuth extends HttpServlet {
         for (final Header header : oAuthAccessTokenResponseHeaders) {
             name = header.getName();
             value = header.getValue();
+
+            Loggers.INFO.info(name + "," + value);
+
             if (name.equals(access_token)) {
                 access_token_value = value;
                 continue;
@@ -301,7 +310,7 @@ public abstract class AbstractOAuth extends HttpServlet {
      * @param optionalAppend   All strings in array will be concatenated and appended
      * @return
      */
-    private Header[] getHttpHeaders(final String endpointEndValue, final String... optionalAppend) {
+    Header[] getHttpHeaders(final String endpointEndValue, final String... optionalAppend) {
         final String toBeCalled = endpointEndValue
                 + QUESTION_MARK
                 + ((optionalAppend != null && optionalAppend.length != 0) ? Arrays.toString(optionalAppend).replace(OPEN_SQR_BRCKT, EMPTY).replace(CLOSE_SQR_BRCKT, EMPTY) : EMPTY);
@@ -445,22 +454,22 @@ public abstract class AbstractOAuth extends HttpServlet {
         /**
          * REQUIRED.  Value MUST be set to "code".
          */
-        final private String response_type;
+        final String response_type;
 
         /**
          * REQUIRED.  The client identifier as described in Section 2.2.
          */
-        final private String client_id;
+        final String client_id;
 
         /**
          * OPTIONAL, as described in Section 3.1.2.
          */
-        final private String redirect_uri;
+        final String redirect_uri;
 
         /**
          * OPTIONAL.  The scope of the access request as described by
          */
-        final private String scope;
+        final String scope;
 
         /**
          * RECOMMENDED.  An opaque value used by the client to maintain
@@ -469,7 +478,7 @@ public abstract class AbstractOAuth extends HttpServlet {
          * to the client.  The parameter SHOULD be used for preventing
          * cross-site request forgery as described in Section 10.12.
          */
-        final private String state;
+        final String state;
 
         @LOGIC(
                 @NOTE("By nature, we don't want this object to be modified after construction."))
@@ -552,14 +561,14 @@ public abstract class AbstractOAuth extends HttpServlet {
          * authorization code.  The authorization code is bound to the
          * client identifier and redirection URI.
          */
-        final private String code;
+        final String code;
 
         /**
          * REQUIRED if the "state" parameter was present in the client
          * authorization request.  The exact value received from the
          * client.
          */
-        final private String state;
+        final String state;
 
         public OAuthAuthorizationResponse(final String code, final String state) {
             this.code = code != null ? code : "";
@@ -615,20 +624,20 @@ public abstract class AbstractOAuth extends HttpServlet {
         /**
          * REQUIRED.  Value MUST be set to "authorization_code".
          */
-        private final String grant_type;
+        final String grant_type;
 
         /**
          * REQUIRED.  The authorization code received from the
          * authorization server.
          */
-        private final String code;
+        final String code;
 
         /**
          * REQUIRED, if the "redirect_uri" parameter was included in the
          * authorization request as described in Section 4.1.1, and their
          * values MUST be identical.
          */
-        private final String redirect_uri;
+        final String redirect_uri;
 
         @LOGIC(
                 @NOTE("By nature, we don't want this object to be modified after construction."))
@@ -678,30 +687,30 @@ public abstract class AbstractOAuth extends HttpServlet {
         /**
          * REQUIRED.  The access token issued by the authorization server.
          */
-        final private String access_token;
+        final String access_token;
 
         /**
          * REQUIRED.  The type of the token issued as described in Section 7.1.  Value is case insensitive.
          */
-        final private String token_type;
+        final String token_type;
 
         /**
          * OPTIONAL.  The lifetime in seconds of the access token.  For
          * example, the value "3600" denotes that the access token will
          * expire in one hour from the time the response was generated.
          */
-        final private String expires_in;
+        final String expires_in;
         /**
          * OPTIONAL.  The refresh token which can be used to obtain new
          * access tokens using the same authorization grant as described
          * in Section 6.
          */
-        final private String refresh_token;
+        final String refresh_token;
 
         /**
          * OPTIONAL.  The scope of the access token as described by
          */
-        final private String parameters;
+        final String parameters;
 
         @LOGIC(
                 @NOTE("By nature, we don't want this object to be modified after construction."))
@@ -717,7 +726,6 @@ public abstract class AbstractOAuth extends HttpServlet {
             this.parameters = parameters != null ? parameters : "";
         }
 
-
         @Override
         public String toString() {
             return "OAuthAccessTokenResponse{" +
@@ -728,6 +736,77 @@ public abstract class AbstractOAuth extends HttpServlet {
                     ", parameters='" + parameters + '\'' +
                     '}';
         }
+    }
+
+    /**
+     * Alternatively, the authorization server MAY allow including the
+     * client credentials in the request body using the following
+     * parameters:
+     * <p/>
+     * client_id
+     * REQUIRED.  The client identifier issued to the client during
+     * the registration process described by Section 2.2.
+     * client_secret
+     * REQUIRED.  The client secret.  The client MAY omit the
+     * parameter if the client secret is an empty string.
+     * <p/>
+     * Including the client credentials in the request body using the two
+     * parameters is NOT RECOMMENDED, and should be limited to clients
+     * unable to directly utilize the HTTP Basic authentication scheme (or
+     * other password-based HTTP authentication schemes).
+     * <p/>
+     * For example, requesting to refresh an access token (Section 6) using
+     * the body parameters (extra line breaks are for display purposes
+     * only):
+     * <p/>
+     * <p/>
+     * POST /token HTTP/1.1
+     * Host: server.example.com
+     * Content-Type: application/x-www-form-urlencoded;charset=UTF-8
+     * <p/>
+     * grant_type=refresh_token&refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
+     * &client_id=s6BhdRkqt3&client_secret=7Fjfp0ZBr1KtDRbnfVdmIw
+     * <p/>
+     * <p/>
+     * The authorization server MUST require the use of a transport-layer
+     * security mechanism when sending requests to the token endpoint, as
+     * requests using this authentication method result in the transmission
+     * of clear-text credentials.
+     * <p/>
+     * Since this client authentication method involves a password, the
+     * authorization server MUST protect any endpoint utilizing it against
+     * brute force attacks.
+     */
+    public final class ClientAuthentication {
+
+
+        /**
+         * REQUIRED.  The client identifier issued to the client during
+         * the registration process described by Section 2.2.
+         */
+        final public String client_id;
+        /**
+         * REQUIRED.  The client secret.  The client MAY omit the
+         * parameter if the client secret is an empty string.
+         */
+        final public String client_secret;
+
+
+        @LOGIC(
+                @NOTE("By nature, we don't want this object to be modified after construction."))
+        public ClientAuthentication(String client_id, String client_secret) {
+            this.client_id = client_id;
+            this.client_secret = client_secret;
+        }
+
+        @Override
+        public String toString() {
+            return "ClientAuthentication{" +
+                    "client_id='" + client_id + '\'' +
+                    ", client_secret='" + client_secret + '\'' +
+                    '}';
+        }
+
     }
 
 // ------------------------ OVERRIDING METHODS ------------------------
