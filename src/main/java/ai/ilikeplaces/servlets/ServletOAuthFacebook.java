@@ -18,6 +18,7 @@ public class ServletOAuthFacebook extends AbstractOAuth {
     OAuthProvider oAuthProvider() {
         return new OAuthProvider(
                 "https://www.facebook.com/dialog/oauth",
+                "https://graph.facebook.com/oauth/access_token",
                 new OAuthAuthorizationRequest(
                         "code",
                         "139373316127498",
