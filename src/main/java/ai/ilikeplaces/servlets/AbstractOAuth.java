@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -54,6 +53,10 @@ public abstract class AbstractOAuth extends HttpServlet {
     static final String scope = "scope";
     static final String state = "state";
     static final String access_token = "access_token";
+    static final String expires_in = "expires_in";
+    static final String refresh_token = "refresh_token";
+    static final String parameters = "parameters";
+    static final String token_type = "token_type";
 
 
     private static final String QUESTION_MARK = "?";
@@ -65,6 +68,7 @@ public abstract class AbstractOAuth extends HttpServlet {
     private static final String OPEN_SQR_BRCKT = "[";
     private static final String CLOSE_SQR_BRCKT = "]";
     private static final String EMPTY = "";
+
 
 // ------------------------------ FIELDS (NON-STATIC)--------------------
 
@@ -218,7 +222,6 @@ public abstract class AbstractOAuth extends HttpServlet {
     }
 
     /**
-     * 
      * @param endpointEndValue
      * @param headerName
      * @param optionalAppend   All strings in array will be concatenated and appended
@@ -246,6 +249,53 @@ public abstract class AbstractOAuth extends HttpServlet {
         return getMethod.getRequestHeader(headerName);
     }
 
+    OAuthAccessTokenResponse getOAuthAccessTokenResponse(final OAuthAuthorizationResponse oAuthAuthorizationResponse) {
+        final Header[] oAuthAccessTokenResponseHeaders = getHttpHeaders(
+                oAuthEndpoint,
+                new Parameter().append(code, oAuthAuthorizationResponse.code).get()
+        );
+        String name;
+        String value;
+
+        String access_token_value = "";
+
+        String token_type_value = "";
+
+        String expires_in_value = "";
+
+        String refresh_token_value = "";
+
+        String parameters_value = "";
+
+
+        for (final Header header : oAuthAccessTokenResponseHeaders) {
+            name = header.getName();
+            value = header.getValue();
+            if (name.equals(access_token)) {
+                access_token_value = value;
+                continue;
+            }
+            if (name.equals(token_type)) {
+                token_type_value = value;
+                continue;
+            }
+            if (name.equals(expires_in)) {
+                expires_in_value = value;
+                continue;
+            }
+            if (name.equals(refresh_token)) {
+                refresh_token_value = value;
+                continue;
+            }
+            if (name.equals(parameters)) {
+                parameters_value = value;
+                continue;
+            }
+        }
+
+        return new OAuthAccessTokenResponse(access_token_value, token_type_value, expires_in_value, refresh_token_value, parameters_value);
+    }
+
     /**
      * @param endpointEndValue
      * @param optionalAppend   All strings in array will be concatenated and appended
@@ -271,15 +321,6 @@ public abstract class AbstractOAuth extends HttpServlet {
         }
 
         return getMethod.getRequestHeaders();
-    }
-
-    OAuthAccessTokenResponse getOAuthAccessTokenResponse(final OAuthAuthorizationResponse oAuthAuthorizationResponse) {
-        final Header access_token = getHttpHeader(
-                oAuthEndpoint,
-                this.access_token,
-                new Parameter().append(code, oAuthAuthorizationResponse.code).get()
-        );
-        return null;
     }
 
     /**
@@ -624,7 +665,7 @@ public abstract class AbstractOAuth extends HttpServlet {
         /**
          * OPTIONAL.  The scope of the access token as described by
          */
-        final private String example_parameter;
+        final private String parameters;
 
         @LOGIC(
                 @NOTE("By nature, we don't want this object to be modified after construction."))
@@ -632,12 +673,12 @@ public abstract class AbstractOAuth extends HttpServlet {
                                         final String token_type,
                                         final String expires_in,
                                         final String refresh_token,
-                                        final String example_parameter) {
+                                        final String parameters) {
             this.access_token = access_token != null ? access_token : "";
             this.token_type = token_type != null ? token_type : "";
             this.expires_in = expires_in != null ? expires_in : "";
             this.refresh_token = refresh_token != null ? refresh_token : "";
-            this.example_parameter = example_parameter != null ? example_parameter : "";
+            this.parameters = parameters != null ? parameters : "";
         }
     }
 
