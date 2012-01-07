@@ -3,6 +3,7 @@ package ai.ilikeplaces.servlets;
 import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.LOGIC;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.util.Parameter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +31,31 @@ import java.io.IOException;
                         "as each new instance with be created for that specific vendor and shared within that pool (logical pool).  ")))
 public abstract class AbstractOAuth extends HttpServlet {
 
-    private OAuthAuthorizationRequest OAuthAuthorizationRequest;
+    private static final RuntimeException RedirectToOAuthEndpointFailed = new RuntimeException("Redirect to OAuth Endpoint Failed!");
+    private static final String code = "code";
+    private static final String redirect_uri = "redirect_uri";
+    private static final String client_id = "client_id";
+    private static final String response_type = "response_type";
+    private static final String scope = "scope";
+    private static final String state = "state";
+    private OAuthAuthorizationRequest oAuthAuthorizationRequest;
+    private String oAuthEndpoint;
+
+    public final class OAuthProvider {
+        final public OAuthAuthorizationRequest oAuthAuthorizationRequest;
+        final public String oAuthEndpoint;
+
+        /**
+         * @param oAuthEndpoint             Such as facebook - https://www.facebook.com/dialog/oauth
+         * @param oAuthAuthorizationRequest Contains requred parameters for the endpoint
+         */
+        public OAuthProvider(
+                final String oAuthEndpoint,
+                final OAuthAuthorizationRequest oAuthAuthorizationRequest) {
+            this.oAuthEndpoint = oAuthEndpoint;
+            this.oAuthAuthorizationRequest = oAuthAuthorizationRequest;
+        }
+    }
 
     /**
      * * 4.1.1.  Authorization Request
@@ -333,7 +358,7 @@ public abstract class AbstractOAuth extends HttpServlet {
      * <p/>
      * <p/>
      * The client constructs the request URI by adding the following
-     * parameters to the query component of the authorization endpoint URI
+     * parameters to the query component of the authorization oAuthEndpoint URI
      * using the "application/x-www-form-urlencoded" format as defined by
      * [W3C.REC-html401-19991224]:
      * <p/>
@@ -377,17 +402,66 @@ public abstract class AbstractOAuth extends HttpServlet {
      * &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb HTTP/1.1
      * <p/>
      * Host: server.example.com
-     *
-     * @param OAuthAuthorizationRequest OAuth Authorization Request
      */
     @LOGIC(
             @NOTE("Here our main focus ist to initialize data related to " +
                     "<a href='http://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-4.1.1'>http://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-4.1.1</a> . "))
-    protected AbstractOAuth(final OAuthAuthorizationRequest OAuthAuthorizationRequest) {
-        this.OAuthAuthorizationRequest = OAuthAuthorizationRequest;
+    public AbstractOAuth() {
+        this.oAuthEndpoint = oAuthProvider().oAuthEndpoint;
+        this.oAuthAuthorizationRequest = oAuthProvider().oAuthAuthorizationRequest;
+    }
+
+
+    abstract OAuthProvider oAuthProvider();
+
+    /**
+     * @param request
+     * @param response
+     * @return OAuthAuthorizationResponse or redirects user to endpoint and returns null
+     */
+    OAuthAuthorizationResponse getOAuthAuthorizationResponse(final HttpServletRequest request, final HttpServletResponse response) {
+        final String code = request.getParameter(AbstractOAuth.code);
+        final String state = request.getParameter(AbstractOAuth.state);
+
+        if (code == null || code.isEmpty()) {
+            try {
+                response.sendRedirect(
+                        new Parameter(this.oAuthEndpoint)
+                                .append(client_id, this.oAuthAuthorizationRequest.client_id, true)
+                                .append(redirect_uri, this.oAuthAuthorizationRequest.redirect_uri, true)
+                                .append(response_type, this.oAuthAuthorizationRequest.response_type, true)
+                                .append(scope, this.oAuthAuthorizationRequest.scope, true)
+                                .append(AbstractOAuth.state, this.oAuthAuthorizationRequest.state, true)
+                                .get()
+
+                );
+            } catch (final IOException e) {
+                //hmmm!
+                throw RedirectToOAuthEndpointFailed;
+            }
+            return null;
+        } else {
+            return new OAuthAuthorizationResponse(code, state);
+        }
     }
 
     /**
+     * This generally is called with code and state, as a redirect from the OAuth vendor.
+     * <p/>
+     * <p/>
+     * Below is a redirect from FB.
+     * <p/>
+     * <p/>
+     * e.g. http://www.ilikeplaces.com/oauth2?code=AQC3Zblablablabla9uO8MN_miEUIlZvMWNNblabla6zOyblablafCwDFYMli5zdblabla0peBblablaINKIDw#_=_
+     * <p/>
+     * <p/>
+     * Note that the REQUIRED "state" parameter is missing.
+     * <p/>
+     * <p/>
+     * Generally, if "code" is missing, which will never be missing, we will send the user to the {@link #oAuthEndpoint OAuth Endpoint}
+     * with the non-null parameters specified in {@link #oAuthAuthorizationRequest}.
+     * <p/>
+     * <p/>
      * <b>code</b>
      * <p/>
      * REQUIRED.  The authorization code generated by the
@@ -426,9 +500,7 @@ public abstract class AbstractOAuth extends HttpServlet {
                             "   state\n" +
                             "         REQUIRED if the \"state\" parameter was present in the client\n" +
                             "         authorization request.  The exact value received from the"))
-    private void processRequest(final HttpServletRequest request, final HttpServletResponse response) {
-
-    }
+    abstract void processRequest(final HttpServletRequest request, final HttpServletResponse response);
 
     /**
      * Handles the HTTP <code>GET</code> method.
