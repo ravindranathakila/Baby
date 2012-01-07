@@ -302,7 +302,7 @@ public abstract class AbstractOAuth extends HttpServlet {
      * @return
      */
     private Header[] getHttpHeaders(final String endpointEndValue, final String... optionalAppend) {
-        final String toBeCalled = jsonEndpoint + endpointEndValue
+        final String toBeCalled = endpointEndValue
                 + QUESTION_MARK
                 + ((optionalAppend != null && optionalAppend.length != 0) ? Arrays.toString(optionalAppend).replace(OPEN_SQR_BRCKT, EMPTY).replace(CLOSE_SQR_BRCKT, EMPTY) : EMPTY);
 
@@ -375,6 +375,14 @@ public abstract class AbstractOAuth extends HttpServlet {
                 final OAuthAuthorizationRequest oAuthAuthorizationRequest) {
             this.oAuthEndpoint = oAuthEndpoint;
             this.oAuthAuthorizationRequest = oAuthAuthorizationRequest;
+        }
+
+        @Override
+        public String toString() {
+            return "OAuthProvider{" +
+                    "oAuthAuthorizationRequest=" + oAuthAuthorizationRequest +
+                    ", oAuthEndpoint='" + oAuthEndpoint + '\'' +
+                    '}';
         }
     }
 
@@ -476,6 +484,17 @@ public abstract class AbstractOAuth extends HttpServlet {
             this.scope = scope != null ? scope : "";
             this.state = state != null ? state : "";
         }
+
+        @Override
+        public String toString() {
+            return "OAuthAuthorizationRequest{" +
+                    "response_type='" + response_type + '\'' +
+                    ", client_id='" + client_id + '\'' +
+                    ", redirect_uri='" + redirect_uri + '\'' +
+                    ", scope='" + scope + '\'' +
+                    ", state='" + state + '\'' +
+                    '}';
+        }
     }
 
     /**
@@ -546,6 +565,14 @@ public abstract class AbstractOAuth extends HttpServlet {
             this.code = code != null ? code : "";
             this.state = state != null ? state : "";
         }
+
+        @Override
+        public String toString() {
+            return "OAuthAuthorizationResponse{" +
+                    "code='" + code + '\'' +
+                    ", state='" + state + '\'' +
+                    '}';
+        }
     }
 
     /**
@@ -609,6 +636,15 @@ public abstract class AbstractOAuth extends HttpServlet {
             this.grant_type = grant_type != null ? grant_type : "";
             this.code = code != null ? code : "";
             this.redirect_uri = redirect_uri != null ? redirect_uri : "";
+        }
+
+        @Override
+        public String toString() {
+            return "OAuthAccessTokenRequest{" +
+                    "grant_type='" + grant_type + '\'' +
+                    ", code='" + code + '\'' +
+                    ", redirect_uri='" + redirect_uri + '\'' +
+                    '}';
         }
     }
 
