@@ -4,12 +4,25 @@ import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.LOGIC;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.util.Parameter;
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -30,7 +43,9 @@ import java.io.IOException;
                         "Since it is abstract, this class however, can have data related to a specific OAuth facilitator such as Facebook, Twitter and Google " +
                         "as each new instance with be created for that specific vendor and shared within that pool (logical pool).  ")))
 public abstract class AbstractOAuth extends HttpServlet {
+// ------------------------------ FIELDS ------------------------------
 
+    // ------------------------------ FIELDS STATIC --------------------------
     static final RuntimeException RedirectToOAuthEndpointFailed = new RuntimeException("Redirect to OAuth Endpoint Failed!");
     static final String code = "code";
     static final String redirect_uri = "redirect_uri";
@@ -40,10 +55,273 @@ public abstract class AbstractOAuth extends HttpServlet {
     static final String state = "state";
     static final String access_token = "access_token";
 
+
+    private static final String QUESTION_MARK = "?";
+    private static final String GOT_ERROR_CODE = "Got error code:";
+    private static final String DOT_JASON = ".json";
+    private static final String EQUALS = "=";
+    private static final String API_KEY = "key" + EQUALS;
+    private static final String AMPERSAND = "&";
+    private static final String OPEN_SQR_BRCKT = "[";
+    private static final String CLOSE_SQR_BRCKT = "]";
+    private static final String EMPTY = "";
+
+// ------------------------------ FIELDS (NON-STATIC)--------------------
+
+
     private OAuthAuthorizationRequest oAuthAuthorizationRequest;
     private String oAuthEndpoint;
 
+    /**
+     * @see <a href='http://hc.apache.org/httpclient-3.x/threading.html'>httpclient threading</a>
+     */
+    private final HttpClient threadSafeHttpClient;
+    private String api_key;
+    private String jsonEndpoint;
+
+// --------------------------- CONSTRUCTORS ---------------------------
+
+    /**
+     * 4.1.1.  Authorization Request
+     * <p/>
+     * <p/>
+     * The client constructs the request URI by adding the following
+     * parameters to the query component of the authorization oAuthEndpoint URI
+     * using the "application/x-www-form-urlencoded" format as defined by
+     * [W3C.REC-html401-19991224]:
+     * <p/>
+     * <p/>
+     * <b>response_type</b>
+     * <p/>
+     * REQUIRED.  Value MUST be set to "code".
+     * <p/>
+     * <b>client_id</b>
+     * <p/>
+     * REQUIRED.  The client identifier as described in Section 2.2.
+     * <p/>
+     * <b>redirect_uri</b>
+     * <p/>
+     * OPTIONAL, as described in Section 3.1.2.
+     * <p/>
+     * <b>scope</b>
+     * <p/>
+     * OPTIONAL.  The scope of the access request as described by
+     * Section 3.3.
+     * <p/>
+     * <b>state</b>
+     * <p/>
+     * RECOMMENDED.  An opaque value used by the client to maintain
+     * state between the request and callback.  The authorization
+     * server includes this value when redirecting the user-agent back
+     * to the client.  The parameter SHOULD be used for preventing
+     * cross-site request forgery as described in Section 10.12.
+     * <p/>
+     * <p/>
+     * The client directs the resource owner to the constructed URI using an
+     * HTTP redirection response, or by other means available to it via the
+     * user-agent.
+     * <p/>
+     * For example, the client directs the user-agent to make the following
+     * HTTP request using transport-layer security (extra line breaks are
+     * for display purposes only):
+     * <p/>
+     * <p/>
+     * GET /authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz
+     * &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb HTTP/1.1
+     * <p/>
+     * Host: server.example.com
+     */
+    @LOGIC(
+            @NOTE("Here our main focus ist to initialize data related to " +
+                    "<a href='http://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-4.1.1'>http://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-4.1.1</a> . "))
+    public AbstractOAuth() {
+        this.oAuthEndpoint = oAuthProvider().oAuthEndpoint;
+        this.oAuthAuthorizationRequest = oAuthProvider().oAuthAuthorizationRequest;
+        final MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
+        threadSafeHttpClient = new HttpClient(connectionManager);
+    }
+
+    abstract OAuthProvider oAuthProvider();
+
+// ------------------------ CANONICAL METHODS ------------------------
+
+
+// -------------------------- OTHER METHODS --------------------------
+
+    /**
+     * @param endpointEndValue
+     * @param parameters
+     * @return
+     */
+    public JSONObject getHttpContentAsJson(final String endpointEndValue, final Map<String, String> parameters) {
+        final StringBuilder sb = new StringBuilder(EMPTY);
+        for (final String key : parameters.keySet()) {
+            sb.append(AMPERSAND).append(key).append(EQUALS).append(parameters.get(key));
+        }
+
+        JSONObject jsonObject;
+        try {
+            jsonObject = new JSONObject(getHttpContent(endpointEndValue, sb.toString()));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        return jsonObject;
+    }
+
+    /**
+     * @param endpointEndValue
+     * @param optionalAppend   All strings in array will be concatenated and appended
+     * @return
+     */
+    private String getHttpContent(final String endpointEndValue, final String... optionalAppend) {
+        final String toBeCalled = jsonEndpoint + endpointEndValue
+                + QUESTION_MARK
+                + ((optionalAppend != null && optionalAppend.length != 0) ? Arrays.toString(optionalAppend).replace(OPEN_SQR_BRCKT, EMPTY).replace(CLOSE_SQR_BRCKT, EMPTY) : EMPTY);
+
+        final GetMethod getMethod = new GetMethod(toBeCalled);
+
+        int statusCode = 0;
+        try {
+            statusCode = threadSafeHttpClient.executeMethod(getMethod);
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (statusCode != HttpStatus.SC_OK) {
+            throw new RuntimeException(GOT_ERROR_CODE + statusCode);
+        }
+        InputStream inputStream = null;
+
+        try {
+            inputStream = getMethod.getResponseBodyAsStream();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        final BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        String accumulator = EMPTY;
+        try {
+            while ((line = br.readLine()) != null) {
+                accumulator += line;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            br.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return accumulator;
+    }
+
+    /**
+     * 
+     * @param endpointEndValue
+     * @param headerName
+     * @param optionalAppend   All strings in array will be concatenated and appended
+     * @return
+     */
+    private Header getHttpHeader(final String endpointEndValue, final String headerName, final String... optionalAppend) {
+        final String toBeCalled = jsonEndpoint + endpointEndValue
+                + QUESTION_MARK
+                + ((optionalAppend != null && optionalAppend.length != 0) ? Arrays.toString(optionalAppend).replace(OPEN_SQR_BRCKT, EMPTY).replace(CLOSE_SQR_BRCKT, EMPTY) : EMPTY);
+
+
+        final GetMethod getMethod = new GetMethod(toBeCalled);
+
+        int statusCode = 0;
+        try {
+            statusCode = threadSafeHttpClient.executeMethod(getMethod);
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (statusCode != HttpStatus.SC_OK) {
+            throw new RuntimeException(GOT_ERROR_CODE + statusCode);
+        }
+
+        return getMethod.getRequestHeader(headerName);
+    }
+
+    /**
+     * @param endpointEndValue
+     * @param optionalAppend   All strings in array will be concatenated and appended
+     * @return
+     */
+    private Header[] getHttpHeaders(final String endpointEndValue, final String... optionalAppend) {
+        final String toBeCalled = jsonEndpoint + endpointEndValue
+                + QUESTION_MARK
+                + ((optionalAppend != null && optionalAppend.length != 0) ? Arrays.toString(optionalAppend).replace(OPEN_SQR_BRCKT, EMPTY).replace(CLOSE_SQR_BRCKT, EMPTY) : EMPTY);
+
+
+        final GetMethod getMethod = new GetMethod(toBeCalled);
+
+        int statusCode = 0;
+        try {
+            statusCode = threadSafeHttpClient.executeMethod(getMethod);
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (statusCode != HttpStatus.SC_OK) {
+            throw new RuntimeException(GOT_ERROR_CODE + statusCode);
+        }
+
+        return getMethod.getRequestHeaders();
+    }
+
+    OAuthAccessTokenResponse getOAuthAccessTokenResponse(final OAuthAuthorizationResponse oAuthAuthorizationResponse) {
+        final Header access_token = getHttpHeader(
+                oAuthEndpoint,
+                this.access_token,
+                new Parameter().append(code, oAuthAuthorizationResponse.code).get()
+        );
+        return null;
+    }
+
+    /**
+     * @param request
+     * @param response
+     * @return OAuthAuthorizationResponse or redirects user to endpoint and returns null
+     */
+    OAuthAuthorizationResponse getOAuthAuthorizationResponse(final HttpServletRequest request, final HttpServletResponse response) {
+        final String code = request.getParameter(AbstractOAuth.code);
+        final String state = request.getParameter(AbstractOAuth.state);
+
+        if (code == null || code.isEmpty()) {
+            try {
+                response.sendRedirect(
+                        new Parameter(this.oAuthEndpoint)
+                                .append(client_id, this.oAuthAuthorizationRequest.client_id, true)
+                                .append(redirect_uri, this.oAuthAuthorizationRequest.redirect_uri)
+                                .append(response_type, this.oAuthAuthorizationRequest.response_type)
+                                .append(scope, this.oAuthAuthorizationRequest.scope)
+                                .append(AbstractOAuth.state, this.oAuthAuthorizationRequest.state)
+                                .get()
+
+                );
+            } catch (final IOException e) {
+                //hmmm!
+                throw RedirectToOAuthEndpointFailed;
+            }
+            return null;
+        } else {
+            return new OAuthAuthorizationResponse(code, state);
+        }
+    }
+
+// -------------------------- INNER CLASSES --------------------------
+
     public final class OAuthProvider {
+// ------------------------------ FIELDS STATIC --------------------------
+
+
+// ------------------------------ FIELDS (NON-STATIC)--------------------
+
+
         final public OAuthAuthorizationRequest oAuthAuthorizationRequest;
         final public String oAuthEndpoint;
 
@@ -112,6 +390,9 @@ public abstract class AbstractOAuth extends HttpServlet {
     @LOGIC(
             @NOTE("By nature, we don't want this object to be modified after construction."))
     public final class OAuthAuthorizationRequest {
+// ------------------------------ FIELDS (NON-STATIC)--------------------
+
+
         /**
          * REQUIRED.  Value MUST be set to "code".
          */
@@ -196,6 +477,7 @@ public abstract class AbstractOAuth extends HttpServlet {
     @LOGIC(
             @NOTE("By nature, we don't want this object to be modified after construction."))
     public final class OAuthAuthorizationResponse {
+// ------------------------------ FIELDS (NON-STATIC)--------------------
 
 
         /**
@@ -259,6 +541,8 @@ public abstract class AbstractOAuth extends HttpServlet {
      * &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
      */
     public final class OAuthAccessTokenRequest {
+// ------------------------------ FIELDS (NON-STATIC)--------------------
+
 
         /**
          * REQUIRED.  Value MUST be set to "authorization_code".
@@ -311,6 +595,8 @@ public abstract class AbstractOAuth extends HttpServlet {
      * }
      */
     public final class OAuthAccessTokenResponse {
+// ------------------------------ FIELDS (NON-STATIC)--------------------
+
 
         /**
          * REQUIRED.  The access token issued by the authorization server.
@@ -355,96 +641,20 @@ public abstract class AbstractOAuth extends HttpServlet {
         }
     }
 
-    /**
-     * 4.1.1.  Authorization Request
-     * <p/>
-     * <p/>
-     * The client constructs the request URI by adding the following
-     * parameters to the query component of the authorization oAuthEndpoint URI
-     * using the "application/x-www-form-urlencoded" format as defined by
-     * [W3C.REC-html401-19991224]:
-     * <p/>
-     * <p/>
-     * <b>response_type</b>
-     * <p/>
-     * REQUIRED.  Value MUST be set to "code".
-     * <p/>
-     * <b>client_id</b>
-     * <p/>
-     * REQUIRED.  The client identifier as described in Section 2.2.
-     * <p/>
-     * <b>redirect_uri</b>
-     * <p/>
-     * OPTIONAL, as described in Section 3.1.2.
-     * <p/>
-     * <b>scope</b>
-     * <p/>
-     * OPTIONAL.  The scope of the access request as described by
-     * Section 3.3.
-     * <p/>
-     * <b>state</b>
-     * <p/>
-     * RECOMMENDED.  An opaque value used by the client to maintain
-     * state between the request and callback.  The authorization
-     * server includes this value when redirecting the user-agent back
-     * to the client.  The parameter SHOULD be used for preventing
-     * cross-site request forgery as described in Section 10.12.
-     * <p/>
-     * <p/>
-     * The client directs the resource owner to the constructed URI using an
-     * HTTP redirection response, or by other means available to it via the
-     * user-agent.
-     * <p/>
-     * For example, the client directs the user-agent to make the following
-     * HTTP request using transport-layer security (extra line breaks are
-     * for display purposes only):
-     * <p/>
-     * <p/>
-     * GET /authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz
-     * &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb HTTP/1.1
-     * <p/>
-     * Host: server.example.com
-     */
-    @LOGIC(
-            @NOTE("Here our main focus ist to initialize data related to " +
-                    "<a href='http://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-4.1.1'>http://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-4.1.1</a> . "))
-    public AbstractOAuth() {
-        this.oAuthEndpoint = oAuthProvider().oAuthEndpoint;
-        this.oAuthAuthorizationRequest = oAuthProvider().oAuthAuthorizationRequest;
-    }
-
-
-    abstract OAuthProvider oAuthProvider();
+// ------------------------ OVERRIDING METHODS ------------------------
 
     /**
-     * @param request
-     * @param response
-     * @return OAuthAuthorizationResponse or redirects user to endpoint and returns null
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws javax.servlet.ServletException if a servlet-specific error occurs
+     * @throws java.io.IOException            if an I/O error occurs
      */
-    OAuthAuthorizationResponse getOAuthAuthorizationResponse(final HttpServletRequest request, final HttpServletResponse response) {
-        final String code = request.getParameter(AbstractOAuth.code);
-        final String state = request.getParameter(AbstractOAuth.state);
-
-        if (code == null || code.isEmpty()) {
-            try {
-                response.sendRedirect(
-                        new Parameter(this.oAuthEndpoint)
-                                .append(client_id, this.oAuthAuthorizationRequest.client_id, true)
-                                .append(redirect_uri, this.oAuthAuthorizationRequest.redirect_uri)
-                                .append(response_type, this.oAuthAuthorizationRequest.response_type)
-                                .append(scope, this.oAuthAuthorizationRequest.scope)
-                                .append(AbstractOAuth.state, this.oAuthAuthorizationRequest.state)
-                                .get()
-
-                );
-            } catch (final IOException e) {
-                //hmmm!
-                throw RedirectToOAuthEndpointFailed;
-            }
-            return null;
-        } else {
-            return new OAuthAuthorizationResponse(code, state);
-        }
+    @Override
+    protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -505,20 +715,6 @@ public abstract class AbstractOAuth extends HttpServlet {
     abstract void processRequest(final HttpServletRequest request, final HttpServletResponse response);
 
     /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws javax.servlet.ServletException if a servlet-specific error occurs
-     * @throws java.io.IOException            if an I/O error occurs
-     */
-    @Override
-    protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
      * Handles the HTTP <code>POST</code> method.
      *
      * @param request  servlet request
@@ -531,5 +727,4 @@ public abstract class AbstractOAuth extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
 }
