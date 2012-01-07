@@ -31,13 +31,15 @@ import java.io.IOException;
                         "as each new instance with be created for that specific vendor and shared within that pool (logical pool).  ")))
 public abstract class AbstractOAuth extends HttpServlet {
 
-    private static final RuntimeException RedirectToOAuthEndpointFailed = new RuntimeException("Redirect to OAuth Endpoint Failed!");
-    private static final String code = "code";
-    private static final String redirect_uri = "redirect_uri";
-    private static final String client_id = "client_id";
-    private static final String response_type = "response_type";
-    private static final String scope = "scope";
-    private static final String state = "state";
+    static final RuntimeException RedirectToOAuthEndpointFailed = new RuntimeException("Redirect to OAuth Endpoint Failed!");
+    static final String code = "code";
+    static final String redirect_uri = "redirect_uri";
+    static final String client_id = "client_id";
+    static final String response_type = "response_type";
+    static final String scope = "scope";
+    static final String state = "state";
+    static final String access_token = "access_token";
+
     private OAuthAuthorizationRequest oAuthAuthorizationRequest;
     private String oAuthEndpoint;
 
@@ -146,11 +148,11 @@ public abstract class AbstractOAuth extends HttpServlet {
                                          final String redirect_uri,
                                          final String scope,
                                          final String state) {
-            this.response_type = response_type;
-            this.client_id = client_id;
-            this.redirect_uri = redirect_uri;
-            this.scope = scope;
-            this.state = state;
+            this.response_type = response_type != null ? response_type : "";
+            this.client_id = client_id != null ? client_id : "";
+            this.redirect_uri = redirect_uri != null ? redirect_uri : "";
+            this.scope = scope != null ? scope : "";
+            this.state = state != null ? state : "";
         }
     }
 
@@ -218,8 +220,8 @@ public abstract class AbstractOAuth extends HttpServlet {
         final private String state;
 
         public OAuthAuthorizationResponse(final String code, final String state) {
-            this.code = code;
-            this.state = state;
+            this.code = code != null ? code : "";
+            this.state = state != null ? state : "";
         }
     }
 
@@ -279,9 +281,9 @@ public abstract class AbstractOAuth extends HttpServlet {
         @LOGIC(
                 @NOTE("By nature, we don't want this object to be modified after construction."))
         public OAuthAccessTokenRequest(final String grant_type, final String code, final String redirect_uri) {
-            this.grant_type = grant_type;
-            this.code = code;
-            this.redirect_uri = redirect_uri;
+            this.grant_type = grant_type != null ? grant_type : "";
+            this.code = code != null ? code : "";
+            this.redirect_uri = redirect_uri != null ? redirect_uri : "";
         }
     }
 
@@ -345,11 +347,11 @@ public abstract class AbstractOAuth extends HttpServlet {
                                         final String expires_in,
                                         final String refresh_token,
                                         final String example_parameter) {
-            this.access_token = access_token;
-            this.token_type = token_type;
-            this.expires_in = expires_in;
-            this.refresh_token = refresh_token;
-            this.example_parameter = example_parameter;
+            this.access_token = access_token != null ? access_token : "";
+            this.token_type = token_type != null ? token_type : "";
+            this.expires_in = expires_in != null ? expires_in : "";
+            this.refresh_token = refresh_token != null ? refresh_token : "";
+            this.example_parameter = example_parameter != null ? example_parameter : "";
         }
     }
 
@@ -428,10 +430,10 @@ public abstract class AbstractOAuth extends HttpServlet {
                 response.sendRedirect(
                         new Parameter(this.oAuthEndpoint)
                                 .append(client_id, this.oAuthAuthorizationRequest.client_id, true)
-                                .append(redirect_uri, this.oAuthAuthorizationRequest.redirect_uri, true)
-                                .append(response_type, this.oAuthAuthorizationRequest.response_type, true)
-                                .append(scope, this.oAuthAuthorizationRequest.scope, true)
-                                .append(AbstractOAuth.state, this.oAuthAuthorizationRequest.state, true)
+                                .append(redirect_uri, this.oAuthAuthorizationRequest.redirect_uri)
+                                .append(response_type, this.oAuthAuthorizationRequest.response_type)
+                                .append(scope, this.oAuthAuthorizationRequest.scope)
+                                .append(AbstractOAuth.state, this.oAuthAuthorizationRequest.state)
                                 .get()
 
                 );
