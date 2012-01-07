@@ -50,9 +50,12 @@ public class ServletOAuthFacebook extends AbstractOAuth {
      */
     @Override
     void processRequest(final HttpServletRequest request, final HttpServletResponse response) {
-        final OAuthAuthorizationResponse oAuthAuthorizationResponse = getOAuthAuthorizationResponse(request, response);
+        final OAuthAuthorizationResponse oAuthAuthorizationResponse = super.getOAuthAuthorizationResponse(request, response);
         if (oAuthAuthorizationResponse != null) {
-            Loggers.INFO.info("" + code + ":" + request.getParameter(code));
+            final String code_ = request.getParameter(code);
+            Loggers.INFO.info(oAuthAuthorizationResponse.toString());
+            final OAuthAccessTokenResponse oAuthAccessTokenResponse = super.getOAuthAccessTokenResponse(oAuthAuthorizationResponse);
+            Loggers.INFO.info(oAuthAccessTokenResponse.toString());
         } else {
             // we ignore since a redirect will happen
         }
