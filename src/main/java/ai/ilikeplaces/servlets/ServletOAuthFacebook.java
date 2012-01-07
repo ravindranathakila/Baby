@@ -1,6 +1,7 @@
 package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.Parameter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,9 +54,18 @@ public class ServletOAuthFacebook extends AbstractOAuth {
         final OAuthAuthorizationResponse oAuthAuthorizationResponse = super.getOAuthAuthorizationResponse(request, response);
         if (oAuthAuthorizationResponse != null) {
             final String code_ = request.getParameter(code);
-            Loggers.INFO.info(oAuthAuthorizationResponse.toString());
-            final OAuthAccessTokenResponse oAuthAccessTokenResponse = super.getOAuthAccessTokenResponse(oAuthAuthorizationResponse);
-            Loggers.INFO.info(oAuthAccessTokenResponse.toString());
+            Loggers.info(oAuthAuthorizationResponse.toString());
+            final OAuthAccessTokenResponse oAuthAccessTokenResponse = super.getOAuthAccessTokenResponse(oAuthAuthorizationResponse,
+                    new ClientAuthentication("139373316127498","56a2340af5eb11db36258f9f7a07b2b9"));
+            Loggers.info(oAuthAccessTokenResponse.toString());
+            Loggers.info(super.getHttpContent("https://graph.facebook.com/oauth/access_token",
+                    new Parameter()
+                            .append(code, oAuthAuthorizationResponse.code)
+                            .append(client_id,"139373316127498")
+                            .append(redirect_uri,"http://www.ilikeplaces.com/oauth2")
+                            .append(client_secret,"56a2340af5eb11db36258f9f7a07b2b9")
+                            .get()
+            ));
         } else {
             // we ignore since a redirect will happen
         }
