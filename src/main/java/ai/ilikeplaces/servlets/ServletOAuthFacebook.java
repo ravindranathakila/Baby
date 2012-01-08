@@ -169,38 +169,7 @@ public class ServletOAuthFacebook extends AbstractOAuth {
                         }
                     }
 
-                    LoginTheUser:
-                    {
-
-                        Loggers.info("Logging in User");
-
-                        final HttpSession userSession_;
-                        handleHttpSession:
-                        {
-                            /**
-                             * Remove any redundant session
-                             */
-                            if (request.getSession(false) != null) {
-                                request.getSession(false).invalidate();
-                            }
-
-                            /**
-                             * Make user session anyway as he came to log in
-                             */
-                            userSession_ = request.getSession();
-
-                            /**
-                             * Set a timeout compatible with the stateful session bean handling user
-                             */
-                            userSession_.setMaxInactiveInterval(Integer.parseInt(RBGet.globalConfig.getString("UserSessionIdleInterval")));
-                        }
-
-                        final HumanUserLocal humanUserLocal = (HumanUserLocal) context.lookup(HumanUserLocal.NAME);
-                        humanUserLocal.setHumanUserId(existingUser.getHumanId());
-                        userSession_.setAttribute(ServletLogin.HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
-
-                        response.sendRedirect(home.getURL());
-                    }
+                    loginUser(request, response, existingUser);
 
                 } else {
                     Loggers.info("Creating New User");
@@ -209,6 +178,12 @@ public class ServletOAuthFacebook extends AbstractOAuth {
                             new HumanId().setObjAsValid(email),
                             new Password(Bate.getRandomPassword()),
                             new Email(email));
+
+                    if (humanCreateReturn.valid()) {
+                        loginUser(request, response, DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(email));
+                    }else{
+                        //Hmmm. Backend would've logged this. We need to notify the user however.
+                    }
                 }
             } catch (final JSONException e) {
                 Loggers.error(JSON_ERROR, e);
@@ -227,6 +202,41 @@ public class ServletOAuthFacebook extends AbstractOAuth {
 
         } else {
             // we ignore since a redirect will happen
+        }
+    }
+
+    private void loginUser(HttpServletRequest request, HttpServletResponse response, Human existingUser) throws NamingException, IOException {
+        LoginTheUser:
+        {
+
+            Loggers.info("Logging in User");
+
+            final HttpSession userSession_;
+            handleHttpSession:
+            {
+                /**
+                 * Remove any redundant session
+                 */
+                if (request.getSession(false) != null) {
+                    request.getSession(false).invalidate();
+                }
+
+                /**
+                 * Make user session anyway as he came to log in
+                 */
+                userSession_ = request.getSession();
+
+                /**
+                 * Set a timeout compatible with the stateful session bean handling user
+                 */
+                userSession_.setMaxInactiveInterval(Integer.parseInt(RBGet.globalConfig.getString("UserSessionIdleInterval")));
+            }
+
+            final HumanUserLocal humanUserLocal = (HumanUserLocal) context.lookup(HumanUserLocal.NAME);
+            humanUserLocal.setHumanUserId(existingUser.getHumanId());
+            userSession_.setAttribute(ServletLogin.HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
+
+            response.sendRedirect(home.getURL());
         }
     }
 }
