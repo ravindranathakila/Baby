@@ -63,6 +63,14 @@ public class GoogleContactImporter {
 
     }
 
+    public static Person fetchAuthor(final String emailToImportFrom, final String authSubToken) {
+
+        final ContactFeed resultFeed = getResultFeed(emailToImportFrom, authSubToken);
+
+        return resultFeed.getAuthors().get(0);
+
+    }
+
     private static List<ImportedContact> getContracts(ContactFeed resultFeed) {
         final List<ImportedContact> importedContacts = new ArrayList<ImportedContact>();
 
