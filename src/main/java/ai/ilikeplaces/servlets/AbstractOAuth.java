@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -327,6 +328,73 @@ public abstract class AbstractOAuth extends HttpServlet {
                 continue;
             }
         }
+
+        return new OAuthAccessTokenResponse(access_token_value, token_type_value, expires_in_value, refresh_token_value, parameters_value);
+    }
+
+    /**
+     * Only supports format: application/x-www-form-urlencoded
+     *
+     * @param oAuthAuthorizationResponse
+     * @param clientAuthentication
+     * @return
+     * @see <a href='http://tools.ietf.org/html/draft-ietf-oauth-v2-05#section-3.3.2'>http://tools.ietf.org/html/draft-ietf-oauth-v2-05#section-3.3.2</a>
+     */
+
+    OAuthAccessTokenResponse getOAuthAccessTokenResponseUsingJson(final OAuthAuthorizationResponse oAuthAuthorizationResponse, final ClientAuthentication clientAuthentication) {
+
+        final JSONObject access_token_string = getHttpContentAsJson(oAuthAuthorizationEndpoint,
+                new HashMap<String, String>() {
+                    {
+                        put(code, oAuthAuthorizationResponse.code);
+                        put(client_id, clientAuthentication.client_id);
+                        put(redirect_uri, clientAuthentication.redirect_uri);
+                        put(client_secret, clientAuthentication.client_secret);
+                    }
+                });
+
+
+        String access_token_value = AbstractOAuth.EMPTY;
+
+        String token_type_value = AbstractOAuth.EMPTY;
+
+        String expires_in_value = AbstractOAuth.EMPTY;
+
+        String refresh_token_value = AbstractOAuth.EMPTY;
+
+        String parameters_value = AbstractOAuth.EMPTY;
+
+
+        try {
+            access_token_value = access_token_string.getString(access_token);
+        } catch (final JSONException e) {
+            //hell uf a world!
+        }
+
+        try {
+            token_type_value = access_token_string.getString(token_type);
+        } catch (final JSONException e) {
+            //hell uf a world!
+        }
+
+        try {
+            expires_in_value = access_token_string.getString(expires_in);
+        } catch (final JSONException e) {
+            //hell uf a world!
+        }
+
+        try {
+            refresh_token_value = access_token_string.getString(refresh_token);
+        } catch (final JSONException e) {
+            //hell uf a world!
+        }
+
+        try {
+            parameters_value = access_token_string.getString(parameters);
+        } catch (final JSONException e) {
+            //hell uf a world!
+        }
+
 
         return new OAuthAccessTokenResponse(access_token_value, token_type_value, expires_in_value, refresh_token_value, parameters_value);
     }
