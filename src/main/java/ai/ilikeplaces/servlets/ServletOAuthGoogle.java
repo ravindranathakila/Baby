@@ -52,10 +52,10 @@ public class ServletOAuthGoogle extends AbstractOAuth {
                 "https://accounts.google.com/o/oauth2/auth",
                 "https://accounts.google.com/o/oauth2/auth",
                 new OAuthAuthorizationRequest(
-                        "code",
-                        "139373316127498",
+                        "token",
+                        "796688826799.apps.googleusercontent.com",
                         "http://www.ilikeplaces.com/oauth2gg",
-                        "email",
+                        "https://www.google.com/m8/feeds",
                         null
                 ));
     }
@@ -135,7 +135,7 @@ public class ServletOAuthGoogle extends AbstractOAuth {
             Loggers.debug(oAuthAuthorizationResponse.toString());
 
             final OAuthAccessTokenResponse oAuthAccessTokenResponse = super.getOAuthAccessTokenResponse(oAuthAuthorizationResponse,
-                    new ClientAuthentication("139373316127498", "56a2340af5eb11db36258f9f7a07b2b9", "http://www.ilikeplaces.com/oauth2gg"));
+                    new ClientAuthentication("796688826799.apps.googleusercontent.com", "lHiQ5yEkEBVhfXEHZirmgY3i", "http://www.ilikeplaces.com/oauth2gg"));
 
             Loggers.debug(oAuthAccessTokenResponse.toString());
 
