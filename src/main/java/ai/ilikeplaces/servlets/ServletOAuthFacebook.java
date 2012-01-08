@@ -1,12 +1,36 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.Parameter;
+import ai.ilikeplaces.entities.Human;
+import ai.ilikeplaces.entities.HumansAuthentication;
+import ai.ilikeplaces.exception.ConstructorInvokationException;
+import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.exception.DBDishonourException;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
+import ai.ilikeplaces.logic.Listeners.widgets.Bate;
+import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.mail.SendMail;
+import ai.ilikeplaces.logic.role.HumanUser;
+import ai.ilikeplaces.logic.role.HumanUserLocal;
+import ai.ilikeplaces.logic.validators.unit.Email;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.logic.validators.unit.Password;
+import ai.ilikeplaces.rbs.RBGet;
+import ai.ilikeplaces.security.face.SingletonHashingFace;
+import ai.ilikeplaces.util.*;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Properties;
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,7 +39,12 @@ import java.util.HashMap;
  * Time: 12:22 PM
  */
 public class ServletOAuthFacebook extends AbstractOAuth {
-// ------------------------ CANONICAL METHODS ------------------------
+    private static final RuntimeException JSONERROR = new RuntimeException("ERROR IN GETTING EMAIL FROM JSON OBJECT.");
+    private static final String JSON_ERROR = "JSON ERROR";
+    private static final String NAMING_ERROR = "NAMING ERROR";
+    private static final String IO_ERROR = "IO ERROR";
+    private static final String DB_ERROR = "DB ERROR";
+    // ------------------------ CANONICAL METHODS ------------------------
 
     @Override
     OAuthProvider oAuthProvider() {
@@ -25,10 +54,56 @@ public class ServletOAuthFacebook extends AbstractOAuth {
                 new OAuthAuthorizationRequest(
                         "code",
                         "139373316127498",
-                        "http://www.ilikeplaces.com/oauth2",
-                        null,
+                        "http://www.ilikeplaces.com/oauth2fb",
+                        "email",
                         null
                 ));
+    }
+
+
+    final Logger logger = LoggerFactory.getLogger(ServletLogin.class.getName());
+    final private Properties p_ = new Properties();
+    private Context context = null;
+    private SingletonHashingFace singletonHashingFace = null;
+    private static final String HEADER_REFERER = "Referer";
+
+    final PageFace home = Controller.Page.home;
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void init() {
+        boolean initializeFailed = true;
+        final StringBuilder log = new StringBuilder();
+        init:
+        {
+            try {
+                p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
+                context = new InitialContext(p_);
+
+                singletonHashingFace = (SingletonHashingFace) context.lookup("SingletonHashingLocal");
+                if (singletonHashingFace == null) {
+                    log.append("\nVARIABLE singletonHashingFace IS NULL! ");
+                    log.append(singletonHashingFace);
+                    break init;
+                }
+            } catch (NamingException ex) {
+                log.append("\nCOULD NOT INITIALIZE SIGNUP SERVLET DUE TO A NAMING EXCEPTION!");
+                logger.info("\nCOULD NOT INITIALIZE SIGNUP SERVLET DUE TO A NAMING EXCEPTION!", ex);
+                break init;
+            }
+
+            /**
+             *
+             * break. Do not let this statement be reachable if initialization
+             * failed. Instead, break immediately where initialization failed.
+             * At this point, we set the initializeFailed to false and thereby,
+             * allow initialization of an instance
+             */
+            initializeFailed = false;
+        }
+        if (initializeFailed) {
+            throw new ConstructorInvokationException(log.toString());
+        }
     }
 
     /**
@@ -60,7 +135,7 @@ public class ServletOAuthFacebook extends AbstractOAuth {
             Loggers.debug(oAuthAuthorizationResponse.toString());
 
             final OAuthAccessTokenResponse oAuthAccessTokenResponse = super.getOAuthAccessTokenResponse(oAuthAuthorizationResponse,
-                    new ClientAuthentication("139373316127498", "56a2340af5eb11db36258f9f7a07b2b9", "http://www.ilikeplaces.com/oauth2"));
+                    new ClientAuthentication("139373316127498", "56a2340af5eb11db36258f9f7a07b2b9", "http://www.ilikeplaces.com/oauth2fb"));
 
             Loggers.debug(oAuthAccessTokenResponse.toString());
 
@@ -74,8 +149,81 @@ public class ServletOAuthFacebook extends AbstractOAuth {
                     }
             );
 
-
             Loggers.info(profileDataOfUser.toString());
+
+            Human existingUser = null;
+            try {
+                final String email = profileDataOfUser.getString("email");
+
+                Loggers.info(email);
+
+                existingUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(email);
+
+                if (existingUser != null) {
+
+                    ActivateAccountAsFBWouldHaveVerifiedUser:
+                    {
+                        if (!existingUser.getHumanAlive()) {
+                            Loggers.info("Activating User");
+                            DB.getHumanCRUDHumanLocal(true).doUActivateHuman(new HumanId(existingUser.getHumanId()).getSelfAsValid());
+                        }
+                    }
+
+                    LoginTheUser:
+                    {
+
+                        Loggers.info("Logging in User");
+
+                        final HttpSession userSession_;
+                        handleHttpSession:
+                        {
+                            /**
+                             * Remove any redundant session
+                             */
+                            if (request.getSession(false) != null) {
+                                request.getSession(false).invalidate();
+                            }
+
+                            /**
+                             * Make user session anyway as he came to log in
+                             */
+                            userSession_ = request.getSession();
+
+                            /**
+                             * Set a timeout compatible with the stateful session bean handling user
+                             */
+                            userSession_.setMaxInactiveInterval(Integer.parseInt(RBGet.globalConfig.getString("UserSessionIdleInterval")));
+                        }
+
+                        final HumanUserLocal humanUserLocal = (HumanUserLocal) context.lookup(HumanUserLocal.NAME);
+                        humanUserLocal.setHumanUserId(existingUser.getHumanId());
+                        userSession_.setAttribute(ServletLogin.HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
+
+                        response.sendRedirect(home.getURL());
+                    }
+
+                } else {
+                    Loggers.info("Creating New User");
+
+                    final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                            new HumanId().setObjAsValid(email),
+                            new Password(Bate.getRandomPassword()),
+                            new Email(email));
+                }
+            } catch (final JSONException e) {
+                Loggers.error(JSON_ERROR, e);
+                throw JSONERROR;
+            } catch (NamingException e) {
+                Loggers.error(NAMING_ERROR, e);
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                Loggers.error(IO_ERROR, e);
+                throw new RuntimeException(e);
+            } catch (DBDishonourCheckedException e) {
+                Loggers.error(DB_ERROR, e);
+                throw new RuntimeException(e);
+            }
+
 
         } else {
             // we ignore since a redirect will happen

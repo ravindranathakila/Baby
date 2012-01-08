@@ -430,7 +430,7 @@ abstract public class Bate extends AbstractWidgetListener {
     final static public Return<Boolean> sendInviteToOfflineInvite(final HumanId inviter, final String invitersName, final ImportedContact inviteee) {
         Return<Boolean> returnVal;
         try {
-            final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
+            final String randomPassword = getRandomPassword();
 
             final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
                     new HumanId().setObjAsValid(inviteee.getEmail()),
@@ -469,6 +469,10 @@ abstract public class Bate extends AbstractWidgetListener {
         }
         return returnVal;
 
+    }
+
+    public static final String getRandomPassword() {
+        return Long.toHexString(Double.doubleToLongBits(Math.random()));
     }
 
 }
