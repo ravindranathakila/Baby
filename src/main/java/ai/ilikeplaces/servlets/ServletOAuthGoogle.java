@@ -134,7 +134,7 @@ public class ServletOAuthGoogle extends AbstractOAuth {
         if (oAuthAuthorizationResponse != null) {
             Loggers.debug(oAuthAuthorizationResponse.toString());
 
-            final OAuthAccessTokenResponse oAuthAccessTokenResponse = super.getOAuthAccessTokenResponse(oAuthAuthorizationResponse,
+            final OAuthAccessTokenResponse oAuthAccessTokenResponse = super.getOAuthAccessTokenResponseUsingJson(oAuthAuthorizationResponse,
                     new ClientAuthentication("796688826799.apps.googleusercontent.com", "lHiQ5yEkEBVhfXEHZirmgY3i", "http://www.ilikeplaces.com/oauth2gg"));
 
             Loggers.debug(oAuthAccessTokenResponse.toString());
