@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * Time: 12:22 PM
  */
 public class ServletOAuthFacebook extends AbstractOAuth {
+// ------------------------ CANONICAL METHODS ------------------------
 
     @Override
     OAuthProvider oAuthProvider() {
@@ -54,25 +55,24 @@ public class ServletOAuthFacebook extends AbstractOAuth {
     void processRequest(final HttpServletRequest request, final HttpServletResponse response) {
         final OAuthAuthorizationResponse oAuthAuthorizationResponse = super.getOAuthAuthorizationResponse(request, response);
         if (oAuthAuthorizationResponse != null) {
-            final String code_ = request.getParameter(code);
             Loggers.info(oAuthAuthorizationResponse.toString());
             final OAuthAccessTokenResponse oAuthAccessTokenResponse = super.getOAuthAccessTokenResponse(oAuthAuthorizationResponse,
-                    new ClientAuthentication("139373316127498","56a2340af5eb11db36258f9f7a07b2b9"));
+                    new ClientAuthentication("139373316127498", "56a2340af5eb11db36258f9f7a07b2b9", "http://www.ilikeplaces.com/oauth2"));
+
             Loggers.info(oAuthAccessTokenResponse.toString());
-            Loggers.info(super.getHttpContent("https://graph.facebook.com/oauth/access_token",
+            /*Loggers.info(super.getHttpContent("https://graph.facebook.com/oauth/access_token",
                     new Parameter()
                             .append(code, oAuthAuthorizationResponse.code)
                             .append(client_id,"139373316127498")
                             .append(redirect_uri,"http://www.ilikeplaces.com/oauth2")
                             .append(client_secret,"56a2340af5eb11db36258f9f7a07b2b9")
                             .get()
-            ));
+            ));*/
         } else {
             // we ignore since a redirect will happen
         }
     }
 }
-
 
 /*
 

@@ -70,6 +70,8 @@ public abstract class AbstractOAuth extends HttpServlet {
     private static final String OPEN_SQR_BRCKT = "[";
     private static final String CLOSE_SQR_BRCKT = "]";
     private static final String EMPTY = "";
+    private static final String expires = "expires";
+    private static final String COMMA = ",";
 
 
 // ------------------------------ FIELDS (NON-STATIC)--------------------
@@ -253,36 +255,56 @@ public abstract class AbstractOAuth extends HttpServlet {
         return getMethod.getRequestHeader(headerName);
     }
 
+    /**
+     * Only supports format: application/x-www-form-urlencoded
+     *
+     * @param oAuthAuthorizationResponse
+     * @param clientAuthentication
+     * @return
+     * @see <a href='http://tools.ietf.org/html/draft-ietf-oauth-v2-05#section-3.3.2'>http://tools.ietf.org/html/draft-ietf-oauth-v2-05#section-3.3.2</a>
+     */
     OAuthAccessTokenResponse getOAuthAccessTokenResponse(final OAuthAuthorizationResponse oAuthAuthorizationResponse, final ClientAuthentication clientAuthentication) {
-        final Header[] oAuthAccessTokenResponseHeaders = getHttpHeaders(
+        //Last time we checked, this did now work. 
+        /*final Header[] oAuthAccessTokenResponseHeaders = getHttpHeaders(
                 oAuthAuthorizationEndpoint,
                 new Parameter()
                         .append(code, oAuthAuthorizationResponse.code)
                         .append(client_id, clientAuthentication.client_id)
                         .append(client_secret, clientAuthentication.client_secret)
-                        .append(redirect_uri,"http://www.ilikeplaces.com/oauth2")
+                        .append(redirect_uri, "http://www.ilikeplaces.com/oauth2")
+                        .get()
+        );  */
+
+        final String access_token_string = getHttpContent(
+                oAuthAuthorizationEndpoint,
+                new Parameter()
+                        .append(code, oAuthAuthorizationResponse.code)
+                        .append(client_id, clientAuthentication.client_id)
+                        .append(redirect_uri, clientAuthentication.redirect_uri)
+                        .append(client_secret, clientAuthentication.client_secret)
                         .get()
         );
 
         String name;
         String value;
 
-        String access_token_value = "";
+        String access_token_value = AbstractOAuth.EMPTY;
 
-        String token_type_value = "";
+        String token_type_value = AbstractOAuth.EMPTY;
 
-        String expires_in_value = "";
+        String expires_in_value = AbstractOAuth.EMPTY;
 
-        String refresh_token_value = "";
+        String refresh_token_value = AbstractOAuth.EMPTY;
 
-        String parameters_value = "";
+        String parameters_value = AbstractOAuth.EMPTY;
 
+        for (final String key_value : access_token_string.split("&")) {
 
-        for (final Header header : oAuthAccessTokenResponseHeaders) {
-            name = header.getName();
-            value = header.getValue();
+            final String[] split = key_value.split("=");
+            name = split[0];
+            value = split[1];
 
-            Loggers.INFO.info(name + "," + value);
+            Loggers.debug(name + COMMA + value);
 
             if (name.equals(access_token)) {
                 access_token_value = value;
@@ -292,7 +314,7 @@ public abstract class AbstractOAuth extends HttpServlet {
                 token_type_value = value;
                 continue;
             }
-            if (name.equals(expires_in)) {
+            if (name.equals(expires_in) || /*I know. Facebook!!!*/name.equals(expires)) {
                 expires_in_value = value;
                 continue;
             }
@@ -495,11 +517,11 @@ public abstract class AbstractOAuth extends HttpServlet {
                                          final String redirect_uri,
                                          final String scope,
                                          final String state) {
-            this.response_type = response_type != null ? response_type : "";
-            this.client_id = client_id != null ? client_id : "";
-            this.redirect_uri = redirect_uri != null ? redirect_uri : "";
-            this.scope = scope != null ? scope : "";
-            this.state = state != null ? state : "";
+            this.response_type = response_type != null ? response_type : AbstractOAuth.EMPTY;
+            this.client_id = client_id != null ? client_id : AbstractOAuth.EMPTY;
+            this.redirect_uri = redirect_uri != null ? redirect_uri : AbstractOAuth.EMPTY;
+            this.scope = scope != null ? scope : AbstractOAuth.EMPTY;
+            this.state = state != null ? state : AbstractOAuth.EMPTY;
         }
 
         @Override
@@ -579,8 +601,8 @@ public abstract class AbstractOAuth extends HttpServlet {
         final String state;
 
         public OAuthAuthorizationResponse(final String code, final String state) {
-            this.code = code != null ? code : "";
-            this.state = state != null ? state : "";
+            this.code = code != null ? code : AbstractOAuth.EMPTY;
+            this.state = state != null ? state : AbstractOAuth.EMPTY;
         }
 
         @Override
@@ -650,9 +672,9 @@ public abstract class AbstractOAuth extends HttpServlet {
         @LOGIC(
                 @NOTE("By nature, we don't want this object to be modified after construction."))
         public OAuthAccessTokenRequest(final String grant_type, final String code, final String redirect_uri) {
-            this.grant_type = grant_type != null ? grant_type : "";
-            this.code = code != null ? code : "";
-            this.redirect_uri = redirect_uri != null ? redirect_uri : "";
+            this.grant_type = grant_type != null ? grant_type : AbstractOAuth.EMPTY;
+            this.code = code != null ? code : AbstractOAuth.EMPTY;
+            this.redirect_uri = redirect_uri != null ? redirect_uri : AbstractOAuth.EMPTY;
         }
 
         @Override
@@ -687,6 +709,8 @@ public abstract class AbstractOAuth extends HttpServlet {
      * "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
      * "example_parameter":"example_value"
      * }
+     *
+     * @see <a href='http://tools.ietf.org/html/draft-ietf-oauth-v2-05#section-3.3.2'>http://tools.ietf.org/html/draft-ietf-oauth-v2-05#section-3.3.2</a>
      */
     public final class OAuthAccessTokenResponse {
 // ------------------------------ FIELDS (NON-STATIC)--------------------
@@ -727,11 +751,11 @@ public abstract class AbstractOAuth extends HttpServlet {
                                         final String expires_in,
                                         final String refresh_token,
                                         final String parameters) {
-            this.access_token = access_token != null ? access_token : "";
-            this.token_type = token_type != null ? token_type : "";
-            this.expires_in = expires_in != null ? expires_in : "";
-            this.refresh_token = refresh_token != null ? refresh_token : "";
-            this.parameters = parameters != null ? parameters : "";
+            this.access_token = access_token != null ? access_token : AbstractOAuth.EMPTY;
+            this.token_type = token_type != null ? token_type : AbstractOAuth.EMPTY;
+            this.expires_in = expires_in != null ? expires_in : AbstractOAuth.EMPTY;
+            this.refresh_token = refresh_token != null ? refresh_token : AbstractOAuth.EMPTY;
+            this.parameters = parameters != null ? parameters : AbstractOAuth.EMPTY;
         }
 
         @Override
@@ -786,8 +810,6 @@ public abstract class AbstractOAuth extends HttpServlet {
      * brute force attacks.
      */
     public final class ClientAuthentication {
-
-
         /**
          * REQUIRED.  The client identifier issued to the client during
          * the registration process described by Section 2.2.
@@ -799,12 +821,15 @@ public abstract class AbstractOAuth extends HttpServlet {
          */
         final public String client_secret;
 
+        final public String redirect_uri;
+
 
         @LOGIC(
                 @NOTE("By nature, we don't want this object to be modified after construction."))
-        public ClientAuthentication(String client_id, String client_secret) {
+        public ClientAuthentication(final String client_id, final String client_secret, final String redirect_uri) {
             this.client_id = client_id;
             this.client_secret = client_secret;
+            this.redirect_uri = redirect_uri;
         }
 
         @Override
@@ -814,7 +839,6 @@ public abstract class AbstractOAuth extends HttpServlet {
                     ", client_secret='" + client_secret + '\'' +
                     '}';
         }
-
     }
 
 // ------------------------ OVERRIDING METHODS ------------------------
