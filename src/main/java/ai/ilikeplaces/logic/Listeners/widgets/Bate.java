@@ -56,7 +56,7 @@ abstract public class Bate extends AbstractWidgetListener {
 
     private static final String ACCESS_TOKEN = "access_token";
     private static final String HASH = "#";
-    private static final String DEFAULT = "default";
+    public static final String DEFAULT = "default";
     final private Logger logger = LoggerFactory.getLogger(FindFriend.class.getName());
 
     HumanId humanId;
