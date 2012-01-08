@@ -2,9 +2,11 @@ package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Parameter;
+import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 
 /**
  * Created by IntelliJ IDEA.
@@ -55,19 +57,26 @@ public class ServletOAuthFacebook extends AbstractOAuth {
     void processRequest(final HttpServletRequest request, final HttpServletResponse response) {
         final OAuthAuthorizationResponse oAuthAuthorizationResponse = super.getOAuthAuthorizationResponse(request, response);
         if (oAuthAuthorizationResponse != null) {
-            Loggers.info(oAuthAuthorizationResponse.toString());
+            Loggers.debug(oAuthAuthorizationResponse.toString());
+
             final OAuthAccessTokenResponse oAuthAccessTokenResponse = super.getOAuthAccessTokenResponse(oAuthAuthorizationResponse,
                     new ClientAuthentication("139373316127498", "56a2340af5eb11db36258f9f7a07b2b9", "http://www.ilikeplaces.com/oauth2"));
 
-            Loggers.info(oAuthAccessTokenResponse.toString());
-            /*Loggers.info(super.getHttpContent("https://graph.facebook.com/oauth/access_token",
-                    new Parameter()
-                            .append(code, oAuthAuthorizationResponse.code)
-                            .append(client_id,"139373316127498")
-                            .append(redirect_uri,"http://www.ilikeplaces.com/oauth2")
-                            .append(client_secret,"56a2340af5eb11db36258f9f7a07b2b9")
-                            .get()
-            ));*/
+            Loggers.debug(oAuthAccessTokenResponse.toString());
+
+            //https://graph.facebook.com/me
+
+            final JSONObject profileDataOfUser = getHttpContentAsJson("https://graph.facebook.com/me",
+                    new HashMap<String, String>() {
+                        {
+                            put(access_token, oAuthAccessTokenResponse.access_token);
+                        }
+                    }
+            );
+
+
+            Loggers.info(profileDataOfUser.toString());
+
         } else {
             // we ignore since a redirect will happen
         }
