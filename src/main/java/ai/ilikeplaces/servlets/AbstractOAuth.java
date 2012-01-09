@@ -10,6 +10,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -78,9 +79,9 @@ public abstract class AbstractOAuth extends HttpServlet {
 // ------------------------------ FIELDS (NON-STATIC)--------------------
 
 
-    private OAuthAuthorizationRequest oAuthAuthorizationRequest;
-    private String oAuthEndpoint;
-    private String oAuthAuthorizationEndpoint;
+    final OAuthAuthorizationRequest oAuthAuthorizationRequest;
+    final String oAuthEndpoint;
+    final String oAuthAuthorizationEndpoint;
 
     /**
      * @see <a href='http://hc.apache.org/httpclient-3.x/threading.html'>httpclient threading</a>
@@ -180,6 +181,30 @@ public abstract class AbstractOAuth extends HttpServlet {
         return jsonObject;
     }
 
+
+    /**
+     * @param endpointEndValue
+     * @param parameters
+     * @return
+     */
+    public JSONObject postHttpContentAsJson(final String endpointEndValue, final Map<String, String> parameters) {
+        final StringBuilder sb = new StringBuilder(EMPTY);
+        for (final String key : parameters.keySet()) {
+            sb.append(AMPERSAND).append(key).append(EQUALS).append(parameters.get(key));
+        }
+
+        JSONObject jsonObject;
+        try {
+            final String response = postHttpContent(endpointEndValue, sb.toString());
+            Loggers.info(response);
+            jsonObject = new JSONObject(response);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        return jsonObject;
+    }
+
     /**
      * @param endpointEndValue
      * @param optionalAppend   All strings in array will be concatenated and appended
@@ -199,7 +224,55 @@ public abstract class AbstractOAuth extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        if (statusCode != HttpStatus.SC_OK) {
+        if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_MOVED_TEMPORARILY) {
+            throw new RuntimeException(GOT_ERROR_CODE + statusCode);
+        }
+        InputStream inputStream = null;
+
+        try {
+            inputStream = getMethod.getResponseBodyAsStream();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        final BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        String accumulator = EMPTY;
+        try {
+            while ((line = br.readLine()) != null) {
+                accumulator += line;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            br.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return accumulator;
+    }
+
+    /**
+     * @param endpointEndValue
+     * @param optionalAppend   All strings in array will be concatenated and appended
+     * @return
+     */
+    String postHttpContent(final String endpointEndValue, final String... optionalAppend) {
+        final String toBeCalled = endpointEndValue
+                + QUESTION_MARK
+                + ((optionalAppend != null && optionalAppend.length != 0) ? Arrays.toString(optionalAppend).replace(OPEN_SQR_BRCKT, EMPTY).replace(CLOSE_SQR_BRCKT, EMPTY) : EMPTY);
+
+        final PostMethod getMethod = new PostMethod(toBeCalled);
+
+        int statusCode = 0;
+        try {
+            statusCode = threadSafeHttpClient.executeMethod(getMethod);
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_MOVED_TEMPORARILY) {
             throw new RuntimeException(GOT_ERROR_CODE + statusCode);
         }
         InputStream inputStream = null;
@@ -249,7 +322,7 @@ public abstract class AbstractOAuth extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        if (statusCode != HttpStatus.SC_OK) {
+        if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_MOVED_TEMPORARILY) {
             throw new RuntimeException(GOT_ERROR_CODE + statusCode);
         }
 
@@ -343,13 +416,14 @@ public abstract class AbstractOAuth extends HttpServlet {
 
     OAuthAccessTokenResponse getOAuthAccessTokenResponseUsingJson(final OAuthAuthorizationResponse oAuthAuthorizationResponse, final ClientAuthentication clientAuthentication) {
 
-        final JSONObject access_token_string = getHttpContentAsJson(oAuthAuthorizationEndpoint,
+        final JSONObject access_token_string = postHttpContentAsJson(oAuthAuthorizationEndpoint,
                 new HashMap<String, String>() {
                     {
                         put(code, oAuthAuthorizationResponse.code);
                         put(client_id, clientAuthentication.client_id);
                         put(redirect_uri, clientAuthentication.redirect_uri);
                         put(client_secret, clientAuthentication.client_secret);
+                        put("grant_type", "authorization_code");
                     }
                 });
 
@@ -419,7 +493,7 @@ public abstract class AbstractOAuth extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        if (statusCode != HttpStatus.SC_OK) {
+        if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_MOVED_TEMPORARILY) {
             throw new RuntimeException(GOT_ERROR_CODE + statusCode);
         }
 

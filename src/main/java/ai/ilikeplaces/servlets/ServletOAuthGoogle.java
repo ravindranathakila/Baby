@@ -1,6 +1,7 @@
 package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.doc.DOCUMENTATION;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.exception.ConstructorInvokationException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
@@ -14,6 +15,7 @@ import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.face.SingletonHashingFace;
 import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.Parameter;
 import ai.ilikeplaces.util.Return;
 import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
 import com.google.gdata.data.Person;
@@ -29,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -52,7 +55,7 @@ public class ServletOAuthGoogle extends AbstractOAuth {
                 "https://accounts.google.com/o/oauth2/auth",
                 "https://accounts.google.com/o/oauth2/auth",
                 new OAuthAuthorizationRequest(
-                        "token",
+                        "code",
                         "796688826799.apps.googleusercontent.com",
                         "http://www.ilikeplaces.com/oauth2gg",
                         "https://www.google.com/m8/feeds",
@@ -130,70 +133,150 @@ public class ServletOAuthGoogle extends AbstractOAuth {
      */
     @Override
     void processRequest(final HttpServletRequest request, final HttpServletResponse response) {
-        final OAuthAuthorizationResponse oAuthAuthorizationResponse = super.getOAuthAuthorizationResponse(request, response);
+        final OAuthAuthorizationResponse oAuthAuthorizationResponse = this.getOAuthAuthorizationResponse(request, response);
         if (oAuthAuthorizationResponse != null) {
             Loggers.debug(oAuthAuthorizationResponse.toString());
 
-            final OAuthAccessTokenResponse oAuthAccessTokenResponse = super.getOAuthAccessTokenResponseUsingJson(oAuthAuthorizationResponse,
+            final OAuthAccessTokenResponse oAuthAccessTokenResponse = this.getOAuthAccessTokenResponse(request, response, oAuthAuthorizationResponse,
                     new ClientAuthentication("796688826799.apps.googleusercontent.com", "lHiQ5yEkEBVhfXEHZirmgY3i", "http://www.ilikeplaces.com/oauth2gg"));
 
-            Loggers.debug(oAuthAccessTokenResponse.toString());
+            Loggers.info(oAuthAccessTokenResponse != null ? oAuthAccessTokenResponse.toString() : "");
 
-            final Person person = GoogleContactImporter.fetchAuthor(Bate.DEFAULT, oAuthAccessTokenResponse.access_token);
+            if (oAuthAccessTokenResponse != null) {
 
-            Loggers.info(person.toString());
+                final Person person = GoogleContactImporter.fetchAuthor(Bate.DEFAULT, oAuthAccessTokenResponse.access_token);
 
-            Human existingUser = null;
-            try {
-                final String email = person.getEmail();
+                Loggers.info(person.toString());
 
-                Loggers.info(email);
+                Human existingUser = null;
+                try {
+                    final String email = person.getEmail();
 
-                existingUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(email);
+                    Loggers.info(email);
 
-                if (existingUser != null) {
+                    existingUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(email);
 
-                    ActivateAccountAsFBWouldHaveVerifiedUser:
-                    {
-                        if (!existingUser.getHumanAlive()) {
-                            Loggers.info("Activating User");
-                            DB.getHumanCRUDHumanLocal(true).doUActivateHuman(new HumanId(existingUser.getHumanId()).getSelfAsValid());
+                    if (existingUser != null) {
+
+                        ActivateAccountAsFBWouldHaveVerifiedUser:
+                        {
+                            if (!existingUser.getHumanAlive()) {
+                                Loggers.info("Activating User");
+                                DB.getHumanCRUDHumanLocal(true).doUActivateHuman(new HumanId(existingUser.getHumanId()).getSelfAsValid());
+                            }
+                        }
+
+                        loginUser(request, response, existingUser);
+
+                    } else {
+                        Loggers.info("Creating New User");
+
+                        final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                                new HumanId().setObjAsValid(email),
+                                new Password(Bate.getRandomPassword()),
+                                new Email(email));
+
+                        if (humanCreateReturn.valid()) {
+                            loginUser(request, response, DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(email));
+                        } else {
+                            //Hmmm. Backend would've logged this. We need to notify the user however.
                         }
                     }
-
-                    loginUser(request, response, existingUser);
-
-                } else {
-                    Loggers.info("Creating New User");
-
-                    final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
-                            new HumanId().setObjAsValid(email),
-                            new Password(Bate.getRandomPassword()),
-                            new Email(email));
-
-                    if (humanCreateReturn.valid()) {
-                        loginUser(request, response, DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(email));
-                    }else{
-                        //Hmmm. Backend would've logged this. We need to notify the user however.
-                    }
+                } catch (NamingException e) {
+                    Loggers.error(NAMING_ERROR, e);
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    Loggers.error(IO_ERROR, e);
+                    throw new RuntimeException(e);
+                } catch (DBDishonourCheckedException e) {
+                    Loggers.error(DB_ERROR, e);
+                    throw new RuntimeException(e);
                 }
-            } catch (NamingException e) {
-                Loggers.error(NAMING_ERROR, e);
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                Loggers.error(IO_ERROR, e);
-                throw new RuntimeException(e);
-            } catch (DBDishonourCheckedException e) {
-                Loggers.error(DB_ERROR, e);
-                throw new RuntimeException(e);
             }
-
-
         } else {
             // we ignore since a redirect will happen
         }
     }
 
+    /**
+     * @param request
+     * @param response
+     * @return OAuthAuthorizationResponse or redirects user to endpoint and returns null
+     */
+    OAuthAuthorizationResponse getOAuthAuthorizationResponse(final HttpServletRequest request, final HttpServletResponse response) {
+        final String code = request.getParameter(AbstractOAuth.code);
+        final String state = request.getParameter(AbstractOAuth.state);
+
+        if ((state != null && state.equals("login")) && (code == null || code.isEmpty())) {
+            try {
+                response.sendRedirect(
+                        new Parameter(this.oAuthEndpoint)
+                                .append(client_id, this.oAuthAuthorizationRequest.client_id, true)
+                                .append(redirect_uri, this.oAuthAuthorizationRequest.redirect_uri)
+                                .append(response_type, this.oAuthAuthorizationRequest.response_type)
+                                .append(scope, this.oAuthAuthorizationRequest.scope)
+                                .append(AbstractOAuth.state, this.oAuthAuthorizationRequest.state)
+                                .get()
+
+                );
+            } catch (final IOException e) {
+                //hmmm!
+                throw RedirectToOAuthEndpointFailed;
+            }
+            return null;
+        } else {
+            return new OAuthAuthorizationResponse(code, state);
+        }
+    }
+
+    @WARNING("DEVIATING FROM OAUTH IMPLEMENTATION JUST FOR GOOGLE. WE DON'T NEED code WE JUST NEED TO USE A CLIENT PAGE REFRESH TO GET THE access_token")
+    OAuthAccessTokenResponse getOAuthAccessTokenResponse(final HttpServletRequest request, final HttpServletResponse response, final OAuthAuthorizationResponse oAuthAuthorizationResponse, final ClientAuthentication clientAuthentication) {
+        final String access_token__ = request.getParameter(access_token);
+        final String code__ = request.getParameter(code);
+
+        Loggers.info("################################ code: " + code__);
+        Loggers.info("################################ token: " + access_token__);
+
+        if (code__ != null && !code__.isEmpty()) {
+            try {
+                response.sendRedirect(
+                        new Parameter(this.oAuthEndpoint)
+                                .append(client_id, this.oAuthAuthorizationRequest.client_id, true)
+                                .append(redirect_uri, this.oAuthAuthorizationRequest.redirect_uri)
+                                .append(response_type, "token")
+                                .append(scope, this.oAuthAuthorizationRequest.scope)
+                                .append(AbstractOAuth.state, "done")
+                                .get()
+
+                );
+                return null;
+            } catch (final IOException e) {
+                //hmmm!
+                throw RedirectToOAuthEndpointFailed;
+            }
+        } else {
+            if (access_token__ != null && !access_token__.isEmpty()) {
+                return new OAuthAccessTokenResponse(access_token__, "", "", "", "");
+            } else {
+                try {
+                    final PrintWriter out = response.getWriter();
+                    out.println("<html><head>");
+                    out.println("        <script type=\"text/javascript\">\n" +
+                            "            if(window.location.hash){\n" +
+                            "                window.location.href = '?'+(window.location.hash + '').substring(1);\n" +
+                            "            }\n" +
+                            "        </script>");
+                    out.println("</title>");
+                    out.println("<body>");
+                    out.println("</body></html>");
+                    out.close();
+                    return null;
+                } catch (final IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
 
     private void loginUser(HttpServletRequest request, HttpServletResponse response, Human existingUser) throws NamingException, IOException {
         LoginTheUser:
@@ -294,3 +377,29 @@ https://graph.facebook.com/ravindranathakila
 
 */
 
+
+/*
+
+final String parameter = request.getParameter(access_token);
+
+if (parameter == null || parameter.isEmpty()) {
+    try {
+        final PrintWriter out = response.getWriter();
+        out.println("<html><head>");
+        out.println("        <script type=\"text/javascript\">\n" +
+                "            if(window.location.hash){\n" +
+                "                window.location.href = '?'+(window.location.hash + '').substring(1);\n" +
+                "            }\n" +
+                "        </script>");
+        out.println("</title>");
+        out.println("<body>");
+        out.println("<body>");
+        out.println("</body></html>");
+    } catch (final IOException e) {
+        throw new RuntimeException(e);
+    }
+}else{
+    Loggers.info("######################### " + parameter);
+}
+
+*/
