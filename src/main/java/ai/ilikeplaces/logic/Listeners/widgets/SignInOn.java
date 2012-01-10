@@ -10,7 +10,6 @@ import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
-import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatServletRequest;
@@ -45,6 +44,18 @@ abstract public class SignInOn extends AbstractWidgetListener {
     private Obj<Boolean> userOk = null;
     private Obj<Boolean> existButNotActive = null;
 
+// -------------------------- ENUMERATIONS --------------------------
+
+    public static enum SignInOnIds implements WidgetIds {
+        signinon_login,
+        signinon_signup,
+        signinon_logon,
+        signinonUsername,
+        signinonPassword,
+        signinonSubmit,
+        signinonNotice,
+    }
+
 // --------------------------- CONSTRUCTORS ---------------------------
 
     /**
@@ -57,6 +68,8 @@ abstract public class SignInOn extends AbstractWidgetListener {
         super(request__, Page.SignInOn, appendToElement__, humanId);
     }
 
+// ------------------------ CANONICAL METHODS ------------------------
+
     // ------------------------ OVERRIDING METHODS ------------------------
     @WARNING(warning = "During work ont this class, from time to time you'll want to make it a WEB 2.0 login." +
             "However, remember that having a login on a separate servlet is better for security.  HTTPS support." +
@@ -64,7 +77,7 @@ abstract public class SignInOn extends AbstractWidgetListener {
             "You will also have to make sure both online and offline modes are available.")
     @Override
     protected void init(final Object... initArgs) {
-        registerUserNotifier($$(Page.signinonNotice));
+        registerUserNotifier($$(SignInOnIds.signinonNotice));
 
         username = (HumanId) initArgs[0];
         password = new Password();
@@ -76,27 +89,27 @@ abstract public class SignInOn extends AbstractWidgetListener {
         if (username.validate() == 0) {
             UCShowHideWidgets:
             {
-                $$displayBlock($$(Controller.Page.signinon_logon));
-                $$displayNone($$(Controller.Page.signinon_login));
-                $$displayNone($$(Controller.Page.signinon_signup));
+                $$displayBlock($$(SignInOnIds.signinon_logon));
+                $$displayNone($$(SignInOnIds.signinon_login));
+                $$displayNone($$(SignInOnIds.signinon_signup));
             }
         } else {
             UCShowHIdeWIdgets:
             {
-                $$displayBlock($$(Controller.Page.signinon_login));
-                $$displayNone($$(Controller.Page.signinon_logon));
-                $$displayNone($$(Controller.Page.signinon_signup));
+                $$displayBlock($$(SignInOnIds.signinon_login));
+                $$displayNone($$(SignInOnIds.signinon_logon));
+                $$displayNone($$(SignInOnIds.signinon_signup));
             }
             UCShowPleaseLoginMessage:
             {
-                $$(Page.signinonNotice).setTextContent("Login!");
+                $$(SignInOnIds.signinonNotice).setTextContent("Login!");
             }
         }
     }
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.signinonUsername), EventType.BLUR.toString(), new EventListener() {
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(SignInOnIds.signinonUsername), EventType.BLUR.toString(), new EventListener() {
             private HumanId myusername = username;
             private SimpleString mydbHash = dbHash;
             private SimpleString mydbSalt = dbSalt;
@@ -124,7 +137,7 @@ abstract public class SignInOn extends AbstractWidgetListener {
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.signinonPassword), EventType.BLUR.toString(), new EventListener() {
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(SignInOnIds.signinonPassword), EventType.BLUR.toString(), new EventListener() {
             private Password mypassword = password;
 
             @Override
@@ -160,7 +173,6 @@ abstract public class SignInOn extends AbstractWidgetListener {
                     if (userSession_.getAttribute(HumanUserLocal.NAME) == null) {
                         /*Ok the session does not have the bean, initialize it with the user with email id and password*/
                         if (myuserOk.getObj()) {/*Ok user name valid but now we check for password*/
-
                             if (mydbHash.getObj().equals(DB.getSingletonHashingFaceLocal(true).getHash(mypassword.getObjectAsValid(), mydbSalt.getObj()))) {
                                 final HumanUserLocal humanUserLocal = DB.getHumanUserLocal(true);
 
@@ -175,7 +187,6 @@ abstract public class SignInOn extends AbstractWidgetListener {
                                 notifyUser("Ha ha wrong password!");
                             }
                         } else {/*There is no such user. Ask if he forgot username or whether to create a new account :)*/
-
                             if (myexistButNotActive.getObj()) {
                                 $$sendJS(JSCodeToSend.redirectPageWithURL("/page/_profile"));
                                 notifyUser("Please activate your account.");
@@ -192,7 +203,7 @@ abstract public class SignInOn extends AbstractWidgetListener {
             }
         };
 
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.signinonPassword), EventType.BLUR.toString(), loginListener, false);
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.signinonSubmit), EventType.CLICK.toString(), loginListener, false);
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(SignInOnIds.signinonPassword), EventType.BLUR.toString(), loginListener, false);
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(SignInOnIds.signinonSubmit), EventType.CLICK.toString(), loginListener, false);
     }
 }
