@@ -6,7 +6,7 @@
     </head>
     <body>
     <div class="use100" id="SignInOn" style="display:block;" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
-        <div class="use100 inherit_height" id="signinon_login" style="display:none;overflow:hidden;height:50px;">
+        <div class="use60 use20p use20a inherit_height" id="signinon_login" style="display:none;overflow:hidden;height:50px;">
             <form method="post" id="Html_login" action="/login" >
                 <div class="use15 inherit_height bg_a9abf1" style="overflow:hidden;">
                     <div class="use100 inherit_height line_height_50 center" style="font-size:13px;color:#dddddd;font-weight:900;">
@@ -14,12 +14,12 @@
                     </div>
                 </div>
                 <div class="use25 inherit_height line_height_50" style="overflow:hidden;" >
-                    <div class="use100" style="height:20%;">&nbsp;</div>
-                    <div class="use100" style="height:60%;">
-                        <input class="use100 inherit_height" style="height:100%;border:none;background-color:#eeeeee;font-weight:900;" id="signinonUsername"
+                    <div class="use100" style="height:12px;">&nbsp;</div>
+                    <div class="use90 use5p use5a" style="height:18px;">
+                        <input class="use100 inherit_height" style="height:100%;color:#eeeeee;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;" id="signinonUsername"
                                name="Username" maxlength="255" type="text"/>
                     </div>
-                    <div class="use100" style="height:20%;">&nbsp;</div>
+                    <div class="use100" style="height:12px;">&nbsp;</div>
                 </div>
                 <div class="use15 inherit_height bg_a9abf1" style="overflow:hidden;">
                     <div class="use100 inherit_height line_height_50 center" style="font-size:13px;color:#dddddd;font-weight:900;">
@@ -27,51 +27,104 @@
                     </div>
                 </div>
                 <div class="use25 inherit_height line_height_50" style="overflow:hidden;">
-                    <div class="use100" style="height:20%;">&nbsp;</div>
-                    <div class="use100" style="height:60%;">
-                        <input class="use100 bold" style="height:100%;border:none;background-color:#eeeeee;font-weight:900;" id="signinonPassword"
+                    <div class="use100" style="height:12px;">&nbsp;</div>
+                    <div class="use90 use5p use5a" style="height:18px;">
+                        <input class="use100 bold" style="height:100%;color:#eeeeee;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;" id="signinonPassword"
                                name="Password" maxlength="255" type="password" />
                     </div>
-                    <div class="use100" style="height:20%;">&nbsp;</div>
+                    <div class="use100" style="height:12px;">&nbsp;</div>
                 </div>
 
                 <div class="use20 inherit_height bg_a9abf1 center" style="overflow:hidden;">
-                    <div class="use90 use5p use5a inherit_height line_height_50 center cursor_link">
-                        <div class="use100" style="height:20%;">&nbsp;</div>
-                        <div class="use100 intensity_3" style="height:60%;">
+                    <div class="use70 use15p use15a inherit_height line_height_50 center cursor_link">
+                        <div class="use100" style="height:15px%;">&nbsp;</div>
+                        <div class="use100 intensity_3" style="height:20px;">
                             <a
                                class=""><img id="signinonSubmit" src="/images/login_button.png" alt="Login" style="height:100%;cursor:pointer;"/></a>
                         </div>
-                        <div class="use100" style="height:20%;">&nbsp;</div>
+                        <div class="use100" style="height:15px;">&nbsp;</div>
                     </div>
                 </div>
             </form>
         </div>
         <!-- Only one of these 3 divs are visible -->
-        <div class="use100 inherit_height" id="signinon_logon" style="display:none;overflow:hidden;height:50px;">
-            <div class="use85" style="height:100%;">
-                &nbsp;
-            </div>
-            <div class="use15 bg_a9abf1" style="height:100%;">
-                <div class="use100" style="height:20%;">&nbsp;</div>
-                <div class="use100" style="height:60%;">
-                    <a href="/page/_so" class="btn" style="vertical-align:middle;text-decoration:none;font-size:100%;">
-                        <img src="/images/logout_button.png" alt="Account" style="vertical-align:middle;width:100%;cursor:pointer;"/>
+        <div class="use100 lose_attn" id="signinon_logon" style="height:78px;display:none;">
+            <div class="use100 lose_attn"  style="height:78px;">
+            <div class="use100 inherit_height" style="background:url('/images/Metal.png') repeat-x;">
+                <div class="use40 inherit_height center" style="display:none;">
+                    <div class="use100" style="height:28px;">&nbsp;</div>
+                    <div class="use100" style="height:25px; color:red;text-transform: uppercase;font-weight:900;" id="Skeleton_notifications">&nbsp;</div>
+                    <div class="use100" style="height:25px;">&nbsp;</div>
+                </div>
+                <div class="use20 inherit_height center" style="display:block;overflow:hidden;">
+                    <img class="vtip cursor_link center"
+                         style="height:100%;vertical-align:middle;cursor:pointer;"
+                         title="Go back to www.ilikeplaces.com"
+                         onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location=$('.profile_link').attr('href');});"
+                         src="/images/The Talk.png"
+                         alt="The Talk"
+                            />
+                    <a href="#" class="profile_link" id="Skeleton_othersidebar_wall_link" style="display:none;">&nbsp;
                     </a>
                 </div>
-                <div class="use100" style="height:20%;">&nbsp;</div>
+                <div class="use20 inherit_height center" style="display:block;overflow:hidden;">
+                    <img class="vtip cursor_link center"
+                         style="height:100%;vertical-align:middle;cursor:pointer;"
+                         id="Skeleton_othersidebar_places_link"
+                         title="Go back to www.ilikeplaces.com"
+                         onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location='/page/_tribes';});"
+                         src="/images/The Tribes.png"
+                         alt="The Talk"
+                            />
+                </div>
+                <div class="use20 inherit_height center" style="overflow:hidden;">
+                    <div class="use30">
+                        &nbsp;
+                    </div>
+                    <div class="use40 center">
+                        <div class="use100" style="height:17px;">
+                            &nbsp;
+                        </div>
+                        <div style="height:50px;;" class="center">
+                            <img class="vtip cursor_link center"
+                                 style="height:100%;vertical-align:middle;cursor:pointer;"
+                                 title="Go back to www.ilikeplaces.com"
+                                 onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location='/';});"
+                                 src="/images/DT.png"
+                                 alt="Down Town"
+                                    />
+                        </div>
+                        <div class="use100" style="height:17px;">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="use30">
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="use20 inherit_height center" style="display:block;overflow:hidden;">
+                    <img class="vtip cursor_link center"
+                         style="height:100%;vertical-align:middle;cursor:pointer;"
+                         id="Skeleton_othersidebar_organizer_link"
+                         title="Go back to www.ilikeplaces.com"
+                         onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location='/page/_org';});"
+                         src="/images/The Moments.png"
+                         alt="The Talk"
+                            />
+                </div>
+                <div class="use20 inherit_height center" style="display:block;overflow:hidden;">
+                    <img class="vtip cursor_link center"
+                         style="height:100%;vertical-align:middle;cursor:pointer;"
+                         title="Go back to www.ilikeplaces.com"
+                         onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location='/page/_me';});"
+                         src="/images/The Snaps.png"
+                         alt="The Talk"
+                            />
+                </div>
+                <div id="Skeleton_login_widget" class="use40" style="display:none;height:78px;">
+                </div>
             </div>
         </div>
-        <!-- Only one of these 3 divs are visible -->
-        <div class="use100  inherit_height" id="signinon_signup" style="display:none;overflow:hidden;height:50px;">
-            <form method="post" id="Html_signup" action="/signup">
-                <div>
-                    <input id="SignUpUsername"
-                           name="Username" maxlength="255" type="text"/>
-                    <input id="SignUpPassword"
-                           name="Password" maxlength="255" type="password"/>
-                </div>
-            </form>
         </div>
         <!-- Notification Footer of Header -->
         <div class="use100 center" style="height:28px;">
@@ -79,7 +132,7 @@
                 <span id="signinonNotice" style="white-space:pre;font-size:13px;color:#dddddd;font-weight:900;">&nbsp;</span>
             </div>
             <div class="use15 center" style="overflow:hidden;">
-                <div class="use90 center cursor_link">
+                <div class="use60 center cursor_link">
                     <div class="use100 intensity_3" style="height:20px;">
                         <a href="/page/_profile"
                            class=""><img src="/images/Settings.png" alt="Recover" style="width:100%;height:100%;"/></a>
