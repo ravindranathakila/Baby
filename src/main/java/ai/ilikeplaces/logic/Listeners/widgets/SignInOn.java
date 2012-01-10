@@ -48,7 +48,6 @@ abstract public class SignInOn extends AbstractWidgetListener {
 
     public static enum SignInOnIds implements WidgetIds {
         signinon_login,
-        signinon_signup,
         signinon_logon,
         signinonUsername,
         signinonPassword,
@@ -91,14 +90,12 @@ abstract public class SignInOn extends AbstractWidgetListener {
             {
                 $$displayBlock($$(SignInOnIds.signinon_logon));
                 $$displayNone($$(SignInOnIds.signinon_login));
-                $$displayNone($$(SignInOnIds.signinon_signup));
             }
         } else {
             UCShowHIdeWIdgets:
             {
                 $$displayBlock($$(SignInOnIds.signinon_login));
                 $$displayNone($$(SignInOnIds.signinon_logon));
-                $$displayNone($$(SignInOnIds.signinon_signup));
             }
             UCShowPleaseLoginMessage:
             {
