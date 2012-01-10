@@ -3,12 +3,7 @@ package ai.ilikeplaces.servlets;
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.logic.Listeners.*;
 import ai.ilikeplaces.logic.Listeners.templates.TemplateGeneric;
-import ai.ilikeplaces.logic.Listeners.widgets.AlbumManager;
-import ai.ilikeplaces.logic.Listeners.widgets.ListenerShare;
-import ai.ilikeplaces.logic.Listeners.widgets.TribeWidget;
-import ai.ilikeplaces.logic.Listeners.widgets.WallWidget;
-import ai.ilikeplaces.logic.Listeners.widgets.carousel.Carousel;
-import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete;
+import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
 import org.itsnat.core.*;
@@ -1040,13 +1035,7 @@ final public class
         },
         SignInOn(
                 "ai/ilikeplaces/widgets/SignInOn.xhtml",
-                Controller.Page.signinon_login,
-                Controller.Page.signinon_signup,
-                Controller.Page.signinon_logon,
-                Controller.Page.signinonUsername,
-                Controller.Page.signinonPassword,
-                Controller.Page.signinonSubmit,
-                Controller.Page.signinonNotice
+                ai.ilikeplaces.logic.Listeners.widgets.SignInOn.SignInOnIds.values()
         ) {
             @Override
             public String getURL() {
@@ -1519,14 +1508,6 @@ final public class
 
         /*SignInOn Page*/
         final static public String DocSignInOn = "SignInOn";
-        /*SignInOn Specific IDs*/
-        final static public String signinon_login = "signinon_login";
-        final static public String signinon_signup = "signinon_signup";
-        final static public String signinon_logon = "signinon_logon";
-        final static public String signinonUsername = "signinonUsername";
-        final static public String signinonPassword = "signinonPassword";
-        final static public String signinonSubmit = "signinonSubmit";
-        final static public String signinonNotice = "signinonNotice";
 
         /*Notification Page*/
         final static public String DocNotification = "DocNotification";
