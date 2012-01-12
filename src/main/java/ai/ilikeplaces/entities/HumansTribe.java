@@ -21,7 +21,7 @@ import java.util.Set;
  */
 @WARNING("THIS ENTITY IS NOT GUARANTEED TO 'BE' EVEN THOUGH A HUMAN IS SIGNED UP. SO CREATE IT IF NOT PRESENT!")
 @Entity
-public class HumansTribe implements HumansFriend {
+public class HumansTribe implements HumansFriend, HumanIdFace, HumanEqualsFace {
     public String humanId;
 
     public Set<Tribe> tribes;
@@ -70,4 +70,23 @@ public class HumansTribe implements HumansFriend {
     public void setTribes(final Set<Tribe> tribes) {
         this.tribes = tribes;
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null) {
+            return false;
+        }
+
+        if (getClass() == o.getClass()) {
+            final Mute that = (Mute) o;
+            return !(this.getHumanId() == null || that.getHumanId() == null) && this.getHumanId().equals(that.getHumanId());
+        } else {
+            return HumanEquals.staticMatchHumanId(this, o);
+        }
+    }
 }
+
