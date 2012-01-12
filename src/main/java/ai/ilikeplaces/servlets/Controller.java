@@ -133,6 +133,9 @@ final public class
     final PageFace carousel = Page.Carousel;
     final PageFace carouselThumb = Page.CarouselThumb;
 
+    final PageFace people = Page.People;
+    final PageFace peopleThumb = Page.PeopleThumb;
+
     final PageFace album = Page.Album;
     final PageFace albumTribe = Page.AlbumTribe;
 
@@ -259,6 +262,34 @@ final public class
             @Override
             public String toString() {
                 return DocCarouselThumb;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
+        People("ai/ilikeplaces/widgets/people/people.xhtml",
+                ai.ilikeplaces.logic.Listeners.widgets.people.People.PeopleIds.values()
+        ) {
+            @Override
+            public String toString() {
+                return DocPeople;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
+        PeopleThumb("ai/ilikeplaces/widgets/people/people_thumb.xhtml",
+                ai.ilikeplaces.logic.Listeners.widgets.people.PeopleThumb.PeopleThumbIds.values()
+        ) {
+            @Override
+            public String toString() {
+                return DocPeopleThumb;
             }
 
             @Override
@@ -1159,6 +1190,12 @@ final public class
         /*Carousel*/
         final static public String DocCarousel = "DocCarousel";
 
+        /*PeopleThumb*/
+        final static public String DocPeopleThumb = "DocPeopleThumb";
+
+        /*People*/
+        final static public String DocPeople = "DocPeople";
+
         /*CarouselThumb*/
         final static public String DocCarouselThumb = "DocCarouselThumb";
 
@@ -1742,6 +1779,10 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(carousel.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(carousel));
 
             inhs__.registerItsNatDocFragmentTemplate(carouselThumb.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(carouselThumb));
+
+            inhs__.registerItsNatDocFragmentTemplate(people.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(people));
+
+            inhs__.registerItsNatDocFragmentTemplate(peopleThumb.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(peopleThumb));
 
             inhs__.registerItsNatDocFragmentTemplate(albumTribe.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(albumTribe));
 
