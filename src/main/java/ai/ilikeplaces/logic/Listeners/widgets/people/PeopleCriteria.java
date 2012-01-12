@@ -1,6 +1,8 @@
 package ai.ilikeplaces.logic.Listeners.widgets.people;
 
+import ai.ilikeplaces.entities.HumanIdFace;
 import ai.ilikeplaces.entities.PrivatePhoto;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +14,14 @@ import java.util.List;
  * Time: 12:48 PM
  */
 public class PeopleCriteria {
-    private List<PrivatePhoto> albumPhotos = null;
+    private List<HumanIdFace> people = null;
 
-    public PeopleCriteria setAlbumPhotos(List<PrivatePhoto> albumPhotos) {
-        this.albumPhotos = albumPhotos;
+    public PeopleCriteria setPeople(List<HumanIdFace> people) {
+        this.people = people;
         return this;
     }
 
-    public List<PrivatePhoto> getAlbumPhotos() {
-        return albumPhotos != null ? albumPhotos : (albumPhotos = new ArrayList<PrivatePhoto>(0));
+    public List<HumanIdFace> getPeople() {
+        return people != null ? people : (people = new ArrayList<HumanIdFace>(0));
     }
 }

@@ -33,7 +33,7 @@ import java.util.List;
                 )
         }
 )
-public class HumansNetPeople extends HumanEquals implements HumansFriend {
+public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanIdFace {
     public String humanId;
     public final static String humanIdCOL = "humanId";
     public HumansNet humansNet;

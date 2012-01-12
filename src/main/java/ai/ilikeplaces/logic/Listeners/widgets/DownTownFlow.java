@@ -2,6 +2,8 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
+import ai.ilikeplaces.logic.Listeners.widgets.people.People;
+import ai.ilikeplaces.logic.Listeners.widgets.people.PeopleCriteria;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventViewSidebar;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventViewSidebarCriteria;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
@@ -81,13 +83,15 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
     @Override
     protected void init(final DownTownFlowCriteria downTownFlowCriteria) {
 
+        final String currentUser = downTownFlowCriteria.getHumanId().getObj();
+        final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) downTownFlowCriteria.getHumanUserLocal().cache(currentUser);
+        new People(request,new PeopleCriteria().setPeople((List<HumanIdFace>)(List<?>)beFriends),$(Controller.Page.Skeleton_left_column));
+
+
         switch (downTownFlowCriteria.getDownTownFlowDisplayComponent()) {
             case TALKS: {
                 UCDownTownFlowFriends:
                 {
-                    final String currentUser = downTownFlowCriteria.getHumanId().getObj();
-                    final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) downTownFlowCriteria.getHumanUserLocal().cache(currentUser);
-
                     final Set<Wall> notifiedWalls = DB.getHumanCRUDHumansUnseenLocal(false).readEntries(downTownFlowCriteria.getHumanId().getHumanId());
 
                     final Set<Long> notifiedWallLongs = new HashSet<Long>(notifiedWalls.size());
