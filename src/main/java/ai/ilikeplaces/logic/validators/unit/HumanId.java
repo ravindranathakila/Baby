@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.validators.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumanEquals;
 import ai.ilikeplaces.entities.HumanEqualsFace;
+import ai.ilikeplaces.entities.HumanIdFace;
 import ai.ilikeplaces.entities.Mute;
 import ai.ilikeplaces.util.RefObj;
 import net.sf.oval.Validator;
@@ -19,7 +20,7 @@ import net.sf.oval.exception.ConstraintsViolatedException;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public class HumanId extends RefObj<String> implements HumanEqualsFace {
+public class HumanId extends RefObj<String> implements HumanEqualsFace, HumanIdFace {
 
     public HumanId() {
     }
@@ -53,6 +54,11 @@ public class HumanId extends RefObj<String> implements HumanEqualsFace {
 
     public String getHumanId() {
         return getObjectAsValid();
+    }
+
+    @Override
+    public void setHumanId(final String humanId__) {
+       super.setObj(humanId__);
     }
 
 

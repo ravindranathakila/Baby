@@ -2,7 +2,10 @@ package ai.ilikeplaces.logic.Listeners.widgets.people;
 
 import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.entities.HumanIdFace;
 import ai.ilikeplaces.entities.PrivatePhoto;
+import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
+import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import org.itsnat.core.ItsNatServletRequest;
@@ -41,8 +44,8 @@ public class People extends AbstractWidgetListener<PeopleCriteria> {
      */
     @Override
     protected void init(final PeopleCriteria peopleCriteria) {
-        for (final PrivatePhoto privatePhoto : peopleCriteria.getAlbumPhotos()) {
-            new PeopleThumb(request, new PeopleThumbCriteria().setPrivatePhoto(privatePhoto), $$(PeopleIds.PeopleImages));
+        for (final HumanIdFace humanId : peopleCriteria.getPeople()) {
+            new PeopleThumb(request, new PeopleThumbCriteria().setProfilePhoto(UserProperty.HUMANS_IDENTITY_CACHE.get(humanId.getHumanId(), "").getHumansIdentityProfilePhoto()), $$(PeopleIds.PeopleImages));
         }
     }
 

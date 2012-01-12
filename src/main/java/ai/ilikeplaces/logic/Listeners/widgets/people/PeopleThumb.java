@@ -17,8 +17,7 @@ import org.w3c.dom.html.HTMLDocument;
  */
 public class PeopleThumb extends AbstractWidgetListener<PeopleThumbCriteria> {
 
-    private static final String ALBUM__PHOTOS = "ALBUM_PHOTOS";
-    private static final String TH_ = "th_";
+    private static final String PROFILE_PHOTOS = "PROFILE_PHOTOS";
 
 
     public static enum PeopleThumbIds implements WidgetIds {
@@ -39,10 +38,10 @@ public class PeopleThumb extends AbstractWidgetListener<PeopleThumbCriteria> {
      */
     @Override
     protected void init(final PeopleThumbCriteria peopleThumbCriteria) {
-        final String privatePhotoURLPath = peopleThumbCriteria.getPrivatePhoto().getPrivatePhotoURLPath();
-        final String imageURL = RBGet.globalConfig.getString(ALBUM__PHOTOS) + TH_ + privatePhotoURLPath;
-        $$(PeopleThumbIds.peopleThumbImage).setAttribute(MarkupTag.IMG.title(), imageURL);
-        $$(PeopleThumbIds.peopleThumbImage).setAttribute(MarkupTag.IMG.alt(), privatePhotoURLPath);
+        final String profilePhotoURLPath = peopleThumbCriteria.getProfilePhoto();
+        final String imageURL = RBGet.globalConfig.getString(PROFILE_PHOTOS) + profilePhotoURLPath;
+        $$(PeopleThumbIds.peopleThumbImage).setAttribute(MarkupTag.IMG.src(), imageURL);
+        $$(PeopleThumbIds.peopleThumbImage).setAttribute(MarkupTag.IMG.alt(), profilePhotoURLPath);
     }
 
     /**
