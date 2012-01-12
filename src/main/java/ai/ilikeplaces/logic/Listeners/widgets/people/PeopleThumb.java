@@ -40,9 +40,7 @@ public class PeopleThumb extends AbstractWidgetListener<PeopleThumbCriteria> {
     @Override
     protected void init(final PeopleThumbCriteria peopleThumbCriteria) {
         final String profilePhotoURLPath = UserProperty.formatProfilePhotoUrl(peopleThumbCriteria.getProfilePhoto());
-        final String imageURL = RBGet.globalConfig.getString(PROFILE_PHOTOS) + profilePhotoURLPath;
-        $$(PeopleThumbIds.PeopleThumbImage).setAttribute(MarkupTag.IMG.src(), imageURL);
-        $$(PeopleThumbIds.PeopleThumbImage).setAttribute(MarkupTag.IMG.alt(), profilePhotoURLPath);
+        $$(PeopleThumbIds.PeopleThumbImage).setAttribute(MarkupTag.IMG.title(), profilePhotoURLPath);
     }
 
     /**
