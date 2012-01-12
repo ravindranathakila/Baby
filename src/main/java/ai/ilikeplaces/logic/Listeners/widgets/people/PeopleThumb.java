@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets.people;
 
+import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;
@@ -21,7 +22,7 @@ public class PeopleThumb extends AbstractWidgetListener<PeopleThumbCriteria> {
 
 
     public static enum PeopleThumbIds implements WidgetIds {
-        peopleThumbImage
+        PeopleThumbImage
     }
 
     /**
@@ -38,10 +39,10 @@ public class PeopleThumb extends AbstractWidgetListener<PeopleThumbCriteria> {
      */
     @Override
     protected void init(final PeopleThumbCriteria peopleThumbCriteria) {
-        final String profilePhotoURLPath = peopleThumbCriteria.getProfilePhoto();
+        final String profilePhotoURLPath = UserProperty.formatProfilePhotoUrl(peopleThumbCriteria.getProfilePhoto());
         final String imageURL = RBGet.globalConfig.getString(PROFILE_PHOTOS) + profilePhotoURLPath;
-        $$(PeopleThumbIds.peopleThumbImage).setAttribute(MarkupTag.IMG.src(), imageURL);
-        $$(PeopleThumbIds.peopleThumbImage).setAttribute(MarkupTag.IMG.alt(), profilePhotoURLPath);
+        $$(PeopleThumbIds.PeopleThumbImage).setAttribute(MarkupTag.IMG.src(), imageURL);
+        $$(PeopleThumbIds.PeopleThumbImage).setAttribute(MarkupTag.IMG.alt(), profilePhotoURLPath);
     }
 
     /**
