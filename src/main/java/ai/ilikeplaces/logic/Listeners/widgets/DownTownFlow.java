@@ -85,7 +85,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
 
         final String currentUser = downTownFlowCriteria.getHumanId().getObj();
         final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) downTownFlowCriteria.getHumanUserLocal().cache(currentUser);
-        new People(request,new PeopleCriteria().setPeople((List<HumanIdFace>)(List<?>)beFriends),$(Controller.Page.Skeleton_left_column));
+        //new People(request,new PeopleCriteria().setPeople((List<HumanIdFace>)(List<?>)beFriends),$(Controller.Page.Skeleton_left_column));
 
 
         switch (downTownFlowCriteria.getDownTownFlowDisplayComponent()) {

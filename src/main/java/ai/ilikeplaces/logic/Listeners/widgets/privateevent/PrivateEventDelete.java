@@ -3,17 +3,18 @@ package ai.ilikeplaces.logic.Listeners.widgets.privateevent;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.entities.HumansFriend;
-import ai.ilikeplaces.entities.HumansNetPeople;
-import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.AlbumManager;
 import ai.ilikeplaces.logic.Listeners.widgets.MemberHandler;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent;
+import ai.ilikeplaces.logic.Listeners.widgets.people.People;
+import ai.ilikeplaces.logic.Listeners.widgets.people.PeopleCriteria;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatServletRequest;
@@ -26,6 +27,8 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
@@ -112,7 +115,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                         new Parameter("http://maps.google.com/maps/api/staticmap")
                                 .append("sensor", "false", true)
                                 .append("center", gc.toString())
-                                .append("zoom","14")
+                                .append("zoom", "14")
                                 .append("size", "150x150")
                                 .append("format", "jpg")
                                 .append("markers", "color:0x7fe2ff|label:S|path=fillcolor:0xAA000033|color:0xFFFFFF00|"
@@ -172,13 +175,14 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
         final PrivateEvent privateEvent = privateEventReturn.returnValue();
 
+        final List<HumansPrivateEvent> privateEventOwners = privateEvent.getPrivateEventOwners();
         AddRemoveOwners:
         {
             new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
                     request, $$(PrivateEventDeleteIds.privateEventDeleteOwners),
                     user.getHumansNet(),
                     possibilities,
-                    privateEvent.getPrivateEventOwners(),
+                    privateEventOwners,
                     new Save<Return<PrivateEvent>>() {
 
                         final long myprivateEventId = privateEvent.getPrivateEventId();
@@ -232,11 +236,12 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
         }
         AddRemoveVisitors:
         {
+            final List<HumansPrivateEvent> privateEventViewers = privateEvent.getPrivateEventViewers();
             new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
                     request, $$(PrivateEventDeleteIds.privateEventDeleteVisitors),
                     user.getHumansNet(),
                     possibilities,
-                    privateEvent.getPrivateEventViewers(),
+                    privateEventViewers,
                     new Save<Return<PrivateEvent>>() {
 
                         final long myprivateEventId = privateEvent.getPrivateEventId();
@@ -335,6 +340,22 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                             }
                         }
                 );
+            }
+
+            UCFiltering:
+            {
+                new People(request, new PeopleCriteria().setPeople((List<HumanIdFace>) (List<?>)
+                        new ArrayList<HumansPrivateEvent>(new HashSet<HumansPrivateEvent>() {
+                            final HumanId myhumanId = humanId;
+
+                            {
+                                privateEventOwners.remove(myhumanId);
+                                privateEventViewers.remove(myhumanId);
+                                addAll(privateEventOwners);
+                                addAll(privateEventViewers);
+                            }
+                        })
+                ), $(Controller.Page.Skeleton_left_column));
             }
         }
     }
