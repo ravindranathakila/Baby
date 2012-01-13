@@ -35,6 +35,14 @@
         <servlet-class>ai.ilikeplaces.servlets.ServletMobile</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ServletOAuthFacebook</servlet-name>
+        <servlet-class>ai.ilikeplaces.servlets.ServletOAuthFacebook</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletOAuthGoogle</servlet-name>
+        <servlet-class>ai.ilikeplaces.servlets.ServletOAuthGoogle</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AccessViewStatusMessages</servlet-name>
         <servlet-class>ch.qos.logback.access.ViewStatusMessagesServlet</servlet-class>
     </servlet>
@@ -71,6 +79,14 @@
     <servlet-mapping>
         <servlet-name>ServletMobile</servlet-name>
         <url-pattern>/mobile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletOAuthFacebook</servlet-name>
+        <url-pattern>/oauth2fb</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletOAuthGoogle</servlet-name>
+        <url-pattern>/oauth2gg</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -231,11 +247,11 @@
         <url-pattern>/page/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
-    <filter-mapping>
-        <filter-name>SubdomainForward</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-    </filter-mapping>
+    <!--<filter-mapping>-->
+        <!--<filter-name>SubdomainForward</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+        <!--<dispatcher>REQUEST</dispatcher>-->
+    <!--</filter-mapping>-->
     <!--<filter-mapping>-->
         <!--<filter-name>FacebookUserFilter</filter-name>-->
         <!--<url-pattern>/*</url-pattern>-->
