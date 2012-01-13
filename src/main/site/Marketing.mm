@@ -660,7 +660,7 @@
 </node>
 <node CREATED="1306059000951" ID="Freemind_Link_892883600" MODIFIED="1306060190286" TEXT="Warriors"/>
 </node>
-<node COLOR="#338800" CREATED="1306055485112" FOLDED="true" ID="Freemind_Link_232833227" MODIFIED="1315400694406" POSITION="left" TEXT="The Golden Circle(GOC)">
+<node COLOR="#338800" CREATED="1306055485112" FOLDED="true" ID="Freemind_Link_232833227" MODIFIED="1325253698125" POSITION="left" TEXT="The Golden Circle(GOC)">
 <icon BUILTIN="wizard"/>
 <node COLOR="#cccccc" CREATED="1306059400723" ID="Freemind_Link_1586088254" MODIFIED="1306059827150" TEXT="Penetrated">
 <arrowlink DESTINATION="Freemind_Link_232833227" ENDARROW="Default" ENDINCLINATION="84;0;" ID="Freemind_Arrow_Link_1101734140" STARTARROW="None" STARTINCLINATION="84;0;"/>
@@ -851,7 +851,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1306055581706" FOLDED="true" ID="Freemind_Link_1686754881" MODIFIED="1311725477812" POSITION="left" TEXT="The Cunning Beggar(CUB)">
+<node CREATED="1306055581706" FOLDED="true" ID="Freemind_Link_1686754881" MODIFIED="1325253707687" POSITION="left" TEXT="The Cunning Beggar(CUB)">
 <richcontent TYPE="NOTE"><html><head/><body><p>The cunning beggar comes near the church every sunday.<br/>As the service finishes, he stands there waiting for the people of God to come out.<br/>He wears his most ragged clothes and looks his worst with sweat and lack of breakfast, and he carries his begging bowl.<br/>He is a rich man!<br/>~Ravindranath Akila</p></body></html></richcontent>
 <icon BUILTIN="wizard"/>
 <node COLOR="#cccccc" CREATED="1306059414519" ID="Freemind_Link_133381740" MODIFIED="1306060030288" STYLE="fork" TEXT="Penetrated">
@@ -947,7 +947,7 @@
 </node>
 <node CREATED="1308449112937" ID="ID_1573290525" MODIFIED="1308449139015" TEXT="Least Check Points in Neural Pathway"/>
 </node>
-<node CREATED="1307245463296" FOLDED="true" ID="ID_222575109" MODIFIED="1315237041859" TEXT="Consistent and quality updates(FUS3)">
+<node CREATED="1307245463296" FOLDED="true" ID="ID_222575109" MODIFIED="1325253365359" TEXT="Consistent and quality updates(FUS3)">
 <node CREATED="1308449041500" FOLDED="true" ID="ID_1507474408" MODIFIED="1308449088718" TEXT="Action Confirmations">
 <node CREATED="1308449071406" ID="ID_317078212" MODIFIED="1308449077109" TEXT="Confirm the action the user just did"/>
 </node>
@@ -955,13 +955,13 @@
 <node CREATED="1308449078296" ID="ID_1919213808" MODIFIED="1308449083468" TEXT="Tell the user what to expect"/>
 </node>
 </node>
-<node CREATED="1307245481813" ID="ID_1606485639" MODIFIED="1315237036765" TEXT="Anthropomorphic design and movement(FUS4)">
+<node CREATED="1307245481813" FOLDED="true" ID="ID_1606485639" MODIFIED="1325253366484" TEXT="Anthropomorphic design and movement(FUS4)">
 <node CREATED="1307969679296" ID="ID_1169519293" MODIFIED="1310086122124" TEXT="Assimilation and Neural Surfing">
 <node CREATED="1313758725125" ID="ID_1051967656" MODIFIED="1313758738078" TEXT="Cat Alive"/>
 </node>
 <node CREATED="1307969691890" ID="ID_38462006" MODIFIED="1307969698296" TEXT="Curvature"/>
 <node CREATED="1307969698765" ID="ID_1070674711" MODIFIED="1307969700750" TEXT="Cleavage"/>
-<node CREATED="1307969968671" FOLDED="true" ID="ID_1867470405" MODIFIED="1315237029468" TEXT="The Golden Ratio">
+<node CREATED="1307969968671" FOLDED="true" ID="ID_1867470405" MODIFIED="1325253349703" TEXT="The Golden Ratio">
 <node CREATED="1307970225984" ID="ID_1143060069" LINK="http://www.msnbc.msn.com/id/34482178/ns/health-skin_and_beauty/t/ideal-beauty-matter-millimeters-study-says/" MODIFIED="1307970296171" TEXT="1"/>
 <node CREATED="1307970242390" ID="ID_1728394564" LINK="http://goldennumber.net/face.htm" MODIFIED="1307970302546" TEXT="2"/>
 </node>
@@ -1252,7 +1252,7 @@
 <node CREATED="1315235986796" ID="ID_691916083" MODIFIED="1315235998312" TEXT="2012 Calendar"/>
 <node CREATED="1315236021546" ID="ID_1663376440" MODIFIED="1315236876125" TEXT="Create Email Forwards of Panoramio and forward to all, linking to ilikeplaces"/>
 <node CREATED="1315236886718" ID="ID_546252555" MODIFIED="1315236893062" TEXT="Advertising Agency"/>
-<node CREATED="1315236894140" ID="ID_1064985890" MODIFIED="1315236904593" TEXT="Span Emails"/>
+<node CREATED="1315236894140" ID="ID_1064985890" MODIFIED="1325253301156" TEXT="Spam Emails"/>
 </node>
 </node>
 </node>

@@ -340,12 +340,12 @@
                 </includes>
             </resource>
             <!--Required to include java files as distribution AGPLv3-->
-            <!--<resource>-->
-            <!--<directory>src/main/java</directory>-->
-            <!--<includes>-->
-            <!--<include>**/*.java</include>-->
-            <!--</includes>-->
-            <!--</resource>-->
+            <resource>
+            <directory>src/main/java</directory>
+            <includes>
+            <include>**/*.java</include>
+            </includes>
+            </resource>
         </resources>
         <plugins>
             <plugin>
