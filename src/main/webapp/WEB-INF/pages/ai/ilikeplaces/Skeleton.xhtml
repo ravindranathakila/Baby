@@ -335,7 +335,7 @@
                     <div class="use100 center" style="background:url(/images/Metal_Title_Lighter.png) repeat; background-color:#fafafa">
                         <div class="use100" style="height:10px;"> &nbsp;</div>
                         <div class="use100">
-                            <span style="font-size:18px;line-height:0.9;letter-spacing:-1px;" class="bold">SEARCH MOMENTS</span>
+                            <span id="search_moments" style="font-size:18px;line-height:0.9;letter-spacing:-1px;" class="bold">SEARCH MOMENTS</span>
                         </div>
                         <div class="use100" style="height:5px;"> &nbsp;</div>
                         <div class="use100" style="height:5px;background:url(/images/5_fade_sidebar_vertical.png) repeat-x;"> &nbsp;</div>
@@ -445,6 +445,37 @@
 <script type="text/javascript" src="/js/miniquarry/all_skeleton.js"></script>
 
 <script type="text/javascript" src="/js/miniquarry/ItsNatEventMonitor.js"></script>
+
+<script type="text/javascript" >
+    $("#search_moments").click(
+        function(){
+            alert('clicked search');
+            //$(".AutoplayControlsStop").trigger('click');
+
+            var HTMLElement = document.getElementsByName("AutoplayControlsStop")[0];
+            fireEvent(HTMLElement,'click');
+
+            return true;
+        }
+    );
+
+    function fireEvent(element,event){
+        if (document.createEventObject){
+            // dispatch for IE
+            var evt = document.createEventObject();
+            return element.fireEvent('on'+event,evt)
+        }
+        else{
+            // dispatch for firefox + others
+            var evt = document.createEvent("HTMLEvents");
+            evt.initEvent(event, true, true ); // event type,bubbling,cancelable
+            return !element.dispatchEvent(evt);
+        }
+    }
+
+</script>
+
+
 
 </body>
 </html>
