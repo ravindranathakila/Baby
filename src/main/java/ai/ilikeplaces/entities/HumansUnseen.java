@@ -18,7 +18,7 @@ import java.util.Set;
 @Entity
 public class HumansUnseen {
     public String humanId;
-    public Set<Wall> unseenWalls;
+    public List<Wall> unseenWalls;
 
     @Id
     public String getHumanId() {
@@ -37,11 +37,11 @@ public class HumansUnseen {
 
     @UNIDIRECTIONAL
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-    public Set<Wall> getUnseenWalls() {
+    public List<Wall> getUnseenWalls() {
         return unseenWalls;
     }
 
-    public void setUnseenWalls(final Set<Wall> unseenWalls) {
+    public void setUnseenWalls(final List<Wall> unseenWalls) {
         this.unseenWalls = unseenWalls;
     }
 }
