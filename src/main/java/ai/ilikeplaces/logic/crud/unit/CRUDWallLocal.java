@@ -39,14 +39,14 @@ public interface CRUDWallLocal {
      */
     public Wall doRWall(final long wallId, final RefreshSpec refreshSpec) throws DBDishonourCheckedException, DBFetchDataException;
 
-    /**
-     * @param wallId
-     * @param contentToBeAppended
-     * @return Wall
-     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
-     */
-    @Deprecated
-    public Wall doNTxUAppendToWall(final long wallId, final String contentToBeAppended) throws DBDishonourCheckedException;
+//    /**
+//     * @param wallId
+//     * @param contentToBeAppended
+//     * @return Wall
+//     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
+//     */
+//    @Deprecated
+//    public Wall doNTxUAppendToWall(final long wallId, final String contentToBeAppended) throws DBDishonourCheckedException;
 
     /**
      * @param wallId
@@ -73,12 +73,12 @@ public interface CRUDWallLocal {
      */
     public Wall doURemoveMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException;
 
-    /**
-     * @param wallId
-     * @return Wall
-     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
-     */
-    public Wall doUClearWall(final long wallId) throws DBDishonourCheckedException;
+//    /**
+//     * @param wallId
+//     * @return Wall
+//     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
+//     */
+//    public Wall doUClearWall(final long wallId) throws DBDishonourCheckedException;
 
     /**
      * @param wallId
@@ -86,4 +86,6 @@ public interface CRUDWallLocal {
     public void doNTxDWall(final long wallId);
 
     public List<Msg> doRHumansWallLastEntries(final long wallId, final Integer numberOfEntriesToFetch);
+
+    public void doUpdateMetadata(final long wallId, final String key, final String value);
 }

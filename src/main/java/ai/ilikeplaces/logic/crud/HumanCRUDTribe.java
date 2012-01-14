@@ -125,8 +125,21 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
     public Return<Wall> readWall(final HumanId whosWall__, final Obj requester__, RefreshSpec refreshSpec__) {
         Return<Wall> r;
         try {
-            r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doRWall(getTribe(whosWall__, (VLong) requester__).getTribeWall().getWallId(), refreshSpec__), READ_WALL_SUCCESSFUL);
+            final Tribe tribe = getTribe(whosWall__, (VLong) requester__);
+            final Wall wall = crudWallLocal_
+                    .doRWall(tribe.getTribeWall().getWallId(), refreshSpec__);
+
+            if (wall.getWallMetadata() == null) {
+                RecoveringFromAbsentMetadata:
+                {
+                    final String key = Wall.WallMetadataKey.TRIBE.toString();
+                    final String value = "" + tribe.getTribeId();
+
+                    crudWallLocal_.doUpdateMetadata(wall.getWallId(), key, value);
+                }
+            }
+
+            r = new ReturnImpl<Wall>(wall, READ_WALL_SUCCESSFUL);
         } catch (final Throwable t) {
             r = new ReturnImpl<Wall>(t, READ_WALL_FAILED, true);
         }

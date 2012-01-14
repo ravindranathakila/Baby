@@ -49,7 +49,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public PrivateEvent doRPrivateEventAsAny(final String humanId, final long privateEventId) throws DBDishonourCheckedException, DBFetchDataException {
-        final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).refresh();
+        final PrivateEvent privateEvent_ = rPrivateEventBadly(privateEventId);
 
         final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
 
@@ -66,8 +66,14 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
+    public PrivateEvent rPrivateEventBadly(long privateEventId) throws DBFetchDataException {
+        return privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).refresh();
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public PrivateEvent doRPrivateEventBasicAsAny(final String humanId, final long privateEventId) throws DBDishonourCheckedException, DBFetchDataException {
-        final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).refresh();
+        final PrivateEvent privateEvent_ = rPrivateEventBadly(privateEventId);
 
         final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
 
@@ -85,7 +91,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
     @Override
     public PrivateEvent doRPrivateEventAsSystem(final long privateEventId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException {
         return eager ?
-                privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).refresh() :
+                rPrivateEventBadly(privateEventId) :
                 privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId);
     }
 
@@ -94,7 +100,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
     public boolean doRPrivateEventIsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException {
 //        return privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).getPrivateEventOwners()
 //                .contains(humansPrivateEventCrudServiceLocal_.findBadly(HumansPrivateEvent.class, humanId));
-        return privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).refresh().getPrivateEventOwners()
+        return rPrivateEventBadly(privateEventId).getPrivateEventOwners()
                 .contains(humanCrudServiceLocal_.findBadly(Human.class, humanId));
     }
 
@@ -103,7 +109,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
     public boolean doRPrivateEventIsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException {
 //        return privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).getPrivateEventViewers()
 //                .contains(humansPrivateEventCrudServiceLocal_.findBadly(HumansPrivateEvent.class, humanId));
-        return privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).refresh().getPrivateEventViewers()
+        return rPrivateEventBadly(privateEventId).getPrivateEventViewers()
                 .contains(humanCrudServiceLocal_.findBadly(Human.class, humanId));
     }
 

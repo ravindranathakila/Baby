@@ -15,9 +15,6 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-@NOTE(note = "Wall is initially a plain String. Each text is appended, hence non editable." +
-        "A wall can be 'cleared' by a owner." +
-        "This approach was taken to reduce TTM.")
 public class Wall implements Clearance, Refreshable<Wall> {
     public Long wallId = null;
     public static String wallIdCOL = "wallId";
@@ -34,12 +31,19 @@ public class Wall implements Clearance, Refreshable<Wall> {
 
     final static public int wallTypeMISC = 0;
     final static public int wallTypeHuman = 1;
+    final static public int wallTypePrivateEvent = 2;
     final static public int wallTypeTribe = 3;
 
 
-    final static public int WALL_LENGTH = 10240;
+//    final static public int WALL_LENGTH = 10240;
 
     private static final Refresh<Wall> REFRESH = new Refresh<Wall>();
+
+    public static enum WallMetadataKey {
+        PRIVATE_PHOTO,
+        PRIVATE_EVENT,
+        TRIBE,
+    }
 
 
     @Id
@@ -52,14 +56,14 @@ public class Wall implements Clearance, Refreshable<Wall> {
         this.wallId = wallId;
     }
 
-    @Column(length = WALL_LENGTH)
-    public String getWallContent() {
-        return wallContent;
-    }
-
-    public void setWallContent(String wallContent) {
-        this.wallContent = wallContent;
-    }
+//    @Column(length = WALL_LENGTH)
+//    public String getWallContent() {
+//        return wallContent;
+//    }
+//
+//    public void setWallContent(String wallContent) {
+//        this.wallContent = wallContent;
+//    }
 
     @Transient
     public Wall setWallRContent(String wallContent) {
@@ -134,10 +138,31 @@ public class Wall implements Clearance, Refreshable<Wall> {
         return this;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        final Wall wall = (Wall) o;
+
+        if (wallId != null ? !wallId.equals(wall.wallId) : wall.wallId != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return wallId != null ? wallId.hashCode() : 0;
+    }
+
     @Override
     public String toString() {
         return "Wall{" +
                 "wallId=" + wallId +
+                ", clearance=" + clearance +
+                ", wallType=" + wallType +
+                ", wallMetadata='" + wallMetadata + '\'' +
                 '}';
     }
 
