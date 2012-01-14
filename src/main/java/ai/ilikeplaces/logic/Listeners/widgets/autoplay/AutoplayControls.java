@@ -69,55 +69,62 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                     @Override
                     protected void onFire(Event evt) {
                         final List<Wall> updatedWalls = DB.getHumanCRUDHumansUnseenLocal(false).readEntries(criteria.getHumanId().getHumanId());
-                        final Wall hopefullyLastWall = updatedWalls.get(updatedWalls.size());
 
-                        switch (hopefullyLastWall.getWallType()) {
-                            case Wall.wallTypeHuman: {
-                                final String otherHumansId = hopefullyLastWall.getMetadataValueFor(Wall.WallMetadataKey.HUMAN);
-                                final HumansIdentity humansIdentity = ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(otherHumansId, "");
+                        if (!updatedWalls.isEmpty()) {
+                            final Wall hopefullyLastWall = updatedWalls.get(updatedWalls.size() - 1);
 
-                                $$sendJS(JSCodeToSend.refreshPageWith(
-                                        ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfileUrl(humansIdentity.getUrl().getUrl(), true))
-                                );
-
-                                break;
+                            if(hopefullyLastWall.getWallType() == null){
+                                hopefullyLastWall.setWallType(Wall.wallTypePrivateEvent);
                             }
-                            case Wall.wallTypeTribe: {
-                                final String tribeIdAsString = hopefullyLastWall.getMetadataValueFor(Wall.WallMetadataKey.TRIBE);
-                                final long tribeId = Long.parseLong(tribeIdAsString);
 
-                                final String href = new Parameter(Tribes.getURL())
-                                        .append(DocTribesMode, DocTribesModeView, true)
-                                        .append(DocTribesWhich, tribeId)
-                                        .get();
+                            switch (hopefullyLastWall.getWallType()) {
+                                case Wall.wallTypeHuman: {
+                                    final String otherHumansId = hopefullyLastWall.getMetadataValueFor(Wall.WallMetadataKey.HUMAN);
+                                    final HumansIdentity humansIdentity = ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(otherHumansId, "");
 
-                                $$sendJS(JSCodeToSend.refreshPageWith(
-                                        href)
-                                );
+                                    $$sendJS(JSCodeToSend.redirectPageWithURL(
+                                            ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfileUrl(humansIdentity.getUrl().getUrl(), true))
+                                    );
 
-                                break;
-                            }
-                            default: {//Private Event is default. Humans set metadata
-                                final String privateEventString = hopefullyLastWall.getMetadataValueFor(Wall.WallMetadataKey.PRIVATE_EVENT);
-                                final String privatePhotoString = hopefullyLastWall.getMetadataValueFor(Wall.WallMetadataKey.PRIVATE_PHOTO);
+                                    break;
+                                }
+                                case Wall.wallTypeTribe: {
+                                    final String tribeIdAsString = hopefullyLastWall.getMetadataValueFor(Wall.WallMetadataKey.TRIBE);
+                                    final long tribeId = Long.parseLong(tribeIdAsString);
 
-                                if (privateEventString != null) {
-                                     final PrivateEvent privateEvent =  ai.ilikeplaces.logic.Listeners.widgets.privateevent
-                                             .PrivateEventViewSidebar.PRIVATE_EVENT_BASIC_INFO_CACHE.get(Long.parseLong(privateEventString), criteria.getHumanId());
-                                     
-                                    
-                                    final String href = new Parameter(Organize.getURL())
-                                            .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
-                                            .append(DocOrganizeLocation, privateEvent.getPrivateLocation().getPrivateLocationId())
-                                            .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
+                                    final String href = new Parameter(Tribes.getURL())
+                                            .append(DocTribesMode, DocTribesModeView, true)
+                                            .append(DocTribesWhich, tribeId)
                                             .get();
 
-                                    $$sendJS(JSCodeToSend.refreshPageWith(href));
-                                    
-                                } else if (privatePhotoString != null) {
-                                    $$sendJS(JSCodeToSend.refreshPageIn(0));
-                                } else {
-                                    throw new IllegalStateException(WHO_THE_HELL_MADE_THIS_WALL + hopefullyLastWall.toString());
+                                    $$sendJS(JSCodeToSend.redirectPageWithURL(
+                                            href)
+                                    );
+
+                                    break;
+                                }
+                                default: {//Private Event is default. Humans set metadata
+                                    final String privateEventString = hopefullyLastWall.getMetadataValueFor(Wall.WallMetadataKey.PRIVATE_EVENT);
+                                    final String privatePhotoString = hopefullyLastWall.getMetadataValueFor(Wall.WallMetadataKey.PRIVATE_PHOTO);
+
+                                    if (privateEventString != null) {
+                                        final PrivateEvent privateEvent = ai.ilikeplaces.logic.Listeners.widgets.privateevent
+                                                .PrivateEventViewSidebar.PRIVATE_EVENT_BASIC_INFO_CACHE.get(Long.parseLong(privateEventString), criteria.getHumanId());
+
+
+                                        final String href = new Parameter(Organize.getURL())
+                                                .append(DocOrganizeCategory, DocOrganizeModeEvent, true)
+                                                .append(DocOrganizeLocation, privateEvent.getPrivateLocation().getPrivateLocationId())
+                                                .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
+                                                .get();
+
+                                        $$sendJS(JSCodeToSend.redirectPageWithURL(href));
+
+                                    } else if (privatePhotoString != null) {
+                                        $$sendJS(JSCodeToSend.refreshPageIn(0));
+                                    } else {
+                                        throw new IllegalStateException(WHO_THE_HELL_MADE_THIS_WALL + hopefullyLastWall.toString());
+                                    }
                                 }
                             }
                         }
