@@ -32,7 +32,7 @@ public interface HumanCRUDHumansUnseenLocal {
 
     public void removeEntry(final String humanId, final Long wallId);
 
-    public Set<Wall> readEntries(final String humanId);
+    public List<Wall> readEntries(final String humanId);
 
     public HumansUnseen getHumansUnseen(final String humanId);
 }

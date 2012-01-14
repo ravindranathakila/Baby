@@ -19,6 +19,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
@@ -84,7 +85,7 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
             final Set<Long> notifyingWalls;
             GetHumansWallNotificationSubscriptions:
             {
-                final Set<Wall> notifyingWallEntities = DB.getHumanCRUDHumansUnseenLocal(false).readEntries(humanId.getObjectAsValid());
+                final List<Wall> notifyingWallEntities = DB.getHumanCRUDHumansUnseenLocal(false).readEntries(humanId.getObjectAsValid());
 
                 notifyingWalls = new HashSet<Long>(notifyingWallEntities.size());
                 for (final Wall wall : notifyingWallEntities) {
