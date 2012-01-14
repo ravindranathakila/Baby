@@ -136,6 +136,8 @@ final public class
     final PageFace people = Page.People;
     final PageFace peopleThumb = Page.PeopleThumb;
 
+    final PageFace autoplayControls = Page.AutoplayControls;
+
     final PageFace album = Page.Album;
     final PageFace albumTribe = Page.AlbumTribe;
 
@@ -290,6 +292,20 @@ final public class
             @Override
             public String toString() {
                 return DocPeopleThumb;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
+        AutoplayControls("ai/ilikeplaces/widgets/autoplay/controls.xhtml",
+                ai.ilikeplaces.logic.Listeners.widgets.autoplay.AutoplayControls.AutoplayControlsIds.values()
+        ) {
+            @Override
+            public String toString() {
+                return DocAutoplayControls;
             }
 
             @Override
@@ -1193,6 +1209,9 @@ final public class
         /*PeopleThumb*/
         final static public String DocPeopleThumb = "DocPeopleThumb";
 
+        /*AutoplayControls*/
+        final static public String DocAutoplayControls = "DocAutoplayControls";
+
         /*People*/
         final static public String DocPeople = "DocPeople";
 
@@ -1783,6 +1802,8 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(people.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(people));
 
             inhs__.registerItsNatDocFragmentTemplate(peopleThumb.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(peopleThumb));
+
+            inhs__.registerItsNatDocFragmentTemplate(autoplayControls.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(autoplayControls));
 
             inhs__.registerItsNatDocFragmentTemplate(albumTribe.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(albumTribe));
 

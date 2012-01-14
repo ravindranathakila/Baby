@@ -295,6 +295,16 @@ public abstract class AbstractWidgetListener<T> {
 
     /**
      * To be called only during initialization. If otherwise, not tested for functionality!
+     *
+     * @param element       registered for listening
+     * @param eventListener called when text changes
+     */
+    protected void registerForInputText(final WidgetIds element, final EventListener eventListener) {
+        registerForInputText($$(element), eventListener);
+    }
+
+    /**
+     * To be called only during initialization. If otherwise, not tested for functionality!
      * DOES NOT SUPPORT TEXT INPUTS. USE {@link #registerForInputText(org.w3c.dom.Element, org.w3c.dom.events.EventListener)} INSTEAD
      *
      * @param element       registered for listening
@@ -307,6 +317,17 @@ public abstract class AbstractWidgetListener<T> {
 
     /**
      * To be called only during initialization. If otherwise, not tested for functionality!
+     * DOES NOT SUPPORT TEXT INPUTS. USE {@link #registerForInputText(org.w3c.dom.Element, org.w3c.dom.events.EventListener)} INSTEAD
+     *
+     * @param element       registered for listening
+     * @param eventListener called when text changes
+     */
+    protected void registerForEvent(final WidgetIds element, final EventListener eventListener, final EventType eventType) {
+        registerForEvent($$(element), eventListener, eventType);
+    }
+
+    /**
+     * To be called only during initialization. If otherwise, not tested for functionality!
      *
      * @param element       registered for listening
      * @param eventListener called when text changes
@@ -314,6 +335,16 @@ public abstract class AbstractWidgetListener<T> {
     protected void registerForClick(final Element element, final EventListener eventListener) {
 
         itsNatHTMLDocument_.addEventListener((EventTarget) element, EventType.CLICK.toString(), eventListener, false);
+    }
+
+    /**
+     * To be called only during initialization. If otherwise, not tested for functionality!
+     *
+     * @param element       registered for listening
+     * @param eventListener called when text changes
+     */
+    protected void registerForClick(final WidgetIds element, final EventListener eventListener) {
+        registerForClick($$(element), eventListener);
     }
 
     /**
