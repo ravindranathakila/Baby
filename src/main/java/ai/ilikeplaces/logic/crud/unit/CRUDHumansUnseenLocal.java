@@ -29,6 +29,6 @@ public interface CRUDHumansUnseenLocal {
 
     public Set<Wall> readEntries(final String humanId);
 
-    public HumansUnseen getHumansUnseen(final String humanId);
+    public HumansUnseen doRHumansUnseenBadly(final String humanId);
 
 }

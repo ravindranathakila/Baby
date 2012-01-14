@@ -21,6 +21,14 @@ import java.util.List;
 public interface RPrivateEventLocal {
 
     /**
+     * @param privateEventId
+     * @return
+     * @throws DBFetchDataException
+     */
+    public PrivateEvent rPrivateEventBadly(long privateEventId) throws DBFetchDataException;
+
+
+    /**
      * @param humanId
      * @param privateEventId
      * @return

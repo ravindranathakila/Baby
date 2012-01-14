@@ -37,6 +37,7 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
     private static final String UNMUTE_WALL_FAILED = "Unmute Wall FAILED!";
     private static final String READ_WALL_SUCCESSFUL = "Read Wall Successful!";
     private static final String READ_WALL_FAILED = "Read Wall FAILED!";
+    private static final String EMPTY = "";
     @EJB
     private CPrivatePhotoLocal cPrivatePhotoLocal_;
 
@@ -198,6 +199,17 @@ final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements
         try {
             final PrivatePhoto privatePhoto = rPrivatePhoto(whosWall__, requester__, REFRESH_SPEC).returnValueBadly();
             final Wall privatePhotoWall = privatePhoto.getPrivatePhotoWall();
+
+            if (privatePhotoWall.getWallMetadata() == null) {
+                RecoveringFromAbsentMetadata:
+                {
+                    final String key = Wall.WallMetadataKey.PRIVATE_PHOTO.toString();
+                    final String value = EMPTY + privatePhoto.getPrivatePhotoId();
+
+                    crudWallLocal_.doUpdateMetadata(privatePhotoWall.getWallId(), key, value);
+                }
+            }
+
             r = new ReturnImpl<Wall>(crudWallLocal_
                     .doRWall(privatePhotoWall.getWallId(), refreshSpec__), READ_WALL_SUCCESSFUL);
         } catch (final Throwable t) {

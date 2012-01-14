@@ -29,6 +29,7 @@ import java.util.List;
 @Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements HumanCRUDPrivateEventLocal {
 
+    private static final String COMMA = ",";
     @EJB
     private CPrivateEventLocal cPrivateEventLocal_;
 
@@ -230,21 +231,21 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         }
         return r;
     }
-
-    public Return<Wall> uPrivateEventAddToWall(HumanId operator__, long privateEventId__, String contentToBeAppended) {
-
-        Return<Wall> r;
-        try {
-            r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doNTxUAppendToWall(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId(),
-                            contentToBeAppended), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
-        } catch (final AbstractEjbApplicationException t) {
-            r = new ReturnImpl<Wall>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
-        }
-        return r;
-
-
-    }
+//
+//    public Return<Wall> uPrivateEventAddToWall(HumanId operator__, long privateEventId__, String contentToBeAppended) {
+//
+//        Return<Wall> r;
+//        try {
+//            r = new ReturnImpl<Wall>(crudWallLocal_
+//                    .doNTxUAppendToWall(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId(),
+//                            contentToBeAppended), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+//        } catch (final AbstractEjbApplicationException t) {
+//            r = new ReturnImpl<Wall>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
+//        }
+//        return r;
+//
+//
+//    }
 
     @Override
     public Return<Wall> addEntryToWall(final HumanId whosWall__, final HumanId msgOwner__, final Obj wallReference__, final String contentToBeAppended) {
@@ -295,25 +296,38 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
 
     }
 
-    public Return<Wall> uPrivateEventClearWall(HumanId operator__, long privateEventId__) {
+//    public Return<Wall> uPrivateEventClearWall(HumanId operator__, long privateEventId__) {
+//
+//        Return<Wall> r;
+//        try {
+//            r = new ReturnImpl<Wall>(crudWallLocal_
+//                    .doUClearWall(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+//        } catch (final AbstractEjbApplicationException t) {
+//            r = new ReturnImpl<Wall>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
+//        }
+//        return r;
+//    }
 
-        Return<Wall> r;
-        try {
-            r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doUClearWall(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
-        } catch (final AbstractEjbApplicationException t) {
-            r = new ReturnImpl<Wall>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
-        }
-        return r;
-    }
-
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
-    public Return<Wall> readWall(HumanId whosWall__, Obj requester__, RefreshSpec refreshSpec__) {
+    public Return<Wall> readWall(final HumanId whosWall__, final Obj requester__, final RefreshSpec refreshSpec__) {
 
         Return<Wall> r;
         try {
-            r = new ReturnImpl<Wall>(crudWallLocal_
-                    .doRWall(dirtyRPrivateEventAsAny(whosWall__.getObj(), (Long) requester__.getObjectAsValid()).returnValueBadly().getPrivateEventWall().getWallId(),refreshSpec__), READ_WALL_SUCCESSFUL);
+            final PrivateEvent privateEvent = dirtyRPrivateEventAsAny(whosWall__.getObj(), (Long) requester__.getObjectAsValid()).returnValueBadly();
+            final Wall wall = crudWallLocal_.doRWall(privateEvent.getPrivateEventWall().getWallId(), refreshSpec__);
+
+            if (wall.getWallMetadata() == null) {
+                RecoveringFromAbsentMetadata:
+                {
+                    final String key = Wall.WallMetadataKey.PRIVATE_EVENT.toString();
+                    final String value = "" + privateEvent.getPrivateEventId();
+
+                    crudWallLocal_.doUpdateMetadata(wall.getWallId(), key, value);
+                }
+            }
+
+            r = new ReturnImpl<Wall>(wall, READ_WALL_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Wall>(t, READ_WALL_FAILED, true);
         }
@@ -322,6 +336,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
 
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public Return<List<Msg>> readWallLastEntries(final HumanId humanId, final Obj<Long> wallId, final Integer numberOfEntriesToFetch, final RefreshSpec refreshSpec__) {
         Return<List<Msg>> r;
         r = new ReturnImpl<List<Msg>>(crudWallLocal_.doRHumansWallLastEntries(wallId.getObj(), numberOfEntriesToFetch), READ_WALL_SUCCESSFUL);
@@ -344,7 +359,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
-    public Return<List<PrivateEvent>> doDirtyRPrivateEventsOfHuman(final HumanId humanId){
+    public Return<List<PrivateEvent>> doDirtyRPrivateEventsOfHuman(final HumanId humanId) {
         Return<List<PrivateEvent>> r;
         try {
             r = new ReturnImpl<List<PrivateEvent>>(rPrivateEventLocal_.doRPrivateEventsOfHuman(humanId.getObj()), VIEW_PRIVATE_EVENT_SUCCESSFUL);
@@ -357,7 +372,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     @Override
-    public Return<PrivateEvent> dirtyRPrivateEventInfoAsAny(final String humanId, final long privateEventId){
+    public Return<PrivateEvent> dirtyRPrivateEventInfoAsAny(final String humanId, final long privateEventId) {
         Return<PrivateEvent> r;
         try {
             r = new ReturnImpl<PrivateEvent>(rPrivateEventLocal_.doRPrivateEventBasicAsAny(humanId, privateEventId), VIEW_PRIVATE_EVENT_SUCCESSFUL);
