@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Mute;
 import ai.ilikeplaces.entities.Wall;
@@ -164,6 +165,7 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @WARNING("Reflect any changes on CRUDHumansWall as well")
     public void doUpdateMetadata(final long wallId, final String key, final String value) {
         if(key == null || key.isEmpty()){
             throw new NullPointerException(key + IS_NULL_OR_EMPTY);

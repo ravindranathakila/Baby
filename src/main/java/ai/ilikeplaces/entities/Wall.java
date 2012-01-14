@@ -33,6 +33,7 @@ public class Wall implements Clearance, Refreshable<Wall> {
     final static public int wallTypeHuman = 1;
     final static public int wallTypePrivateEvent = 2;
     final static public int wallTypeTribe = 3;
+    final static public int wallTypePrivatePhoto = 4;
 
 
 //    final static public int WALL_LENGTH = 10240;
@@ -40,6 +41,7 @@ public class Wall implements Clearance, Refreshable<Wall> {
     private static final Refresh<Wall> REFRESH = new Refresh<Wall>();
 
     public static enum WallMetadataKey {
+        HUMAN,
         PRIVATE_PHOTO,
         PRIVATE_EVENT,
         TRIBE,
@@ -164,6 +166,27 @@ public class Wall implements Clearance, Refreshable<Wall> {
                 ", wallType=" + wallType +
                 ", wallMetadata='" + wallMetadata + '\'' +
                 '}';
+    }
+    
+    @Transient
+    public String getMetadataValueFor(final WallMetadataKey keyEnum){
+        final String key = keyEnum.toString();
+        final String wallMetadata = this.getWallMetadata();
+        final String returnVal;
+        if (wallMetadata == null || wallMetadata.isEmpty()) {
+            returnVal = null;
+        } else {
+            final String[] pairs = wallMetadata.split(",");
+            String value = null;
+            for (final String pairString : pairs) {
+                final String[] pair = pairString.split("=");
+                if (key.equals(pair[0])) {
+                    value = pair[1];
+                }
+            }
+            returnVal = value;
+        }
+        return returnVal;
     }
 
 }

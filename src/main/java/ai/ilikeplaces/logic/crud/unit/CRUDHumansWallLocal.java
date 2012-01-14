@@ -23,11 +23,15 @@ public interface CRUDHumansWallLocal {
      * @param humanId
      * @return
      */
-    public HumansWall doRHumansWall(final String humanId, final RefreshSpec wallRefreshSpec) throws DBFetchDataException;
+    public HumansWall doDirtyRHumansWall(final String humanId, final RefreshSpec wallRefreshSpec) throws DBFetchDataException;
 
-    public HumansWall doRHumansWall(final String humanId);
+    public HumansWall doRHumansWallRefreshed(final String humanId);
 
     public List<Msg> doRHumansWallLastEntries(final String humanId, final Integer numberOfEntriesToFetch);
 
     public Long doDirtyRHumansWallID(final String humanId) throws DBDishonourCheckedException;
+
+    public HumansWall doRHumansWall(String humanId);
+
+    public void doUpdateMetadata(final long wallId, final String key, final String value);
 }

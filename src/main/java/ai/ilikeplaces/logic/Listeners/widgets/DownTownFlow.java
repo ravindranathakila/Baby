@@ -92,7 +92,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
             case TALKS: {
                 UCDownTownFlowFriends:
                 {
-                    final Set<Wall> notifiedWalls = DB.getHumanCRUDHumansUnseenLocal(false).readEntries(downTownFlowCriteria.getHumanId().getHumanId());
+                    final List<Wall> notifiedWalls = DB.getHumanCRUDHumansUnseenLocal(false).readEntries(downTownFlowCriteria.getHumanId().getHumanId());
 
                     final Set<Long> notifiedWallLongs = new HashSet<Long>(notifiedWalls.size());
                     for (final Wall wall : notifiedWalls) {

@@ -11,7 +11,6 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Ravindranath Akila
@@ -51,7 +50,7 @@ public class HumanCRUDHumansUnseen extends AbstractSLBCallbacks implements Human
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Set<Wall> readEntries(final String humanId) {
+    public List<Wall> readEntries(final String humanId) {
         return crudHumansUnseenLocal_.readEntries(humanId);
     }
 

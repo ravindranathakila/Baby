@@ -54,7 +54,7 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Return<Wall> readWall(final HumanId whosWall, final Obj requester, final RefreshSpec refreshSpec__) {
         Return<Wall> r;
-        r = new ReturnImpl<Wall>(crudHumansWallLocal_.doRHumansWall(whosWall.getObj()).getWall(), READ_WALL_SUCCESSFUL);
+        r = new ReturnImpl<Wall>(crudHumansWallLocal_.doRHumansWallRefreshed(whosWall.getObj()).getWall(), READ_WALL_SUCCESSFUL);
         return r;
 
     }
@@ -83,7 +83,7 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Return<Wall> addEntryToWall(final HumanId whosWall, final HumanId msgOwner__, Obj wallReference__, final String contentToBeAppended) {
-        final Wall wall = crudHumansWallLocal_.doRHumansWall(whosWall.getObj()).getWall();
+        final Wall wall = crudHumansWallLocal_.doRHumansWallRefreshed(whosWall.getObj()).getWall();
 
         wall.getWallMsgs().size();//refreshing
         wall.getWallMsgs().add(new Msg()
