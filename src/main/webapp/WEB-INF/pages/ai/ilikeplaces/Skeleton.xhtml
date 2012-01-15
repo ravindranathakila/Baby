@@ -474,6 +474,20 @@
 
 </script>
 
+<script type="text/javascript">
+    $(window).bind('hashchange', function() {
+        var url = '' + window.location.hash;
+        url = url.replace('.','\\.');
+        url = url.replace('#','');
+        if(url != ''){
+            $('.sidebars').css('display','none');
+            $('.non_sidebar').addClass('use100').removeClass('use528');
+            $('.carouselable').hide();
+            $('.' + url).fadeIn('slow');
+            $('#' + this.id).parent().parent().appendTo('.carousel');
+        }
+    });
+</script>
 
 
 </body>
