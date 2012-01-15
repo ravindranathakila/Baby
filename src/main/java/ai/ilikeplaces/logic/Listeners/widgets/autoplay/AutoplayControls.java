@@ -8,6 +8,7 @@ import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventViewSidebar;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.servlets.Controller;
+import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.AIEventListener;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.Parameter;
@@ -83,8 +84,8 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                                     final HumansIdentity humansIdentity = ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(otherHumansId, "");
 
                                     $$sendJS(JSCodeToSend.redirectPageWithURL(
-                                            ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfileUrl(humansIdentity.getUrl().getUrl(), true))
-                                    );
+                                            ProfileRedirect.PROFILE_URL + humansIdentity.getUrl().getUrl()
+                                    ));
 
                                     break;
                                 }

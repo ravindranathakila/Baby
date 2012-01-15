@@ -6,15 +6,51 @@
 </head>
 <body>
 <div class="use100" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
-    <a class="AutoplayControlsStop" name="AutoplayControlsStop" href="#" id="AutoplayControlsStop" onclick="javascript:alert('Stopped');">
-        Stop
-    </a>
-    <a class="" href="#" id="AutoplayControlsPause">
-        Pause
-    </a>
-    <a class="" href="#" id="AutoplayControlsPlay">
-        Play
-    </a>
+    <div class="use100">
+        <div class="use100" style="height:4px;">
+            &nbsp;
+        </div>
+        <div class="use100" style="height:50px;">
+            <div class="use30">
+                <div class="use100 center" style="height:50px;" >
+                    <a class="" href="#" id="AutoplayControlsPause">
+                        <img src="/images/Pause.png" alt="Pause" style="height:50px;"/>
+                    </a>
+                </div>
+            </div>
+            <div class="use40 center">
+                <div style="height:50px;;" class="center">
+                    <img class="vtip cursor_link center"
+                         style="height:100%;vertical-align:middle;cursor:pointer;"
+                         title="Go back to www.ilikeplaces.com"
+                         onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location='/';});"
+                         src="/images/DT.png"
+                         alt="Down Town"
+                            />
+                </div>
+            </div>
+            <div class="use30">
+                <div class="use100 center" style="height:50px;;" >
+                    <a class="" href="#" id="AutoplayControlsPlay">
+                        <img src="/images/Play.png" alt="Play" style="height:50px;"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="use100" style="height:24px;">
+            <div class="use100 center" style="height:24px;">
+                <a class="AutoplayControlsStop"
+                   name="AutoplayControlsStop"
+                   href="#" id="AutoplayControlsStop"
+                   onclick="javascript:alert('Stopped');"
+                   style="font-size:12px;">
+                    Playing Phantom of The Opera On Symphony 5
+                </a>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 </body>
 </html>
