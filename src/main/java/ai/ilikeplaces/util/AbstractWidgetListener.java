@@ -3,6 +3,7 @@ package ai.ilikeplaces.util;
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall;
+import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.ServletLogin;
@@ -197,6 +198,12 @@ public abstract class AbstractWidgetListener<T> {
         return sessionBoundBadRefWrapper != null ?
                 (sessionBoundBadRefWrapper.isAlive() ?
                         sessionBoundBadRefWrapper.boundInstance.getHumanUserId() : null) : null;
+
+    }
+
+    public static HumanUserLocal getHumanUserFromRequest(final ItsNatServletRequest request_) {
+        final SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper = (SessionBoundBadRefWrapper<HumanUserLocal>) request_.getItsNatSession().getAttribute(ServletLogin.HumanUser);
+        return HumanUser.getHumanUserAsValid(sessionBoundBadRefWrapper);
 
     }
 

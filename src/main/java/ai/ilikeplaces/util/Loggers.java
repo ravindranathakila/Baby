@@ -88,6 +88,10 @@ final public class Loggers {
         ERROR.error(message, throwable);
     }
 
+    final static public void error(final String message) {
+        ERROR.error(message);
+    }
+
 
     /**
      * Exceptions and Errors in one logger is easy for monitoring

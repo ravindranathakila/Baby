@@ -2,8 +2,6 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
-import ai.ilikeplaces.logic.Listeners.widgets.people.People;
-import ai.ilikeplaces.logic.Listeners.widgets.people.PeopleCriteria;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventViewSidebar;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventViewSidebarCriteria;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
@@ -14,7 +12,7 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
+import ai.ilikeplaces.util.cache.SmartCache;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
@@ -28,7 +26,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static ai.ilikeplaces.servlets.Controller.Page.Bate;
 import static ai.ilikeplaces.servlets.Controller.Page.user_property_sidebar_talk;
 
 /**
@@ -49,6 +46,12 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
     private static final String MESSAGE_ADDING_SELF_AS_FRIEND = "message.adding.self.as.friend";
     private static final String IS_ALREADY_YOUR_FRIEND = "0.is.already.your.friend";
     private static final String READ_MORE = "read.more";
+    private static final SmartCache.RecoverWith<String,Object> STATIC_VARIABLE_RECOVER_WITH = new SmartCache.RecoverWith<String, Object>() {
+        @Override
+        public Object getValue(final String s) {
+            return DB.getHumanCRUDHumanLocal(true).doDirtyRHumansBefriends(new HumanId(s).getSelfAsValid()).returnValueBadly();
+        }
+    };
 
 // ------------------------------ FIELDS (NON-STATIC)--------------------
 
@@ -84,7 +87,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
     protected void init(final DownTownFlowCriteria downTownFlowCriteria) {
 
         final String currentUser = downTownFlowCriteria.getHumanId().getObj();
-        final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) downTownFlowCriteria.getHumanUserLocal().cache(currentUser);
+        final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) downTownFlowCriteria.getHumanUserLocal().cache(currentUser, STATIC_VARIABLE_RECOVER_WITH);
         //new People(request,new PeopleCriteria().setPeople((List<HumanIdFace>)(List<?>)beFriends),$(Controller.Page.Skeleton_left_column));
 
 

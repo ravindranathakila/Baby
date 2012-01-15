@@ -7,10 +7,12 @@ import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventViewSidebar;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.AIEventListener;
 import ai.ilikeplaces.util.AbstractWidgetListener;
+import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Parameter;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -21,6 +23,7 @@ import org.w3c.dom.html.HTMLDocument;
 import java.util.List;
 import java.util.Set;
 
+import static ai.ilikeplaces.logic.Listeners.widgets.autoplay.AutoplayControlsCriteria.AUTOPLAY_STATE.PLAYING;
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 
 /**
@@ -30,9 +33,6 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
  * Time: 7:16 PM
  */
 public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCriteria> {
-
-
-    private static final String WHO_THE_HELL_MADE_THIS_WALL = "WHO THE HELL MADE THIS WALL? ";
 
     public static enum AutoplayControlsIds implements WidgetIds {
         AutoplayControlsPlay,
@@ -46,6 +46,23 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
      */
     public AutoplayControls(final ItsNatServletRequest request__, final AutoplayControlsCriteria autoplayControlsCriteria, final Element appendToElement__) {
         super(request__, Controller.Page.AutoplayControls, autoplayControlsCriteria, appendToElement__);
+    }
+
+
+    @Override
+    protected void init(final AutoplayControlsCriteria autoplayControlsCriteria) {
+        final String autplayStateString = (String) criteria.getHumanUserLocal().cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.AUTOPLAY_STATE, null);
+        final AutoplayControlsCriteria.AUTOPLAY_STATE autoplayState = AutoplayControlsCriteria.AUTOPLAY_STATE.valueOf(autplayStateString != null ? autplayStateString :
+                PLAYING.name());
+        switch (autoplayState) {
+            case PLAYING: {
+                break;
+            }
+            case PAUSED: {
+                break;
+            }
+        }
+
     }
 
     /**
@@ -69,12 +86,16 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                      */
                     @Override
                     protected void onFire(Event evt) {
+
+                        criteria.getHumanUserLocal().cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.AUTOPLAY_STATE, PLAYING);
+
+
                         final List<Wall> updatedWalls = DB.getHumanCRUDHumansUnseenLocal(false).readEntries(criteria.getHumanId().getHumanId());
 
                         if (!updatedWalls.isEmpty()) {
                             final Wall hopefullyLastWall = updatedWalls.get(updatedWalls.size() - 1);
 
-                            if(hopefullyLastWall.getWallType() == null){
+                            if (hopefullyLastWall.getWallType() == null) {
                                 hopefullyLastWall.setWallType(Wall.wallTypePrivateEvent);
                             }
 
@@ -124,7 +145,7 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                                     } else if (privatePhotoString != null) {
                                         $$sendJS(JSCodeToSend.refreshPageIn(0));
                                     } else {
-                                        throw new IllegalStateException(WHO_THE_HELL_MADE_THIS_WALL + hopefullyLastWall.toString());
+                                        Loggers.error(criteria.getHumanId() + " HAS AN UPDATE ON WALL " + hopefullyLastWall.toString() + " BUT CANNOT ACCESS IT SINCE ITS METADATA AND/OR TYPE ARE NOT UPDATED.");
                                     }
                                 }
                             }
@@ -135,6 +156,15 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
         super.registerForClick(
                 AutoplayControlsIds.AutoplayControlsPause,
                 new AIEventListener<AutoplayControlsCriteria>(criteria) {
+                    /**
+                     * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+                     *
+                     * @param evt fired from client
+                     */
+                    @Override
+                    protected void onFire(Event evt) {
+                        criteria.getHumanUserLocal().cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.AUTOPLAY_STATE, PLAYING);
+                    }
                 });
         super.registerForClick(
                 AutoplayControlsIds.AutoplayControlsStop,
