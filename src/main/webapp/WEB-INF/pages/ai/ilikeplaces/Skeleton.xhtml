@@ -447,13 +447,13 @@
 <script type="text/javascript" src="/js/miniquarry/ItsNatEventMonitor.js"></script>
 
 <script type="text/javascript" >
-    playing = true;
+    playing = document.getElementsByName("AutoplayControlsPlayState")[0].value;
 
     setInterval("play()",5000);
 
     function play(){
         if(playing){
-            var HTMLElement = document.getElementsByName("AutoplayControlsPlay")[0];
+            var HTMLElement = document.getElementsByName("AutoplayControlsTimeout")[0];
             fireEvent(HTMLElement,'click');
         }
     }

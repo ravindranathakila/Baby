@@ -530,12 +530,24 @@ public abstract class AbstractWidgetListener<T> {
     protected final void $$displayBlock(final Element element__) {
         ((ElementCSSInlineStyle) element__).getStyle().setProperty(DISPLAY, BLOCK, EMPTY);
     }
+    @WARNING("Fails on ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall#protected void fetchToEmail(Object... args) " +
+            "since it is not a normal itsnat operation on the current document, but a raw created one.")
+    protected final void $$displayBlock(final WidgetIds element__) {
+        $$displayBlock($$(element__));
+    }
 
     @WARNING("Fails on ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall#protected void fetchToEmail(Object... args) " +
             "since it is not a normal itsnat operation on the current document, but a raw created one.")
 
     protected final void $$displayNone(final Element element__) {
         ((ElementCSSInlineStyle) element__).getStyle().setProperty(DISPLAY, NONE, EMPTY);
+    }
+
+    @WARNING("Fails on ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall#protected void fetchToEmail(Object... args) " +
+            "since it is not a normal itsnat operation on the current document, but a raw created one.")
+
+    protected final void $$displayNone(final WidgetIds element__) {
+        $$displayNone($$(element__));
     }
 
     protected final void $$setStyle(final Element element__, final String property, final String value) {
