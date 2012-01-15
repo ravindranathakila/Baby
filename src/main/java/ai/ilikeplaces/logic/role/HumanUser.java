@@ -190,19 +190,40 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
      * @return
      */
     private SmartCache<String, Object> getCache() {
-        return cache == null ? cache = new SmartCache<String, Object>(new SmartCache.RecoverWith<String, Object>() {
-            @Override
-            public Object getValue(final String s) {
-                return DB.getHumanCRUDHumanLocal(true).doDirtyRHumansBefriends(new HumanId(s).getSelfAsValid()).returnValueBadly();
-            }
-        }) : cache;
+        return cache == null ? cache = new SmartCache<String, Object>() : cache;
     }
 
-    public Object cache(final String key) {
-        return getCache().get(new String(key));//DO NOT REMOVE NEW STRING, WILL NOT ALLOW GC AS A WEAK REFERENCE IF SO
+    /**
+     * This is Approach One To Cache: Key is an unknown constant
+     * <p/>
+     * Approach Two To Cache: {@link #cacheAndUpdateWith(ai.ilikeplaces.logic.role.HumanUserLocal.CACHE_KEY, Object)}
+     *
+     * @param key
+     * @param recoverWith
+     * @return the cached or recovered value
+     * @see {@link #cacheAndUpdateWith(ai.ilikeplaces.logic.role.HumanUserLocal.CACHE_KEY, Object)}
+     */
+    public Object cache(final String key, final SmartCache.RecoverWith<String, Object> recoverWith) {
+        return getCache().get(new String(key), recoverWith);//DO NOT REMOVE NEW STRING, WILL NOT ALLOW GC AS A WEAK REFERENCE IF SO
     }
 
+
+    /**
+     * This is Approach Two To Cache: Key is a known constant
+     * <p/>
+     * Approach One To Cache: {@link #cache(String, ai.ilikeplaces.util.cache.SmartCache.RecoverWith)}
+     * <p/>
+     * Updates the cache(if value is not null) and returns the old value.
+     * Returns value if value is null
+     *
+     *
+     * @param key
+     * @param valueToUpdateWith
+     * @return old value
+     *         <p/>
+     * @see {@link #cache(String, ai.ilikeplaces.util.cache.SmartCache.RecoverWith)}
+     */
     public Object cacheAndUpdateWith(final CACHE_KEY key, final Object valueToUpdateWith) {
-        return getCache().MAP.put(new String(key.name()), valueToUpdateWith);//DO NOT REMOVE NEW STRING, WILL NOT ALLOW GC AS A WEAK REFERENCE IF SO
+        return valueToUpdateWith == null ? getCache().MAP.get(key.name()) : getCache().MAP.put(new String(key.name()), valueToUpdateWith);
     }
 }

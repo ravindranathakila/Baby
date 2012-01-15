@@ -21,7 +21,8 @@ public interface HumanUserLocal extends HttpSessionBindingListener, Serializable
     final static public String NAME = HumanUserLocal.class.getSimpleName();
 
     static public enum CACHE_KEY{
-        BE_FRIENDS
+        BE_FRIENDS,
+        AUTOPLAY_STATE,
     }
 
     /**
@@ -39,8 +40,15 @@ public interface HumanUserLocal extends HttpSessionBindingListener, Serializable
      */
     public HumanUserLocal setHumanUserId(String loggedOnUserId);
 
-    public Object cache(final String key);
+    public Object cache(final String key, SmartCache.RecoverWith<String, Object> recoverWith);
 
+    /**
+     * Updates the cache and returns the old value
+     *
+     * @param key
+     * @param valueToUpdateWith
+     * @return old value
+     */
     public Object cacheAndUpdateWith(final CACHE_KEY key, final Object valueToUpdateWith);
 
 }

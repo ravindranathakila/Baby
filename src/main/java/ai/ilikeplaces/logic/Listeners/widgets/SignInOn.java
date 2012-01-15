@@ -5,8 +5,7 @@ import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
-import ai.ilikeplaces.logic.Listeners.widgets.autoplay.AutoplayControls;
-import ai.ilikeplaces.logic.Listeners.widgets.autoplay.AutoplayControlsCriteria;
+import ai.ilikeplaces.logic.Listeners.widgets.autoplay.*;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -97,7 +96,10 @@ abstract public class SignInOn extends AbstractWidgetListener {
 
             UCAutoplay:
             {
-                new AutoplayControls(request, new AutoplayControlsCriteria().setHumanId(username), $$(SignInOnIds.signinon_autoplay));
+                new AutoplayControls(request, new AutoplayControlsCriteria()
+                        .setHumanId(username)
+                        .setHumanUserLocal(getHumanUserFromRequest(request))
+                        , $$(SignInOnIds.signinon_autoplay));
             }
         } else {
             UCShowHIdeWIdgets:
