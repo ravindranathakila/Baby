@@ -447,17 +447,16 @@
 <script type="text/javascript" src="/js/miniquarry/ItsNatEventMonitor.js"></script>
 
 <script type="text/javascript" >
-    $("#search_moments").click(
-        function(){
-            alert('clicked search');
-            //$(".AutoplayControlsStop").trigger('click');
+    playing = true;
 
-            var HTMLElement = document.getElementsByName("AutoplayControlsStop")[0];
+    setInterval("play()",5000);
+
+    function play(){
+        if(playing){
+            var HTMLElement = document.getElementsByName("AutoplayControlsPlay")[0];
             fireEvent(HTMLElement,'click');
-
-            return true;
         }
-    );
+    }
 
     function fireEvent(element,event){
         if (document.createEventObject){
