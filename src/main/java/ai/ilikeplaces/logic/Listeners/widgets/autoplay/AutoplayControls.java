@@ -2,15 +2,18 @@ package ai.ilikeplaces.logic.Listeners.widgets.autoplay;
 
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventViewSidebar;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
+import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
@@ -31,6 +34,9 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
  * Time: 7:16 PM
  */
 public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCriteria> {
+
+    private static final String HAS_AN_UPDATE_ON_WALL = " HAS AN UPDATE ON WALL ";
+    private static final String BUT_CANNOT_ACCESS_IT_SINCE_ITS_METADATA_AND_OR_TYPE_ARE_NOT_UPDATED = " BUT CANNOT ACCESS IT SINCE ITS METADATA AND/OR TYPE ARE NOT UPDATED.";
 
     public static enum AutoplayControlsIds implements WidgetIds {
         AutoplayControlsPlay,
@@ -196,9 +202,33 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                                                 $$sendJS(JSCodeToSend.redirectPageWithURL(href));
 
                                             } else if (privatePhotoString != null) {
-                                                $$sendJS(JSCodeToSend.refreshPageIn(0));
+                                                final Integer userLocationType = (Integer) criteria.getHumanUserLocal().cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.USER_LOCATION_TYPE, null);
+
+                                                switch (userLocationType) {
+                                                    case Wall.wallTypePrivateEvent: {
+
+                                                        final long privatePhotoLong = Long.parseLong(privatePhotoString);
+                                                        final List<Long> privatePhotos = (List<Long>) getHumanUserFromRequest(request).cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.USER_LOCATION_PRIVATE_PHOTOS, null);
+
+                                                        if (privatePhotos != null && privatePhotos.contains(privatePhotoLong)) {
+                                                            final VLong vLongPrivatePhoto = new VLong().setObjAsValid(privatePhotoLong);
+                                                            final PrivatePhoto privatePhoto = DB.getHumanCRUDPrivatePhotoLocal(false)
+                                                                    .rPrivatePhoto(criteria.getHumanId(), vLongPrivatePhoto,
+                                                                            new RefreshSpec()
+                                                                    ).returnValueBadly();
+
+                                                            DB.getHumanCRUDHumansUnseenLocal(false).removeEntry(criteria.getHumanId().getHumanId(), hopefullyLastWall.getWallId());
+
+                                                            $$sendJS(JSCodeToSend.refreshPageWith(
+                                                                    "#" + privatePhoto.getPrivatePhotoURLPath()
+                                                            ));
+                                                        }
+
+                                                        break;
+                                                    }
+                                                }
                                             } else {
-                                                Loggers.error(criteria.getHumanId() + " HAS AN UPDATE ON WALL " + hopefullyLastWall.toString() + " BUT CANNOT ACCESS IT SINCE ITS METADATA AND/OR TYPE ARE NOT UPDATED.");
+                                                Loggers.error(criteria.getHumanId() + HAS_AN_UPDATE_ON_WALL + hopefullyLastWall.toString() + BUT_CANNOT_ACCESS_IT_SINCE_ITS_METADATA_AND_OR_TYPE_ARE_NOT_UPDATED);
                                             }
                                         }
                                     }

@@ -4,10 +4,9 @@ import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.LOGIC;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.entities.HumansIdentity;
-import ai.ilikeplaces.entities.Msg;
-import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
@@ -150,6 +149,15 @@ public class WallWidgetPrivatePhoto extends WallWidget {
                                         }.fetchToEmail
                                 );
                             }
+
+                            //final PrivateEvent pe = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(myhumanId.getObj(), myprivateEventId).returnValue();
+                            for (final HumansIdentity hpe : wallProspects.values()) {
+                                if (!wall.getWallMutes().contains(hpe) && !hpe.getHumanId().equals(myhumanId.getObj())) {
+                                    //SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), pe.getPrivateEventName(), fetchToEmail + b.toString());
+                                    DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), wall.getWallId());
+                                }
+                            }
+
                         } else {
                             $$(Controller.Page.wallNotice).setTextContent(r.returnMsg());
                         }
@@ -158,11 +166,7 @@ public class WallWidgetPrivatePhoto extends WallWidget {
             }
 
 
-            @Override
-            public void finalize() throws Throwable {
-                Loggers.finalized(this.getClass().getName());
-                super.finalize();
-            }
+
         }, false);
 
 
