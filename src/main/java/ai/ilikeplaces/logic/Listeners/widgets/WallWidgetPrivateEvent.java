@@ -10,7 +10,6 @@ import ai.ilikeplaces.logic.validators.unit.WallEntry;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.cache.SmartCache;
 import ai.ilikeplaces.util.cache.SmartCache2;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatServletRequest;
@@ -119,7 +118,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
                 b.append(
                         new UserProperty(
                                 request,
-                                $$(Controller.Page.wallContent),
+                                $$(WallWidgetIds.wallContent),
                                 ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
                                 new HumanId(msg.getMsgMetadata())) {
                         }.fetchToEmail
@@ -142,7 +141,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
 
         } else {//Moves on with the wall without refresh
             for (final Msg msg : aReturn.returnValueBadly().getWallMsgs()) {
-                new UserProperty(request, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
+                new UserProperty(request, $$(WallWidgetIds.wallContent), new HumanId(msg.getMsgMetadata())) {
                     protected void init(final Object... initArgs) {
                         $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
                     }
@@ -159,7 +158,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
         super.setWallProfilePhoto(UserProperty.formatProfilePhotoUrl(currUserAsVisitorHI.getHumansIdentityProfilePhoto()));
         super.setWallTitle(MessageFormat.format(RBGet.gui().getString(TALK_AT_0), pe.getPrivateEventName()));
 
-        $$displayWallAsMuted($$(Controller.Page.wallMute), aReturn.returnValueBadly().getWallMutes().contains(humanId));
+        $$displayWallAsMuted($$(WallWidgetIds.wallMute), aReturn.returnValueBadly().getWallMutes().contains(humanId));
     }
 
 
@@ -193,7 +192,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
 
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.wallSubmit), EventType.CLICK.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(WallWidgetIds.wallSubmit), EventType.CLICK.toString(), new EventListener() {
 
             private HumanId myhumanId = humanId;
             private Long myprivateEventId = privateEventId;
@@ -216,19 +215,19 @@ public class WallWidgetPrivateEvent extends WallWidget {
 
 
                         if (r.returnStatus() == 0) {
-                            $$(Controller.Page.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
+                            $$(WallWidgetIds.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
                             wallAppend.setObj("");
 
                             LAST_WALL_ENTRY.MAP.put(mywallId, null);
 
-                            clear($$(Controller.Page.wallContent));
+                            clear($$(WallWidgetIds.wallContent));
                             final Wall wall = (DB.getHumanCrudPrivateEventLocal(true).readWall(myhumanId, new Obj<Long>(myprivateEventId), REFRESH_SPEC).returnValueBadly());
                             final StringBuilder b = new StringBuilder("");
                             for (final Msg msg : wall.getWallMsgs()) {
                                 b.append(
                                         new UserProperty(
                                                 request,
-                                                $$(Controller.Page.wallContent),
+                                                $$(WallWidgetIds.wallContent),
                                                 ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
                                                 new HumanId(msg.getMsgMetadata())) {
                                         }.fetchToEmail
@@ -242,7 +241,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
                                 }
                             }
                         } else {
-                            $$(Controller.Page.wallNotice).setTextContent(r.returnMsg());
+                            $$(WallWidgetIds.wallNotice).setTextContent(r.returnMsg());
                         }
                     }
                 }
@@ -251,7 +250,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
         }, false);
 
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.wallMute), EventType.CLICK.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(WallWidgetIds.wallMute), EventType.CLICK.toString(), new EventListener() {
 
             private HumanId myhumanId = humanId;
             private Long myprivateEventId = privateEventId;
