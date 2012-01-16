@@ -18,6 +18,9 @@ import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.servlet.http.HttpSessionBindingEvent;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observer;
 
 /**
@@ -41,6 +44,8 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
      * DO NOT REMOVE transient SINCE THIS IS A CACHE, AND WILL GET VERY BULKY.
      */
     private transient SmartCache<String, Object> cache;
+
+    private Map<String, Object> store = new HashMap<String, Object>(0);
 
     /**
      * Get the HumanId of the Logged in user, or throw exception.
@@ -216,7 +221,6 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
      * Updates the cache(if value is not null) and returns the old value.
      * Returns value if value is null
      *
-     *
      * @param key
      * @param valueToUpdateWith
      * @return old value
@@ -225,5 +229,19 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
      */
     public Object cacheAndUpdateWith(final CACHE_KEY key, final Object valueToUpdateWith) {
         return valueToUpdateWith == null ? getCache().MAP.get(key.name()) : getCache().MAP.put(new String(key.name()), valueToUpdateWith);
+    }
+
+    /**
+     * Updates the cache(if value is not null) and returns the old value.
+     * Returns value if value is null
+     *
+     * @param key
+     * @param valueToUpdateWith
+     * @return old value
+     *         <p/>
+     * @see {@link #cache(String, ai.ilikeplaces.util.cache.SmartCache.RecoverWith)}
+     */
+    public Object storeAndUpdateWith(final STORE_KEY key, final Object valueToUpdateWith) {
+        return valueToUpdateWith == null ? store.get(key.name()) : store.put(key.name(), valueToUpdateWith);
     }
 }

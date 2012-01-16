@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.Listeners.widgets.autoplay;
 
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.util.Loggers;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,6 +19,7 @@ public class AutoplayControlsCriteria {
     }
 
     public HumanUserLocal getHumanUserLocal() {
+        Loggers.debug(humanUserLocal.toString());
         return humanUserLocal;
     }
 

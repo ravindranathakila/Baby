@@ -265,12 +265,12 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                         try {
                                             UCUpdateUserLocation:
                                             {
-                                                super.getHumanUserAsValid().cacheAndUpdateWith(
-                                                        HumanUserLocal.CACHE_KEY.USER_LOCATION_TYPE,
+                                                super.getHumanUserAsValid().storeAndUpdateWith(
+                                                        HumanUserLocal.STORE_KEY.USER_LOCATION_TYPE,
                                                         Wall.wallTypePrivateEvent
                                                 );
-                                                super.getHumanUserAsValid().cacheAndUpdateWith(
-                                                        HumanUserLocal.CACHE_KEY.USER_LOCATION_DETAILS,
+                                                super.getHumanUserAsValid().storeAndUpdateWith(
+                                                        HumanUserLocal.STORE_KEY.USER_LOCATION_DETAILS,
                                                         r.returnValueBadly().getPrivateEventId()
                                                 );
                                             }

@@ -59,19 +59,19 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
 
     @Override
     protected void init(final AutoplayControlsCriteria autoplayControlsCriteria) {
-        AutoplayControlsCriteria.AUTOPLAY_STATE autoplayState = (AutoplayControlsCriteria.AUTOPLAY_STATE) criteria.getHumanUserLocal().cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.AUTOPLAY_STATE, null);
+        AutoplayControlsCriteria.AUTOPLAY_STATE autoplayState = (AutoplayControlsCriteria.AUTOPLAY_STATE) criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.AUTOPLAY_STATE, null);
         autoplayState = (autoplayState != null ? autoplayState :
                 PLAYING);
         switch (autoplayState) {
             case PLAYING: {
                 $$displayBlock(AutoplayControlsIds.AutoplayControlsPauseSection);
-                criteria.getHumanUserLocal().cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.AUTOPLAY_STATE, PLAYING);
+                criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.AUTOPLAY_STATE, PLAYING);
                 $$(AutoplayControlsIds.AutoplayControlsPlayState).setAttribute(MarkupTag.INPUT.value(), Boolean.TRUE.toString());
                 break;
             }
             case PAUSED: {
                 $$displayBlock(AutoplayControlsIds.AutoplayControlsPlaySection);
-                criteria.getHumanUserLocal().cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.AUTOPLAY_STATE, PAUSED);
+                criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.AUTOPLAY_STATE, PAUSED);
                 $$(AutoplayControlsIds.AutoplayControlsPlayState).setAttribute(MarkupTag.INPUT.value(), Boolean.FALSE.toString());
                 break;
             }
@@ -101,7 +101,7 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                     @Override
                     protected void onFire(Event evt) {
 
-                        criteria.getHumanUserLocal().cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.AUTOPLAY_STATE, PLAYING);
+                        criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.AUTOPLAY_STATE, PLAYING);
                         $$displayNone(AutoplayControlsIds.AutoplayControlsPlaySection);
                         $$displayBlock(AutoplayControlsIds.AutoplayControlsPauseSection);
 
@@ -119,7 +119,7 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                      */
                     @Override
                     protected void onFire(Event evt) {
-                        criteria.getHumanUserLocal().cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.AUTOPLAY_STATE, PAUSED);
+                        criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.AUTOPLAY_STATE, PAUSED);
                         $$displayNone(AutoplayControlsIds.AutoplayControlsPauseSection);
                         $$displayBlock(AutoplayControlsIds.AutoplayControlsPlaySection);
                     }
@@ -142,7 +142,7 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                     @Override
                     protected void onFire(Event evt) {
 
-                        AutoplayControlsCriteria.AUTOPLAY_STATE autplayState = (AutoplayControlsCriteria.AUTOPLAY_STATE) criteria.getHumanUserLocal().cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.AUTOPLAY_STATE, null);
+                        AutoplayControlsCriteria.AUTOPLAY_STATE autplayState = (AutoplayControlsCriteria.AUTOPLAY_STATE) criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.AUTOPLAY_STATE, null);
                         autplayState = (autplayState != null ? autplayState :
                                 PLAYING);
 
@@ -202,31 +202,31 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                                                 $$sendJS(JSCodeToSend.redirectPageWithURL(href));
 
                                             } else if (privatePhotoString != null) {
-                                                final Integer userLocationType = (Integer) criteria.getHumanUserLocal().cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.USER_LOCATION_TYPE, null);
+                                                final Integer userLocationType = (Integer) criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_TYPE, null);
 
-                                                switch (userLocationType) {
-                                                    case Wall.wallTypePrivateEvent: {
-
-                                                        final long privatePhotoLong = Long.parseLong(privatePhotoString);
-                                                        final List<Long> privatePhotos = (List<Long>) getHumanUserFromRequest(request).cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.USER_LOCATION_PRIVATE_PHOTOS, null);
-
-                                                        if (privatePhotos != null && privatePhotos.contains(privatePhotoLong)) {
-                                                            final VLong vLongPrivatePhoto = new VLong().setObjAsValid(privatePhotoLong);
-                                                            final PrivatePhoto privatePhoto = DB.getHumanCRUDPrivatePhotoLocal(false)
-                                                                    .rPrivatePhoto(criteria.getHumanId(), vLongPrivatePhoto,
-                                                                            new RefreshSpec()
-                                                                    ).returnValueBadly();
-
-                                                            DB.getHumanCRUDHumansUnseenLocal(false).removeEntry(criteria.getHumanId().getHumanId(), hopefullyLastWall.getWallId());
-
-                                                            $$sendJS(JSCodeToSend.refreshPageWith(
-                                                                    "#" + privatePhoto.getPrivatePhotoURLPath()
-                                                            ));
-                                                        }
-
-                                                        break;
-                                                    }
-                                                }
+//                                                switch (userLocationType) {
+//                                                    case Wall.wallTypePrivateEvent: {
+//
+//                                                        final long privatePhotoLong = Long.parseLong(privatePhotoString);
+//                                                        final List<Long> privatePhotos = (List<Long>) getHumanUserFromRequest(request).cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.USER_LOCATION_PRIVATE_PHOTOS, null);
+//
+//                                                        if (privatePhotos != null && privatePhotos.contains(privatePhotoLong)) {
+//                                                            final VLong vLongPrivatePhoto = new VLong().setObjAsValid(privatePhotoLong);
+//                                                            final PrivatePhoto privatePhoto = DB.getHumanCRUDPrivatePhotoLocal(false)
+//                                                                    .rPrivatePhoto(criteria.getHumanId(), vLongPrivatePhoto,
+//                                                                            new RefreshSpec()
+//                                                                    ).returnValueBadly();
+//
+//                                                            DB.getHumanCRUDHumansUnseenLocal(false).removeEntry(criteria.getHumanId().getHumanId(), hopefullyLastWall.getWallId());
+//
+//                                                            $$sendJS(JSCodeToSend.refreshPageWith(
+//                                                                    "#" + privatePhoto.getPrivatePhotoURLPath()
+//                                                            ));
+//                                                        }
+//
+//                                                        break;
+//                                                    }
+//                                                }
                                             } else {
                                                 Loggers.error(criteria.getHumanId() + HAS_AN_UPDATE_ON_WALL + hopefullyLastWall.toString() + BUT_CANNOT_ACCESS_IT_SINCE_ITS_METADATA_AND_OR_TYPE_ARE_NOT_UPDATED);
                                             }
