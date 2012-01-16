@@ -446,14 +446,7 @@ final public class
             }
         },
         WallHandler("ai/ilikeplaces/widgets/wall.xhtml",
-                Controller.Page.wallContent,
-                Controller.Page.wallAppend,
-                Controller.Page.wallSubmit,
-                Controller.Page.wallNotice,
-                Controller.Page.wallMute,
-                Controller.Page.wallTitle,
-                Controller.Page.wallProfilePhoto,
-                Controller.Page.wallProfileName
+                WallWidget.WallWidgetIds.values()
         ) {
             @Override
             public String toString() {
@@ -1283,15 +1276,6 @@ final public class
 
         /*WallHandler Page*/
         final static public String DocWall = "DocWall";
-        /*WallHandler IDs*/
-        final static public String wallContent = "wallContent";
-        final static public String wallAppend = "wallAppend";
-        final static public String wallSubmit = "wallSubmit";
-        final static public String wallNotice = "wallNotice";
-        final static public String wallMute = "wallMute";
-        final static public String wallTitle = "wallTitle";
-        final static public String wallProfilePhoto = "wallProfilePhoto";
-        final static public String wallProfileName = "wallProfileName";
 
         /*DisplayName Page*/
         final static public String DocDisplayName = "DocDisplayName";

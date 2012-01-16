@@ -89,7 +89,7 @@ public class WallWidgetHumansWall extends WallWidget {
         final Wall wall = DB.getHumanCrudWallLocal(true).readWall(requestedProfile, new Obj<HumanId>(currUserAsVisitor), REFRESH_SPEC).returnValueBadly();
 
         for (final Msg msg : wall.getWallMsgs()) {
-            new UserProperty(request, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
+            new UserProperty(request, $$(WallWidgetIds.wallContent), new HumanId(msg.getMsgMetadata())) {
                 protected void init(final Object... initArgs) {
                     $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
                 }
@@ -98,7 +98,7 @@ public class WallWidgetHumansWall extends WallWidget {
 
         DB.getHumanCRUDHumansUnseenLocal(false).removeEntry(currUserAsVisitor.getObjectAsValid(), wall.getWallId());
 
-        $$displayWallAsMuted($$(Controller.Page.wallMute), wall.getWallMutes().contains(currUserAsVisitor));
+        $$displayWallAsMuted($$(WallWidgetIds.wallMute), wall.getWallMutes().contains(currUserAsVisitor));
 
     }
 
@@ -128,7 +128,7 @@ public class WallWidgetHumansWall extends WallWidget {
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
 
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.wallSubmit), EventType.CLICK.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(WallWidgetIds.wallSubmit), EventType.CLICK.toString(), new EventListener() {
 
             private HumanId myrequestedProfile = requestedProfile;
             private HumanId mycurrUserAsVisitor = currUserAsVisitor;
@@ -144,16 +144,16 @@ public class WallWidgetHumansWall extends WallWidget {
 
 
                         if (r.returnStatus() == 0) {
-                            $$(Controller.Page.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
+                            $$(WallWidgetIds.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
                             wallAppend.setObj("");
                             LAST_WALL_ENTRY.MAP.put(new String(myrequestedProfile.getHumanId()), null);
 
-                            clear($$(Controller.Page.wallContent));
+                            clear($$(WallWidgetIds.wallContent));
                             final Wall wall = DB.getHumanCrudWallLocal(true).readWall(requestedProfile, new Obj<HumanId>(currUserAsVisitor), REFRESH_SPEC).returnValue();
                             final StringBuilder b = new StringBuilder("");
                             for (final Msg msg : wall.getWallMsgs()) {
                                 b.append(new UserProperty(request,
-                                        $$(Controller.Page.wallContent),
+                                        $$(WallWidgetIds.wallContent),
                                         ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
                                         new HumanId(msg.getMsgMetadata())) {
                                 }.fetchToEmail);
@@ -184,14 +184,14 @@ public class WallWidgetHumansWall extends WallWidget {
 
 
                         } else {
-                            $$(Controller.Page.wallNotice).setTextContent(r.returnMsg());
+                            $$(WallWidgetIds.wallNotice).setTextContent(r.returnMsg());
                         }
                     }
                 }
             }
         }, false);
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.wallMute), EventType.CLICK.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(WallWidgetIds.wallMute), EventType.CLICK.toString(), new EventListener() {
 
             private HumanId myrequestedProfile = requestedProfile;
             private HumanId mycurrUserAsVisitor = currUserAsVisitor;

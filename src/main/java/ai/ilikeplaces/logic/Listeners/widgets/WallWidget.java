@@ -2,11 +2,9 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.logic.validators.unit.WallEntry;
-import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache;
-import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.w3c.dom.Element;
@@ -32,6 +30,18 @@ abstract public class WallWidget<T> extends AbstractWidgetListener<T> {
 
     final static public SmartCache<String, Long> HUMANS_WALL_ID = new SmartCache<String, Long>();
 
+    public static enum WallWidgetIds implements WidgetIds {
+        /*WallHandler IDs*/
+        wallContent,
+        wallAppend,
+        wallSubmit,
+        wallNotice,
+        wallMute,
+        wallTitle,
+        wallProfilePhoto,
+        wallProfileName,
+    }
+
 
     public WallWidget(final ItsNatServletRequest request__, final Element appendToElement__, final Object... initArgs) {
         super(request__, Page.WallHandler, appendToElement__, initArgs);
@@ -39,7 +49,7 @@ abstract public class WallWidget<T> extends AbstractWidgetListener<T> {
         UCProcessWallText:
         {
 
-            itsNatDocument_.addEventListener((EventTarget) $$(Page.wallAppend), EventType.BLUR.toString(), new EventListener() {
+            itsNatDocument_.addEventListener((EventTarget) $$(WallWidgetIds.wallAppend), EventType.BLUR.toString(), new EventListener() {
 
                 @Override
                 public void handleEvent(final Event evt_) {
@@ -64,7 +74,7 @@ abstract public class WallWidget<T> extends AbstractWidgetListener<T> {
         UCProcessWallText:
         {
 
-            itsNatDocument_.addEventListener((EventTarget) $$(Page.wallAppend), EventType.BLUR.toString(), new EventListener() {
+            itsNatDocument_.addEventListener((EventTarget) $$(WallWidgetIds.wallAppend), EventType.BLUR.toString(), new EventListener() {
 
                 @Override
                 public void handleEvent(final Event evt_) {
@@ -101,14 +111,14 @@ abstract public class WallWidget<T> extends AbstractWidgetListener<T> {
     }
 
     void setWallProfilePhoto(final String profilePhotoUrl) {
-        $$(Page.wallProfilePhoto).setAttribute(MarkupTag.IMG.title(), profilePhotoUrl);
+        $$(WallWidgetIds.wallProfilePhoto).setAttribute(MarkupTag.IMG.title(), profilePhotoUrl);
     }
 
     void setWallTitle(final String wallTitle) {
-        $$(Page.wallTitle).setTextContent(wallTitle);
+        $$(WallWidgetIds.wallTitle).setTextContent(wallTitle);
     }
 
     void setWallProfileName(final String wallProfileName) {
-        $$(Page.wallProfileName).setTextContent(wallProfileName);
+        $$(WallWidgetIds.wallProfileName).setTextContent(wallProfileName);
     }
 }

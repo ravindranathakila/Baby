@@ -6,13 +6,12 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
-import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatServletRequest;
+import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
@@ -20,7 +19,6 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
-import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,27 +89,27 @@ public class WallWidgetPrivatePhoto extends WallWidget {
             b.append(
                     new UserProperty(
                             request,
-                            $$(Controller.Page.wallContent),
+                            $$(WallWidgetIds.wallContent),
                             ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
                             wallProspects.get(msg.getMsgMetadata())) {
                     }.fetchToEmail
             );
         }
 
-        final HumansIdentity currUserAsVisitorHI = UserProperty.HUMANS_IDENTITY_CACHE.get((humanId.getHumanId()),"");
+        final HumansIdentity currUserAsVisitorHI = UserProperty.HUMANS_IDENTITY_CACHE.get((humanId.getHumanId()), "");
 
         super.setWallProfileName(currUserAsVisitorHI.getHuman().getDisplayName());
         super.setWallProfilePhoto(UserProperty.formatProfilePhotoUrl(currUserAsVisitorHI.getHumansIdentityProfilePhoto()));
         super.setWallTitle(RBGet.gui().getString(TALK_ON_THIS_PHOTO));
 
-        $$displayWallAsMuted($$(Controller.Page.wallMute), wall.getWallMutes().contains(humanId));
+        $$displayWallAsMuted($$(WallWidgetIds.wallMute), wall.getWallMutes().contains(humanId));
     }
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
 
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.wallSubmit), EventType.CLICK.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(WallWidgetIds.wallSubmit), EventType.CLICK.toString(), new EventListener() {
 
             private HumanId myhumanId = humanId;
             private Long myprivatePhotoId = privatePhotoId;
@@ -133,17 +131,17 @@ public class WallWidgetPrivatePhoto extends WallWidget {
 
 
                         if (r.returnStatus() == 0) {
-                            $$(Controller.Page.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
+                            $$(WallWidgetIds.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
                             wallAppend.setObj("");
 
-                            clear($$(Controller.Page.wallContent));
+                            clear($$(WallWidgetIds.wallContent));
                             final Wall wall = (DB.getHumanCRUDPrivatePhotoLocal(true).readWall(myhumanId, (Obj) new Obj<Long>(myprivatePhotoId).getSelfAsValid(), REFRESH_SPEC).returnValueBadly());
                             final StringBuilder b = new StringBuilder("");
                             for (final Msg msg : wall.getWallMsgs()) {
                                 b.append(
                                         new UserProperty(
                                                 request,
-                                                $$(Controller.Page.wallContent),
+                                                $$(WallWidgetIds.wallContent),
                                                 ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
                                                 new HumanId(msg.getMsgMetadata())) {
                                         }.fetchToEmail
@@ -159,18 +157,51 @@ public class WallWidgetPrivatePhoto extends WallWidget {
                             }
 
                         } else {
-                            $$(Controller.Page.wallNotice).setTextContent(r.returnMsg());
+                            $$(WallWidgetIds.wallNotice).setTextContent(r.returnMsg());
                         }
                     }
                 }
             }
 
 
-
         }, false);
 
+        UCProcessWallText:
+        {
 
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.wallMute), EventType.CLICK.toString(), new EventListener() {
+            itsNatDocument_.addEventListener((EventTarget) $$(WallWidgetIds.wallAppend), EventType.BLUR.toString(), new EventListener() {
+
+                private HumanId myhumanId = humanId;
+                private Long myprivatePhotoId = privatePhotoId;
+
+                @Override
+                public void handleEvent(final Event evt_) {
+                    UCRefreshingWall:
+                    {
+                        $$(WallWidgetIds.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
+                        wallAppend.setObj("");
+
+                        clear($$(WallWidgetIds.wallContent));
+                        final Wall wall = (DB.getHumanCRUDPrivatePhotoLocal(true).readWall(myhumanId, (Obj) new Obj<Long>(myprivatePhotoId).getSelfAsValid(), REFRESH_SPEC).returnValueBadly());
+                        final StringBuilder b = new StringBuilder("");
+                        for (final Msg msg : wall.getWallMsgs()) {
+                            b.append(
+                                    new UserProperty(
+                                            request,
+                                            $$(WallWidgetIds.wallContent),
+                                            ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
+                                            new HumanId(msg.getMsgMetadata())) {
+                                    }.fetchToEmail
+                            );
+                        }
+                    }
+                }
+
+            }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+        }
+
+
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(WallWidgetIds.wallMute), EventType.CLICK.toString(), new EventListener() {
 
             private HumanId myhumanId = humanId;
             private Long myprivatePhotoId = privatePhotoId;

@@ -506,6 +506,11 @@
             $('.non_sidebar').addClass('use100').removeClass('use528');
             $('.carouselable').hide();
             $('.' + url).fadeIn('slow');
+            alert($('.' + url).length);
+            alert($('.' + url).children('.wall_input').length);
+            $('.' + url).children('.wall_input').focus();
+            $('.' + url).children('.wall_input').blur();
+            //fireEvent($('.' + url).children('.wall_submit')[0],"click");
             $('#' + this.id).parent().parent().appendTo('.carousel');
         }
     });

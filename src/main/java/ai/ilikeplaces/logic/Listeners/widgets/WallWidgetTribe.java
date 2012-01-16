@@ -18,7 +18,6 @@ import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 import org.xml.sax.SAXException;
 
@@ -115,7 +114,7 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
                 b.append(
                         new UserProperty(
                                 request,
-                                $$(Controller.Page.wallContent),
+                                $$(WallWidgetIds.wallContent),
                                 ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
                                 new HumanId(msg.getMsgMetadata())) {
                         }.fetchToEmail
@@ -137,7 +136,7 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
             }
         } else {//Moves on with the wall without refresh
             for (final Msg msg : aReturn.returnValueBadly().getWallMsgs()) {
-                new UserProperty(request, $$(Controller.Page.wallContent), new HumanId(msg.getMsgMetadata())) {
+                new UserProperty(request, $$(WallWidgetIds.wallContent), new HumanId(msg.getMsgMetadata())) {
                     protected void init(final Object... initArgs) {
                         $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
                     }
@@ -154,7 +153,7 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
         super.setWallProfilePhoto(UserProperty.formatProfilePhotoUrl(currUserAsVisitorHI.getHumansIdentityProfilePhoto()));
         super.setWallTitle(MessageFormat.format(RBGet.gui().getString(TALK_AT_0), tribe.getTribeName()));
 
-        $$displayWallAsMuted($$(Controller.Page.wallMute), aReturn.returnValueBadly().getWallMutes().contains(criteria.getHumanId()));
+        $$displayWallAsMuted($$(WallWidgetIds.wallMute), aReturn.returnValueBadly().getWallMutes().contains(criteria.getHumanId()));
     }
 
     /**
@@ -184,7 +183,7 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
 
-        super.registerForClick($$(Controller.Page.wallSubmit),
+        super.registerForClick($$(WallWidgetIds.wallSubmit),
                 new AIEventListener<WallWidgetTribeCriteria>(criteria) {
 
                     @Override
@@ -202,19 +201,19 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
 
 
                                 if (r.returnStatus() == 0) {
-                                    $$(Controller.Page.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
+                                    $$(WallWidgetIds.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
                                     wallAppend.setObj("");
 
                                     //LAST_WALL_ENTRY.MAP.put(criteria.getWallId(), null);
 
-                                    clear($$(Controller.Page.wallContent));
+                                    clear($$(WallWidgetIds.wallContent));
                                     final Wall wall = (DB.getHumanCRUDTribeLocal(true).readWall(criteria.getHumanId(), new VLong(criteria.getTribeId()), REFRESH_SPEC).returnValueBadly());
                                     final StringBuilder b = new StringBuilder("");
                                     for (final Msg msg : wall.getWallMsgs()) {
                                         b.append(
                                                 new UserProperty(
                                                         request,
-                                                        $$(Controller.Page.wallContent),
+                                                        $$(WallWidgetIds.wallContent),
                                                         ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
                                                         new HumanId(msg.getMsgMetadata())) {
                                                 }.fetchToEmail
@@ -231,10 +230,10 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
                                             }
                                         }
                                     } else {
-                                        $$(Controller.Page.wallNotice).setTextContent(r.returnMsg());
+                                        $$(WallWidgetIds.wallNotice).setTextContent(r.returnMsg());
                                     }
                                 } else {
-                                    $$(Controller.Page.wallNotice).setTextContent(r.returnMsg());
+                                    $$(WallWidgetIds.wallNotice).setTextContent(r.returnMsg());
                                 }
                             }
                         }
@@ -242,7 +241,7 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
                 });
 
 
-        super.registerForClick($$(Controller.Page.wallMute),
+        super.registerForClick($$(WallWidgetIds.wallMute),
 
                 new AIEventListener<WallWidgetTribeCriteria>(criteria) {
 
