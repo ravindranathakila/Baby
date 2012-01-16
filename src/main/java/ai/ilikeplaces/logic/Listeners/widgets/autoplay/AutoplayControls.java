@@ -158,6 +158,7 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                                         hopefullyLastWall.setWallType(Wall.wallTypePrivateEvent);
                                     }
 
+                                    Loggers.debug("" + hopefullyLastWall.getWallType());
                                     switch (hopefullyLastWall.getWallType()) {
                                         case Wall.wallTypeHuman: {
                                             final String otherHumansId = hopefullyLastWall.getMetadataValueFor(Wall.WallMetadataKey.HUMAN);
@@ -187,6 +188,9 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                                         default: {//Private Event is default. Humans set metadata
                                             final String privateEventString = hopefullyLastWall.getMetadataValueFor(Wall.WallMetadataKey.PRIVATE_EVENT);
                                             final String privatePhotoString = hopefullyLastWall.getMetadataValueFor(Wall.WallMetadataKey.PRIVATE_PHOTO);
+                                            Loggers.debug("" + privateEventString);
+                                            Loggers.debug("" + privatePhotoString);
+
 
                                             if (privateEventString != null) {
                                                 final PrivateEvent privateEvent = ai.ilikeplaces.logic.Listeners.widgets.privateevent
@@ -204,6 +208,7 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                                             } else if (privatePhotoString != null) {
                                                 final Integer userLocationType = (Integer) criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_TYPE, null);
 
+                                                Loggers.debug("" + userLocationType);
                                                 switch (userLocationType) {
                                                     case Wall.wallTypePrivateEvent: {
 

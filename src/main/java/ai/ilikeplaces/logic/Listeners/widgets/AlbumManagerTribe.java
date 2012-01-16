@@ -100,6 +100,7 @@ public class AlbumManagerTribe extends AbstractWidgetListener {
                 final List<Long> albumPhotoIds = new ArrayList<Long>(albumPhotos.size());
 
                 for (final PrivatePhoto privatePhoto__ : albumPhotos) {
+                    albumPhotoIds.add(privatePhoto__.getPrivatePhotoId());
                     new Photo$Description(request, $$(Page.AlbumTribePhotos), photoSequenceNumber++, wallProspects) {
                         @Override
                         protected void init(final Object... initArgs) {
