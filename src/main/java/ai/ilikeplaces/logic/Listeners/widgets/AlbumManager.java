@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
+import ai.ilikeplaces.doc.BUG;
 import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
@@ -100,7 +101,9 @@ public class AlbumManager extends AbstractWidgetListener {
         for (final HumansPrivateEvent humansNetPeople : privateEvent.getPrivateEventViewers()) {
             emails.add(new Email(humansNetPeople.getEmail()));
         }
-        for (final HumansPrivateEvent humansNetPeople : privateEvent.getPrivateEventInvites()) {
+
+
+        for (@BUG("Adding invitees as prospects might cause privacy leakage") final HumansPrivateEvent humansNetPeople : privateEvent.getPrivateEventInvites()) {
             emails.add(new Email(humansNetPeople.getEmail()));
         }
 
