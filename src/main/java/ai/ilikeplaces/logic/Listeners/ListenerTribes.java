@@ -1,10 +1,12 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.entities.Tribe;
+import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.Listeners.widgets.teach.TeachTribe;
 import ai.ilikeplaces.logic.Listeners.widgets.teach.TeachTribeCriteria;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.servlets.Controller;
@@ -108,6 +110,7 @@ public class ListenerTribes implements ItsNatServletRequestListener {
                                             //Ignore this pathetic situation and add 0 which will never match with a tribe
                                             which.add(0L);
                                         }
+                                        break;//Avoiding this feature for autoplay to work
                                     }
 
                                     final Set<Tribe> humansTribes;
