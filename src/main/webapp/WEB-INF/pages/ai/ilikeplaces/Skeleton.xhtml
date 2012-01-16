@@ -447,12 +447,34 @@
 <script type="text/javascript" src="/js/miniquarry/ItsNatEventMonitor.js"></script>
 
 <script type="text/javascript" >
+    //Thanks! http://stackoverflow.com/questions/667555/detecting-idle-time-in-javascript-elegantly
+
+    idleTime = 0;
+
+    //Increment the idle time counter every second.
+    var idleInterval = setInterval("timerIncrement()", 1000);
+
+    function timerIncrement(){
+        idleTime++;
+    }
+
+    //Zero the idle timer on mouse movement.
+    function idleReset(){
+        idleTime = 0;
+    }
+    $(this)
+        .bind("click",idleReset)
+        .bind("keydown",idleReset)
+        .bind("mousedown",idleReset)
+        .bind("mousemove",idleReset)
+        .bind("scroll",idleReset);
+
     playing = document.getElementsByName("AutoplayControlsPlayState")[0].value;
 
     setInterval("play()",5000);
 
     function play(){
-        if(playing){
+        if(playing && idleTime > 5){
             var HTMLElement = document.getElementsByName("AutoplayControlsTimeout")[0];
             fireEvent(HTMLElement,'click');
         }
