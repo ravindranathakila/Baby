@@ -204,29 +204,29 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                                             } else if (privatePhotoString != null) {
                                                 final Integer userLocationType = (Integer) criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_TYPE, null);
 
-//                                                switch (userLocationType) {
-//                                                    case Wall.wallTypePrivateEvent: {
-//
-//                                                        final long privatePhotoLong = Long.parseLong(privatePhotoString);
-//                                                        final List<Long> privatePhotos = (List<Long>) getHumanUserFromRequest(request).cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.USER_LOCATION_PRIVATE_PHOTOS, null);
-//
-//                                                        if (privatePhotos != null && privatePhotos.contains(privatePhotoLong)) {
-//                                                            final VLong vLongPrivatePhoto = new VLong().setObjAsValid(privatePhotoLong);
-//                                                            final PrivatePhoto privatePhoto = DB.getHumanCRUDPrivatePhotoLocal(false)
-//                                                                    .rPrivatePhoto(criteria.getHumanId(), vLongPrivatePhoto,
-//                                                                            new RefreshSpec()
-//                                                                    ).returnValueBadly();
-//
-//                                                            DB.getHumanCRUDHumansUnseenLocal(false).removeEntry(criteria.getHumanId().getHumanId(), hopefullyLastWall.getWallId());
-//
-//                                                            $$sendJS(JSCodeToSend.refreshPageWith(
-//                                                                    "#" + privatePhoto.getPrivatePhotoURLPath()
-//                                                            ));
-//                                                        }
-//
-//                                                        break;
-//                                                    }
-//                                                }
+                                                switch (userLocationType) {
+                                                    case Wall.wallTypePrivateEvent: {
+
+                                                        final long privatePhotoLong = Long.parseLong(privatePhotoString);
+                                                        final List<Long> privatePhotos = (List<Long>) getHumanUserFromRequest(request).storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_PRIVATE_PHOTOS, null);
+
+                                                        if (privatePhotos != null && privatePhotos.contains(privatePhotoLong)) {
+                                                            final VLong vLongPrivatePhoto = new VLong().setObjAsValid(privatePhotoLong);
+                                                            final PrivatePhoto privatePhoto = DB.getHumanCRUDPrivatePhotoLocal(false)
+                                                                    .rPrivatePhoto(criteria.getHumanId(), vLongPrivatePhoto,
+                                                                            new RefreshSpec()
+                                                                    ).returnValueBadly();
+
+                                                            DB.getHumanCRUDHumansUnseenLocal(false).removeEntry(criteria.getHumanId().getHumanId(), hopefullyLastWall.getWallId());
+
+                                                            $$sendJS(JSCodeToSend.refreshPageWith(
+                                                                    "#" + privatePhoto.getPrivatePhotoURLPath()
+                                                            ));
+                                                        }
+
+                                                        break;
+                                                    }
+                                                }
                                             } else {
                                                 Loggers.error(criteria.getHumanId() + HAS_AN_UPDATE_ON_WALL + hopefullyLastWall.toString() + BUT_CANNOT_ACCESS_IT_SINCE_ITS_METADATA_AND_OR_TYPE_ARE_NOT_UPDATED);
                                             }

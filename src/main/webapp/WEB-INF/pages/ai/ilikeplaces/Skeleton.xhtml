@@ -478,7 +478,7 @@
     $(window).bind('hashchange', function() {
         var url = '' + window.location.hash;
         url = url.replace('.','\\.');
-        url = url.replace('#','');
+        url = url.replace(/#/g,'');
         if(url != ''){
             $('.sidebars').css('display','none');
             $('.non_sidebar').addClass('use100').removeClass('use528');
