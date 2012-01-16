@@ -236,7 +236,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
                             }
                             final PrivateEvent pe = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(myhumanId.getObj(), myprivateEventId).returnValue();
                             for (final HumansPrivateEvent hpe : pe.getPrivateEventViewers()) {
-                                if (!wall.getWallMutes().contains(hpe)) {
+                                if (!wall.getWallMutes().contains(hpe) && !hpe.getHumanId().equals(myhumanId.getObj())) {
                                     SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), pe.getPrivateEventName(), fetchToEmail + b.toString());
                                     DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), wall.getWallId());
                                 }

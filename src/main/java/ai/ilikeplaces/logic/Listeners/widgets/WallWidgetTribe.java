@@ -225,7 +225,7 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
                                     if (returnVal.valid()) {
                                         final Tribe tribe = returnVal.returnValue();
                                         for (final HumansTribe hpe : tribe.getTribeMembers()) {
-                                            if (!wall.getWallMutes().contains(hpe)) {
+                                            if (!wall.getWallMutes().contains(hpe) && !hpe.getHumanId().equals(criteria.getHumanId().getObj())) {
                                                 SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), tribe.getTribeName(), fetchToEmail + b.toString());
                                                 DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), wall.getWallId());
                                             }

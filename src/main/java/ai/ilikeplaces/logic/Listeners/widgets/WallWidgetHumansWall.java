@@ -173,7 +173,7 @@ public class WallWidgetHumansWall extends WallWidget {
                                     final HumansNetPeople hnps = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(mymyrequestedProfile);
 
                                     for (final HumansNetPeople hpe : hnps.getHumansNetPeoples()) {
-                                        if (!wall.getWallMutes().contains(hpe)) {
+                                        if (!wall.getWallMutes().contains(hpe) && !hpe.getHumanId().equals(mycurrUserAsVisitor.getObj())) {
                                             SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), hnps.getDisplayName(), myfetchToEmail + myb.toString());
                                             DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), mywall.getWallId());
                                         }
