@@ -7,6 +7,7 @@ import ai.ilikeplaces.logic.Listeners.widgets.people.PeopleCriteria;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
+import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
@@ -88,6 +89,19 @@ public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria> {
         setTribeStory:
         {
             $$(TribeWidgetIds.tribeHomeInfo).setTextContent(criteria.getTribe().getTribeStory());
+        }
+
+
+        UCUpdateUserLocation:
+        {
+            super.getHumanUserFromRequest(request).storeAndUpdateWith(
+                    HumanUserLocal.STORE_KEY.USER_LOCATION_TYPE,
+                    Wall.wallTypeTribe
+            );
+            super.getHumanUserFromRequest(request).storeAndUpdateWith(
+                    HumanUserLocal.STORE_KEY.USER_LOCATION_DETAILS,
+                    criteria.getTribeId()
+            );
         }
 
         new WallWidgetTribe(request, new WallWidgetTribeCriteria().setHumanId(criteria.getHumanId()).setTribeId(criteria.getTribeId().getObj()), $$(TribeWidgetIds.tribeHomeWall));
