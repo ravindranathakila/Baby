@@ -9,6 +9,7 @@ import ai.ilikeplaces.logic.Listeners.widgets.carousel.Carousel;
 import ai.ilikeplaces.logic.Listeners.widgets.carousel.CarouselCriteria;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
+import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
@@ -121,8 +122,12 @@ public class AlbumManager extends AbstractWidgetListener {
                 final List<PrivatePhoto> albumPhotos = album.getAlbumPhotos();
 
                 new Carousel(request, new CarouselCriteria().setAlbumPhotos(albumPhotos), $(Page.Skeleton_right_column));
+                
+                final List<Long> albumPhotoIds = new ArrayList<Long>(albumPhotos.size());
 
                 for (final PrivatePhoto privatePhoto__ : albumPhotos) {
+                    albumPhotoIds.add(privatePhoto__.getPrivatePhotoId());
+
                     new Photo$Description(request, $$(AlbumManagerIds.AlbumPhotos), photoSequenceNumber++, wallProspects) {
                         @Override
                         protected void init(final Object... initArgs) {
@@ -147,6 +152,9 @@ public class AlbumManager extends AbstractWidgetListener {
                         }
                     };
                 }
+
+                getHumanUserFromRequest(request).cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.USER_LOCATION_PRIVATE_PHOTOS,albumPhotoIds);
+
             } else {
                 $$(AlbumManagerIds.AlbumNotice).setTextContent(albumReturn.returnMsg());
             }

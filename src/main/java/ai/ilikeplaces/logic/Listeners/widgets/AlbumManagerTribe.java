@@ -8,6 +8,7 @@ import ai.ilikeplaces.logic.Listeners.widgets.carousel.Carousel;
 import ai.ilikeplaces.logic.Listeners.widgets.carousel.CarouselCriteria;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
+import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
@@ -96,6 +97,8 @@ public class AlbumManagerTribe extends AbstractWidgetListener {
 
                 new Carousel(request, new CarouselCriteria().setAlbumPhotos(albumPhotos), $(Page.Skeleton_right_column));
 
+                final List<Long> albumPhotoIds = new ArrayList<Long>(albumPhotos.size());
+
                 for (final PrivatePhoto privatePhoto__ : albumPhotos) {
                     new Photo$Description(request, $$(Page.AlbumTribePhotos), photoSequenceNumber++, wallProspects) {
                         @Override
@@ -120,6 +123,9 @@ public class AlbumManagerTribe extends AbstractWidgetListener {
                         }
                     };
                 }
+
+                getHumanUserFromRequest(request).cacheAndUpdateWith(HumanUserLocal.CACHE_KEY.USER_LOCATION_PRIVATE_PHOTOS, albumPhotoIds);
+
             } else {
                 $$(Page.AlbumTribeNotice).setTextContent(albumReturn.returnMsg());
             }

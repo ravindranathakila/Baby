@@ -7,6 +7,7 @@ import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventCreate;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete;
@@ -14,6 +15,7 @@ import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventView;
 import ai.ilikeplaces.logic.Listeners.widgets.teach.TeachMoment;
 import ai.ilikeplaces.logic.Listeners.widgets.teach.TeachMomentCriteria;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
@@ -261,11 +263,23 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                     final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(getUsernameAsValid(), event);
                                     if (r.returnStatus() == 0) {
                                         try {
-                                            setTitle:
+                                            UCUpdateUserLocation:
+                                            {
+                                                super.getHumanUserAsValid().cacheAndUpdateWith(
+                                                        HumanUserLocal.CACHE_KEY.USER_LOCATION_TYPE,
+                                                        Wall.wallTypePrivateEvent
+                                                );
+                                                super.getHumanUserAsValid().cacheAndUpdateWith(
+                                                        HumanUserLocal.CACHE_KEY.USER_LOCATION_DETAILS,
+                                                        r.returnValueBadly().getPrivateEventId()
+                                                );
+                                            }
+
+                                            UCSetTitle:
                                             {
                                                 $(skeletonTitle).setTextContent(r.returnValue().getPrivateEventName());
                                             }
-                                            SetBackButton:
+                                            UCSetBackButton:
                                             {
                                                 //Planned for removal. The link makes the UI ugly. Browser has a back button. Left navigation links help. We also can have more intuitive navigation later.
                                                 /*new Button(request__, $(Skeleton_center_skeleton), LOCATIONS, false) {
@@ -277,7 +291,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                                     }
                                                 };*/
                                             }
-                                            ShowEvent:
+                                            UCShowEvent:
                                             {
                                                 if (r.returnStatus() == 0) {
                                                     UCReadPrivateEventOK:
@@ -296,7 +310,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                             EXCEPTION.error("{}", t);
                                         }
                                     } else {
-                                        NonExistentEvent:
+                                        UCNonExistentEvent:
                                         {
                                             USER.warn(getUsernameAsValid() + FAILS_TO_ACCESS_THIS_EVENT);
                                             $(Skeleton_notice).setTextContent(GUI.getString(NO_EXIST_OR_ERROR_EVENT));

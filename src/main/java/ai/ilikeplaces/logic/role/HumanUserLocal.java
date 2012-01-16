@@ -23,6 +23,7 @@ public interface HumanUserLocal extends HttpSessionBindingListener, Serializable
     static public enum CACHE_KEY{
         BE_FRIENDS,
         AUTOPLAY_STATE,
+        USER_LOCATION_TYPE, USER_LOCATION_DETAILS, USER_LOCATION_PRIVATE_PHOTOS,
     }
 
     /**
