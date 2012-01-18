@@ -19,7 +19,7 @@ final public class JSCodeToSend {
     final static public String RefreshPage = "\nwindow.location.href=window.location.href;\n";
     final static public String ClosePage = "\nif(confirm('Done! Close page?')){window.close();}\n";
     final static public String ClosePageOrRefresh = "\nif(confirm('Done! Close page?')){window.close();}else{window.location.href = window.location.href;}\n";
-    private static final String WINDOW_LOCATION_HREF_WINDOW_LOCATION_HREF = "window.location.href=window.location.href";
+    private static final String STRING = "#";
 
 // --------------------------- CONSTRUCTORS ---------------------------
 
@@ -62,7 +62,7 @@ final public class JSCodeToSend {
      * @return
      */
     public static String refreshPageIn(final int timeout) {
-        return "setTimeout('" + WINDOW_LOCATION_HREF_WINDOW_LOCATION_HREF + "'" + "," + timeout + ");\n";
+        return "setTimeout('" + "window.location.href=window.location.href" + "'" + "," + timeout + ");\n";
     }
 
     /**
@@ -73,6 +73,29 @@ final public class JSCodeToSend {
      * @return
      */
     public static String refreshPageWith(final String stringToBeAppended) {
-        return WINDOW_LOCATION_HREF_WINDOW_LOCATION_HREF + "+" + "'" + stringToBeAppended + "';\n";
+        return "window.location.href=window.location.href" + "+" + "'" + stringToBeAppended + "';\n";
+    }
+
+    /**
+     * Uses window.location.hash = 'stringToBeAppended'
+     * Might turn out to be buggy if there are outer quotes. Verify with firebug for safety.
+     *
+     * @param stringToBeAppended
+     * @return
+     */
+    public static String updateHashWith(final String stringToBeAppended) {
+        return "window.location.hash=" + "'" + stringToBeAppended + "';\n";
+    }
+
+    /**
+     * Uses window.location.hash = 'stringToBeAppended'; prior to that, sets hash to #
+     * Might turn out to be buggy if there are outer quotes. Verify with firebug for safety.
+     *
+     * @param stringToBeAppended
+     * @return
+     */
+    public static String resetHashWith(final String stringToBeAppended) {
+        return "window.location.hash=" + "'#'" + ";"
+                + "window.location.hash=" + "'" + stringToBeAppended + "';\n";
     }
 }

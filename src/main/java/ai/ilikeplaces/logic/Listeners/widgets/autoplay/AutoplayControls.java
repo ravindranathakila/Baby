@@ -5,8 +5,6 @@ import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
-import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
-import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventViewSidebar;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.VLong;
@@ -21,7 +19,6 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.html.HTMLDocument;
 
 import java.util.List;
-import java.util.Set;
 
 import static ai.ilikeplaces.logic.Listeners.widgets.autoplay.AutoplayControlsCriteria.AUTOPLAY_STATE.PAUSED;
 import static ai.ilikeplaces.logic.Listeners.widgets.autoplay.AutoplayControlsCriteria.AUTOPLAY_STATE.PLAYING;
@@ -224,8 +221,8 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
 
                                                             DB.getHumanCRUDHumansUnseenLocal(false).removeEntry(criteria.getHumanId().getHumanId(), hopefullyLastWall.getWallId());
 
-                                                            $$sendJS(JSCodeToSend.refreshPageWith(
-                                                                    "#" + privatePhoto.getPrivatePhotoURLPath()
+                                                            $$sendJS(JSCodeToSend.resetHashWith(
+                                                                    privatePhoto.getPrivatePhotoURLPath()
                                                             ));
                                                         }
 
@@ -245,8 +242,8 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
 
                                                             DB.getHumanCRUDHumansUnseenLocal(false).removeEntry(criteria.getHumanId().getHumanId(), hopefullyLastWall.getWallId());
 
-                                                            $$sendJS(JSCodeToSend.refreshPageWith(
-                                                                    "#" + privatePhoto.getPrivatePhotoURLPath()
+                                                            $$sendJS(JSCodeToSend.resetHashWith(
+                                                                    privatePhoto.getPrivatePhotoURLPath()
                                                             ));
                                                         }
 
