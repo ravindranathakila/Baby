@@ -35,6 +35,7 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
         user_property_sidebar_name,
         user_property_sidebar_widget,
         user_property_sidebar_content,
+        user_property_sidebar_talk,
         user_property_sidebar_engage,
     }
 
