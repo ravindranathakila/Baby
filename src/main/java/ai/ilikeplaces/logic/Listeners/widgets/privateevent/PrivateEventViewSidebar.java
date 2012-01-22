@@ -116,6 +116,7 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
                     myhref = (String) ((Object[]) initArgs[1])[1];
 
                     $$displayBlock($$(UserPropertySidebarIds.user_property_sidebar_talk));
+                    $$displayNone($$(UserPropertySidebarIds.user_property_sidebar_name_section));
 
                     String msgContent = lastWallEntry.getMsgContent();
 
@@ -156,6 +157,8 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
                     myhref = (String) ((Object[]) initArgs[1])[1];
 
                     $$displayBlock($$(UserPropertySidebarIds.user_property_sidebar_talk));
+                    $$displayNone($$(UserPropertySidebarIds.user_property_sidebar_name_section));
+
                     Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText("").$ElementSetHref(myhref).get();
                     $$(UserPropertySidebarIds.user_property_sidebar_content).appendChild(commentHref);
                 }

@@ -118,6 +118,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
                                     protected void init(final Object... initArgs) {
 
                                         $$displayBlock($$(UserPropertySidebarIds.user_property_sidebar_talk));
+                                        $$displayNone($$(UserPropertySidebarIds.user_property_sidebar_name_section));
 
                                         href = ProfileRedirect.PROFILE_URL + HUMANS_IDENTITY_SIDEBAR_CACHE.get(friend.getHumanId(), "").getUrl().getUrl();
 
