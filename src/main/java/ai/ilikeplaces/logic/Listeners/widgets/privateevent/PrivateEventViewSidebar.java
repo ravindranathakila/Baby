@@ -10,21 +10,16 @@ import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
-import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache2;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
-
-import java.util.List;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 
@@ -120,7 +115,7 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
                     mylastWallEntry = (Msg) ((Object[]) initArgs[1])[0];
                     myhref = (String) ((Object[]) initArgs[1])[1];
 
-                    $$displayBlock($$(Controller.Page.user_property_sidebar_talk));
+                    $$displayBlock($$(UserPropertySidebarIds.user_property_sidebar_talk));
 
                     String msgContent = lastWallEntry.getMsgContent();
 
@@ -133,13 +128,13 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
                     }
 
                     Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(msgContent).$ElementSetHref(myhref).get();
-                    $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
+                    $$(UserPropertySidebarIds.user_property_sidebar_content).appendChild(commentHref);
                 }
 
                 @Override
                 protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
 
-                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
+                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(UserPropertySidebarIds.user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
                         @Override
                         public void handleEvent(final Event evt_) {
 
@@ -160,15 +155,15 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
 
                     myhref = (String) ((Object[]) initArgs[1])[1];
 
-                    $$displayBlock($$(Controller.Page.user_property_sidebar_talk));
+                    $$displayBlock($$(UserPropertySidebarIds.user_property_sidebar_talk));
                     Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText("").$ElementSetHref(myhref).get();
-                    $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
+                    $$(UserPropertySidebarIds.user_property_sidebar_content).appendChild(commentHref);
                 }
 
                 @Override
                 protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
 
-                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
+                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(UserPropertySidebarIds.user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
                         @Override
                         public void handleEvent(final Event evt_) {
 

@@ -93,7 +93,7 @@ public class TribeSidebar extends AbstractWidgetListener<TribeSidebarCriteria> {
                     mylastWallEntry = (Msg) ((Object[]) initArgs[1])[0];
                     myhref = (String) ((Object[]) initArgs[1])[1];
 
-                    $$displayBlock($$(Page.user_property_sidebar_talk));
+                    $$displayBlock($$(UserPropertySidebarIds.user_property_sidebar_talk));
 
                     String msgContent = lastWallEntry.getMsgContent();
 
@@ -106,13 +106,13 @@ public class TribeSidebar extends AbstractWidgetListener<TribeSidebarCriteria> {
                     }
 
                     Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(msgContent).$ElementSetHref(myhref).get();
-                    $$(Page.user_property_sidebar_content).appendChild(commentHref);
+                    $$(UserPropertySidebarIds.user_property_sidebar_content).appendChild(commentHref);
                 }
 
                 @Override
                 protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
 
-                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
+                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(UserPropertySidebarIds.user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
                         @Override
                         public void handleEvent(final Event evt_) {
 
@@ -134,15 +134,15 @@ public class TribeSidebar extends AbstractWidgetListener<TribeSidebarCriteria> {
 
                     myhref = (String) ((Object[]) initArgs[1])[1];
 
-                    $$displayBlock($$(Page.user_property_sidebar_talk));
+                    $$displayBlock($$(UserPropertySidebarIds.user_property_sidebar_talk));
                     Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText("").$ElementSetHref(myhref).get();
-                    $$(Page.user_property_sidebar_content).appendChild(commentHref);
+                    $$(UserPropertySidebarIds.user_property_sidebar_content).appendChild(commentHref);
                 }
 
                 @Override
                 protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
 
-                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
+                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(UserPropertySidebarIds.user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
                         @Override
                         public void handleEvent(final Event evt_) {
 

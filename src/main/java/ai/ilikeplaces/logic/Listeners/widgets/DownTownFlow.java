@@ -26,7 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static ai.ilikeplaces.servlets.Controller.Page.user_property_sidebar_talk;
+import static ai.ilikeplaces.logic.Listeners.widgets.UserPropertySidebar.UserPropertySidebarIds.user_property_sidebar_talk;
 
 /**
  * Created by IntelliJ IDEA.
@@ -109,7 +109,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
 
                                 final Msg lastWallEntry = WallWidgetHumansWall.LAST_WALL_ENTRY.get(new String(friend.getHumanId()), new String(currentUser));
 
-                                final Element appendToElement__ = $$(Controller.Page.user_property_sidebar_content);
+                                final Element appendToElement__ = $$(UserPropertySidebarIds.user_property_sidebar_content);
 
                                 new UserPropertySidebar(request, appendToElement__, new HumanId(lastWallEntry.getMsgMetadata())) {
                                     final Msg mylastWallEntry = lastWallEntry;
@@ -132,7 +132,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
                                         }
 
                                         Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(msgContent).$ElementSetHref(href).get();
-                                        $$(Controller.Page.user_property_sidebar_content).appendChild(commentHref);
+                                        $$(UserPropertySidebarIds.user_property_sidebar_content).appendChild(commentHref);
                                         if (notifiedWallLongs.contains(friendWallId)) {
                                             new Notification(request, new NotificationCriteria("!!!"), commentHref);
                                         }

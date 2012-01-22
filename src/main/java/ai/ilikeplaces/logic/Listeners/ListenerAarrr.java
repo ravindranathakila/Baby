@@ -1,6 +1,8 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlow;
+import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria;
 import ai.ilikeplaces.logic.Listeners.widgets.DownTownHeatMap;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -52,11 +54,42 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
                 final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
 
 
-                    new SignInOn(request__, $(Controller.Page.AarrrHeader), new HumanId(getUsername()), request__.getServletRequest()) {
-                    };
+                new SignInOn(request__, $(Controller.Page.AarrrHeader), new HumanId(getUsername()), request__.getServletRequest()) {
+                };
 
-                    new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
-//                new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
+                new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
+
+                if (getUsername() != null) {
+                    new DownTownFlow(
+                            request__,
+                            new DownTownFlowCriteria()
+                                    .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS)
+                                    .setHumanId(new HumanId(getUsernameAsValid()))
+                                    .setHumanUserLocal(getHumanUserAsValid()),
+                            $(Controller.Page.AarrrColumn1));
+                    new DownTownFlow(
+                            request__,
+                            new DownTownFlowCriteria()
+                                    .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.TRIBES)
+                                    .setHumanId(new HumanId(getUsernameAsValid()))
+                                    .setHumanUserLocal(getHumanUserAsValid()),
+                            $(Controller.Page.AarrrColumn2));
+                    new DownTownFlow(
+                            request__,
+                            new DownTownFlowCriteria()
+                                    .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.MOMENTS)
+                                    .setHumanId(new HumanId(getUsernameAsValid()))
+                                    .setHumanUserLocal(getHumanUserAsValid()),
+                            $(Controller.Page.AarrrColumn3));
+                    new DownTownFlow(
+                            request__,
+                            new DownTownFlowCriteria()
+                                    .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS)
+                                    .setHumanId(new HumanId(getUsernameAsValid()))
+                                    .setHumanUserLocal(getHumanUserAsValid()),
+                            $(Controller.Page.AarrrColumn4));
+                }
+
 
                 sl.complete(Loggers.LEVEL.SERVER_STATUS, Loggers.DONE);
             }
