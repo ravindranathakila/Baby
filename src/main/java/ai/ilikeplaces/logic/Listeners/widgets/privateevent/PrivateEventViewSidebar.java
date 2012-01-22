@@ -134,7 +134,7 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
                 @Override
                 protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
 
-                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(UserPropertySidebarIds.user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
+                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(UserPropertySidebarIds.user_property_sidebar_engage), EventType.CLICK.toString(), new EventListener() {
                         @Override
                         public void handleEvent(final Event evt_) {
 
@@ -163,7 +163,7 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
                 @Override
                 protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
 
-                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(UserPropertySidebarIds.user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
+                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(UserPropertySidebarIds.user_property_sidebar_engage), EventType.CLICK.toString(), new EventListener() {
                         @Override
                         public void handleEvent(final Event evt_) {
 

@@ -117,7 +117,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
 
                                     protected void init(final Object... initArgs) {
 
-                                        $$displayBlock($$(Controller.Page.user_property_sidebar_talk));
+                                        $$displayBlock($$(UserPropertySidebarIds.user_property_sidebar_talk));
 
                                         href = ProfileRedirect.PROFILE_URL + HUMANS_IDENTITY_SIDEBAR_CACHE.get(friend.getHumanId(), "").getUrl().getUrl();
 
@@ -141,7 +141,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
                                     @Override
                                     protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
 
-                                        itsNatHTMLDocument_.addEventListener((EventTarget) $$(user_property_sidebar_talk), EventType.CLICK.toString(), new EventListener() {
+                                        itsNatHTMLDocument_.addEventListener((EventTarget) $$(UserPropertySidebarIds.user_property_sidebar_engage), EventType.CLICK.toString(), new EventListener() {
                                             @Override
                                             public void handleEvent(final Event evt_) {
 
