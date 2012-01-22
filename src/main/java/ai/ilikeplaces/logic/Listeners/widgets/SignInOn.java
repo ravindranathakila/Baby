@@ -205,7 +205,7 @@ abstract public class SignInOn extends AbstractWidgetListener {
                         //We just ignore since the form is not visible and this cannot happen, or a hacker is trying something ;)
                     }
                 } else {
-                    notifyUser("Login failed! Retry or Click Settings");
+                    notifyUser("Login failed! Retry or Recover Access");
                 }
             }
         };

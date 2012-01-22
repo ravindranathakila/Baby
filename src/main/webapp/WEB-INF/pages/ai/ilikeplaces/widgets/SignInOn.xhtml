@@ -6,47 +6,73 @@
     </head>
     <body>
     <div class="use100" id="SignInOn" style="display:block;" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
-        <div class="use60 use20p use20a inherit_height" id="signinon_login" style="display:none;overflow:hidden;height:50px;">
-            <form method="post" id="Html_login" action="/login" >
-                <div class="use15 inherit_height bg_a9abf1" style="overflow:hidden;">
-                    <div class="use100 inherit_height line_height_50 center" style="font-size:13px;color:#dddddd;font-weight:900;">
-                        &nbsp;&nbsp;EMAIL:&nbsp;
-                    </div>
-                </div>
-                <div class="use25 inherit_height line_height_50" style="overflow:hidden;" >
-                    <div class="use100" style="height:12px;">&nbsp;</div>
-                    <div class="use90 use5p use5a" style="height:18px;">
-                        <input class="use100 inherit_height" style="height:100%;color:#000000;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;" id="signinonUsername"
-                               name="Username" maxlength="255" type="text" tabindex="1"/>
-                    </div>
-                    <div class="use100" style="height:12px;">&nbsp;</div>
-                </div>
-                <div class="use15 inherit_height bg_a9abf1" style="overflow:hidden;">
-                    <div class="use100 inherit_height line_height_50 center" style="font-size:13px;color:#dddddd;font-weight:900;">
-                        &nbsp;PASSWORD:&nbsp;
-                    </div>
-                </div>
-                <div class="use25 inherit_height line_height_50" style="overflow:hidden;">
-                    <div class="use100" style="height:12px;">&nbsp;</div>
-                    <div class="use90 use5p use5a" style="height:18px;">
-                        <input class="use100 bold" style="height:100%;color:#000000;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;" id="signinonPassword"
-                               name="Password" maxlength="255" type="password" tabindex="2"/>
-                    </div>
-                    <div class="use100" style="height:12px;">&nbsp;</div>
-                </div>
-
-                <div class="use20 inherit_height bg_a9abf1 center" style="overflow:hidden;">
-                    <div class="use70 use15p use15a inherit_height line_height_50 center cursor_link">
-                        <div class="use100" style="height:15px%;">&nbsp;</div>
-                        <div class="use100 intensity_3" style="height:20px;">
-                            <a
-                               class="" id="signinonSubmit" tabindex="3"><img src="/images/login_button.png" alt="Login" style="height:100%;cursor:pointer;"/></a>
+        <div class="use100" style="height:78px;display:none;" id="signinon_login">
+            <div class="use60 use20p use20a">
+                <div class="use100 inherit_height" style="overflow:hidden;height:50px;">
+                    <form method="post" id="Html_login" action="/login" >
+                        <div class="use15 inherit_height bg_a9abf1" style="overflow:hidden;">
+                            <div class="use100 inherit_height line_height_50 center" style="font-size:13px;color:#dddddd;font-weight:900;">
+                                &nbsp;&nbsp;EMAIL:&nbsp;
+                            </div>
                         </div>
-                        <div class="use100" style="height:15px;">&nbsp;</div>
+                        <div class="use25 inherit_height line_height_50" style="overflow:hidden;" >
+                            <div class="use100" style="height:16px;">&nbsp;</div>
+                            <div class="use90 use5p use5a" style="height:18px;">
+                                <input class="use100 inherit_height" style="height:100%;color:#000000;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;" id="signinonUsername"
+                                       name="Username" maxlength="255" type="text" tabindex="1"/>
+                            </div>
+                            <div class="use100" style="height:16px;">&nbsp;</div>
+                        </div>
+                        <div class="use15 inherit_height bg_a9abf1" style="overflow:hidden;">
+                            <div class="use100 inherit_height line_height_50 center" style="font-size:13px;color:#dddddd;font-weight:900;">
+                                &nbsp;PASSWORD:&nbsp;
+                            </div>
+                        </div>
+                        <div class="use25 inherit_height line_height_50" style="overflow:hidden;">
+                            <div class="use100" style="height:16px;">&nbsp;</div>
+                            <div class="use90 use5p use5a" style="height:18px;">
+                                <input class="use100 bold" style="height:100%;color:#000000;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;" id="signinonPassword"
+                                       name="Password" maxlength="255" type="password" tabindex="2"/>
+                            </div>
+                            <div class="use100" style="height:16px;">&nbsp;</div>
+                        </div>
+
+                        <div class="use20 inherit_height bg_a9abf1 center" style="overflow:hidden;">
+                            <div class="use70 use15p use15a inherit_height line_height_50 left cursor_link">
+                                <div class="use100" style="height:16px;">&nbsp;</div>
+                                <div class="use100 intensity_3" style="height:30px;">
+                                    <a
+                                       class="" id="signinonSubmit" tabindex="3"><img src="/images/power_off.png" alt="Login" style="height:30px;cursor:pointer;"/></a>
+                                </div>
+                                <div class="use100" style="height:4px;">&nbsp;</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Notification Footer of Header -->
+                <div class="use100 use20a center" style="height:28px;">
+                    <div class="use30">
+                        &nbsp;
+                    </div>
+                    <div class="use40 center" style="overflow:hidden;">
+                        <span id="signinonNotice" style="white-space:pre;font-size:12px;color:#000000;font-weight:900;"
+                                class="center">&nbsp;</span>
+                    </div>
+                    <div class="use30 center" style="overflow:hidden;">
+                        <div class="use60 center cursor_link">
+                            <div class="use100 intensity_3" style="height:20px;">
+                                <a href="/page/_profile"
+                                   class="bold" tabindex="4" style="text-decoration:underline;">Recover Access Here</a>
+                            </div>
+                            <div class="use100" style="height:8px;">&nbsp;</div>
+                        </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
+
+
+
         <!-- Only one of these 3 divs are visible -->
         <div class="use100" id="signinon_logon" style="height:78px;display:none;">
             <div class="use100"  style="height:78px;">
@@ -104,21 +130,7 @@
             </div>
         </div>
         </div>
-        <!-- Notification Footer of Header -->
-        <div class="use100 center" style="height:28px;">
-            <div class="use85 center" style="overflow:hidden;">
-                <span id="signinonNotice" style="white-space:pre;font-size:12px;color:#000000;font-weight:900;">&nbsp;</span>
-            </div>
-            <div class="use15 center" style="overflow:hidden;">
-                <div class="use60 center cursor_link">
-                    <div class="use100 intensity_3" style="height:20px;">
-                        <a href="/page/_profile"
-                           class="" tabindex="4"><img src="/images/Settings.png" alt="Recover" style="height:100%;"/></a>
-                    </div>
-                    <div class="use100" style="height:8px;">&nbsp;</div>
-                </div>
-            </div>
-        </div>
+
     </div>
     </body>
 </html>
