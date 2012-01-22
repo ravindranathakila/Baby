@@ -369,11 +369,7 @@ final public class
 
 
         UserPropertySidebar("ai/ilikeplaces/widgets/UserProperty_sidebar.xhtml",
-                Controller.Page.user_property_sidebar_profile_photo,
-                Controller.Page.user_property_sidebar_name,
-                Controller.Page.user_property_sidebar_widget,
-                Controller.Page.user_property_sidebar_content,
-                Controller.Page.user_property_sidebar_talk
+                ai.ilikeplaces.logic.Listeners.widgets.UserPropertySidebar.UserPropertySidebarIds.values()
 
         ) {
             @Override
@@ -1004,7 +1000,11 @@ final public class
                 "ai/ilikeplaces/AARRR.xhtml",
                 Controller.Page.AarrrDownTownHeatMap,
                 Controller.Page.AarrrWOEID,
-                Controller.Page.AarrrHeader
+                Controller.Page.AarrrHeader,
+                Controller.Page.AarrrColumn1,
+                Controller.Page.AarrrColumn2,
+                Controller.Page.AarrrColumn3,
+                Controller.Page.AarrrColumn4
         ) {
             @Override
             public String getURL() {
@@ -1233,12 +1233,6 @@ final public class
 
         /*UserPropertySidebar Page*/
         final static public String DocUserPropertySidebar = "DocUserPropertySidebar";
-        /*UserPropertySidebar IDs*/
-        final static public String user_property_sidebar_profile_photo = "user_property_sidebar_profile_photo";
-        final static public String user_property_sidebar_name = "user_property_sidebar_name";
-        final static public String user_property_sidebar_widget = "user_property_sidebar_widget";
-        final static public String user_property_sidebar_content = "user_property_sidebar_content";
-        final static public String user_property_sidebar_talk = "user_property_sidebar_talk";
 
 
         /*ProfileWidget Page*/
@@ -1498,6 +1492,10 @@ final public class
         final static public String AarrrDownTownHeatMap = "AarrrDownTownHeatMap";
         final static public String AarrrWOEID = "AarrrWOEID";
         final static public String AarrrHeader = "AarrrHeader";
+        final static public String AarrrColumn1 = "AarrrColumn1";
+        final static public String AarrrColumn2 = "AarrrColumn2";
+        final static public String AarrrColumn3 = "AarrrColumn3";
+        final static public String AarrrColumn4 = "AarrrColumn4";
 
 
         /*DocLocation Page*/

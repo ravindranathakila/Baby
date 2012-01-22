@@ -7,7 +7,6 @@ import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.cache.SmartCache;
 import ai.ilikeplaces.util.cache.SmartCache2String;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -31,6 +30,14 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
 
     public final static SmartCache2String<HumansIdentity, String> HUMANS_IDENTITY_SIDEBAR_CACHE = UserProperty.HUMANS_IDENTITY_CACHE;
 
+    public static enum UserPropertySidebarIds implements WidgetIds {
+        user_property_sidebar_profile_photo,
+        user_property_sidebar_name,
+        user_property_sidebar_widget,
+        user_property_sidebar_content,
+        user_property_sidebar_engage,
+    }
+
 
     /**
      * Shows the profile belonging to humanId
@@ -49,9 +56,9 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
 
         final HumansIdentity hi = HUMANS_IDENTITY_SIDEBAR_CACHE.get((humanId.getHumanId()),"");
 
-        $$(Page.user_property_sidebar_name).setTextContent(hi.getHuman().getDisplayName());
-        $$(Page.user_property_sidebar_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-        $$(Page.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.title(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+        $$(UserPropertySidebarIds.user_property_sidebar_name).setTextContent(hi.getHuman().getDisplayName());
+        //$$(Page.user_property_sidebar_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+        $$(UserPropertySidebarIds.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.title(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
 
         /*  fetchToEmail(//WARNING! This does not append the content.
         hi.getHuman().getInviterDisplayName(),
@@ -71,10 +78,10 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
     public UserPropertySidebar(final ItsNatServletRequest request__, final Element appendToElement__, final Element content, final HumanId humanId, final Object... params) {
         super(request__, Page.UserProperty, appendToElement__, humanId, params);
         final HumansIdentity hi = HUMANS_IDENTITY_SIDEBAR_CACHE.get((humanId.getHumanId()),"");
-        $$(Page.user_property_sidebar_name).setTextContent(hi.getHuman().getDisplayName());
-        $$(Page.user_property_sidebar_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-        $$(Page.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.title(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
-        $$(Page.user_property_sidebar_content).appendChild(content);
+        $$(UserPropertySidebarIds.user_property_sidebar_name).setTextContent(hi.getHuman().getDisplayName());
+        //$$(Page.user_property_sidebar_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+        $$(UserPropertySidebarIds.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.title(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+        $$(UserPropertySidebarIds.user_property_sidebar_content).appendChild(content);
 
         fetchToEmail(
                 hi.getHuman().getDisplayName(),
@@ -90,15 +97,15 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
     protected void fetchToEmail(final Object... args) {
         try {
             final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + USER_PROPERTY_EMAIL_XHTML);
-            $$(Page.user_property_sidebar_name, document).setTextContent((String) args[0]);
-            $$(Page.user_property_sidebar_name, document).setAttribute(MarkupTag.A.href(), (String) args[1]);
-            $$(Page.user_property_sidebar_profile_photo, document).setAttribute(MarkupTag.IMG.src(), (String) args[2]);
-            $$(Page.user_property_sidebar_content, document).appendChild(
+            $$(UserPropertySidebarIds.user_property_sidebar_name.name(), document).setTextContent((String) args[0]);
+            //$$(Page.user_property_sidebar_name, document).setAttribute(MarkupTag.A.href(), (String) args[1]);
+            $$(UserPropertySidebarIds.user_property_sidebar_profile_photo.name(), document).setAttribute(MarkupTag.IMG.src(), (String) args[2]);
+            $$(UserPropertySidebarIds.user_property_sidebar_content.name(), document).appendChild(
                     document.importNode(((Element) args[3]), true)
             );
 
 
-            fetchToEmail = HTMLDocParser.convertNodeToHtml($$(Page.user_property_sidebar_widget, document));
+            fetchToEmail = HTMLDocParser.convertNodeToHtml($$(UserPropertySidebarIds.user_property_sidebar_widget.name(), document));
         } catch (final TransformerException e) {
             Loggers.EXCEPTION.error("", e);
         } catch (final SAXException e) {
