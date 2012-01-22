@@ -676,6 +676,7 @@ $(document).ready(function(){
     $('.ajax_image').appear(
         function(){
             this.src = this.title;
+            this.title= this.alt;
         }
     );
 
