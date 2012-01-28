@@ -74,6 +74,7 @@ public abstract class AbstractOAuth extends HttpServlet {
     private static final String EMPTY = "";
     private static final String expires = "expires";
     private static final String COMMA = ",";
+    public static final String ILP_DESTINATION = "ilp_destination";
 
 
 // ------------------------------ FIELDS (NON-STATIC)--------------------
@@ -996,6 +997,18 @@ public abstract class AbstractOAuth extends HttpServlet {
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
             throws ServletException, IOException {
+        final String ilp_destination_value = request.getParameter(ILP_DESTINATION); //Using ilp prefix incase it clashes with OAuth
+
+        if (ilp_destination_value != null && !ilp_destination_value.isEmpty()) {
+            if (request.getSession(true).getAttribute(ILP_DESTINATION) == null) {
+                request.getSession().setAttribute(ILP_DESTINATION, ilp_destination_value);
+            }
+        } else {//tricky. we need to get refer but do this just once to avoid refer being updated with internal urls upon consecutive calls
+            if (request.getSession(true).getAttribute(ILP_DESTINATION) == null) {//checking if previous calls set refer in session
+                request.getSession().setAttribute(ILP_DESTINATION,  request.getHeader(ServletLogin.HEADER_REFERER));
+            }
+        }
+
         processRequest(request, response);
     }
 

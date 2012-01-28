@@ -60,7 +60,7 @@ final public class ServletLogin extends HttpServlet {
     final private Properties p_ = new Properties();
     private Context context = null;
     private SingletonHashingFace singletonHashingFace = null;
-    private static final String HEADER_REFERER = "Referer";
+    public static final String HEADER_REFERER = "Referer";
 
     final PageFace home = Page.home;
     final PageFace signup = Page.signup;
