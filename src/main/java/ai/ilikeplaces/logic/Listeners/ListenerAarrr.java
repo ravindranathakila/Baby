@@ -60,34 +60,34 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
                 new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
 
                 if (getUsername() != null) {
-                    new DownTownFlow(
-                            request__,
-                            new DownTownFlowCriteria()
-                                    .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS)
-                                    .setHumanId(new HumanId(getUsernameAsValid()))
-                                    .setHumanUserLocal(getHumanUserAsValid()),
-                            $(Controller.Page.AarrrColumn1));
-                    new DownTownFlow(
-                            request__,
-                            new DownTownFlowCriteria()
-                                    .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.TRIBES)
-                                    .setHumanId(new HumanId(getUsernameAsValid()))
-                                    .setHumanUserLocal(getHumanUserAsValid()),
-                            $(Controller.Page.AarrrColumn2));
-                    new DownTownFlow(
-                            request__,
-                            new DownTownFlowCriteria()
-                                    .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.MOMENTS)
-                                    .setHumanId(new HumanId(getUsernameAsValid()))
-                                    .setHumanUserLocal(getHumanUserAsValid()),
-                            $(Controller.Page.AarrrColumn3));
-                    new DownTownFlow(
-                            request__,
-                            new DownTownFlowCriteria()
-                                    .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS)
-                                    .setHumanId(new HumanId(getUsernameAsValid()))
-                                    .setHumanUserLocal(getHumanUserAsValid()),
-                            $(Controller.Page.AarrrColumn4));
+//                    new DownTownFlow(
+//                            request__,
+//                            new DownTownFlowCriteria()
+//                                    .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS)
+//                                    .setHumanId(new HumanId(getUsernameAsValid()))
+//                                    .setHumanUserLocal(getHumanUserAsValid()),
+//                            $(Controller.Page.AarrrColumn1));
+//                    new DownTownFlow(
+//                            request__,
+//                            new DownTownFlowCriteria()
+//                                    .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.TRIBES)
+//                                    .setHumanId(new HumanId(getUsernameAsValid()))
+//                                    .setHumanUserLocal(getHumanUserAsValid()),
+//                            $(Controller.Page.AarrrColumn2));
+//                    new DownTownFlow(
+//                            request__,
+//                            new DownTownFlowCriteria()
+//                                    .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.MOMENTS)
+//                                    .setHumanId(new HumanId(getUsernameAsValid()))
+//                                    .setHumanUserLocal(getHumanUserAsValid()),
+//                            $(Controller.Page.AarrrColumn3));
+//                    new DownTownFlow(
+//                            request__,
+//                            new DownTownFlowCriteria()
+//                                    .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS)
+//                                    .setHumanId(new HumanId(getUsernameAsValid()))
+//                                    .setHumanUserLocal(getHumanUserAsValid()),
+//                            $(Controller.Page.AarrrColumn4));
                 }
 
 
