@@ -401,16 +401,7 @@ final public class
             }
         },
         ForgotPasswordChange("ai/ilikeplaces/widgets/password.xhtml",
-                Controller.Page.ProfileForgotPasswordWidget,
-                Controller.Page.ProfileForgotPasswordNotice,
-                Controller.Page.ProfileForgotPasswordEmailAddress,
-                Controller.Page.ProfileForgotPasswordCodeMail,
-                Controller.Page.ProfileForgotPasswordEmailedCode,
-                Controller.Page.ProfileForgotPasswordNew,
-                Controller.Page.ProfileForgotPasswordNewConfirm,
-                Controller.Page.ProfileForgotPasswordSave,
-                Controller.Page.ProfileForgotPasswordEmailRecoverySection,
-                Controller.Page.ProfileForgotPasswordEmailAddressSection
+                ForgotPasswordManager.ForgotPasswordManagerIds.values()
 
         ) {
             @Override
@@ -1245,17 +1236,6 @@ final public class
 
         /*Forgot Password Page*/
         final static public String DocForgotPasswordChange = "DocForgotPasswordChange";
-        /*Forgot Password IDs*/
-        final static public String ProfileForgotPasswordWidget = "ProfileForgotPasswordWidget";
-        final static public String ProfileForgotPasswordNotice = "ProfileForgotPasswordNotice";
-        final static public String ProfileForgotPasswordEmailAddress = "ProfileForgotPasswordEmailAddress";
-        final static public String ProfileForgotPasswordCodeMail = "ProfileForgotPasswordCodeMail";
-        final static public String ProfileForgotPasswordEmailedCode = "ProfileForgotPasswordEmailedCode";
-        final static public String ProfileForgotPasswordNew = "ProfileForgotPasswordNew";
-        final static public String ProfileForgotPasswordNewConfirm = "ProfileForgotPasswordNewConfirm";
-        final static public String ProfileForgotPasswordSave = "ProfileForgotPasswordSave";
-        final static public String ProfileForgotPasswordEmailAddressSection = "ProfileForgotPasswordEmailAddressSection";
-        final static public String ProfileForgotPasswordEmailRecoverySection = "ProfileForgotPasswordEmailRecoverySection";
 
 
         /*Password Page*/

@@ -124,7 +124,7 @@ public class FilterHeader implements Filter {
                     servletResponse.setHeader(header.getKey(), header.getValue());
                 }
             }
-            setCacheExpireDate(servletResponse, 14 * 24 * 60 * 60);
+            setCacheExpireDate(servletResponse, 2 * 24 * 60 * 60);
             setEtag(servletResponse);
         } catch (final Throwable t) {
             Loggers.EXCEPTION.error("", t);
