@@ -284,6 +284,8 @@ public class ServletOAuthGoogle extends AbstractOAuth {
 
             Loggers.info("Logging in User");
 
+            final String ilp_destination = (String) request.getSession(true).getAttribute(ILP_DESTINATION);
+
             final HttpSession userSession_;
             handleHttpSession:
             {
@@ -309,7 +311,7 @@ public class ServletOAuthGoogle extends AbstractOAuth {
             humanUserLocal.setHumanUserId(existingUser.getHumanId());
             userSession_.setAttribute(ServletLogin.HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
 
-            response.sendRedirect(home.getURL());
+            response.sendRedirect(ilp_destination);
         }
     }
 }

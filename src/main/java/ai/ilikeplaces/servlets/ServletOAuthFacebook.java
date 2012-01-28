@@ -211,11 +211,14 @@ public class ServletOAuthFacebook extends AbstractOAuth {
 
             Loggers.info("Logging in User");
 
+            final String ilp_destination = (String) request.getSession(true).getAttribute(ILP_DESTINATION);
+
             final HttpSession userSession_;
             handleHttpSession:
             {
+
                 /**
-                 * Remove any redundant session
+                 * Remove any redundant session. Though above session is created, leave this anyway;
                  */
                 if (request.getSession(false) != null) {
                     request.getSession(false).invalidate();
@@ -236,7 +239,7 @@ public class ServletOAuthFacebook extends AbstractOAuth {
             humanUserLocal.setHumanUserId(existingUser.getHumanId());
             userSession_.setAttribute(ServletLogin.HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
 
-            response.sendRedirect(home.getURL());
+            response.sendRedirect(ilp_destination);
         }
     }
 }
