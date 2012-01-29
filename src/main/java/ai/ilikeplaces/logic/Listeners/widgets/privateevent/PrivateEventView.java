@@ -2,16 +2,11 @@ package ai.ilikeplaces.logic.Listeners.widgets.privateevent;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.doc.SEE;
 import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.entities.HumanEqualsFace;
-import ai.ilikeplaces.entities.HumanIdFace;
-import ai.ilikeplaces.entities.HumansPrivateEvent;
-import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
-import ai.ilikeplaces.logic.Listeners.widgets.AlbumManager;
-import ai.ilikeplaces.logic.Listeners.widgets.Button;
-import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
-import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent;
+import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.Listeners.widgets.people.People;
 import ai.ilikeplaces.logic.Listeners.widgets.people.PeopleCriteria;
 import ai.ilikeplaces.logic.crud.DB;
@@ -187,7 +182,13 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
 
             UCFiltering:
             {
-                new People(request, new PeopleCriteria().setPeople((List<HumanIdFace>) (List<?>)
+                @SEE(seeClasses = {
+                        WallWidgetHumansWall.class,
+                        PrivateEventDelete.class,
+                        PrivateEventView.class,
+                        Tribe.class
+                })
+                final People people = new People(request, new PeopleCriteria().setPeople((List<HumanIdFace>) (List<?>)
                         new ArrayList<HumansPrivateEvent>(new HashSet<HumansPrivateEvent>() {
                             final HumanId myhumanId = humanId;
 
@@ -199,7 +200,7 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
                             }
                         })
 
-                ), $(Controller.Page.Skeleton_left_column));
+                ), $(Page.Skeleton_left_column));
             }
 
         } else {

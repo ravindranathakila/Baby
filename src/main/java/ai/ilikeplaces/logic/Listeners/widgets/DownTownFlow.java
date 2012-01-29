@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
+import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventViewSidebar;
@@ -52,7 +53,9 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
     private static final String MESSAGE_ADDING_SELF_AS_FRIEND = "message.adding.self.as.friend";
     private static final String IS_ALREADY_YOUR_FRIEND = "0.is.already.your.friend";
     private static final String READ_MORE = "read.more";
-    private static final SmartCache.RecoverWith<String,Object> STATIC_VARIABLE_RECOVER_WITH = new SmartCache.RecoverWith<String, Object>() {
+
+    @FIXME("We need to move this cache to EJB's, stateless hopefully.")
+    public static final SmartCache.RecoverWith<String,Object> STATIC_VARIABLE_RECOVER_WITH = new SmartCache.RecoverWith<String, Object>() {
         @Override
         public Object getValue(final String s) {
             return DB.getHumanCRUDHumanLocal(true).doDirtyRHumansBefriends(new HumanId(s).getSelfAsValid()).returnValueBadly();

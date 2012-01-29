@@ -2,10 +2,12 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.HumansIdentity;
-import ai.ilikeplaces.entities.HumansNetPeople;
-import ai.ilikeplaces.entities.Msg;
-import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.doc.SEE;
+import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.logic.Listeners.widgets.people.People;
+import ai.ilikeplaces.logic.Listeners.widgets.people.PeopleCriteria;
+import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete;
+import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventView;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -28,6 +30,9 @@ import org.xml.sax.SAXException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -99,6 +104,23 @@ public class WallWidgetHumansWall extends WallWidget {
         DB.getHumanCRUDHumansUnseenLocal(false).removeEntry(currUserAsVisitor.getObjectAsValid(), wall.getWallId());
 
         $$displayWallAsMuted($$(WallWidgetIds.wallMute), wall.getWallMutes().contains(currUserAsVisitor));
+
+        UCFiltering:
+        {
+
+            final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) getHumanUserFromRequest(request)
+                    .cache(requestedProfile.getHumanId(), DownTownFlow.STATIC_VARIABLE_RECOVER_WITH);
+
+            @SEE(seeClasses = {
+                    WallWidgetHumansWall.class,
+                    PrivateEventDelete.class,
+                    PrivateEventView.class,
+                    Tribe.class
+            })
+            final People people = new People(request, new PeopleCriteria().setPeople((List<HumanIdFace>) (List<?>)
+                    beFriends
+            ), $(Controller.Page.Skeleton_left_column));
+        }
 
     }
 

@@ -2,11 +2,13 @@ package ai.ilikeplaces.logic.Listeners.widgets.privateevent;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.doc.SEE;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.AlbumManager;
 import ai.ilikeplaces.logic.Listeners.widgets.MemberHandler;
+import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent;
 import ai.ilikeplaces.logic.Listeners.widgets.people.People;
 import ai.ilikeplaces.logic.Listeners.widgets.people.PeopleCriteria;
@@ -344,7 +346,13 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
             UCFiltering:
             {
-                new People(request, new PeopleCriteria().setPeople((List<HumanIdFace>) (List<?>)
+                @SEE(seeClasses = {
+                        WallWidgetHumansWall.class,
+                        PrivateEventDelete.class,
+                        PrivateEventView.class,
+                        Tribe.class
+                })
+                final People people = new People(request, new PeopleCriteria().setPeople((List<HumanIdFace>) (List<?>)
                         new ArrayList<HumansPrivateEvent>(new HashSet<HumansPrivateEvent>() {
                             final HumanId myhumanId = humanId;
 
@@ -355,7 +363,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                                 addAll(privateEventViewers);
                             }
                         })
-                ), $(Controller.Page.Skeleton_left_column));
+                ), $(Page.Skeleton_left_column));
             }
         }
     }
