@@ -5,7 +5,9 @@ import ai.ilikeplaces.doc.License;
 import java.util.Arrays;
 
 /**
- * Please let us know if you have a faster/memorable :P implementation
+ * Please let us know if you have a faster/memorable :P implementation.
+ *
+ * I doubt if this approach is consistent, but over time, there are no complains :)
  * <p/>
  * Created by IntelliJ IDEA.
  * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
