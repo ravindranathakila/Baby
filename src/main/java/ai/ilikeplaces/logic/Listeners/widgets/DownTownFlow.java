@@ -29,6 +29,12 @@ import java.util.Set;
 import static ai.ilikeplaces.logic.Listeners.widgets.UserPropertySidebar.UserPropertySidebarIds.user_property_sidebar_talk;
 
 /**
+ *
+ * This is still not fool proof. Autoplay should play upon:
+ *
+ * Failure of proper entity read
+ * Network delays on client (when loading images)
+ *
  * Created by IntelliJ IDEA.
  * User: Ravindranath Akila
  * Date: 10/16/11
