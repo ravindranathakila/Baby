@@ -2,7 +2,7 @@
 
 How have you been? What brought you here?
 
-=== Looking for some code to use in your project? ====
+=== 1. Looking for some code to use in your project? ====
 Try our Gists!
 
 === Still Unhappy? ===
@@ -13,25 +13,25 @@ Make sure you'll not come back to us complaining how AWESOME ItsNat is!
 
 
 
-=== Sniffing around www.ilikeplaces.com internal secrets? ===
+=== 2. Sniffing around for some internal secrets? ===
 
 We can help you. But who knows, we might lead you down a wrong trail ;-)
 
 
 
 
-=== Want to find the philosophy behind this project? ===
+=== 3. Want to find the philosophy behind this project? ===
 
 And you thought we just built www.ilikeplaces.com? No way, there's a lot of thinking, passion and belief behind it!
 
-==== Very Very Very Very Private Socializing On Down Town ====
+==== 3.1 Very Very Very Very Private Socializing On Down Town ====
 
 '''DT is a social network hysterically focused on privacy.'''
 If you want only your family to see an event(called Moments) on DT, you can do it.
 If it's just friends the secrets of that moment are safe with, you can make that happen.
 '''It's very very very very very private!'''
 
-==== Down Town knows socializing is best done offline ====
+==== 3.1 Down Town knows socializing is best done offline ====
 
 DT wants you to use the website as less as possible.
 Compare that with other social networks who are hungry to keep you online to click their ads.
@@ -44,6 +44,6 @@ If a friend updates a photo or moment talk, you are automatically send there unl
 See? We want you to get moving fast.
 '''What's more fabulous than a social network that autoplays in front of your eyes, the latest updates!'''
 
-==== So What Is Down Town? ====
+==== 3.3 So What Is Down Town? ====
 
 '''A website for offline socializing in a really really private way!'''
