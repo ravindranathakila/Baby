@@ -6,13 +6,13 @@ How have you been? What brought you here?
 
 ==== 1.1 Try our Gists! ====
 
-Go [https://gist.github.com/ravindranathakila here]. If you like what you see, share 'em all! If not, tell us where in comments :-)
+'''Go [https://gist.github.com/ravindranathakila here]'''. If you like what you see, share 'em all! If not, tell us where in comments :-)
 
 
 ==== 1.2 Still Unhappy? ====
 
-Give us some time, we will update this section with a code walk through. Meanwhile maybe you'd like to have a look at
-[http://www.innowhere.com:8080/itsnat/feashow_servlet?itsnat_doc_name=feashow.main ItsNat] .
+Give us some time, we will update this section with a code walk through. Meanwhile maybe you'd like to '''have a look at
+[http://www.innowhere.com:8080/itsnat/feashow_servlet?itsnat_doc_name=feashow.main ItsNat]''' .
 Make sure you'll not come back to us complaining how AWESOME ItsNat is!
 
 
@@ -20,7 +20,7 @@ Make sure you'll not come back to us complaining how AWESOME ItsNat is!
 === 2. Sniffing around for some internal secrets? ===
 
 We can help you. But who knows, we might lead you down a wrong trail ;-)
-Okay, go [https://www.pivotaltracker.com/projects/304913 here]. Don't tell!
+Okay, '''go [https://www.pivotaltracker.com/projects/304913 here]'''. Don't tell!
 
 
 === 3. Want to find the philosophy behind this project? ===
