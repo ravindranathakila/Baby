@@ -8,6 +8,7 @@ How have you been? What brought you here?
 
 '''Go [https://gist.github.com/ravindranathakila here]'''. If you like what you see, share 'em all! If not, tell us where in comments :-)
 
+[[#Hello_Code_Hacker|Back to Top^]]
 
 ==== 1.2) Still Unhappy? ====
 
@@ -15,6 +16,8 @@ Give us some time, we will update this section with a code walk through. Meanwhi
 Make sure you'll not come back to us complaining how AWESOME ItsNat is!
 
 
+
+[[#Hello_Code_Hacker|Back to Top^]]
 
 === 2) Sniffing around for some internal secrets? ===
 
@@ -26,12 +29,16 @@ Okay, '''go [https://www.pivotaltracker.com/projects/304913 here]'''. Don't tell
 
 And you thought we just built [http://www.ilikeplaces.com www.ilikeplaces.com]? No way, there's a lot of thinking, passion and belief behind it!
 
+[[#Hello_Code_Hacker|Back to Top^]]
+
 ==== 3.1) Very Very Very Very Private Socializing On Down Town ====
 
 '''DT is a social network hysterically focused on privacy.'''
 If you want only your family to see an event(called Moments) on DT, you can do it.
 If it's just friends the secrets of that moment are safe with, you can make that happen.
 '''It's very very very very very private!'''
+
+[[#Hello_Code_Hacker|Back to Top^]]
 
 ==== 3.1) Down Town knows socializing is best done offline ====
 
@@ -46,6 +53,10 @@ If a friend updates a photo or moment talk, you are automatically send there unl
 See? We want you to get moving fast.
 '''What's more fabulous than a social network that autoplays in front of your eyes, the latest updates!'''
 
+[[#Hello_Code_Hacker|Back to Top^]]
+
 ==== 3.3) So What Is Down Town? ====
 
 '''You tell us the time, even if its "now" and we'll tell you the most exciting place to be!'''
+
+[[#Hello_Code_Hacker|Back to Top^]]
