@@ -6,11 +6,11 @@ How have you been? What brought you here?
 
 === 0.1) The links ===
 
-[http://goo.gl/Xlsv4.qr]
-[http://goo.gl/QDrMj.qr]
-[http://goo.gl/Hd1CS.qr]
-[http://goo.gl/lAQKP.qr]
-[http://goo.gl/kplHV.qr]
+http://goo.gl/Xlsv4.qr
+http://goo.gl/QDrMj.qr
+http://goo.gl/Hd1CS.qr
+http://goo.gl/lAQKP.qr
+http://goo.gl/kplHV.qr
 
 === 1) Looking for some code to use in your project? ====
 
