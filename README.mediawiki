@@ -1,8 +1,7 @@
-{{TOC right}}
 
 == Hello Code Hacker! ==
 How have you been? What brought you here?
-=== 0) WWW, You and Us ===
+=== WWW, You and Us ===
 ==== 0.1) The links ====
 [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/facebook_ilikeplaces.png]]
 [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]]
