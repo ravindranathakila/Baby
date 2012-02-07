@@ -2,6 +2,8 @@
 
 How have you been? What brought you here?
 
+
+
 === 0) WWW, You and Us ===
 
 ==== 0.1) The links ====
@@ -40,10 +42,12 @@ Hey, you can upload photos too!
 Start a Tribe! Ah you guessed it right. You just have to visit  [http://www.ilikeplaces.com www.iLikePlaces.com].
 
 
-
 There you go. That much we can offer you. Tell a friend!
 
-=== 1) Looking for some code to use in your project? ====
+
+
+
+=== 1) Looking for some code to use in your project? ===
 
 ==== 1.1) Try our Gists! ====
 
@@ -55,6 +59,7 @@ There you go. That much we can offer you. Tell a friend!
 
 Give us some time, we will update this section with a code walk through. Meanwhile maybe you'd like to '''have a look at [http://www.innowhere.com:8080/itsnat/feashow_servlet?itsnat_doc_name=feashow.main ItsNat]''' .
 Make sure you'll not come back to us complaining how AWESOME ItsNat is!
+
 
 
 
