@@ -6,8 +6,8 @@ How have you been? What brought you here?
 ==== 0.1) The links ====
 [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/facebook_ilikeplaces.png]]
 [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]]
-[[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]]
-[[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]]
+[[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_ilikeplaces.png]]
+[[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/twitter_ilikeplaces.png]]
 [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/ilikeplaces.png]]
 ==== 0.2) How may we serve you? ====
 * 0.2.1) Can we interest you in finding out what interesting places to visit, given any location on earth?
