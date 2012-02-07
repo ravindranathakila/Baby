@@ -21,8 +21,8 @@ Once you've done that, invite your friends and family to it.
 Hey, you can upload photos too!
 * 0.2.4) Can we interest you in starting a movement on something you believe in something very badly?
 Start a Tribe! Ah you guessed it right. You just have to visit  [http://www.ilikeplaces.com www.iLikePlaces.com].
-There you go. That much we can offer you. Tell a friend!
-[[#Hello_Code_Hacker|Back to Top^]]
+ <br/>There you go. That much we can offer you. Tell a friend!
+ <br/>[[#Hello_Code_Hacker|Back to Top^]]
 ----
 === 1) Looking for some code to use in your project? ===
 ==== 1.1) Try our Gists! ====
@@ -30,12 +30,12 @@ There you go. That much we can offer you. Tell a friend!
 ==== 1.2) Still Unhappy? ====
 Give us some time, we will update this section with a code walk through. Meanwhile maybe you'd like to '''have a look at [http://www.innowhere.com:8080/itsnat/feashow_servlet?itsnat_doc_name=feashow.main ItsNat]''' .
 Make sure you'll not come back to us complaining how AWESOME ItsNat is!
-[[#Hello_Code_Hacker|Back to Top^]]
+ <br/>[[#Hello_Code_Hacker|Back to Top^]]
 ----
 === 2) Sniffing around for some internal secrets? ===
 We can help you. But who knows, we might lead you down a wrong trail ;-)
 Okay, '''go [https://www.pivotaltracker.com/projects/304913 here]'''. Don't tell!
-[[#Hello_Code_Hacker|Back to Top^]]
+ <br/>[[#Hello_Code_Hacker|Back to Top^]]
 ----
 === 3) Want to find the philosophy behind this project? ===
 And you thought we just built [http://www.ilikeplaces.com www.ilikeplaces.com]? No way, there's a lot of thinking, passion and belief behind it!
@@ -57,5 +57,5 @@ See? We want you to get moving fast.
 '''What's more fabulous than a social network that autoplays in front of your eyes, the latest updates!'''
 ==== 3.3) So What Is Down Town? ====
 '''You tell us the time, even if its "now" and we'll tell you the most exciting place to be!'''
-[[#Hello_Code_Hacker|Back to Top^]]
+ <br/>[[#Hello_Code_Hacker|Back to Top^]]
 ----
