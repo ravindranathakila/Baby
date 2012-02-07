@@ -1,51 +1,51 @@
 == Hello Code Hacker! ==
     How have you been? What brought you here?
-    === 0) WWW, You and Us ===
-        ==== 0.1) The links ====
+=== 0) WWW, You and Us ===
+==== 0.1) The links ====
             [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/facebook_ilikeplaces.png]]
             [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]]
             [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]]
             [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]]
             [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/ilikeplaces.png]]
-        ==== 0.2) How may we serve you? ====
+==== 0.2) How may we serve you? ====
             '''First of all'''
-                ===== 0.2.1) Can we interest you in finding out what interesting places to visit, given any location on earth? =====
+===== 0.2.1) Can we interest you in finding out what interesting places to visit, given any location on earth? =====
                     If so, head over to [http://www.ilikeplaces.com www.iLikePlaces.com] and search for any location on Earth.
                     You'll see a map with makers of interesting places in that area. Now, go visit them! Tell a friend!
-                ===== 0.2.2) Can we interest you in finding out, given any moment, the most interesting place to be? =====
+===== 0.2.2) Can we interest you in finding out, given any moment, the most interesting place to be? =====
                     We wish we could! Well, we have that bad habbit of pursuing our wishes '''With All We've Got'''. Stay tuned!
-                ===== 0.2.3) Can we interest you in planning out private events with close friends and family? =====
+===== 0.2.3) Can we interest you in planning out private events with close friends and family? =====
                     No, if you click "like", things aren't going to be all public exposing you to a lot of embarrassment.
                     Instead, head over to [http://www.ilikeplaces.com www.iLikePlaces.com] and '''Start a Moment'''.
                     Once you've done that, invite your friends and family to it.
                     '''Now you've got your own private moment'''. It's got a '''Talk Page''' to discuss your event stuff.
                     Hey, you can upload photos too!
-                ===== 0.2.4) Can we interest you in starting a movement on something you believe in something very badly? =====
+===== 0.2.4) Can we interest you in starting a movement on something you believe in something very badly? =====
                     Start a Tribe! Ah you guessed it right. You just have to visit  [http://www.ilikeplaces.com www.iLikePlaces.com].
             There you go. That much we can offer you. Tell a friend!
     [[#Hello_Code_Hacker|Back to Top^]]
-    ----
-    === 1) Looking for some code to use in your project? ===
-        ==== 1.1) Try our Gists! ====
+----
+=== 1) Looking for some code to use in your project? ===
+==== 1.1) Try our Gists! ====
             '''Go [https://gist.github.com/ravindranathakila here]'''. If you like what you see, share 'em all! If not, tell us where in comments :-)
-        ==== 1.2) Still Unhappy? ====
+==== 1.2) Still Unhappy? ====
             Give us some time, we will update this section with a code walk through. Meanwhile maybe you'd like to '''have a look at [http://www.innowhere.com:8080/itsnat/feashow_servlet?itsnat_doc_name=feashow.main ItsNat]''' .
             Make sure you'll not come back to us complaining how AWESOME ItsNat is!
     [[#Hello_Code_Hacker|Back to Top^]]
-    ----
-    === 2) Sniffing around for some internal secrets? ===
+----
+=== 2) Sniffing around for some internal secrets? ===
         We can help you. But who knows, we might lead you down a wrong trail ;-)
         Okay, '''go [https://www.pivotaltracker.com/projects/304913 here]'''. Don't tell!
     [[#Hello_Code_Hacker|Back to Top^]]
     ----
-    === 3) Want to find the philosophy behind this project? ===
+=== 3) Want to find the philosophy behind this project? ===
         And you thought we just built [http://www.ilikeplaces.com www.ilikeplaces.com]? No way, there's a lot of thinking, passion and belief behind it!
-            ==== 3.1) Very Very Very Very Private Socializing On Down Town ====
+==== 3.1) Very Very Very Very Private Socializing On Down Town ====
                 '''DT is a social network hysterically focused on privacy.'''
                 If you want only your family to see an event(called Moments) on DT, you can do it.
                 If it's just friends the secrets of that moment are safe with, you can make that happen.
                 '''It's very very very very very private!'''
-            ==== 3.1) Down Town knows socializing is best done offline ====
+==== 3.1) Down Town knows socializing is best done offline ====
                 DT wants you to use the website as less as possible.
                 Compare that with other social networks who are hungry to keep you online to click their ads.
                 DT just wants you to find ways to socialize in real life.
@@ -56,7 +56,7 @@
                 If a friend updates a photo or moment talk, you are automatically send there unless you '''pause''' the autoupdate.
                 See? We want you to get moving fast.
                 '''What's more fabulous than a social network that autoplays in front of your eyes, the latest updates!'''
-            ==== 3.3) So What Is Down Town? ====
+==== 3.3) So What Is Down Town? ====
                 '''You tell us the time, even if its "now" and we'll tell you the most exciting place to be!'''
         [[#Hello_Code_Hacker|Back to Top^]]
-    ----
+----
