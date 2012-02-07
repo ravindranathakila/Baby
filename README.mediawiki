@@ -6,15 +6,15 @@ How have you been? What brought you here?
 
 === 0.1) The links ===
 
-[[www.ilikeplaces.com/raw/master/src/main/site/qr_codes/facebook_ilikeplaces.png|frame]]
+www.ilikeplaces.com/raw/master/src/main/site/qr_codes/facebook_ilikeplaces.png|frame
 
-[[www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png|frame]]
+www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png|frame
 
-[[www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png|frame]]
+www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png|frame
 
-[[www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png|frame]]
+www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png|frame
 
-[[www.ilikeplaces.com/raw/master/src/main/site/qr_codes/ilikeplaces.png|frame]]
+www.ilikeplaces.com/raw/master/src/main/site/qr_codes/ilikeplaces.png|frame2
 
 === 1) Looking for some code to use in your project? ====
 
