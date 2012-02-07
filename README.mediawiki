@@ -6,11 +6,11 @@ How have you been? What brought you here?
 
 === 0.1) The links ===
 
-[https://github.com/ravindranathakila/www.ilikeplaces.com/blob/master/src/main/site/qr_codes/facebook_ilikeplaces.png]
-[https://github.com/ravindranathakila/www.ilikeplaces.com/blob/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]
-[https://github.com/ravindranathakila/www.ilikeplaces.com/blob/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]
-[https://github.com/ravindranathakila/www.ilikeplaces.com/blob/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]
-[https://github.com/ravindranathakila/www.ilikeplaces.com/blob/master/src/main/site/qr_codes/ilikeplaces.png]
+[https://github.com/ravindranathakila/www.ilikeplaces.com/raw/master/src/main/site/qr_codes/facebook_ilikeplaces.png]
+[https://github.com/ravindranathakila/www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]
+[https://github.com/ravindranathakila/www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]
+[https://github.com/ravindranathakila/www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]
+[https://github.com/ravindranathakila/www.ilikeplaces.com/raw/master/src/main/site/qr_codes/ilikeplaces.png]
 
 === 1) Looking for some code to use in your project? ====
 
