@@ -14,19 +14,19 @@ How have you been? What brought you here?
 
 ==== 0.2) How may we serve you? (& vice versa) ====
 
-First of all, can we interest you in:
+'''First of all, can we interest you in:'''
 
 ===== 0.2.1) Finding out what interesting places to visit, given any location on earth? =====
 
 If so, head over to [http://www.ilikeplaces.com www.iLikePlaces.com] and search for any location on Earth.
 You'll see a map with makers of interesting places in that area. Now, go visit them! Tell a friend!
 
-==== 0.2.2) Finding out, given any moment, the most interesting place to be? ====
+===== 0.2.2) Finding out, given any moment, the most interesting place to be? =====
 
 We wish we could! Well, we have that bad habbit of pursuing our wishes '''With All We've Got'''. Stay tuned!
 
 
-==== 0.2.3) Planning out private events with close friends and family? ====
+===== 0.2.3) Planning out private events with close friends and family? =====
 
 No, if you click "like", things aren't going to be all public exposing you to a lot of embarrassment.
 Instead, head over to [http://www.ilikeplaces.com www.iLikePlaces.com] and '''Start a Moment'''.
@@ -35,7 +35,7 @@ Once you've done that, invite your friends and family to it.
 '''Now you've got your own private moment'''. It's got a '''Talk Page''' to discuss your event stuff.
 Hey, you can upload photos too!
 
-==== 0.2.4) Starting a movement on something you believe in something very badly? ====
+===== 0.2.4) Starting a movement on something you believe in something very badly? =====
 
 Start a Tribe! Ah you guessed it right. You just have to visit  [http://www.ilikeplaces.com www.iLikePlaces.com].
 
