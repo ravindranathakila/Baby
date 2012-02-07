@@ -1,3 +1,5 @@
+{{TOC right}}
+
 == Hello Code Hacker! ==
 How have you been? What brought you here?
 === 0) WWW, You and Us ===
