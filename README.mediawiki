@@ -14,7 +14,7 @@ How have you been? What brought you here?
 [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]]
 [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/ilikeplaces.png]]
 
-==== 0.2) How may we serve you? (& vice versa) ====
+==== 0.2) How may we serve you? ====
 
 '''First of all'''
 
