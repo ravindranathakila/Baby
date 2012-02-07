@@ -1,5 +1,7 @@
 == Hello Code Hacker! ==
 How have you been? What brought you here?
+
+
 === 0) WWW, You and Us ===
 ==== 0.1) The links ====
 [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/facebook_ilikeplaces.png]]
@@ -21,22 +23,32 @@ Once you've done that, invite your friends and family to it.
 Hey, you can upload photos too!
 * 0.2.4) Can we interest you in starting a movement on something you believe in something very badly?
 Start a Tribe! Ah you guessed it right. You just have to visit  [http://www.ilikeplaces.com www.iLikePlaces.com].
- <br/>There you go. That much we can offer you. Tell a friend!
- <br/>[[#Hello_Code_Hacker|Back to Top^]]
+
+There you go. That much we can offer you. Tell a friend!
+
+[[#Hello_Code_Hacker|Back to Top^]]
 ----
+
+
 === 1) Looking for some code to use in your project? ===
 ==== 1.1) Try our Gists! ====
 '''Go [https://gist.github.com/ravindranathakila here]'''. If you like what you see, share 'em all! If not, tell us where in comments :-)
 ==== 1.2) Still Unhappy? ====
 Give us some time, we will update this section with a code walk through. Meanwhile maybe you'd like to '''have a look at [http://www.innowhere.com:8080/itsnat/feashow_servlet?itsnat_doc_name=feashow.main ItsNat]''' .
 Make sure you'll not come back to us complaining how AWESOME ItsNat is!
- <br/>[[#Hello_Code_Hacker|Back to Top^]]
+
+[[#Hello_Code_Hacker|Back to Top^]]
 ----
+
+
 === 2) Sniffing around for some internal secrets? ===
 We can help you. But who knows, we might lead you down a wrong trail ;-)
 Okay, '''go [https://www.pivotaltracker.com/projects/304913 here]'''. Don't tell!
- <br/>[[#Hello_Code_Hacker|Back to Top^]]
+
+[[#Hello_Code_Hacker|Back to Top^]]
 ----
+
+
 === 3) Want to find the philosophy behind this project? ===
 And you thought we just built [http://www.ilikeplaces.com www.ilikeplaces.com]? No way, there's a lot of thinking, passion and belief behind it!
 ==== 3.1) Very Very Very Very Private Socializing On Down Town ====
@@ -57,5 +69,6 @@ See? We want you to get moving fast.
 '''What's more fabulous than a social network that autoplays in front of your eyes, the latest updates!'''
 ==== 3.3) So What Is Down Town? ====
 '''You tell us the time, even if its "now" and we'll tell you the most exciting place to be!'''
- <br/>[[#Hello_Code_Hacker|Back to Top^]]
+
+[[#Hello_Code_Hacker|Back to Top^]]
 ----
