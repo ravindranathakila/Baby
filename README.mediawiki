@@ -1,7 +1,6 @@
-
 == Hello Code Hacker! ==
 How have you been? What brought you here?
-=== WWW, You and Us ===
+=== 0) WWW, You and Us ===
 ==== 0.1) The links ====
 [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/facebook_ilikeplaces.png]]
 [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]]
@@ -9,7 +8,11 @@ How have you been? What brought you here?
 [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]]
 [[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/ilikeplaces.png]]
 ==== 0.2) How may we serve you? ====
-'''First of all'''
+===== 0.2.1) Can we interest you in finding out what interesting places to visit, given any location on earth? =====
+If so, head over to [http://www.ilikeplaces.com www.iLikePlaces.com] and search for any location on Earth.
+You'll see a map with makers of interesting places in that area. Now, go visit them! Tell a friend!
+===== 0.2.2) Can we interest you in finding out, given any moment, the most interesting place to be? =====
+We wish we could! Well, we have that bad habbit of pursuing our wishes '''With All We've Got'''. Stay tuned!
 ===== 0.2.3) Can we interest you in planning out private events with close friends and family? =====
 No, if you click "like", things aren't going to be all public exposing you to a lot of embarrassment.
 Instead, head over to [http://www.ilikeplaces.com www.iLikePlaces.com] and '''Start a Moment'''.
