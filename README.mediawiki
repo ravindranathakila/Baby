@@ -45,7 +45,7 @@ There you go. That much we can offer you. Tell a friend!
 
 [[#Hello_Code_Hacker|Back to Top^]]
 
----
+----
 
 === 1) Looking for some code to use in your project? ===
 
@@ -55,7 +55,7 @@ There you go. That much we can offer you. Tell a friend!
 
 [[#Hello_Code_Hacker|Back to Top^]]
 
----
+----
 
 ==== 1.2) Still Unhappy? ====
 
@@ -75,7 +75,7 @@ Okay, '''go [https://www.pivotaltracker.com/projects/304913 here]'''. Don't tell
 
 [[#Hello_Code_Hacker|Back to Top^]]
 
----
+----
 
 === 3) Want to find the philosophy behind this project? ===
 
@@ -109,4 +109,4 @@ See? We want you to get moving fast.
 
 [[#Hello_Code_Hacker|Back to Top^]]
 
----
+----
