@@ -4,7 +4,7 @@ How have you been? What brought you here?
 
 === 0) WWW, You and Us ===
 
-1) The links:
+=== 0.1) The links ===
 
 [http://goo.gl/Xlsv4.qr]
 [http://goo.gl/QDrMj.qr]
