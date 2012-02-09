@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.Hail;
+import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.ygp.impl.ClientFactory;
 
 import javax.annotation.PostConstruct;
@@ -120,8 +121,8 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         System.out.println("");
         System.out.println("SETTING PERSISTENCE LOGGING");
 
-        EntityLifeCycleListener.PRE_ACTIONS.setObj(true);
-        EntityLifeCycleListener.POST_ACTIONS.setObj(true);
+        EntityLifeCycleListener.PRE_ACTIONS.setObj(Loggers.DEBUG.isDebugEnabled());
+        EntityLifeCycleListener.POST_ACTIONS.setObj(Loggers.DEBUG.isDebugEnabled());
         
         System.out.println("DONE SETTING PERSISTENCE LOGGING");
 
