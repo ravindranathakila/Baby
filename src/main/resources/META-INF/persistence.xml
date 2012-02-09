@@ -7,7 +7,7 @@
     <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
     <properties>
       <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
-      <property name="openjpa.Log" value="File=../logs/openjpa.log, DefaultLevel=TRACE, Runtime=TRACE, SQL=TRACE"/>
+      <property name="openjpa.Log" value="File=../logs/openjpa.log, DefaultLevel=INFO, Runtime=INFO, SQL=INFO"/>
     </properties>
   </persistence-unit>
 </persistence>
