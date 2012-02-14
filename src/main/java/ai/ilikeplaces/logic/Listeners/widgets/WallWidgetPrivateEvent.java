@@ -156,7 +156,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
 
         super.setWallProfileName(currUserAsVisitorHI.getHuman().getDisplayName());
         super.setWallProfilePhoto(UserProperty.formatProfilePhotoUrl(currUserAsVisitorHI.getHumansIdentityProfilePhoto()));
-        super.setWallTitle(MessageFormat.format(RBGet.gui().getString(TALK_AT_0), pe.getPrivateEventName()));
+        //Change property key please super.setWallTitle(MessageFormat.format(RBGet.gui().getString(TALK_AT_0), pe.getPrivateEventName()));
 
         $$displayWallAsMuted($$(WallWidgetIds.wallMute), aReturn.returnValueBadly().getWallMutes().contains(humanId));
     }

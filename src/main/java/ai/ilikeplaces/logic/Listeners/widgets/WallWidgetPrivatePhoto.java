@@ -100,7 +100,7 @@ public class WallWidgetPrivatePhoto extends WallWidget {
 
         super.setWallProfileName(currUserAsVisitorHI.getHuman().getDisplayName());
         super.setWallProfilePhoto(UserProperty.formatProfilePhotoUrl(currUserAsVisitorHI.getHumansIdentityProfilePhoto()));
-        super.setWallTitle(RBGet.gui().getString(TALK_ON_THIS_PHOTO));
+        //Change property key please super.setWallTitle(RBGet.gui().getString(TALK_ON_THIS_PHOTO));
 
         $$displayWallAsMuted($$(WallWidgetIds.wallMute), wall.getWallMutes().contains(humanId));
     }

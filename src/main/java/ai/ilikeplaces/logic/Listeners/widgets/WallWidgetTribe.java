@@ -151,7 +151,7 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
 
         super.setWallProfileName(currUserAsVisitorHI.getHuman().getDisplayName());
         super.setWallProfilePhoto(UserProperty.formatProfilePhotoUrl(currUserAsVisitorHI.getHumansIdentityProfilePhoto()));
-        super.setWallTitle(MessageFormat.format(RBGet.gui().getString(TALK_AT_0), tribe.getTribeName()));
+        //Change property key please super.setWallTitle(MessageFormat.format(RBGet.gui().getString(TALK_AT_0), tribe.getTribeName()));
 
         $$displayWallAsMuted($$(WallWidgetIds.wallMute), aReturn.returnValueBadly().getWallMutes().contains(criteria.getHumanId()));
     }
