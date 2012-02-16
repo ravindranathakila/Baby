@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="robots" content="noindex"/>
     <title id="skeletonTitle">
-        What's Most Exciting Place To Be? Now or Later?!
+        What's Most Exciting Place To Be?
     </title>
     <link rel="icon" type="image/ico" href="/favicon.ico"/>
 
@@ -41,40 +41,50 @@
     <div id="Skeleton_login_widget" class="use100" style="height:78px;">
     </div>
 </div>
-<div class="use100" style="background-color:#f7f1f1;overflow:hidden;height:12px;">
-    <div class="use25 right">
-        <div class="use15 alphabet">A</div>
-        <div class="use17 alphabet">B</div>
-        <div class="use17 alphabet">C</div>
-        <div class="use17 alphabet">D</div>
-        <div class="use17 alphabet">E</div>
-        <div class="use17 alphabet">F</div>
-    </div>
-    <div class="use25 right">
-        <div class="use15 alphabet">G</div>
-        <div class="use17 alphabet">H</div>
-        <div class="use17 alphabet">I</div>
-        <div class="use17 alphabet">J</div>
-        <div class="use17 alphabet">K</div>
-        <div class="use17 alphabet">L</div>
-    </div>
-    <div class="use25 right">
-        <div class="use15 alphabet">M</div>
-        <div class="use15 alphabet">N</div>
-        <div class="use14 alphabet">O</div>
-        <div class="use14 alphabet">P</div>
-        <div class="use14 alphabet">Q</div>
-        <div class="use14 alphabet">R</div>
-        <div class="use14 alphabet">S</div>
-    </div>
-    <div class="use25 right">
-        <div class="use15 alphabet">T</div>
-        <div class="use15 alphabet">U</div>
-        <div class="use14 alphabet">V</div>
-        <div class="use14 alphabet">W</div>
-        <div class="use14 alphabet">X</div>
-        <div class="use14 alphabet">Y</div>
-        <div class="use14 alphabet">Z</div>
+<div class="use100" id="Skeleton_morpheus">
+    <div class="use100" id="Morpheus">
+        <div class="use100 center Morpheus_Dreams" style="color;#bcbbbb;font-weight:900;font-size:10px;background-color:#f7f1f1;overflow:hidden;height:12px;display:none;">
+            &nbsp;
+        </div>
+        <div class="use100 Morpheus_Typewriter"
+             onmouseover="javascript:$('.Morpheus_Dreams').slideDown();"
+             onmouseout="javascript:$('.Morpheus_Dreams').slideUp();"
+             style="background-color:#f7f1f1;overflow:hidden;height:12px;">
+            <div class="use25 right">
+                <div class="use15 alphabet">A</div>
+                <div class="use17 alphabet">B</div>
+                <div class="use17 alphabet">C</div>
+                <div class="use17 alphabet">D</div>
+                <div class="use17 alphabet">E</div>
+                <div class="use17 alphabet">F</div>
+            </div>
+            <div class="use25 right">
+                <div class="use15 alphabet">G</div>
+                <div class="use17 alphabet">H</div>
+                <div class="use17 alphabet">I</div>
+                <div class="use17 alphabet">J</div>
+                <div class="use17 alphabet">K</div>
+                <div class="use17 alphabet">L</div>
+            </div>
+            <div class="use25 right">
+                <div class="use15 alphabet">M</div>
+                <div class="use15 alphabet">N</div>
+                <div class="use14 alphabet">O</div>
+                <div class="use14 alphabet">P</div>
+                <div class="use14 alphabet">Q</div>
+                <div class="use14 alphabet">R</div>
+                <div class="use14 alphabet">S</div>
+            </div>
+            <div class="use25 right">
+                <div class="use15 alphabet">T</div>
+                <div class="use15 alphabet">U</div>
+                <div class="use14 alphabet">V</div>
+                <div class="use14 alphabet">W</div>
+                <div class="use14 alphabet">X</div>
+                <div class="use14 alphabet">Y</div>
+                <div class="use14 alphabet">Z</div>
+            </div>
+</div>
     </div>
 </div>
 <div class="use100" style="background-color:#f5f5f5;">
@@ -148,7 +158,15 @@
             <div class="use917">
                 <div class="use100">
                     <div class="use100 center" style="background:url(/images/Metal_Title_Lighter.png) repeat; background-color:#fafafa">
-                        <div class="use100" style="height:10px;display:none;"> &nbsp;</div>
+                        <div class="use100">
+                            <div class="use100"><img class="use100" src="/images/Metal_Curve_inverted.png" alt=""/></div>
+                            <div class="use100 center" style="background:url(/images/Metal.png) repeat; background-color:#fafafa">
+                                <div class="use100">
+                                    <span id="Skeleton_othersidebar_identity" style="font-size:18px;line-height:0.9;letter-spacing:0px;" class="bold">MOMENT UPDATES</span>
+                                </div>
+                            </div>
+                            <div class="use100"><img class="use100" src="/images/Metal_Curve.png" alt=""/></div>
+                        </div>
                         <div class="use100">
                             <span id="search_moments" style="font-size:18px;line-height:0.9;letter-spacing:-1px;display:none;" class="bold">SEARCH MOMENTS</span>
                             <div class="use100" style="background-color:#6b6d6d;display:block;">
@@ -158,9 +176,6 @@
                                          style="width:100%;"
                                          alt="Profile Picture"
                                          onclick="javascript:window.location.href='/page/_profile';"/>
-                                </div>
-                                <div class="use100  center ntyBot black_bg white fg title_blend bold" style="display:none;">
-                                    <span id="Skeleton_othersidebar_identity" class="white_fg"></span>
                                 </div>
                             </div>
                         </div>
@@ -330,6 +345,30 @@
             $('#' + this.id).parent().parent().appendTo('.carousel');
         }
     });
+</script>
+
+<script type="text/javascript">
+
+    ORIGINAL_DOCUMENT_TITLE = document.title;//Man, don't change this!
+
+    jQuery(document).ready(
+        function($){
+            $(".vtip").unbind().hover(
+                function(e) {
+                    $('.Morpheus_Dreams').text(this.title);
+                    $(document).attr("title", this.title);
+                    $('.Morpheus_Dreams').slideDown();
+                },
+                function() {
+                    $('.Morpheus_Dreams').text('');
+                    $(document).attr("title", ORIGINAL_DOCUMENT_TITLE);
+                    $('.Morpheus_Dreams').slideUp();
+                }
+            );
+        }
+    );
+
+
 </script>
 
 
