@@ -1800,7 +1800,7 @@ final public class
 
             inhs__.registerItsNatDocFragmentTemplate(help.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(help));
 
-            inhs__.registerItsNatDocFragmentTemplate(juice.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(help));
+            inhs__.registerItsNatDocFragmentTemplate(juice.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(juice));
         }
     }
 
