@@ -149,6 +149,8 @@ final public class
     final PageFace bate = Page.Bate;
     final PageFace help = Page.Help;
 
+    final PageFace juice = Page.Juice;
+
 // -------------------------- ENUMERATIONS --------------------------
 
     @NOTE(note = "Inner Enums are static. Therefore, the lists shall be populated only once.")
@@ -990,6 +992,7 @@ final public class
         Aarrr(
                 "ai/ilikeplaces/AARRR.xhtml",
                 Controller.Page.AarrrDownTownHeatMap,
+                Controller.Page.AarrrJuice,
                 Controller.Page.AarrrWOEID,
                 Controller.Page.AarrrHeader,
                 Controller.Page.AarrrColumn1,
@@ -1145,6 +1148,18 @@ final public class
             @Override
             public String toString() {
                 return DocTribeCreateHome;
+            }
+        }, Juice(
+                "ai/ilikeplaces/widgets/Juice.xhtml",
+                ai.ilikeplaces.logic.Listeners.widgets.Juice.JuiceIds.values()) {
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocJuice;
             }
         };
 
@@ -1470,6 +1485,7 @@ final public class
         final static public String DocAarrr = "Aarrr";
         /*Aarrr Specific IDs*/
         final static public String AarrrDownTownHeatMap = "AarrrDownTownHeatMap";
+        final static public String AarrrJuice = "AarrrJuice";
         final static public String AarrrWOEID = "AarrrWOEID";
         final static public String AarrrHeader = "AarrrHeader";
         final static public String AarrrColumn1 = "AarrrColumn1";
@@ -1548,6 +1564,9 @@ final public class
 
         /*TribeHome Page*/
         final static public String DocTribeHome = "DocTribeHome";
+
+        /*Juice Page*/
+        final static public String  DocJuice = "DocJuice";
 
         /*TribeCreateHome Page*/
         final static public String DocTribeCreateHome = "DocTribeCreateHome";
@@ -1780,6 +1799,8 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(bate.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(bate));
 
             inhs__.registerItsNatDocFragmentTemplate(help.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(help));
+
+            inhs__.registerItsNatDocFragmentTemplate(juice.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(help));
         }
     }
 

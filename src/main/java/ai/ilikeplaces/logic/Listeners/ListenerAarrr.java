@@ -1,10 +1,7 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.TODO;
-import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlow;
-import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria;
-import ai.ilikeplaces.logic.Listeners.widgets.DownTownHeatMap;
-import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
+import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
@@ -88,6 +85,8 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
 //                                    .setHumanId(new HumanId(getUsernameAsValid()))
 //                                    .setHumanUserLocal(getHumanUserAsValid()),
 //                            $(Controller.Page.AarrrColumn4));
+                } else {
+                    new Juice(request__, new JuiceCriteria(), $(Controller.Page.AarrrJuice));
                 }
 
 
