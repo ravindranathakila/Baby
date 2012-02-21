@@ -13,10 +13,21 @@ import org.w3c.dom.html.HTMLDocument;
  * Date: 2/17/12
  * Time: 6:47 PM
  */
-public class Juice extends AbstractWidgetListener<JuiceCriteria>{
-    public static enum JuiceIds implements WidgetIds{
+public class Juice extends AbstractWidgetListener<JuiceCriteria> {
+    public static enum JuiceIds implements WidgetIds {
+        Juice_Content,
 
-    };
+        Juice_Talk,
+        Juice_Talk_Content,
+        Juice_Tribe,
+        Juice_Tribe_Content,
+        Juice_Moment,
+        Juice_Moment_Content,
+        Juice_Snap,
+        Juice_Snap_Content,
+    }
+
+
 
     /**
      * @param request__
