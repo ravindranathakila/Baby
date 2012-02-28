@@ -530,6 +530,7 @@ public abstract class AbstractWidgetListener<T> {
     protected final void $$displayBlock(final Element element__) {
         ((ElementCSSInlineStyle) element__).getStyle().setProperty(DISPLAY, BLOCK, EMPTY);
     }
+
     @WARNING("Fails on ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall#protected void fetchToEmail(Object... args) " +
             "since it is not a normal itsnat operation on the current document, but a raw created one.")
     protected final void $$displayBlock(final WidgetIds element__) {
@@ -723,6 +724,19 @@ public abstract class AbstractWidgetListener<T> {
         } else {
             throw new NullPointerException(THE_ELEMENT_GIVEN_T0_REGISTER_FOR_NOTIFICATIONS_IS_NULL);
         }
+    }
+
+    /**
+     * Use this method to register an element which will be used to notify the user.
+     * The element sent in should support {@link Element#setTextContent(String)}, as in, should show text in it, as in
+     * should not be something like an IMG element.
+     *
+     * @param elementToUseForUserNotifications
+     *
+     * @return the element sent in
+     */
+    final protected Element registerUserNotifier(final WidgetIds elementToUseForUserNotifications) {
+        return registerUserNotifier($$(elementToUseForUserNotifications));
     }
 
     /**
