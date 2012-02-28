@@ -9,7 +9,7 @@
     <title>ai\ilikeplaces\widgets\Juice.xhtml</title>
 </head>
 <body>
-<div class="use100 center" id="Juice" style="height:100%;" onmouseover="window.location.href='#Juice';" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
+<div class="use100 center" id="Juice" style="height:100%;" onmouseover="window.location.href='#Juice';" onmouseout="window.location.href='#';" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
     <div class="use100" style="height:19%;" >
         <div class="use19" id="Juice_Talk" style="height:100%;background-color:red;" >
             <div class="use100" style="height:100%;background:url(/images/Metal_translucent.png);">
@@ -45,25 +45,55 @@
             <img src="/images/Talk_home_page_5.jpg" alt="" class="use100 hidden"/>
 
             <div class="use100" style="height:100%;background-color:transparent;">
+                <div class="use100" id="Juice_Noti" style="font-size:30px;font-family:'Comic Sans MS';">
+                </div>
                 <div class="use100" style="height:40%;">
                     <img src="/images/What_is_exciting_lately.png" alt="What is exciting lately?" class="use100"/>
                 </div>
-                <div class="use100">
-                    <div class="use40 use30p use30a hidden" style="height:30%;">
-                        <input type="text"
-                               style="height:28px;background-color:transparent;border:4px solid orange;background:transparent;font-size:20px;"
-                               class="use100"/>
+                <div class="use100 hidden" id="jsSignupBox" style="height:45%;">
+                    <div class="use100" style="height:30%;">
+                        <div class="use15 use5p" style="height:100%;">
+                            <img src="/images/Sign_up_Email.png" alt="Sign Up Email" class="use100"/>
+                        </div>
+                        <div class="use50 use5p" style="height:100%;">
+                            <input type="text"
+                                   id="Juice_Email"
+                                   style="height:100%;font-family:'Comic Sans MS';color:#f928c7;text-align:center;border:4px solid orange;background:url(/images/Metal_translucent.png) repeat;font-size:25px;"
+                                   class="use100"/>
+                        </div>
+                        <div class="use15 use5p use5a" style="height:100%;">
+                            <img id="Juice_Signup_Click" class="use100" src="/images/Sign_up_Do.png" alt="Talk!"
+                                 style="cursor:pointer;"/>
+                        </div>
+                    </div>
+                    <div class="use100" style="height:10%;">
+                    </div>
+                    <div class="use100" style="height:20%; overflow:hidden;">
+                        <div class="use10 use45p use45a">
+                            <img src="/images/Sign_up_Or.png" alt="Or" class="use40 use30p use30a"/>
+                        </div>
+                    </div>
+                    <div class="use80 use10p use10a" style="height:40%;">
+                        <div class="use25 use20p use5a">
+                            <img src="/images/Sign_up_3rd_Google.png" alt="" class="use100" style="cursor:pointer;"
+                                 onclick="$('body').hide();window.location.href='/oauth2gg?state=login';"/>
+                        </div>
+                        <div class="use25 use20a use5p">
+                            <img src="/images/Sign_up_3rd_Facebook.png" alt="" class="use100" style="cursor:pointer;"
+                                 onclick="$('body').hide();window.location.href='/oauth2fb';"/>
+                        </div>
                     </div>
                 </div>
-                <div class="use100 shown" style="height:30%;">
-                    &nbsp;
-                </div>
-                <div class="use100">
-                    <div class="use20 use75p use5a" style="height:25%;">
-                        <img src="/images/Sign_up.png" alt="Sign up It's free!" class="use100"/>
+                <div class="use100" id="jsSignupFiller" style="height:45%;">
+                    <div class="use100" style="height:50%;">
+                        &nbsp;
+                    </div>
+                    <div class="use20 use75p use5a" style="height:50%;">
+                        <img src="/images/Sign_up.png" alt="Sign up.. It's free!" class="use100"  style="cursor:pointer;"
+                             onclick="$('#jsSignupFiller').fadeOut();$('#jsSignupBox').fadeIn();"/>
                     </div>
                 </div>
-                <div class="use100" style="height:5%;">
+                <div class="use100" style="height:15%;">
                     &nbsp;
                 </div>
             </div>
