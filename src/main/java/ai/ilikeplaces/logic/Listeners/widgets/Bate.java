@@ -143,7 +143,7 @@ abstract public class Bate extends AbstractWidgetListener {
                             }
                             UCSendInviteMails:
                             {
-                                final Return<Boolean> booleanReturn = sendInviteToOfflineInvite(humanId, humansName.getObjectAsValid(), importedContact);
+                                final Return<Boolean> booleanReturn = sendInviteToOfflineInvite(humansName.getObjectAsValid(), importedContact);
                             }
                             UCCleaningUpForNextTimeIfEver:
                             {
@@ -346,7 +346,7 @@ abstract public class Bate extends AbstractWidgetListener {
                             @Override
                             public void handleEvent(final Event evt) {
 
-                                final Return<Boolean> booleanReturn = sendInviteToOfflineInvite(myinviter, myinvitersName, myinvitee);
+                                final Return<Boolean> booleanReturn = sendInviteToOfflineInvite(myinvitersName, myinvitee);
 
                                 if (booleanReturn.returnStatus() == 0 && booleanReturn.returnValue()) {
                                     /**
@@ -427,7 +427,7 @@ abstract public class Bate extends AbstractWidgetListener {
 
     }
 
-    final static public Return<Boolean> sendInviteToOfflineInvite(final HumanId inviter, final String invitersName, final ImportedContact inviteee) {
+    final static public Return<Boolean> sendInviteToOfflineInvite(final String invitersName, final ImportedContact inviteee) {
         Return<Boolean> returnVal;
         try {
             final String randomPassword = getRandomPassword();

@@ -238,7 +238,6 @@ public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria> {
 
                                 if (!DB.getHumanCRUDHumanLocal(false).doDirtyCheckHuman(email.getObj()).returnValue()) {
                                     final Return<Boolean> returnVal = ai.ilikeplaces.logic.Listeners.widgets.Bate.sendInviteToOfflineInvite(
-                                            criteria.getHumanId(),
                                             UserProperty.HUMANS_IDENTITY_CACHE.get(criteria.getHumanId().getHumanId(), "").getHuman().getDisplayName(),
                                             new ImportedContact().setEmail(email.getObj()).setFullName(""));
 
