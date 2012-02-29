@@ -8,6 +8,7 @@ import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ import java.util.List;
                 )
         }
 )
-public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanIdFace {
+public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanIdFace, Serializable {
     public String humanId;
     public final static String humanIdCOL = "humanId";
     public HumansNet humansNet;

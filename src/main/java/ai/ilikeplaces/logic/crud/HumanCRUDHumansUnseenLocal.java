@@ -13,6 +13,7 @@ import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.List;
 import java.util.Set;
 
@@ -21,7 +22,7 @@ import java.util.Set;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@Local
+@Remote
 public interface HumanCRUDHumansUnseenLocal {
 
     final static public String NAME = HumanCRUDHumansUnseenLocal.class.getSimpleName();

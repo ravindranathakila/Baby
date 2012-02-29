@@ -4,17 +4,17 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;
 
-import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  * @author Ravindranath Akila
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@Local
-public interface DBLocal {
+@Remote
+public interface DBRemote {
 
-    final static public String NAME = DBLocal.class.getSimpleName();
+    final static public String NAME = DBRemote.class.getSimpleName();
 
     public HumanCRUDPublicPhotoLocal getHumanCRUDPublicPhotoLocal();
 

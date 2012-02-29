@@ -8,6 +8,7 @@ import ai.ilikeplaces.util.Return;
 import com.google.gdata.data.geo.impl.W3CPoint;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 
 
 /**
@@ -18,7 +19,7 @@ import javax.ejb.Local;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@Local
+@Remote
 public interface HumanCRUDPrivateLocationLocal {
     final static public String NAME = HumanCRUDPrivateLocationLocal.class.getSimpleName();
 

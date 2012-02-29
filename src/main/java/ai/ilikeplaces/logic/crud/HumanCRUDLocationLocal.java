@@ -7,6 +7,7 @@ import ai.ilikeplaces.util.Return;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ import java.util.Map;
 
 // @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@Local
+@Remote
 public interface HumanCRUDLocationLocal {
 
     final static public String NAME = HumanCRUDLocationLocal.class.getSimpleName();

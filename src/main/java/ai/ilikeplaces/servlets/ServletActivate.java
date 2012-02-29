@@ -11,7 +11,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.SingletonHashing;
-import ai.ilikeplaces.security.face.SingletonHashingFace;
+import ai.ilikeplaces.security.face.SingletonHashingRemote;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Return;
@@ -74,7 +74,7 @@ final public class ServletActivate extends HttpServlet {
     final PageFace signup = Page.signup;
     final private Properties p_ = new Properties();
     private Context context = null;
-    private SingletonHashingFace singletonHashingFace = null;
+    private SingletonHashingRemote singletonHashingRemote = null;
     private PageFace tribes = Page.Tribes;
 
     // ------------------------ OVERRIDING METHODS ------------------------
@@ -90,10 +90,10 @@ final public class ServletActivate extends HttpServlet {
                 p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
                 context = new InitialContext(p_);
 
-                singletonHashingFace = (SingletonHashingFace) context.lookup("SingletonHashingLocal");
-                if (singletonHashingFace == null) {
-                    log.append("\nVARIABLE singletonHashingFace IS NULL! ");
-                    log.append(singletonHashingFace);
+                singletonHashingRemote = (SingletonHashingRemote) context.lookup("SingletonHashingLocal");
+                if (singletonHashingRemote == null) {
+                    log.append("\nVARIABLE singletonHashingRemote IS NULL! ");
+                    log.append(singletonHashingRemote);
                     break init;
                 }
             } catch (NamingException ex) {
@@ -343,7 +343,7 @@ final public class ServletActivate extends HttpServlet {
         final boolean isCorrect;
         if (humanId.validate() == 0) {
             final HumansAuthentication humansAuthentications = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(humanId).returnValue();
-            isCorrect = humansAuthentications.getHumanAuthenticationHash().equals(SingletonHashing.getSingletonHashingLocal().getHash(password, humansAuthentications.getHumanAuthenticationSalt()));
+            isCorrect = humansAuthentications.getHumanAuthenticationHash().equals(DB.getSingletonHashingFaceLocal(false).getHash(password, humansAuthentications.getHumanAuthenticationSalt()));
         } else {
             throw new ConstraintsViolatedException(humanId.getViolations());
         }

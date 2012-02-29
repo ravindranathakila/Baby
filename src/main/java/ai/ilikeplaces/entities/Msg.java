@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Okay, we need to
@@ -22,7 +23,7 @@ import javax.persistence.*;
 @Entity
 @NamedQuery(name = "FindWallEntriesByWallIdOrderByIdDesc",
         query = "SELECT msg FROM Msg msg WHERE msg.msgId IN (SELECT wall.wallMsgs FROM Wall wall WHERE wall.wallId = :wallId) order by msg.msgId DESC")
-public class Msg {
+public class Msg implements Serializable{
 
     public Long msgId;
     public static final String msgIdCOL = "msgId";

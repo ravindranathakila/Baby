@@ -1,21 +1,16 @@
 package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.entities.Human;
-import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.exception.ConstructorInvokationException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.exception.DBDishonourException;
-import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.mail.SendMail;
-import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.rbs.RBGet;
-import ai.ilikeplaces.security.face.SingletonHashingFace;
+import ai.ilikeplaces.security.face.SingletonHashingRemote;
 import ai.ilikeplaces.util.*;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,7 +59,7 @@ public class ServletOAuthFacebook extends AbstractOAuth {
     final Logger logger = LoggerFactory.getLogger(ServletLogin.class.getName());
     final private Properties p_ = new Properties();
     private Context context = null;
-    private SingletonHashingFace singletonHashingFace = null;
+    private SingletonHashingRemote singletonHashingRemote = null;
     private static final String HEADER_REFERER = "Referer";
 
     final PageFace home = Controller.Page.home;
@@ -80,10 +75,10 @@ public class ServletOAuthFacebook extends AbstractOAuth {
                 p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
                 context = new InitialContext(p_);
 
-                singletonHashingFace = (SingletonHashingFace) context.lookup("SingletonHashingLocal");
-                if (singletonHashingFace == null) {
-                    log.append("\nVARIABLE singletonHashingFace IS NULL! ");
-                    log.append(singletonHashingFace);
+                singletonHashingRemote = (SingletonHashingRemote) context.lookup("SingletonHashingLocal");
+                if (singletonHashingRemote == null) {
+                    log.append("\nVARIABLE singletonHashingRemote IS NULL! ");
+                    log.append(singletonHashingRemote);
                     break init;
                 }
             } catch (NamingException ex) {

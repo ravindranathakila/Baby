@@ -5,6 +5,7 @@ import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.util.Return;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
 
 // @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@Local
+@Remote
 public interface HumanCRUDPublicPhotoLocal {
 
     final static public String NAME = HumanCRUDPublicPhotoLocal.class.getSimpleName();

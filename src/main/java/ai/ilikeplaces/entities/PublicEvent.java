@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.exception.DBFetchDataException;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ import java.util.List;
         )
 )
 //@Entity
-public class PublicEvent implements RefreshData<PublicEvent> {
+public class PublicEvent implements RefreshData<PublicEvent>, Serializable {
 // ------------------------------ FIELDS ------------------------------
 
     final static public String privateLocationCOL = "privateLocation";

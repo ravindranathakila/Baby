@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.SEE;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.Email;
@@ -118,6 +119,8 @@ public class Juice extends AbstractWidgetListener<JuiceCriteria> {
                                 new ImportedContact().setEmail(email.getObj()).setFullName(""));
                         if (returnVal.valid() || !returnVal.returnValue()) {
                             notifyUser("Sorry, but we think this email is invalid :-(");
+                        }else{
+                            $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
                         }
                     }
                 }

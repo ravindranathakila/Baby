@@ -15,7 +15,7 @@ import java.lang.reflect.Field;
  * @author Ravindranath Akila
  */
 @Entity
-public class HumanEmbedded implements HumanPkJoinFace {
+public class HumanEmbedded implements HumanPkJoinFace, Serializable {
 
     private String humanId;
 

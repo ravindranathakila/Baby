@@ -2,6 +2,8 @@ package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.License;
 
+import java.io.Serializable;
+
 /**
  * Created by IntelliJ IDEA.
  * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
@@ -10,7 +12,7 @@ import ai.ilikeplaces.doc.License;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-final public class ReturnImpl<T> implements Return<T> {
+final public class ReturnImpl<T> implements Return<T>, Serializable {
 
     final static private String logMsgBeginning = "SORRY! I ENCOUNTERED AN EXCEPTION! HOWEVER, THE APPLICATION SHOULD REMAIN INTACT. SEE BELOW FOR MORE DETAILS.\n\n";
 

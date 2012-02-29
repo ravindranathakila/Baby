@@ -4,9 +4,8 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt;
-import ai.ilikeplaces.security.face.SingletonHashingFace;
+import ai.ilikeplaces.security.face.SingletonHashingRemote;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +30,7 @@ public class UHumansAuthentication extends AbstractSLBCallbacks implements UHuma
     private CrudServiceLocal<HumansAuthentication> humansAuthenticationCrudServiceLocal_;
 
     @EJB
-    private SingletonHashingFace singletonHashingFace_;
+    private SingletonHashingRemote singletonHashingRemote_;
 
     public UHumansAuthentication() {
     }
@@ -42,11 +41,11 @@ public class UHumansAuthentication extends AbstractSLBCallbacks implements UHuma
     public boolean doUHumansAuthentication(final String humanId, final String currentPassword, final String newPassword) {
         boolean returnVal = false;
         final HumansAuthentication ha = humansAuthenticationCrudServiceLocal_.find(HumansAuthentication.class, humanId);
-        if (ha.getHumanAuthenticationHash().equals(singletonHashingFace_.getHash(currentPassword,
+        if (ha.getHumanAuthenticationHash().equals(singletonHashingRemote_.getHash(currentPassword,
                 ha.getHumanAuthenticationSalt()))) {
 
             ha.setHumanAuthenticationSalt(BCrypt.gensalt());
-            ha.setHumanAuthenticationHash(singletonHashingFace_.getHash(newPassword, ha.getHumanAuthenticationSalt()));
+            ha.setHumanAuthenticationHash(singletonHashingRemote_.getHash(newPassword, ha.getHumanAuthenticationSalt()));
             returnVal = true;
         } else {
             throw new IllegalAccessError("Sorry! The given current password does not match!");
@@ -60,7 +59,7 @@ public class UHumansAuthentication extends AbstractSLBCallbacks implements UHuma
         final HumansAuthentication ha = humansAuthenticationCrudServiceLocal_.find(HumansAuthentication.class, humanId);
 
         ha.setHumanAuthenticationSalt(BCrypt.gensalt());
-        ha.setHumanAuthenticationHash(singletonHashingFace_.getHash(newPassword, ha.getHumanAuthenticationSalt()));
+        ha.setHumanAuthenticationHash(singletonHashingRemote_.getHash(newPassword, ha.getHumanAuthenticationSalt()));
 
         return true;
     }

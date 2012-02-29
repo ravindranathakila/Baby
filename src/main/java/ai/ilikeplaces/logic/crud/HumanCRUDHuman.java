@@ -5,16 +5,14 @@ import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.exception.AbstractEjbApplicationRuntimeException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.exception.DBDishonourException;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.*;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt;
-import ai.ilikeplaces.security.face.SingletonHashingFace;
+import ai.ilikeplaces.security.face.SingletonHashingRemote;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.spam.mail.*;
 import net.sf.oval.exception.ConstraintsViolatedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +77,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     private RHumansIdentityLocal rHumansIdentityLocal_;
 
     @EJB
-    private SingletonHashingFace singletonHashingFace;
+    private SingletonHashingRemote singletonHashingRemote;
 
     @EJB
     private RHumansAuthenticationLocal rHumansAuthenticationLocal_;
@@ -388,7 +386,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
             final HumansAuthentication ha = new HumansAuthentication();
             ha.setHumanId(newUser.getHumanId());
             ha.setHumanAuthenticationSalt(BCrypt.gensalt());
-            ha.setHumanAuthenticationHash(singletonHashingFace.getHash(password.getObjectAsValid(), ha.getHumanAuthenticationSalt()));
+            ha.setHumanAuthenticationHash(singletonHashingRemote.getHash(password.getObjectAsValid(), ha.getHumanAuthenticationSalt()));
             newUser.setHumansAuthentications(ha);
             newUser.setHumanAlive(false);
 

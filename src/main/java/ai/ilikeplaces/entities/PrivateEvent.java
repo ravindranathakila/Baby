@@ -5,6 +5,7 @@ import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
 @CREATED_BY(who = {PrivateEvent.class},
             note = "We need to return this entity to the user for CRUD, hence cascade creation not possible.")
 @Entity
-public class PrivateEvent implements RefreshData<PrivateEvent> {
+public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
 // ------------------------------ FIELDS ------------------------------
 
     final static public String privateEventOwnersCOL = "privateEventOwners";

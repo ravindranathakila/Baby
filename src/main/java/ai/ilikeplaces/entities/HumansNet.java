@@ -8,6 +8,7 @@ import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * This entity would be about friends. <p/>
@@ -83,7 +84,7 @@ import javax.persistence.*;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-public class HumansNet implements HumanPkJoinFace, HumansFriend {
+public class HumansNet implements HumanPkJoinFace, HumansFriend, Serializable {
 
     public String humanId;
     public Human human;

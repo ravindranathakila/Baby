@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.util.jpa.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-public class Wall implements Clearance, Refreshable<Wall> {
+public class Wall implements Clearance, Refreshable<Wall>, Serializable {
     public Long wallId = null;
     public static String wallIdCOL = "wallId";
     public Long clearance = 0L;

@@ -9,6 +9,7 @@ import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.jpa.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-public class Album implements RefreshData<Album>, Refreshable<Album> {
+public class Album implements RefreshData<Album>, Refreshable<Album>, Serializable {
 
     public Long albumId;
 

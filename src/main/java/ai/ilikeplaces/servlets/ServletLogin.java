@@ -12,7 +12,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.SingletonHashing;
-import ai.ilikeplaces.security.face.SingletonHashingFace;
+import ai.ilikeplaces.security.face.SingletonHashingRemote;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Return;
@@ -59,7 +59,7 @@ final public class ServletLogin extends HttpServlet {
     final Logger logger = LoggerFactory.getLogger(ServletLogin.class.getName());
     final private Properties p_ = new Properties();
     private Context context = null;
-    private SingletonHashingFace singletonHashingFace = null;
+    private SingletonHashingRemote singletonHashingRemote = null;
     public static final String HEADER_REFERER = "Referer";
 
     final PageFace home = Page.home;
@@ -76,10 +76,10 @@ final public class ServletLogin extends HttpServlet {
                 p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
                 context = new InitialContext(p_);
 
-                singletonHashingFace = (SingletonHashingFace) context.lookup("SingletonHashingLocal");
-                if (singletonHashingFace == null) {
-                    log.append("\nVARIABLE singletonHashingFace IS NULL! ");
-                    log.append(singletonHashingFace);
+                singletonHashingRemote = (SingletonHashingRemote) context.lookup("SingletonHashingLocal");
+                if (singletonHashingRemote == null) {
+                    log.append("\nVARIABLE singletonHashingRemote IS NULL! ");
+                    log.append(singletonHashingRemote);
                     break init;
                 }
             } catch (NamingException ex) {
@@ -159,7 +159,7 @@ final public class ServletLogin extends HttpServlet {
                         if (existingUser != null && existingUser.getHumanAlive()) {/*Ok user name valid but now we check for password*/
                             final HumansAuthentication humansAuthentications = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(request__.getParameter(Username))).returnValue();
 
-                            if (humansAuthentications.getHumanAuthenticationHash().equals(singletonHashingFace.getHash(request__.getParameter(Password), humansAuthentications.getHumanAuthenticationSalt()))) {
+                            if (humansAuthentications.getHumanAuthenticationHash().equals(singletonHashingRemote.getHash(request__.getParameter(Password), humansAuthentications.getHumanAuthenticationSalt()))) {
                                 final HumanUserLocal humanUserLocal = (HumanUserLocal) context.lookup(HumanUserLocal.NAME);
                                 humanUserLocal.setHumanUserId(request__.getParameter(Username));
                                 userSession_.setAttribute(HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
@@ -210,7 +210,7 @@ final public class ServletLogin extends HttpServlet {
         final boolean isCorrect;
         if (humanId.validate() == 0) {
             final HumansAuthentication humansAuthentications = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(humanId).returnValue();
-            isCorrect = humansAuthentications.getHumanAuthenticationHash().equals(SingletonHashing.getSingletonHashingLocal().getHash(password, humansAuthentications.getHumanAuthenticationSalt()));
+            isCorrect = humansAuthentications.getHumanAuthenticationHash().equals(DB.getSingletonHashingFaceLocal(false).getHash(password, humansAuthentications.getHumanAuthenticationSalt()));
         } else {
             throw new ConstraintsViolatedException(humanId.getViolations());
         }

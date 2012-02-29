@@ -8,13 +8,14 @@ import ai.ilikeplaces.util.Return;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.List;
 
 /**
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@Local
+@Remote
 public interface HumanCRUDPrivatePhotoLocal extends GeneralCRUDWall {
 
     final static public String NAME = HumanCRUDPrivatePhotoLocal.class.getSimpleName();

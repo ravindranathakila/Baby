@@ -14,6 +14,7 @@ import ai.ilikeplaces.util.Return;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.List;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ import java.util.Set;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@Local
+@Remote
 public interface HumanCRUDTribeLocal extends GeneralCRUDWall {
 
     final static public String NAME = HumanCRUDTribeLocal.class.getSimpleName();

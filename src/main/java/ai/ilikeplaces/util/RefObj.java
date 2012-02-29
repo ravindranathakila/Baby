@@ -5,6 +5,7 @@ import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
 import net.sf.oval.exception.ConstraintsViolatedException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
  * Date: Jan 21, 2010
  * Time: 6:03:22 PM
  */
-public abstract class RefObj<T> {
+public abstract class RefObj<T> implements Serializable{
 
     protected T obj = null;
 

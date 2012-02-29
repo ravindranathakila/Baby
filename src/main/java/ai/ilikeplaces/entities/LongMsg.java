@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Okay, we need to
@@ -19,7 +20,7 @@ import javax.persistence.*;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-public class LongMsg {
+public class LongMsg implements Serializable{
 
     public Long longMsgId;
     public static final String longMsgIdCOL = "longMsgId";

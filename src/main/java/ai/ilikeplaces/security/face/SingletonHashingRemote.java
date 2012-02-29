@@ -3,15 +3,16 @@ package ai.ilikeplaces.security.face;
 import ai.ilikeplaces.doc.License;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  * @author Ravindranath Akila
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@Local
-public interface SingletonHashingFace {
-    final static public String NAME = "SingletonHashingLocal";
+@Remote
+public interface SingletonHashingRemote {
+    final static public String NAME = SingletonHashingRemote.class.getSimpleName();
     
     /**
      * @param plaintext__

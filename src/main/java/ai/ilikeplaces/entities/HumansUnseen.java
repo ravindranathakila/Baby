@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.UNIDIRECTIONAL;
 import ai.ilikeplaces.doc.WARNING;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ import java.util.Set;
  */
 @WARNING("THIS ENTITY IS NOT GUARANTEED TO 'BE' EVEN THOUGH A HUMAN IS SIGNED UP. SO CREATE IT IF NOT PRESENT!")
 @Entity
-public class HumansUnseen {
+public class HumansUnseen implements Serializable {
     public String humanId;
     public List<Wall> unseenWalls;
 

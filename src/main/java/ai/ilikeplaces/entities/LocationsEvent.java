@@ -2,6 +2,8 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
 
+import java.io.Serializable;
+
 /**
  * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Dec 6, 2009
@@ -9,5 +11,5 @@ import ai.ilikeplaces.doc.License;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public class LocationsEvent {
+public class LocationsEvent implements Serializable {
 }

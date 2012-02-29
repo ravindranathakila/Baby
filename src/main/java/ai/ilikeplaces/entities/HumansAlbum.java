@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * This entity is NOT related to a humans public location bookings.
@@ -16,7 +17,7 @@ import javax.persistence.*;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-public class HumansAlbum implements HumanPkJoinFace {
+public class HumansAlbum implements HumanPkJoinFace, Serializable {
 
     public String humanId;
 
