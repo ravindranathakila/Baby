@@ -5,10 +5,13 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.crud.DBLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -16,12 +19,12 @@ import javax.ejb.PostActivate;
 import javax.ejb.PrePassivate;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.http.HttpSessionBindingEvent;
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Observer;
+import java.util.*;
 
 /**
  * @author Ravindranath Akila
@@ -46,6 +49,60 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
     private transient SmartCache<String, Object> cache;
 
     private Map<String, Object> store = new HashMap<String, Object>(0);
+
+
+
+    final static private Properties P_ = new Properties();
+    static private Context Context_ = null;
+    static private boolean OK_ = false;
+    final static private ResourceBundle exceptionMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.ExceptionMsgs");
+    final static private ResourceBundle config = ResourceBundle.getBundle("ai.ilikeplaces.rbs.Config");
+    final static private String ICF = config.getString("oejb.LICF");
+    final static Logger logger = LoggerFactory.getLogger(DB.class);
+
+    public static final String NAMING_EXCEPTION = "SORRY! I ENCOUNTERED AN NAMING EXCEPTION WHILE DOING A CONTEXT OPERATION.";
+
+    static {
+        try {
+            P_.put(Context.INITIAL_CONTEXT_FACTORY, ICF);
+            Context_ = new InitialContext(P_);
+            OK_ = true;
+        } catch (NamingException ex) {
+            OK_ = false;
+            logger.error(NAMING_EXCEPTION, ex);
+        }
+    }
+
+    static public void isOK() {
+        if (!OK_) {
+            throw new IllegalStateException(exceptionMsgs.getString("ai.ilikeplaces.static_initialization_failure"));
+        }
+    }
+
+
+    @Override
+    public HumanUserLocal getHumanUserLocal() {
+        isOK();
+        HumanUserLocal h = null;
+        try {
+            h = (HumanUserLocal) Context_.lookup(HumanUserLocal.NAME);
+        } catch (NamingException ex) {
+            logger.error(NAMING_EXCEPTION, ex);
+        }
+        return h != null ? h : (HumanUserLocal) LogNull.logThrow();
+
+    }
+
+    public static HumanUserLocal getHumanUserLocal(final boolean nonInjected) {
+        HumanUserLocal h = null;
+        try {
+            h = ((HumanUserLocal) Context_.lookup(HumanUser.NAME)).getHumanUserLocal();
+        } catch (NamingException ex) {
+            logger.error(NAMING_EXCEPTION, ex);
+        }
+        return h != null ? h : (HumanUserLocal) LogNull.logThrow();
+
+    }
 
     /**
      * Get the HumanId of the Logged in user, or throw exception.

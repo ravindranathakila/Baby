@@ -7,6 +7,7 @@ import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.autoplay.*;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
@@ -181,7 +182,7 @@ abstract public class SignInOn extends AbstractWidgetListener {
                         /*Ok the session does not have the bean, initialize it with the user with email id and password*/
                         if (myuserOk.getObj()) {/*Ok user name valid but now we check for password*/
                             if (mydbHash.getObj().equals(DB.getSingletonHashingFaceLocal(true).getHash(mypassword.getObjectAsValid(), mydbSalt.getObj()))) {
-                                final HumanUserLocal humanUserLocal = DB.getHumanUserLocal(true);
+                                final HumanUserLocal humanUserLocal = HumanUser.getHumanUserLocal(true);
 
                                 humanUserLocal.setHumanUserId(myusername.getObjectAsValid());
 

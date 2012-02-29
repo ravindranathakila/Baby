@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@Remote
+@Local
 public interface HumanUserLocal extends HttpSessionBindingListener, Serializable {
 
     final static public String NAME = HumanUserLocal.class.getSimpleName();
@@ -29,6 +29,9 @@ public interface HumanUserLocal extends HttpSessionBindingListener, Serializable
         AUTOPLAY_STATE,
         USER_LOCATION_TYPE, USER_LOCATION_DETAILS, USER_LOCATION_PRIVATE_PHOTOS
     }
+
+    public HumanUserLocal getHumanUserLocal();
+
 
     /**
      * @return

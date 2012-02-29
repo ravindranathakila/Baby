@@ -70,7 +70,7 @@ public class ServletMobile extends HttpServlet {
 
 
                     if (hash.equals(DB.getSingletonHashingFaceLocal(true).getHash(password.getObjectAsValid(), salt))) {
-                        final HumanUserLocal humanUserLocal = DB.getHumanUserLocal(true);
+                        final HumanUserLocal humanUserLocal = HumanUser.getHumanUserLocal(true);
 
                         humanUserLocal.setHumanUserId(email.getObjectAsValid());
 

@@ -27,23 +27,39 @@ import java.util.ResourceBundle;
 @FIXME(issue = "non injected call should be verified if a user sends false")
 @Startup
 @Interceptors({MethodTimer.class})
-final public class DB implements DBLocal, DBRemote {
+final public class DB implements DBLocal {
 
-    final static private Properties P_ = new Properties();
-    static private Context Context_ = null;
+    final static private Properties REMOTE_PROPERTIES = new Properties();
+    static private Context REMOTE_CONTEXT = null;
+    
+    final static private Properties LOCAL_PROPERTIES = new Properties();
+    static private Context LOCAL_CONTEXT = null;
+    
+    
     static private boolean OK_ = false;
     final static private ResourceBundle exceptionMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.ExceptionMsgs");
     final static private ResourceBundle config = ResourceBundle.getBundle("ai.ilikeplaces.rbs.Config");
-    final static private String ICF = config.getString("oejb.LICF");
+    final static private String LICF = config.getString("oejb.LICF");
     final static Logger logger = LoggerFactory.getLogger(DB.class);
 
     public static final String NAMING_EXCEPTION = "SORRY! I ENCOUNTERED AN NAMING EXCEPTION WHILE DOING A CONTEXT OPERATION.";
 
     static {
         try {
-            DB.P_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.RemoteInitialContextFactory");
-            DB.P_.put(Context.PROVIDER_URL, "http://127.0.0.1:8080/openejb/ejb");
-            DB.Context_ = new InitialContext(P_);
+            DB.REMOTE_PROPERTIES.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.RemoteInitialContextFactory");
+            DB.REMOTE_PROPERTIES.put(Context.PROVIDER_URL, "http://127.0.0.1:8080/openejb/ejb");
+            DB.REMOTE_CONTEXT = new InitialContext(REMOTE_PROPERTIES);
+            DB.OK_ = true;
+        } catch (NamingException ex) {
+            DB.OK_ = false;
+            logger.error(NAMING_EXCEPTION, ex);
+        }
+    } 
+    
+    static {
+        try {
+            DB.LOCAL_PROPERTIES.put(Context.INITIAL_CONTEXT_FACTORY, LICF);
+            DB.LOCAL_CONTEXT = new InitialContext(LOCAL_PROPERTIES);
             DB.OK_ = true;
         } catch (NamingException ex) {
             DB.OK_ = false;
@@ -51,9 +67,11 @@ final public class DB implements DBLocal, DBRemote {
         }
     }
 
+
+
     static public void isOK() {
         if (!OK_) {
-            throw new IllegalStateException(exceptionMsgs.getString("ai.ilikeplaces.logic.crud.DB.0001"));
+            throw new IllegalStateException(exceptionMsgs.getString("ai.ilikeplaces.static_initialization_failure"));
         }
     }
 
@@ -65,7 +83,7 @@ final public class DB implements DBLocal, DBRemote {
         isOK();
         HumanCRUDPublicPhotoLocal h = null;
         try {
-            h = (HumanCRUDPublicPhotoLocal) Context_.lookup(HumanCRUDPublicPhotoLocal.NAME.replace("Local","Remote"));
+            h = (HumanCRUDPublicPhotoLocal) REMOTE_CONTEXT.lookup(HumanCRUDPublicPhotoLocal.NAME.replace("Local", "Remote"));
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -75,7 +93,7 @@ final public class DB implements DBLocal, DBRemote {
     public static HumanCRUDPublicPhotoLocal getHumanCRUDPublicPhotoLocal(final boolean nonInjected) {
         HumanCRUDPublicPhotoLocal h = null;
         try {
-            h = ((DBRemote) Context_.lookup(DBRemote.NAME)).getHumanCRUDPublicPhotoLocal();
+            h = ((DBLocal) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCRUDPublicPhotoLocal();
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -87,7 +105,7 @@ final public class DB implements DBLocal, DBRemote {
         isOK();
         HumanCRUDPrivatePhotoLocal h = null;
         try {
-            h = (HumanCRUDPrivatePhotoLocal) Context_.lookup(HumanCRUDPrivatePhotoLocal.NAME.replace("Local","Remote"));
+            h = (HumanCRUDPrivatePhotoLocal) REMOTE_CONTEXT.lookup(HumanCRUDPrivatePhotoLocal.NAME.replace("Local", "Remote"));
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -97,7 +115,7 @@ final public class DB implements DBLocal, DBRemote {
     public static HumanCRUDPrivatePhotoLocal getHumanCRUDPrivatePhotoLocal(final boolean nonInjected) {
         HumanCRUDPrivatePhotoLocal h = null;
         try {
-            h = ((DBRemote) Context_.lookup(DBRemote.NAME)).getHumanCRUDPrivatePhotoLocal();
+            h = ((DBLocal) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCRUDPrivatePhotoLocal();
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -109,7 +127,7 @@ final public class DB implements DBLocal, DBRemote {
         isOK();
         HumanCRUDHumanLocal h = null;
         try {
-            h = (HumanCRUDHumanLocal) Context_.lookup(HumanCRUDHumanLocal.NAME.replace("Local","Remote"));
+            h = (HumanCRUDHumanLocal) REMOTE_CONTEXT.lookup(HumanCRUDHumanLocal.NAME.replace("Local", "Remote"));
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -119,7 +137,7 @@ final public class DB implements DBLocal, DBRemote {
     public static HumanCRUDHumanLocal getHumanCRUDHumanLocal(final boolean nonInjected) {
         HumanCRUDHumanLocal h = null;
         try {
-            h = ((DBRemote) Context_.lookup(DBRemote.NAME)).getHumanCRUDHumanLocal();
+            h = ((DBLocal) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCRUDHumanLocal();
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -132,7 +150,7 @@ final public class DB implements DBLocal, DBRemote {
         isOK();
         HumanCRUDLocationLocal h = null;
         try {
-            h = (HumanCRUDLocationLocal) Context_.lookup(HumanCRUDLocationLocal.NAME.replace("Local","Remote"));
+            h = (HumanCRUDLocationLocal) REMOTE_CONTEXT.lookup(HumanCRUDLocationLocal.NAME.replace("Local", "Remote"));
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -142,7 +160,7 @@ final public class DB implements DBLocal, DBRemote {
     public static HumanCRUDLocationLocal getHumanCRUDLocationLocal(final boolean nonInjected) {
         HumanCRUDLocationLocal h = null;
         try {
-            h = ((DBRemote) Context_.lookup(DBRemote.NAME)).getHumanCRUDLocationLocal();
+            h = ((DBLocal) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCRUDLocationLocal();
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -155,7 +173,7 @@ final public class DB implements DBLocal, DBRemote {
         isOK();
         HumanCRUDMapLocal h = null;
         try {
-            h = (HumanCRUDMapLocal) Context_.lookup(HumanCRUDMapLocal.NAME.replace("Local","Remote"));
+            h = (HumanCRUDMapLocal) REMOTE_CONTEXT.lookup(HumanCRUDMapLocal.NAME.replace("Local", "Remote"));
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -165,7 +183,7 @@ final public class DB implements DBLocal, DBRemote {
     public static HumanCRUDMapLocal getHumanCRUDMapLocal(final boolean nonInjected) {
         HumanCRUDMapLocal h = null;
         try {
-            h = ((DBRemote) Context_.lookup(DBRemote.NAME)).getHumanCRUDMapLocal();
+            h = ((DBLocal) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCRUDMapLocal();
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -178,7 +196,7 @@ final public class DB implements DBLocal, DBRemote {
         isOK();
         HumanCRUDPrivateEventLocal h = null;
         try {
-            h = (HumanCRUDPrivateEventLocal) Context_.lookup(HumanCRUDPrivateEventLocal.NAME.replace("Local","Remote"));
+            h = (HumanCRUDPrivateEventLocal) REMOTE_CONTEXT.lookup(HumanCRUDPrivateEventLocal.NAME.replace("Local", "Remote"));
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -188,7 +206,7 @@ final public class DB implements DBLocal, DBRemote {
     public static HumanCRUDPrivateEventLocal getHumanCrudPrivateEventLocal(final boolean nonInjected) {
         HumanCRUDPrivateEventLocal h = null;
         try {
-            h = ((DBRemote) Context_.lookup(DBRemote.NAME)).getHumanCrudPrivateEventLocal();
+            h = ((DBLocal) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCrudPrivateEventLocal();
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -201,7 +219,7 @@ final public class DB implements DBLocal, DBRemote {
         isOK();
         HumanCRUDPrivateLocationLocal h = null;
         try {
-            h = (HumanCRUDPrivateLocationLocal) Context_.lookup(HumanCRUDPrivateLocationLocal.NAME.replace("Local","Remote"));
+            h = (HumanCRUDPrivateLocationLocal) REMOTE_CONTEXT.lookup(HumanCRUDPrivateLocationLocal.NAME.replace("Local", "Remote"));
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -212,7 +230,7 @@ final public class DB implements DBLocal, DBRemote {
     public static HumanCRUDPrivateLocationLocal getHumanCrudPrivateLocationLocal(final boolean nonInjected) {
         HumanCRUDPrivateLocationLocal h = null;
         try {
-            h = ((DBRemote) Context_.lookup(DBRemote.NAME)).getHumanCrudPrivateLocationLocal();
+            h = ((DBLocal) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCrudPrivateLocationLocal();
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -226,7 +244,7 @@ final public class DB implements DBLocal, DBRemote {
         isOK();
         HumanCRUDWallLocal h = null;
         try {
-            h = (HumanCRUDWallLocal) Context_.lookup(HumanCRUDWallLocal.NAME.replace("Local","Remote"));
+            h = (HumanCRUDWallLocal) REMOTE_CONTEXT.lookup(HumanCRUDWallLocal.NAME.replace("Local", "Remote"));
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -237,7 +255,7 @@ final public class DB implements DBLocal, DBRemote {
     public static HumanCRUDWallLocal getHumanCrudWallLocal(final boolean nonInjected) {
         HumanCRUDWallLocal h = null;
         try {
-            h = ((DBRemote) Context_.lookup(DBRemote.NAME)).getHumanCrudWallLocal();
+            h = ((DBLocal) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCrudWallLocal();
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -250,7 +268,7 @@ final public class DB implements DBLocal, DBRemote {
         isOK();
         SingletonHashingRemote h = null;
         try {
-            h = (SingletonHashingRemote) Context_.lookup(SingletonHashingRemote.NAME.replace("Local","Remote"));
+            h = (SingletonHashingRemote) REMOTE_CONTEXT.lookup(SingletonHashingRemote.NAME.replace("Local", "Remote"));
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -261,7 +279,7 @@ final public class DB implements DBLocal, DBRemote {
     public static SingletonHashingRemote getSingletonHashingFaceLocal(final boolean nonInjected) {
         SingletonHashingRemote h = null;
         try {
-            h = ((DBRemote) Context_.lookup(DBRemote.NAME)).getSingletonHashingFaceLocal();
+            h = ((DBLocal) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getSingletonHashingFaceLocal();
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -274,7 +292,7 @@ final public class DB implements DBLocal, DBRemote {
         isOK();
         HumanUserLocal h = null;
         try {
-            h = (HumanUserLocal) Context_.lookup(HumanUserLocal.NAME.replace("Local","Remote"));
+            h = (HumanUserLocal) REMOTE_CONTEXT.lookup(HumanUserLocal.NAME.replace("Local", "Remote"));
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -285,7 +303,7 @@ final public class DB implements DBLocal, DBRemote {
     public static HumanUserLocal getHumanUserLocal(final boolean nonInjected) {
         HumanUserLocal h = null;
         try {
-            h = ((DBRemote) Context_.lookup(DBRemote.NAME)).getHumanUserLocal();
+            h = ((DBLocal) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanUserLocal();
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -299,7 +317,7 @@ final public class DB implements DBLocal, DBRemote {
         isOK();
         HumanCRUDHumansUnseenLocal h = null;
         try {
-            h = (HumanCRUDHumansUnseenLocal) Context_.lookup(HumanCRUDHumansUnseenLocal.NAME.replace("Local","Remote"));
+            h = (HumanCRUDHumansUnseenLocal) REMOTE_CONTEXT.lookup(HumanCRUDHumansUnseenLocal.NAME.replace("Local", "Remote"));
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -310,7 +328,7 @@ final public class DB implements DBLocal, DBRemote {
     public static HumanCRUDHumansUnseenLocal getHumanCRUDHumansUnseenLocal(final boolean nonInjected) {
         HumanCRUDHumansUnseenLocal h = null;
         try {
-            h = ((DBRemote) Context_.lookup(DBRemote.NAME)).getHumanCRUDHumansUnseenLocal();
+            h = ((DBLocal) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCRUDHumansUnseenLocal();
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -323,7 +341,7 @@ final public class DB implements DBLocal, DBRemote {
         isOK();
         HumanCRUDTribeLocal h = null;
         try {
-            h = (HumanCRUDTribeLocal) Context_.lookup(HumanCRUDTribeLocal.NAME.replace("Local","Remote"));
+            h = (HumanCRUDTribeLocal) REMOTE_CONTEXT.lookup(HumanCRUDTribeLocal.NAME.replace("Local", "Remote"));
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
@@ -334,7 +352,7 @@ final public class DB implements DBLocal, DBRemote {
     public static HumanCRUDTribeLocal getHumanCRUDTribeLocal(final boolean nonInjected) {
         HumanCRUDTribeLocal h = null;
         try {
-            h = ((DBRemote) Context_.lookup(DBRemote.NAME)).getHumanCRUDTribeLocal();
+            h = ((DBLocal) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCRUDTribeLocal();
         } catch (NamingException ex) {
             logger.error(NAMING_EXCEPTION, ex);
         }
