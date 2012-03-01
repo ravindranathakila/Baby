@@ -10,6 +10,7 @@ import ai.ilikeplaces.servlets.ServletLogin;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServlet;
 import org.itsnat.core.ItsNatServletRequest;
+import org.itsnat.core.event.ItsNatEvent;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.itsnat.core.http.ItsNatHttpSession;
 import org.itsnat.core.tmpl.ItsNatHTMLDocFragmentTemplate;
@@ -17,8 +18,11 @@ import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
 import org.w3c.dom.html.HTMLDocument;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +33,8 @@ import java.util.ResourceBundle;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public abstract class AbstractListener {
+public abstract class
+        AbstractListener {
 
     /**
      * Use this ItsNatDocument in your code for handling the page
@@ -70,6 +75,25 @@ public abstract class AbstractListener {
     public AbstractListener(final ItsNatServletRequest request_, final Object... initArgs) {
         sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, INITIALIZING_LISTENER, 10000, null, true);
         this.itsNatDocument = request_.getItsNatDocument();
+
+        itsNatDocument.addEventListener(new EventListener() {
+            @Override
+            public void handleEvent(Event evt) {
+                /*itsNatDocument_.addCodeToSend("\n" + "alert("
+                        + "'"
+                        + itsNatDocument_.getItsNatDocumentTemplate().getName()
+                        + ","
+                        + ((Element) evt.getCurrentTarget()).getAttribute(MarkupTag.GENERIC.id()).replaceAll("\\d*$", "")
+                        + ","
+                        + evt.getType()
+                        + "'"
+                        + ");" + "\n");*/
+
+                if (evt.getCurrentTarget() instanceof Element) {
+                    itsNatDocument.addCodeToSend("_gaq.push(['_trackEvent', '" + ((ItsNatEvent)evt).getItsNatDocument().getItsNatDocumentTemplate().getName() + "', '" + evt.getType() + "', '" + ((Element) evt.getCurrentTarget()).getAttribute(MarkupTag.GENERIC.id()).replaceAll("\\d*$", "") + "']);");
+                }
+            }
+        });
 
         this.itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument;
         this.hTMLDocument_ = itsNatHTMLDocument_.getHTMLDocument();
@@ -332,10 +356,10 @@ public abstract class AbstractListener {
 
     /**
      * Non-static wrapper for {@link ai.ilikeplaces.logic.role.HumanUser#getHumanUserAsValid(SessionBoundBadRefWrapper)}
-     *
+     * <p/>
      * The contents of this method were moved to the static method to make the static method avaiable globally.
      * This should later be shifted to most relevantly to {@link ai.ilikeplaces.logic.role.HumanUser}
-     *
+     * <p/>
      * Get the Username of the Logged in user, or throw exception.
      * This is a call by prevention where the calls will be made to this method after one
      * validation that the user is logged in. This is the safe approach to code that assumes logged in.

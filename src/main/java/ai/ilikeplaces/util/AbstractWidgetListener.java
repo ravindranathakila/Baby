@@ -157,22 +157,24 @@ public abstract class AbstractWidgetListener<T> {
         criteria = null;
         this.itsNatDocument_ = request__.getItsNatDocument();
 
-        itsNatDocument_.addEventListener(new EventListener() {
-            @Override
-            public void handleEvent(Event evt) {
-                /*itsNatDocument_.addCodeToSend("\n" + "alert("
-                        + "'"
-                        + itsNatDocument_.getItsNatDocumentTemplate().getName()
-                        + ","
-                        + ((Element) evt.getCurrentTarget()).getAttribute(MarkupTag.GENERIC.id()).replaceAll("\\d*$", "")
-                        + ","
-                        + evt.getType()
-                        + "'"
-                        + ");" + "\n");*/
-
-                itsNatDocument_.addCodeToSend("_gaq.push(['_trackEvent', '" + page.name() + "', '" + evt.getType() + "', '" + ((Element) evt.getCurrentTarget()).getAttribute(MarkupTag.GENERIC.id()).replaceAll("\\d*$", "") + "']);");
-            }
-        });
+//        itsNatDocument_.addEventListener(new EventListener() {
+//            @Override
+//            public void handleEvent(Event evt) {
+//                /*itsNatDocument_.addCodeToSend("\n" + "alert("
+//                        + "'"
+//                        + itsNatDocument_.getItsNatDocumentTemplate().getName()
+//                        + ","
+//                        + ((Element) evt.getCurrentTarget()).getAttribute(MarkupTag.GENERIC.id()).replaceAll("\\d*$", "")
+//                        + ","
+//                        + evt.getType()
+//                        + "'"
+//                        + ");" + "\n");*/
+//
+//                if (evt.getCurrentTarget() instanceof Element) {
+//                    itsNatDocument_.addCodeToSend("_gaq.push(['_trackEvent', '" + page.name() + "', '" + evt.getType() + "', '" + ((Element) evt.getCurrentTarget()).getAttribute(MarkupTag.GENERIC.id()).replaceAll("\\d*$", "") + "']);");
+//                }
+//            }
+//        });
 
         this.itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument_;
         this.hTMLDocument_ = itsNatHTMLDocument_.getHTMLDocument();
