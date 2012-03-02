@@ -63,6 +63,54 @@ import static ai.ilikeplaces.util.Loggers.LEVEL;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class SmartLogger extends Thread {
 
+    //Let's experiment with ThreadLocal :-P
+
+    final private static ThreadLocal<SmartLogger> smartLoggerThreadLocal = new ThreadLocal<SmartLogger>() {
+        /**
+         * Returns the current thread's "initial value" for this
+         * thread-local variable.  This method will be invoked the first
+         * time a thread accesses the variable with the {@link #get}
+         * method, unless the thread previously invoked the {@link #set}
+         * method, in which case the <tt>initialValue</tt> method will not
+         * be invoked for the thread.  Normally, this method is invoked at
+         * most once per thread, but it may be invoked again in case of
+         * subsequent invocations of {@link #remove} followed by {@link #get}.
+         * <p/>
+         * <p>This implementation simply returns <tt>null</tt>; if the
+         * programmer desires thread-local variables to have an initial
+         * value other than <tt>null</tt>, <tt>ThreadLocal</tt> must be
+         * subclassed, and this method overridden.  Typically, an
+         * anonymous inner class will be used.
+         *
+         * @return the initial value for this thread-local
+         */
+        @Override
+        protected synchronized SmartLogger initialValue() {
+            return SmartLogger.start(LEVEL.INFO, "SL STARTING FOR THREAD ID:" + Thread.currentThread().getId(), 0, "SL:" + Thread.currentThread().getId(), null);
+        }
+
+        /**
+         * Returns the value in the current thread's copy of this
+         * thread-local variable.  If the variable has no value for the
+         * current thread, it is first initialized to the value returned
+         * by an invocation of the {@link #initialValue} method.
+         *
+         * @return the current thread's value of this thread-local
+         */
+        @Override
+        public SmartLogger get() {
+            final SmartLogger smartLogger = super.get();
+            if (smartLogger.hasCompleted()) {
+                remove();
+            }
+            return super.get();
+        }
+    };
+
+    public static SmartLogger g() {
+        return smartLoggerThreadLocal.get();
+    }
+
     private static final String LOGGER_HAS_ALREADY_BEEN_COMPLETED = "Logger has already been completed!";
     private static final String LOGGER_HAS_ALREADY_BEEN_COMPLETED_UNDER_TIMEOUT_LOGGING = "Logger has already been completed under timeout logging.";
     private static final String SORRY_I_POSSIBLY_FAILED_TO_LOG = "SORRY! I POSSIBLY FAILED TO LOG:";
@@ -96,7 +144,7 @@ final public class SmartLogger extends Thread {
      * @param timeout
      * @param startMsg_calcExecTime
      */
-    public SmartLogger(final LEVEL logLevel, final String logMessage, final long timeout, final Object... startMsg_calcExecTime) {
+    private SmartLogger(final LEVEL logLevel, final String logMessage, final long timeout, final Object... startMsg_calcExecTime) {
         if (startMsg_calcExecTime.length == 2) {  //Placing this IF above as we need to log time asap.
             if (startMsg_calcExecTime[1] != null) {
                 if ((Boolean) startMsg_calcExecTime[1]) {
@@ -143,8 +191,12 @@ final public class SmartLogger extends Thread {
         }
     }
 
+    /**
+     *
+     * @return Updates and returns log status to be false if no logging was done before. Subsequent calls will return true;
+     */
     private synchronized boolean status() {
-        return !(logged = !logged);//hehe, tricky. :D
+        return !logged ? !(logged = true) : !logged;//hehe, tricky. :D
     }
 
     /**
@@ -290,5 +342,17 @@ final public class SmartLogger extends Thread {
      */
     public void complete(final String completeStatus) {
         complete(level, completeStatus);
+    }
+
+    public boolean isTimed() {
+        return sleep > 0;
+    }
+
+    public boolean hasTimedOut() {
+        return sleep == -1;
+    }
+
+    public boolean hasCompleted() {
+        return logged;
     }
 }

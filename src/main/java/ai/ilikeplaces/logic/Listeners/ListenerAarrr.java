@@ -7,6 +7,7 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractListener;
 import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.SmartLogger;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -29,7 +30,6 @@ import static ai.ilikeplaces.servlets.Controller.Page.Skeleton_login_widget;
 public class ListenerAarrr implements ItsNatServletRequestListener {
 
 
-    final static private Logger logger = LoggerFactory.getLogger(ListenerAarrr.class);
     final static protected String LocationId = RBGet.globalConfig.getString("LOCATIONID");
 
     /**
@@ -55,42 +55,18 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
                 };
 
                 new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
+                new Juice(request__, new JuiceCriteria(), $(Controller.Page.AarrrJuice));
 
                 if (getUsername() != null) {
-//                    new DownTownFlow(
-//                            request__,
-//                            new DownTownFlowCriteria()
-//                                    .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS)
-//                                    .setHumanId(new HumanId(getUsernameAsValid()))
-//                                    .setHumanUserLocal(getHumanUserAsValid()),
-//                            $(Controller.Page.AarrrColumn1));
-//                    new DownTownFlow(
-//                            request__,
-//                            new DownTownFlowCriteria()
-//                                    .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.TRIBES)
-//                                    .setHumanId(new HumanId(getUsernameAsValid()))
-//                                    .setHumanUserLocal(getHumanUserAsValid()),
-//                            $(Controller.Page.AarrrColumn2));
-//                    new DownTownFlow(
-//                            request__,
-//                            new DownTownFlowCriteria()
-//                                    .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.MOMENTS)
-//                                    .setHumanId(new HumanId(getUsernameAsValid()))
-//                                    .setHumanUserLocal(getHumanUserAsValid()),
-//                            $(Controller.Page.AarrrColumn3));
-//                    new DownTownFlow(
-//                            request__,
-//                            new DownTownFlowCriteria()
-//                                    .setDownTownFlowDisplayComponent(DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS)
-//                                    .setHumanId(new HumanId(getUsernameAsValid()))
-//                                    .setHumanUserLocal(getHumanUserAsValid()),
-//                            $(Controller.Page.AarrrColumn4));
+                    displayNone($(Controller.Page.AarrrJuice));
+                    displayBlock($(Controller.Page.AarrrDownTownHeatMap));
                 } else {
-                    new Juice(request__, new JuiceCriteria(), $(Controller.Page.AarrrJuice));
+                    displayBlock($(Controller.Page.AarrrJuice));
+                    displayNone($(Controller.Page.AarrrDownTownHeatMap));
                 }
 
 
-                sl.complete(Loggers.LEVEL.SERVER_STATUS, Loggers.DONE);
+                SmartLogger.g().complete(Loggers.LEVEL.SERVER_STATUS, Loggers.DONE);
             }
 
             /**
@@ -101,14 +77,5 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
 
             }
         };
-    }
-
-    /**
-     * @param showChangeLog__
-     * @return changeLog
-     */
-    public String toString(final boolean showChangeLog__) {
-        String changeLog = toString() + "\n";
-        return showChangeLog__ ? changeLog : toString();
     }
 }

@@ -73,7 +73,8 @@ public abstract class
      */
     @SuppressWarnings("unchecked")
     public AbstractListener(final ItsNatServletRequest request_, final Object... initArgs) {
-        sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, INITIALIZING_LISTENER, 10000, null, true);
+        //sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, INITIALIZING_LISTENER, 10000, null, true);
+        sl = SmartLogger.g();
         this.itsNatDocument = request_.getItsNatDocument();
 
         itsNatDocument.addEventListener(new EventListener() {
@@ -90,7 +91,7 @@ public abstract class
                         + ");" + "\n");*/
 
                 if (evt.getCurrentTarget() instanceof Element) {
-                    itsNatDocument.addCodeToSend("_gaq.push(['_trackEvent', '" + ((ItsNatEvent)evt).getItsNatDocument().getItsNatDocumentTemplate().getName() + "', '" + evt.getType() + "', '" + ((Element) evt.getCurrentTarget()).getAttribute(MarkupTag.GENERIC.id()).replaceAll("\\d*$", "") + "']);");
+                    itsNatDocument.addCodeToSend("_gaq.push(['_trackEvent', '" + ((ItsNatEvent) evt).getItsNatDocument().getItsNatDocumentTemplate().getName() + "', '" + evt.getType() + "', '" + ((Element) evt.getCurrentTarget()).getAttribute(MarkupTag.GENERIC.id()).replaceAll("\\d*$", "") + "']);");
                 }
             }
         });

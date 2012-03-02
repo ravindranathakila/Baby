@@ -5,6 +5,7 @@ import ai.ilikeplaces.logic.Listeners.widgets.Bate;
 import ai.ilikeplaces.logic.Listeners.widgets.legal.PrivacyPolicy;
 import ai.ilikeplaces.logic.Listeners.widgets.legal.TermsOfServices;
 import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.SmartLogger;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -42,7 +43,7 @@ public class ListenerMuster implements ItsNatServletRequestListener {
 
                 new Bate(request__,$(Skeleton_center_content)){};
 
-                sl.complete(Loggers.LEVEL.DEBUG, Loggers.DONE);//Request completed within timeout. If not, goes to LEVEL.SERVER_STATUS
+                SmartLogger.g().complete(Loggers.LEVEL.DEBUG, Loggers.DONE);//Request completed within timeout. If not, goes to LEVEL.SERVER_STATUS
             }
 
             @Override

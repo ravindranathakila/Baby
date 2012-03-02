@@ -121,7 +121,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
 
             sendMail:
             {
-                final SmartLogger sl = new SmartLogger(
+                final SmartLogger sl = SmartLogger.start(
                         LEVEL.INFO, Loggers.CODE_MAIL +
                                 "SENDING A MAIL TO THE FOLLOWING USERS:" + Arrays.toString(message.getAllRecipients()),
                         3000,

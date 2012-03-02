@@ -44,7 +44,7 @@ public class HotspotAnalyzer {
     private int arrayWSize;
     private int arrayHSize;
 
-    final SmartLogger sl = new SmartLogger(Loggers.LEVEL.DEBUG, "HotspotAnalyzer", 5000, "started", true);
+    final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.DEBUG, "HotspotAnalyzer", 5000, "started", true);
     private static final String BYTES = " Bytes";
     private static final String GENERATE_HOTSPOTS_RAWSPOTS_AVERAGE_DONE_DONE = "generateHotspots rawspots average done done - ";
     private static final String GENERATE_HOTSPOTS_RAWSPOTS_ADDITION_DONE = "generateHotspots rawspots addition done - ";

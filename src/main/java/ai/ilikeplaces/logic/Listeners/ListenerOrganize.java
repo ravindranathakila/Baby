@@ -134,6 +134,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                         try {
                                             UCIntroduction:
                                             {
+                                                SmartLogger.g().appendToLogMSG("Mode: ModeIntroduction");
 
                                                 /*//We are abandonning this to use an image instead
                                                 $(SkeletonCPageTitle).setTextContent(GUI.getString(ORGANIZE_MAIN_TITLE));
@@ -171,6 +172,8 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                 case Controller.Page.DocOrganizeModeOrganize:
                                     UCOrganize:
                                     {
+                                        SmartLogger.g().appendToLogMSG("Mode: " +Controller.Page.DocOrganizeModeOrganize);
+
                                         try {
                                             new PrivateLocationCreate(request__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
                                             };
@@ -186,6 +189,9 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                 case ModeCreatePlace:
                                     UCCretePlace:
                                     {
+
+                                        SmartLogger.g().appendToLogMSG("Mode: ModeCreatePlace");
+
                                         try {
                                             new PrivateLocationCreate(request__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
                                             };
@@ -197,6 +203,9 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                 case Controller.Page.DocOrganizeModeLocation:
                                     UCLocation:
                                     {
+
+                                        SmartLogger.g().appendToLogMSG("Mode: " + Controller.Page.DocOrganizeModeLocation);
+
                                         @NOTE(note = "Outside try as this is caught by the outermost common Number format exception.")
                                         final int location = Integer.parseInt(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeLocation));
                                         try {
@@ -212,6 +221,9 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                 case Controller.Page.DocOrganizeModePrivateLocation:
                                     UCPrivateLocation:
                                     {
+
+                                        SmartLogger.g().appendToLogMSG("Mode: " + Controller.Page.DocOrganizeModePrivateLocation);
+
                                         try {
                                             @NOTE(note = "Outside try as this is caught by the outermost common Number format exception.")
                                             final long requestedPrivateLocation = Long.parseLong(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeLocation));
@@ -255,6 +267,9 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                     }
                                     break;
                                 case Controller.Page.DocOrganizeModeEvent: {
+
+                                    SmartLogger.g().appendToLogMSG("Mode: " + Controller.Page.DocOrganizeModeEvent);
+
                                     @NOTE(note = "Outside try as this is caught by the outermost common Number format exception.")
                                     final long requestedPrivateLocation = Long.parseLong(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeLocation));
 
@@ -323,13 +338,15 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                             }
                         } catch (
                                 final NumberFormatException e_) {
+                            SmartLogger.g().appendToLogMSG(e_.getMessage());
                             USER_EXCEPTION.error("", e_);
                         }
                     }
                 } else {
+                    SmartLogger.g().appendToLogMSG("Appending TeachMoment");
                     new TeachMoment(request__, new TeachMomentCriteria(null), $(Controller.Page.Skeleton_center_content));
                 }
-                sl.complete(LEVEL.DEBUG, Loggers.DONE);//Request completed within timeout. If not, goes to LEVEL.SERVER_STATUS
+                SmartLogger.g().complete(Loggers.DONE);//Request completed within timeout. If not, goes to LEVEL.SERVER_STATUS
             }
 
 

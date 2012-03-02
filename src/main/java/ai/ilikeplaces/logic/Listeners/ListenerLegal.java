@@ -10,10 +10,7 @@ import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.util.EventType;
-import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.MarkupTag;
-import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -60,7 +57,7 @@ public class ListenerLegal implements ItsNatServletRequestListener {
                 new TermsOfServices(request__,$(Skeleton_center_content)){};
                 new PrivacyPolicy(request__,$(Skeleton_center_content)){};
 
-                sl.complete(Loggers.LEVEL.DEBUG, Loggers.DONE);//Request completed within timeout. If not, goes to LEVEL.SERVER_STATUS
+                SmartLogger.g().complete(Loggers.LEVEL.DEBUG, Loggers.DONE);//Request completed within timeout. If not, goes to LEVEL.SERVER_STATUS
             }
 
             @Override

@@ -13,6 +13,7 @@ import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.ElementComposer;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MarkupTag;
+import ai.ilikeplaces.util.SmartLogger;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -66,20 +67,20 @@ public class ListenerI implements ItsNatServletRequestListener {
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
                 //itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor);
 
-                sl.appendToLogMSG("Returning I Page");
+                SmartLogger.g().appendToLogMSG("Returning I Page");
 
 
                 final String requestedProfile = DB.getHumanCRUDHumanLocal(true).doDirtyProfileFromURL(request__.getServletRequest().getParameter(USER_PROFILE)).returnValueBadly();
 
 
-                sl.appendToLogMSG("Requested Profile:" + requestedProfile);
+                SmartLogger.g().appendToLogMSG("Requested Profile:" + requestedProfile);
 
                 if (getUsername() == null) {
-                    sl.complete(Loggers.LEVEL.DEBUG, "No Login." + Loggers.DONE);
+                    SmartLogger.g().complete(Loggers.LEVEL.DEBUG, "No Login." + Loggers.DONE);
                     redirectToSomeOtherPage(response__);
                 } else {//User is logged on, now other things
                     if (requestedProfile == null) {//This user isn't alive
-                        sl.complete(Loggers.LEVEL.DEBUG, "No Such Live User." + Loggers.DONE);
+                        SmartLogger.g().complete(Loggers.LEVEL.DEBUG, "No Such Live User." + Loggers.DONE);
                         redirectToSomeOtherPage(response__);
                     } else {//This user should be a friend
                         //Be careful who checks who here. this user should have been added by the profile we are visiting as friend.(asymetric friend addition)
@@ -160,9 +161,9 @@ public class ListenerI implements ItsNatServletRequestListener {
                                     }
                                 }
                             }
-                            sl.complete(Loggers.LEVEL.DEBUG, VIEW_FRIEND_SUCCESSFUL + Loggers.DONE);
+                            SmartLogger.g().complete(Loggers.LEVEL.DEBUG, VIEW_FRIEND_SUCCESSFUL + Loggers.DONE);
                         } else {
-                            sl.complete(Loggers.LEVEL.DEBUG, NOT_FRIEND + Loggers.DONE);
+                            SmartLogger.g().complete(Loggers.LEVEL.DEBUG, NOT_FRIEND + Loggers.DONE);
                             redirectToSomeOtherPage(response__);
                         }
                     }

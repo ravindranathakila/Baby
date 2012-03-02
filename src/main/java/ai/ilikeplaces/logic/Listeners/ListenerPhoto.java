@@ -8,10 +8,7 @@ import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.util.EventType;
-import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.MarkupTag;
-import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -122,7 +119,7 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
                         $(Controller.Page.SkeletonCPageNotice).setTextContent(r.returnMsg());
                     }
                 }
-                sl.complete("Done loading photo page");
+                SmartLogger.g().complete("Done loading photo page");
 
             }
 
