@@ -3,6 +3,8 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.logic.validators.unit.GeoCoord;
+import ai.ilikeplaces.logic.validators.unit.VDouble;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
 import com.google.gdata.data.geo.impl.W3CPoint;
@@ -23,10 +25,10 @@ import javax.ejb.Remote;
 public interface HumanCRUDPrivateLocationLocal {
     final static public String NAME = HumanCRUDPrivateLocationLocal.class.getSimpleName();
 
-    @Deprecated
-    public Return<PrivateLocation> cPrivateLocation(final RefObj<String> humanId, final String privateLocationName, final String privateLocationInfo);
+//    @Deprecated
+//    public Return<PrivateLocation> cPrivateLocation(final RefObj<String> humanId, final String privateLocationName, final String privateLocationInfo);
 
-    public Return<PrivateLocation> cPrivateLocation(final RefObj<String> humanId, final RefObj<String> privateLocationName, final RefObj<String> privateLocationInfo, final RefObj<W3CPoint> woeid);
+    public Return<PrivateLocation> cPrivateLocation(final RefObj<String> humanId, final RefObj<String> privateLocationName, final RefObj<String> privateLocationInfo, final VDouble latitude, final VDouble longitude);
 
     public Return<PrivateLocation> dirtyRPrivateLocationAsAny(final RefObj<String> humanId, final long privateLocationId);
 

@@ -7,17 +7,20 @@ import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
+import ai.ilikeplaces.logic.validators.unit.VDouble;
 
 public class UserIntroduction {
     public static void createIntroData(HumanId newUser) {
 
         SettingMoment:
         {
+            GeoCoord geoCoord = new GeoCoord().setObj("27.17311262887182", "78.04209488227843");
             final Return<PrivateLocation> privateLocationReturn = DB.getHumanCrudPrivateLocationLocal(false).cPrivateLocation(
                     newUser,
                     new SimpleString("Taj Mahal"),
                     new SimpleString("The symbol of love"),
-                    (new GeoCoord().setObj("27.17311262887182,78.04209488227843")));
+                    new VDouble(geoCoord.getObjectAsValid().getLatitude()),
+                    new VDouble(geoCoord.getObjectAsValid().getLongitude()));
 
             final Return<PrivateEvent> privateEventReturn = DB.getHumanCrudPrivateEventLocal(false).cPrivateEvent(
                     newUser.getHumanId(),

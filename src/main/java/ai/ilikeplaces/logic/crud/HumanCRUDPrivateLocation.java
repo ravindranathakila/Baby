@@ -8,6 +8,9 @@ import ai.ilikeplaces.logic.crud.unit.CPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.DPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.RPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.UPrivateLocationLocal;
+import ai.ilikeplaces.logic.validators.unit.GeoCoord;
+import ai.ilikeplaces.logic.validators.unit.VDouble;
+import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.util.*;
 import com.google.gdata.data.geo.impl.W3CPoint;
 
@@ -54,28 +57,28 @@ public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements Hu
     private static final String UPDATE_PRIVATE_LOCATION_FAILED = "Update private location FAILED!";
 
 
-    @Deprecated
-    @Override
-    public Return<PrivateLocation> cPrivateLocation(final RefObj<String> humanId, final String privateLocationName, final String privateLocationInfo) {
-        Return<PrivateLocation> r;
-        try {
-            r = new ReturnImpl<PrivateLocation>(cPrivateLocationLocal.doNTxCPrivateLocation(humanId.getObjectAsValid(), privateLocationName, privateLocationInfo), SAVE_PRIVATE_LOCATION_SUCCESSFUL);
-        } catch (final AbstractEjbApplicationException t) {
-            r = new ReturnImpl<PrivateLocation>(t, UPDATE_PRIVATE_LOCATION_FAILED, true);
-        }
-        return r;
-    }
+//    @Deprecated
+//    @Override
+//    public Return<PrivateLocation> cPrivateLocation(final RefObj<String> humanId, final String privateLocationName, final String privateLocationInfo) {
+//        Return<PrivateLocation> r;
+//        try {
+//            r = new ReturnImpl<PrivateLocation>(cPrivateLocationLocal.doNTxCPrivateLocation(humanId.getObjectAsValid(), privateLocationName, privateLocationInfo), SAVE_PRIVATE_LOCATION_SUCCESSFUL);
+//        } catch (final AbstractEjbApplicationException t) {
+//            r = new ReturnImpl<PrivateLocation>(t, UPDATE_PRIVATE_LOCATION_FAILED, true);
+//        }
+//        return r;
+//    }
 
     @Override
-    public Return<PrivateLocation> cPrivateLocation(final RefObj<String> humanId, final RefObj<String> privateLocationName, final RefObj<String> privateLocationInfo, final RefObj<W3CPoint> woeid) {
+    public Return<PrivateLocation> cPrivateLocation(final RefObj<String> humanId, final RefObj<String> privateLocationName, final RefObj<String> privateLocationInfo, final VDouble latitude, final VDouble longitude) {
         Return<PrivateLocation> r;
         try {
             r = new ReturnImpl<PrivateLocation>(cPrivateLocationLocal.doNTxCPrivateLocation(
                     humanId.getObjectAsValid(),
                     privateLocationName.getObjectAsValid(),
                     privateLocationInfo.getObjectAsValid(),
-                    woeid.getObjectAsValid().getLatitude(),
-                    woeid.getObjectAsValid().getLongitude()
+                    latitude.getObjectAsValid(),
+                    longitude.getObjectAsValid()
             ), SAVE_PRIVATE_LOCATION_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateLocation>(t, UPDATE_PRIVATE_LOCATION_FAILED, true);

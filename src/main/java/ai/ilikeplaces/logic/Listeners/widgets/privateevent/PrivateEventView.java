@@ -126,7 +126,7 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
                 new AlbumManager(request, $$(PrivateEventViewIds.privateEventViewAlbum), humanId, r.returnValue());
 
                 final GeoCoord gc = new GeoCoord();
-                gc.setObj(r.returnValue().getPrivateLocation().getPrivateLocationLatitude() + "," + r.returnValue().getPrivateLocation().getPrivateLocationLongitude());
+                gc.setObj(r.returnValue().getPrivateLocation().getPrivateLocationLatitude() , r.returnValue().getPrivateLocation().getPrivateLocationLongitude());
                 gc.validateThrow();
 
                 $$(PrivateEventViewIds.privateEventViewLocationMap).setAttribute(MarkupTag.IMG.src(),

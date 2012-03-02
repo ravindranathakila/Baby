@@ -5,10 +5,7 @@ import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.validators.unit.GeoCoord;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.logic.validators.unit.Info;
-import ai.ilikeplaces.logic.validators.unit.SimpleName;
+import ai.ilikeplaces.logic.validators.unit.*;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
@@ -109,7 +106,14 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
                     woeid = new GeoCoord().setObj($$(request, WOEHINT));
                     final List<PrivateLocation> privateLocations = DB.getHumanCRUDHumanLocal(false).doDirtyRHumansPrivateLocation(humanId).returnValue().getPrivateLocationsOwned();
 
+                    LogNull.logThrow(privateLocations);
+
+                    LogNull.logThrow(woeid.getObjectAsValid());
+
                     for (final PrivateLocation privateLocation : privateLocations) {
+
+                        Loggers.info(privateLocation.toString());
+                        Loggers.info(woeid.toString());
 
                         if (privateLocation.getPrivateLocationLatitude() - 0.000133145585763375 < woeid.getObjectAsValid().getLatitude() &&
                                 privateLocation.getPrivateLocationLatitude() + 0.000133145585763375 > woeid.getObjectAsValid().getLatitude() &&
@@ -140,7 +144,8 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
                                 humanId,
                                 privateLocationName,
                                 privateLocationInfo,
-                                woeid);
+                                new VDouble(woeid.getObjectAsValid().getLatitude()),
+                                new VDouble(woeid.getObjectAsValid().getLongitude()));
                         if (r.returnStatus() == 0) {
                             itsNatDocument_.addCodeToSend(JSCodeToSend.redirectPageWithURL(
                                     new Parameter(Controller.Page.Organize.getURL())

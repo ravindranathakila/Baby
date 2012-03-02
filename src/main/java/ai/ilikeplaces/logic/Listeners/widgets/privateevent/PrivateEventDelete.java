@@ -110,7 +110,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                 new AlbumManager(request, $$(PrivateEventDeleteIds.privateEventDeleteAlbum), humanId, privateEventReturn.returnValue());
 
                 final GeoCoord gc = new GeoCoord();
-                gc.setObj(privateEventReturn.returnValue().getPrivateLocation().getPrivateLocationLatitude() + "," + privateEventReturn.returnValue().getPrivateLocation().getPrivateLocationLongitude());
+                gc.setObj(privateEventReturn.returnValue().getPrivateLocation().getPrivateLocationLatitude(), privateEventReturn.returnValue().getPrivateLocation().getPrivateLocationLongitude());
                 gc.validateThrow();
 
                 $$(PrivateEventDeleteIds.privateEventDeleteLocationMap).setAttribute(MarkupTag.IMG.src(),

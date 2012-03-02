@@ -95,7 +95,7 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
             SetLocationMap:
             {
                 final GeoCoord gc = new GeoCoord();
-                gc.setObj(r.returnValue().getPrivateLocationLatitude() + "," + r.returnValue().getPrivateLocationLongitude());
+                gc.setObj(r.returnValue().getPrivateLocationLatitude() , r.returnValue().getPrivateLocationLongitude());
                 gc.validateThrow();
 
                 $$(privateLocationDeleteLocationMap).setAttribute(MarkupTag.IMG.src(),

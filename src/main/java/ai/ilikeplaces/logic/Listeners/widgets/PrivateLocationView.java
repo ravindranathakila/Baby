@@ -144,7 +144,8 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
             SetLocationMap:
             {
                 final GeoCoord gc = new GeoCoord();
-                gc.setObj(r.returnValue().getPrivateLocationLatitude() + "," + r.returnValue().getPrivateLocationLongitude());
+                Loggers.info(r.returnValue().toString());
+                gc.setObj(r.returnValue().getPrivateLocationLatitude(), r.returnValue().getPrivateLocationLongitude());
                 gc.validateThrow();
 
                 $$(privateLocationViewLocationMap).setAttribute(MarkupTag.IMG.src(),

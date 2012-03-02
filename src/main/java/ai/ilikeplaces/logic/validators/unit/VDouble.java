@@ -1,10 +1,8 @@
 package ai.ilikeplaces.logic.validators.unit;
 
 import ai.ilikeplaces.util.Obj;
-import ai.ilikeplaces.util.RefObj;
 import net.sf.oval.Validator;
 import net.sf.oval.configuration.annotation.IsInvariant;
-import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.NotNull;
 
 /**
@@ -15,29 +13,29 @@ import net.sf.oval.constraint.NotNull;
  * Date: 10/27/11
  * Time: 7:10 PM
  */
-public class VLong extends Obj<Long> {
+public class VDouble extends Obj<Double> {
 
-    public VLong(final Long aLong) {
-        super(aLong);
+    public VDouble(final Double aDouble) {
+        super(aDouble);
     }
 
-    public VLong() {
-    }
-
-    @Override
-    public VLong getSelfAsValid(final Validator... validator) {
-        return (VLong) super.getSelfAsValid(validator);
+    public VDouble() {
     }
 
     @Override
-    public VLong setObjAsValid(final Long obj) {
-        return (VLong) super.setObjAsValid(obj);
+    public VDouble getSelfAsValid(final Validator... validator) {
+        return (VDouble) super.getSelfAsValid(validator);
+    }
+
+    @Override
+    public VDouble setObjAsValid(final Double obj) {
+        return (VDouble) super.setObjAsValid(obj);
     }
 
     @IsInvariant
     @NotNull
     @Override
-    public Long getObj() {
+    public Double getObj() {
         return obj;
     }
 }

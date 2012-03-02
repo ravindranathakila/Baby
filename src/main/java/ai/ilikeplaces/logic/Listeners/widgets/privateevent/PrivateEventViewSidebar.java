@@ -87,7 +87,7 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
 
 
         final GeoCoord gc = new GeoCoord();
-        gc.setObj(privateEvent.getPrivateLocation().getPrivateLocationLatitude() + "," + privateEvent.getPrivateLocation().getPrivateLocationLongitude());
+        gc.setObj(privateEvent.getPrivateLocation().getPrivateLocationLatitude(), privateEvent.getPrivateLocation().getPrivateLocationLongitude());
         gc.validateThrow();
         $$(Page.private_event_view_sidebar_name).setTextContent(privateEvent.getPrivateEventName());
 
