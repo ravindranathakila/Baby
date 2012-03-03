@@ -994,11 +994,7 @@ final public class
                 Controller.Page.AarrrDownTownHeatMap,
                 Controller.Page.AarrrJuice,
                 Controller.Page.AarrrWOEID,
-                Controller.Page.AarrrHeader,
-                Controller.Page.AarrrColumn1,
-                Controller.Page.AarrrColumn2,
-                Controller.Page.AarrrColumn3,
-                Controller.Page.AarrrColumn4
+                Controller.Page.AarrrHeader
         ) {
             @Override
             public String getURL() {
