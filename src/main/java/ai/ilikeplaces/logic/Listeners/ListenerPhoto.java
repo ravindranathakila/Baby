@@ -78,7 +78,7 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
                     }
                     sideBarFriends:
                     {
-                        setSideBarFriends(request__, DownTownFlowCriteria.DownTownFlowDisplayComponent.TRIBES);
+                        setSideBarFriends(request__, DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS);
                     }
                     signinupActionNotice:
                     {
