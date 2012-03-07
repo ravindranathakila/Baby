@@ -85,7 +85,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                 {
                     setLoginWidget:
                     {
-                        setLoginWidget(request__);
+                        setLoginWidget(request__, SignInOnCriteria.SignInOnDisplayComponent.MOMENTS);
                     }
 
                     setTitle:

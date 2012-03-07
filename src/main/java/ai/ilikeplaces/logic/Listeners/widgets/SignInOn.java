@@ -33,7 +33,7 @@ import javax.servlet.http.HttpSession;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-abstract public class SignInOn extends AbstractWidgetListener {
+abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> {
 // ------------------------------ FIELDS ------------------------------
 
     private static final String TRUE = "true";
@@ -58,19 +58,19 @@ abstract public class SignInOn extends AbstractWidgetListener {
         signinonSubmit,
         signinonNotice,
         signinon_autoplay,
-        Global_Profile_Link
+        Global_Profile_Link,
+        signinonBG
     }
 
 // --------------------------- CONSTRUCTORS ---------------------------
 
     /**
      * @param request__
+     * @param signInOnCriteria__
      * @param appendToElement__
-     * @param humanId
-     * @param request
      */
-    public SignInOn(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId, final ServletRequest request) {
-        super(request__, Page.SignInOn, appendToElement__, humanId);
+    public SignInOn(final ItsNatServletRequest request__, final Element appendToElement__, final SignInOnCriteria signInOnCriteria__) {
+        super(request__, Page.SignInOn, signInOnCriteria__, appendToElement__);
     }
 
 // ------------------------ CANONICAL METHODS ------------------------
@@ -81,15 +81,20 @@ abstract public class SignInOn extends AbstractWidgetListener {
             "Also, note that we have a policy of redirecting the user to the refer. " +
             "You will also have to make sure both online and offline modes are available.")
     @Override
-    protected void init(final Object... initArgs) {
+    protected void init(final SignInOnCriteria signInOnCriteria) {
         registerUserNotifier($$(SignInOnIds.signinonNotice));
 
-        username = (HumanId) initArgs[0];
+        username = signInOnCriteria.getHumanId();
         password = new Password();
         dbHash = new SimpleString("");
         dbSalt = new SimpleString("");
         userOk = new Obj<Boolean>(false);
         existButNotActive = new Obj<Boolean>(false);
+
+        UCSetCSSBasedOnURL:
+        {
+            $$setClass($$(SignInOnIds.signinonBG), criteria.getSignInOnDisplayComponent().toString(), false);
+        }
 
         if (username.validate() == 0) {
             UCSetGlobalProfileLink:

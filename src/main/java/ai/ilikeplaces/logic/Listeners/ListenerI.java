@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.logic.Listeners.widgets.FriendAdd;
+import ai.ilikeplaces.logic.Listeners.widgets.SignInOnCriteria;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall;
 import ai.ilikeplaces.logic.crud.DB;
@@ -90,7 +91,7 @@ public class ListenerI implements ItsNatServletRequestListener {
                             {
                                 setLoginWidget:
                                 {
-                                    setLoginWidget((ItsNatServletRequest) initArgs[0]);
+                                    setLoginWidget((ItsNatServletRequest) initArgs[0], SignInOnCriteria.SignInOnDisplayComponent.TALKS);
                                 }
 
                                 signOnDisplayLink:

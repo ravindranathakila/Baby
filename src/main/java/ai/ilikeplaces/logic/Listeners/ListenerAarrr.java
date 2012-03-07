@@ -56,7 +56,10 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
                 final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
 
 
-                new SignInOn(request__, $(Controller.Page.AarrrHeader), new HumanId(getUsername()), request__.getServletRequest()) {
+                new SignInOn(request__, $(Controller.Page.AarrrHeader),
+                        new SignInOnCriteria()
+                                .setHumanId(new HumanId(getUsername()))
+                                .setSignInOnDisplayComponent(SignInOnCriteria.SignInOnDisplayComponent.HOME)) {
                 };
 
                 new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());

@@ -45,7 +45,7 @@ public class ListenerTribes implements ItsNatServletRequestListener {
                 {
                     setLoginWidget:
                     {
-                        setLoginWidget(request__);
+                        setLoginWidget(request__, SignInOnCriteria.SignInOnDisplayComponent.TRIBES);
                     }
 
                     setTitle:

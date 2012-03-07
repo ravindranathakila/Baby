@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.LongMsg;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
+import ai.ilikeplaces.logic.Listeners.widgets.SignInOnCriteria;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.modules.Modules;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -189,7 +190,10 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     setLoginWidget:
                     {
                         try {
-                            new SignInOn(request__, $(Main_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
+                            new SignInOn(request__, $(Main_login_widget),
+                                    new SignInOnCriteria()
+                                            .setHumanId(new HumanId(getUsername()))
+                                            .setSignInOnDisplayComponent(SignInOnCriteria.SignInOnDisplayComponent.MOMENTS)) {
                             };
                         } catch (final Throwable t) {
                             sl.l(ERROR_IN_UC_SET_LOGIN_WIDGET, t);

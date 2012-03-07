@@ -8,7 +8,6 @@ import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
@@ -73,7 +72,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
         {
             setLoginWidget:
             {
-                setLoginWidget(request__);
+                setLoginWidget(request__, SignInOnCriteria.SignInOnDisplayComponent.TALKS);
             }
 
             setTitle:
@@ -129,11 +128,13 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_, final ItsNatDocument itsNatDocument__) {
     }
 
-    protected void setLoginWidget(final ItsNatServletRequest request__) {
+    protected void setLoginWidget(final ItsNatServletRequest request__, final SignInOnCriteria.SignInOnDisplayComponent signInOnDisplayComponent) {
         initStatus = true;
 
         try {
-            new SignInOn(request__, $(Skeleton_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
+            new SignInOn(request__, $(Skeleton_login_widget), new SignInOnCriteria()
+                    .setHumanId(new HumanId(getUsername()))
+                    .setSignInOnDisplayComponent(signInOnDisplayComponent)) {
             };
         } catch (final Throwable t) {
             EXCEPTION.error("{}", t);

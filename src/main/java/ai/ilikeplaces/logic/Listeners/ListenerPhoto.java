@@ -3,7 +3,9 @@ package ai.ilikeplaces.logic.Listeners;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.PrivatePhoto;
+import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria;
 import ai.ilikeplaces.logic.Listeners.widgets.Photo$Description;
+import ai.ilikeplaces.logic.Listeners.widgets.SignInOnCriteria;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
@@ -53,7 +55,41 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
             @Override
             @SuppressWarnings("unchecked")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
-                super.init(itsNatHTMLDocument__, hTMLDocument__, itsNatDocument__, initArgs);
+
+                layoutNeededForAllPages:
+                {
+                    setLoginWidget:
+                    {
+                        setLoginWidget(request__, SignInOnCriteria.SignInOnDisplayComponent.SNAPS);
+                    }
+
+                    setTitle:
+                    {
+                        //set below
+                    }
+
+                    setProfileLink:
+                    {
+                        setProfileLink();
+                    }
+                    setProfileDataLink:
+                    {
+                        setProfileDataLink();
+                    }
+                    sideBarFriends:
+                    {
+                        setSideBarFriends(request__, DownTownFlowCriteria.DownTownFlowDisplayComponent.TRIBES);
+                    }
+                    signinupActionNotice:
+                    {
+                        //We do nothing now
+                    }
+                    SetNotifications:
+                    {
+                        setNotifications();
+                    }
+                }
+
 
                 if (super.getUsername() != null) {
 
@@ -93,23 +129,6 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
                                         }
 
                                     }, false);
-
-                                    //Planned for removal. Now jquery handles loading the image
-                                    /*                itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.pd_photo), EventType.ONMOUSEOVER.toString(), new EventListener() {
-
-                                       boolean imageLoaded = false;
-
-                                       @Override
-                                       public void handleEvent(final Event evt_) {
-                                           if (!imageLoaded) {
-                                               $$(evt_).setAttribute(MarkupTag.IMG.src(), $$(evt_).getAttribute(MarkupTag.DIV.title()));
-                                               imageLoaded = true;//safety measure 1
-                                           }
-                                           remove(evt_.getTarget(), EventType.ONMOUSEOVER, this); //safety measure 2
-                                       }
-
-
-                                   }, false);*/
                                 }
                             };
                         }
