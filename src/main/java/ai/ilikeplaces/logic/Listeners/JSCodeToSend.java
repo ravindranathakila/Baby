@@ -62,7 +62,7 @@ final public class JSCodeToSend {
      * @return
      */
     public static String refreshPageIn(final int timeout) {
-        return "setTimeout('" + "window.location.href=window.location.href" + "'" + "," + timeout + ");\n";
+        return "setTimeout('" + "window.location.reload(true)'" + "," + timeout + ");\n";
     }
 
     /**
