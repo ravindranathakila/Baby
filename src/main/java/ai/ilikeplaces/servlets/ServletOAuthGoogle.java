@@ -76,10 +76,13 @@ public class ServletOAuthGoogle extends AbstractOAuth {
         init:
         {
             try {
-                p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
+                p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.RemoteInitialContextFactory");
+                p_.put(Context.PROVIDER_URL, "http://127.0.0.1:8080/openejb/ejb");
+
                 context = new InitialContext(p_);
 
-                singletonHashingRemote = (SingletonHashingRemote) context.lookup("SingletonHashingLocal");
+                singletonHashingRemote = (SingletonHashingRemote) context.lookup(SingletonHashingRemote.NAME);
+
                 if (singletonHashingRemote == null) {
                     log.append("\nVARIABLE singletonHashingRemote IS NULL! ");
                     log.append(singletonHashingRemote);
