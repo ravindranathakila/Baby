@@ -1,33 +1,17 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.TODO;
-import ai.ilikeplaces.entities.PrivatePhoto;
-import ai.ilikeplaces.logic.Listeners.widgets.Photo$Description;
 import ai.ilikeplaces.logic.Listeners.widgets.legal.PrivacyPolicy;
 import ai.ilikeplaces.logic.Listeners.widgets.legal.TermsOfServices;
-import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.rbs.RBGet;
-import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.html.ItsNatHTMLDocument;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
-import java.util.List;
-
 import static ai.ilikeplaces.servlets.Controller.Page.Skeleton_center_content;
-import static ai.ilikeplaces.servlets.Controller.Page.pd_photo;
-import static ai.ilikeplaces.servlets.Controller.Page.pd_photo_permalink;
 
 /**
  * @author Ravindranath Akila
@@ -44,7 +28,7 @@ public class ListenerLegal implements ItsNatServletRequestListener {
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
 
 
-        new AbstractSkeletonListener(request__) {
+        new AbstractSkeletonListener(request__, response__) {
 
             /**
              * Intialize your document here by appending fragments

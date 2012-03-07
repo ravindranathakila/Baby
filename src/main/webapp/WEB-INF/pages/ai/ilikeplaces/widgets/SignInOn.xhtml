@@ -97,54 +97,66 @@
         <!-- Only one of these 3 divs are visible -->
         <div class="use100" id="signinon_logon" style="height:78px;display:none;">
             <div class="use100"  style="height:78px;">
-            <div class="use100 inherit_height" style="background:url('/images/Metal.png') repeat-x;">
+            <div class="use100 inherit_height">
                 <div class="use40 inherit_height center" style="display:none;">
                     <div class="use100" style="height:28px;">&nbsp;</div>
                     <div class="use100" style="height:25px; color:red;text-transform: uppercase;font-weight:900;" id="Skeleton_notifications">&nbsp;</div>
                     <div class="use100" style="height:25px;">&nbsp;</div>
                 </div>
                 <div class="use20 inherit_height center" style="display:block;overflow:hidden;">
-                    <img class="vtip cursor_link center"
-                         style="height:100%;vertical-align:middle;cursor:pointer;"
-                         title="Go back to www.ilikeplaces.com"
-                         onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location=$('.profile_link').attr('href');});"
-                         src="/images/The Talk.png"
-                         alt="The Talk"
-                            />
-                    <a href="#" class="profile_link" id="Skeleton_othersidebar_wall_link" style="display:none;">&nbsp;
+                    <a href="#"
+                       onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location=$('.profile_link').attr('href');});"
+                            >
+                        <img class="vtip cursor_link center"
+                             style="height:100%;vertical-align:middle;cursor:pointer;"
+                             title="View Updates From Friends And Update Your Own Status"
+                             src="/images/The Talk.png"
+                             alt="The Talk"
+                                />
+                    </a>
+                    <a href="#" class="profile_link" id="Global_Profile_Link" style="display:none;">&nbsp;
                     </a>
                 </div>
                 <div class="use20 inherit_height center" style="display:block;overflow:hidden;">
-                    <img class="vtip cursor_link center"
-                         style="height:100%;vertical-align:middle;cursor:pointer;"
-                         id="Skeleton_othersidebar_places_link"
-                         title="Go back to www.ilikeplaces.com"
-                         onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location='/page/_tribes';});"
-                         src="/images/The Tribes.png"
-                         alt="The Talk"
-                            />
+                    <a href="/page/_tribes"
+                       onclick="javascript:$('.fade_out').fadeOut(1000, function() {});"
+                            >
+                        <img class="vtip cursor_link center"
+                             style="height:100%;vertical-align:middle;cursor:pointer;"
+                             id="Skeleton_othersidebar_places_link"
+                             title="Visit The Tribes And Hangout With Like Minded People"
+                             src="/images/The Tribes.png"
+                             alt="The Talk"
+                                />
+                    </a>
                 </div>
                 <div class="use20 inherit_height center" id="signinon_autoplay" style="overflow:hidden;">
 
                 </div>
                 <div class="use20 inherit_height center" style="display:block;overflow:hidden;">
-                    <img class="vtip cursor_link center"
-                         style="height:100%;vertical-align:middle;cursor:pointer;"
-                         id="Skeleton_othersidebar_organizer_link"
-                         title="Go back to www.ilikeplaces.com"
-                         onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location='/page/_org';});"
-                         src="/images/The Moments.png"
-                         alt="The Talk"
-                            />
+                    <a href="/page/_org"
+                       onclick="javascript:$('.fade_out').fadeOut(1000, function() {});"
+                            >
+                        <img class="vtip cursor_link center"
+                             style="height:100%;vertical-align:middle;cursor:pointer;"
+                             id="Skeleton_othersidebar_organizer_link"
+                             title="Visit The Moments And Have Fun"
+                             src="/images/The Moments.png"
+                             alt="The Talk"
+                                />
+                    </a>
                 </div>
                 <div class="use20 inherit_height center" style="display:block;overflow:hidden;">
-                    <img class="vtip cursor_link center"
-                         style="height:100%;vertical-align:middle;cursor:pointer;"
-                         title="Go back to www.ilikeplaces.com"
-                         onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location='/page/_me';});"
-                         src="/images/The Snaps.png"
-                         alt="The Talk"
-                            />
+                    <a href="/page/_me"
+                       onclick="javascript:$('.fade_out').fadeOut(1000, function() {});"
+                            >
+                        <img class="vtip cursor_link center"
+                             style="height:100%;vertical-align:middle;cursor:pointer;"
+                             title="Visit The Snaps And Checkout Snaps"
+                             src="/images/The Snaps.png"
+                             alt="The Talk"
+                                />
+                    </a>
                 </div>
                 <div id="Skeleton_login_widget" class="use40" style="display:none;height:78px;">
                 </div>

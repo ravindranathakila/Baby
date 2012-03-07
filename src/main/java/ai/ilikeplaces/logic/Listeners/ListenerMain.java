@@ -114,7 +114,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
     @Override
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
 
-        new AbstractListener(request__) {
+        new AbstractListener(request__, response__) {
 
             protected String location;
 

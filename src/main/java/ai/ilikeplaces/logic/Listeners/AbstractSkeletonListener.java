@@ -12,6 +12,7 @@ import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
+import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.html.HTMLDocument;
 
@@ -38,9 +39,10 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
 
     /**
      * @param request_
+     * @param response_
      */
-    public AbstractSkeletonListener(final ItsNatServletRequest request_) {
-        super(request_, request_);
+    public AbstractSkeletonListener(final ItsNatServletRequest request_, final ItsNatServletResponse response_) {
+        super(request_, response_, request_);
     }
 
     /**
@@ -189,7 +191,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                         MarkupTag.IMG.src(),
                         ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrlStatic(profilePhotoURL)
                 );
-                $(Skeleton_othersidebar_wall_link).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
             }
         } catch (final Throwable t) {
             EXCEPTION.error("{}", t);

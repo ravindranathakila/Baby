@@ -23,8 +23,8 @@ public class ListenerHelp implements ItsNatServletRequestListener {
 // --------------------- Interface ItsNatServletRequestListener ---------------------
 
     @Override
-    public void processRequest(final ItsNatServletRequest request, final ItsNatServletResponse itsNatServletResponse) {
-        new AbstractSkeletonListener(request) {
+    public void processRequest(final ItsNatServletRequest request, final ItsNatServletResponse response__) {
+        new AbstractSkeletonListener(request, response__) {
             @Override
             protected void init(ItsNatHTMLDocument itsNatHTMLDocument__, HTMLDocument hTMLDocument__, ItsNatDocument itsNatDocument__, Object... initArgs) {
                 new Help(request, new HelpCriteria(), $(Controller.Page.Skeleton_center_content));

@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
+import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.autoplay.*;
 import ai.ilikeplaces.logic.crud.DB;
@@ -13,6 +14,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
 import ai.ilikeplaces.servlets.Controller.Page;
+import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
@@ -56,6 +58,7 @@ abstract public class SignInOn extends AbstractWidgetListener {
         signinonSubmit,
         signinonNotice,
         signinon_autoplay,
+        Global_Profile_Link
     }
 
 // --------------------------- CONSTRUCTORS ---------------------------
@@ -89,6 +92,12 @@ abstract public class SignInOn extends AbstractWidgetListener {
         existButNotActive = new Obj<Boolean>(false);
 
         if (username.validate() == 0) {
+            UCSetGlobalProfileLink:
+            {
+                final HumansIdentity hi = ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(username.getObjectAsValid(), "");
+
+                $$(SignInOnIds.Global_Profile_Link).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+            }
             UCShowHideWidgets:
             {
                 $$displayBlock($$(SignInOnIds.signinon_logon));

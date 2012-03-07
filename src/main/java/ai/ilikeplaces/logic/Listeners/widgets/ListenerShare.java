@@ -5,7 +5,6 @@ import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.logic.Listeners.AbstractSkeletonListener;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.util.ElementComposer;
 import ai.ilikeplaces.util.ExceptionCache;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MarkupTag;
@@ -17,7 +16,6 @@ import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.html.HTMLDocument;
 
 import static ai.ilikeplaces.servlets.Controller.Page.pd_photo;
-import static ai.ilikeplaces.servlets.Controller.Page.pd_photo_permalink;
 
 /**
  * This page is mainly intended to show shares from external sites within it's content.
@@ -53,7 +51,7 @@ public class ListenerShare implements ItsNatServletRequestListener {
     public void processRequest(final ItsNatServletRequest request__,
                                final ItsNatServletResponse response__) {
 
-        new AbstractSkeletonListener(request__) {
+        new AbstractSkeletonListener(request__, response__) {
 
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
                 super.init(itsNatHTMLDocument__, hTMLDocument__, itsNatDocument__, initArgs);

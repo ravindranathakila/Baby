@@ -45,7 +45,7 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
 
 
-        new AbstractSkeletonListener(request__) {
+        new AbstractSkeletonListener(request__, response__) {
 
             /**
              * Intialize your document here by appending fragments

@@ -29,7 +29,7 @@ public class ListenerActivate implements ItsNatServletRequestListener {
     public void processRequest(final ItsNatServletRequest request__,
                                final ItsNatServletResponse response__) {
 
-        new AbstractSkeletonListener(request__) {
+        new AbstractSkeletonListener(request__, response__) {
 
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
                 super.init(itsNatHTMLDocument__, hTMLDocument__, itsNatDocument__, initArgs);

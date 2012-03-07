@@ -26,7 +26,7 @@ public class ListenerBookings implements ItsNatServletRequestListener {
     @Override
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
 
-        new AbstractSkeletonListener(request__) {
+        new AbstractSkeletonListener(request__, response__) {
 
             /**
              * Intialize your document here by appending fragments

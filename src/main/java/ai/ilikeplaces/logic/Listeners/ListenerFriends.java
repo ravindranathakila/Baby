@@ -1,16 +1,9 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.logic.Listeners.widgets.FindFriend;
-import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
-import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.rbs.RBGet;
-import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.util.AbstractListener;
 import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.MarkupTag;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -18,13 +11,9 @@ import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
 
-import java.util.ResourceBundle;
-
 import static ai.ilikeplaces.servlets.Controller.Page.*;
-import static ai.ilikeplaces.util.Loggers.EXCEPTION;
 
 /**
  * @author Ravindranath Akila
@@ -42,7 +31,7 @@ public class ListenerFriends implements ItsNatServletRequestListener {
     @Override
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
 
-        new AbstractSkeletonListener(request__) {
+        new AbstractSkeletonListener(request__, response__) {
 
             /**
              * Intialize your document here by appending fragments

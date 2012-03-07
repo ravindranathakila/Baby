@@ -8,7 +8,6 @@ import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.ElementComposer;
 import ai.ilikeplaces.util.Loggers;
@@ -49,7 +48,7 @@ public class ListenerI implements ItsNatServletRequestListener {
     @Override
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
 
-        new AbstractSkeletonListener(request__) {
+        new AbstractSkeletonListener(request__, response__) {
 
             private void redirectToSomeOtherPage(final ItsNatServletResponse response) {
                 try {

@@ -2,8 +2,6 @@ package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
-import ai.ilikeplaces.logic.Listeners.widgets.legal.PrivacyPolicy;
-import ai.ilikeplaces.logic.Listeners.widgets.legal.TermsOfServices;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SmartLogger;
 import org.itsnat.core.ItsNatDocument;
@@ -30,7 +28,7 @@ public class ListenerMuster implements ItsNatServletRequestListener {
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
 
 
-        new AbstractSkeletonListener(request__) {
+        new AbstractSkeletonListener(request__, response__) {
 
             /**
              * Intialize your document here by appending fragments

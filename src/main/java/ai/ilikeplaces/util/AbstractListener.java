@@ -10,6 +10,7 @@ import ai.ilikeplaces.servlets.ServletLogin;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServlet;
 import org.itsnat.core.ItsNatServletRequest;
+import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatEvent;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.itsnat.core.http.ItsNatHttpSession;
@@ -23,6 +24,8 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.html.HTMLDocument;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +75,7 @@ public abstract class
      * @param request_
      */
     @SuppressWarnings("unchecked")
-    public AbstractListener(final ItsNatServletRequest request_, final Object... initArgs) {
+    public AbstractListener(final ItsNatServletRequest request_, final ItsNatServletResponse response_, final Object... initArgs) {
         //sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, INITIALIZING_LISTENER, 10000, null, true);
         sl = SmartLogger.g();
         this.itsNatDocument = request_.getItsNatDocument();
@@ -106,9 +109,23 @@ public abstract class
                         null : (!((SessionBoundBadRefWrapper<HumanUserLocal>) attribute__).isAlive() ?
                         null : ((SessionBoundBadRefWrapper<HumanUserLocal>) attribute__));
 
-        init(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument, initArgs);
+        try {
+            init(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument, initArgs);
 
-        registerEventListeners(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument);
+            registerEventListeners(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument);
+        } catch (final Throwable re) {
+            try {
+                if (Loggers.DEBUG.isDebugEnabled()) {
+                    Loggers.error("SORRY! ERROR FOUND IN " + this.getClass().getName() + " IMPLEMENTATION. " +
+                            "YOU SHOULD DO YOUR OWN LOGGING. " +
+                            "SINCE DEBUG IS ENABLED, LOGGING ERROR DETAILS TO ERROR LOGGER AS FOLLOWS. ",
+                            re);
+                }
+                ((HttpServletResponse) response_.getServletResponse()).sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            } catch (final IOException e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
 
     }
 

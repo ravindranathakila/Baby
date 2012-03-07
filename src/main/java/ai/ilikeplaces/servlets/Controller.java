@@ -128,7 +128,7 @@ final public class
     final PageFace profileWidget = Page.ProfileWidget;
 
     final PageFace teachTribe = Page.TeachTribe;
-    final PageFace teachMoment= Page.TeachMoment;
+    final PageFace teachMoment = Page.TeachMoment;
 
     final PageFace carousel = Page.Carousel;
     final PageFace carouselThumb = Page.CarouselThumb;
@@ -857,7 +857,6 @@ final public class
                 Controller.Page.Skeleton_othersidebar_upload_file_sh,
                 Controller.Page.Skeleton_right_column,
                 Controller.Page.Skeleton_sidebar,
-                Controller.Page.Skeleton_othersidebar_wall_link,
                 Controller.Page.Skeleton_notifications
 
         ) {
@@ -1430,7 +1429,6 @@ final public class
         final static public String Skeleton_left_column = "Skeleton_left_column";
         final static public String Skeleton_right_column = "Skeleton_right_column";
         final static public String Skeleton_sidebar = "Skeleton_sidebar";
-        final static public String Skeleton_othersidebar_wall_link = "Skeleton_othersidebar_wall_link";
         final static public String Skeleton_notifications = "Skeleton_notifications";
 
         /*Private Location Page*/
@@ -1484,10 +1482,6 @@ final public class
         final static public String AarrrJuice = "AarrrJuice";
         final static public String AarrrWOEID = "AarrrWOEID";
         final static public String AarrrHeader = "AarrrHeader";
-        final static public String AarrrColumn1 = "AarrrColumn1";
-        final static public String AarrrColumn2 = "AarrrColumn2";
-        final static public String AarrrColumn3 = "AarrrColumn3";
-        final static public String AarrrColumn4 = "AarrrColumn4";
 
 
         /*DocLocation Page*/
@@ -1954,9 +1948,15 @@ final public class
                 request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocLocation);/*Framework specific*/
                 Loggers.DEBUG.debug(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0009") + URL__);
             } else {/*Divert to home page*/
-                Loggers.DEBUG.debug(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
-                request__.getServletRequest().setAttribute("location", "");
+                Loggers.DEBUG.debug(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0026"));
                 request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
+                request__.getServletRequest().setAttribute("location", "");
+                try {
+                    ((HttpServletResponse) response__.getServletResponse()).sendError(HttpServletResponse.SC_NOT_FOUND);
+                } catch (final IOException e) {
+                    Loggers.EXCEPTION.error(Loggers.EMBED, e);
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
@@ -2081,7 +2081,7 @@ final public class
                  */
                 GlobalHTMLIdRegistry.put(id_.toString(), id_.toString());
             } else {
-                throw new SecurityException(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0011" + id_));
+                throw new SecurityException("SORRY! THIS KEY IS ALREADY IN REGISTRY:" + id_);
             }
         }
     }

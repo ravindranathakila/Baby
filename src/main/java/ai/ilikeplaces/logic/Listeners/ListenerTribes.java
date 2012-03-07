@@ -1,12 +1,10 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.entities.Tribe;
-import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.Listeners.widgets.teach.TeachTribe;
 import ai.ilikeplaces.logic.Listeners.widgets.teach.TeachTribeCriteria;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.servlets.Controller;
@@ -37,9 +35,9 @@ public class ListenerTribes implements ItsNatServletRequestListener {
 // --------------------- Interface ItsNatServletRequestListener ---------------------
 
     @Override
-    public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse itsNatServletResponse) {
+    public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
 
-        new AbstractSkeletonListener(request__) {
+        new AbstractSkeletonListener(request__, response__) {
             @Override
             protected void init(ItsNatHTMLDocument itsNatHTMLDocument__, HTMLDocument hTMLDocument__, ItsNatDocument itsNatDocument__, Object... initArgs) {
 
