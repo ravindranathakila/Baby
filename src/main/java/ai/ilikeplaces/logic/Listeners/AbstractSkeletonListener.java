@@ -192,6 +192,8 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
                         MarkupTag.IMG.src(),
                         ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrlStatic(profilePhotoURL)
                 );
+
+                $(Skeleton_othersidebar_identity).setTextContent(ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(getUsername(), "").getHuman().getDisplayName());
             }
         } catch (final Throwable t) {
             EXCEPTION.error("{}", t);
