@@ -84,8 +84,7 @@
 </div>
 <div class="use100" id="Skeleton_morpheus">
     <div class="use100" id="Morpheus">
-        <div class="use100 center Morpheus_Dreams" style="color;#bcbbbb;font-weight:900;font-size:12px;background-color:#f7f1f1;overflow:hidden;height:14px;display:none;">
-            &nbsp;
+        <div class="use100 center Morpheus_Dreams" style="color;#bcbbbb;font-weight:900;font-size:12px;background-color:#f7f1f1;overflow:hidden;display:none;">
         </div>
         <div class="use100 Morpheus_Typewriter"
              style="background-color:#f7f1f1;overflow:hidden;height:12px;">
@@ -399,6 +398,7 @@
     function clearMorpheusDreams(){
          if((new Date()).getTime() - lastUpdateTimeOfMorpheusDreams > 10000){
             $('.Morpheus_Dreams').slideUp();
+            $('.Morpheus_Dreams').empty();
          }
     }
 
