@@ -857,7 +857,8 @@ final public class
                 Controller.Page.Skeleton_othersidebar_upload_file_sh,
                 Controller.Page.Skeleton_right_column,
                 Controller.Page.Skeleton_sidebar,
-                Controller.Page.Skeleton_notifications
+                Controller.Page.Skeleton_notifications,
+                Controller.Page.Skeleton_pageType
 
         ) {
             @Override
@@ -1430,6 +1431,7 @@ final public class
         final static public String Skeleton_right_column = "Skeleton_right_column";
         final static public String Skeleton_sidebar = "Skeleton_sidebar";
         final static public String Skeleton_notifications = "Skeleton_notifications";
+        final static public String Skeleton_pageType = "Skeleton_pageType";
 
         /*Private Location Page*/
         final static public String DocPrivateLocationView = "PrivateLocationView";

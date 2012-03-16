@@ -13,6 +13,7 @@ import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
+import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
@@ -94,6 +95,7 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
         UCSetCSSBasedOnURL:
         {
             $$setClass($$(SignInOnIds.signinonBG), criteria.getSignInOnDisplayComponent().toString(), false);
+            $(Controller.Page.Skeleton_pageType).setAttribute(MarkupTag.INPUT.value(), criteria.getSignInOnDisplayComponent().toString());
         }
 
         if (username.validate() == 0) {

@@ -29,6 +29,10 @@
                 background-color:#ff1e7c;
             }
 
+            .flipper.MOMENTS{
+                background-color:#ff1e7c;
+            }
+
             .TRIBES{
                  background-color:#ff8300;
             }
@@ -84,8 +88,6 @@
             &nbsp;
         </div>
         <div class="use100 Morpheus_Typewriter"
-             onmouseover="javascript:$('.Morpheus_Dreams').slideDown();"
-             onmouseout="javascript:$('.Morpheus_Dreams').slideUp();"
              style="background-color:#f7f1f1;overflow:hidden;height:12px;">
             <div class="use25 right">
                 <div class="use15 alphabet">A</div>
@@ -299,14 +301,19 @@
                     </div>
                 </div>
             </div>
-
-            <div class="use083" style="height:1000px;background-color:#cdcdcd;">
-                <img src="/images/8_fade_inverted.png" alt="" class="use100" style="height:1000px;"/>
+            <div class="use083 fillPageType flipper" style="height:1000px;">
+                <div class="use100" style="height:1000px;background:url(/images/Metal_translucent.png) repeat">
+                    &nbsp;
+                </div>
             </div>
         </div>
 
     </div>
 </div>
+</div>
+
+<div style="display:none;">
+    <input id="Skeleton_pageType" class="Skeleton_pageType" type="hidden" value=""/>
 </div>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
@@ -402,6 +409,12 @@
                     $('.Morpheus_Dreams').slideUp();
                 }
             );
+        }
+    );
+
+    jQuery(document).ready(
+        function($){
+           $('.fillPageType').addClass($('.Skeleton_pageType').attr('value'));
         }
     );
 
