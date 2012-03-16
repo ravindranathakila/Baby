@@ -407,6 +407,7 @@
             $('.Morpheus_Dreams_State').empty();
             $('.Morpheus_Dreams_Action').empty();
             $('.Morpheus_Dreams_Result').empty();
+            $(document).attr("title", ORIGINAL_DOCUMENT_TITLE);
          }
     }
 
@@ -435,12 +436,10 @@
 
                     $('.Morpheus_Dreams').slideDown();
 
+                    lastUpdateTimeOfMorpheusDreams = (new Date()).getTime();
+
                 },
                 function() {
-                    lastUpdateTimeOfMorpheusDreams = (new Date()).getTime();
-                    //$('.Morpheus_Dreams').text('');
-                    //$(document).attr("title", ORIGINAL_DOCUMENT_TITLE);
-                    //$('.Morpheus_Dreams').slideUp();
                 }
             );
         }
