@@ -84,7 +84,7 @@
 </div>
 <div class="use100" id="Skeleton_morpheus">
     <div class="use100" id="Morpheus">
-        <div class="use100 center Morpheus_Dreams" style="color;#bcbbbb;font-weight:900;font-size:10px;background-color:#f7f1f1;overflow:hidden;height:12px;display:none;">
+        <div class="use100 center Morpheus_Dreams" style="color;#bcbbbb;font-weight:900;font-size:12px;background-color:#f7f1f1;overflow:hidden;height:14px;display:none;">
             &nbsp;
         </div>
         <div class="use100 Morpheus_Typewriter"
@@ -395,6 +395,15 @@
 
     ORIGINAL_DOCUMENT_TITLE = document.title;//Man, don't change this!
 
+    var lastUpdateTimeOfMorpheusDreams = (new Date()).getTime();
+    function clearMorpheusDreams(){
+         if((new Date()).getTime() - lastUpdateTimeOfMorpheusDreams > 10000){
+            $('.Morpheus_Dreams').slideUp();
+         }
+    }
+
+    setInterval('clearMorpheusDreams()',5000);
+
     jQuery(document).ready(
         function($){
             $(".vtip").unbind().hover(
@@ -404,9 +413,10 @@
                     $('.Morpheus_Dreams').slideDown();
                 },
                 function() {
-                    $('.Morpheus_Dreams').text('');
-                    $(document).attr("title", ORIGINAL_DOCUMENT_TITLE);
-                    $('.Morpheus_Dreams').slideUp();
+                    lastUpdateTimeOfMorpheusDreams = (new Date()).getTime();
+                    //$('.Morpheus_Dreams').text('');
+                    //$(document).attr("title", ORIGINAL_DOCUMENT_TITLE);
+                    //$('.Morpheus_Dreams').slideUp();
                 }
             );
         }
