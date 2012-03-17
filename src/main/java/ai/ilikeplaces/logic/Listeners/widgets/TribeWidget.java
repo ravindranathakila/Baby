@@ -132,7 +132,7 @@ public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria> {
                     if (!alertedUserWithConfirm.getObj()) {
                         alertedUserWithConfirm.setObjAsValid(true);
                         $$(evt_).setAttribute(MarkupTag.IMG.src(),
-                                $$(evt_).getAttribute(MarkupTag.IMG.src()).replace("delete.png", "confirm.png")
+                                $$(evt_).getAttribute(MarkupTag.IMG.src()).replace("JDelete.png", "JConfirm.png")
                         );
                         //$$(evt_).setTextContent("Confirm Delete!");
                     } else {

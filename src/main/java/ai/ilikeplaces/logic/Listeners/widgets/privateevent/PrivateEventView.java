@@ -226,7 +226,7 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
                         Loggers.USER.info(myhumanId.getObj() + " clicked delete for private event " + myprivateEventId);
                         alertedUserWithConfirm.setObjAsValid(true);
                         $$(evt_).setAttribute(MarkupTag.IMG.src(),
-                                $$(evt_).getAttribute(MarkupTag.IMG.src()).replace("delete.png", "confirm.png")
+                                $$(evt_).getAttribute(MarkupTag.IMG.src()).replace("JDelete.png", "JConfirm.png")
                         );
                         //$$(evt_).setTextContent("Confirm Delete!");
                     } else {
