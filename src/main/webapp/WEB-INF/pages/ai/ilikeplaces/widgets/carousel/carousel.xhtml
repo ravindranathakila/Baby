@@ -9,14 +9,17 @@
     <title>Carousel</title>
 </head>
 <body>
-<div class="use100" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
+<div class="use100 vtip" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat"
+     title="This is a minimized list of photos!|Click to view the photos|Try clicking one 'photo slot' again and again!"
+        >
     <div class="use100" style="background-color:#cdcdcd;background:url(/images/Metal_Title_Light.png) repeat; background-color:#fafafa">
         <div class="use100" style="height:2px;"> &nbsp;</div>
         <div class="use100 center" style="cursor:pointer;">
             <img src="/images/Reel.png" style="height:31px;"
                  class="carousel_click"
                  onclick="javascript:if(carouselShowing){ carouselShowing = false; this.src = '/images/Reel.png'; $('.non_sidebar').removeClass('use100').addClass('use528');$('.sidebars').css('display','block');$('.carouselable').fadeIn('slow'); }else{ carouselShowing = true; this.src = '/images/Close.png'; $('.carousel_thumb').first().click();}"
-                 alt="Play"/>
+                 alt="Show/Hide Photos"
+                 />
         </div>
         <div class="use100" style="height:3px;"> &nbsp;</div>
         <div class="use100" style="height:7px;background:url(/images/5_fade_vertical.png) repeat-x;"> &nbsp;</div>
