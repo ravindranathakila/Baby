@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -45,9 +46,18 @@ public class DPrivateLocation extends AbstractSLBCallbacks implements DPrivateLo
 
             final PrivateLocation privateLocation = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId);
 
-            if (privateLocation.refresh().getPrivateLocationOwners().contains(humansPrivateLocation)) {
-                privateLocationCrudServiceLocal_.delete(PrivateLocation.class, privateLocation.getPrivateLocationId());
-                returnVal = true;
+            final List<HumansPrivateLocation> privateLocationOwners = privateLocation.refresh().getPrivateLocationOwners();
+            if (privateLocationOwners.contains(humansPrivateLocation)) {
+                if (privateLocationOwners.size() == 1) {
+                    privateLocationCrudServiceLocal_.delete(PrivateLocation.class, privateLocation.getPrivateLocationId());
+                    returnVal = true;
+                }else{
+                    List<HumansPrivateLocation> privateLocationViewers = privateLocation.getPrivateLocationViewers();
+                    privateLocationOwners.remove(humansPrivateLocation);
+                    privateLocationViewers.remove(humansPrivateLocation);
+                    //Not removing this human from all private events associated with this location since this might happen accidentally
+                    //In that case, upon reallocating the user as a owner or viewer, he can navigate to the specific moment.
+                }
             } else {
                 throw new SecurityException(RBGet.expMsgs.getString("ai.ilikeplaces.logic.crud.unit.DPrivateLocation.0001"));
             }
