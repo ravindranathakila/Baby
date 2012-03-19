@@ -108,11 +108,11 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
                     sl.appendToLogMSG(SAVING_SCALED_IMAGE);
                     saveImage(bi, newFile);
 
-                    sl.appendToLogMSG(POSTERIZING);
+                    /*sl.appendToLogMSG(POSTERIZING);
                     bi = new Sampler().run(newFile.getCanonicalPath());
 
                     sl.appendToLogMSG(SAVING_POSTERIZED_IMAGE);
-                    saveImage(bi, newFile);
+                    saveImage(bi, newFile);*/
 
                     try {
                         final String cdnFileName = newFile.getName();
