@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Element;
+import org.w3c.dom.events.*;
 import org.w3c.dom.html.HTMLDocument;
 import twitter4j.*;
 import where.yahooapis.com.v1.Place;
@@ -561,20 +562,52 @@ public class ListenerMain implements ItsNatServletRequestListener {
              * Use ItsNatHTMLDocument variable stored in the AbstractListener class
              */
             @Override
-            protected void registerEventListeners
-            (
+            protected void registerEventListeners(
                     final ItsNatHTMLDocument itsNatHTMLDocument__,
                     final HTMLDocument hTMLDocument__,
                     final ItsNatDocument itsNatDocument__) {
-//                ItsNatDocument itsNatDoc = itsNatDocument__;
-//                Document docEvent = (Document) itsNatDoc;
-//
-//                MouseEvent mouseEvent = (MouseEvent) itsNatDoc.createEvent("MouseEvent");
-//
-//                mouseEvent.initMouseEvent("click", true, true, ((DocumentView) itsNatDoc).getDefaultView(), 0,
-//                        0, 0, 0, 0, false, false, false, false, (short) 0/*left button*/, null);
-//
-//                itsNatDoc.dispatchEvent((EventTarget) $(Main_notice), mouseEvent);
+                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.Main_hotels_link), EventType.CLICK.toString(), new org.w3c.dom.events.EventListener() {
+                    @Override
+                    public void handleEvent(Event evt) {
+                        itsNatHTMLDocument__.addCodeToSend(
+                                JSCodeToSend.redirectPageWithURL("http://travel.ilikeplaces.com/hotels/index.jsp?cid=317285")
+                        );
+                    }
+                }, false);
+                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.Main_home_page_link), EventType.CLICK.toString(), new org.w3c.dom.events.EventListener() {
+                    @Override
+                    public void handleEvent(Event evt) {
+                        itsNatHTMLDocument__.addCodeToSend(
+                                JSCodeToSend.redirectPageWithURL("/")
+                        );
+                    }
+                }, false);
+                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.Main_flight_page_link), EventType.CLICK.toString(), new org.w3c.dom.events.EventListener() {
+                    @Override
+                    public void handleEvent(Event evt) {
+                        itsNatHTMLDocument__.addCodeToSend(
+                                JSCodeToSend.redirectPageWithURL("http://travel.ilikeplaces.com/airlines/index.jsp?cid=317285")
+                        );
+                    }
+                }, false);
+                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.Main_car_page_link), EventType.CLICK.toString(), new org.w3c.dom.events.EventListener() {
+                    @Override
+                    public void handleEvent(Event evt) {
+                        itsNatHTMLDocument__.addCodeToSend(
+                                JSCodeToSend.redirectPageWithURL("http://travel.ilikeplaces.com/cars/index.jsp?cid=317285")
+                        );
+                    }
+                }, false);
+                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.Main_cruise_page_link), EventType.CLICK.toString(), new org.w3c.dom.events.EventListener() {
+                    @Override
+                    public void handleEvent(Event evt) {
+                        itsNatHTMLDocument__.addCodeToSend(
+                                JSCodeToSend.redirectPageWithURL("http://travel.ilikeplaces.com/go.jsp?link=http://cruises.travelnow.com")
+                        );
+                    }
+                }, false);
+
+
             }
 
             private List<Element> generateLocationLinks(final List<Location> locationList) {

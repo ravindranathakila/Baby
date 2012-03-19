@@ -100,25 +100,16 @@ public class ListenerI implements ItsNatServletRequestListener {
                                 }
                                 setProfileLink:
                                 {
-                                    setProfileDataLink();
+                                    //setProfileDataLink();//We wii do this ourselves. Look below
                                 }
                                 setProfilePhotoLink:
                                 {
-                                    try {
-                                        if (getUsername() != null) {
-                                            /**
-                                             * TODO check for db failure
-                                             */
-                                            final String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(requestedProfile)).returnValueBadly();
-                                            $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(),
-                                                    ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrlStatic(url));
-
-                                            $(Skeleton_othersidebar_identity).setTextContent(ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(getUsername(), "").getHuman().getDisplayName());
-                                        }
-                                    } catch (final Throwable t) {
-                                        EXCEPTION.error("{}", t);
-
-                                    }
+                                    /**
+                                     * TODO check for db failure
+                                     */
+                                    final String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(requestedProfile)).returnValueBadly();
+                                    $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(),
+                                            ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrlStatic(url));
                                 }
                                 setSidebarFriends:
                                 {

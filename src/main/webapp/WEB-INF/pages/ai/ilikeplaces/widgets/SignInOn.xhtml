@@ -25,7 +25,8 @@
                         <div class="use25 inherit_height line_height_50" style="overflow:hidden;" >
                             <div class="use100" style="height:16px;">&nbsp;</div>
                             <div class="use90 use5p use5a" style="height:18px;">
-                                <input class="use100 inherit_height" style="height:100%;color:#ffffff;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;" id="signinonUsername"
+                                <input class="use100 inherit_height vtip" style="height:100%;color:#ffffff;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;" id="signinonUsername"
+                                       title="This is for entering your email|Enter your email to login|Upon clicking the on/off button you will be signed in"
                                        name="Username" maxlength="255" type="text" tabindex="1"/>
                             </div>
                             <div class="use100" style="height:16px;">&nbsp;</div>
@@ -38,7 +39,8 @@
                         <div class="use25 inherit_height line_height_50" style="overflow:hidden;">
                             <div class="use100" style="height:16px;">&nbsp;</div>
                             <div class="use90 use5p use5a" style="height:18px;">
-                                <input class="use100 bold" style="height:100%;color:#ffffff;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;" id="signinonPassword"
+                                <input class="use100 bold vtip" style="height:100%;color:#ffffff;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;" id="signinonPassword"
+                                       title="This is for entering your password|Enter your password to login|Upon clicking the on/off button you will be signed in"
                                        name="Password" maxlength="255" type="password" tabindex="2"/>
                             </div>
                             <div class="use100" style="height:16px;">&nbsp;</div>
@@ -48,8 +50,9 @@
                             <div class="use70 use15p use15a inherit_height line_height_50 left cursor_link">
                                 <div class="use100" style="height:16px;">&nbsp;</div>
                                 <div class="use100 intensity_3" style="height:30px;">
-                                    <a
-                                       class="" id="signinonSubmit" tabindex="3"><img src="/images/Power_off_Off.png" alt="Login" style="height:30px;cursor:pointer;"/></a>
+                                    <a class="vtip" id="signinonSubmit"
+                                       title="You haven't signed in yet|Enter your email, password and click here|You will be signed in shortly after"
+                                       tabindex="3"><img src="/images/Power_off_Off.png" alt="Login" style="height:30px;cursor:pointer;"/></a>
                                 </div>
                                 <div class="use100" style="height:4px;">&nbsp;</div>
                             </div>
@@ -68,8 +71,9 @@
                     <div class="use30 center" style="overflow:hidden;">
                         <div class="use60 center cursor_link">
                             <div class="use100 intensity_3" style="height:20px;">
-                                <a href="/page/_profile"
-                                   class="bold" tabindex="4" style="text-decoration:underline;">Recover Access Here</a>
+                                <a href="/page/_profile"  class="bold vtip" tabindex="4" style="text-decoration:underline;"
+                                        title="Your inaccessible account is recoverable|Click here to unlock/recover your account|You will be taken to the recovery page"
+                                        >Recover Access Here</a>
                             </div>
                             <div class="use100" style="height:8px;">&nbsp;</div>
                         </div>
@@ -80,12 +84,16 @@
                 <div class="use100" style="height:9px;"> &nbsp;</div>
                 <div class="use100" style="height:40px;">
                     <div class="use100" style="height:20px;">
-                        <a href="/oauth2fb" class="bold" style="text-decoration:underline;">
+                        <a href="/oauth2fb" class="bold vtip" style="text-decoration:underline;"
+                             title="You haven't signed in yet|Click here to Sign in with your Facebook account|You will be signed in with your Facebook credentials"
+                                >
                             Login Using Facebook
                         </a>
                     </div>
                     <div class="use100" style="height:20px;">
-                        <a href="/oauth2gg?state=login" class="bold" style="text-decoration:underline;">
+                        <a href="/oauth2gg?state=login" class="bold vtip" style="text-decoration:underline;"
+                            title="You haven't signed in yet|Click here to Sign in with your Google account|You will be signed in with your Google credentials"
+                                >
                             Login Using Google
                         </a>
                     </div>
@@ -130,7 +138,7 @@
                              id="Skeleton_othersidebar_places_link"
                              title="Like minded people are tribes|Click to view all the tribes you are a member of|You will be taken to the tribe home"
                              src="/images/The Tribes.png"
-                             alt="The Talk"
+                             alt="The Tribes"
                                 />
                     </a>
                 </div>
@@ -146,7 +154,7 @@
                              id="Skeleton_othersidebar_organizer_link"
                              title="Find, attend and share, hot exciting events|Click to visit the moments you are on|You will be taken to the moments home"
                              src="/images/The Moments.png"
-                             alt="The Talk"
+                             alt="The Moments"
                                 />
                     </a>
                 </div>
@@ -158,7 +166,7 @@
                              style="height:100%;vertical-align:middle;cursor:pointer;"
                              title="All your photos on one single page|Click to manage(delete/share) your photos|You will be taken to the snaps page"
                              src="/images/The Snaps.png"
-                             alt="The Talk"
+                             alt="The Snaps"
                                 />
                     </a>
                 </div>

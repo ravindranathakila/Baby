@@ -964,6 +964,10 @@ final public class
                 Controller.Page.Main_notice_sh,
                 Controller.Page.Main_loading_hotels_link,
                 Controller.Page.Main_hotels_link,
+                Controller.Page.Main_home_page_link,
+                Controller.Page.Main_flight_page_link,
+                Controller.Page.Main_car_page_link,
+                Controller.Page.Main_cruise_page_link,
                 Controller.Page.Main_center_main,
                 Controller.Page.Main_notice,
                 Controller.Page.Main_center_main_location_title,
@@ -1504,6 +1508,11 @@ final public class
         final static public String Main_othersidebar_upload_file_sh = "Main_othersidebar_upload_file_sh";
         final static public String Main_loading_hotels_link = "Main_loading_hotels_link";
         final static public String Main_hotels_link = "Main_hotels_link";
+        final static public String Main_home_page_link = "Main_home_page_link";
+        final static public String Main_flight_page_link = "Main_flight_page_link";
+        final static public String Main_car_page_link = "Main_car_page_link";
+        final static public String Main_cruise_page_link = "Main_cruise_page_link";
+
         final static public String Main_center_main = "Main_center_main";
         final static public String Main_notice = "Main_notice";
         final static public String Main_notice_sh = "Main_notice_sh";
