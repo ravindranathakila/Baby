@@ -71,6 +71,8 @@ abstract public class UserProperty extends AbstractWidgetListener {
             $$(Page.user_property_name).setTextContent(hi.getHuman().getDisplayName());
             $$(Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
             $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+            $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.title(), hi.getHuman().getDisplayName());
+
 
             /*  fetchToEmail(//WARNING! This does not append the content.
             hi.getHuman().getInviterDisplayName(),
@@ -103,6 +105,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
             $$(Page.user_property_name).setTextContent(hi.getHuman().getDisplayName());
             $$(Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
             $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+            $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.title(), hi.getHuman().getDisplayName());
             $$(Page.user_property_content).appendChild(content);
 
             this.fetchToEmail(
@@ -135,6 +138,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
             $$(Page.user_property_name).setTextContent(humanIdWhosProfileToShow.getHuman().getDisplayName());
             $$(Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + humanIdWhosProfileToShow.getUrl().getUrl());
             $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(humanIdWhosProfileToShow.getHumansIdentityProfilePhoto()));
+            $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.title(), humanIdWhosProfileToShow.getHuman().getDisplayName());
             $$(Page.user_property_content).appendChild(content);
 
             this.fetchToEmail(
@@ -167,6 +171,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
             $$(Page.user_property_name).setTextContent(fullName + inviteCriteria.getInvitee().getEmail());
             $$(Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + inviteCriteria.getProfileUrl());
             $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(inviteCriteria.getProfilePhoto()));
+            $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.title(), fullName + inviteCriteria.getInvitee().getEmail());
             $$(Page.user_property_content).appendChild(content);
 
             this.fetchToEmail(
@@ -191,6 +196,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
             $$(Controller.Page.user_property_name, document).setTextContent((String) args[0]);
             $$(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), (String) args[1]);
             $$(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(), (String) args[2]);
+            $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.title(), (String) args[0]);
             $$(Controller.Page.user_property_content, document).appendChild(
                     document.importNode(((Element) args[3]), true)
             );
