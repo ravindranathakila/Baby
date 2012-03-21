@@ -5,6 +5,7 @@ import ai.ilikeplaces.exception.ConstructorInvokationException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -72,8 +73,8 @@ public class ServletOAuthFacebook extends AbstractOAuth {
         init:
         {
             try {
-                p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.RemoteInitialContextFactory");
-                p_.put(Context.PROVIDER_URL, "http://127.0.0.1:8080/openejb/ejb");
+                p_.put(Context.INITIAL_CONTEXT_FACTORY, RBGet.globalConfig.getString("oejb.RICF"));
+                p_.put(Context.PROVIDER_URL, RBGet.globalConfig.getString("RICF_LOCATION"));
 
                 context = new InitialContext(p_);
 
@@ -232,7 +233,7 @@ public class ServletOAuthFacebook extends AbstractOAuth {
                 userSession_.setMaxInactiveInterval(Integer.parseInt(RBGet.globalConfig.getString("UserSessionIdleInterval")));
             }
 
-            final HumanUserLocal humanUserLocal = (HumanUserLocal) context.lookup(HumanUserLocal.NAME);
+            final HumanUserLocal humanUserLocal =  HumanUser.getHumanUserLocal(true);
             humanUserLocal.setHumanUserId(existingUser.getHumanId());
             userSession_.setAttribute(ServletLogin.HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
 

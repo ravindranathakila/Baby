@@ -39,15 +39,14 @@ final public class DB implements DBLocal {
     static private boolean OK_ = false;
     final static private ResourceBundle exceptionMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.ExceptionMsgs");
     final static private ResourceBundle config = ResourceBundle.getBundle("ai.ilikeplaces.rbs.Config");
-    final static private String LICF = config.getString("oejb.LICF");
     final static Logger logger = LoggerFactory.getLogger(DB.class);
 
     public static final String NAMING_EXCEPTION = "SORRY! I ENCOUNTERED AN NAMING EXCEPTION WHILE DOING A CONTEXT OPERATION.";
 
     static {
         try {
-            DB.REMOTE_PROPERTIES.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.RemoteInitialContextFactory");
-            DB.REMOTE_PROPERTIES.put(Context.PROVIDER_URL, "http://127.0.0.1:8080/openejb/ejb");
+            DB.REMOTE_PROPERTIES.put(Context.INITIAL_CONTEXT_FACTORY, config.getString("oejb.RICF"));
+            DB.REMOTE_PROPERTIES.put(Context.PROVIDER_URL, config.getString("RICF_LOCATION"));
             DB.REMOTE_CONTEXT = new InitialContext(REMOTE_PROPERTIES);
             DB.OK_ = true;
         } catch (NamingException ex) {
@@ -58,7 +57,7 @@ final public class DB implements DBLocal {
     
     static {
         try {
-            DB.LOCAL_PROPERTIES.put(Context.INITIAL_CONTEXT_FACTORY, LICF);
+            DB.LOCAL_PROPERTIES.put(Context.INITIAL_CONTEXT_FACTORY, config.getString("oejb.LICF"));
             DB.LOCAL_CONTEXT = new InitialContext(LOCAL_PROPERTIES);
             DB.OK_ = true;
         } catch (NamingException ex) {
