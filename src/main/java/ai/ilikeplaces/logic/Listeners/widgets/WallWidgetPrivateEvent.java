@@ -99,6 +99,13 @@ public class WallWidgetPrivateEvent extends WallWidget {
 
         final Return<Wall> aReturn = DB.getHumanCrudPrivateEventLocal(true).
                 readWall(humanId, new Obj<Long>(privateEventId), REFRESH_SPEC);
+        
+        UCHidingWallIfEmptyToShowInviteWidgetOnTop:
+        {
+            if (pe.getPrivateEventOwners().size() + pe.getPrivateEventViewers().size() == 2) {
+                $$displayNone(WallWidgetIds.wallWidget);
+            }
+        }
 
         /**
          * If null, this means we have to check on if the wall entry parameter is available and update.

@@ -72,8 +72,10 @@ public class AlbumManager extends AbstractWidgetListener {
         AlbumNotice,
         AlbumPivateEventId,
         AlbumOwner,
+        AlbumForwardSection,
         AlbumForward,
-        AlbumPhotos
+        AlbumPhotos,
+        AlbumWidget
     }
 
     // --------------------------- CONSTRUCTORS ---------------------------
@@ -121,8 +123,19 @@ public class AlbumManager extends AbstractWidgetListener {
 
                 final List<PrivatePhoto> albumPhotos = album.getAlbumPhotos();
 
+                UCHideAlbumForwardIfNoPhotos:
+                {
+                    if (albumPhotos.size() == 0) {
+                        $$displayNone(AlbumManagerIds.AlbumForwardSection);
+                    }
+
+                    if (privateEvent.getPrivateEventOwners().size() + privateEvent.getPrivateEventViewers().size() == 1) {
+                        $$displayNone(AlbumManagerIds.AlbumWidget);
+                    }
+                }
+
                 new Carousel(request, new CarouselCriteria().setAlbumPhotos(albumPhotos), $(Page.Skeleton_right_column));
-                
+
                 final List<Long> albumPhotoIds = new ArrayList<Long>(albumPhotos.size());
 
                 for (final PrivatePhoto privatePhoto__ : albumPhotos) {
@@ -153,7 +166,7 @@ public class AlbumManager extends AbstractWidgetListener {
                     };
                 }
 
-                getHumanUserFromRequest(request).storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_PRIVATE_PHOTOS,albumPhotoIds);
+                getHumanUserFromRequest(request).storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_PRIVATE_PHOTOS, albumPhotoIds);
 
             } else {
                 $$(AlbumManagerIds.AlbumNotice).setTextContent(albumReturn.returnMsg());

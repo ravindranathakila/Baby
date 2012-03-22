@@ -154,8 +154,6 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
                     } else if (existingUser != null && !existingUser.getHumanAlive()) {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
                         myuserOk.setObj(false);
                         myexistButNotActive.setObj(true);
-                        $$sendJS(JSCodeToSend.redirectPageWithURL("/page/_profile"));
-                        notifyUser("Please activate your account.");
                     }
                 }
             }
@@ -208,7 +206,7 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
 
                                 $$sendJS(JSCodeToSend.refreshPageIn(0));
                             } else {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
-                                notifyUser("Ha ha wrong password!");
+                                notifyUser("Sorry, the password is wrong!");
                             }
                         } else {/*There is no such user. Ask if he forgot username or whether to create a new account :)*/
                             if (myexistButNotActive.getObj()) {

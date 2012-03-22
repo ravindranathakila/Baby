@@ -119,9 +119,9 @@
 			}
 
 			function ilp_progress_finalize(){
-				document.getElementById('ilp_progress_block').style.display = 'none';
-				document.getElementById('ilp_main_content').style.display = 'block';
-				ilp_load_map();
+				//document.getElementById('ilp_progress_block').style.display = 'none';
+				//document.getElementById('ilp_main_content').style.display = 'block';
+				//ilp_load_map();
 			}
 
 			function ilp_progress_initialize(){
@@ -185,18 +185,18 @@
 				<br/>
 				<br/>
 				<br/>
-				<div id="progress-bar">
+				<div id="progress-bar" style="display:none;">
 					<div id="progress-level"></div>
 				</div>
 				<div class="span-24 last" >
-					<div class="span-2 prepend-8 last center">
+					<div class="span-2 prepend-8 last center" style="display:none;">
 						<img class="center" src="/images/circle.gif" height="18px" alt="..."/>
 					</div>
-					<div class="span-6 append-8 last left bold" id="ilp_current_operation">Loading...</div>
+					<div class="span-6 append-8 last left bold" id="ilp_current_operation" style="display:none;">Loading...</div>
 					<hr class="space"/>
-					<div class="span-4 prepend-10 append-10 last left bold"><a href="#" style="font-size:10px;" onclick="ilp_progress_finalize();">i'm in a hurry! show anyway...</a></div>
+					<div class="span-4 prepend-10 append-10 last left bold" style="display:none;"><a href="#" style="font-size:10px;" onclick="ilp_progress_finalize();">i'm in a hurry! show anyway...</a></div>
                     <hr class="space"/>
-                    <div class="span-4 prepend-10 append-10 last left bold center">&nbsp;&nbsp;&nbsp;&nbsp;Better, take me...</div>
+                    <div class="span-4 prepend-10 append-10 last left bold center" style="display:none;">&nbsp;&nbsp;&nbsp;&nbsp;Better, take me...</div>
                     <div class="span-6 prepend-9 append-9 last left bold"><img src="http://www.ilikeplaces.com/favicon.png" alt="_"/>&nbsp;&nbsp;
                         <a class="logo_yellow" style="font-size:13px;"
                            id="Main_home_page_link"

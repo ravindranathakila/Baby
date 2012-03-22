@@ -1,5 +1,6 @@
 <%@ page isErrorPage="true"%>
 
+<html>
 <head></head>
 <body>
 
@@ -8,4 +9,9 @@
 
 <h3>Looking for something? Well, it sure ain't here :-( <h3>
 
+<script type="text/javascript">
+  window.location.href = "/";
+</script>
+
 </body>
+<html>

@@ -116,7 +116,7 @@
           })();
         </script>
     </head>
-    <body style="background-color:#ffffff;height:100%;">
+    <body style="background-color:#ffffff;height:100%;" id="body">
     <div itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat" style="height:100%;">
         <div id="Main_display" class="container" itsnat:nocache="true" style="display:block;height:100%;">
             <div class="use100">
@@ -509,6 +509,35 @@
             setTimeout('$.prompt.close();',1000);
             setTimeout('$.prompt.close();',5000);
             setTimeout('$.prompt.close();',10000);
+
+            jQuery(document).ready(
+                function($) {
+                    $("#Juice").mouseenter(
+                        function(event){
+                            event.preventDefault();
+                            $('html,body').animate(
+                                {
+                                    scrollTop:$("#Juice").offset().top
+                                },
+                                500
+                            );
+
+                        }
+                    );
+                    $("#Juice").mouseleave(
+                        function(event){
+                            event.preventDefault();
+                            $('html,body').animate(
+                                {
+                                    scrollTop:$("#body").offset().top
+                                },
+                                500
+                            );
+
+                        }
+                    );
+                }
+            );
         </script>
     </body>
 </html>

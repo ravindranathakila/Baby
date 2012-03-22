@@ -9,80 +9,82 @@
     </head>
     <body>
     <div class="by"  itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
-        <div class="by fg_red bold center" id="wallNotice">
-        </div>
-        <div class="by">
-            <div class="use100">
-                <div class="use100" style="">
-                    <div class="use100" style="height:10px;"> &nbsp;</div>
-                    <div class="use100">
-                        <div class="use100 center" >
-                                    <span  id="wallTitle" class="bold vtip"
-                                           style="font-size:21px;line-height:0.9;"
-                                           title="You can invite friends to this event.">&nbsp;</span>
+        <div class="use100" id="wallWidget">
+            <div class="by fg_red bold center" id="wallNotice">
+            </div>
+            <div class="by">
+                <div class="use100">
+                    <div class="use100" style="">
+                        <div class="use100" style="height:10px;"> &nbsp;</div>
+                        <div class="use100">
+                            <div class="use100 center" >
+                                        <span  id="wallTitle" class="bold vtip"
+                                               style="font-size:21px;line-height:0.9;"
+                                               title="You can invite friends to this event.">&nbsp;</span>
+                            </div>
                         </div>
+                        <div class="use100" style="height:10px;"> &nbsp;</div>
                     </div>
-                    <div class="use100" style="height:10px;"> &nbsp;</div>
                 </div>
-            </div>
 
-            <div class="use100" style="height:10px;">&nbsp;</div>
-            <div class="use100">
-                <div class="use20">
-                  <img
-                      src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG"
-                      id="wallProfilePhoto"
-                      alt=""
-                      class="use95 ajax_image"
-                      style="padding:2px;background-color:#cdcdcd;opacity:0.7;filter:alpha(opacity=70);"/>
+                <div class="use100" style="height:10px;">&nbsp;</div>
+                <div class="use100">
+                    <div class="use20">
+                      <img
+                          src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG"
+                          id="wallProfilePhoto"
+                          alt=""
+                          class="use95 ajax_image"
+                          style="padding:2px;background-color:#cdcdcd;opacity:0.7;filter:alpha(opacity=70);"/>
+                    </div>
+                    <div class="use03">
+                        &nbsp;
+                    </div>
+                    <div class="use53">
+                        <div class="use100 center"><span id="wallProfileName" class="user_property_name" style="line-height:0.7;color:#919090;font-size:19px;text-transform:none;vertical-align:top;"></span><span class="user_property_name" style="color:#919090;font-size:18px;display:none;"> SAYS'</span></div>
+                        <div class="use100" style="height:5px;">&nbsp;</div>
+                        <TEXTAREA
+                                rows="5"
+                                cols="40"
+                                id="wallAppend"
+                                class="use100 bold vtip font wall_input"
+                                value=""
+                                onclick=""
+                                tabindex="1"
+                                style="height:78px;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';"
+                                title="You Haven't Entered Anything Here Yet|Enter Something You Want To Tell Others|People allowed here will get updated immediately!"></TEXTAREA>
+                    </div>
+                    <div class="use04">
+                        &nbsp;
+                    </div>
+                    <div class="use20">
+                        &nbsp;
+                    </div>
                 </div>
-                <div class="use03">
-                    &nbsp;
-                </div>
-                <div class="use53">
-                    <div class="use100 center"><span id="wallProfileName" class="user_property_name" style="line-height:0.7;color:#919090;font-size:19px;text-transform:none;vertical-align:top;"></span><span class="user_property_name" style="color:#919090;font-size:18px;display:none;"> SAYS'</span></div>
-                    <div class="use100" style="height:5px;">&nbsp;</div>
-                    <TEXTAREA
-                            rows="5"
-                            cols="40"
-                            id="wallAppend"
-                            class="use100 bold vtip font wall_input"
-                            value=""
-                            onclick=""
-                            tabindex="1"
-                            style="height:78px;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';"
-                            title="You Haven't Entered Anything Here Yet|Enter Something You Want To Tell Others|People allowed here will get updated immediately!"></TEXTAREA>
-                </div>
-                <div class="use04">
-                    &nbsp;
-                </div>
-                <div class="use20">
-                    &nbsp;
+                <div class="use100" style="height:5px;">&nbsp;</div>
+                <div id="wallSubmit" class="use20 use65p use15a" onclick="">
+                    <img class="use40 use45p use15a" src="/images/Enter.png" alt="Talk!"  style="cursor:pointer;"/>
                 </div>
             </div>
-            <div class="use100" style="height:5px;">&nbsp;</div>
-            <div id="wallSubmit" class="use20 use65p use15a" onclick="">
-                <img class="use40 use45p use15a" src="/images/Enter.png" alt="Talk!"  style="cursor:pointer;"/>
+            <div class="use100" style="height:20px;">
+               &nbsp;
             </div>
-        </div>
-        <div class="use100" style="height:20px;">
-           &nbsp;
-        </div>
-        <div class="by">
-            <div class="use100" id="wallContent" style="text-align:left;">
+            <div class="by">
+                <div class="use100" id="wallContent" style="text-align:left;">
+                </div>
             </div>
-        </div>
-        <div class="by center">
-            <div class="use20 use80p center cursor_link" style="center">
-                <img class="use60 use20p use20a vtip" id="wallMute" src="/images/mute.png" alt="mute/unmute wall" style="cursor:pointer;"
-                    title="You have access to this discussion|Clicking this will mute/unmute you its' updates|Your updates will be modified if you click here"
-                        />
+            <div class="by center">
+                <div class="use20 use80p center cursor_link" style="center">
+                    <img class="use60 use20p use20a vtip" id="wallMute" src="/images/mute.png" alt="mute/unmute wall" style="cursor:pointer;"
+                        title="You have access to this discussion|Clicking this will mute/unmute you its' updates|Your updates will be modified if you click here"
+                            />
+                </div>
             </div>
-        </div>
-        <div class="use100" style="height:5px;">
+            <div class="use100" style="height:5px;">
 
+            </div>
+            <hr/>
         </div>
-        <hr/>
     </div>
     </body>
 </html>

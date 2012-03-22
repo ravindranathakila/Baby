@@ -317,11 +317,7 @@ final public class
         },
 
         Album("ai/ilikeplaces/widgets/Album.xhtml",
-                AlbumManager.AlbumManagerIds.AlbumNotice,
-                AlbumManager.AlbumManagerIds.AlbumPivateEventId,
-                AlbumManager.AlbumManagerIds.AlbumOwner,
-                AlbumManager.AlbumManagerIds.AlbumForward,
-                AlbumManager.AlbumManagerIds.AlbumPhotos
+                AlbumManager.AlbumManagerIds.values()
         ) {
             @Override
             public String toString() {
@@ -335,11 +331,7 @@ final public class
         },
 
         AlbumTribe("ai/ilikeplaces/widgets/AlbumTribe.xhtml",
-                Controller.Page.AlbumTribeNotice,
-                Controller.Page.AlbumTribeTribeId,
-                Controller.Page.AlbumTribeOwner,
-                Controller.Page.AlbumTribeForward,
-                Controller.Page.AlbumTribePhotos
+                AlbumManagerTribe.AlbumManagerTribeIds.values()
         ) {
             @Override
             public String toString() {
@@ -1222,12 +1214,6 @@ final public class
 
         /*AlbumTribe Page*/
         final static public String DocAlbumTribe = "DocAlbumTribe";
-        /*AlbumTribe IDs*/
-        final static public String AlbumTribeNotice = "AlbumTribeNotice";
-        final static public String AlbumTribeTribeId = "AlbumTribeTribeId";
-        final static public String AlbumTribeOwner = "AlbumTribeOwner";
-        final static public String AlbumTribeForward = "AlbumTribeForward";
-        final static public String AlbumTribePhotos = "AlbumTribePhotos";
 
         /*ProfileWidget Page*/
         final static public String DocUserProperty = "DocUserProperty";

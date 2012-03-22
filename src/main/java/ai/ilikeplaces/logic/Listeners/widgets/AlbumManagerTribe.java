@@ -13,7 +13,6 @@ import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.rbs.RBGet;
-import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
@@ -60,6 +59,16 @@ public class AlbumManagerTribe extends AbstractWidgetListener {
     private HumansIdentity humansIdentity;
     private Return<Album> albumReturn;
 
+    public static enum AlbumManagerTribeIds implements WidgetIds {
+        AlbumTribeNotice,
+        AlbumTribeTribeId,
+        AlbumTribeOwner,
+        AlbumTribeForwardSection,
+        AlbumTribeForward,
+        AlbumTribePhotos,
+        AlbumTribeWidget,
+    }
+
 // --------------------------- CONSTRUCTORS ---------------------------
 
     public AlbumManagerTribe(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId__, final Tribe tribe) {
@@ -95,13 +104,24 @@ public class AlbumManagerTribe extends AbstractWidgetListener {
 
                 final List<PrivatePhoto> albumPhotos = album.getAlbumPhotos();
 
+                UCHideAlbumForwardIfNoPhotos:
+                {
+                    if (albumPhotos.size() == 0) {
+                        $$displayNone(AlbumManagerTribe.AlbumManagerTribeIds.AlbumTribeForwardSection);
+                    }
+
+                    if (tribe.getTribeMembers().size() == 1) {
+                        $$displayNone(AlbumManagerTribeIds.AlbumTribeWidget);
+                    }
+                }
+
                 new Carousel(request, new CarouselCriteria().setAlbumPhotos(albumPhotos), $(Page.Skeleton_right_column));
 
                 final List<Long> albumPhotoIds = new ArrayList<Long>(albumPhotos.size());
 
                 for (final PrivatePhoto privatePhoto__ : albumPhotos) {
                     albumPhotoIds.add(privatePhoto__.getPrivatePhotoId());
-                    new Photo$Description(request, $$(Page.AlbumTribePhotos), photoSequenceNumber++, wallProspects) {
+                    new Photo$Description(request, $$(AlbumManagerTribeIds.AlbumTribePhotos), photoSequenceNumber++, wallProspects) {
                         @Override
                         protected void init(final Object... initArgs) {
                             final Integer photoSequenceNumber = (Integer) initArgs[0];
@@ -128,17 +148,17 @@ public class AlbumManagerTribe extends AbstractWidgetListener {
                 getHumanUserFromRequest(request).storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_PRIVATE_PHOTOS, albumPhotoIds);
 
             } else {
-                $$(Page.AlbumTribeNotice).setTextContent(albumReturn.returnMsg());
+                $$(AlbumManagerTribeIds.AlbumTribeNotice).setTextContent(albumReturn.returnMsg());
             }
         }
 
-        $$(Page.AlbumTribeTribeId).setAttribute(MarkupTag.INPUT.value(), tribe.getTribeId().toString());
+        $$(AlbumManagerTribeIds.AlbumTribeTribeId).setAttribute(MarkupTag.INPUT.value(), tribe.getTribeId().toString());
 
     }
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
-        itsNatHTMLDocument__.addEventListener((EventTarget) $$(Page.AlbumTribeForward), EventType.CLICK.toString(), new EventListener() {
+        itsNatHTMLDocument__.addEventListener((EventTarget) $$(AlbumManagerTribeIds.AlbumTribeForward), EventType.CLICK.toString(), new EventListener() {
             final HumanId myhumanId = humanId;
             final Long mytribeId = tribe.getTribeId();
             boolean confirmed = false;
@@ -190,7 +210,7 @@ public class AlbumManagerTribe extends AbstractWidgetListener {
                         //$$(evt_).setTextContent(RBGet.gui().getString(BUTTONTEXT_CLICK_TO_CONFIRM));
                     } else {
                         //Why are we displaying the button in the first place if the album doesn't contain photos? To imply photos can be uploaded and forwarded
-                        $$displayNone($$(Page.AlbumTribeForward));
+                        $$displayNone($$(AlbumManagerTribeIds.AlbumTribeForward));
                     }
                 }
             }

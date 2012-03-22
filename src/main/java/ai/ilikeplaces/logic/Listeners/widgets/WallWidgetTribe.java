@@ -96,6 +96,13 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
         final Return<Wall> aReturn = DB.getHumanCRUDTribeLocal(true).
                 readWall(criteria.getHumanId(), new VLong(criteria.getTribeId()), REFRESH_SPEC);
 
+        UCHidingWallIfEmptyToShowInviteWidgetOnTop:
+        {
+            if (tribe.getTribeMembers().size() == 1) {
+                $$displayNone(WallWidgetIds.wallWidget);
+            }
+        }
+
         /**
          * If null, this means we have to check on if the wall entry parameter is available and update.
          * If not null, this means the wall entry has been consumed(we set it to true)

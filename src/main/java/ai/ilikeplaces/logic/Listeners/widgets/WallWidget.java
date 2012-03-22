@@ -32,6 +32,7 @@ abstract public class WallWidget<T> extends AbstractWidgetListener<T> {
 
     public static enum WallWidgetIds implements WidgetIds {
         /*WallHandler IDs*/
+        wallWidget,
         wallContent,
         wallAppend,
         wallSubmit,
