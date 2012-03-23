@@ -6,6 +6,7 @@ import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.exception.ConstructorInvokationException;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
+import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
@@ -72,49 +73,9 @@ final public class ServletActivate extends HttpServlet {
     //final PageFace home = Page.home;
     final PageFace organize = Page.Organize;
     final PageFace signup = Page.signup;
-    final private Properties p_ = new Properties();
-    private Context context = null;
-    private SingletonHashingRemote singletonHashingRemote = null;
     private PageFace tribes = Page.Tribes;
 
     // ------------------------ OVERRIDING METHODS ------------------------
-    @Override
-    @SuppressWarnings("unchecked")
-    public void init() {
-
-        boolean initializeFailed = true;
-        final StringBuilder log = new StringBuilder();
-        init:
-        {
-            try {
-                p_.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
-                context = new InitialContext(p_);
-
-                singletonHashingRemote = (SingletonHashingRemote) context.lookup("SingletonHashingLocal");
-                if (singletonHashingRemote == null) {
-                    log.append("\nVARIABLE singletonHashingRemote IS NULL! ");
-                    log.append(singletonHashingRemote);
-                    break init;
-                }
-            } catch (NamingException ex) {
-                log.append("\nCOULD NOT INITIALIZE SIGNUP SERVLET DUE TO A NAMING EXCEPTION!");
-                logger.info("\nCOULD NOT INITIALIZE SIGNUP SERVLET DUE TO A NAMING EXCEPTION!", ex);
-                break init;
-            }
-
-            /**
-             *
-             * break. Do not let this statement be reachable if initialization
-             * failed. Instead, break immediately where initialization failed.
-             * At this point, we set the initializeFailed to false and thereby,
-             * allow initialization of an instance
-             */
-            initializeFailed = false;
-        }
-        if (initializeFailed) {
-            throw new ConstructorInvokationException(log.toString());
-        }
-    }
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -193,7 +154,7 @@ final public class ServletActivate extends HttpServlet {
                             if (humansAuthentications.getHumanAuthenticationHash().equals(request__.getParameter(Password))) {
                                 DB.getHumanCRUDHumanLocal(true).doUActivateHuman(new HumanId(existingUser.getHumanId()).getSelfAsValid());
 
-                                final HumanUserLocal humanUserLocal = (HumanUserLocal) context.lookup(HumanUserLocal.NAME);
+                                final HumanUserLocal humanUserLocal = ai.ilikeplaces.logic.role.HumanUser.getHumanUserLocal(true);
                                 humanUserLocal.setHumanUserId(request__.getParameter(Username));
                                 userSession_.setAttribute(HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
                                 SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
