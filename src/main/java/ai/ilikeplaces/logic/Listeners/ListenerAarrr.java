@@ -63,12 +63,12 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
                 };
 
                 new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
-                new Juice(request__, new JuiceCriteria(), $(Controller.Page.AarrrJuice));
 
                 if (getUsername() != null) {
                     displayNone($(Controller.Page.AarrrJuice));
                     displayBlock($(Controller.Page.AarrrDownTownHeatMap));
                 } else {
+                    new Juice(request__, new JuiceCriteria(), $(Controller.Page.AarrrJuice));
                     displayBlock($(Controller.Page.AarrrJuice));
                     displayNone($(Controller.Page.AarrrDownTownHeatMap));
                 }

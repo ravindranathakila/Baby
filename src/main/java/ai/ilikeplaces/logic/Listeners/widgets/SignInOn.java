@@ -126,7 +126,7 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
             }
             UCShowPleaseLoginMessage:
             {
-                $$(SignInOnIds.signinonNotice).setTextContent("Login!");
+                $$(SignInOnIds.signinonNotice).setTextContent("Hey, you have not logged in!");
             }
         }
     }
@@ -169,63 +169,61 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
 
-//        Lat time we checked, this did not work!
-//        super.registerForClick($$(Page.signinonSubmit), new EventListener() {
-//            @Override
-//            public void handleEvent(Event evt) {
-//                notifyUser("Trying to log you in...");
-//            }
-//        });
-
-
-        final EventListener loginListener = new EventListener() {
-            private HumanId myusername = username;
-            private Password mypassword = password;
-            private SimpleString mydbHash = dbHash;
-            private SimpleString mydbSalt = dbSalt;
-            private Obj<Boolean> myuserOk = userOk;
-            private Obj<Boolean> myexistButNotActive = existButNotActive;
-
-
+        //Last time we checked, this did not work!
+        super.registerForClick(SignInOnIds.signinonSubmit, new AIEventListener<SignInOnCriteria>(criteria) {
             @Override
-            public void handleEvent(final Event evt_) {
-                final HttpSession userSession_ = ((ItsNatHttpSession) request.getItsNatSession()).getHttpSession();
-
-                if (myusername.validate() == 0 && mypassword.validate() == 0) {
-                    if (userSession_.getAttribute(HumanUserLocal.NAME) == null) {
-                        /*Ok the session does not have the bean, initialize it with the user with email id and password*/
-                        if (myuserOk.getObj()) {/*Ok user name valid but now we check for password*/
-                            if (mydbHash.getObj().equals(DB.getSingletonHashingFaceLocal(true).getHash(mypassword.getObjectAsValid(), mydbSalt.getObj()))) {
-                                final HumanUserLocal humanUserLocal = HumanUser.getHumanUserLocal(true);
-
-                                humanUserLocal.setHumanUserId(myusername.getObjectAsValid());
-
-                                userSession_.setAttribute(HumanUserLocal.NAME, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
-
-                                notifyUser("Logging you in...");
-
-                                $$sendJS(JSCodeToSend.refreshPageIn(0));
-                            } else {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
-                                notifyUser("Sorry, the password is wrong!");
-                            }
-                        } else {/*There is no such user. Ask if he forgot username or whether to create a new account :)*/
-                            if (myexistButNotActive.getObj()) {
-                                $$sendJS(JSCodeToSend.redirectPageWithURL("/page/_profile"));
-                                notifyUser("Please activate your account.");
-                            } else {
-                                notifyUser(myusername.getObj() + " is not a user of this website");
-                            }
-                        }
-                    } else {
-                        //We just ignore since the form is not visible and this cannot happen, or a hacker is trying something ;)
-                    }
-                } else {
-                    notifyUser("Login failed! Retry or Recover Access");
-                }
+            public void onFire(Event evt) {
+                notifyUser("Checking credentials...");
             }
-        };
+        });
 
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(SignInOnIds.signinonPassword), EventType.BLUR.toString(), loginListener, false);
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(SignInOnIds.signinonSubmit), EventType.CLICK.toString(), loginListener, false);
+
+        super.registerForClick(SignInOnIds.signinonSubmit,
+                new AIEventListener<SignInOnCriteria>(criteria) {
+                    private HumanId myusername = username;
+                    private Password mypassword = password;
+                    private SimpleString mydbHash = dbHash;
+                    private SimpleString mydbSalt = dbSalt;
+                    private Obj<Boolean> myuserOk = userOk;
+                    private Obj<Boolean> myexistButNotActive = existButNotActive;
+
+
+                    @Override
+                    public void onFire(final Event evt_) {
+                        final HttpSession userSession_ = ((ItsNatHttpSession) request.getItsNatSession()).getHttpSession();
+
+                        if (myusername.validate() == 0 && mypassword.validate() == 0) {
+                            if (userSession_.getAttribute(HumanUserLocal.NAME) == null) {
+                                /*Ok the session does not have the bean, initialize it with the user with email id and password*/
+                                if (myuserOk.getObj()) {/*Ok user name valid but now we check for password*/
+                                    if (mydbHash.getObj().equals(DB.getSingletonHashingFaceLocal(true).getHash(mypassword.getObjectAsValid(), mydbSalt.getObj()))) {
+                                        final HumanUserLocal humanUserLocal = HumanUser.getHumanUserLocal(true);
+
+                                        humanUserLocal.setHumanUserId(myusername.getObjectAsValid());
+
+                                        userSession_.setAttribute(HumanUserLocal.NAME, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
+
+                                        notifyUser("Logging you in...");
+
+                                        $$sendJS(JSCodeToSend.refreshPageIn(0));
+                                    } else {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
+                                        notifyUser("Sorry, the password is wrong!");
+                                    }
+                                } else {/*There is no such user. Ask if he forgot username or whether to create a new account :)*/
+                                    if (myexistButNotActive.getObj()) {
+                                        $$sendJS(JSCodeToSend.redirectPageWithURL("/page/_profile"));
+                                        notifyUser("Please activate your account.");
+                                    } else {
+                                        notifyUser(myusername.getObj() + " is not a user of this website");
+                                    }
+                                }
+                            } else {
+                                //We just ignore since the form is not visible and this cannot happen, or a hacker is trying something ;)
+                            }
+                        } else {
+                            notifyUser("Login failed! Retry or Recover Access");
+                        }
+                    }
+                });
     }
 }

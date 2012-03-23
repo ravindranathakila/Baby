@@ -102,6 +102,17 @@ public class Juice extends AbstractWidgetListener<JuiceCriteria> {
         });
 
         super.registerForClick(JuiceIds.Juice_Signup_Click, new AIEventListener<JuiceCriteria>(criteria) {
+            /**
+             * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+             *
+             * @param evt fired from client
+             */
+            @Override
+            protected void onFire(Event evt) {
+                notifyUser("Hold on please... We are signing you up!");
+            }
+        });
+        super.registerForClick(JuiceIds.Juice_Signup_Click, new AIEventListener<JuiceCriteria>(criteria) {
 
             /**
              * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
@@ -117,9 +128,9 @@ public class Juice extends AbstractWidgetListener<JuiceCriteria> {
                         final Return<Boolean> returnVal = ai.ilikeplaces.logic.Listeners.widgets.Bate.sendInviteToOfflineInvite(
                                 "I Like Places",
                                 new ImportedContact().setEmail(email.getObj()).setFullName(""));
-                        if (returnVal.valid() || !returnVal.returnValue()) {
+                        if (!returnVal.valid() || !returnVal.returnValue()) {
                             notifyUser("Sorry, but we think this email is invalid :-(");
-                        }else{
+                        } else {
                             $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
                         }
                     }

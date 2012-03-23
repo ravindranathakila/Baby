@@ -188,315 +188,52 @@
         </div>
     </div>
 
-
-
-
-
     <div style="display:none;">
-    <div id="impromptuPlaceDetails">
-        <div class="use100 center">
-            <div class="use100">
-                <div class="use100" style="font-size:18px;font-weight:900;color:#919090;">
-                    PLACE NAME?
-                </div>
-
-                <div class="use100" style="height:10px;">
-                    &nbsp;
-                </div>
-                <div class="use40 use30p use30a">
-                    <input class="use100" type="text" id="impromptuPlaceDetailsPlaceName" maxlength="30" value=""
-                           style="text-align:center;height:24px;font-size:16px;font-weight:900;border:4px solid #dddddd;"/>
-                </div>
-            </div>
-            <div class="use100" style="height:10px;">
-                &nbsp;
-            </div>
-            <div class="use100">
-                <div class="use100" style="font-size:18px;font-weight:900;color:#919090;">
-                    PLACE DESCRIPTION?
-                </div>
-                <div class="use100" style="height:10px;">
-                    &nbsp;
-                </div>
-                <div class="use60 use20p use20a">
-                    <input class="use100" type="text" id="impromptuPlaceDetailsPlaceDetails" maxlength="100" value=""
-                           style="text-align:center;height:24px;font-size:16px;font-weight:900;border:4px solid #dddddd;"/>
-                </div>
-            </div>
-            <div class="use100" style="height:10px;">
-                &nbsp;
-            </div>
-            <div class="use100">
-                <div class="use100" style="font-size:18px;font-weight:900;color:#919090;">
-                    ONCE YOU ADD THIS PLACE<br/>
-                    START A MOMENT HERE TO SOCIALIZE
-                </div>
-            </div>
-            <div class="use100" style="height:10px;">
-                &nbsp;
-            </div>
-        </div>
-        </div>
-        <div id="impromptuLoginForm">
-            <a>Coming Soon!</a>
-        </div>
-        <div id="impromtuWhyWeAreDoingThis" class="center">
-                <div class="use100 center" style="background-color:#ffffff;">
-                    <div class="use100 center" style="background:url('/images/Metal.png') repeat;">
-                        <div class="use100" style="height:10px;">&nbsp;</div>
-                        <div style="font-size:20px;"
-                             class="use60 use20p use20a grabber_subtitle">
-                            <a href="/page/_org"><img src="/images/dt_home.png" alt="Down Town"
-                                                      style="width:100%;"/></a>
-                        </div>
-                        <div class="use100" style="color:#000000;overflow:hidden;">jump UP in the air!
-                        </div>
-                        <div class="use100" style="height:5px;">&nbsp;</div>
-                    </div>
-                    <!-- End of Header-->
-                    <div class="use100" style="height:10px;">&nbsp;</div>
-                    <div id="popupSelectSection">
-                        <div class="use100">
-                             <span class="layer_4 grabber center" style="color:#333333;font-size:18px;">
-                                 What would you like to do?
-                             </span>
-                        </div>
-                        <div class="use100" style="height:10px;">&nbsp;</div>
-                        <span class="layer_4 grabber center" style="color:#000000;font-size:12px;">
-                            Got Something Exciting Coming Up?<br/>
-                        </span>
-                        <div class="use100" style="height:10px;">&nbsp;</div>
-                        <div class="use618 use191p use191a">
-                            <div class="use100" style="border:4px solid #000000;">
-                                <span class="layer_4 grabber center" style="color:#000000;font-size:20px; padding:5px;cursor:pointer;" onclick="$('#popupMomentSection').slideToggle();$('#popupSelectSection').slideToggle();">
-                                    START A MOMENT
-                                </span>
-                            </div>
-                        </div>
-                        <div class="use100" style="height:10px;">&nbsp;</div>
-                        <span class="layer_4 grabber center" style="color:#000000;font-size:12px;">
-                            Believe In Something So Badly You Want Others To Follow?<br/>
-                        </span>
-                        <div class="use100" style="height:10px;">&nbsp;</div>
-                        <div class="use618 use191p use191a">
-                            <div class="use100" style="border:4px solid #000000;">
-                                <span class="layer_4 grabber center" style="color:#000000;font-size:20px; padding:5px;cursor:pointer;" onclick="javascript:$('#popupSelectSection').slideToggle();window.location.href='/page/_tribes';">
-                                    START A TRIBE
-                                </span>
-                            </div>
-                        </div>
-                        <div class="use100" style="height:10px;">&nbsp;</div>
-                    </div>
-                    <div class="use100" style="height:10px;">&nbsp;</div>
-                    <div id="popupTribeSection" style="display:none;">
-                    </div>
-                    <div id="popupMomentSection" style="display:none;">
-                        <div class="use618 use191p use191a">
-                            <span style="font-size:18px;">IT'S EASY TO START A MOMENT</span>
-                        </div>
-                        <div class="use100" style="height:10px;"> &nbsp;</div>
-                        <div class="use618 use191p use191a">
-                            <span style="font-size:16px;">1) PICK A PLACE  2) INVITE YOUR FRIENDS</span>
-                        </div>
-                        <div class="use100" style="height:10px;"> &nbsp;</div>
-                        <div class="use618 use191p use191a">
-                            <span>PICK A PLACE IN:</span>
-                        </div>
-                        <div class="use100" style="height:10px;"> &nbsp;</div>
-                        <div class="use618 use191p use191a">
-                            <input type="text" id="popupSearchBox" style="width:100%;height:30px;font-size:16px;text-align:center;font-weight:900;border:4px solid #dddddd;" value="" onclick="javascript:this.value = '';" onchange="javascript:$('#searchboxmap').attr('value',this.value);setMapToLocation(document.getElementById('popupSearchBox').value);$.prompt.close();"/>
-                        </div>
-                        <div class="use100" style="height:5px;">&nbsp;</div>
-                        <div class="use618 use191p use191a">
-                            <i>Enter an area. e.g. Las Vegas, United States</i>
-                        </div>
-                        <div class="use618 use191p use191a" style="cursor:pointer;">
-                            <img src="/images/Go Fetch_Button.png" alt="Go Fetch!" class="use618 use191p use191a" onclick="javascript:setMapToLocation(document.getElementById('popupSearchBox').value);$.prompt.close();"/>
-                        </div>
-                        <span class="layer_4 grabber center" style="color:#ee00bb;font-size:12px;">
-                            Click <i>MARKERS</i> to choose places others chose<br/>
-                        </span>
-                    </div>
-                    <div class="use100" style="height:10px;"> &nbsp;</div>
-                    <div class="use100" style="height:24px;text-align:right;">
-                        <span class="use100" style="font-size:12px;text-align:center;cursor:pointer;font-style:none;text-decoration:underline;" onclick="javascript:$.prompt.close();$('.ClassDownTownHeatMapSignupEmail').focus();">It's ABSOLUTELY FREE For You &amp; Your Friends You Invite<br/></span>
-                    </div>
-                    <div class="use10 use90p">
-                        <img src="http://www.opensource.org/files/osi_greyscale_for_use_on_light_backgrounds_logo.png"
-                             alt="" class="use100" style="cursor:pointer;" onclick="javascript:window.location.href='http://www.opensource.org/licenses/AGPL-3.0';"/>
-                    </div>
-                </div>
-        </div>
-        <div id="impromtuWhyWeAreDoingThis1">
-                <div class="use100 center" style="background-color:#ffffff;">
-                    <span style="font-size:16px;" class="intensity">Down&darr;Town is Invite Only ;)<br/>
-                    <div class="use100" style="height:5px;">&nbsp;</div>
-                    <div class="use100" style="font-size:14px;">
-                        But there's a way in...
-                    </div>
-                    <div class="use100" style="font-size:16px;">
-                        Invite someone you care about and get invited back
-                    </div>
-                    <div class="use100" style="height:10px;">&nbsp;</div>
-                </div>
-        </div>
-        <div id="impromtuTour1">
-                <div class="use100 center" style="background-color:#ffffff;">
-                    <span style="font-size:18px;" class="intensity">What place or area am I interested in?</span><br/>
-                    <div class="use100" style="height:10px;">&nbsp;</div>
-                    <div class="use80 use10p use10a"><img src="/images/Search 1_1.JPG" style="width:100%;" alt="loading..."/></div>
-                    <span style="font-size:16px;" class="layer_4">
-                        Use the <i>Go Fetch!</i> box to focus the map on any place<br/>
-                        e.g. "Paris"
-                    </span>
-                </div>
-        </div>
-        <div id="impromtuTour2">
-                <div class="use100 center" style="background-color:#ffffff;">
-                    <span style="font-size:16px;" class="intensity">What happens if I search for "Park Lane, London"?</span><br/>
-                    <div class="use100" style="height:10px;">&nbsp;</div>
-                    <span style="font-size:11px;" class="layer_4">
-                        If the search was successful, the map will focus on Park Lane of London<br/>
-                    </span>
-                    <div class="use80 use10p use10a"><img src="/images/Search 1_2.JPG" style="width:80%;" alt="loading..."/></div>
-                    <div class="use100" style="height:5px;">&nbsp;</div>
-                </div>
-        </div>
-        <div id="impromtuTour3">
-                <div class="use100 center" style="background-color:#ffffff;">
-                    <span style="font-size:16px;" class="intensity">How do I know which is which?</span><br/>
-                    <div class="use100" style="height:10px;">&nbsp;</div>
-                    <div class="use45 use5a">
-                        <span style="font-size:11px;" class="layer_4">
-                            Names of the most popular places in the area will be listed on the left.<br/>Zoom in or drag map to see more<br/>
-                        </span>
-                        <img src="/images/Search 1_3.JPG" style="width:100%;" alt="loading..."/>
-                    </div>
-                    <div class="use50">
-                        <span style="font-size:11px;" class="layer_4">
-                            The interesting places will also be marked on the map with markers.<br/>Zoom in or drag map to see more<br/>
-                        </span>
-                        <img src="/images/Search 1_4.JPG" style="width:100%;" alt="loading..."/>
-                    </div>
-                    <div class="use100" style="height:5px;">&nbsp;</div>
-                </div>
-        </div>
-        <div id="impromtuTour4">
-                <div class="use100 center" style="background-color:#ffffff;">
-                    <span style="font-size:16px;" class="intensity">I found an interesting place, now what?</span><br/>
-                    <div class="use100" style="height:10px;">&nbsp;</div>
-                    <div class="use45 use5a">
-                        <span style="font-size:11px;" class="layer_4">
-                            Click on an interesting marker or any interesting place on map<br/>
-                        </span>
-                        <img src="/images/Search 1_3.JPG" style="width:100%;" alt="loading..."/>
-                    </div>
-                    <div class="use50">
-                        <span style="font-size:11px;" class="layer_4">
-                            The interesting places will also be marked on the map with markers
-                        </span>
-                        <img src="/images/Search 1_4.JPG" style="width:100%;" alt="loading..."/>
-                    </div>
-                    <div class="use100" style="height:5px;">&nbsp;</div>
-                </div>
-        </div>
-        <div id="impromtuSignUp">
-                <div class="use100 center" style="background-color:#ffffff;">
-
-                </div>
-        </div>
-
-        <div id="impromtuHowWeGoAboutIt1">
-                <div class="use100 center" style="background-color:#ffffff;">
-                    <span style="font-size:16px;" class="intensity">First you find a good place to hang out</span><br/>
-                    <div class="use100" style="height:10px;">&nbsp;</div>
-                    <div class="use50 use25p use25a"><img id="impromtuHowWeGoAboutIt1img1" src="#" style="width:100%;" alt="loading..."/></div>
-                    <span style="font-size:11px;" class="layer_4">
-                        You can easily do this using the map<br/>
-                        Let's select Taj Mahal for this example
-                    </span>
-                </div>
-        </div>
-        <div id="impromtuHowWeGoAboutIt2">
-                <div class="use100 center" style="background-color:#ffffff;">
-                    <span style="font-size:16px;" class="intensity">Then you create your own moment there with people you care</span><br/>
-                    <div class="use100" style="height:10px;">&nbsp;</div>
-                    <div class="use80 use10p use10a"><img src="/images/purpose_plan_event.JPG" style="width:100%;" alt="loading..."/></div>
-                    <span style="font-size:11px;" class="layer_4">
-                        Use the wall to talk to people and organize things. It's quite private to people you invite. <br/>
-                        You can use the private album to share the snaps taken.<br/>
-                    </span>
-                </div>
-        </div>
-        <div id="impromtuHowWeGoAboutIt3">
-                <div class="use100 center" style="background-color:#ffffff;">
-                    <span style="font-size:16px;" class="intensity">Can I help others by planning my own moments with people I care?</span><br/>
-                    <div class="use100" style="height:10px;">&nbsp;</div>
-                    <div class="use60 use20p use20a"><img src="/images/purpose_help_others_find_a_good_place.JPG" style="width:100%;" alt="loading..."/></div>
-                    <span style="font-size:11px;" class="layer_4">
-                        Yes, indeed! The places you mark go into the main map where others can find it. <br/>
-                        "Oh! are my places so public?"<br/>
-                        Quite the contrary. Usually we show a places name based on an average of 10 name entries given to it.<br/>
-                        This means private places like homes are unlikely to show. With time, we'll increse this quota for more safety.<br/>
-                        You can mark any public interesting place and have moments there.<br/>
-                        By spending moments there, you help others new to the area find that interesting place.
-                    </span>
-                </div>
-        </div>
-
-        <div id="impromptuRealityAmanda1" class="use100">
-            <div class="use100" style="height:20px;">
-                &nbsp;
-            </div>
-            <div class="use100" >
-                <div class="use20">
-                    <img src="/images/amanda_jane_profile_pic_th.jpg" class="use60 use20p use20a" alt="Loading..." title=""/>
-                </div>
-                <div class="use80">
-                    Amanda got an invite to ilikeplaces from Lilly her best friend.
-                    She immediately logged in and set her name and profile photo.
-                    She was leaving to Cudillero in a week.
-                    Down Town had a way of organizing great moments!
-                </div>
-            </div>
-        </div>
-        <div id="impromptuRealityAmanda2">
-            <div class="use100" style="height:20px;">
-                &nbsp;
-            </div>
+        <div id="impromptuPlaceDetails">
             <div class="use100 center">
-                The first thing Amanda did was to <i>search Cudillero</i> on the home page.
-            </div>
-            <div class="use100" >
-                <img src="/images/amanda_jane_cudillero_search.jpg" class="use40 use30p use30a" alt="Loading..." title=""/>
+                <div class="use100">
+                    <div class="use100" style="font-size:18px;font-weight:900;color:#919090;">
+                        PLACE NAME?
+                    </div>
+
+                    <div class="use100" style="height:10px;">
+                        &nbsp;
+                    </div>
+                    <div class="use40 use30p use30a">
+                        <input class="use100" type="text" id="impromptuPlaceDetailsPlaceName" maxlength="30" value=""
+                               style="text-align:center;height:24px;font-size:16px;font-weight:900;border:4px solid #dddddd;"/>
+                    </div>
+                </div>
+                <div class="use100" style="height:10px;">
+                    &nbsp;
+                </div>
+                <div class="use100">
+                    <div class="use100" style="font-size:18px;font-weight:900;color:#919090;">
+                        PLACE DESCRIPTION?
+                    </div>
+                    <div class="use100" style="height:10px;">
+                        &nbsp;
+                    </div>
+                    <div class="use60 use20p use20a">
+                        <input class="use100" type="text" id="impromptuPlaceDetailsPlaceDetails" maxlength="100" value=""
+                               style="text-align:center;height:24px;font-size:16px;font-weight:900;border:4px solid #dddddd;"/>
+                    </div>
+                </div>
+                <div class="use100" style="height:10px;">
+                    &nbsp;
+                </div>
+                <div class="use100">
+                    <div class="use100" style="font-size:18px;font-weight:900;color:#919090;">
+                        ONCE YOU ADD THIS PLACE<br/>
+                        START A MOMENT HERE TO SOCIALIZE
+                    </div>
+                </div>
+                <div class="use100" style="height:10px;">
+                    &nbsp;
+                </div>
             </div>
         </div>
-        <div id="impromptuRealityAmanda3">
-            <div class="use100" style="height:20px;">
-                &nbsp;
-            </div>
-            <div class="use100" >
-                The map immediately focused on Cudillero, a lovely town in Spain.
-                She also noticed several markers pop up on the map. They had numbers on them.
-                She assumed the numbers were based on popularity of each place in Cudillero.
-                She also try the "Show Pics" button. As the images appeared,
-                "Wow!" She thought, "There are plenty of pretty places in Cudillero!".
-            </div>
-            <div class="use100" >
-                <img src="/images/amanda_jane_cudillero_search_result.jpg" class="use40 use30p use30a" alt="Loading..." title=""/>
-            </div>
-        </div>
-        <div id="impromptuRealityAmanda4">
-            <div class="use100" style="height:20px;">
-                &nbsp;
-            </div>
-            <div class="use100" >
-                <i>As Amanda was staying at Hotel El Pescador, she clicked on it.</i><br/>
-            </div>
-            <div class="use100" >
-                <img src="/images/amanda_jane_cudillero_search_result.jpg" class="use40 use30p use30a" alt="Loading..." title=""/>
-            </div>
-        </div>
+
     </div>
 
     <div style="display:none;">
