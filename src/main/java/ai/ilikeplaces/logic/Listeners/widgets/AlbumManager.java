@@ -129,7 +129,7 @@ public class AlbumManager extends AbstractWidgetListener {
                         $$displayNone(AlbumManagerIds.AlbumForwardSection);
                     }
 
-                    if (privateEvent.getPrivateEventOwners().size() + privateEvent.getPrivateEventViewers().size() == 1) {
+                    if (privateEvent.getPrivateEventOwners().size() + privateEvent.getPrivateEventViewers().size() == 2) {
                         $$displayNone(AlbumManagerIds.AlbumWidget);
                     }
                 }
