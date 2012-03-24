@@ -193,30 +193,24 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
 
                                             @Override
                                             public String afterInviteWithNoti(final HumanId invitee) {
-                                                final Return<Boolean> friendAddReturn = DB.getHumanCRUDHumanLocal(true).doNTxAddHumansNetPeople(myhumanId, invitee);
 
-                                                if (friendAddReturn.valid()) {
+                                                final Human friend = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(invitee.getHumanId());
 
-                                                    final Human friend = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(invitee.getHumanId());
-
-                                                    final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddOwnerWithPrivateLocationCheck(myhumanId, myprivateEventId, friend, mymyprivateEvent.getPrivateLocation().getPrivateLocationId());
-                                                    if (returnVal.returnStatus() == 0) {
-                                                        SendMail.getSendMailLocal().sendAsHTMLAsynchronously(invitee.getHumanId(),
-                                                                myhumanId.getObj(),
-                                                                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
-                                                                        new HumanId(myhumanId.getHumanId()),
-                                                                        invitee.getHumanId(),
-                                                                        ElementComposer.compose($$(MarkupTag.A))
-                                                                                .$ElementSetHref(myeventLink)
-                                                                                .$ElementSetText("I added you as an manager of moment " + returnVal.returnValue().getPrivateEventName())
-                                                                                .get()
-                                                                ));
-                                                        return "Invited to this Moment and added to your profile!";
-                                                    } else {
-                                                        return "Invited and added to your profile, but could not add to this Moment";
-                                                    }
+                                                final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddOwnerWithPrivateLocationCheck(myhumanId, myprivateEventId, friend, mymyprivateEvent.getPrivateLocation().getPrivateLocationId());
+                                                if (returnVal.returnStatus() == 0) {
+                                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(invitee.getHumanId(),
+                                                            myhumanId.getObj(),
+                                                            ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
+                                                                    new HumanId(myhumanId.getHumanId()),
+                                                                    invitee.getHumanId(),
+                                                                    ElementComposer.compose($$(MarkupTag.A))
+                                                                            .$ElementSetHref(myeventLink)
+                                                                            .$ElementSetText("I added you as an manager of moment " + returnVal.returnValue().getPrivateEventName())
+                                                                            .get()
+                                                            ));
+                                                    return "Invited to this Moment and added to your profile!";
                                                 } else {
-                                                    return "Sorry, something went wrong :-(";
+                                                    return "Invited and added to your profile, but could not add to this Moment";
                                                 }
                                             }
                                         }
