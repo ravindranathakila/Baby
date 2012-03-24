@@ -10,5 +10,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
  */
 public interface AdaptableSignupCallback {
 
-    public String afterInviteWithNoti(final HumanId invitee);
+    public String afterInvite(final HumanId invitee);
+
+    public String jsToSend(final HumanId invitee);
 }

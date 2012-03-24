@@ -14,6 +14,7 @@ public class AdaptableSignupCriteria<T extends AdaptableSignupCallback> {
 
     private HumanId humanId;
     private InviteData inviteData;
+    private String widgetTitle;
 
 
     private T adaptableSignupCallback;
@@ -44,7 +45,16 @@ public class AdaptableSignupCriteria<T extends AdaptableSignupCallback> {
         return this;
     }
 
-// -------------------------- INNER CLASSES --------------------------
+    public String getWidgetTitle() {
+        return widgetTitle != null ? widgetTitle : "";
+    }
+
+    public AdaptableSignupCriteria setWidgetTitle(final String widgetTitle) {
+        this.widgetTitle = widgetTitle;
+        return this;
+    }
+
+    // -------------------------- INNER CLASSES --------------------------
 
     public class InviteData {
 // ------------------------------ FIELDS ------------------------------

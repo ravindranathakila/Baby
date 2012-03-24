@@ -38,6 +38,7 @@ public class AdaptableSignup extends AbstractWidgetListener<AdaptableSignupCrite
         AdaptableSignupNoti,
         AdaptableSignupEmail,
         AdaptableSignupSignup,
+        AdaptableSignupTitle,
     }
 
     /**
@@ -51,6 +52,7 @@ public class AdaptableSignup extends AbstractWidgetListener<AdaptableSignupCrite
     @Override
     protected void init(final AdaptableSignupCriteria adaptableSignupCriteria) {
         registerUserNotifier(AdaptableSignupIds.AdaptableSignupNoti);
+        $$(AdaptableSignupIds.AdaptableSignupTitle).setTextContent(criteria.getWidgetTitle());
     }
 
     /**
@@ -103,15 +105,17 @@ public class AdaptableSignup extends AbstractWidgetListener<AdaptableSignupCrite
                                         new ImportedContact().setEmail(email.getObj()).setFullName(""));
                             }
 
-                            if (!DB.getHumanCRUDHumanLocal(false).doDirtyIsHumansNetPeople(criteria.getHumanId(), new HumanId(email.getObj())).returnValue()) {
+                            final HumanId invitee = new HumanId(email.getObj());
+                            if (!DB.getHumanCRUDHumanLocal(false).doDirtyIsHumansNetPeople(criteria.getHumanId(), invitee).returnValue()) {
                                 if (!criteria.getHumanId().getHumanId().equals(email.getObj())) {
-                                    Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doNTxAddHumansNetPeople(criteria.getHumanId(), new HumanId(email.getObj()));
+                                    Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doNTxAddHumansNetPeople(criteria.getHumanId(), invitee);
                                     if (r.valid()) {
                                         $$(AdaptableSignupIds.AdaptableSignupNoti).setTextContent(MessageFormat.format(RBGet.gui().getString(INVITED_ADDED_0), email));
                                         $$(AdaptableSignupIds.AdaptableSignupEmail).setAttribute(MarkupTag.INPUT.value(), "");
 
-                                        final String notice = criteria.getAdaptableSignupCallback().afterInviteWithNoti(new HumanId(email.getObj()));
-                                        notifyUser(notice);
+                                        final String notification = criteria.getAdaptableSignupCallback().afterInvite(invitee);
+                                        notifyUser(notification);
+                                        $$sendJS(criteria.getAdaptableSignupCallback().jsToSend(invitee));
 
                                     } else {
                                         notifyUser(RBGet.gui().getString(COULD_NOT_INVITE_AND_ADD_TRY_AGAIN));

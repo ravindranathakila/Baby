@@ -177,12 +177,13 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
         final List<HumansPrivateEvent> privateEventOwners = privateEvent.getPrivateEventOwners();
         UCAddRemoveOwners:
         {
-            UCFriendsDoNotExistToAddRemove:
+            UCFriendsDoNotExistToAddRemove_UCAddRemoveOwners:
             {
                 new AdaptableSignup(
                         request,
                         new AdaptableSignupCriteria()
                                 .setHumanId(humanId)
+                                .setWidgetTitle("Add Managers By Their Email")
                                 .setAdaptableSignupCallback(
                                         new AdaptableSignupCallback() {
 
@@ -190,9 +191,10 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                                             final HumanId myhumanId = humanId;
                                             final long myprivateEventId = privateEvent.getPrivateEventId();
                                             final PrivateEvent mymyprivateEvent = privateEvent;
+                                            private boolean successful = false;
 
                                             @Override
-                                            public String afterInviteWithNoti(final HumanId invitee) {
+                                            public String afterInvite(final HumanId invitee) {
 
                                                 final Human friend = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(invitee.getHumanId());
 
@@ -205,12 +207,22 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                                                                     invitee.getHumanId(),
                                                                     ElementComposer.compose($$(MarkupTag.A))
                                                                             .$ElementSetHref(myeventLink)
-                                                                            .$ElementSetText("I added you as an manager of moment " + returnVal.returnValue().getPrivateEventName())
+                                                                            .$ElementSetText("I added you as a manager of moment " + returnVal.returnValue().getPrivateEventName())
                                                                             .get()
                                                             ));
+                                                    successful = true;
                                                     return "Invited to this Moment and added to your profile!";
                                                 } else {
                                                     return "Invited and added to your profile, but could not add to this Moment";
+                                                }
+                                            }
+
+                                            @Override
+                                            public String jsToSend(final HumanId invitee) {
+                                                if (successful) {
+                                                    return JSCodeToSend.refreshPageIn(2);
+                                                } else {
+                                                    return "";
                                                 }
                                             }
                                         }
@@ -218,7 +230,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                         $$(PrivateEventDeleteIds.privateEventDeleteOwners));
             }
 
-            UCFriendsExistToAddRemove:
+            UCFriendsExistToAddRemove_UCAddRemoveOwners:
             {
                 new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
                         request, $$(PrivateEventDeleteIds.privateEventDeleteOwners),
@@ -243,7 +255,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                                                     humansFriend.getHumanId(),
                                                     ElementComposer.compose($$(MarkupTag.A))
                                                             .$ElementSetHref(myeventLink)
-                                                            .$ElementSetText("I added you as an manager of moment " + returnVal.returnValue().getPrivateEventName())
+                                                            .$ElementSetText("I added you as a manager of moment " + returnVal.returnValue().getPrivateEventName())
                                                             .get()
                                             ));
                                 }
@@ -266,7 +278,7 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                                             ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
                                                     new HumanId(humanId.getHumanId()),
                                                     humansFriend.getHumanId(),
-                                                    ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + " has removed you as an manager of moment " + returnVal.returnValue().getPrivateEventName()
+                                                    ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + " has removed you as a manager of moment " + returnVal.returnValue().getPrivateEventName()
                                             ));
                                 }
                                 return returnVal;
@@ -280,59 +292,117 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
         UCAddRemoveVisitors:
         {
             final List<HumansPrivateEvent> privateEventViewers = privateEvent.getPrivateEventViewers();
-            new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
-                    request, $$(PrivateEventDeleteIds.privateEventDeleteVisitors),
-                    user.getHumansNet(),
-                    possibilities,
-                    privateEventViewers,
-                    new Save<Return<PrivateEvent>>() {
 
-                        final long myprivateEventId = privateEvent.getPrivateEventId();
-                        final String myeventLink = eventLink;
+            UCFriendsDoNotExistToAddRemove_UCAddRemoveVisitors:
+            {
+                new AdaptableSignup(
+                        request,
+                        new AdaptableSignupCriteria()
+                                .setHumanId(humanId)
+                                .setWidgetTitle("Invite People By Their Email")
+                                .setAdaptableSignupCallback(
+                                        new AdaptableSignupCallback() {
 
-                        @Override
-                        public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
+                                            final String myeventLink = eventLink;
+                                            final HumanId myhumanId = humanId;
+                                            final long myprivateEventId = privateEvent.getPrivateEventId();
+                                            final PrivateEvent mymyprivateEvent = privateEvent;
+                                            private boolean successful = false;
 
-                            final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddVisitorWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, privateEvent.getPrivateLocation().getPrivateLocationId());
-                            if (returnVal.returnStatus() == 0) {
-                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
-                                        humanId.getObj(),
-                                        ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
-                                                new HumanId(humanId.getHumanId()),
-                                                humansFriend.getHumanId(),
-                                                ElementComposer.compose($$(MarkupTag.A))
-                                                        .$ElementSetHref(myeventLink)
-                                                        .$ElementSetText("I added you as an attendee of moment " + returnVal.returnValue().getPrivateEventName())
-                                                        .get()
-                                        ));
+                                            @Override
+                                            public String afterInvite(final HumanId invitee) {
+
+                                                final Human friend = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(invitee.getHumanId());
+
+                                                final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddVisitorWithPrivateLocationCheck(myhumanId, myprivateEventId, friend, mymyprivateEvent.getPrivateLocation().getPrivateLocationId());
+                                                if (returnVal.returnStatus() == 0) {
+                                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(invitee.getHumanId(),
+                                                            myhumanId.getObj(),
+                                                            ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
+                                                                    new HumanId(myhumanId.getHumanId()),
+                                                                    invitee.getHumanId(),
+                                                                    ElementComposer.compose($$(MarkupTag.A))
+                                                                            .$ElementSetHref(myeventLink)
+                                                                            .$ElementSetText("I added you as an attendee of moment " + returnVal.returnValue().getPrivateEventName())
+                                                                            .get()
+                                                            ));
+                                                    successful = true;
+                                                    return "Invited to this Moment and added to your profile!";
+                                                } else {
+                                                    return "Invited and added to your profile, but could not add to this Moment";
+                                                }
+                                            }
+
+                                            @Override
+                                            public String jsToSend(HumanId invitee) {
+                                                if (successful) {
+                                                    return JSCodeToSend.refreshPageIn(5);
+                                                } else {
+                                                    return "";
+                                                }
+                                            }
+                                        }
+                                ),
+                        $$(PrivateEventDeleteIds.privateEventDeleteVisitors));
+            }
+
+
+            UCFriendsExistToAddRemove_UCAddRemoveVisitors:
+            {
+                new MemberHandler<HumansFriend, List<HumansFriend>, Return<PrivateEvent>>(
+                        request, $$(PrivateEventDeleteIds.privateEventDeleteVisitors),
+                        user.getHumansNet(),
+                        possibilities,
+                        privateEventViewers,
+                        new Save<Return<PrivateEvent>>() {
+
+                            final long myprivateEventId = privateEvent.getPrivateEventId();
+                            final String myeventLink = eventLink;
+
+                            @Override
+                            public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
+
+                                final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventAddVisitorWithPrivateLocationCheck(humanId, myprivateEventId, humansFriend, privateEvent.getPrivateLocation().getPrivateLocationId());
+                                if (returnVal.returnStatus() == 0) {
+                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
+                                            humanId.getObj(),
+                                            ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
+                                                    new HumanId(humanId.getHumanId()),
+                                                    humansFriend.getHumanId(),
+                                                    ElementComposer.compose($$(MarkupTag.A))
+                                                            .$ElementSetHref(myeventLink)
+                                                            .$ElementSetText("I added you as an attendee of moment " + returnVal.returnValue().getPrivateEventName())
+                                                            .get()
+                                            ));
+                                }
+                                return returnVal;
+
                             }
-                            return returnVal;
+                        },
+                        new Save<Return<PrivateEvent>>() {
 
-                        }
-                    },
-                    new Save<Return<PrivateEvent>>() {
-
-                        final long myprivateEventId = privateEvent.getPrivateEventId();
+                            final long myprivateEventId = privateEvent.getPrivateEventId();
 
 
-                        @Override
-                        public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
-                            final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveVisitor(humanId, myprivateEventId, humansFriend);
-                            if (returnVal.returnStatus() == 0) {
-                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
-                                        humanId.getObj(),
-                                        ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
-                                                new HumanId(humanId.getHumanId()),
-                                                humansFriend.getHumanId(),
-                                                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + " has removed you as an attendee of moment " + returnVal.returnValue().getPrivateEventName()
-                                        ));
+                            @Override
+                            public Return<PrivateEvent> save(final HumanId humanId, final HumansFriend humansFriend) {
+                                final Return<PrivateEvent> returnVal = DB.getHumanCrudPrivateEventLocal(true).uPrivateEventRemoveVisitor(humanId, myprivateEventId, humansFriend);
+                                if (returnVal.returnStatus() == 0) {
+                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
+                                            humanId.getObj(),
+                                            ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
+                                                    new HumanId(humanId.getHumanId()),
+                                                    humansFriend.getHumanId(),
+                                                    ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + " has removed you as an attendee of moment " + returnVal.returnValue().getPrivateEventName()
+                                            ));
+                                }
+                                return returnVal;
+
                             }
-                            return returnVal;
-
                         }
-                    }
-            ) {
-            };
+                ) {
+                };
+            }
             UCAddRemoveInvitee:
 //INVITEES JUST GET NOTIFICATIONS. AS OF 2011-10-01 THESE GUYS CANNOT VIEW THE EVENT. HENCE IT IS HIDDEN.
             {
