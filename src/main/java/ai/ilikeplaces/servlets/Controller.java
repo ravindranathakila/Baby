@@ -151,6 +151,8 @@ final public class
 
     final PageFace juice = Page.Juice;
 
+    final PageFace adaptableSignup = Page.AdaptableSignup;
+
 // -------------------------- ENUMERATIONS --------------------------
 
     @NOTE(note = "Inner Enums are static. Therefore, the lists shall be populated only once.")
@@ -1153,7 +1155,19 @@ final public class
             public String toString() {
                 return DocJuice;
             }
-        };
+        }, AdaptableSignup(
+                "ai/ilikeplaces/widgets/AdaptableSignup.xhtml",
+                ai.ilikeplaces.logic.Listeners.widgets.AdaptableSignup.AdaptableSignupIds.values()) {
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+
+            @Override
+            public String toString() {
+                return DocAdaptableSignup;
+            }
+        } ;
 
         private static final String APP_ROOT = RBGet.getGlobalConfigKey("AppRoot");
 
@@ -1555,6 +1569,9 @@ final public class
         /*Juice Page*/
         final static public String  DocJuice = "DocJuice";
 
+        /*AdaptableSignup Page*/
+        final static public String  DocAdaptableSignup = "DocAdaptableSignup";
+
         /*TribeCreateHome Page*/
         final static public String DocTribeCreateHome = "DocTribeCreateHome";
         /*TribeCreateHome Specific IDs*/
@@ -1598,7 +1615,7 @@ final public class
             } catch (
                     @WARNING(warning = "Don't remove this catch. You'll not see any duplicate id exceptions etc. anywhere if you do so.")
                     final Exception e) {
-                Loggers.EXCEPTION.error("SORRY! SOMETHING WENT WRONG DURING INITIALIZATION. THIS SHOULD EXPTECTED TO BE FATAL.", e);
+                Loggers.EXCEPTION.error("SORRY! SOMETHING WENT WRONG DURING INITIALIZATION. THIS SHOULD EXPECTED TO BE FATAL.", e);
             }
         }
 
@@ -1788,6 +1805,8 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(help.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(help));
 
             inhs__.registerItsNatDocFragmentTemplate(juice.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(juice));
+
+            inhs__.registerItsNatDocFragmentTemplate(adaptableSignup.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(adaptableSignup));
         }
     }
 
