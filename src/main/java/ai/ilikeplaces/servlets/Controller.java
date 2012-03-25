@@ -992,7 +992,8 @@ final public class
                 Controller.Page.AarrrDownTownHeatMap,
                 Controller.Page.AarrrJuice,
                 Controller.Page.AarrrWOEID,
-                Controller.Page.AarrrHeader
+                Controller.Page.AarrrHeader,
+                Controller.Page.AARRR_pageType
         ) {
             @Override
             public String getURL() {
@@ -1435,7 +1436,6 @@ final public class
         final static public String Skeleton_right_column = "Skeleton_right_column";
         final static public String Skeleton_sidebar = "Skeleton_sidebar";
         final static public String Skeleton_notifications = "Skeleton_notifications";
-        final static public String Skeleton_pageType = "Skeleton_pageType";
 
         /*Private Location Page*/
         final static public String DocPrivateLocationView = "PrivateLocationView";
@@ -1586,6 +1586,8 @@ final public class
         final static public String CPageTitle = "PageTitle";
         final static public String CPageIntro = "PageIntro";
         final static public String CPageNotice = "PageNotice";
+        final static public String CPageType = "Skeleton_pageType";
+
 
         final static public String SkeletonCPageTitle = CPageTitle;
         final static public String MainCPageTitle = CPageTitle;//NOT IMPLEMENTED YET, UPDATE HTML AND CONSTRUCTOR PLS
@@ -1598,6 +1600,10 @@ final public class
         final static public String SkeletonCPageNotice = CPageNotice;
         final static public String MainCPageNotice = CPageNotice;//NOT IMPLEMENTED YET, UPDATE HTML AND CONSTRUCTOR PLS
         final static public String PrivateLocationCreateCNotice = "PrivateLocationCreateNotice";
+
+        final static public String Skeleton_pageType = CPageType;
+        final static public String AARRR_pageType = CPageType;
+
 /*End of common definitions*/
 
 

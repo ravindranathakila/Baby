@@ -13,107 +13,6 @@
     <!--<link rel="stylesheet" href="/css/theme/blur_attn.css" type="text/css"/>-->
     <link rel="stylesheet" href="/css/miniquarry/layout.css" type="text/css"/>
 
-    <style type="text/css">
-            /*Darker Pink 860035*/
-
-            .flipper.TALKS{
-                background-color:#aa0055;
-            }
-            .flipper.TRIBES{
-                 background-color:#bb0000;
-            }
-            .flipper.MOMENTS{
-                background-color:#ff8300;
-            }
-            .flipper.SNAPS{
-                background-color:#ffca1e;
-            }
-            .flipper.HOME{
-                background-color:purple;
-            }
-
-            .downtownflow_underline.TALKS{
-                background-color:#aa0055;
-            }
-            .downtownflow_underline.TRIBES{
-                 background-color:#bb0000;
-            }
-            .downtownflow_underline.MOMENTS{
-                background-color:#ff8300;
-            }
-            .downtownflow_underline.SNAPS{
-                background-color:#ffca1e;
-            }
-
-
-            .signinon_header.TALKS{
-                background-color:#aa0055;
-            }
-            .signinon_header.TRIBES{
-                 background-color:#bb0000;
-            }
-            .signinon_header.MOMENTS{
-                background-color:#ff8300;
-            }
-            .signinon_header.SNAPS{
-                background-color:#ffca1e;
-            }
-            .signinon_header.HOME{
-                background-color:purple;
-            }
-
-
-            .sidebar.TALKS{
-                background-color:#aa0055;
-            }
-            .sidebar.TRIBES{
-                background-color:#bb0000;
-            }
-            .sidebar.MOMENTS{
-                background-color:#ff8300;
-            }
-            .sidebar.SNAPS{
-                background-color:#ffca1e;
-            }
-            .sidebar.HOME{
-                background-color:purple;
-            }
-
-
-
-            .talkbox.TALKS{
-                border-color:#aa0055;
-                border-width:2px;
-                border-style:solid;
-            }
-            .talkbox.TRIBES{
-                border-color:#bb0000;
-                border-width:2px;
-                border-style:solid;
-            }
-            .talkbox.MOMENTS{
-                border-color:#ff8300;
-                border-width:2px;
-                border-style:solid;
-            }
-            .talkbox.SNAPS{
-                border-color:#ffca1e;
-                border-width:2px;
-                border-style:solid;
-            }
-            .talkbox.HOME{
-                border-color:purple;
-                border-width:2px;
-                border-style:solid;
-            }
-
-
-
-
-
-
-    </style>
-
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-13297277-1']);
@@ -443,24 +342,6 @@
         }
     }
 
-</script>
-
-<script type="text/javascript">
-    $(window).bind('hashchange', function() {
-        var url = '' + window.location.hash;
-        url = url.replace('.','\\.');
-        url = url.replace(/#/g,'');
-        if(url != '' && url != 'JSFriends'){
-            $('.sidebars').css('display','none');
-            $('.non_sidebar').addClass('use100').removeClass('use528');
-            $('.carouselable').hide();
-            $('.' + url).fadeIn('slow');
-            $('.' + url).find('.wall_input').focus();
-            $('.' + url).find('.wall_input').blur();
-            //fireEvent($('.' + url).children('.wall_submit')[0],"click");
-            $('#' + this.id).parent().parent().appendTo('.carousel');
-        }
-    });
 </script>
 
 <script type="text/javascript">

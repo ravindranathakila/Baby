@@ -554,7 +554,6 @@ $(document).ready(function(){
             + (data.geoplugin_region != null ? data.geoplugin_region + ',' : '')
             + (data.geoplugin_countryName != null ? data.geoplugin_countryName : '');
             document.getElementById('searchboxmap').value = browserLocation;
-            document.getElementById('popupSearchBox').value = browserLocation;
         });
     }catch(err){
         alert(err);
@@ -565,7 +564,32 @@ $(document).ready(function(){
     $('.ajax_image').appear(
         function(){
             this.src = this.title;
-            //this.title= this.alt;
+            this.title= '';
+        }
+    );
+
+    $("#Juice").mouseenter(
+        function(event){
+            event.preventDefault();
+            $('html,body').animate(
+                {
+                    scrollTop:$("#Juice").offset().top
+                },
+                500
+            );
+
+        }
+    );
+    $("#Juice").mouseleave(
+        function(event){
+            event.preventDefault();
+            $('html,body').animate(
+                {
+                    scrollTop:$("#body").offset().top
+                },
+                500
+            );
+
         }
     );
 });
@@ -611,6 +635,5 @@ function focusMapWithLatLng(){
 focusMapWithLatLngLoop = setInterval('focusMapWithLatLng()',2000);
 
 zoomInHint = true;
-
 
 // EO PROGRESSIVE-2

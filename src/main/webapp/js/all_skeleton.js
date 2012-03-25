@@ -676,12 +676,29 @@ $(document).ready(function(){
     $('.ajax_image').appear(
         function(){
             this.src = this.title;
-            this.title= this.alt;
+            this.title= '';
         }
     );
 
-
     $('#SignInOn').attr('style','display:block');
+
+
+    ////////////////// HASH CHANGE DETECTION
+    $(window).bind('hashchange', function() {
+        var url = '' + window.location.hash;
+        url = url.replace('.','\\.');
+        url = url.replace(/#/g,'');
+        if(url != '' && url != 'JSFriends'){
+            $('.sidebars').css('display','none');
+            $('.non_sidebar').addClass('use100').removeClass('use528');
+            $('.carouselable').hide();
+            $('.' + url).fadeIn('slow');
+            $('.' + url).find('.wall_input').focus();
+            $('.' + url).find('.wall_input').blur();
+            //fireEvent($('.' + url).children('.wall_submit')[0],"click");
+            $('#' + this.id).parent().parent().appendTo('.carousel');
+        }
+    });
 
 });
 

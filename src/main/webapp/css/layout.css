@@ -867,6 +867,33 @@ div.jqismooth button.jqismoothdefaultbutton{ background-color: #BF5E26; }
     float:left;
 }
 
+.use19{
+    width:19%;
+    position:relative;
+    float:left;
+}.use19p{
+    padding-left:19%;
+    position:relative;
+    float:left;
+}.use19a{
+    padding-right:19%;
+    position:relative;
+    float:left;
+}
+
+.use191{
+    width:19.1%;
+    position:relative;
+    float:left;
+}.use191p{
+    padding-left:19.1%;
+    position:relative;
+    float:left;
+}.use191a{
+    padding-right:19.1%;
+    position:relative;
+    float:left;
+}
 
 .use20{
     width:20%;
@@ -1106,6 +1133,36 @@ div.jqismooth button.jqismoothdefaultbutton{ background-color: #BF5E26; }
     float:left;
 }
 
+
+.use62{
+    width:62%;
+    position:relative;
+    float:left;
+}.use62p{
+    padding-left:62%;
+    position:relative;
+    float:left;
+}.use62a{
+    padding-right:62%;
+    position:relative;
+    float:left;
+}
+
+
+.use618{
+    width:61.8%;
+    position:relative;
+    float:left;
+}.use618p{
+    padding-left:61.8%;
+    position:relative;
+    float:left;
+}.use618a{
+    padding-right:61.8%;
+    position:relative;
+    float:left;
+}
+
 .use65{
     width:65%;
     position:relative;
@@ -1329,23 +1386,6 @@ div.jqismooth button.jqismoothdefaultbutton{ background-color: #BF5E26; }
     float:left;
 }
 
-
-.use618{
-    width:61.8%;
-    position:relative;
-    float:left;
-}.use618p{
-    padding-left:61.8%;
-    position:relative;
-    float:left;
-}.use618a{
-    padding-right:61.8%;
-    position:relative;
-    float:left;
-}
-
-
-
 .use382{
     width:38.2%;
     position:relative;
@@ -1360,22 +1400,6 @@ div.jqismooth button.jqismoothdefaultbutton{ background-color: #BF5E26; }
     float:left;
 }
 
-
-
-
-.use191{
-    width:19.1%;
-    position:relative;
-    float:left;
-}.use191p{
-    padding-left:19.1%;
-    position:relative;
-    float:left;
-}.use191a{
-    padding-right:19.1%;
-    position:relative;
-    float:left;
-}
 
 
 .alphabet{
@@ -1437,6 +1461,134 @@ div.jqismooth button.jqismoothdefaultbutton{ background-color: #BF5E26; }
     font-weight:900;
     color:#ee00bb;
 }
+
+
+/*Darker Pink 860035*/
+
+.flipper.TALKS{
+    background-color:#aa0055;
+}
+.flipper.TRIBES{
+     background-color:#bb0000;
+}
+.flipper.MOMENTS{
+    background-color:#ff8300;
+}
+.flipper.SNAPS{
+    background-color:#ffca1e;
+}
+.flipper.HOME{
+    background-color:purple;
+}
+
+.juice.TALKS{
+    background-color:#aa0055;
+}
+.juice.TRIBES{
+     background-color:#bb0000;
+}
+.juice.MOMENTS{
+    background-color:#ff8300;
+}
+.juice.SNAPS{
+    background-color:#ffca1e;
+}
+.flipper.juice{
+    background-color:purple;
+}
+
+.downtownflow_underline.TALKS{
+    background-color:#aa0055;
+}
+.downtownflow_underline.TRIBES{
+     background-color:#bb0000;
+}
+.downtownflow_underline.MOMENTS{
+    background-color:#ff8300;
+}
+.downtownflow_underline.SNAPS{
+    background-color:#ffca1e;
+}
+
+
+.signinon_header.TALKS{
+    background-color:#aa0055;
+}
+.signinon_header.TRIBES{
+     background-color:#bb0000;
+}
+.signinon_header.MOMENTS{
+    background-color:#ff8300;
+}
+.signinon_header.SNAPS{
+    background-color:#ffca1e;
+}
+.signinon_header.HOME{
+    background-color:purple;
+}
+
+
+.sidebar.TALKS{
+    background-color:#aa0055;
+}
+.sidebar.TRIBES{
+    background-color:#bb0000;
+}
+.sidebar.MOMENTS{
+    background-color:#ff8300;
+}
+.sidebar.SNAPS{
+    background-color:#ffca1e;
+}
+.sidebar.HOME{
+    background-color:purple;
+}
+
+
+
+.talkbox.TALKS{
+    border-color:#aa0055;
+    border-width:2px;
+    border-style:solid;
+}
+.talkbox.TRIBES{
+    border-color:#bb0000;
+    border-width:2px;
+    border-style:solid;
+}
+.talkbox.MOMENTS{
+    border-color:#ff8300;
+    border-width:2px;
+    border-style:solid;
+}
+.talkbox.SNAPS{
+    border-color:#ffca1e;
+    border-width:2px;
+    border-style:solid;
+}
+.talkbox.HOME{
+    border-color:purple;
+    border-width:2px;
+    border-style:solid;
+}
+
+.hidden{
+    display:none;
+}
+
+.shown{
+    display:block;
+}
+
+.rise100{
+    height:100%;
+}
+
+
+.overflow_hidden{
+    overflow:hidden;
+}
+
 
 
 /* SKELETON */
