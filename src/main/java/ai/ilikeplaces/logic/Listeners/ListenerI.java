@@ -166,7 +166,7 @@ public class ListenerI implements ItsNatServletRequestListener {
                                                         @Override
                                                         public String afterInvite(final HumanId invitee) {
                                                             return ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE
-                                                                    .get(invitee.getHumanId(), invitee.getHumanId()) + " is now following you!";
+                                                                    .get(invitee.getHumanId(), invitee.getHumanId()).getHuman().getDisplayName() + " is now following you!";
                                                         }
 
                                                         @Override
