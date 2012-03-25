@@ -86,7 +86,7 @@ final public class SmartLogger extends Thread {
          */
         @Override
         protected synchronized SmartLogger initialValue() {
-            return SmartLogger.start(LEVEL.INFO, "SL STARTING FOR THREAD ID:" + Thread.currentThread().getId(), 0, "SL:" + Thread.currentThread().getId(), null);
+            return SmartLogger.start(LEVEL.INFO, "SL STARTING FOR THREAD ID:" + Thread.currentThread().getId(), 0, null, null);
         }
 
         /**
