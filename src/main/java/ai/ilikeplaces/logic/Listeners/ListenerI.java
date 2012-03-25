@@ -3,10 +3,7 @@ package ai.ilikeplaces.logic.Listeners;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.Human;
-import ai.ilikeplaces.logic.Listeners.widgets.FriendAdd;
-import ai.ilikeplaces.logic.Listeners.widgets.SignInOnCriteria;
-import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
-import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall;
+import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
@@ -85,7 +82,7 @@ public class ListenerI implements ItsNatServletRequestListener {
                     } else {//This user should be a friend
                         //Be careful who checks who here. this user should have been added by the profile we are visiting as friend.(asymetric friend addition)
                         if (DB.getHumanCRUDHumanLocal(true).doNTxIsHumansNetPeople(new HumanId(requestedProfile), new HumanId(getUsernameAsValid())).returnValue()
-                                || getUsernameAsValid().equals(requestedProfile)) {
+                                || getUsernameAsValid().equals(requestedProfile)) {//Show page if it is I am a friend of hers or if this is my profile
 
                             layoutNeededForAllPages:
                             {
@@ -93,15 +90,17 @@ public class ListenerI implements ItsNatServletRequestListener {
                                 {
                                     setLoginWidget((ItsNatServletRequest) initArgs[0], SignInOnCriteria.SignInOnDisplayComponent.TALKS);
                                 }
-
+                                //Setting her details for identity
                                 signOnDisplayLink:
                                 {
                                     $(Skeleton_othersidebar_identity).setTextContent(DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(requestedProfile).getDisplayName());
                                 }
+                                //Setting her details for identity
                                 setProfileLink:
                                 {
                                     //setProfileDataLink();//We wii do this ourselves. Look below
                                 }
+                                //Setting her details for identity
                                 setProfilePhotoLink:
                                 {
                                     /**
@@ -111,6 +110,7 @@ public class ListenerI implements ItsNatServletRequestListener {
                                     $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(),
                                             ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrlStatic(url));
                                 }
+                                //My friends, not hers
                                 setSidebarFriends:
                                 {
                                     setSideBarFriends((ItsNatServletRequest) initArgs[0]);
@@ -144,14 +144,37 @@ public class ListenerI implements ItsNatServletRequestListener {
 
                                     }
                                 }
+                                //Setting her details for identity
                                 setWall:
                                 {
                                     try {
                                         new WallWidgetHumansWall(request__, $(Skeleton_center_content), new HumanId(requestedProfile), new HumanId(getUsernameAsValid()));
+
                                     } catch (final Throwable t) {
                                         EXCEPTION.error("{}", t);
 
                                     }
+                                }
+                                UCSetFriendAddWidget:
+                                {
+                                    new AdaptableSignup(
+                                            request__,
+                                            new AdaptableSignupCriteria()
+                                                    .setHumanId(new HumanId(getUsernameAsValid()))
+                                                    .setWidgetTitle("Add Followers")
+                                                    .setAdaptableSignupCallback(new AdaptableSignupCallback() {
+                                                        @Override
+                                                        public String afterInvite(HumanId invitee) {
+                                                            return "";
+                                                        }
+
+                                                        @Override
+                                                        public String jsToSend(HumanId invitee) {
+                                                            return null;
+                                                        }
+                                                    })
+
+                                            , $(Skeleton_center_content));
                                 }
                             }
                             SmartLogger.g().complete(Loggers.LEVEL.DEBUG, VIEW_FRIEND_SUCCESSFUL + Loggers.DONE);

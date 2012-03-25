@@ -450,7 +450,7 @@
         var url = '' + window.location.hash;
         url = url.replace('.','\\.');
         url = url.replace(/#/g,'');
-        if(url != ''){
+        if(url != '' && url != 'JSFriends'){
             $('.sidebars').css('display','none');
             $('.non_sidebar').addClass('use100').removeClass('use528');
             $('.carouselable').hide();
@@ -517,6 +517,23 @@
            $('.fillPageType').addClass($('.Skeleton_pageType').attr('value'));
         }
     );
+
+    jQuery(document).ready(
+                function($) {
+                    $("#JSLinkToJSFriends").click(
+                        function(event){
+                            event.preventDefault();
+                            $('html,body').animate(
+                                {
+                                    scrollTop:$(".JSFriends").offset().top
+                                },
+                                500
+                            );
+
+                        }
+                    );
+                }
+            );
 
 
 </script>
