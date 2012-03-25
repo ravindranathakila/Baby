@@ -13,6 +13,7 @@ import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
@@ -126,7 +127,7 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
             }
             UCShowPleaseLoginMessage:
             {
-                $$(SignInOnIds.signinonNotice).setTextContent("Hey, you have not logged in!");
+                $$(SignInOnIds.signinonNotice).setTextContent(RBGet.gui().getString("not.logged.in"));
             }
         }
     }
@@ -173,7 +174,7 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
         super.registerForClick(SignInOnIds.signinonSubmit, new AIEventListener<SignInOnCriteria>(criteria) {
             @Override
             public void onFire(Event evt) {
-                notifyUser("Checking credentials...");
+                notifyUser(RBGet.gui().getString("checking.credentials"));
             }
         });
 
@@ -203,25 +204,25 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
 
                                         userSession_.setAttribute(HumanUserLocal.NAME, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
 
-                                        notifyUser("Logging you in...");
+                                        notifyUser(RBGet.gui().getString("logging.you.in"));
 
                                         $$sendJS(JSCodeToSend.refreshPageIn(0));
                                     } else {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
-                                        notifyUser("Sorry, the password is wrong!");
+                                        notifyUser(RBGet.gui().getString("password.is.wrong"));
                                     }
                                 } else {/*There is no such user. Ask if he forgot username or whether to create a new account :)*/
                                     if (myexistButNotActive.getObj()) {
                                         $$sendJS(JSCodeToSend.redirectPageWithURL("/page/_profile"));
-                                        notifyUser("Please activate your account.");
+                                        notifyUser(RBGet.gui().getString("activate.your.account"));
                                     } else {
-                                        notifyUser(myusername.getObj() + " is not a user of this website");
+                                        //notifyUser(myusername.getObj() + " is not a user of this website");
                                     }
                                 }
                             } else {
                                 //We just ignore since the form is not visible and this cannot happen, or a hacker is trying something ;)
                             }
                         } else {
-                            notifyUser("Login failed! Retry or Recover Access");
+                            notifyUser(RBGet.gui().getString("login.failed.retry.or.recover"));
                         }
                     }
                 });
