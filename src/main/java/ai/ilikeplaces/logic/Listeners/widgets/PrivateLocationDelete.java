@@ -11,6 +11,7 @@ import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatServletRequest;
@@ -115,7 +116,7 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
-        delete:
+        UCDelete:
         {
             itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationDelete), EventType.CLICK.toString(), new EventListener() {
                 final HumanId myhumanId = humanId;
@@ -138,7 +139,7 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
                     }
                 }
 
-            }, false, JSCodeToSend.RefreshPage);
+            }, false, JSCodeToSend.redirectPageWithURL(Page.Organize.getURL()));
         }
 
         final HumansNetPeople user = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(humanId);
