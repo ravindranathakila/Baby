@@ -27,15 +27,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static ai.ilikeplaces.logic.Listeners.widgets.UserPropertySidebar.UserPropertySidebarIds.user_property_sidebar_talk;
-
 /**
- *
  * This is still not fool proof. Autoplay should play upon:
- *
+ * <p/>
  * Failure of proper entity read
  * Network delays on client (when loading images)
- *
+ * <p/>
  * Created by IntelliJ IDEA.
  * User: Ravindranath Akila
  * Date: 10/16/11
@@ -55,10 +52,18 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
     private static final String READ_MORE = "read.more";
 
     @FIXME("We need to move this cache to EJB's, stateless hopefully.")
-    public static final SmartCache.RecoverWith<String,Object> STATIC_VARIABLE_RECOVER_WITH = new SmartCache.RecoverWith<String, Object>() {
+    public static final SmartCache.RecoverWith<String, Object> STATIC_VARIABLE_RECOVER_WITH_BE_FRIENDS = new SmartCache.RecoverWith<String, Object>() {
         @Override
         public Object getValue(final String s) {
             return DB.getHumanCRUDHumanLocal(true).doDirtyRHumansBefriends(new HumanId(s).getSelfAsValid()).returnValueBadly();
+        }
+    };
+
+    @FIXME("We need to move this cache to EJB's, stateless hopefully.")
+    public static final SmartCache.RecoverWith<String, Object> STATIC_VARIABLE_RECOVER_WITH_FRIENDS = new SmartCache.RecoverWith<String, Object>() {
+        @Override
+        public Object getValue(final String s) {
+            return DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(s).getSelfAsValid()).getHumansNetPeoples();
         }
     };
 
@@ -96,7 +101,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
     protected void init(final DownTownFlowCriteria downTownFlowCriteria) {
 
         final String currentUser = downTownFlowCriteria.getHumanId().getObj();
-        final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) downTownFlowCriteria.getHumanUserLocal().cache(currentUser, STATIC_VARIABLE_RECOVER_WITH);
+        final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) downTownFlowCriteria.getHumanUserLocal().cache("BE_" + currentUser, STATIC_VARIABLE_RECOVER_WITH_BE_FRIENDS);
         //new People(request,new PeopleCriteria().setPeople((List<HumanIdFace>)(List<?>)beFriends),$(Controller.Page.Skeleton_left_column));
 
 

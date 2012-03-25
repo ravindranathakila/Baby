@@ -30,8 +30,6 @@ import org.xml.sax.SAXException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -109,7 +107,7 @@ public class WallWidgetHumansWall extends WallWidget {
         {
 
             final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) getHumanUserFromRequest(request)
-                    .cache(requestedProfile.getHumanId(), DownTownFlow.STATIC_VARIABLE_RECOVER_WITH);
+                    .cache(requestedProfile.getHumanId(), DownTownFlow.STATIC_VARIABLE_RECOVER_WITH_FRIENDS);
 
             @SEE(seeClasses = {
                     WallWidgetHumansWall.class,

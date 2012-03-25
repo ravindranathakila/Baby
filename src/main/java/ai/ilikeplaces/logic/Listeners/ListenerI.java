@@ -164,13 +164,14 @@ public class ListenerI implements ItsNatServletRequestListener {
                                                     .setWidgetTitle("Add Followers")
                                                     .setAdaptableSignupCallback(new AdaptableSignupCallback() {
                                                         @Override
-                                                        public String afterInvite(HumanId invitee) {
-                                                            return "";
+                                                        public String afterInvite(final HumanId invitee) {
+                                                            return ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE
+                                                                    .get(invitee.getHumanId(), invitee.getHumanId()) + " is now following you!";
                                                         }
 
                                                         @Override
                                                         public String jsToSend(HumanId invitee) {
-                                                            return null;
+                                                            return JSCodeToSend.refreshPageIn(5);
                                                         }
                                                     })
 
