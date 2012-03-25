@@ -55,7 +55,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
     public static final SmartCache.RecoverWith<String, Object> STATIC_VARIABLE_RECOVER_WITH_BE_FRIENDS = new SmartCache.RecoverWith<String, Object>() {
         @Override
         public Object getValue(final String s) {
-            return DB.getHumanCRUDHumanLocal(true).doDirtyRHumansBefriends(new HumanId(s).getSelfAsValid()).returnValueBadly();
+            return DB.getHumanCRUDHumanLocal(true).doDirtyRHumansBefriends(new HumanId(s.split("BE_")[1]).getSelfAsValid()).returnValueBadly();
         }
     };
 
