@@ -81,7 +81,7 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
      */
     @Override
     protected void init(final WallWidgetTribeCriteria wallWidgetTribeCriteria) {
-        final Tribe tribe = DB.getHumanCRUDTribeLocal(true).getTribe(criteria.getHumanId(), new VLong(criteria.getTribeId()));
+        final Tribe tribe = DB.getHumanCRUDTribeLocal(true).getTribe(criteria.getHumanId(), new VLong(criteria.getTribeId()), true).returnValueBadly();
 
         criteria.setWallId(tribe.getTribeWall().getWallId());
 
