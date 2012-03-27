@@ -104,7 +104,7 @@ final public class GenericFileGrabber extends HttpServlet {
                         }
 
                         @SuppressWarnings("unchecked")
-                        final HumanUserLocal sBLoggedOnUserLocal = ((SessionBoundBadRefWrapper<HumanUserLocal>) session.getAttribute(ServletLogin.HumanUser)).boundInstance;
+                        final HumanUserLocal sBLoggedOnUserLocal = ((SessionBoundBadRefWrapper<HumanUserLocal>) session.getAttribute(ServletLogin.HumanUser)).getBoundInstance();
 
                         try {
                             processRequest:

@@ -120,7 +120,7 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
         } else if (!sessionBoundBadRefWrapper.isAlive()) {//(Defensive)This is checked in the constructor of this class
             throw ILLEGAL_STATE_EXCEPTION;
         }
-        return sessionBoundBadRefWrapper.boundInstance;
+        return sessionBoundBadRefWrapper.getBoundInstance();
     }
 
     /**

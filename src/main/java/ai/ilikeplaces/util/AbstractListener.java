@@ -333,7 +333,7 @@ public abstract class
     final protected String getUsername() {
         return sessionBoundBadRefWrapper != null ?
                 (sessionBoundBadRefWrapper.isAlive() ?
-                        sessionBoundBadRefWrapper.boundInstance.getHumanUserId() : null) : null;
+                        sessionBoundBadRefWrapper.getBoundInstance().getHumanUserId() : null) : null;
     }
 
     /**
@@ -351,7 +351,7 @@ public abstract class
         } else if (!sessionBoundBadRefWrapper.isAlive()) {//(Defensive)This is checked in the constructor of this class
             throw HumanUser.ILLEGAL_STATE_EXCEPTION;
         }
-        return sessionBoundBadRefWrapper.boundInstance.getHumanUserId();
+        return sessionBoundBadRefWrapper.getBoundInstance().getHumanUserId();
     }
 
     /**
@@ -369,7 +369,7 @@ public abstract class
         } else if (!sessionBoundBadRefWrapper.isAlive()) {//(Defensive)This is checked in the constructor of this class
             throw HumanUser.ILLEGAL_STATE_EXCEPTION;
         }
-        return new HumanId(sessionBoundBadRefWrapper.boundInstance.getHumanUserId());
+        return new HumanId(sessionBoundBadRefWrapper.getBoundInstance().getHumanUserId());
     }
 
     /**

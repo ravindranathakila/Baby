@@ -164,7 +164,7 @@ final public class ServletLogin extends HttpServlet {
                                 humanUserLocal.setHumanUserId(request__.getParameter(Username));
                                 userSession_.setAttribute(HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
 
-                                logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0001") + ((SessionBoundBadRefWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).boundInstance.getHumanUserId());
+                                logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0001") + ((SessionBoundBadRefWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).getBoundInstance().getHumanUserId());
 
                                 final String referer = request__.getHeader(HEADER_REFERER);
                                 response__.sendRedirect(!referer.contains("signup") ? referer : home.getURL());
@@ -195,7 +195,7 @@ final public class ServletLogin extends HttpServlet {
                 }
 
             } else {/*Why did the user come to this page if he was already logged on? Send him back!*/
-                logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0005") + ((SessionBoundBadRefWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).boundInstance.getHumanUserId());
+                logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0005") + ((SessionBoundBadRefWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).getBoundInstance().getHumanUserId());
                 response__.sendRedirect(request__.getHeader(HEADER_REFERER));
             }
         }

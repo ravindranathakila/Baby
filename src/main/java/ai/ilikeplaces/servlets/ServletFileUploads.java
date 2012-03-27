@@ -89,7 +89,7 @@ final public class ServletFileUploads extends HttpServlet {
                     {
                         @SuppressWarnings("unchecked")
                         final HumanUserLocal sBLoggedOnUserLocal =
-                                ((SessionBoundBadRefWrapper<HumanUserLocal>) session.getAttribute(ServletLogin.HumanUser)).boundInstance;
+                                ((SessionBoundBadRefWrapper<HumanUserLocal>) session.getAttribute(ServletLogin.HumanUser)).getBoundInstance();
                         try {
                             /*Check that we have a file upload request*/
                             final boolean isMultipart = ServletFileUpload.isMultipartContent(request__);

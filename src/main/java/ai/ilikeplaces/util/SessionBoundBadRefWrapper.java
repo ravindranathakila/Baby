@@ -35,7 +35,7 @@ import java.util.Observer;
                         "i18n"})
 final public class SessionBoundBadRefWrapper<T> implements HttpSessionBindingListener, Observer {
 
-    final public T boundInstance;
+    final private T boundInstance;
 
     final private HttpSession bindingInstance;
 
@@ -51,6 +51,10 @@ final public class SessionBoundBadRefWrapper<T> implements HttpSessionBindingLis
         this.bindingInstance = theObjectWhichIsBoundTo__;
         registerAsLiveStatusObserver();
         this.isAlive = true;
+    }
+
+    public synchronized T getBoundInstance(){
+        return boundInstance;
     }
 
 //    @FIXME(issue = "isAlive",
@@ -90,9 +94,9 @@ final public class SessionBoundBadRefWrapper<T> implements HttpSessionBindingLis
     void registerAsLiveStatusObserver() {
         final Method m;
         try {
-            m = boundInstance.getClass().getMethod("addObserver", new Class[]{Observer.class});
+            m = getBoundInstance().getClass().getMethod("addObserver", new Class[]{Observer.class});
             try {
-                m.invoke(boundInstance, this);
+                m.invoke(getBoundInstance(), this);
             } catch (final IllegalAccessException ex) {
                 Loggers.EXCEPTION.error(null, ex);
             } catch (final IllegalArgumentException ex) {
@@ -111,9 +115,9 @@ final public class SessionBoundBadRefWrapper<T> implements HttpSessionBindingLis
     public void valueBound(HttpSessionBindingEvent event) {
         final Method m;
         try {
-            m = boundInstance.getClass().getMethod("valueBound", new Class[]{HttpSessionBindingEvent.class});
+            m = getBoundInstance().getClass().getMethod("valueBound", new Class[]{HttpSessionBindingEvent.class});
             try {
-                m.invoke(boundInstance, event);
+                m.invoke(getBoundInstance(), event);
             } catch (final IllegalAccessException ex) {
                 Loggers.EXCEPTION.error(null, ex);
             } catch (final IllegalArgumentException ex) {
@@ -137,9 +141,9 @@ final public class SessionBoundBadRefWrapper<T> implements HttpSessionBindingLis
         final Method m;
         try {
             this.isAlive = false;
-            m = boundInstance.getClass().getMethod("valueUnbound", new Class[]{HttpSessionBindingEvent.class});
+            m = getBoundInstance().getClass().getMethod("valueUnbound", new Class[]{HttpSessionBindingEvent.class});
             try {
-                m.invoke(boundInstance, event);
+                m.invoke(getBoundInstance(), event);
             } catch (final IllegalAccessException ex) {
                 Loggers.EXCEPTION.error(null, ex);
             } catch (final IllegalArgumentException ex) {

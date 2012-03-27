@@ -206,7 +206,7 @@ final public class ServletActivate extends HttpServlet {
                     break doActivate;
                 }
             } else {/*Why did the user come to this page if he was already logged on? Send him back!*/
-                logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0005") + ((SessionBoundBadRefWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).boundInstance.getHumanUserId());
+                logger.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.ServletLogin.0005") + ((SessionBoundBadRefWrapper<HumanUserLocal>) userSession_.getAttribute(HumanUser)).getBoundInstance().getHumanUserId());
                 redirectToProfilePage(request__, response__);
             }
         }

@@ -208,7 +208,7 @@ public abstract class AbstractWidgetListener<T> {
         }
     }
 
-    public static String getHumanIdFromRequest(final ItsNatServletRequest request_) {
+    public static synchronized String getHumanIdFromRequest(final ItsNatServletRequest request_) {
         final Object attribute__ = request_.getItsNatSession().getAttribute(ServletLogin.HumanUser);
         SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper =
                 attribute__ == null ?
@@ -217,13 +217,14 @@ public abstract class AbstractWidgetListener<T> {
 
         return sessionBoundBadRefWrapper != null ?
                 (sessionBoundBadRefWrapper.isAlive() ?
-                        sessionBoundBadRefWrapper.boundInstance.getHumanUserId() : null) : null;
+                        sessionBoundBadRefWrapper.getBoundInstance().getHumanUserId() : null) : null;
 
     }
 
-    public static HumanUserLocal getHumanUserFromRequest(final ItsNatServletRequest request_) {
+    public static synchronized HumanUserLocal getHumanUserFromRequest(final ItsNatServletRequest request_) {
         final SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper = (SessionBoundBadRefWrapper<HumanUserLocal>) request_.getItsNatSession().getAttribute(ServletLogin.HumanUser);
-        return HumanUser.getHumanUserAsValid(sessionBoundBadRefWrapper);
+        final HumanUserLocal humanUserAsValid = HumanUser.getHumanUserAsValid(sessionBoundBadRefWrapper);
+        return humanUserAsValid;
 
     }
 

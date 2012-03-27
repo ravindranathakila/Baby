@@ -107,7 +107,7 @@ public class CDNAlbumTribe extends CDN implements CDNAlbumTribeLocal {
                 sl.complete("No Login!");
                 r = new ReturnImpl<File>(ExceptionCache.NO_LOGIN, "Please login!", true);
             } else {
-                final HumanId humanId = new HumanId(s.boundInstance.getHumanUserId()).getSelfAsValid();
+                final HumanId humanId = new HumanId(s.getBoundInstance().getHumanUserId()).getSelfAsValid();
 
                 try {
                     try {

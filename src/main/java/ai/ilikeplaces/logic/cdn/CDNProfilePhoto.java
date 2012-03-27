@@ -96,7 +96,7 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
                 sl.complete(NO_LOGIN);
                 r = new ReturnImpl<File>(ExceptionCache.NO_LOGIN, PLEASE_LOGIN, true);
             } else {
-                final HumanId humanId = new HumanId(s.boundInstance.getHumanUserId());
+                final HumanId humanId = new HumanId(s.getBoundInstance().getHumanUserId());
 
                 try {
                     sl.appendToLogMSG(LOADING_IMAGE_AS_BUFFERED_IMAGE);
