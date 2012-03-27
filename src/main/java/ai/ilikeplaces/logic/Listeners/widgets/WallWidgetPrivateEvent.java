@@ -230,7 +230,9 @@ public class WallWidgetPrivateEvent extends WallWidget {
                             clear($$(WallWidgetIds.wallContent));
                             final Wall wall = (DB.getHumanCrudPrivateEventLocal(true).readWall(myhumanId, new Obj<Long>(myprivateEventId), REFRESH_SPEC).returnValueBadly());
                             final StringBuilder b = new StringBuilder("");
-                            for (final Msg msg : wall.getWallMsgs()) {
+                            List<Msg> wallMsgs = wall.getWallMsgs();
+                            for (int i = 0, wallMsgsSize = wallMsgs.size(); i < wallMsgsSize && i < 25; i++) {
+                                Msg msg = wallMsgs.get(i);
                                 b.append(
                                         new UserProperty(
                                                 request,

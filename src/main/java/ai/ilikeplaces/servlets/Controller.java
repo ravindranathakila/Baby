@@ -34,6 +34,8 @@ final public class
     public static final String LOCATION_HUB = "/page/Earth_of_Earth?WOEID=1";
     public static final String WEB_INF_PAGES = "WEB-INF/pages/";
     public static String USER_PROPERTY_EMAIL_XHTML = "ai/ilikeplaces/widgets/UserProperty_email.xhtml";
+    public static String PEOPLE_EMAIL_XHTML = "ai/ilikeplaces/widgets/people/people_thumb_email.xhtml";
+
 
     /**
      * This Map is static as Id's in html documents should be universally identical, i.e. as htmldocname_elementId
@@ -1168,7 +1170,7 @@ final public class
             public String toString() {
                 return DocAdaptableSignup;
             }
-        } ;
+        };
 
         private static final String APP_ROOT = RBGet.getGlobalConfigKey("AppRoot");
 
@@ -1567,10 +1569,10 @@ final public class
         final static public String DocTribeHome = "DocTribeHome";
 
         /*Juice Page*/
-        final static public String  DocJuice = "DocJuice";
+        final static public String DocJuice = "DocJuice";
 
         /*AdaptableSignup Page*/
-        final static public String  DocAdaptableSignup = "DocAdaptableSignup";
+        final static public String DocAdaptableSignup = "DocAdaptableSignup";
 
         /*TribeCreateHome Page*/
         final static public String DocTribeCreateHome = "DocTribeCreateHome";

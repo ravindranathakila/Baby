@@ -45,7 +45,11 @@ public class People extends AbstractWidgetListener<PeopleCriteria> {
     @Override
     protected void init(final PeopleCriteria peopleCriteria) {
         for (final HumanIdFace humanId : peopleCriteria.getPeople()) {
-            new PeopleThumb(request, new PeopleThumbCriteria().setProfilePhoto(UserProperty.HUMANS_IDENTITY_CACHE.get(humanId.getHumanId(), "").getHumansIdentityProfilePhoto()), $$(PeopleIds.PeopleImages));
+            People.this.fetchToEmail = People.this.fetchToEmail + new PeopleThumb(
+                    request,
+                    new PeopleThumbCriteria()
+                            .setProfilePhoto(UserProperty.HUMANS_IDENTITY_CACHE.get(humanId.getHumanId(), "").getHumansIdentityProfilePhoto()),
+                    $$(PeopleIds.PeopleImages)).fetchToEmail;
         }
     }
 

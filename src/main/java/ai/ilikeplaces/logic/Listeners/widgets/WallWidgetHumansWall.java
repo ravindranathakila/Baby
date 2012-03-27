@@ -57,7 +57,11 @@ public class WallWidgetHumansWall extends WallWidget {
 
                 @Override
                 public Msg getValue(final String whosWall, final String visitor) {
-                    return DB.getHumanCrudWallLocal(false).readWallLastEntries(new HumanId(whosWall), new Obj<String>(visitor), 1, new RefreshSpec()).returnValue().get(0);//Guaranteed not to fail since wall has atleast one entry
+                    return DB.getHumanCrudWallLocal(false).readWallLastEntries(
+                            new HumanId(whosWall),
+                            new Obj<String>(visitor),
+                            1,
+                            new RefreshSpec()).returnValue().get(0);//Guaranteed not to fail since wall has atleast one entry
                 }
             }
     );
@@ -80,8 +84,8 @@ public class WallWidgetHumansWall extends WallWidget {
         this.requestedProfile = ((HumanId) initArgs[0]).getSelfAsValid();
         this.currUserAsVisitor = ((HumanId) initArgs[1]).getSelfAsValid();
 
-        final HumansIdentity currUserAsVisitorHI = UserProperty.HUMANS_IDENTITY_CACHE.get((currUserAsVisitor.getHumanId()),"");
-        final HumansIdentity requestedProfileHI = UserProperty.HUMANS_IDENTITY_CACHE.get((requestedProfile.getHumanId()),"");
+        final HumansIdentity currUserAsVisitorHI = UserProperty.HUMANS_IDENTITY_CACHE.get((currUserAsVisitor.getHumanId()), "");
+        final HumansIdentity requestedProfileHI = UserProperty.HUMANS_IDENTITY_CACHE.get((requestedProfile.getHumanId()), "");
 
         super.setWallProfileName(currUserAsVisitorHI.getHuman().getDisplayName());
         super.setWallProfilePhoto(UserProperty.formatProfilePhotoUrl(currUserAsVisitorHI.getHumansIdentityProfilePhoto()));
@@ -115,9 +119,16 @@ public class WallWidgetHumansWall extends WallWidget {
                     PrivateEventView.class,
                     Tribe.class
             })
-            final People people = new People(request, new PeopleCriteria().setPeople((List<HumanIdFace>) (List<?>)
-                    beFriends
-            ), $(Controller.Page.Skeleton_left_column));
+            final String peopleFetchToEmail1 = new People(
+                    request,
+                    new PeopleCriteria()
+                            .setPeople((List<HumanIdFace>) (List<?>) beFriends),
+                    $(Controller.Page.Skeleton_left_column)).fetchToEmail;
+
+            Loggers.debug("PEOPLE FETCH TO EMAIL CONTENT:" + peopleFetchToEmail1);
+
+            fetchToEmailSetLeftSidebar(peopleFetchToEmail1);
+            fetchToEmailSetRightSidebar("&nbsp;");
         }
 
     }
@@ -142,6 +153,31 @@ public class WallWidgetHumansWall extends WallWidget {
         } catch (final IOException e) {
             Loggers.EXCEPTION.error("", e);
         }
+    }
+
+    void fetchToEmailSetLeftSidebar(final String leftSidebar) {
+        fetchToEmail = fetchToEmail.replace("___|_", leftSidebar);
+    }
+
+    void fetchToEmailSetCenter(final String center) {
+        fetchToEmail = fetchToEmail.replace("___||_", center);
+    }
+
+    void fetchToEmailSetRightSidebar(final String rigtSidebar) {
+        fetchToEmail = fetchToEmail.replace("___|||_", rigtSidebar);
+    }
+
+
+    static String fetchToEmailSetLeftSidebar(final String leftSidebar, final String document) {
+        return document.replace("___|_", leftSidebar);
+    }
+
+    static String fetchToEmailSetCenter(final String center, final String document) {
+        return document.replace("___||_", center);
+    }
+
+    static String fetchToEmailSetRightSidebar(final String rightSidebar, final String document) {
+        return document.replace("___|||_", rightSidebar);
     }
 
     @Override
@@ -171,7 +207,9 @@ public class WallWidgetHumansWall extends WallWidget {
                             clear($$(WallWidgetIds.wallContent));
                             final Wall wall = DB.getHumanCrudWallLocal(true).readWall(requestedProfile, new Obj<HumanId>(currUserAsVisitor), REFRESH_SPEC).returnValue();
                             final StringBuilder b = new StringBuilder("");
-                            for (final Msg msg : wall.getWallMsgs()) {
+                            List<Msg> wallMsgs = wall.getWallMsgs();
+                            for (int i = 0, wallMsgsSize = wallMsgs.size(); i < wallMsgsSize && i < 25; i++) {
+                                Msg msg = wallMsgs.get(i);
                                 b.append(new UserProperty(request,
                                         $$(WallWidgetIds.wallContent),
                                         ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
@@ -183,7 +221,7 @@ public class WallWidgetHumansWall extends WallWidget {
 
                                 private HumanId mymyrequestedProfile = myrequestedProfile;
                                 private HumanId mycurrUserAsVisitor = currUserAsVisitor;
-                                private String myfetchToEmail = fetchToEmail;
+                                private String myfetchToEmail = WallWidgetHumansWall.this.fetchToEmail;
                                 private StringBuilder myb = b;
                                 private Wall mywall = wall;
 
@@ -194,7 +232,10 @@ public class WallWidgetHumansWall extends WallWidget {
 
                                     for (final HumansNetPeople hpe : hnps.getHumansNetPeoples()) {
                                         if (!wall.getWallMutes().contains(hpe) && !hpe.getHumanId().equals(mycurrUserAsVisitor.getObj())) {
-                                            SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), hnps.getDisplayName(), myfetchToEmail + myb.toString());
+                                            SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                                    hpe.getHumanId(),
+                                                    hnps.getDisplayName() + ": What is exciting lately?",
+                                                    WallWidgetHumansWall.fetchToEmailSetCenter(myb.toString(), myfetchToEmail));
                                             DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), mywall.getWallId());
                                         }
                                     }
