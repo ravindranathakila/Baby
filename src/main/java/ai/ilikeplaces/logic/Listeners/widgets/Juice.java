@@ -129,6 +129,7 @@ public class Juice extends AbstractWidgetListener<JuiceCriteria> {
                                 "I Like Places",
                                 new ImportedContact().setEmail(email.getObj()).setFullName(""));
                         if (!returnVal.valid() || !returnVal.returnValue()) {
+                            Loggers.log(Loggers.LEVEL.FAILED_SIGNUPS, email.getObj());
                             notifyUser("Sorry, but we think this email is invalid :-(");
                         } else {
                             $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));

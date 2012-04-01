@@ -61,7 +61,8 @@ final public class Loggers {
         SERVER_STATUS,
         USER,
         USER_EXCEPTION,
-        NON_USER
+        NON_USER,
+        FAILED_SIGNUPS
     }
 
     private Loggers() {
@@ -77,6 +78,11 @@ final public class Loggers {
      * For the purpose of logging non user activity
      */
     final static public Logger NON_USER = LoggerFactory.getLogger("NON_USER");
+
+    /**
+     * For the purpose of logging failed signup emails
+     */
+    final static public Logger FAILED_SIGNUPS = LoggerFactory.getLogger("FAILED_SIGNUPS");
 
 
     /**
@@ -194,10 +200,55 @@ final public class Loggers {
             case NON_USER:
                 Loggers.NON_USER.info(message, obj);
                 break;
+            case FAILED_SIGNUPS:
+                Loggers.FAILED_SIGNUPS.info(message);
+                break;
             default:
                 Loggers.DEBUG.debug(
                         message + "(WARNING:MSG DEFAULTED DUE TO INAPPROPRIATE USAGE OF THIS METHOD",
                         obj);
+        }
+    }
+
+    /**
+     * Note that in the case of exception, the object will be/should be able to be,
+     * cast to {@link Throwable}
+     *
+     * @param level
+     * @param message
+     */
+    static public void log(final LEVEL level, final String message) {
+        switch (level) {
+            case DEBUG:
+                Loggers.DEBUG.debug(message);
+                break;
+            case INFO:
+                Loggers.INFO.info(message);
+                break;
+            case WARN:
+                Loggers.WARN.warn(message);
+                break;
+            case ERROR:
+                Loggers.EXCEPTION.error(message);
+                break;
+            case SERVER_STATUS:
+                Loggers.STATUS.info(message);
+                break;
+            case USER:
+                Loggers.USER.info(message);
+                break;
+            case USER_EXCEPTION:
+                Loggers.USER_EXCEPTION.error(message);
+                break;
+            case NON_USER:
+                Loggers.NON_USER.info(message);
+                break;
+            case FAILED_SIGNUPS:
+                Loggers.FAILED_SIGNUPS.info(message);
+                break;
+            default:
+                Loggers.DEBUG.debug(
+                        message + "(WARNING:MSG DEFAULTED DUE TO INAPPROPRIATE USAGE OF THIS METHOD");
         }
     }
 }
