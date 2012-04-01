@@ -147,6 +147,24 @@
         <input id="Skeleton_pageType" class="Skeleton_pageType" type="hidden" value=""/>
     </div>
 
+<script type="text/javascript" >
+
+    function fireEvent(element,event){
+        if (document.createEventObject){
+            // dispatch for IE
+            var evt = document.createEventObject();
+            return element.fireEvent('on'+event,evt)
+        }
+        else{
+            // dispatch for firefox + others
+            var evt = document.createEvent("HTMLEvents");
+            evt.initEvent(event, true, true ); // event type,bubbling,cancelable
+            return !element.dispatchEvent(evt);
+        }
+    }
+
+</script>
+
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
         <script type="text/javascript" src="/js/miniquarry/all_aarrr.js"></script>
 

@@ -27,6 +27,7 @@
                             <div class="use90 use5p use5a" style="height:18px;">
                                 <input class="use100 inherit_height vtip" style="height:100%;color:#ffffff;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;" id="signinonUsername"
                                        title="This is for entering your email|Enter your email to login|Upon clicking the on/off button you will be signed in"
+                                       onkeypress="javascript:if((event.keyCode ? event.keyCode : event.which) == 13){$('.JSPasswordInput').focus();}"
                                        name="Username" maxlength="255" type="text" tabindex="1"/>
                             </div>
                             <div class="use100" style="height:16px;">&nbsp;</div>
@@ -39,8 +40,9 @@
                         <div class="use25 inherit_height line_height_50" style="overflow:hidden;">
                             <div class="use100" style="height:16px;">&nbsp;</div>
                             <div class="use90 use5p use5a" style="height:18px;">
-                                <input class="use100 bold vtip" style="height:100%;color:#ffffff;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;" id="signinonPassword"
+                                <input class="use100 bold vtip JSPasswordInput" style="height:100%;color:#ffffff;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;" id="signinonPassword"
                                        title="This is for entering your password|Enter your password to login|Upon clicking the on/off button you will be signed in"
+                                       onkeypress="javascript:if((event.keyCode ? event.keyCode : event.which) == 13){ $('.JSPasswordInput').blur(); fireEvent(document.getElementsByName('JSLoginButton')[0],'click'); }"
                                        name="Password" maxlength="255" type="password" tabindex="2"/>
                             </div>
                             <div class="use100" style="height:16px;">&nbsp;</div>
@@ -51,6 +53,7 @@
                                 <div class="use100" style="height:16px;">&nbsp;</div>
                                 <div class="use100 intensity_3" style="height:30px;">
                                     <a class="vtip" id="signinonSubmit"
+                                       name="JSLoginButton"
                                        title="You haven't signed in yet|Enter your email, password and click here|You will be signed in shortly after"
                                        tabindex="3"><img src="/images/Power_off_Off.png" alt="Login" style="height:30px;cursor:pointer;"/></a>
                                 </div>

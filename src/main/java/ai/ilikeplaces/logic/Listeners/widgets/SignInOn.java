@@ -134,7 +134,7 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(SignInOnIds.signinonUsername), EventType.BLUR.toString(), new EventListener() {
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(SignInOnIds.signinonUsername), EventType.CHANGE.toString(), new EventListener() {
             private HumanId myusername = username;
             private SimpleString mydbHash = dbHash;
             private SimpleString mydbSalt = dbSalt;
@@ -160,7 +160,7 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(SignInOnIds.signinonPassword), EventType.BLUR.toString(), new EventListener() {
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(SignInOnIds.signinonPassword), EventType.CHANGE.toString(), new EventListener() {
             private Password mypassword = password;
 
             @Override
