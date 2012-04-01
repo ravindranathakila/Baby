@@ -19,6 +19,13 @@ import org.slf4j.LoggerFactory;
         "Using an interface based approach is easy to make changes to")
 public enum MarkupTag implements MarkupTagFace {
 
+    BODY() {
+        @Override
+        public String toString() {
+            return BODY_TAG;
+        }
+
+    },
     P() {
         @Override
         public String toString() {
@@ -231,6 +238,7 @@ public enum MarkupTag implements MarkupTagFace {
             return ONCLICK;
         }
     };
+    private static final String BODY_TAG = "BODY";
     private static final String ONCLICK = "onclick";
     private static final String SPAN_TAG = "SPAN";
     private static final String CONTENT = "content";
