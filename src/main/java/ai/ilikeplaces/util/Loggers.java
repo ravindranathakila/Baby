@@ -62,7 +62,8 @@ final public class Loggers {
         USER,
         USER_EXCEPTION,
         NON_USER,
-        FAILED_SIGNUPS
+        FAILED_SIGNUPS,
+        FAILED_LOGINS
     }
 
     private Loggers() {
@@ -83,6 +84,12 @@ final public class Loggers {
      * For the purpose of logging failed signup emails
      */
     final static public Logger FAILED_SIGNUPS = LoggerFactory.getLogger("FAILED_SIGNUPS");
+
+
+    /**
+     * For the purpose of logging failed logins
+     */
+    final static public Logger FAILED_LOGINS = LoggerFactory.getLogger("FAILED_LOGINS");
 
 
     /**
@@ -245,6 +252,9 @@ final public class Loggers {
                 break;
             case FAILED_SIGNUPS:
                 Loggers.FAILED_SIGNUPS.info(message);
+                break;
+            case FAILED_LOGINS:
+                Loggers.FAILED_LOGINS.info(message);
                 break;
             default:
                 Loggers.DEBUG.debug(

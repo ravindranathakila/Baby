@@ -124,6 +124,19 @@
         </layout>
     </appender>
 
+    <appender name="FILE_FAILED_LOGINS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/ilp_failed_logins.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_failed_logins.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%-4level|%date>%msg%n</Pattern>
+        </layout>
+    </appender>
+
 
     <logger name="USER" level="info">
             <appender-ref ref="FILE_USER" />
@@ -155,6 +168,10 @@
 
     <logger name="FAILED_SIGNUPS" level="info">
             <appender-ref ref="FILE_FAILED_SIGNUPS" />
+    </logger>
+
+    <logger name="FAILED_LOGINS" level="info">
+            <appender-ref ref="FILE_FAILED_LOGINS" />
     </logger>
 
 

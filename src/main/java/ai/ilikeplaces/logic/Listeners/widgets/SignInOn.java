@@ -208,14 +208,15 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
 
                                         $$sendJS(JSCodeToSend.refreshPageIn(0));
                                     } else {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
+                                        Loggers.log(Loggers.LEVEL.FAILED_LOGINS, myusername.getHumanId() + ":" + mypassword.getObj());
                                         notifyUser(RBGet.gui().getString("password.is.wrong"));
                                     }
                                 } else {/*There is no such user. Ask if he forgot username or whether to create a new account :)*/
                                     if (myexistButNotActive.getObj()) {
-                                        $$sendJS(JSCodeToSend.redirectPageWithURL("/page/_profile"));
+                                        $$sendJS(JSCodeToSend.redirectPageWithURL(Page.Profile.getURL()));
                                         notifyUser(RBGet.gui().getString("activate.your.account"));
                                     } else {
-                                        //notifyUser(myusername.getObj() + " is not a user of this website");
+                                        notifyUser(RBGet.gui().getString("recheck.your.email"));
                                     }
                                 }
                             } else {
