@@ -86,12 +86,12 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
     protected void init(final SignInOnCriteria signInOnCriteria) {
         registerUserNotifier($$(SignInOnIds.signinonNotice));
 
-        username = signInOnCriteria.getHumanId();
-        password = new Password();
-        dbHash = new SimpleString("");
-        dbSalt = new SimpleString("");
-        userOk = new Obj<Boolean>(false);
-        existButNotActive = new Obj<Boolean>(false);
+        criteria.username = signInOnCriteria.getHumanId();
+        criteria.password = new Password();
+        criteria.dbHash = new SimpleString("");
+        criteria.dbSalt = new SimpleString("");
+        criteria.userOk = new Obj<Boolean>(false);
+        criteria.existButNotActive = new Obj<Boolean>(false);
 
         UCSetCSSBasedOnURL:
         {
@@ -99,10 +99,10 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
             $(Controller.Page.Skeleton_pageType).setAttribute(MarkupTag.INPUT.value(), criteria.getSignInOnDisplayComponent().toString());
         }
 
-        if (username.validate() == 0) {
+        if (criteria.username.validate() == 0) {
             UCSetGlobalProfileLink:
             {
-                final HumansIdentity hi = ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(username.getObjectAsValid(), "");
+                final HumansIdentity hi = ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(criteria.username.getObjectAsValid(), "");
 
                 $$(SignInOnIds.Global_Profile_Link).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
             }
@@ -115,7 +115,7 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
             UCAutoplay:
             {
                 new AutoplayControls(request, new AutoplayControlsCriteria()
-                        .setHumanId(username)
+                        .setHumanId(criteria.username)
                         .setHumanUserLocal(getHumanUserFromRequest(request))
                         , $$(SignInOnIds.signinon_autoplay));
             }
@@ -135,42 +135,43 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(SignInOnIds.signinonUsername), EventType.CHANGE.toString(), new EventListener() {
-            private HumanId myusername = username;
-            private SimpleString mydbHash = dbHash;
-            private SimpleString mydbSalt = dbSalt;
-            private Obj<Boolean> myuserOk = userOk;
-            private Obj<Boolean> myexistButNotActive = existButNotActive;
 
             @Override
             public void handleEvent(final Event evt_) {
-                myusername.setObj($$(evt_).getAttribute(MarkupTag.INPUT.value()));
-
-                if (myusername.validate() == 0) {
-                    Human existingUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(myusername.getObjectAsValid());
-                    if (existingUser != null && existingUser.getHumanAlive()) {/*Ok user name valid but now we check for password*/
-                        final HumansAuthentication humansAuthentication = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(myusername).returnValue();
-                        mydbHash.setObj(humansAuthentication.getHumanAuthenticationHash());
-                        mydbSalt.setObj(humansAuthentication.getHumanAuthenticationSalt());
-                        myuserOk.setObj(true);
-                    } else if (existingUser != null && !existingUser.getHumanAlive()) {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
-                        myuserOk.setObj(false);
-                        myexistButNotActive.setObj(true);
+                synchronized (criteria) {
+                    //because the user might change this value once hash and everything is set. This is a critical bug fix. Remove only if you know what you are doing!
+                    if (!criteria.userOk.getObj()) {
+                        criteria.username.setObj($$(evt_).getAttribute(MarkupTag.INPUT.value()));
+                        if (criteria.username.validate() == 0) {
+                            Human existingUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(criteria.username.getObjectAsValid());
+                            if (existingUser != null
+                                    && existingUser.getHumanAlive()
+                                    ) {/*Ok user name valid but now we check for criteria.password*/
+                                final HumansAuthentication humansAuthentication = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(criteria.username).returnValue();
+                                criteria.dbHash.setObj(humansAuthentication.getHumanAuthenticationHash());
+                                criteria.dbSalt.setObj(humansAuthentication.getHumanAuthenticationSalt());
+                                criteria.userOk.setObj(true);
+                            } else if (existingUser != null && !existingUser.getHumanAlive()) {/*Ok criteria.password wrong or not activated. What do we do with this guy? First lets make his session object null*/
+                                criteria.userOk.setObj(false);
+                                criteria.existButNotActive.setObj(true);
+                            }
+                        }
                     }
                 }
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(SignInOnIds.signinonPassword), EventType.CHANGE.toString(), new EventListener() {
-            private Password mypassword = password;
 
             @Override
             public void handleEvent(final Event evt_) {
-                mypassword.setObj($$(evt_).getAttribute(MarkupTag.INPUT.value()));
+                synchronized (criteria) {
+                    criteria.password.setObj($$(evt_).getAttribute(MarkupTag.INPUT.value()));
+                }
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
 
-        //Last time we checked, this did not work!
         super.registerForClick(SignInOnIds.signinonSubmit, new AIEventListener<SignInOnCriteria>(criteria) {
             @Override
             public void onFire(Event evt) {
@@ -181,49 +182,45 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
 
         super.registerForClick(SignInOnIds.signinonSubmit,
                 new AIEventListener<SignInOnCriteria>(criteria) {
-                    private HumanId myusername = username;
-                    private Password mypassword = password;
-                    private SimpleString mydbHash = dbHash;
-                    private SimpleString mydbSalt = dbSalt;
-                    private Obj<Boolean> myuserOk = userOk;
-                    private Obj<Boolean> myexistButNotActive = existButNotActive;
-
 
                     @Override
                     public void onFire(final Event evt_) {
-                        final HttpSession userSession_ = ((ItsNatHttpSession) request.getItsNatSession()).getHttpSession();
 
-                        if (myusername.validate() == 0 && mypassword.validate() == 0) {
-                            if (userSession_.getAttribute(HumanUserLocal.NAME) == null) {
-                                /*Ok the session does not have the bean, initialize it with the user with email id and password*/
-                                if (myuserOk.getObj()) {/*Ok user name valid but now we check for password*/
-                                    if (mydbHash.getObj().equals(DB.getSingletonHashingFaceLocal(true).getHash(mypassword.getObjectAsValid(), mydbSalt.getObj()))) {
-                                        final HumanUserLocal humanUserLocal = HumanUser.getHumanUserLocal(true);
+                        synchronized (criteria) {
+                            final HttpSession userSession_ = ((ItsNatHttpSession) request.getItsNatSession()).getHttpSession();
 
-                                        humanUserLocal.setHumanUserId(myusername.getObjectAsValid());
+                            if (criteria.username.validate() == 0 && criteria.password.validate() == 0) {
+                                if (userSession_.getAttribute(HumanUserLocal.NAME) == null) {
+                                    /*Ok the session does not have the bean, initialize it with the user with email id and criteria.password*/
+                                    if (criteria.userOk.getObj()) {/*Ok user name valid but now we check for criteria.password*/
+                                        if (criteria.dbHash.getObj().equals(DB.getSingletonHashingFaceLocal(true).getHash(criteria.password.getObjectAsValid(), criteria.dbSalt.getObj()))) {
+                                            final HumanUserLocal humanUserLocal = HumanUser.getHumanUserLocal(true);
 
-                                        userSession_.setAttribute(HumanUserLocal.NAME, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
+                                            humanUserLocal.setHumanUserId(criteria.username.getObjectAsValid());
 
-                                        notifyUser(RBGet.gui().getString("logging.you.in"));
+                                            userSession_.setAttribute(HumanUserLocal.NAME, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
 
-                                        $$sendJS(JSCodeToSend.refreshPageIn(0));
-                                    } else {/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/
-                                        Loggers.log(Loggers.LEVEL.FAILED_LOGINS, myusername.getHumanId() + ":" + mypassword.getObj());
-                                        notifyUser(RBGet.gui().getString("password.is.wrong"));
+                                            notifyUser(RBGet.gui().getString("logging.you.in"));
+
+                                            $$sendJS(JSCodeToSend.refreshPageIn(0));
+                                        } else {/*Ok criteria.password wrong or not activated. What do we do with this guy? First lets make his session object null*/
+                                            Loggers.log(Loggers.LEVEL.FAILED_LOGINS, criteria.username.getHumanId() + ":" + criteria.password.getObj());
+                                            notifyUser(RBGet.gui().getString("criteria.password.is.wrong"));
+                                        }
+                                    } else {/*There is no such user. Ask if he forgot criteria.username or whether to create a new account :)*/
+                                        if (criteria.existButNotActive.getObj()) {
+                                            $$sendJS(JSCodeToSend.redirectPageWithURL(Page.Profile.getURL()));
+                                            notifyUser(RBGet.gui().getString("activate.your.account"));
+                                        } else {
+                                            notifyUser(RBGet.gui().getString("recheck.your.email"));
+                                        }
                                     }
-                                } else {/*There is no such user. Ask if he forgot username or whether to create a new account :)*/
-                                    if (myexistButNotActive.getObj()) {
-                                        $$sendJS(JSCodeToSend.redirectPageWithURL(Page.Profile.getURL()));
-                                        notifyUser(RBGet.gui().getString("activate.your.account"));
-                                    } else {
-                                        notifyUser(RBGet.gui().getString("recheck.your.email"));
-                                    }
+                                } else {
+                                    //We just ignore since the form is not visible and this cannot happen, or a hacker is trying something ;)
                                 }
                             } else {
-                                //We just ignore since the form is not visible and this cannot happen, or a hacker is trying something ;)
+                                notifyUser(RBGet.gui().getString("login.failed.retry.or.recover"));
                             }
-                        } else {
-                            notifyUser(RBGet.gui().getString("login.failed.retry.or.recover"));
                         }
                     }
                 });

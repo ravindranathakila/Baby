@@ -1,6 +1,9 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.logic.validators.unit.Password;
+import ai.ilikeplaces.logic.validators.unit.SimpleString;
+import ai.ilikeplaces.util.Obj;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,6 +14,14 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 public class SignInOnCriteria {
 
     private HumanId humanId;
+
+    public HumanId username = null;
+    public Password password = null;
+
+    public SimpleString dbHash = null;
+    public SimpleString dbSalt = null;
+    public Obj<Boolean> userOk = null;
+    public Obj<Boolean> existButNotActive = null;
 
     private SignInOnDisplayComponent signInOnDisplayComponent;
 

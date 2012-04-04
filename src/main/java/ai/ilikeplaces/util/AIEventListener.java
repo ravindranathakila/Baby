@@ -16,7 +16,7 @@ abstract public class AIEventListener<T> implements EventListener {
     private static final String EVENT_TYPE = "Event Type: ";
     private static final String EVENT_TARGET = "Event Target: ";
     private static final String COMMA_SEP_1 = ", ";
-    protected T criteria;
+    final protected T criteria;
 
     protected AIEventListener(final T criteria) {
         this.criteria = criteria;
