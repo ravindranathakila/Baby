@@ -205,7 +205,7 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
                                             $$sendJS(JSCodeToSend.refreshPageIn(0));
                                         } else {/*Ok criteria.password wrong or not activated. What do we do with this guy? First lets make his session object null*/
                                             Loggers.log(Loggers.LEVEL.FAILED_LOGINS, criteria.username.getHumanId() + ":" + criteria.password.getObj());
-                                            notifyUser(RBGet.gui().getString("criteria.password.is.wrong"));
+                                            notifyUser(RBGet.gui().getString("password.is.wrong"));
                                         }
                                     } else {/*There is no such user. Ask if he forgot criteria.username or whether to create a new account :)*/
                                         if (criteria.existButNotActive.getObj()) {

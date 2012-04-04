@@ -122,4 +122,29 @@ abstract public class WallWidget<T> extends AbstractWidgetListener<T> {
     void setWallProfileName(final String wallProfileName) {
         $$(WallWidgetIds.wallProfileName).setTextContent(wallProfileName);
     }
+
+    void fetchToEmailSetLeftSidebar(final String leftSidebar) {
+        fetchToEmail = fetchToEmail.replace("___|_", leftSidebar);
+    }
+
+    void fetchToEmailSetCenter(final String center) {
+        fetchToEmail = fetchToEmail.replace("___||_", center);
+    }
+
+    void fetchToEmailSetRightSidebar(final String rigtSidebar) {
+        fetchToEmail = fetchToEmail.replace("___|||_", rigtSidebar);
+    }
+
+
+    static String fetchToEmailSetLeftSidebar(final String leftSidebar, final String document) {
+        return document.replace("___|_", leftSidebar);
+    }
+
+    static String fetchToEmailSetCenter(final String center, final String document) {
+        return document.replace("___||_", center);
+    }
+
+    static String fetchToEmailSetRightSidebar(final String rightSidebar, final String document) {
+        return document.replace("___|||_", rightSidebar);
+    }
 }

@@ -454,28 +454,6 @@ abstract public class PrivateEventDelete extends AbstractWidgetListener {
                         }
                 );
             }
-
-            UCFiltering:
-            {
-                @SEE(seeClasses = {
-                        WallWidgetHumansWall.class,
-                        PrivateEventDelete.class,
-                        PrivateEventView.class,
-                        Tribe.class
-                })
-                final People people = new People(request, new PeopleCriteria().setPeople((List<HumanIdFace>) (List<?>)
-                        new ArrayList<HumansPrivateEvent>(new HashSet<HumansPrivateEvent>() {
-                            final HumanId myhumanId = humanId;
-
-                            {
-                                privateEventOwners.remove(myhumanId);
-                                privateEventViewers.remove(myhumanId);
-                                addAll(privateEventOwners);
-                                addAll(privateEventViewers);
-                            }
-                        })
-                ), $(Page.Skeleton_left_column));
-            }
         }
     }
 }

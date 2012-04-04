@@ -1,8 +1,13 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.SEE;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
+import ai.ilikeplaces.logic.Listeners.widgets.people.People;
+import ai.ilikeplaces.logic.Listeners.widgets.people.PeopleCriteria;
+import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete;
+import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventView;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -25,6 +30,8 @@ import org.xml.sax.SAXException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -99,7 +106,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
 
         final Return<Wall> aReturn = DB.getHumanCrudPrivateEventLocal(true).
                 readWall(humanId, new Obj<Long>(privateEventId), REFRESH_SPEC);
-        
+
         UCHidingWallIfEmptyToShowInviteWidgetOnTop:
         {
             if (pe.getPrivateEventOwners().size() + pe.getPrivateEventViewers().size() == 2) {
@@ -159,13 +166,41 @@ public class WallWidgetPrivateEvent extends WallWidget {
         DB.getHumanCRUDHumansUnseenLocal(false).removeEntry(humanId.getObjectAsValid(), aReturn.returnValue().getWallId());
 
 
-        final HumansIdentity currUserAsVisitorHI = UserProperty.HUMANS_IDENTITY_CACHE.get((humanId.getHumanId()),"");
+        final HumansIdentity currUserAsVisitorHI = UserProperty.HUMANS_IDENTITY_CACHE.get((humanId.getHumanId()), "");
 
         super.setWallProfileName(currUserAsVisitorHI.getHuman().getDisplayName());
         super.setWallProfilePhoto(UserProperty.formatProfilePhotoUrl(currUserAsVisitorHI.getHumansIdentityProfilePhoto()));
         //Change property key please super.setWallTitle(MessageFormat.format(RBGet.gui().getString(TALK_AT_0), pe.getPrivateEventName()));
 
         $$displayWallAsMuted($$(WallWidgetIds.wallMute), aReturn.returnValueBadly().getWallMutes().contains(humanId));
+
+        UCFiltering:
+        {
+            @SEE(seeClasses = {
+                    WallWidgetHumansWall.class,
+                    PrivateEventDelete.class,
+                    PrivateEventView.class,
+                    Tribe.class
+            })
+            final String peopleFetchToEmail1 = new People(request, new PeopleCriteria().setPeople((List<HumanIdFace>) (List<?>)
+                    new ArrayList<HumansPrivateEvent>(new HashSet<HumansPrivateEvent>() {
+                        final HumanId myhumanId = humanId;
+
+                        {
+                            pe.getPrivateEventOwners().remove(myhumanId);
+                            pe.getPrivateEventViewers().remove(myhumanId);
+                            addAll(pe.getPrivateEventOwners());
+                            addAll(pe.getPrivateEventViewers());
+                        }
+                    })
+            ), $(Controller.Page.Skeleton_left_column)).fetchToEmail;
+
+            Loggers.debug("PEOPLE FETCH TO EMAIL CONTENT:" + peopleFetchToEmail1);
+
+            fetchToEmailSetLeftSidebar(peopleFetchToEmail1);
+            fetchToEmailSetRightSidebar("&nbsp;");
+
+        }
     }
 
 
@@ -245,7 +280,11 @@ public class WallWidgetPrivateEvent extends WallWidget {
                             final PrivateEvent pe = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(myhumanId.getObj(), myprivateEventId).returnValue();
                             for (final HumansPrivateEvent hpe : pe.getPrivateEventViewers()) {
                                 if (!wall.getWallMutes().contains(hpe) && !hpe.getHumanId().equals(myhumanId.getObj())) {
-                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), pe.getPrivateEventName(), fetchToEmail + b.toString());
+                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                            hpe.getHumanId(),
+                                            pe.getPrivateEventName(),
+                                            fetchToEmailSetCenter(b.toString(), fetchToEmail)
+                                    );
                                     DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), wall.getWallId());
                                 }
                             }

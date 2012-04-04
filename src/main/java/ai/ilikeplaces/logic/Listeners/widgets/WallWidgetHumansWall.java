@@ -155,30 +155,6 @@ public class WallWidgetHumansWall extends WallWidget {
         }
     }
 
-    void fetchToEmailSetLeftSidebar(final String leftSidebar) {
-        fetchToEmail = fetchToEmail.replace("___|_", leftSidebar);
-    }
-
-    void fetchToEmailSetCenter(final String center) {
-        fetchToEmail = fetchToEmail.replace("___||_", center);
-    }
-
-    void fetchToEmailSetRightSidebar(final String rigtSidebar) {
-        fetchToEmail = fetchToEmail.replace("___|||_", rigtSidebar);
-    }
-
-
-    static String fetchToEmailSetLeftSidebar(final String leftSidebar, final String document) {
-        return document.replace("___|_", leftSidebar);
-    }
-
-    static String fetchToEmailSetCenter(final String center, final String document) {
-        return document.replace("___||_", center);
-    }
-
-    static String fetchToEmailSetRightSidebar(final String rightSidebar, final String document) {
-        return document.replace("___|||_", rightSidebar);
-    }
 
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
@@ -235,7 +211,7 @@ public class WallWidgetHumansWall extends WallWidget {
                                             SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
                                                     hpe.getHumanId(),
                                                     hnps.getDisplayName() + ": What is exciting lately?",
-                                                    WallWidgetHumansWall.fetchToEmailSetCenter(myb.toString(), myfetchToEmail));
+                                                    fetchToEmailSetCenter(b.toString(), myfetchToEmail));
                                             DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), mywall.getWallId());
                                         }
                                     }

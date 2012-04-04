@@ -281,19 +281,6 @@ public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria> {
                     });
         }
 
-        UCFiltering:
-        {
-            final ArrayList<HumansTribe> humansTribes = new ArrayList<HumansTribe>(criteria.getTribe().getTribeMembers());
-            final boolean remove = humansTribes.remove(criteria.getHumanId());
-
-            @SEE(seeClasses = {
-                    WallWidgetHumansWall.class,
-                    PrivateEventDelete.class,
-                    PrivateEventView.class,
-                    Tribe.class
-            })
-            final People people = new People(request, new PeopleCriteria().setPeople((List<HumanIdFace>) (List<?>) humansTribes), $(Controller.Page.Skeleton_left_column));
-        }
     }
 
     private Return<Tribe> inviteToTribe(final HumanId humanId, final HumansFriend humansFriend, final VLong tribeId) {

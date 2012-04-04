@@ -1,8 +1,13 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc.SEE;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
+import ai.ilikeplaces.logic.Listeners.widgets.people.People;
+import ai.ilikeplaces.logic.Listeners.widgets.people.PeopleCriteria;
+import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete;
+import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventView;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -24,6 +29,7 @@ import org.xml.sax.SAXException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -161,6 +167,25 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
         //Change property key please super.setWallTitle(MessageFormat.format(RBGet.gui().getString(TALK_AT_0), tribe.getTribeName()));
 
         $$displayWallAsMuted($$(WallWidgetIds.wallMute), aReturn.returnValueBadly().getWallMutes().contains(criteria.getHumanId()));
+
+        UCFiltering:
+        {
+            final ArrayList<HumansTribe> humansTribes = new ArrayList<HumansTribe>(tribe.getTribeMembers());
+            final boolean remove = humansTribes.remove(criteria.getHumanId());
+
+            @SEE(seeClasses = {
+                    WallWidgetHumansWall.class,
+                    PrivateEventDelete.class,
+                    PrivateEventView.class,
+                    Tribe.class
+            })
+            final String peopleFetchToEmail1 = new People(request, new PeopleCriteria().setPeople((List<HumanIdFace>) (List<?>) humansTribes), $(Controller.Page.Skeleton_left_column)).fetchToEmail;
+
+            Loggers.debug("PEOPLE FETCH TO EMAIL CONTENT:" + peopleFetchToEmail1);
+
+            fetchToEmailSetLeftSidebar(peopleFetchToEmail1);
+            fetchToEmailSetRightSidebar("&nbsp;");
+        }
     }
 
     /**
@@ -232,7 +257,11 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
                                         final Tribe tribe = returnVal.returnValue();
                                         for (final HumansTribe hpe : tribe.getTribeMembers()) {
                                             if (!wall.getWallMutes().contains(hpe) && !hpe.getHumanId().equals(criteria.getHumanId().getObj())) {
-                                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), tribe.getTribeName(), fetchToEmail + b.toString());
+                                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                                        hpe.getHumanId(),
+                                                        tribe.getTribeName(),
+                                                        fetchToEmailSetCenter(b.toString(), fetchToEmail)
+                                                );
                                                 DB.getHumanCRUDHumansUnseenLocal(false).addEntry(hpe.getHumanId(), wall.getWallId());
                                             }
                                         }
