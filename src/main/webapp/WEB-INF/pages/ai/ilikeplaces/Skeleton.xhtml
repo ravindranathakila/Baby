@@ -37,7 +37,7 @@
          background-color:#ff6677;
     }
     .userPropertySidebar.MOMENTS{
-        background-color:#ff8300;
+        background-color:#ffbb99;
     }
     .userPropertySidebar.SNAPS{
         background-color:#ffca1e;
@@ -53,7 +53,7 @@
          background-color:#ff6677;
     }
     .privateEventSidebar.MOMENTS{
-        background-color:#ff8300;
+        background-color:#ffbb99;
     }
     .privateEventSidebar.SNAPS{
         background-color:#ffca1e;
@@ -69,7 +69,7 @@
          background-color:#ff6677;
     }
     .carousel.MOMENTS{
-        background-color:#ff8300;
+        background-color:#ffbb99;
     }
     .carousel.SNAPS{
         background-color:#ffca1e;
@@ -85,7 +85,7 @@
          background-color:#ff6677;
     }
     .people.MOMENTS{
-        background-color:#ff8300;
+        background-color:#ffbb99;
     }
     .people.SNAPS{
         background-color:#ffca1e;
@@ -101,7 +101,7 @@
          background-color:#ff6677;
     }
     .user_property_photo.MOMENTS{
-        background-color:#ff8300;
+        background-color:#ffbb99;
     }
     .user_property_photo.SNAPS{
         background-color:#ffca1e;
@@ -498,27 +498,35 @@
 
     jQuery(document).ready(
         function($){
-           $('.click_indicator').hover(
+           $('.click_indicator')
+            .hover(
                    function(){
                      $(this).fadeTo(0,0.8);
                    },
                    function(){
                      $(this).fadeTo(0,1);
-                   }
-            );
+                   })
+            .click(
+                   function(){
+                     $(this).fadeTo(0,0.3);
+                   });
         }
     );
 
     jQuery(document).ready(
         function($){
-           $('.click_indicator_strong').hover(
+           $('.click_indicator_strong')
+                .hover(
                    function(){
                      $(this).fadeTo(0,0.5);
                    },
                    function(){
                      $(this).fadeTo(0,1);
-                   }
-            );
+                   })
+                .click(
+                    function(){
+                     $(this).fadeTo(0,0.3);
+                   });
         }
     );
 
