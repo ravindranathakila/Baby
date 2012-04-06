@@ -10,6 +10,7 @@ import ai.ilikeplaces.util.jpa.RefreshException;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -57,7 +58,14 @@ public interface CRUDTribeLocal {
      * @param humanId The humanId of whose to return all the Tribes she's member of
      * @return The Tribes the given user is a member of
      */
-    public Set<Tribe> getHumansTribes(final String humanId);
+    public Set<Tribe> getHumansTribesAsSet(final String humanId);
+
+
+    /**
+     * @param humanId The humanId of whose to return all the Tribes she's member of
+     * @return The Tribes the given user is a member of
+     */
+    public List<Tribe> getHumansTribes(final String humanId);
 
     /**
      *

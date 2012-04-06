@@ -65,7 +65,7 @@ import java.util.Set;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 @Entity
-public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Tribe>{
+public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Tribe>, Comparable<Tribe> {
 // ------------------------------ FIELDS ------------------------------
 
     public Long tribeId;
@@ -195,6 +195,12 @@ public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Trib
                 "tribeId=" + tribeId +
                 ", tribeName='" + tribeName + '\'' +
                 '}';
+    }
+
+
+    @Override
+    public int compareTo(final Tribe o) {
+        return (int) (this.tribeId - o.tribeId);
     }
 }
 
