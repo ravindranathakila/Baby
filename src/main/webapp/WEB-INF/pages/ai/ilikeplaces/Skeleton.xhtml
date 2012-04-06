@@ -371,8 +371,8 @@
                     </div>
                 </div>
             </div>
-            <div class="use083 fillPageType flipper" style="height:1000px;">
-                <div class="use100 vtip" style="height:1000px;background:url(/images/Metal_translucent.png) repeat;cursor:pointer;"
+            <div class="use083 fillPageType click_indicator flipper" style="height:1000px;">
+                <div class="use100 vtip " style="height:1000px;background:url(/images/Metal_translucent.png) repeat;cursor:pointer;"
                      onclick="javascript:history.go(1);"
                      title="This flipper is for navigation|Click to go forward|You will be taken to the latest page you visited"
                         >
@@ -495,6 +495,33 @@
             );
         }
     );
+
+    jQuery(document).ready(
+        function($){
+           $('.click_indicator').hover(
+                   function(){
+                     $(this).fadeTo(0,0.8);
+                   },
+                   function(){
+                     $(this).fadeTo(0,1);
+                   }
+            );
+        }
+    );
+
+    jQuery(document).ready(
+        function($){
+           $('.click_indicator_strong').hover(
+                   function(){
+                     $(this).fadeTo(0,0.5);
+                   },
+                   function(){
+                     $(this).fadeTo(0,1);
+                   }
+            );
+        }
+    );
+
 
     jQuery(document).ready(
         function($){
