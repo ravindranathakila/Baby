@@ -23,6 +23,7 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
 import java.text.MessageFormat;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -175,7 +176,10 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
             case MOMENTS: {
                 UCDownTownFlowMoments:
                 {
-                    for (final PrivateEvent privateEvent : DB.getHumanCrudPrivateEventLocal(false).doDirtyRPrivateEventsOfHuman(downTownFlowCriteria.getHumanId()).returnValue()) {
+                    List<PrivateEvent> privateEvents = DB.getHumanCrudPrivateEventLocal(false).doDirtyRPrivateEventsOfHuman(downTownFlowCriteria.getHumanId()).returnValue();
+                    Collections.reverse(privateEvents);
+
+                    for (final PrivateEvent privateEvent : privateEvents) {
                         new PrivateEventViewSidebar(
                                 request,
                                 new PrivateEventViewSidebarCriteria().setPrivateEventId__(privateEvent.getPrivateEventId()).setHumanId__(downTownFlowCriteria.getHumanId().getHumanId()),
@@ -188,7 +192,10 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
             case TRIBES: {
                 UCDownTownFlowTRIBES:
                 {
-                    for (final Tribe tribe : DB.getHumanCRUDTribeLocal(false).getHumansTribes(downTownFlowCriteria.getHumanId())) {
+                    final List<Tribe> tribes = DB.getHumanCRUDTribeLocal(false).getHumansTribes(downTownFlowCriteria.getHumanId());
+                    Collections.reverse(tribes);
+
+                    for (final Tribe tribe : tribes) {
                         new TribeSidebar(
                                 request,
                                 new TribeSidebarCriteria().setTribeId(tribe.getTribeId()).setHumanId(downTownFlowCriteria.getHumanId().getHumanId()),

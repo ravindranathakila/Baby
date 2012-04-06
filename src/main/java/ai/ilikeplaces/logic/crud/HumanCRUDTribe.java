@@ -5,9 +5,6 @@ import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.entities.Wall;
-import ai.ilikeplaces.exception.AbstractEjbApplicationException;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.logic.crud.unit.CRUDAlbumLocal;
 import ai.ilikeplaces.logic.crud.unit.CRUDTribeLocal;
 import ai.ilikeplaces.logic.crud.unit.CRUDWallLocal;
@@ -16,7 +13,6 @@ import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.logic.validators.unit.VTribeName;
 import ai.ilikeplaces.logic.validators.unit.VTribeStory;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.jpa.RefreshException;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.EJB;
@@ -228,7 +224,16 @@ public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTri
      * @return The Tribes the given user is a member of, unrefreshed
      */
     @Override
-    public Set<Tribe> getHumansTribes(final HumanId humanId) {
+    public Set<Tribe> getHumansTribesAsSet(final HumanId humanId) {
+        return crudTribeLocal_.getHumansTribesAsSet(humanId.getObjectAsValid());
+    }
+
+    /**
+     * @param humanId The humanId of whose to return all the Tribes she's member of
+     * @return The Tribes the given user is a member of, unrefreshed
+     */
+    @Override
+    public List<Tribe> getHumansTribes(final HumanId humanId) {
         return crudTribeLocal_.getHumansTribes(humanId.getObjectAsValid());
     }
 

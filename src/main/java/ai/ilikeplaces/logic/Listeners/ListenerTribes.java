@@ -115,7 +115,7 @@ public class ListenerTribes implements ItsNatServletRequestListener {
 
                                     FirstWeGetThisPersonsTribes_ThisIsImportant:
                                     {
-                                        humansTribes = DB.getHumanCRUDTribeLocal(false).getHumansTribes(new HumanId(getUsernameAsValid()));
+                                        humansTribes = DB.getHumanCRUDTribeLocal(false).getHumansTribesAsSet(new HumanId(getUsernameAsValid()));
                                     }
 
                                     for (final Tribe tribe : humansTribes) {

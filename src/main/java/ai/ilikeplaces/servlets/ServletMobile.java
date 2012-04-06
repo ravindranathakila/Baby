@@ -5,11 +5,8 @@ import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
-import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetTribe;
-import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.role.HumanUser;
@@ -27,8 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.Map;
 import java.util.Set;
 
@@ -197,7 +192,7 @@ public class ServletMobile extends HttpServlet {
                     resp.getWriter().append(gson.toJson(wall));
                 } else {
                     resp.getWriter().flush();
-                    final Set<Tribe> tribes = DB.getHumanCRUDTribeLocal(false).getHumansTribes(humanId);
+                    final Set<Tribe> tribes = DB.getHumanCRUDTribeLocal(false).getHumansTribesAsSet(humanId);
                     resp.getWriter().append((new Gson().toJson(tribes)));
                 }
             }

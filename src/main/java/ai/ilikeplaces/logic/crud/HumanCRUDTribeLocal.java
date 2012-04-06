@@ -69,7 +69,13 @@ public interface HumanCRUDTribeLocal extends GeneralCRUDWall {
      * @param humanId The humanId of whose to return all the Tribes she's member of
      * @return The Tribes the given user is a member of
      */
-    public Set<Tribe> getHumansTribes(final HumanId humanId);
+    public Set<Tribe> getHumansTribesAsSet(final HumanId humanId);
+
+    /**
+     * @param humanId The humanId of whose to return all the Tribes she's member of
+     * @return The Tribes the given user is a member of
+     */
+    public List<Tribe> getHumansTribes(final HumanId humanId);
 
 
     /**
