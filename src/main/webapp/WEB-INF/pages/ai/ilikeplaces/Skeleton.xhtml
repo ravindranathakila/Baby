@@ -387,7 +387,7 @@
 </div>
 
 <div style="display:none;">
-    <input id="Skeleton_pageType" class="Skeleton_pageType" type="hidden" value=""/>
+    <input id="pageType" class="pageType" type="hidden" value=""/>
 </div>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
@@ -533,7 +533,7 @@
 
     jQuery(document).ready(
         function($){
-           $('.fillPageType').addClass($('.Skeleton_pageType').attr('value'));
+           $('.fillPageType').addClass($('.pageType').attr('value'));
         }
     );
 

@@ -853,8 +853,7 @@ final public class
                 Controller.Page.Skeleton_othersidebar_upload_file_sh,
                 Controller.Page.Skeleton_right_column,
                 Controller.Page.Skeleton_sidebar,
-                Controller.Page.Skeleton_notifications,
-                Controller.Page.Skeleton_pageType
+                Controller.Page.Skeleton_notifications
 
         ) {
             @Override
@@ -994,8 +993,7 @@ final public class
                 Controller.Page.AarrrDownTownHeatMap,
                 Controller.Page.AarrrJuice,
                 Controller.Page.AarrrWOEID,
-                Controller.Page.AarrrHeader,
-                Controller.Page.AARRR_pageType
+                Controller.Page.AarrrHeader
         ) {
             @Override
             public String getURL() {
@@ -1006,7 +1004,21 @@ final public class
             public String toString() {
                 return DocAarrr;
             }
+        }, Global(
+                "",
+                Page.CPageType
+        ) {
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS THE ENUM FOR GLOBAL KEYS ONLY");
+            }
+
+            @Override
+            public String toString() {
+                throw new IllegalAccessError("SORRY! THIS IS THE ENUM FOR GLOBAL KEYS ONLY");
+            }
         },
+
         Photo$Description(
                 "ai/ilikeplaces/widgets/Photo-Description.xhtml",
                 Controller.Page.pd,
@@ -1588,7 +1600,7 @@ final public class
         final static public String CPageTitle = "PageTitle";
         final static public String CPageIntro = "PageIntro";
         final static public String CPageNotice = "PageNotice";
-        final static public String CPageType = "Skeleton_pageType";
+        final static public String CPageType = "pageType";
 
 
         final static public String SkeletonCPageTitle = CPageTitle;
@@ -1605,6 +1617,7 @@ final public class
 
         final static public String Skeleton_pageType = CPageType;
         final static public String AARRR_pageType = CPageType;
+        final static public String Main_pageType = CPageType;
 
 /*End of common definitions*/
 

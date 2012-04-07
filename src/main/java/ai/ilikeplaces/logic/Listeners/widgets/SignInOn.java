@@ -96,7 +96,7 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
         UCSetCSSBasedOnURL:
         {
             $$setClass($$(SignInOnIds.signinonBG), criteria.getSignInOnDisplayComponent().toString(), false);
-            $(Controller.Page.Skeleton_pageType).setAttribute(MarkupTag.INPUT.value(), criteria.getSignInOnDisplayComponent().toString());
+            $(Controller.Page.CPageType).setAttribute(MarkupTag.INPUT.value(), criteria.getSignInOnDisplayComponent().toString());
         }
 
         if (criteria.username.validate() == 0) {
