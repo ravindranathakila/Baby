@@ -43,22 +43,24 @@ public class UHumansIdentity extends AbstractSLBCallbacks implements UHumansIden
     @Override
     public HumansIdentity doUHumansPublicURL(final String humanId, final String url) throws DBDishonourCheckedException {
 
-        doUHumansPublicURLDelete(humanId);
-        doUHumansPublicURLAdd(humanId,url);
+        doUHumansPublicURLAdd(humanId, url);
 
-       return rHumansIdentityLocal_.doRHumansIdentity(humanId);
+        return rHumansIdentityLocal_.doRHumansIdentity(humanId);
     }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     @Override
-    public void doUHumansPublicURLDelete(final String humanId) throws DBDishonourCheckedException {
-         rHumansIdentityLocal_.doRHumansIdentity(humanId).setUrl(null);
+    public void doUHumansPublicURLDeleteUrl(final String url) throws DBDishonourCheckedException {
+        urlCrudServiceLocal_.delete(Url.class, url);
     }
 
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     @Override
     public void doUHumansPublicURLAdd(final String humanId, final String url) throws DBDishonourCheckedException {
-        rHumansIdentityLocal_.doRHumansIdentity(humanId).setUrl(new Url().setUrlR(url).setMetadataR(humanId).setTypeR(Url.typeHUMAN));
+        final HumansIdentity humansIdentity = rHumansIdentityLocal_.doRHumansIdentity(humanId);
+        final String oldUrl = humansIdentity.getUrl().getUrl();
+        humansIdentity.setUrl(new Url().setUrlR(url).setMetadataR(humanId).setTypeR(Url.typeHUMAN));
+        doUHumansPublicURLDeleteUrl(oldUrl);
     }
 }

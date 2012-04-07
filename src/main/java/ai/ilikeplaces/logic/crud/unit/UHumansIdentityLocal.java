@@ -16,7 +16,7 @@ public interface UHumansIdentityLocal {
 
     public HumansIdentity doUHumansPublicURL(final String humanId, final String url) throws DBDishonourCheckedException;
 
-    public void doUHumansPublicURLDelete(final String humanId) throws DBDishonourCheckedException;
+    public void doUHumansPublicURLDeleteUrl(final String humanId) throws DBDishonourCheckedException;
 
     public void doUHumansPublicURLAdd(final String humanId, final String url) throws DBDishonourCheckedException;
 }
