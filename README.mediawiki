@@ -78,3 +78,18 @@ See? We want you to get moving fast.
 
 === Eye - Thank you http://findicons.com/pack/2448/wpzoom_developer ===
 === Denise(Font) - Thank you Denise! http://budeni.com/  http://www.dafont.com/denise-b.d2982?l[]=10 ===
+=== Corbis (Home Page) ===
+
+
+== Live Deployments ==
+
+=== DEPLOYMENT ON THE 4TH OF APRIL, 2012 ===
+==== Minimizing stylesheets and scripts... DONE ====
+==== Turn off debugging... DONE ====
+==== Testing on different browsers... DONE ====
+==== Uploading deployment files... DONE ====
+==== Backing up existing working deployment... DONE ====
+==== Replacing current deployment with new deployment... DONE ====
+==== DEPLOYMENT COMPLETE! ====
+
+=== ===
