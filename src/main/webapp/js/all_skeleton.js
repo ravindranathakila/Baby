@@ -700,6 +700,34 @@ $(document).ready(function(){
         }
     });
 
+   $('.click_indicator')
+    .hover(
+           function(){
+             $(this).fadeTo(0,0.8);
+           },
+           function(){
+             $(this).fadeTo(0,1);
+           })
+    .click(
+           function(){
+             $(this).fadeTo(0,0.3);
+           });
+
+   $('.click_indicator_strong')
+        .hover(
+           function(){
+             $(this).fadeTo(0,0.5);
+           },
+           function(){
+             $(this).fadeTo(0,1);
+           })
+        .click(
+            function(){
+             $(this).fadeTo(0,0.3);
+           });
+
+   $('.fillPageType').addClass($('.pageType').attr('value'));
+
 });
 
 

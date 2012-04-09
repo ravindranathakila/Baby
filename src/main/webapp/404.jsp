@@ -1,11 +1,14 @@
 <%@ page isErrorPage="true"%>
 
 <html>
-<head></head>
+<head>
+    <title>
+        Billions of bilious blue blistering barnacles!
+    </title>
+</head>
 <body>
 
-<h1>Holy Shit!</h1>
-<h2>What was that all about?<h2>
+<h1>What was that all about?<h1>
 
 <h3>Looking for something? Well, it sure ain't here :-( <h3>
 
