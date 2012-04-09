@@ -58,7 +58,7 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
     protected void init(final AutoplayControlsCriteria autoplayControlsCriteria) {
         AutoplayControlsCriteria.AUTOPLAY_STATE autoplayState = (AutoplayControlsCriteria.AUTOPLAY_STATE) criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.AUTOPLAY_STATE, null);
         autoplayState = (autoplayState != null ? autoplayState :
-                PLAYING);
+                PAUSED);
         switch (autoplayState) {
             case PLAYING: {
                 $$displayBlock(AutoplayControlsIds.AutoplayControlsPauseSection);
