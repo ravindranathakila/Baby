@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.SEE;
 import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.people.People;
 import ai.ilikeplaces.logic.Listeners.widgets.people.PeopleCriteria;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete;
@@ -223,6 +224,8 @@ public class WallWidgetHumansWall extends WallWidget {
                         } else {
                             $$(WallWidgetIds.wallNotice).setTextContent(r.returnMsg());
                         }
+
+                        $$sendJS(JSCodeToSend.UpdateDocument);
                     }
                 }
             }

@@ -19,6 +19,7 @@ final public class JSCodeToSend {
     final static public String RefreshPage = "\nwindow.location.reload(true);\n";
     final static public String ClosePage = "\nif(confirm('Done! Close page?')){window.close();}\n";
     final static public String ClosePageOrRefresh = "\nif(confirm('Done! Close page?')){window.close();}else{window.location.href = window.location.href;}\n";
+    final static public String UpdateDocument = "\nJUpdateDocument();\n";
     private static final String STRING = "#";
 
 // --------------------------- CONSTRUCTORS ---------------------------
@@ -98,4 +99,5 @@ final public class JSCodeToSend {
         return "window.location.hash=" + "'#'" + ";"
                 + "window.location.hash=" + "'" + stringToBeAppended + "';\n";
     }
+
 }

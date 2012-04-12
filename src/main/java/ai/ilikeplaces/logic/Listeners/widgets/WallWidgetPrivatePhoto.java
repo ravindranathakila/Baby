@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.LOGIC;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
@@ -159,6 +160,7 @@ public class WallWidgetPrivatePhoto extends WallWidget {
                         } else {
                             $$(WallWidgetIds.wallNotice).setTextContent(r.returnMsg());
                         }
+                        $$sendJS(JSCodeToSend.UpdateDocument);
                     }
                 }
             }

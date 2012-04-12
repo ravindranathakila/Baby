@@ -291,6 +291,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
                         } else {
                             $$(WallWidgetIds.wallNotice).setTextContent(r.returnMsg());
                         }
+                        $$sendJS(JSCodeToSend.UpdateDocument);
                     }
                 }
             }

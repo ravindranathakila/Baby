@@ -271,6 +271,7 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
                                 } else {
                                     $$(WallWidgetIds.wallNotice).setTextContent(r.returnMsg());
                                 }
+                                $$sendJS(JSCodeToSend.UpdateDocument);
                             }
                         }
                     }
