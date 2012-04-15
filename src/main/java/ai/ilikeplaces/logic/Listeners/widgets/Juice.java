@@ -58,6 +58,8 @@ public class Juice extends AbstractWidgetListener<JuiceCriteria> {
         Juice_Snap,
         Juice_Snap_Content,
 
+        Juice_Signup_Show,
+
         Juice_Email,
         Juice_Signup_Click,
         Juice_Noti,
@@ -137,6 +139,10 @@ public class Juice extends AbstractWidgetListener<JuiceCriteria> {
                     }
                 }
             }
+        });
+
+        super.registerForClick(JuiceIds.Juice_Signup_Show, new AIEventListener<JuiceCriteria>(criteria) {
+            //this is in place just to record analytics
         });
     }
 }
