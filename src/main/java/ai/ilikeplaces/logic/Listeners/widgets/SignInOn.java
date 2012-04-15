@@ -61,7 +61,10 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
         signinonNotice,
         signinon_autoplay,
         Global_Profile_Link,
-        signinonBG
+        signinonBG,
+
+        signinonFacebook,
+        signinonGoogle
     }
 
 // --------------------------- CONSTRUCTORS ---------------------------
@@ -224,5 +227,29 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
                         }
                     }
                 });
+
+        super.registerForClick(SignInOnIds.signinonFacebook, new AIEventListener<SignInOnCriteria>(criteria) {//Google Analytics
+            /**
+             * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+             *
+             * @param evt fired from client
+             */
+            @Override
+            protected void onFire(Event evt) {
+                $$sendJS(JSCodeToSend.redirectPageWithURL("/oauth2fb"));
+            }
+        });
+
+        super.registerForClick(SignInOnIds.signinonGoogle, new AIEventListener<SignInOnCriteria>(criteria) {//Google Analytics
+            /**
+             * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+             *
+             * @param evt fired from client
+             */
+            @Override
+            protected void onFire(Event evt) {
+                $$sendJS(JSCodeToSend.redirectPageWithURL("/oauth2gg?state=login"));
+            }
+        });
     }
 }
