@@ -10,6 +10,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
  */
 public class InfoCriteria {
 
+    private String image;
     private String title;
 
     public String getTitle() {
@@ -18,6 +19,15 @@ public class InfoCriteria {
 
     public InfoCriteria setTitle(final String title) {
         this.title = title;
+        return this;
+    }
+
+    public String getImage() {
+        return image != null ? image : (image = "");
+    }
+
+    public InfoCriteria setImage(String image) {
+        this.image = image;
         return this;
     }
 }

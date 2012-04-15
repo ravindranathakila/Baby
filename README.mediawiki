@@ -78,7 +78,8 @@ See? We want you to get moving fast.
 
 === Eye - Thank you http://findicons.com/pack/2448/wpzoom_developer ===
 === Denise(Font) - Thank you Denise! http://budeni.com/  http://www.dafont.com/denise-b.d2982?l[]=10 ===
-=== Corbis (Home Page) ===
+=== Corbis (Home Page) - Thank you Corbis ===
+=== Wikipedia (Lock Image) - Thank you https://commons.wikimedia.org/wiki/File:Ambox_padlock_red.svg ===
 
 
 == Live Deployments ==

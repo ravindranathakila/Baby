@@ -102,19 +102,26 @@ public class WallWidgetHumansWall extends WallWidget {
 
                     $$displayNone(WallWidgetIds.wallWidget);
 
-                    String title = "";
-                    if (friendCount == 0) {
-                        title = "Your follower score is " + 0 + "! " + " You have no followers!";
-                    } else if (friendCount == 1) {
-                        title = "Your follower score is " + 1 + "!" + " You have only 1 follower";
-                    }
+                    String title = "You need at least 2 followers to unlock your talk page";
+
+                    //https://upload.wikimedia.org/wikipedia/commons/8/8d/Ambox_padlock_red.svg
+                    new Info(request,
+                            new InfoCriteria()
+                                    .setImage("/images/What_is_exciting_lately.png"),
+                            $$(WallWidgetIds.wallGame));
 
                     new Info(request,
                             new InfoCriteria()
-                                    .setTitle(title),
+                                    .setImage("/images/What_is_exciting_lately_Talk.png"),
+                            $$(WallWidgetIds.wallGame));
+
+                    new Info(request,
+                            new InfoCriteria()
+                                    .setTitle(title)
+                                    .setImage("/images/Locked.png"),
                             $$(WallWidgetIds.wallGame)) {
                         /**
-                         * Use this only in conjunction with {@link #AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.ilikeplaces.servlets.Controller.Page, Object, org.w3c.dom.Element)}
+                         * Use this only in conjunction with
                          * GENERIC constructor.
                          *
                          * @param infoCriteria
@@ -126,9 +133,9 @@ public class WallWidgetHumansWall extends WallWidget {
                                 String addFollowerTitle = "";
 
                                 if (friendCount == 0) {
-                                    addFollowerTitle = "Add 2 Followers To Score 2 And Start Posting!";
+                                    addFollowerTitle = "Add 2 Followers To Start Posting!";
                                 } else if (friendCount == 1) {
-                                    addFollowerTitle = "Almost there! Add 1 More Follower To Score 1 And Start Posting!";
+                                    addFollowerTitle = "Almost there! Add 1 More Follower To Posting!";
                                 }
 
                                 new AdaptableSignup(
