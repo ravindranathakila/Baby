@@ -73,7 +73,7 @@ public class HumanId extends RefObj<String> implements HumanEqualsFace, HumanIdF
         }
 
         if (getClass() == o.getClass()) {
-            final Mute that = (Mute) o;
+            final HumanEqualsFace that = (HumanEqualsFace) o;
             return !(this.getHumanId() == null || that.getHumanId() == null) && this.getHumanId().equals(that.getHumanId());
         } else {
             return HumanEquals.staticMatchHumanId(this,o);
