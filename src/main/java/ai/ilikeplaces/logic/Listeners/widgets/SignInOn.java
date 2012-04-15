@@ -28,7 +28,6 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -119,7 +118,7 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
             {
                 new AutoplayControls(request, new AutoplayControlsCriteria()
                         .setHumanId(criteria.username)
-                        .setHumanUserLocal(getHumanUserFromRequest(request))
+                        .setHumanUserLocal($$getHumanUserFromRequest(request))
                         , $$(SignInOnIds.signinon_autoplay));
             }
         } else {
