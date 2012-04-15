@@ -129,6 +129,8 @@ final public class
     final PageFace forgotPasswordChange = Page.ForgotPasswordChange;
     final PageFace profileWidget = Page.ProfileWidget;
 
+    final PageFace info = Page.Info;
+
     final PageFace teachTribe = Page.TeachTribe;
     final PageFace teachMoment = Page.TeachMoment;
 
@@ -221,6 +223,20 @@ final public class
             }
         },
 
+
+        Info("ai/ilikeplaces/widgets/info.xhtml",
+                ai.ilikeplaces.logic.Listeners.widgets.Info.InfoIds.values()
+        ) {
+            @Override
+            public String toString() {
+                return DocInfo;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
 
         TeachTribe("ai/ilikeplaces/widgets/teach/teach_tribe.xhtml",
                 ai.ilikeplaces.logic.Listeners.widgets.teach.TeachTribe.TeachTribeIds.values()
@@ -1208,6 +1224,11 @@ final public class
         final static public String BateOmg = "BateOmg";
         final static public String BateOmgSuccessMsg = "BateOmgSuccessMsg";
 
+        /*Info Page*/
+        final static public String DocInfo = "DocInfo";
+        /*Info IDs*/
+        //Nothing here
+
         /*TeachTribe Page*/
         final static public String DocTeachTribe = "DocTeachTribe";
         /*TeachTribe IDs*/
@@ -1794,6 +1815,8 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(forgotPasswordChange.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(forgotPasswordChange));
 
             inhs__.registerItsNatDocFragmentTemplate(profileWidget.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(profileWidget));
+
+            inhs__.registerItsNatDocFragmentTemplate(info.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(info));
 
             inhs__.registerItsNatDocFragmentTemplate(teachTribe.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(teachTribe));
 

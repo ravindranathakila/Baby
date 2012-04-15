@@ -136,6 +136,8 @@ public class Juice extends AbstractWidgetListener<JuiceCriteria> {
                         } else {
                             $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
                         }
+                    } else {
+                        $$sendJS(JSCodeToSend.redirectPageWithURL(Controller.Page.Profile.getURL()));
                     }
                 }
             }

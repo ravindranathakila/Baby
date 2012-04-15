@@ -1,12 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.SEE;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
-import ai.ilikeplaces.logic.Listeners.widgets.people.People;
-import ai.ilikeplaces.logic.Listeners.widgets.people.PeopleCriteria;
-import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete;
-import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventView;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
@@ -24,7 +19,6 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.html.HTMLDocument;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import static ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete.PrivateEventDeleteIds.privateEventDeleteNotice;
@@ -97,11 +91,11 @@ public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria> {
 
         UCUpdateUserLocation:
         {
-            super.getHumanUserFromRequest(request).storeAndUpdateWith(
+            super.$$getHumanUserFromRequest(request).storeAndUpdateWith(
                     HumanUserLocal.STORE_KEY.USER_LOCATION_TYPE,
                     Wall.wallTypeTribe
             );
-            super.getHumanUserFromRequest(request).storeAndUpdateWith(
+            super.$$getHumanUserFromRequest(request).storeAndUpdateWith(
                     HumanUserLocal.STORE_KEY.USER_LOCATION_DETAILS,
                     criteria.getTribeId()
             );

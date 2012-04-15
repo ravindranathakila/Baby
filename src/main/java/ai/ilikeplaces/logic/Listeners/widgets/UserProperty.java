@@ -9,11 +9,9 @@ import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.cache.SmartCache;
 import ai.ilikeplaces.util.cache.SmartCache2String;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
@@ -21,9 +19,6 @@ import org.xml.sax.SAXException;
 
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.util.Map;
-import java.util.WeakHashMap;
 
 /**
  * @author Ravindranath Akila
@@ -83,7 +78,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
             Loggers.ERROR.error(STR_FATAL_ERROR_IN_WIDGET_THIS_SHOULD_NOT_HAPPEN_DETAILS_AS_FOLLOWS +
                     STR_PAGE + Page.UserProperty +
                     STR_APPEND_TO_ELEMENT + (appendToElement__ != null ? appendToElement__.getAttribute(MarkupTag.GENERIC.id()) : null) +
-                    STR_HUMAN_ID + getHumanIdFromRequest(request__), t);
+                    STR_HUMAN_ID + $$getHumanIdFromRequest(request__), t);
         }
     }
 
@@ -118,7 +113,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
             Loggers.ERROR.error(STR_FATAL_ERROR_IN_WIDGET_THIS_SHOULD_NOT_HAPPEN_DETAILS_AS_FOLLOWS +
                     STR_PAGE + Page.UserProperty +
                     STR_APPEND_TO_ELEMENT + (appendToElement__ != null ? appendToElement__.getAttribute(MarkupTag.GENERIC.id()) : null) +
-                    STR_HUMAN_ID + getHumanIdFromRequest(request__), t);
+                    STR_HUMAN_ID + $$getHumanIdFromRequest(request__), t);
         }
     }
 
@@ -150,7 +145,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
             Loggers.ERROR.error(STR_FATAL_ERROR_IN_WIDGET_THIS_SHOULD_NOT_HAPPEN_DETAILS_AS_FOLLOWS +
                     STR_PAGE + Page.UserProperty +
                     STR_APPEND_TO_ELEMENT + (appendToElement__ != null ? appendToElement__.getAttribute(MarkupTag.GENERIC.id()) : null) +
-                    STR_HUMAN_ID + getHumanIdFromRequest(request__), t);
+                    STR_HUMAN_ID + $$getHumanIdFromRequest(request__), t);
         }
     }
 
@@ -183,7 +178,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
             Loggers.ERROR.error(STR_FATAL_ERROR_IN_WIDGET_THIS_SHOULD_NOT_HAPPEN_DETAILS_AS_FOLLOWS +
                     STR_PAGE + Page.UserProperty +
                     STR_APPEND_TO_ELEMENT + (appendToElement__ != null ? appendToElement__.getAttribute(MarkupTag.GENERIC.id()) : null) +
-                    STR_HUMAN_ID + getHumanIdFromRequest(request__), t);
+                    STR_HUMAN_ID + $$getHumanIdFromRequest(request__), t);
         }
     }
 

@@ -210,7 +210,7 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                                                     case Wall.wallTypePrivateEvent: {
 
                                                         final long privatePhotoLong = Long.parseLong(privatePhotoString);
-                                                        final List<Long> privatePhotos = (List<Long>) getHumanUserFromRequest(request).storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_PRIVATE_PHOTOS, null);
+                                                        final List<Long> privatePhotos = (List<Long>) $$getHumanUserFromRequest(request).storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_PRIVATE_PHOTOS, null);
 
                                                         if (privatePhotos != null && privatePhotos.contains(privatePhotoLong)) {
                                                             final VLong vLongPrivatePhoto = new VLong().setObjAsValid(privatePhotoLong);
@@ -231,7 +231,7 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                                                     case Wall.wallTypeTribe: {
 
                                                         final long privatePhotoLong = Long.parseLong(privatePhotoString);
-                                                        final List<Long> privatePhotos = (List<Long>) getHumanUserFromRequest(request).storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_PRIVATE_PHOTOS, null);
+                                                        final List<Long> privatePhotos = (List<Long>) $$getHumanUserFromRequest(request).storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_PRIVATE_PHOTOS, null);
 
                                                         if (privatePhotos != null && privatePhotos.contains(privatePhotoLong)) {
                                                             final VLong vLongPrivatePhoto = new VLong().setObjAsValid(privatePhotoLong);

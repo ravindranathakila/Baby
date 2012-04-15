@@ -204,11 +204,11 @@ public abstract class AbstractWidgetListener<T> {
             Loggers.ERROR.error(STR_FATAL_ERROR_IN_WIDGET_THIS_SHOULD_NOT_HAPPEN_DETAILS_AS_FOLLOWS +
                     STR_PAGE + page__ +
                     STR_APPEND_TO_ELEMENT + (appendToElement__ != null ? appendToElement__.getAttribute(MarkupTag.GENERIC.id()) : null) +
-                    STR_HUMAN_ID + getHumanIdFromRequest(request__), throwable);
+                    STR_HUMAN_ID + $$getHumanIdFromRequest(request__), throwable);
         }
     }
 
-    public static synchronized String getHumanIdFromRequest(final ItsNatServletRequest request_) {
+    public static synchronized String $$getHumanIdFromRequest(final ItsNatServletRequest request_) {
         final Object attribute__ = request_.getItsNatSession().getAttribute(ServletLogin.HumanUser);
         SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper =
                 attribute__ == null ?
@@ -221,7 +221,7 @@ public abstract class AbstractWidgetListener<T> {
 
     }
 
-    public static synchronized HumanUserLocal getHumanUserFromRequest(final ItsNatServletRequest request_) {
+    public static synchronized HumanUserLocal $$getHumanUserFromRequest(final ItsNatServletRequest request_) {
         final SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper = (SessionBoundBadRefWrapper<HumanUserLocal>) request_.getItsNatSession().getAttribute(ServletLogin.HumanUser);
         final HumanUserLocal humanUserAsValid = HumanUser.getHumanUserAsValid(sessionBoundBadRefWrapper);
         return humanUserAsValid;
@@ -269,7 +269,7 @@ public abstract class AbstractWidgetListener<T> {
             Loggers.ERROR.error(STR_FATAL_ERROR_IN_WIDGET_THIS_SHOULD_NOT_HAPPEN_DETAILS_AS_FOLLOWS +
                     STR_PAGE + page__ +
                     STR_APPEND_TO_ELEMENT + appendToElement__ != null ? appendToElement__.getAttribute(MarkupTag.GENERIC.id()) : null +
-                    STR_HUMAN_ID + getHumanIdFromRequest(request__), throwable);
+                    STR_HUMAN_ID + $$getHumanIdFromRequest(request__), throwable);
         }
     }
 

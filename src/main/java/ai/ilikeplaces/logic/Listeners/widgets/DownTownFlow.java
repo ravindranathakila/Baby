@@ -53,7 +53,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
     private static final String READ_MORE = "read.more";
 
     @FIXME("We need to move this cache to EJB's, stateless hopefully.")
-    public static final SmartCache.RecoverWith<String, Object> STATIC_VARIABLE_RECOVER_WITH_BE_FRIENDS = new SmartCache.RecoverWith<String, Object>() {
+    public static final SmartCache.RecoverWith<String, Object> BE_FRIENDS = new SmartCache.RecoverWith<String, Object>() {
         @Override
         public Object getValue(final String s) {
             return DB.getHumanCRUDHumanLocal(true).doDirtyRHumansBefriends(new HumanId(s.split("BE_")[1]).getSelfAsValid()).returnValueBadly();
@@ -61,7 +61,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
     };
 
     @FIXME("We need to move this cache to EJB's, stateless hopefully.")
-    public static final SmartCache.RecoverWith<String, Object> STATIC_VARIABLE_RECOVER_WITH_FRIENDS = new SmartCache.RecoverWith<String, Object>() {
+    public static final SmartCache.RecoverWith<String, Object> FRIENDS = new SmartCache.RecoverWith<String, Object>() {
         @Override
         public Object getValue(final String s) {
             return DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(s).getSelfAsValid()).getHumansNetPeoples();
@@ -102,7 +102,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
     protected void init(final DownTownFlowCriteria downTownFlowCriteria) {
 
         final String currentUser = downTownFlowCriteria.getHumanId().getObj();
-        final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) downTownFlowCriteria.getHumanUserLocal().cache("BE_" + currentUser, STATIC_VARIABLE_RECOVER_WITH_BE_FRIENDS);
+        final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) downTownFlowCriteria.getHumanUserLocal().cache("BE_" + currentUser, BE_FRIENDS);
         //new People(request,new PeopleCriteria().setPeople((List<HumanIdFace>)(List<?>)beFriends),$(Controller.Page.Skeleton_left_column));
 
 

@@ -145,7 +145,7 @@ public class AlbumManagerTribe extends AbstractWidgetListener {
                     };
                 }
 
-                getHumanUserFromRequest(request).storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_PRIVATE_PHOTOS, albumPhotoIds);
+                $$getHumanUserFromRequest(request).storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_PRIVATE_PHOTOS, albumPhotoIds);
 
             } else {
                 $$(AlbumManagerTribeIds.AlbumTribeNotice).setTextContent(albumReturn.returnMsg());

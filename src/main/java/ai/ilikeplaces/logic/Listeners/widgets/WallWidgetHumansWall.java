@@ -92,6 +92,71 @@ public class WallWidgetHumansWall extends WallWidget {
         super.setWallProfilePhoto(UserProperty.formatProfilePhotoUrl(currUserAsVisitorHI.getHumansIdentityProfilePhoto()));
         super.setWallTitle(MessageFormat.format(RBGet.gui().getString(TALK_AT_DOWN_TOWN_ER_0_S), requestedProfileHI.getHuman().getDisplayName()));
 
+        final int friendCount = ((List<HumansNetPeople>) $$getHumanUserFromRequest(request).cache(requestedProfile.getHumanId(), DownTownFlow.FRIENDS)).size();
+
+        UCAddFriends:
+        if (requestedProfile.equals(currUserAsVisitor)) {//Accessing own profile
+            UCInviteFriendsIfNoFriends:
+            {
+                if (friendCount < 2) {
+
+                    $$displayNone(WallWidgetIds.wallWidget);
+
+                    String title = "";
+                    if (friendCount == 0) {
+                        title = "Your follower score is " + 0 + "! " + " You have no followers!";
+                    } else if (friendCount == 1) {
+                        title = "Your follower score is " + 1 + "!" + " You have only 1 follower";
+                    }
+
+                    new Info(request,
+                            new InfoCriteria()
+                                    .setTitle(title),
+                            $$(WallWidgetIds.wallGame)) {
+                        /**
+                         * Use this only in conjunction with {@link #AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.ilikeplaces.servlets.Controller.Page, Object, org.w3c.dom.Element)}
+                         * GENERIC constructor.
+                         *
+                         * @param infoCriteria
+                         */
+                        @Override
+                        protected void init(InfoCriteria infoCriteria) {
+                            UCSetFriendAddWidget:
+                            {
+                                String addFollowerTitle = "";
+
+                                if (friendCount == 0) {
+                                    addFollowerTitle = "Add 2 Followers To Score 2 And Start Posting!";
+                                } else if (friendCount == 1) {
+                                    addFollowerTitle = "Almost there! Add 1 More Follower To Score 1 And Start Posting!";
+                                }
+
+                                new AdaptableSignup(
+                                        request,
+                                        new AdaptableSignupCriteria()
+                                                .setHumanId(requestedProfile)
+                                                .setWidgetTitle(addFollowerTitle)
+                                                .setAdaptableSignupCallback(new AdaptableSignupCallback() {
+                                                    @Override
+                                                    public String afterInvite(final HumanId invitee) {
+                                                        return ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE
+                                                                .get(invitee.getHumanId(), invitee.getHumanId()).getHuman().getDisplayName() + " is now following you!";
+                                                    }
+
+                                                    @Override
+                                                    public String jsToSend(HumanId invitee) {
+                                                        return JSCodeToSend.refreshPageIn(5);
+                                                    }
+                                                }),
+                                        $$(InfoIds.InfoAppend));
+                            }
+                        }
+                    };
+                }
+            }
+        }
+
+
         fetchToEmail();
 
         final Wall wall = DB.getHumanCrudWallLocal(true).readWall(requestedProfile, new Obj<HumanId>(currUserAsVisitor), REFRESH_SPEC).returnValueBadly();
@@ -111,8 +176,8 @@ public class WallWidgetHumansWall extends WallWidget {
         UCFiltering:
         {
 
-            final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) getHumanUserFromRequest(request)
-                    .cache(requestedProfile.getHumanId(), DownTownFlow.STATIC_VARIABLE_RECOVER_WITH_FRIENDS);
+            final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) $$getHumanUserFromRequest(request)
+                    .cache(requestedProfile.getHumanId(), DownTownFlow.FRIENDS);
 
             @SEE(seeClasses = {
                     WallWidgetHumansWall.class,

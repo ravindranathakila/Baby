@@ -155,28 +155,6 @@ public class ListenerI implements ItsNatServletRequestListener {
 
                                     }
                                 }
-                                UCSetFriendAddWidget:
-                                {
-                                    new AdaptableSignup(
-                                            request__,
-                                            new AdaptableSignupCriteria()
-                                                    .setHumanId(new HumanId(getUsernameAsValid()))
-                                                    .setWidgetTitle("Add Followers")
-                                                    .setAdaptableSignupCallback(new AdaptableSignupCallback() {
-                                                        @Override
-                                                        public String afterInvite(final HumanId invitee) {
-                                                            return ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE
-                                                                    .get(invitee.getHumanId(), invitee.getHumanId()).getHuman().getDisplayName() + " is now following you!";
-                                                        }
-
-                                                        @Override
-                                                        public String jsToSend(HumanId invitee) {
-                                                            return JSCodeToSend.refreshPageIn(5);
-                                                        }
-                                                    })
-
-                                            , $(Skeleton_center_content));
-                                }
                             }
                             SmartLogger.g().complete(Loggers.LEVEL.DEBUG, VIEW_FRIEND_SUCCESSFUL + Loggers.DONE);
                         } else {
