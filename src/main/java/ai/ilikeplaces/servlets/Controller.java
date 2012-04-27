@@ -57,7 +57,6 @@ final public class
     private static final String HASH = "#";
     private static final String _SO = "_so";
     private static final String _PHOTO_ = "_photo_";
-    private static final String EMPTY = "";
     private static final String _ME = "_me";
     private static final String _ORG = "_org";
     private static final String _FRIENDS = "_friends";
@@ -72,6 +71,36 @@ final public class
     private static final String _LEGAL = "_legal";
     private static final String _MUSTER = "_muster";
     private static final String _HELP = "_help";
+    public static final String EMPTY = "";
+
+    public static final String HTTP_SESSION_ATTR_LOCATION = "HttpSessionAttr.location";
+    public static final String PHOTO_URL = "photoURL";
+
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0005 = "ai.ilikeplaces.servlets.Controller.0005";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0006 = "ai.ilikeplaces.servlets.Controller.0006";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0007 = "ai.ilikeplaces.servlets.Controller.0007";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0008 = "ai.ilikeplaces.servlets.Controller.0008";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0009 = "ai.ilikeplaces.servlets.Controller.0009";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0012 = "ai.ilikeplaces.servlets.Controller.0012";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0013 = "ai.ilikeplaces.servlets.Controller.0013";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0014 = "ai.ilikeplaces.servlets.Controller.0014";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0015 = "ai.ilikeplaces.servlets.Controller.0015";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0016 = "ai.ilikeplaces.servlets.Controller.0016";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0017 = "ai.ilikeplaces.servlets.Controller.0017";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0018 = "ai.ilikeplaces.servlets.Controller.0018";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0019 = "ai.ilikeplaces.servlets.Controller.0019";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0020 = "ai.ilikeplaces.servlets.Controller.0020";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0021 = "ai.ilikeplaces.servlets.Controller.0021";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0022 = "ai.ilikeplaces.servlets.Controller.0022";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0023 = "ai.ilikeplaces.servlets.Controller.0023";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0024 = "ai.ilikeplaces.servlets.Controller.0024";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0026 = "ai.ilikeplaces.servlets.Controller.0026";
+    public static final String AI_ILIKEPLACES_SERVLETS_CONTROLLER_0025 = "ai.ilikeplaces.servlets.Controller.0025";
+
+
+    public static final String LOCATION = "location";
+    public static final String PHOTO = "photo";
+    public static final String PAGE_ORG = "/page/_org";
 
     final PageFace locationMain = Page.LocationMain;
     final PageFace aarrr = Page.Aarrr;
@@ -950,12 +979,12 @@ final public class
                 null) {
             @Override
             public String getURL() {
-                return APP_ROOT + "";
+                return APP_ROOT + Controller.EMPTY;
             }
 
             @Override
             public String toString() {
-                return "";
+                return Controller.EMPTY;
             }
         },
         LocationMain(
@@ -1021,7 +1050,7 @@ final public class
                 return DocAarrr;
             }
         }, Global(
-                "",
+                Controller.EMPTY,
                 Page.CPageType
         ) {
             @Override
@@ -1426,7 +1455,7 @@ final public class
         /*Organize Attributes*/
         final static public String DocOrganizeCategory = "category";
         final static public int DocOrganizeModeOrganize = 0;
-        final static public String DocOrganizeLocation = "location";
+        final static public String DocOrganizeLocation = LOCATION;
         final static public int DocOrganizeModeLocation = 1;
         final static public String DocOrganizeEvent = "event";
         final static public int DocOrganizeModePrivateLocation = 2;
@@ -1903,16 +1932,16 @@ final public class
      */
     private static void pathResolver(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
         final String pathInfo = ((HttpServletRequest) request__.getServletRequest()).getPathInfo();
-        String URL__ = pathInfo == null ? "" : ((HttpServletRequest) request__.getServletRequest()).getPathInfo().substring(1);//Removes preceding slash
+        String URL__ = pathInfo == null ? Controller.EMPTY : ((HttpServletRequest) request__.getServletRequest()).getPathInfo().substring(1);//Removes preceding slash
 
         URL__ = URL__.split("\\?")[0].split("#")[0];
 
         if (isHomePage(URL__)) {
-            Loggers.DEBUG.debug(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0012"));
+            Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0012));
             Loggers.DEBUG.debug(((HttpServletRequest) request__.getServletRequest()).getRequestURL().toString()
                     + (((HttpServletRequest) request__.getServletRequest()).getQueryString() != null
                     ? ((HttpServletRequest) request__.getServletRequest()).getQueryString()
-                    : ""));
+                    : Controller.EMPTY));
             request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
 
 //            final ItsNatHttpSession itsNatHttpSession = (ItsNatHttpSession) request__.getItsNatSession();
@@ -1927,7 +1956,7 @@ final public class
 //                }
 //            }
         } else if (isDownTownPage(URL__)) {
-            response__.addCodeToSend(JSCodeToSend.redirectPageWithURL("/page/_org"));
+            response__.addCodeToSend(JSCodeToSend.redirectPageWithURL(PAGE_ORG));
             return;//let's be paranoid
         } else {
             if (isNonLocationPage(URL__)) {/*i.e. starts with underscore*/
@@ -1937,7 +1966,7 @@ final public class
                         try {
                             ((HttpServletRequest) request__.getServletRequest()).getSession(false).invalidate();
                         } finally {
-                            request__.getServletRequest().setAttribute("location", "");
+                            request__.getServletRequest().setAttribute(LOCATION, Controller.EMPTY);
                             request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
                             try {
                                 ((HttpServletResponse) response__.getServletResponse()).sendRedirect(LOCATION_HUB);
@@ -1947,70 +1976,70 @@ final public class
                         }
                     }
                 } else if (isPhotoPage(URL__)) {
-                    request__.getServletRequest().setAttribute(RBGet.globalConfig.getString("HttpSessionAttr.location"), getPhotoLocation(URL__));
-                    request__.getServletRequest().setAttribute("photoURL", getPhotoURL(URL__));
-                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, "photo");/*Framework specific*/
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0005") + getPhotoLocation(URL__));
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0006") + getPhotoURL(URL__));
+                    request__.getServletRequest().setAttribute(RBGet.globalConfig.getString(HTTP_SESSION_ATTR_LOCATION), getPhotoLocation(URL__));
+                    request__.getServletRequest().setAttribute(PHOTO_URL, getPhotoURL(URL__));
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, PHOTO);/*Framework specific*/
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0005) + getPhotoLocation(URL__));
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0006) + getPhotoURL(URL__));
                 } else if (isHumanPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocPhotos);/*Framework specific*/
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0007"));
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0007));
                 } else if (isOrganizePage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocOrganize);/*Framework specific*/
                     request__.getServletRequest().setAttribute(Page.DocOrganizeCategory, request__.getServletRequest().getParameter(Page.DocOrganizeCategory));
                     request__.getServletRequest().setAttribute(Page.DocOrganizeLocation, request__.getServletRequest().getParameter(Page.DocOrganizeLocation));
                     request__.getServletRequest().setAttribute(Page.DocOrganizeEvent, request__.getServletRequest().getParameter(Page.DocOrganizeEvent));
                     request__.getServletRequest().setAttribute(Page.DocOrganizeAlbum, request__.getServletRequest().getParameter(Page.DocOrganizeAlbum));
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0013"));
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0013));
                 } else if (isFriendsPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocFriends);/*Framework specific*/
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0014"));
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0014));
                 } else if (isBookingsPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocBook);/*Framework specific*/
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0015"));
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0015));
                 } else if (isTribesPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocTribes);/*Framework specific*/
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0025"));
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0025));
                 } else if (isProfilePage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocProfile);/*Framework specific*/
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0016"));
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0016));
                 } else if (isIPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocI);/*Framework specific*/
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0017"));
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0017));
                 } else if (isActivatePage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocActivate);/*Framework specific*/
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0018"));
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0018));
                 } else if (isSharePage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocShare);/*Framework specific*/
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0019"));
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0019));
                 } else if (isGeoBusinessPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocGeoBusiness);/*Framework specific*/
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0020"));
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0020));
                 } else if (isTemplateGenericPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocPublic);/*Framework specific*/
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0021"));
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0021));
                 } else if (isLegalPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocLegal);/*Framework specific*/
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0022"));
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0022));
                 } else if (isMusterPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocMuster);/*Framework specific*/
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0023"));
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0023));
                 } else if (isHelpPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocHelpPage);/*Framework specific*/
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0024"));
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0024));
                 } else {/*Divert to home page*/
-                    Loggers.DEBUG.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0008"));
-                    request__.getServletRequest().setAttribute("location", "");
+                    Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0008));
+                    request__.getServletRequest().setAttribute(LOCATION, Controller.EMPTY);
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
                 }
             } else if (isCorrectLocationFormat(URL__)) {
-                request__.getServletRequest().setAttribute("location", URL__);
+                request__.getServletRequest().setAttribute(LOCATION, URL__);
                 request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocLocation);/*Framework specific*/
-                Loggers.DEBUG.debug(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0009") + URL__);
+                Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0009) + URL__);
             } else {/*Divert to home page*/
-                Loggers.DEBUG.debug(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0026"));
+                Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0026));
                 request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
-                request__.getServletRequest().setAttribute("location", "");
+                request__.getServletRequest().setAttribute(LOCATION, Controller.EMPTY);
                 try {
                     ((HttpServletResponse) response__.getServletResponse()).sendError(HttpServletResponse.SC_NOT_FOUND);
                 } catch (final IOException e) {

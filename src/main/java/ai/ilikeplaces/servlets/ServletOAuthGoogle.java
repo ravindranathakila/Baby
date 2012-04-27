@@ -3,7 +3,6 @@ package ai.ilikeplaces.servlets;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.exception.ConstructorInvokationException;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
 import ai.ilikeplaces.logic.contactimports.google.GoogleContactImporter;
 import ai.ilikeplaces.logic.crud.DB;
@@ -140,19 +139,19 @@ public class ServletOAuthGoogle extends AbstractOAuth {
             final OAuthAccessTokenResponse oAuthAccessTokenResponse = this.getOAuthAccessTokenResponse(request, response, oAuthAuthorizationResponse,
                     new ClientAuthentication("796688826799.apps.googleusercontent.com", "lHiQ5yEkEBVhfXEHZirmgY3i", "http://www.ilikeplaces.com/oauth2gg"));
 
-            Loggers.info(oAuthAccessTokenResponse != null ? oAuthAccessTokenResponse.toString() : "");
+            Loggers.debug(oAuthAccessTokenResponse != null ? oAuthAccessTokenResponse.toString() : "");
 
             if (oAuthAccessTokenResponse != null) {
 
                 final Person person = GoogleContactImporter.fetchAuthor(Bate.DEFAULT, oAuthAccessTokenResponse.access_token);
 
-                Loggers.info(person.toString());
+                Loggers.debug(person.toString());
 
                 Human existingUser = null;
                 try {
                     final String email = person.getEmail();
 
-                    Loggers.info(email);
+                    Loggers.debug(email);
 
                     existingUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(email);
 
@@ -161,7 +160,7 @@ public class ServletOAuthGoogle extends AbstractOAuth {
                         ActivateAccountAsFBWouldHaveVerifiedUser:
                         {
                             if (!existingUser.getHumanAlive()) {
-                                Loggers.info("Activating User");
+                                Loggers.debug("Activating User");
                                 DB.getHumanCRUDHumanLocal(true).doUActivateHuman(new HumanId(existingUser.getHumanId()).getSelfAsValid());
                             }
                         }
@@ -169,7 +168,7 @@ public class ServletOAuthGoogle extends AbstractOAuth {
                         loginUser(request, response, existingUser);
 
                     } else {
-                        Loggers.info("Creating New User");
+                        Loggers.debug("Creating New User");
 
                         final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
                                 new HumanId().setObjAsValid(email),
@@ -187,9 +186,6 @@ public class ServletOAuthGoogle extends AbstractOAuth {
                     throw new RuntimeException(e);
                 } catch (IOException e) {
                     Loggers.error(IO_ERROR, e);
-                    throw new RuntimeException(e);
-                } catch (DBDishonourCheckedException e) {
-                    Loggers.error(DB_ERROR, e);
                     throw new RuntimeException(e);
                 }
             }
@@ -234,8 +230,8 @@ public class ServletOAuthGoogle extends AbstractOAuth {
         final String access_token__ = request.getParameter(access_token);
         final String code__ = request.getParameter(code);
 
-        Loggers.info("################################ code: " + code__);
-        Loggers.info("################################ token: " + access_token__);
+        Loggers.debug("################################ code: " + code__);
+        Loggers.debug("################################ token: " + access_token__);
 
         if (code__ != null && !code__.isEmpty()) {
             try {
@@ -282,7 +278,7 @@ public class ServletOAuthGoogle extends AbstractOAuth {
         LoginTheUser:
         {
 
-            Loggers.info("Logging in User");
+            Loggers.debug("Logging in User");
 
             final String ilp_destination = (String) request.getSession(true).getAttribute(ILP_DESTINATION);
 

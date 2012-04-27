@@ -2,7 +2,6 @@ package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.exception.ConstructorInvokationException;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.role.HumanUser;
@@ -147,13 +146,13 @@ public class ServletOAuthFacebook extends AbstractOAuth {
                     }
             );
 
-            Loggers.info(profileDataOfUser.toString());
+            Loggers.debug(profileDataOfUser.toString());
 
             Human existingUser = null;
             try {
                 final String email = profileDataOfUser.getString("email");
 
-                Loggers.info(email);
+                Loggers.debug(email);
 
                 existingUser = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(email);
 
@@ -162,7 +161,7 @@ public class ServletOAuthFacebook extends AbstractOAuth {
                     ActivateAccountAsFBWouldHaveVerifiedUser:
                     {
                         if (!existingUser.getHumanAlive()) {
-                            Loggers.info("Activating User");
+                            Loggers.debug("Activating User");
                             DB.getHumanCRUDHumanLocal(true).doUActivateHuman(new HumanId(existingUser.getHumanId()).getSelfAsValid());
                         }
                     }
@@ -170,7 +169,7 @@ public class ServletOAuthFacebook extends AbstractOAuth {
                     loginUser(request, response, existingUser);
 
                 } else {
-                    Loggers.info("Creating New User");
+                    Loggers.debug("Creating New User");
 
                     final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
                             new HumanId().setObjAsValid(email),
@@ -192,9 +191,6 @@ public class ServletOAuthFacebook extends AbstractOAuth {
             } catch (IOException e) {
                 Loggers.error(IO_ERROR, e);
                 throw new RuntimeException(e);
-            } catch (DBDishonourCheckedException e) {
-                Loggers.error(DB_ERROR, e);
-                throw new RuntimeException(e);
             }
 
 
@@ -207,7 +203,7 @@ public class ServletOAuthFacebook extends AbstractOAuth {
         LoginTheUser:
         {
 
-            Loggers.info("Logging in User");
+            Loggers.debug("Logging in User");
 
             final String ilp_destination = (String) request.getSession(true).getAttribute(ILP_DESTINATION);
 

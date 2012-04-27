@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.Listeners.widgets.teach;
 
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
 import ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationCreate;
@@ -137,66 +136,62 @@ public class TeachMoment extends AbstractWidgetListener<TeachMomentCriteria> {
 
                         if (myemail.valid()) {
                             if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
-                                try {
-                                    final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
+                                final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
 
-                                    final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
-                                            new HumanId().setObjAsValid(myemail.getObj()),
-                                            new Password(randomPassword),
-                                            myemail);
+                                final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                                        new HumanId().setObjAsValid(myemail.getObj()),
+                                        new Password(randomPassword),
+                                        myemail);
 
-                                    if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
-                                        UserIntroduction.createIntroData(new HumanId(myemail.getObj()));
+                                if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
+                                    UserIntroduction.createIntroData(new HumanId(myemail.getObj()));
 
-                                        final Parameter parameter;
-                                        if (woehint != null && placeName != null && placeDetails != null) {
-                                            parameter = new Parameter("http://www.ilikeplaces.com/page/_org?category=143")
-                                                    .append(PrivateLocationCreate.WOEHINT,
-                                                            woehint)
-                                                    .append(PrivateLocationCreate.PLACENAME,
-                                                            placeName)
-                                                    .append(PrivateLocationCreate.PLACEDETAILS,
-                                                            placeDetails);
-                                        } else {
-                                            parameter = new Parameter("http://www.ilikeplaces.com/page/_org?category=143");
-                                        }
-
-                                        final String activationURL;
-                                        try {
-                                            activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
-                                                    .append(ServletLogin.Username, myemail.getObj(), true)
-                                                    .append(ServletLogin.Password,
-                                                            DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
-                                                                    .returnValue()
-                                                                    .getHumanAuthenticationHash())
-                                                    .append(ServletActivate.NEXT, URLEncoder.encode(parameter.toURL(), "UTF8"))
-                                                            .get();
-                                        } catch (UnsupportedEncodingException e) {
-                                            throw new RuntimeException(e);
-                                        }
-
-
-                                        String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());
-
-                                        htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-                                        htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
-                                        htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it.");
-
-                                        SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
-                                                myemail.getObj(),
-                                                "I Like Places prides you with an Exclusive Invite!",
-                                                htmlBody);
-
-                                        $$displayNone($$(TeachMomentIds.teach_moment_signup_section));
-
-                                        TeachMoment.this.notifyUser("Great! Check your email now!");
-
-                                        $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+                                    final Parameter parameter;
+                                    if (woehint != null && placeName != null && placeDetails != null) {
+                                        parameter = new Parameter("http://www.ilikeplaces.com/page/_org?category=143")
+                                                .append(PrivateLocationCreate.WOEHINT,
+                                                        woehint)
+                                                .append(PrivateLocationCreate.PLACENAME,
+                                                        placeName)
+                                                .append(PrivateLocationCreate.PLACEDETAILS,
+                                                        placeDetails);
                                     } else {
-                                        TeachMoment.this.notifyUser("Email INVALID!");
+                                        parameter = new Parameter("http://www.ilikeplaces.com/page/_org?category=143");
                                     }
-                                } catch (DBDishonourCheckedException e) {
-                                    TeachMoment.this.notifyUser("Email was taken meanwhile!:(");
+
+                                    final String activationURL;
+                                    try {
+                                        activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                                                .append(ServletLogin.Username, myemail.getObj(), true)
+                                                .append(ServletLogin.Password,
+                                                        DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
+                                                                .returnValue()
+                                                                .getHumanAuthenticationHash())
+                                                .append(ServletActivate.NEXT, URLEncoder.encode(parameter.toURL(), "UTF8"))
+                                                        .get();
+                                    } catch (UnsupportedEncodingException e) {
+                                        throw new RuntimeException(e);
+                                    }
+
+
+                                    String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());
+
+                                    htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
+                                    htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
+                                    htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it.");
+
+                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                            myemail.getObj(),
+                                            "I Like Places prides you with an Exclusive Invite!",
+                                            htmlBody);
+
+                                    $$displayNone($$(TeachMomentIds.teach_moment_signup_section));
+
+                                    TeachMoment.this.notifyUser("Great! Check your email now!");
+
+                                    $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+                                } else {
+                                    TeachMoment.this.notifyUser("Email INVALID!");
                                 }
                             } else {
                                 TeachMoment.this.notifyUser("This email is TAKEN!:(");

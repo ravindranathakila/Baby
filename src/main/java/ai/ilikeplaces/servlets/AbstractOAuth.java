@@ -197,7 +197,7 @@ public abstract class AbstractOAuth extends HttpServlet {
         JSONObject jsonObject;
         try {
             final String response = postHttpContent(endpointEndValue, sb.toString());
-            Loggers.info(response);
+            Loggers.debug(response);
             jsonObject = new JSONObject(response);
         } catch (JSONException e) {
             throw new RuntimeException(e);

@@ -8,14 +8,17 @@ import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.autoplay.*;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
+import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
+import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatServletRequest;
@@ -29,6 +32,7 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
 import javax.servlet.http.HttpSession;
+import java.text.MessageFormat;
 
 /**
  * @author Ravindranath Akila
@@ -214,7 +218,33 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
                                             $$sendJS(JSCodeToSend.redirectPageWithURL(Page.Profile.getURL()));
                                             notifyUser(RBGet.gui().getString("activate.your.account"));
                                         } else {
-                                            notifyUser(RBGet.gui().getString("recheck.your.email"));
+
+                                            new Thread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    final Return<Boolean> returnVal = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                                                            criteria.username,
+                                                            criteria.password,
+                                                            new Email().setObjAsValid(criteria.username.getSelfAsValid().getHumanId()));
+
+                                                    final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                                                            .append(ServletLogin.Username, criteria.username, true)
+                                                            .append(ServletLogin.Password,
+                                                                    DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(criteria.username)
+                                                                            .returnValue()
+                                                                            .getHumanAuthenticationHash())
+                                                            .get();
+                                                    final String mail = MessageFormat.format(RBGet.gui().getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
+                                                            .replace("activationURL", "<a href='" +
+                                                                    activationURL + "' >" + activationURL + "</a>");
+                                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                                            criteria.username.getSelfAsValid().getHumanId(),
+                                                            RBGet.gui().getString("SIGNUP_HEADER"),
+                                                            mail);
+                                                }
+                                            }).start();
+
+                                            $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
                                         }
                                     }
                                 } else {

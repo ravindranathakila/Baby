@@ -7,7 +7,6 @@ import javax.ejb.PrePassivate;
 import javax.ejb.Remove;
 
 /**
- *
  * @author Ravindranath Akila
  */
 
@@ -17,13 +16,16 @@ public class AbstractSFBCallbacks extends AbstractSBCallbacks {
     final static private String MsgPassivate = "HELLO, I JUST PASSIVATED AN INSTANCE OF ";
     final static private String MsgActivate = "HELLO, I JUST ACTIVATED AN INSTANCE OF ";
     final static private String MsgRemove = "HELLO, I JUST REMOVED AN INSTANCE OF ";
+    public static final boolean DEBUG_ENABLED = Loggers.DEBUG.isDebugEnabled();
 
     /**
      *
      */
     @PrePassivate
     public void prePassivate() {
-        INFO.info(MsgPassivate + className + this.hashCode());
+        if (DEBUG_ENABLED) {
+            Loggers.debug(MsgPassivate + className + this.hashCode());
+        }
     }
 
     /**
@@ -31,7 +33,9 @@ public class AbstractSFBCallbacks extends AbstractSBCallbacks {
      */
     @PostActivate
     public void postActivate() {
-        INFO.info(MsgActivate + className + this.hashCode());
+        if (Loggers.DEBUG.isDebugEnabled()) {
+            Loggers.debug(MsgActivate + className + this.hashCode());
+        }
     }
 
     /**
@@ -39,6 +43,8 @@ public class AbstractSFBCallbacks extends AbstractSBCallbacks {
      */
     @Remove
     public void remove() {
-        INFO.info(MsgRemove + className + this.hashCode());
+        if (Loggers.DEBUG.isDebugEnabled()) {
+            Loggers.debug(MsgRemove + className + this.hashCode());
+        }
     }
 }

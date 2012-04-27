@@ -370,85 +370,86 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     @TODO(task = "ADD HUMANSIDENTITY VALUES TAKE FROM THE SERVLETSIGNUP. CHANGE ALL NON_CRUDSERVICE CLASSES TO USE NON_TRANSACTIONAL AS REQUIRED")
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public Return<Boolean> doCHuman(final RefObj<String> humanId, final RefObj<String> password, final RefObj<String> email) throws DBDishonourCheckedException {
+    public Return<Boolean> doCHuman(final RefObj<String> humanId, final RefObj<String> password, final RefObj<String> email) {
         Return<Boolean> r;
 
         if (doDirtyCheckHuman(humanId.getObjectAsValid()).returnValue()) {
-            throw new DBDishonourCheckedException(RBGet.logMsgs.getString(AI_ILIKEPLACES_LOGIC_CRUD_HUMAN_CRUDHUMAN_0001) + humanId);
-        }
-
-        if (ai.ilikeplaces.util.spam.mail.Email.isAddressValidTolerant(humanId.getObjectAsValid())) {
-
-            final Human newUser = new Human();
-            newUser.setHumanId(humanId.getObjectAsValid());
-            newUser.setHumanAlive(false);//Wait for signup confirmation click by email
-
-            final HumansAuthentication ha = new HumansAuthentication();
-            ha.setHumanId(newUser.getHumanId());
-            ha.setHumanAuthenticationSalt(BCrypt.gensalt());
-            ha.setHumanAuthenticationHash(singletonHashingRemote.getHash(password.getObjectAsValid(), ha.getHumanAuthenticationSalt()));
-            newUser.setHumansAuthentications(ha);
-            newUser.setHumanAlive(false);
-
-            setHumansIdentityInfo:
-            {
-                final HumansIdentity hid = new HumansIdentity();
-                hid.setHumanId(newUser.getHumanId());
-                hid.setUrl(new Url().setUrlR(humanId.getObj()).setMetadataR(humanId.getObj()));//Yes, the default url is his/her email
-
-                newUser.setHumansIdentity(hid);
-            }
-
-            //HumansNet has as many internal primarykeyjoin entities
-            tricky:
-            {
-                final HumansNetPeople hnp = new HumansNetPeople();
-                hnp.setHumanId(newUser.getHumanId());
-
-                final HumansNet hn = new HumansNet();
-                hn.setDisplayName(newUser.getHumanId().split(SYMBOL_AT)[0]);
-                hn.setHumanId(newUser.getHumanId());
-
-                hn.setHumansNetPeople(hnp);
-
-                newUser.setHumansNet(hn);
-            }
-
-
-            final HumansPrivateLocation hpl = new HumansPrivateLocation();
-            hpl.setHumanId(newUser.getHumanId());
-            newUser.setHumansPrivateLocation(hpl);
-
-            final HumansPrivateEvent hpe = new HumansPrivateEvent();
-            hpe.setHumanId(newUser.getHumanId());
-            newUser.setHumansPrivateEvent(hpe);
-
-            final HumansAlbum hal = new HumansAlbum();
-            hal.setHumanId(newUser.getHumanId());
-            newUser.setHumansAlbum(hal);
-
-            final HumansPrivatePhoto hprp = new HumansPrivatePhoto();
-            hprp.setHumanId(newUser.getHumanId());
-            newUser.setHumansPrivatePhoto(hprp);
-
-            final HumansPublicPhoto hpup = new HumansPublicPhoto();
-            hpup.setHumanId(newUser.getHumanId());
-            newUser.setHumansPublicPhoto(hpup);
-
-            final HumansWall hw = new HumansWall();
-            hw.setHumanId(newUser.getHumanId());
-            hw.setWall(new Wall().setWallTypeR(Wall.wallTypeHuman));
-            newUser.setHumansWall(hw);
-
-            final HumansAlbum halbum = new HumansAlbum();
-            halbum.setHumanId(newUser.getHumanId());
-            newUser.setHumansAlbum(halbum);
-
-            doNTxCHuman(newUser);
-
-            r = new ReturnImpl<Boolean>(true, ADD_USER_SUCCESSFUL);
+            r = new ReturnImpl<Boolean>(DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE, HumanCRUDHuman.ADD_USER_FAILED, true);
         } else {
-            r = new ReturnImpl<Boolean>(new IllegalArgumentException(EMAIL + humanId.getObjectAsValid() + IS_NOT_FROM_A_VALID_DOMAIN), HumanCRUDHuman.ADD_USER_FAILED, true);
+
+            if (ai.ilikeplaces.util.spam.mail.Email.isAddressValidTolerant(humanId.getObjectAsValid())) {
+
+                final Human newUser = new Human();
+                newUser.setHumanId(humanId.getObjectAsValid());
+                newUser.setHumanAlive(false);//Wait for signup confirmation click by email
+
+                final HumansAuthentication ha = new HumansAuthentication();
+                ha.setHumanId(newUser.getHumanId());
+                ha.setHumanAuthenticationSalt(BCrypt.gensalt());
+                ha.setHumanAuthenticationHash(singletonHashingRemote.getHash(password.getObjectAsValid(), ha.getHumanAuthenticationSalt()));
+                newUser.setHumansAuthentications(ha);
+                newUser.setHumanAlive(false);
+
+                setHumansIdentityInfo:
+                {
+                    final HumansIdentity hid = new HumansIdentity();
+                    hid.setHumanId(newUser.getHumanId());
+                    hid.setUrl(new Url().setUrlR(humanId.getObj()).setMetadataR(humanId.getObj()));//Yes, the default url is his/her email
+
+                    newUser.setHumansIdentity(hid);
+                }
+
+                //HumansNet has as many internal primarykeyjoin entities
+                tricky:
+                {
+                    final HumansNetPeople hnp = new HumansNetPeople();
+                    hnp.setHumanId(newUser.getHumanId());
+
+                    final HumansNet hn = new HumansNet();
+                    hn.setDisplayName(newUser.getHumanId().split(SYMBOL_AT)[0]);
+                    hn.setHumanId(newUser.getHumanId());
+
+                    hn.setHumansNetPeople(hnp);
+
+                    newUser.setHumansNet(hn);
+                }
+
+
+                final HumansPrivateLocation hpl = new HumansPrivateLocation();
+                hpl.setHumanId(newUser.getHumanId());
+                newUser.setHumansPrivateLocation(hpl);
+
+                final HumansPrivateEvent hpe = new HumansPrivateEvent();
+                hpe.setHumanId(newUser.getHumanId());
+                newUser.setHumansPrivateEvent(hpe);
+
+                final HumansAlbum hal = new HumansAlbum();
+                hal.setHumanId(newUser.getHumanId());
+                newUser.setHumansAlbum(hal);
+
+                final HumansPrivatePhoto hprp = new HumansPrivatePhoto();
+                hprp.setHumanId(newUser.getHumanId());
+                newUser.setHumansPrivatePhoto(hprp);
+
+                final HumansPublicPhoto hpup = new HumansPublicPhoto();
+                hpup.setHumanId(newUser.getHumanId());
+                newUser.setHumansPublicPhoto(hpup);
+
+                final HumansWall hw = new HumansWall();
+                hw.setHumanId(newUser.getHumanId());
+                hw.setWall(new Wall().setWallTypeR(Wall.wallTypeHuman));
+                newUser.setHumansWall(hw);
+
+                final HumansAlbum halbum = new HumansAlbum();
+                halbum.setHumanId(newUser.getHumanId());
+                newUser.setHumansAlbum(halbum);
+
+                doNTxCHuman(newUser);
+
+                r = new ReturnImpl<Boolean>(true, ADD_USER_SUCCESSFUL);
+            } else {
+                r = new ReturnImpl<Boolean>(new IllegalArgumentException(EMAIL + humanId.getObjectAsValid() + IS_NOT_FROM_A_VALID_DOMAIN), HumanCRUDHuman.ADD_USER_FAILED, true);
+            }
         }
         return r;
     }
@@ -497,79 +498,71 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
 
         verifydoDirtyRHumansIdentitiesByEmails:
         {
-            try {
-                setUpSomeHumans:
-                {
-                    DB.getHumanCRUDHumanLocal(true).doCHuman(new HumanId(random + "1"), new Password(random), null);
-                    DB.getHumanCRUDHumanLocal(true).doCHuman(new HumanId(random + "2"), new Password(random), null);
-                    DB.getHumanCRUDHumanLocal(true).doCHuman(new HumanId(random + "3"), new Password(random), null);
-                }
-
-                verify:
-                {
-                    List<Email> emails = new ArrayList<Email>();
-
-                    returnVal += "\nAdding email";
-                    emails.add(new Email(random + "1" + "@example.com"));
-                    returnVal += "\nExpecting true" +
-                            "\nSuccessful?" + (DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentitiesByEmails(emails).size() == 1);
-
-                    returnVal += "\nAdding email";
-                    emails.add(new Email(random + "2" + "@example.com"));
-                    returnVal += "\nExpecting true" +
-                            "\nSuccessful?" + (DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentitiesByEmails(emails).size() == 2);
-
-                    returnVal += "\nAdding email";
-                    emails.add(new Email(random + "3" + "@example.com"));
-                    returnVal += "\nExpecting true" +
-                            "\nSuccessful?" + (DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentitiesByEmails(emails).size() == 3);
-                }
-
-                cleanup:
-                {
-                    DB.getHumanCRUDHumanLocal(true).doDHuman(new SimpleString(random + "1"));
-                    DB.getHumanCRUDHumanLocal(true).doDHuman(new SimpleString(random + "2"));
-                    DB.getHumanCRUDHumanLocal(true).doDHuman(new SimpleString(random + "3"));
-                }
-
-            } catch (DBDishonourCheckedException e) {
-                logger.error("{}", e);
+            setUpSomeHumans:
+            {
+                DB.getHumanCRUDHumanLocal(true).doCHuman(new HumanId(random + "1"), new Password(random), null);
+                DB.getHumanCRUDHumanLocal(true).doCHuman(new HumanId(random + "2"), new Password(random), null);
+                DB.getHumanCRUDHumanLocal(true).doCHuman(new HumanId(random + "3"), new Password(random), null);
             }
+
+            verify:
+            {
+                List<Email> emails = new ArrayList<Email>();
+
+                returnVal += "\nAdding email";
+                emails.add(new Email(random + "1" + "@example.com"));
+                returnVal += "\nExpecting true" +
+                        "\nSuccessful?" + (DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentitiesByEmails(emails).size() == 1);
+
+                returnVal += "\nAdding email";
+                emails.add(new Email(random + "2" + "@example.com"));
+                returnVal += "\nExpecting true" +
+                        "\nSuccessful?" + (DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentitiesByEmails(emails).size() == 2);
+
+                returnVal += "\nAdding email";
+                emails.add(new Email(random + "3" + "@example.com"));
+                returnVal += "\nExpecting true" +
+                        "\nSuccessful?" + (DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentitiesByEmails(emails).size() == 3);
+            }
+
+            cleanup:
+            {
+                DB.getHumanCRUDHumanLocal(true).doDHuman(new SimpleString(random + "1"));
+                DB.getHumanCRUDHumanLocal(true).doDHuman(new SimpleString(random + "2"));
+                DB.getHumanCRUDHumanLocal(true).doDHuman(new SimpleString(random + "3"));
+            }
+
         }
 
         verifyAddRemoveFriends:
         {
-            try {
-                setUpSomeHumans:
-                {
-                    DB.getHumanCRUDHumanLocal(true).doCHuman(new HumanId(random + "1"), new Password(random), null);
-                    DB.getHumanCRUDHumanLocal(true).doCHuman(new HumanId(random + "2"), new Password(random), null);
-                    DB.getHumanCRUDHumanLocal(true).doCHuman(new HumanId(random + "3"), new Password(random), null);
-                }
-
-                verify:
-                {
-                    returnVal += "\nAdding a friend";
-                    DB.getHumanCRUDHumanLocal(true).doNTxAddHumansNetPeople(new HumanId(random + "1"), new HumanId(random + "2"));
-                    returnVal += "\nExpecting true";
-                    returnVal += "\nResult:" + (DB.getHumanCRUDHumanLocal(true).doNTxIsHumansNetPeople(new HumanId(random + "1"), new HumanId(random + "2")));
-
-                    returnVal += "\nRemoving a friend";
-                    DB.getHumanCRUDHumanLocal(true).doNTxAddHumansNetPeople(new HumanId(random + "1"), new HumanId(random + "2"));
-                    returnVal += "\nExpecting false";
-                    returnVal += "\nResult:" + (DB.getHumanCRUDHumanLocal(true).doNTxIsHumansNetPeople(new HumanId(random + "1"), new HumanId(random + "2")));
-                }
-
-                cleanup:
-                {
-                    DB.getHumanCRUDHumanLocal(true).doDHuman(new SimpleString(random + "1"));
-                    DB.getHumanCRUDHumanLocal(true).doDHuman(new SimpleString(random + "2"));
-                    DB.getHumanCRUDHumanLocal(true).doDHuman(new SimpleString(random + "3"));
-                }
-
-            } catch (DBDishonourCheckedException e) {
-                logger.error("{}", e);
+            setUpSomeHumans:
+            {
+                DB.getHumanCRUDHumanLocal(true).doCHuman(new HumanId(random + "1"), new Password(random), null);
+                DB.getHumanCRUDHumanLocal(true).doCHuman(new HumanId(random + "2"), new Password(random), null);
+                DB.getHumanCRUDHumanLocal(true).doCHuman(new HumanId(random + "3"), new Password(random), null);
             }
+
+            verify:
+            {
+                returnVal += "\nAdding a friend";
+                DB.getHumanCRUDHumanLocal(true).doNTxAddHumansNetPeople(new HumanId(random + "1"), new HumanId(random + "2"));
+                returnVal += "\nExpecting true";
+                returnVal += "\nResult:" + (DB.getHumanCRUDHumanLocal(true).doNTxIsHumansNetPeople(new HumanId(random + "1"), new HumanId(random + "2")));
+
+                returnVal += "\nRemoving a friend";
+                DB.getHumanCRUDHumanLocal(true).doNTxAddHumansNetPeople(new HumanId(random + "1"), new HumanId(random + "2"));
+                returnVal += "\nExpecting false";
+                returnVal += "\nResult:" + (DB.getHumanCRUDHumanLocal(true).doNTxIsHumansNetPeople(new HumanId(random + "1"), new HumanId(random + "2")));
+            }
+
+            cleanup:
+            {
+                DB.getHumanCRUDHumanLocal(true).doDHuman(new SimpleString(random + "1"));
+                DB.getHumanCRUDHumanLocal(true).doDHuman(new SimpleString(random + "2"));
+                DB.getHumanCRUDHumanLocal(true).doDHuman(new SimpleString(random + "3"));
+            }
+
         }
         return returnVal;
     }

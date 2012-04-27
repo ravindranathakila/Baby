@@ -2,7 +2,6 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.contactimports.google.GoogleContactImporter;
@@ -207,43 +206,39 @@ abstract public class Bate extends AbstractWidgetListener {
                 public void handleEvent(final Event evt_) {
                     if (myemail.validate(v) == 0 && mypassword.validate(v) == 0) {
                         if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
-                            try {
 
-                                final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
-                                        new HumanId().setObjAsValid(email.getObj()),
-                                        mypassword,
-                                        myemail);
+                            final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                                    new HumanId().setObjAsValid(email.getObj()),
+                                    mypassword,
+                                    myemail);
 
-                                if (humanCreateReturn.returnValue()) {
+                            if (humanCreateReturn.returnValue()) {
 
-                                    UserIntroduction.createIntroData(new HumanId(email.getObj()));
+                                UserIntroduction.createIntroData(new HumanId(email.getObj()));
 
-                                    final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
-                                            .append(ServletLogin.Username, myemail.getObj(), true)
-                                            .append(ServletLogin.Password,
-                                                    DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
-                                                            .returnValue()
-                                                            .getHumanAuthenticationHash())
-                                            .get();
+                                final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                                        .append(ServletLogin.Username, myemail.getObj(), true)
+                                        .append(ServletLogin.Password,
+                                                DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
+                                                        .returnValue()
+                                                        .getHumanAuthenticationHash())
+                                        .get();
 
 
-                                    String htmlBody = getHTMLStringForOfflineFriendInvite("I Like Places", email.getObj());
+                                String htmlBody = getHTMLStringForOfflineFriendInvite("I Like Places", email.getObj());
 
-                                    htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-                                    htmlBody = htmlBody.replace(PASSWORD_ADVICE, "");
-                                    htmlBody = htmlBody.replace(PASSWORD_DETAILS, "");
+                                htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
+                                htmlBody = htmlBody.replace(PASSWORD_ADVICE, "");
+                                htmlBody = htmlBody.replace(PASSWORD_DETAILS, "");
 
-                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
-                                            myemail.getObj(),
-                                            "I Like Places prides you with an Exclusive Invite!",
-                                            htmlBody);
+                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                        myemail.getObj(),
+                                        "I Like Places prides you with an Exclusive Invite!",
+                                        htmlBody);
 
-                                    $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
-                                }
-
-                            } catch (DBDishonourCheckedException e) {
-                                $$(Controller.Page.BateSignupNotifications).setTextContent("Email was taken meanwhile!:(");
+                                $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
                             }
+
                         } else {
                             $$(Controller.Page.BateSignupNotifications).setTextContent("This email is TAKEN!:(");
                         }
@@ -453,7 +448,7 @@ abstract public class Bate extends AbstractWidgetListener {
                 String htmlBody = getHTMLStringForOfflineFriendInvite(invitersName, inviteee.getFullName());
 
                 htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-                htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
+                htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + "\"" + randomPassword + "\"" + "(without quotes)");
                 htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it. ");
 
                 final Return<Boolean> mailReturn = SendMail.getSendMailLocal().sendAsHTMLAsynchronously(

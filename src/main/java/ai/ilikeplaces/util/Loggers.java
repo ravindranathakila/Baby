@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Any loggers used outside the context of the variable name, might result in losing log entries.
- * For example, do not use DEBUG.info("msg"). Use, DEBUG.debug("msg").
+ * For example, do not use DEBUG.debug("msg"). Use, DEBUG.debug("msg").
  * <p/>
  * <p/>
  * Okay, this next part, is admittedly written because I messed up with the my "OWN" logging convention.

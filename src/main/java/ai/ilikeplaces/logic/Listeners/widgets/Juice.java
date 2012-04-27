@@ -127,15 +127,22 @@ public class Juice extends AbstractWidgetListener<JuiceCriteria> {
 
                 if (email.valid()) {
                     if (!DB.getHumanCRUDHumanLocal(false).doDirtyCheckHuman(email.getObj()).returnValue()) {
-                        final Return<Boolean> returnVal = ai.ilikeplaces.logic.Listeners.widgets.Bate.sendInviteToOfflineInvite(
-                                "I Like Places",
-                                new ImportedContact().setEmail(email.getObj()).setFullName(""));
-                        if (!returnVal.valid() || !returnVal.returnValue()) {
-                            Loggers.log(Loggers.LEVEL.FAILED_SIGNUPS, email.getObj());
-                            notifyUser("Sorry, but we think this email is invalid :-(");
-                        } else {
-                            $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
-                        }
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                final Return<Boolean> returnVal = ai.ilikeplaces.logic.Listeners.widgets.Bate.sendInviteToOfflineInvite(
+                                        "I Like Places",
+                                        new ImportedContact().setEmail(email.getObj()).setFullName(""));
+                                if (!returnVal.valid() || !returnVal.returnValue()) {
+                                    //we are being optimistic and assuming user entered the proper email.
+                                    //This is because mail server check takes a lot of time
+                                }
+                            }
+                        }).start();
+
+                        $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
                     } else {
                         $$sendJS(JSCodeToSend.redirectPageWithURL(Controller.Page.Profile.getURL()));
                     }

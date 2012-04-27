@@ -85,6 +85,7 @@ See? We want you to get moving fast.
 == Live Deployments ==
 
 === DEPLOYMENT ON THE 4TH OF APRIL, 2012 ===
+==== Update Cloud Keys... DONE ====
 ==== Minimizing stylesheets and scripts... DONE ====
 ==== Turn off debugging... DONE ====
 ==== Testing on different browsers... DONE ====

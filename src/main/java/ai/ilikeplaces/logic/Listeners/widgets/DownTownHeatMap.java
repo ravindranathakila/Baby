@@ -12,6 +12,7 @@ import ai.ilikeplaces.logic.hotspots.Rawspot;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.modules.Modules;
 import ai.ilikeplaces.logic.validators.unit.*;
+import ai.ilikeplaces.logic.validators.unit.Info;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
@@ -205,8 +206,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 public void handleEvent(final Event evt_) {
                     if (myemail.validate(v) == 0 && mypassword.validate(v) == 0) {
                         if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
-                            try {
-
                                 final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
                                         new HumanId().setObjAsValid(email.getObj()),
                                         mypassword,
@@ -264,9 +263,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                                             mail);
                                     $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
                                 }*/
-                            } catch (DBDishonourCheckedException e) {
-                                $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email was taken meanwhile!:(");
-                            }
                         } else {
                             $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("This email is TAKEN!:(");
                         }

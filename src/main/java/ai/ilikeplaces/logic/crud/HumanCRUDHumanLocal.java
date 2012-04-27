@@ -57,7 +57,7 @@ public interface HumanCRUDHumanLocal extends Verify {
      */
     public List<HumansIdentity> doDirtyRHumansIdentitiesByEmails(final List<Email> emails);
 
-    public Return<Boolean> doCHuman(final RefObj<String> username, final RefObj<String> password, final RefObj<String> email) throws DBDishonourCheckedException;
+    public Return<Boolean> doCHuman(final RefObj<String> username, final RefObj<String> password, final RefObj<String> email);
 
     public Return<Boolean> doUActivateHuman(final RefObj<String> username);
 

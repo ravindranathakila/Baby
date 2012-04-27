@@ -30,6 +30,7 @@ public class MethodTimer {
             }
         }
     };
+    public static final String TIMING = "Timing:";
 
     @AroundInvoke
     public Object profile(InvocationContext invocation) throws Exception {
@@ -37,7 +38,7 @@ public class MethodTimer {
             final long startTime = System.currentTimeMillis();
             final SmartLogger smartLogger = SmartLogger.start(
                     Loggers.LEVEL.SERVER_STATUS,
-                    "Timing:" + invocation.getMethod(),
+                    TIMING + invocation.getMethod(),
                     0,//Escapes timeout
                     null,//We don't need a start message (tedious when it comes out a lot in logs)
                     true//This is what we need actually

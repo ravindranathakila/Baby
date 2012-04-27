@@ -6,6 +6,7 @@ import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.*;
+import ai.ilikeplaces.logic.validators.unit.Info;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
@@ -112,8 +113,8 @@ abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
                     for (final PrivateLocation privateLocation : privateLocations) {
 
-                        Loggers.info(privateLocation.toString());
-                        Loggers.info(woeid.toString());
+                        Loggers.debug(privateLocation.toString());
+                        Loggers.debug(woeid.toString());
 
                         if (privateLocation.getPrivateLocationLatitude() - 0.000133145585763375 < woeid.getObjectAsValid().getLatitude() &&
                                 privateLocation.getPrivateLocationLatitude() + 0.000133145585763375 > woeid.getObjectAsValid().getLatitude() &&

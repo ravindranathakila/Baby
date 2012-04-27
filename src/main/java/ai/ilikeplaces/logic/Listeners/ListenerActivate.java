@@ -36,7 +36,7 @@ public class ListenerActivate implements ItsNatServletRequestListener {
                 UCShowActivateMSG:
                 {
                     if(getUsername() == null){
-                        $(Controller.Page.Skeleton_notice).setTextContent("We've just mailed you! Click the link in the mail to activate your account. See ya soon!");
+                        $(Controller.Page.Skeleton_notice).setTextContent(GUI.getString("email.activate.your.account"));
                         displayBlock($(Controller.Page.Skeleton_notice_sh));
                     }else{
                         itsNatDocument.addCodeToSend(JSCodeToSend.redirectPageWithURL("/"));

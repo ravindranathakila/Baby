@@ -183,7 +183,7 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
     @Override
     public void prePassivate() {
         Loggers.USER.info(humanUserId_ + " disked out");
-        Loggers.DEBUG.info(humanUserId_ + " disked out");
+        Loggers.DEBUG.debug(humanUserId_ + " disked out");
     }
 
     /**
@@ -193,7 +193,7 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
     @Override
     public void postActivate() {
         Loggers.USER.info(humanUserId_ + " disked in");
-        Loggers.DEBUG.info(humanUserId_ + " disked in");
+        Loggers.DEBUG.debug(humanUserId_ + " disked in");
     }
 
     @PreDestroy
@@ -202,7 +202,7 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
         final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, humanUserId_ + " is destroyed. Notifying observers:", 60000, null, true);
         try {
             Loggers.USER.info(humanUserId_ + " is destroyed");
-            Loggers.DEBUG.info(humanUserId_ + " is destroyed");
+            Loggers.DEBUG.debug(humanUserId_ + " is destroyed");
             delegatedObservable.setChanged();
             delegatedObservable.notifyObservers(true);
             sl.multiComplete(new Loggers.LEVEL[]{Loggers.LEVEL.DEBUG, Loggers.LEVEL.USER}, Loggers.DONE);

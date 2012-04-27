@@ -1,10 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets.teach;
 
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
-import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
-import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.Email;
@@ -124,48 +121,44 @@ public class TeachTribe extends AbstractWidgetListener<TeachTribeCriteria> {
 
                         if (myemail.valid()) {
                             if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
-                                try {
-                                    final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
+                                final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
 
-                                    final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
-                                            new HumanId().setObjAsValid(myemail.getObj()),
-                                            new Password(randomPassword),
-                                            myemail);
+                                final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                                        new HumanId().setObjAsValid(myemail.getObj()),
+                                        new Password(randomPassword),
+                                        myemail);
 
-                                    if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
-                                        UserIntroduction.createIntroData(new HumanId(myemail.getObj()));
+                                if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
+                                    UserIntroduction.createIntroData(new HumanId(myemail.getObj()));
 
-                                        final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
-                                                .append(ServletLogin.Username, myemail.getObj(), true)
-                                                .append(ServletLogin.Password,
-                                                        DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
-                                                                .returnValue()
-                                                                .getHumanAuthenticationHash())
-                                                .append(ServletActivate.NEXT, Controller.Page.Tribes.getURL())
-                                                .get();
+                                    final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                                            .append(ServletLogin.Username, myemail.getObj(), true)
+                                            .append(ServletLogin.Password,
+                                                    DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
+                                                            .returnValue()
+                                                            .getHumanAuthenticationHash())
+                                            .append(ServletActivate.NEXT, Controller.Page.Tribes.getURL())
+                                            .get();
 
 
-                                        String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());
+                                    String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());
 
-                                        htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-                                        htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
-                                        htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it.");
+                                    htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
+                                    htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
+                                    htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it.");
 
-                                        SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
-                                                myemail.getObj(),
-                                                "I Like Places prides you with an Exclusive Invite!",
-                                                htmlBody);
+                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                            myemail.getObj(),
+                                            "I Like Places prides you with an Exclusive Invite!",
+                                            htmlBody);
 
-                                        $$displayNone($$(TeachTribeIds.teach_tribe_signup_section));
+                                    $$displayNone($$(TeachTribeIds.teach_tribe_signup_section));
 
-                                        TeachTribe.this.notifyUser("Great! Check your email now!");
+                                    TeachTribe.this.notifyUser("Great! Check your email now!");
 
-                                        $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
-                                    } else {
-                                        TeachTribe.this.notifyUser("Email INVALID!");
-                                    }
-                                } catch (DBDishonourCheckedException e) {
-                                    TeachTribe.this.notifyUser("Email was taken meanwhile!:(");
+                                    $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+                                } else {
+                                    TeachTribe.this.notifyUser("Email INVALID!");
                                 }
                             } else {
                                 TeachTribe.this.notifyUser("This email is TAKEN!:(");

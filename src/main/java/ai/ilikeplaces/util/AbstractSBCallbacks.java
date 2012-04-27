@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 /**
- *
  * @author Ravindranath Akila
  */
 
@@ -19,6 +18,7 @@ public class AbstractSBCallbacks {
      *
      */
     final static protected Logger INFO = Loggers.INFO;
+    public static final boolean DEBUG_ENABLED = Loggers.DEBUG.isDebugEnabled();
     /**
      *
      */
@@ -31,7 +31,9 @@ public class AbstractSBCallbacks {
      */
     @PostConstruct
     public void postConstruct() {
-        INFO.info(MsgConstruct + className + this.hashCode());
+        if (DEBUG_ENABLED) {
+            Loggers.debug(MsgConstruct + className + this.hashCode());
+        }
     }
 
     /**
@@ -39,6 +41,8 @@ public class AbstractSBCallbacks {
      */
     @PreDestroy
     public void preDestroy() {
-        INFO.info(MsgDestroy + className + this.hashCode());
+        if (Loggers.DEBUG.isDebugEnabled()) {
+            Loggers.debug(MsgDestroy + className + this.hashCode());
+        }
     }
 }

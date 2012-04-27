@@ -144,7 +144,7 @@ abstract public class PrivateLocationView extends AbstractWidgetListener {
             SetLocationMap:
             {
                 final GeoCoord gc = new GeoCoord();
-                Loggers.info(r.returnValue().toString());
+                Loggers.debug(r.returnValue().toString());
                 gc.setObj(r.returnValue().getPrivateLocationLatitude(), r.returnValue().getPrivateLocationLongitude());
                 gc.validateThrow();
 

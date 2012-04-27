@@ -4,7 +4,6 @@ import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.entities.Wall;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetTribe;
 import ai.ilikeplaces.logic.crud.DB;
@@ -89,45 +88,41 @@ public class ServletMobile extends HttpServlet {
 
                 if (myemail.validate() == 0 && mypassword.validate() == 0) {
                     if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
-                        try {
 
-                            humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
-                                    new HumanId().setObjAsValid(myemail.getObj()),
-                                    mypassword,
-                                    myemail);
+                        humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                                new HumanId().setObjAsValid(myemail.getObj()),
+                                mypassword,
+                                myemail);
 
-                            if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
+                        if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
 
-                                UserIntroduction.createIntroData(new HumanId(myemail.getObj()));
+                            UserIntroduction.createIntroData(new HumanId(myemail.getObj()));
 
-                                final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
-                                        .append(ServletLogin.Username, myemail.getObj(), true)
-                                        .append(ServletLogin.Password,
-                                                DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
-                                                        .returnValue()
-                                                        .getHumanAuthenticationHash())
-                                        .get();
+                            final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                                    .append(ServletLogin.Username, myemail.getObj(), true)
+                                    .append(ServletLogin.Password,
+                                            DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
+                                                    .returnValue()
+                                                    .getHumanAuthenticationHash())
+                                    .get();
 
 
-                                String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());
+                            String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());
 
-                                htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-                                htmlBody = htmlBody.replace(Bate.PASSWORD_ADVICE, "");
-                                htmlBody = htmlBody.replace(Bate.PASSWORD_DETAILS, "");
+                            htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
+                            htmlBody = htmlBody.replace(Bate.PASSWORD_ADVICE, "");
+                            htmlBody = htmlBody.replace(Bate.PASSWORD_DETAILS, "");
 
-                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
-                                        myemail.getObj(),
-                                        "I Like Places prides you with an Exclusive Invite!",
-                                        htmlBody);
+                            SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                    myemail.getObj(),
+                                    "I Like Places prides you with an Exclusive Invite!",
+                                    htmlBody);
 
-                                //$$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
-                            } else {
-                                //$$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email INVALID!");
-                            }
-
-                        } catch (DBDishonourCheckedException e) {
-                            //$$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email was taken meanwhile!:(");
+                            //$$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+                        } else {
+                            //$$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email INVALID!");
                         }
+
                     } else {
                         //$$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("This email is TAKEN!:(");
                     }
