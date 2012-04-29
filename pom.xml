@@ -330,20 +330,20 @@
         </dependency>
 
         <!--eh cache-->
-        <!--<dependency>-->
-            <!--<groupId>net.sf.ehcache</groupId>-->
-            <!--<artifactId>ehcache-openjpa</artifactId>-->
-            <!--<version>0.2.0</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-openjpa</artifactId>
+            <version>0.2.0</version>
+        </dependency>
 
         <!--provided with openejb tomee-->
 
-        <!--<dependency>-->
-            <!--<groupId>org.apache.openjpa</groupId>-->
-            <!--<artifactId>openjpa</artifactId>-->
-            <!--<version>LATEST</version>-->
-            <!--<scope>provided</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.apache.openjpa</groupId>
+            <artifactId>openjpa</artifactId>
+            <version>LATEST</version>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
     <build>
