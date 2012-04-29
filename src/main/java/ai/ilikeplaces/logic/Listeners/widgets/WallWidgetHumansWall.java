@@ -43,7 +43,7 @@ import java.util.List;
 public class WallWidgetHumansWall extends WallWidget {
 
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
-    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMsgs", "wallMutes");
+    private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMutes");
     private static final RefreshSpec REFRESH_SPEC_EMPTY = new RefreshSpec();
 
     final static public SmartCache<Pair<String, String>, Long> HUMANS_WALL_ID = new SmartCache<Pair<String, String>, Long>(new SmartCache.RecoverWith<Pair<String, String>, Long>() {
@@ -159,6 +159,29 @@ public class WallWidgetHumansWall extends WallWidget {
                             }
                         }
                     };
+
+                } else {
+
+                    String addFollowerTitle = "Add more followers!";
+
+                    new AdaptableSignup(
+                            request,
+                            new AdaptableSignupCriteria()
+                                    .setHumanId(requestedProfile)
+                                    .setWidgetTitle(addFollowerTitle)
+                                    .setAdaptableSignupCallback(new AdaptableSignupCallback() {
+                                        @Override
+                                        public String afterInvite(final HumanId invitee) {
+                                            return ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE
+                                                    .get(invitee.getHumanId(), invitee.getHumanId()).getHuman().getDisplayName() + " is now following you!";
+                                        }
+
+                                        @Override
+                                        public String jsToSend(HumanId invitee) {
+                                            return JSCodeToSend.refreshPageIn(5);
+                                        }
+                                    }),
+                            $$(Info.InfoIds.InfoAppend));
                 }
             }
         }
@@ -167,8 +190,9 @@ public class WallWidgetHumansWall extends WallWidget {
         fetchToEmail();
 
         final Wall wall = DB.getHumanCrudWallLocal(true).readWall(requestedProfile, new Obj<HumanId>(currUserAsVisitor), REFRESH_SPEC).returnValueBadly();
+        final List<Msg> wallEntries = DB.getHumanCrudWallLocal(true).readWallLastEntries(requestedProfile, new Obj<HumanId>(currUserAsVisitor), 25, REFRESH_SPEC_EMPTY).returnValueBadly();
 
-        for (final Msg msg : wall.getWallMsgs()) {
+        for (final Msg msg : wallEntries) {
             new UserProperty(request, $$(WallWidgetIds.wallContent), new HumanId(msg.getMsgMetadata())) {
                 protected void init(final Object... initArgs) {
                     $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());

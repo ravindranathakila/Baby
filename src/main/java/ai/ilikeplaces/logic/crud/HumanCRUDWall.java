@@ -52,6 +52,7 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Deprecated
     public Return<Wall> readWall(final HumanId whosWall, final Obj requester, final RefreshSpec refreshSpec__) {
         Return<Wall> r;
         r = new ReturnImpl<Wall>(crudHumansWallLocal_.doRHumansWallRefreshed(whosWall.getObj()).getWall(), READ_WALL_SUCCESSFUL);

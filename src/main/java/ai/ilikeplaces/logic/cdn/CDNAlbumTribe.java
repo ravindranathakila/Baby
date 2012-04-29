@@ -48,12 +48,14 @@ public class CDNAlbumTribe extends CDN implements CDNAlbumTribeLocal {
     private static final String ALBUM_PHOTO_UPLOAD_FAILED_DUE_TO_IMAGE_MANIPULATION_ISSUES = "Album Photo Upload Failed Due To Image Manipulation Issues!";
     private static final String ALBUM_PHOTO_UPLOAD_FAILED_DUE_TO_RENAMING_ISSUES = "Album Photo Upload Failed Due To Renaming Issues!";
     private static final String ALBUM_PHOTO_UPLOAD_SUCCESSFUL = "Album Photo Upload Successful.";
-    private static final String UPLOADING_IMAGE = "Uploading Image";
+    private static final String UPLOADING_ORIGINAL_IMAGE = "Uploading Original Image";
     private static final String UPLOADING_IMAGE_THUMB = "Uploading Image Thumbnail";
+    private static final String UPLOADING_STANDARD_IMAGE = "Uploading Standard Image";
     private static final String SAVING_SCALED_IMAGE = "Saving Scaled Image";
     private static final String SCALING_IMAGE = "Scaling Image";
     private static final String LOADING_IMAGE_AS_BUFFERED_IMAGE = "Loading Image As Buffered Image";
     public static final String THUMBNAIL = "th_";
+    public static final String ORIGINAL = "orig_";
 
     public static CDNAlbumTribeLocal getAlbumTribeCDNLocal() {
         isOK();
@@ -111,12 +113,30 @@ public class CDNAlbumTribe extends CDN implements CDNAlbumTribeLocal {
 
                 try {
                     try {
+                        //Uploading Original
                         final String cdnFileName = newFile.getName();
-                        sl.appendToLogMSG(UPLOADING_IMAGE);
-                        final boolean uploaded = client.storeObjectAs(CONTAINER, newFile, FilesConstants.getMimetype(userFileExtension), cdnFileName);
+                        sl.appendToLogMSG(UPLOADING_ORIGINAL_IMAGE);
+                        final boolean uploadedOriginal = client.storeObjectAs(CONTAINER, newFile, FilesConstants.getMimetype(userFileExtension), ORIGINAL + cdnFileName);
 
+                        BufferedImage bi = null;
+
+                        //Uploading Standard Size
                         sl.appendToLogMSG(LOADING_IMAGE_AS_BUFFERED_IMAGE);
-                        BufferedImage bi = loadImage(newFile);
+                        bi = loadImage(newFile);
+
+                        sl.appendToLogMSG(SCALING_IMAGE);
+                        bi = scaleImage(bi, 600); //Reducing size of image to standard view
+
+                        sl.appendToLogMSG(SAVING_SCALED_IMAGE);
+                        saveImage(bi, newFile);
+
+                        final String cdnfileName = newFile.getName();
+                        sl.appendToLogMSG(UPLOADING_STANDARD_IMAGE);
+                        final boolean uploadedStandard = client.storeObjectAs(CONTAINER, newFile, FilesConstants.getMimetype(userFileExtension), cdnfileName);
+
+                        //Uploading Thumb
+                        sl.appendToLogMSG(LOADING_IMAGE_AS_BUFFERED_IMAGE);
+                        bi = loadImage(newFile);
 
                         sl.appendToLogMSG(SCALING_IMAGE);
                         bi = scaleImage(bi, 190); //Reducing size of image to blueprintcss span-5 just to save bandwidth for the user.
@@ -128,7 +148,7 @@ public class CDNAlbumTribe extends CDN implements CDNAlbumTribeLocal {
                         sl.appendToLogMSG(UPLOADING_IMAGE_THUMB);
                         final boolean uploadedThumb = client.storeObjectAs(CONTAINER, newFile, FilesConstants.getMimetype(userFileExtension), cdnThumbFileName);
 
-                        if (uploaded && uploadedThumb) {
+                        if (uploadedStandard && uploadedThumb && uploadedOriginal) {
                             final boolean deleted = newFile.delete();
                             if (deleted) {
                                 final Return<Album> dbr = DB.getHumanCRUDTribeLocal(true).uTribeAddEntryToAlbum(humanId, Long.parseLong((String) parameterMap.get(ALBUM_TRIBE_ID)), new Obj<String>(cdnFileName).getSelfAsValid());
