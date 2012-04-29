@@ -52,11 +52,6 @@ public class ListenerTribes implements ItsNatServletRequestListener {
                     {
                         //set below
                     }
-
-                    setProfileLink:
-                    {
-                        setProfileLink();
-                    }
                     setProfileDataLink:
                     {
                         setProfileDataLink();

@@ -92,11 +92,6 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                     {
                         //set below
                     }
-
-                    setProfileLink:
-                    {
-                        setProfileLink();
-                    }
                     setProfileDataLink:
                     {
                         setProfileDataLink();
@@ -396,7 +391,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                     {
 
                         if (isOwner) {
-                            USER.info(getUsernameAsValid() + IS_ACCEPTED_AS_A_OWNER_OF_THIS_LOCATION + validPrivateLocationId);
+                            DEBUG.debug(getUsernameAsValid() + IS_ACCEPTED_AS_A_OWNER_OF_THIS_LOCATION + validPrivateLocationId);
                             if (!favorViewership) {
                                 new PrivateLocationDelete(request__, appendToElement, getUsernameAsValid(), requestedPrivateLocation) {
                                 };
@@ -417,7 +412,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                 }
                             }
                         } else {
-                            USER.info(getUsernameAsValid() + IS_ACCEPTED_AS_A_VIEWER_OF_THIS_LOCATION + validPrivateLocationId);
+                            DEBUG.debug(getUsernameAsValid() + IS_ACCEPTED_AS_A_VIEWER_OF_THIS_LOCATION + validPrivateLocationId);
                             new PrivateLocationView(request__, appendToElement, getUsernameAsValid(), requestedPrivateLocation) {
                             };
                         }

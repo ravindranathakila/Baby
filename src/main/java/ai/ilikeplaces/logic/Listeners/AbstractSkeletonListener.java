@@ -79,11 +79,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
             {
                 setTitle(RBGet.globalConfig.getString(CODENAME_KEY));
             }
-
-            setProfileLink:
-            {
-                setProfileLink();
-            }
             setProfileDataLink:
             {
                 setProfileDataLink();
@@ -166,19 +161,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
         }
     }
 
-    protected void setProfileLink() {
-        initStatus = true;
-
-        try {
-            if (getUsername() != null) {
-                $(Skeleton_othersidebar_profile_link).setAttribute(MarkupTag.A.href(), Controller.Page.Profile.getURL());
-            } else {
-                $(Skeleton_othersidebar_profile_link).setAttribute(MarkupTag.A.href(), Controller.Page.signup.getURL());
-            }
-        } catch (final Throwable t) {
-            EXCEPTION.error("{}", t);
-        }
-    }
 
     protected void setProfileDataLink() {
         initStatus = true;

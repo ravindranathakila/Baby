@@ -883,21 +883,15 @@ final public class
                 Controller.Page.Skeleton_center,
                 Controller.Page.Skeleton_center_content,
                 Controller.Page.Skeleton_center_skeleton,
-                Controller.Page.Skeleton_file_list,
                 Controller.Page.Skeleton_left_column,
+                Controller.Page.Skeleton_right_column,
                 Controller.Page.Skeleton_login_widget,
                 Controller.Page.Skeleton_notice,
                 Controller.Page.Skeleton_notice_sh,
-                Controller.Page.Skeleton_othersidebar,
                 Controller.Page.Skeleton_profile_photo,
                 Controller.Page.Skeleton_othersidebar_identity,
-                Controller.Page.Skeleton_othersidebar_organizer_link,
-                Controller.Page.Skeleton_othersidebar_photo_manager_link,
-                Controller.Page.Skeleton_othersidebar_places_link,
-                Controller.Page.Skeleton_othersidebar_profile_link,
-                Controller.Page.Skeleton_othersidebar_upload_file_sh,
-                Controller.Page.Skeleton_right_column,
                 Controller.Page.Skeleton_sidebar,
+                Controller.Page.Skeleton_othersidebar,
                 Controller.Page.Skeleton_notifications
 
         ) {
@@ -1485,11 +1479,7 @@ final public class
         final static public String Skeleton_othersidebar = "Skeleton_othersidebar";
         final static public String Skeleton_profile_photo = "Skeleton_profile_photo";
         final static public String Skeleton_othersidebar_identity = "Skeleton_othersidebar_identity";
-        final static public String Skeleton_othersidebar_places_link = "Skeleton_othersidebar_places_link";
         final static public String Skeleton_othersidebar_profile_link = "Skeleton_othersidebar_profile_link";
-        final static public String Skeleton_othersidebar_photo_manager_link = "Skeleton_othersidebar_photo_manager_link";
-        final static public String Skeleton_othersidebar_organizer_link = "Skeleton_othersidebar_organizer_link";
-        final static public String Skeleton_othersidebar_upload_file_sh = "Skeleton_othersidebar_upload_file_sh";
         final static public String Skeleton_file_list = "Skeleton_file_list";
         final static public String Skeleton_center = "Skeleton_center";
         final static public String Skeleton_center_skeleton = "Skeleton_center_skeleton";

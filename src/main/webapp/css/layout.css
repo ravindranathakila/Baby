@@ -1620,19 +1620,19 @@ div.jqismooth button.jqismoothdefaultbutton{ background-color: #BF5E26; }
     background-color:purple;
 }
 
-.carousel.TALKS{
+.carouselFill.TALKS{
     background-color:#ff99ff;
 }
-.carousel.TRIBES{
+.carouselFill.TRIBES{
      background-color:#ff6677;
 }
-.carousel.MOMENTS{
+.carouselFill.MOMENTS{
     background-color:#ffbb99;
 }
-.carousel.SNAPS{
+.carouselFill.SNAPS{
     background-color:#ffca1e;
 }
-.carousel.HOME{
+.carouselFill.HOME{
     background-color:purple;
 }
 

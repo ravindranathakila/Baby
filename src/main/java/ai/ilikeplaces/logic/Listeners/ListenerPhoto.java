@@ -67,11 +67,6 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
                     {
                         //set below
                     }
-
-                    setProfileLink:
-                    {
-                        setProfileLink();
-                    }
                     setProfileDataLink:
                     {
                         setProfileDataLink();
