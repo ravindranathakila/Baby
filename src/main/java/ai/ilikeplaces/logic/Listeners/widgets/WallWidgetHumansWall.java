@@ -181,7 +181,7 @@ public class WallWidgetHumansWall extends WallWidget {
                                             return JSCodeToSend.refreshPageIn(5);
                                         }
                                     }),
-                            $$(Info.InfoIds.InfoAppend));
+                            $$(WallWidgetIds.wallFollowers));
                 }
             }
         }

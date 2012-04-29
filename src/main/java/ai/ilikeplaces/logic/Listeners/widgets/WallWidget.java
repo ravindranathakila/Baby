@@ -41,7 +41,8 @@ abstract public class WallWidget<T> extends AbstractWidgetListener<T> {
         wallTitle,
         wallProfilePhoto,
         wallProfileName,
-        wallGame
+        wallGame,
+        wallFollowers
     }
 
 
