@@ -337,7 +337,7 @@
         </dependency>
 
         <!--provided with openejb tomee-->
-
+        <!--we put this here to prevent other libraries inserting openjpa, namely ehcache-->
         <dependency>
             <groupId>org.apache.openjpa</groupId>
             <artifactId>openjpa</artifactId>
