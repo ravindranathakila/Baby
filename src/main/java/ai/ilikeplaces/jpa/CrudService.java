@@ -28,7 +28,7 @@ import java.util.Set;
 @CONVENTION(convention = "Caller assumes this class methods are of tx scope supports, " +
         "but create and updates here are of scope mandatory which will ensure caller does no mistake.")
 @OK
-final public class CrudService<T> extends AbstractSLBCallbacks implements CrudServiceLocal<T> {
+public class CrudService<T> extends AbstractSLBCallbacks implements CrudServiceLocal<T> {
 
     /**
      * Please not that this is a field of Stateless session bean
