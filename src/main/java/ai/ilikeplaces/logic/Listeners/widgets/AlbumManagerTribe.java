@@ -6,6 +6,8 @@ import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.Listeners.widgets.carousel.Carousel;
 import ai.ilikeplaces.logic.Listeners.widgets.carousel.CarouselCriteria;
+import ai.ilikeplaces.logic.cdn.CDNAlbumPrivateEvent;
+import ai.ilikeplaces.logic.cdn.CDNAlbumTribe;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
@@ -13,6 +15,7 @@ import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.rbs.RBGet;
+import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
@@ -127,9 +130,13 @@ public class AlbumManagerTribe extends AbstractWidgetListener {
                             final Integer photoSequenceNumber = (Integer) initArgs[0];
                             List<HumansIdentity> mywallProspects = (List<HumansIdentity>) initArgs[1];
                             final String imageURL = RBGet.globalConfig.getString(ALBUM__PHOTOS) + privatePhoto__.getPrivatePhotoURLPath();
+                            final String imageThumbURL = RBGet.globalConfig.getString(ALBUM__PHOTOS) + CDNAlbumTribe.THUMBNAIL + privatePhoto__.getPrivatePhotoURLPath();
+
                             $$(Page.pd_photo_permalink).setAttribute(MarkupTag.A.href(), imageURL);
 
                             $$(Page.pd_photo).setAttribute(MarkupTag.IMG.title(), imageURL);
+
+                            $$(Controller.Page.pd_photo).setAttribute(MarkupTag.IMG.src(), imageThumbURL);
 
                             $$setClass($$(Page.pd), privatePhoto__.getPrivatePhotoURLPath(), false);
 

@@ -7,6 +7,7 @@ import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.Listeners.widgets.carousel.Carousel;
 import ai.ilikeplaces.logic.Listeners.widgets.carousel.CarouselCriteria;
+import ai.ilikeplaces.logic.cdn.CDNAlbumPrivateEvent;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
@@ -148,9 +149,12 @@ public class AlbumManager extends AbstractWidgetListener {
                             final Integer photoSequenceNumber = (Integer) initArgs[0];
                             List<HumansIdentity> mywallProspects = (List<HumansIdentity>) initArgs[1];
                             final String imageURL = RBGet.globalConfig.getString(ALBUM__PHOTOS) + privatePhoto__.getPrivatePhotoURLPath();
+                            final String imageThumbURL = RBGet.globalConfig.getString(ALBUM__PHOTOS) + CDNAlbumPrivateEvent.THUMBNAIL + privatePhoto__.getPrivatePhotoURLPath();
                             $$(Controller.Page.pd_photo_permalink).setAttribute(MarkupTag.A.href(), imageURL);
 
                             $$(Controller.Page.pd_photo).setAttribute(MarkupTag.IMG.title(), imageURL);
+
+                            $$(Controller.Page.pd_photo).setAttribute(MarkupTag.IMG.src(), imageThumbURL);
 
                             $$setClass($$(Controller.Page.pd), privatePhoto__.getPrivatePhotoURLPath(), false);
 
