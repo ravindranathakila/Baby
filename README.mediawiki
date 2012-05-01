@@ -94,4 +94,18 @@ See? We want you to get moving fast.
 ==== Replacing current deployment with new deployment... DONE ====
 ==== DEPLOYMENT COMPLETE! ====
 
+
+== Live Deployment Template ==
+
+==== Update Cloud Keys... DONE? ====
+==== Minimizing stylesheets and scripts... DONE? ====
+==== Turn off debugging... DONE? ====
+==== Testing on different browsers... DONE? ====
+==== Uploading deployment files... DONE? ====
+==== Backing up existing working deployment... DONE? ====
+==== Replacing current deployment with new deployment... DONE? ====
+==== Add ehcache.xml to classpath and configure... DONE? ====
+==== Add hazelcast.xml to classpath and configure... DONE? ====
+==== DEPLOYMENT COMPLETE! ====
+
 === ===

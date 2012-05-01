@@ -208,7 +208,16 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
 
                                             notifyUser(RBGet.gui().getString("logging.you.in"));
 
-                                            $$sendJS(JSCodeToSend.refreshPageIn(0));
+                                            switch (criteria.getSignInOnDisplayComponent()) {
+                                                case HOME: {
+                                                    $$sendJS(JSCodeToSend.redirectPageWithURL(ProfileRedirect.PROFILE_URL
+                                                            + ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(criteria.username.getObjectAsValid(), "").getUrl().getUrl()));
+                                                    break;
+                                                }
+                                                default: {
+                                                    $$sendJS(JSCodeToSend.refreshPageIn(0));
+                                                }
+                                            }
                                         } else {/*Ok criteria.password wrong or not activated. What do we do with this guy? First lets make his session object null*/
                                             Loggers.log(Loggers.LEVEL.FAILED_LOGINS, criteria.username.getHumanId() + ":" + criteria.password.getObj());
                                             notifyUser(RBGet.gui().getString("password.is.wrong"));
