@@ -12,7 +12,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.cache.SmartCache2;
+import ai.ilikeplaces.util.cache.SmartCache3;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
@@ -36,9 +36,9 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
 
 // ------------------------------ FIELDS STATIC --------------------------
 
-    public static final SmartCache2<Long, PrivateEvent, HumanId> PRIVATE_EVENT_BASIC_INFO_CACHE = new SmartCache2<Long, PrivateEvent, HumanId>(
+    public static final SmartCache3<Long, PrivateEvent, HumanId> PRIVATE_EVENT_BASIC_INFO_CACHE = new SmartCache3<Long, PrivateEvent, HumanId>(
 
-            new SmartCache2.RecoverWith<Long, PrivateEvent, HumanId>() {
+            new SmartCache3.RecoverWith<Long, PrivateEvent, HumanId>() {
                 @Override
                 public PrivateEvent getValue(final Long privateEventId, HumanId humanId) {
 

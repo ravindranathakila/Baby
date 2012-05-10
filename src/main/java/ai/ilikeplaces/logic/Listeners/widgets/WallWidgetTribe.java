@@ -16,7 +16,7 @@ import ai.ilikeplaces.logic.validators.unit.WallEntry;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.cache.SmartCache2;
+import ai.ilikeplaces.util.cache.SmartCache3;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -43,8 +43,8 @@ import java.util.List;
 public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
 // ------------------------------ FIELDS ------------------------------
 
-    final static public SmartCache2<Long, Msg, String> LAST_WALL_ENTRY = new SmartCache2<Long, Msg, String>(
-            new SmartCache2.RecoverWith<Long, Msg, String>() {
+    final static public SmartCache3<Long, Msg, String> LAST_WALL_ENTRY = new SmartCache3<Long, Msg, String>(
+            new SmartCache3.RecoverWith<Long, Msg, String>() {
                 @Override
                 public Msg getValue(final Long whichWall, final String requester) {
                     final List<Msg> msgs = DB.getHumanCRUDTribeLocal(false).readWallLastEntries(new HumanId(requester), new Obj<Long>(whichWall), 1, new RefreshSpec()).returnValue();

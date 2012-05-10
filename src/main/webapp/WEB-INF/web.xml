@@ -168,6 +168,11 @@
             <param-value>UTF-8</param-value>
         </init-param>
     </filter>
+    <filter>
+        <description>Mainly to catch our long lived javax.ejb.NoSuchEJBException</description>
+        <filter-name>FilterException</filter-name>
+        <filter-class>ai.ilikeplaces.servlets.filters.FilterException</filter-class>
+    </filter>
     <!--<filter>-->
         <!--<filter-name>FacebookUserFilter</filter-name>-->
         <!--<filter-class>ai.ilikeplaces.servlets.filters.FacebookUserFilter</filter-class>-->
@@ -245,6 +250,11 @@
     <filter-mapping>
         <filter-name>LogoutNRedirect</filter-name>
         <url-pattern>/page/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>FilterException</filter-name>
+        <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
     <!--<filter-mapping>-->

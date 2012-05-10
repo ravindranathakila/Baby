@@ -206,6 +206,8 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
 
                                             userSession_.setAttribute(HumanUserLocal.NAME, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
 
+                                            userSession_.setAttribute(ServletLogin.Username, criteria.username.getHumanId());
+
                                             notifyUser(RBGet.gui().getString("logging.you.in"));
 
                                             switch (criteria.getSignInOnDisplayComponent()) {

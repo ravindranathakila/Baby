@@ -70,6 +70,9 @@ public class ServletMobile extends HttpServlet {
 
                         activeSession.setAttribute(HumanUserLocal.NAME, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, activeSession)));
 
+                        activeSession.setAttribute(ServletLogin.Username, existingUser.getHumanId());
+
+
                         resp.getWriter().flush();
                         resp.getWriter().append(gson.toJson(true));
                     } else {
