@@ -14,7 +14,7 @@
             <artifactId>servlet-api</artifactId>
             <version>1+</version>
             <scope>system</scope>
-            <systemPath>C:/Program Files/Apache Software Foundation/Apache Tomcat 6.0.18/lib/servlet-api.jar</systemPath>
+            <systemPath>/home/ravindranathakila/apache-tomcat-6.0.14/lib/servlet-api.jar</systemPath>
         </dependency-->
         <dependency>
             <groupId>ai</groupId>
@@ -31,7 +31,7 @@
             <artifactId>jsp-api</artifactId>
             <version>1+</version>
             <scope>system</scope>
-            <systemPath>M:/apache-tomcat-6.0.14/lib/jsp-api.jar</systemPath>
+            <systemPath>/home/ravindranathakila/apache-tomcat-6.0.14/lib/jsp-api.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.apache.openejb</groupId>
@@ -114,7 +114,7 @@
             <artifactId>derbyclient</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>C:/Program Files/Sun/JavaDB/lib/derbyclient.jar</systemPath>
+            <systemPath>/home/ravindranathakila/JavaDB/lib/derbyclient.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>logback</groupId>
@@ -144,7 +144,7 @@
             <artifactId>cloudfiles</artifactId>
             <version>0</version>
             <scope>system</scope>
-            <systemPath>D:/1/adimpression/rackspace-java-cloudfiles-v1.5.3-0/dist/java-cloudfiles.jar
+            <systemPath>/home/ravindranathakila/rackspace-java-cloudfiles-v1.5.3-0/dist/java-cloudfiles.jar
             </systemPath>
         </dependency>
         <dependency>
@@ -200,7 +200,7 @@
             <artifactId>log4j</artifactId>
             <version>log4j-1.2.15</version>
             <scope>system</scope>
-            <systemPath>D:/1/adimpression/rackspace-java-cloudfiles-v1.5.3-0/lib/log4j-1.2.15.jar
+            <systemPath>/home/ravindranathakila/rackspace-java-cloudfiles-v1.5.3-0/lib/log4j-1.2.15.jar
             </systemPath>
         </dependency>
         <dependency>
@@ -208,7 +208,7 @@
             <artifactId>xercesImpl</artifactId>
             <version>2.8.1</version>
             <scope>system</scope>
-            <systemPath>D:/1/adimpression/rackspace-java-cloudfiles-v1.5.3-0/lib/xercesImpl-2.8.1.jar
+            <systemPath>/home/ravindranathakila/rackspace-java-cloudfiles-v1.5.3-0/lib/xercesImpl-2.8.1.jar
             </systemPath>
         </dependency>
         <dependency>
@@ -406,10 +406,10 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <outputDirectory>
-                        M:/apache-tomcat-6.0.14/webapps/
+                        /apache-tomcat-6.0.14/webapps/
                     </outputDirectory>
                     <webappDirectory>
-                        M:/apache-tomcat-6.0.14/webapps/${project.build.finalName}
+                        /home/ravindranathakila/apache-tomcat-6.0.14/webapps/${project.build.finalName}
                     </webappDirectory>
                 </configuration>
                 <executions>
@@ -420,7 +420,7 @@
                         </goals>
                         <configuration>
                             <webappDirectory>
-                                M:/apache-tomcat-6.0.14/webapps/${project.build.finalName}
+                                /home/ravindranathakila/apache-tomcat-6.0.14/webapps/${project.build.finalName}
                             </webappDirectory>
                             <archive>
                                 <manifest>
