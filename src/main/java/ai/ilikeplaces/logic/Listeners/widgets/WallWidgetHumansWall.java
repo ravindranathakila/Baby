@@ -275,7 +275,7 @@ public class WallWidgetHumansWall extends WallWidget {
                         if (r.returnStatus() == 0) {
                             $$(WallWidgetIds.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), "");
                             wallAppend.setObj("");
-                            LAST_WALL_ENTRY.MAP.put(new String(myrequestedProfile.getHumanId()), null);
+                            LAST_WALL_ENTRY.MAP.remove(new String(myrequestedProfile.getHumanId()));
 
                             clear($$(WallWidgetIds.wallContent));
                             final Wall wall = DB.getHumanCrudWallLocal(true).readWall(requestedProfile, new Obj<HumanId>(currUserAsVisitor), REFRESH_SPEC).returnValue();
