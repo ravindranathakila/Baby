@@ -14,23 +14,31 @@
         </title>
         <link rel="icon" type="image/ico" href="/favicon.ico"/>
     </head>
-    <body id="body"
+    <body id="body">
+		<div id="Main_display" class="container" itsnat:nocache="true">
 
-    	class="vtip" title="Next photo: Ctrl + ]<br/>Previous photo: Ctrl + [<br/>Vanish(7 secs): Ctrl + \\<br/>Photo Page: Ctrl + ;<br/>Owner Page: Ctrl + '<br/>Panoramio photos are copyrighted by their owners">
-		<div id="Main_display" class="container" itsnat:nocache="true" style="display:block;background:white;opacity:0.7; filter:alpha(opacity=70)">
+            <div itemscope itemtype="http://schema.org/Place">
+                <h1> What is the latitude and longitude of the
+                    <span itemprop="name">Empire State Building</span>?
+                </h1>
+                Answer:
+                <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+                    Latitude: 40 deg 44 min 54.36 sec N
+                    Longitude: 73 deg 59 min 8.5 dec W
+                    <meta itemprop="latitude" content="40.75"/>
+                    <meta itemprop="longitude" content="73.98"/>
+                </div>
+            </div>
+
 			<div class="span-24 last" id="ilp_progress_block" style="display:none;background:white;opacity:0.9; filter:alpha(opacity=90)">
 
 				<div id="progress-bar" style="display:none;">
 					<div id="progress-level"></div>
 				</div>
 				<div class="span-24 last" >
-					<div class="span-2 prepend-8 last center" style="display:none;">
-						<img class="center" src="/images/circle.gif" height="18px" alt="..."/>
-					</div>
+
 					<div class="span-6 append-8 last left bold" id="ilp_current_operation" style="display:none;">Loading...</div>
 					<hr class="space"/>
-					<div class="span-4 prepend-10 append-10 last left bold" style="display:none;"><a href="#" style="font-size:10px;" onclick="ilp_progress_finalize();">i'm in a hurry! show anyway...</a></div>
-                    <hr class="space"/>
                     <div class="span-4 prepend-10 append-10 last left bold center" style="display:none;">&nbsp;&nbsp;&nbsp;&nbsp;Better, take me...</div>
                     <div class="span-6 prepend-9 append-9 last left bold"><img src="http://www.ilikeplaces.com/favicon.png" alt="_"/>&nbsp;&nbsp;
                         <a class="logo_yellow" style="font-size:13px;"
@@ -124,7 +132,7 @@
                         <div class="span-24 last" style="display:none;">
                             <div class="span-12" id="Main_f2">&nbsp;</div>
                             <div class="span-12 last">&nbsp;</div>
-                        </div>
+                        </div>                      `
                     </div>
                     <div class="span-24 last">
                         <div class="span-5" id="Main_othersidebar">
