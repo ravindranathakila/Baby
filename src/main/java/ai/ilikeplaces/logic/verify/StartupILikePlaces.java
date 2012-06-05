@@ -4,7 +4,6 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
-import ai.ilikeplaces.util.Hail;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MethodTimer;
 import ai.ilikeplaces.ygp.impl.ClientFactory;
@@ -136,6 +135,5 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         System.out.println("********* START UP CHECK DONE ILIKEPLACES");
         System.out.println("********* ********* ********* ********* *********");
         System.out.println("");
-        System.out.println(Hail.honour());
     }
 }

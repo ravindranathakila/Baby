@@ -10,19 +10,32 @@
     <title>button</title>
 </head>
 <body itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
-<div class="" id="GenericButtonWidth">
-    <div class="just_link use100 center cursor_link">
-        <a id="GenericButtonLink">
-            <span class="vtip center" style="cursor:pointer;vertical-align:middle;text-decoration:underline;color:#000000;"
-                                        id="GenericButtonText">
-            </span>
-            <img
-                id="GenericButtonImage"
-                class="use100"
-                src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/arrow_sans_right_32.png" alt="Link"
-                style="vertical-align:middle;display:none;" />
-        </a>
+    <div itemscope itemtype="http://schema.org/Event">
+        <span itemprop="name">Event Name</span>
+        <img src="image.jpg" itemprop="image" />
+
+        <span itemprop="jobTitle">Professor</span>
+        <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+        <span itemprop="streetAddress">
+          20341 Whitworth Institute
+          405 N. Whitworth
+        </span>
+            <span itemprop="addressLocality">Seattle</span>,
+            <span itemprop="addressRegion">WA</span>
+            <span itemprop="postalCode">98052</span>
+        </div>
+        <span itemprop="telephone">(425) 123-4567</span>
+        <a href="mailto:jane-doe@xyz.edu" itemprop="email">
+            jane-doe@xyz.edu</a>
+
+        Jane's home page:
+        <a href="www.janedoe.com" itemprop="url">janedoe.com</a>
+
+        Graduate students:
+        <a href="www.xyz.edu/students/alicejones.html" itemprop="colleague">
+            Alice Jones</a>
+        <a href="www.xyz.edu/students/bobsmith.html" itemprop="colleague">
+            Bob Smith</a>
     </div>
-</div>
 </body>
 </html>

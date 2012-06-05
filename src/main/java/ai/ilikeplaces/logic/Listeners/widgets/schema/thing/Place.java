@@ -15,8 +15,12 @@ import org.w3c.dom.html.HTMLDocument;
  */
 public class Place extends AbstractWidgetListener<PlaceCriteria> {
 
-    public static enum PlaceIds implements WidgetIds{
-
+    public static enum PlaceIds implements WidgetIds {
+        placeNamePre,
+        placeName,
+        placeNamePost,
+        placeLng,
+        placeLat
     }
 
     /**
@@ -25,8 +29,8 @@ public class Place extends AbstractWidgetListener<PlaceCriteria> {
      * @param t
      * @param appendToElement__
      */
-    public Place(final ItsNatServletRequest request__, final Controller.Page page__, final PlaceCriteria placeCriteria, final Element appendToElement__) {
-        super(request__, page__, placeCriteria, appendToElement__);
+    public Place(final ItsNatServletRequest request__, final PlaceCriteria placeCriteria, final Element appendToElement__) {
+        super(request__, Controller.Page.Place, placeCriteria, appendToElement__);
     }
 
     /**

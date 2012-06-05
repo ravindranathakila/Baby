@@ -6,6 +6,7 @@ import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.LongMsg;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOnCriteria;
+import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.PlaceCriteria;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.modules.Modules;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -312,6 +313,17 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         }
                     }
 
+
+                    GEO_WIDGET:
+                    {
+                        new ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place(request__,
+                                new PlaceCriteria()
+                                        .setPlaceName(existingLocation_.getLocationName())
+                                        .setPlaceLat(existingLocation_.getLocationGeo1())
+                                        .setPlaceLng(existingLocation_.getLocationGeo2()),
+                                $(Controller.Page.Main_center_content));
+                    }
+
                     DISQUS:
                     {
                         try {
@@ -435,7 +447,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                     p.setTextContent(tweet.getText().replace(AT_SIGN, EMPTY));
                                     $(Main_disqus_thread_data).appendChild(p);
                                 }
-                                if(result.getTweets().size() == 0){
+                                if (result.getTweets().size() == 0) {
                                     sl.l("No twitter results found");
                                 }
                             } catch (final Throwable t) {

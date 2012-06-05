@@ -4,6 +4,8 @@ import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.logic.Listeners.*;
 import ai.ilikeplaces.logic.Listeners.templates.TemplateGeneric;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
+import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Event;
+import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
 import org.itsnat.core.*;
@@ -160,6 +162,10 @@ final public class
 
     final PageFace info = Page.Info;
 
+    final PageFace place = Page.Place;
+    final PageFace event = Page.Event;
+    final PageFace person = Page.Person;
+
     final PageFace teachTribe = Page.TeachTribe;
     final PageFace teachMoment = Page.TeachMoment;
 
@@ -244,6 +250,51 @@ final public class
             @Override
             public String toString() {
                 return DocHelp;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
+
+        Place("ai/ilikeplaces/widgets/schema/thing/place.xhtml",
+                ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place.PlaceIds.values()
+        ) {
+            @Override
+            public String toString() {
+                return DocPlace;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
+
+        Event("ai/ilikeplaces/widgets/schema/thing/event.xhtml",
+                ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Event.EventIds.values()
+        ) {
+            @Override
+            public String toString() {
+                return DocEvent;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
+
+        Person("ai/ilikeplaces/widgets/schema/thing/person.xhtml",
+                ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Person.PersonIds.values()
+        ) {
+            @Override
+            public String toString() {
+                return DocPerson;
             }
 
             @Override
@@ -1262,6 +1313,16 @@ final public class
         /*TeachTribe IDs*/
         //Nothing here
 
+        /*Place Page*/
+        final static public String DocPlace = "DocPlace";
+
+        /*Event Page*/
+        final static public String DocEvent = "DocEvent";
+
+        /*Person Page*/
+        final static public String DocPerson = "DocPerson";
+
+
         /*Help Page*/
         final static public String DocHelp = "DocHelp";
         /*Help IDs*/
@@ -1834,6 +1895,12 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(forgotPasswordChange.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(forgotPasswordChange));
 
             inhs__.registerItsNatDocFragmentTemplate(profileWidget.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(profileWidget));
+
+            inhs__.registerItsNatDocFragmentTemplate(place.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(place));
+
+            inhs__.registerItsNatDocFragmentTemplate(event.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(event));
+
+            inhs__.registerItsNatDocFragmentTemplate(person.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(person));
 
             inhs__.registerItsNatDocFragmentTemplate(info.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(info));
 
