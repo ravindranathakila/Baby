@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.Listeners.widgets.schema.thing;
 
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;
+import ai.ilikeplaces.util.MarkupTag;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
@@ -15,18 +16,20 @@ import org.w3c.dom.html.HTMLDocument;
  */
 public class Person extends AbstractWidgetListener<PersonCriteria> {
 
-    public enum PersonIds implements WidgetIds{
-
+    public enum PersonIds implements WidgetIds {
+        personName,
+        personPhoto
     }
 
     /**
      * @param request__
-     * @param page__
-     * @param t
      * @param appendToElement__
      */
-    public Person(final ItsNatServletRequest request__, final Controller.Page page__, final PersonCriteria personCriteria, final Element appendToElement__) {
-        super(request__, page__, personCriteria, appendToElement__);
+    public Person(final ItsNatServletRequest request__, final PersonCriteria personCriteria, final Element appendToElement__) {
+        super(request__, Controller.Page.Person, personCriteria, appendToElement__);
+
+        $$(PersonIds.personName).setTextContent(criteria.getPersonName());
+        $$(PersonIds.personPhoto).setAttribute(MarkupTag.IMG.src(), criteria.getPersonPhoto());
     }
 
     /**

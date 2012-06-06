@@ -7,4 +7,25 @@ package ai.ilikeplaces.logic.Listeners.widgets.schema.thing;
  * Time: 12:06 PM
  */
 public class PersonCriteria {
+
+    private String personName;
+    private String personPhoto;
+
+    public String getPersonName() {
+        return personName;
+    }
+
+    public PersonCriteria setPersonName(String personName) {
+        this.personName = personName;
+        return this;
+    }
+
+    public String getPersonPhoto() {
+        return personPhoto;
+    }
+
+    public PersonCriteria setPersonPhoto(String personPhoto) {
+        this.personPhoto = personPhoto;
+        return this;
+    }
 }

@@ -6,6 +6,9 @@ import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.LongMsg;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOnCriteria;
+import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
+import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Person;
+import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.PersonCriteria;
 import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.PlaceCriteria;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.modules.Modules;
@@ -170,22 +173,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor + JSCodeToSend.FnLocationId + JSCodeToSend.FnLocationName + JSCodeToSend.FnSetTitle);
                 final ResourceBundle gUI = ResourceBundle.getBundle(AI_ILIKEPLACES_RBS_GUI);
 
-                logTheQueryLocationPerUser:
-                {
-                    if (getUsername() != null) {
-                        Loggers.USER.info(getUsernameAsValid() + QUERIES_FOR_LOCATION + location + OF + superLocation);
-                        sl.appendToLogMSG(getUsernameAsValid());
-                    } else {
-                        Loggers.NON_USER.info(request__.getServletRequest().getRemoteHost() + QUERIES_FOR_LOCATION + location + OF + superLocation);
-                        sl.appendToLogMSG(request__.getServletRequest().getRemoteHost());
-                    }
-                }
-
-                UCShowPlacesDataFromGooglePlaceAPIIncludingHotelsRestaurants:
-                {
-
-                }
-
 
                 layoutNeededForAllPages:
                 {
@@ -213,11 +200,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             setMetaDescription:
                             {
                                 $(mainMetaDesc).setAttribute(MarkupTag.META.content(), MessageFormat.format(gUI.getString(WOEIDPAGE_DESC), location));
-                            }
-                            setHotelsLink:
-                            {
-                                //$(Main_hotels_link).setAttribute(MarkupTag.A.href(), HTTP_TRAVEL_ILIKEPLACES_COM_INDEX_JSP_CID_317285_PAGE_NAME_HOT_SEARCH_SUBMITTED_TRUE_VALIDATE_CITY_TRUE_CITY + location.split(OF)[0].replace("/", SPACE));
-                                $(Main_loading_hotels_link).setAttribute(MarkupTag.A.href(), HTTP_TRAVEL_ILIKEPLACES_COM_INDEX_JSP_CID_317285_PAGE_NAME_HOT_SEARCH_SUBMITTED_TRUE_VALIDATE_CITY_TRUE_CITY + location.split(OF)[0].replace("/", SPACE));
                             }
                         } catch (final Throwable t) {
                             sl.l(ERROR_IN_UC_SEO, t);
@@ -324,110 +306,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 $(Controller.Page.Main_center_content));
                     }
 
-                    DISQUS:
-                    {
-                        try {
-
-                            UCIReadDatabaseData:
-                            {
-                                final List<LongMsg> existingLongMsgs = existingLocation_.getLongMsgs();
-
-                                if (existingLongMsgs == null || existingLongMsgs.size() == 0) {
-                                    sl.l("Direct update since exisitng data is zero or null.");
-                                    /*start disqus population anyway*/
-                                    UCICheckForDisqusData:
-                                    {
-                                        final JSONObject postJsonObject = getDisqusPosts(WOEID);
-                                        final JSONArray threadPosts = postJsonObject.getJSONArray(RESPONSE);
-                                        final int numberOfThreadPosts = threadPosts.length();
-                                        sl.l(NUMBER_OF_ITEMS_AT_DISQUS_IN_THREAD + numberOfThreadPosts);
-                                        UCSaveDataInDatabase:
-                                        {
-                                            Map<String, String> postsMap = new HashMap<String, String>();
-                                            for (int i = 0; i < numberOfThreadPosts; i++) {
-                                                final JSONObject threadPost = threadPosts.getJSONObject(i);
-                                                sl.l(threadPost.get(CREATED_AT).toString());
-                                                sl.l(threadPost.get(CREATED_AT).toString());
-                                                postsMap.put(threadPost.getString(POST_ID) + PIPE + threadPost.get(CREATED_AT).toString(), threadPost.toString());
-                                                final Element p = $(MarkupTag.P);
-                                                p.setTextContent(threadPost.get(CREATED_AT).toString() + PIPE + threadPost.get(RAW__MESSAGE).toString());
-                                                $(Main_disqus_thread_data).appendChild(p);
-                                            }
-                                            sl.l("Attempting to update posts data to database");
-                                            DB.getHumanCRUDLocationLocal(false).doULocationComments(WOEID, postsMap, REFRESH_SPEC);
-                                            sl.l("Database updated.");
-                                        }
-
-                                    }
-                                } else {
-                                    sl.l("No direct update since there is existing data in database.");
-                                    /* 500,000 indexed by Google at 80,000 pages a day is about 1 week  */
-                                    UCICheckIfDataNotRefreshedWithinLastWeek:
-                                    {
-                                        final LongMsg dateCalcPost = existingLongMsgs.get(existingLongMsgs.size() - 1);
-                                        sl.l("Date calculation data:" + dateCalcPost.getLongMsgMetadata());
-                                        final String date = dateCalcPost.getLongMsgMetadata().split("\\|")[1];//we check if length is NOT zero in IF condition before
-                                        final String[] dataArr = date.split("-");
-
-                                        Calendar then = Calendar.getInstance();
-                                        then.set(Integer.parseInt(dataArr[0]), Integer.parseInt(dataArr[1]), Integer.parseInt(dataArr[2].substring(0, 2)));
-                                        Calendar now = Calendar.getInstance();
-                                        final long elapsed = (now.getTimeInMillis() - then.getTimeInMillis()) / 1000 * 60 * 60 * 24;
-
-                                        if (elapsed > 7) {
-                                            sl.l("Seven days elapsed since last update");
-                                            UCICheckForDisqusData:
-                                            {
-                                                UCICheckIfPostCountIsLessThanAtDisqusToAvoidDisqusErasingOurDatabase:
-                                                {
-                                                    final JSONObject postJsonObject = getDisqusPosts(WOEID);
-                                                    final JSONArray threadPosts = postJsonObject.getJSONArray(RESPONSE);
-                                                    final int numberOfThreadPosts = threadPosts.length();
-                                                    sl.l(NUMBER_OF_ITEMS_AT_DISQUS_IN_THREAD + numberOfThreadPosts);
-
-                                                    if (existingLongMsgs.size() < numberOfThreadPosts) {
-                                                        UCSaveDataInDatabase:
-                                                        {
-                                                            Map<String, String> postsMap = new HashMap<String, String>();
-                                                            for (int i = 0; i < numberOfThreadPosts; i++) {
-                                                                final JSONObject threadPost = threadPosts.getJSONObject(i);
-                                                                sl.l(threadPost.get(CREATED_AT).toString());
-                                                                sl.l(threadPost.get(CREATED_AT).toString());
-                                                                postsMap.put(threadPost.getString(POST_ID) + PIPE + threadPost.get(CREATED_AT).toString(), threadPost.toString());
-                                                            }
-                                                            DB.getHumanCRUDLocationLocal(false).doULocationComments(WOEID, postsMap, REFRESH_SPEC);
-                                                        }
-                                                    } else {
-                                                        sl.l("Avoiding update since Disqus post count is lower than database post count.");
-                                                    }
-                                                }
-                                            }
-                                        } else {
-                                            sl.l("Avoiding update since Last update was within seven days.");
-                                        }
-                                    }
-
-                                    UCAppendingSEODisqusData:
-                                    {
-                                        for (final LongMsg threadPost : existingLongMsgs) {
-                                            final Element p = $(MarkupTag.P);
-                                            p.setTextContent(threadPost.getLongMsgMetadata().split("\\|")[1] + PIPE + new JSONObject(threadPost.getLongMsgContent()).get(RAW__MESSAGE));
-                                            $(Main_disqus_thread_data).appendChild(p);
-                                        }
-                                    }
-
-                                }
-                            }
-
-
-                        } catch (final Throwable t) {
-                            if (t.getMessage().contains("Got error code:400")) {
-                                sl.l(ERROR_IN_UC_DISQUS + COLON + t.getMessage());//We don't want to log the unwanted stack trace. This happens when nobody has posted a message on this page before.
-                            } else {
-                                sl.l(ERROR_IN_UC_DISQUS, t);
-                            }
-                        }
-                    }
 
                     SEO:
                     {
@@ -441,11 +319,16 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         setTwitterData:
                         {
                             try {
-                                final QueryResult result = TWITTER.search(QUERY.geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 40, Query.MILES));
+                                final QueryResult result = TWITTER.search(QUERY.geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 10000, Query.MILES));
                                 for (Tweet tweet : result.getTweets()) {
                                     final Element p = $(MarkupTag.P);
                                     p.setTextContent(tweet.getText().replace(AT_SIGN, EMPTY));
                                     $(Main_disqus_thread_data).appendChild(p);
+                                    new ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Person(
+                                            request__,
+                                            new PersonCriteria().setPersonName(tweet.getFromUser()).setPersonPhoto(tweet.getProfileImageUrl()),
+                                            $(Main_center_main)
+                                    );
                                 }
                                 if (result.getTweets().size() == 0) {
                                     sl.l("No twitter results found");
@@ -453,17 +336,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             } catch (final Throwable t) {
                                 sl.l("An error occurred during twitter fetch:" + t.getMessage());
                             }
-                        }
-                    }
-
-                    showUploadFileLink:
-                    {
-                        try {
-                            if (getUsername() != null) {
-                                displayBlock($(Main_othersidebar_upload_file_sh));
-                            }
-                        } catch (final Throwable t) {
-                            sl.l(ERROR_IN_UC_SHOW_UPLOAD_FILE_LINK, t);
                         }
                     }
 
@@ -578,48 +450,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     final ItsNatHTMLDocument itsNatHTMLDocument__,
                     final HTMLDocument hTMLDocument__,
                     final ItsNatDocument itsNatDocument__) {
-                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.Main_hotels_link), EventType.CLICK.toString(), new org.w3c.dom.events.EventListener() {
-                    @Override
-                    public void handleEvent(Event evt) {
-                        itsNatHTMLDocument__.addCodeToSend(
-                                JSCodeToSend.redirectPageWithURL("http://travel.ilikeplaces.com/hotels/index.jsp?cid=317285")
-                        );
-                    }
-                }, false);
-                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.Main_home_page_link), EventType.CLICK.toString(), new org.w3c.dom.events.EventListener() {
-                    @Override
-                    public void handleEvent(Event evt) {
-                        itsNatHTMLDocument__.addCodeToSend(
-                                JSCodeToSend.redirectPageWithURL("/")
-                        );
-                    }
-                }, false);
-                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.Main_flight_page_link), EventType.CLICK.toString(), new org.w3c.dom.events.EventListener() {
-                    @Override
-                    public void handleEvent(Event evt) {
-                        itsNatHTMLDocument__.addCodeToSend(
-                                JSCodeToSend.redirectPageWithURL("http://travel.ilikeplaces.com/airlines/index.jsp?cid=317285")
-                        );
-                    }
-                }, false);
-                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.Main_car_page_link), EventType.CLICK.toString(), new org.w3c.dom.events.EventListener() {
-                    @Override
-                    public void handleEvent(Event evt) {
-                        itsNatHTMLDocument__.addCodeToSend(
-                                JSCodeToSend.redirectPageWithURL("http://travel.ilikeplaces.com/cars/index.jsp?cid=317285")
-                        );
-                    }
-                }, false);
-                itsNatHTMLDocument__.addEventListener((EventTarget) $(Controller.Page.Main_cruise_page_link), EventType.CLICK.toString(), new org.w3c.dom.events.EventListener() {
-                    @Override
-                    public void handleEvent(Event evt) {
-                        itsNatHTMLDocument__.addCodeToSend(
-                                JSCodeToSend.redirectPageWithURL("http://travel.ilikeplaces.com/go.jsp?link=http://cruises.travelnow.com")
-                        );
-                    }
-                }, false);
-
-
             }
 
             private List<Element> generateLocationLinks(final List<Location> locationList) {
