@@ -1042,7 +1042,6 @@ final public class
                 Controller.Page.Main_geoplacename,
                 Controller.Page.Main_georegion,
                 Controller.Page.Main_othersidebar_identity,
-                Controller.Page.Main_location_photo,
                 Controller.Page.Main_profile_photo,
                 Controller.Page.Main_othersidebar_profile_link,
                 Controller.Page.Main_notice_sh,
@@ -1050,16 +1049,11 @@ final public class
                 Controller.Page.Main_notice,
                 Controller.Page.Main_center_main_location_title,
                 Controller.Page.Main_center_content,
-                Controller.Page.Main_yox,
                 Controller.Page.Main_left_column,
                 Controller.Page.Main_right_column,
                 Controller.Page.Main_sidebar,
                 Controller.Page.Main_login_widget,
-                Controller.Page.Main_location_backlink,
-                Controller.Page.Main_location_list_header,
-                Controller.Page.Main_location_list,
-                Controller.Page.Main_flickr,
-                Controller.Page.Main_disqus_thread_data
+                Controller.Page.Main_location_list
         ) {
             @Override
             public String getURL() {
@@ -1610,7 +1604,6 @@ final public class
         final static public String Main_geoplacename = "Main_geoplacename";
         final static public String Main_georegion = "Main_georegion";
         final static public String Main_othersidebar_identity = "Main_othersidebar_identity";
-        final static public String Main_location_photo = "Main_location_photo";
         final static public String Main_profile_photo = "Main_profile_photo";
         final static public String Main_othersidebar_profile_link = "Main_othersidebar_profile_link";
 
@@ -1619,16 +1612,12 @@ final public class
         final static public String Main_notice_sh = "Main_notice_sh";
         final static public String Main_center_main_location_title = "Main_center_main_location_title";
         final static public String Main_center_content = "Main_center_content";
-        final static public String Main_yox = "Main_yox";
         final static public String Main_left_column = "Main_left_column";
         final static public String Main_right_column = "Main_right_column";
         final static public String Main_sidebar = "Main_sidebar";
         final static public String Main_login_widget = "Main_login_widget";
-        final static public String Main_location_backlink = "Main_location_backlink";
-        final static public String Main_location_list_header = "Main_location_list_header";
         final static public String Main_location_list = "Main_location_list";
         final static public String Main_flickr = "Main_flickr";
-        final static public String Main_disqus_thread_data = "Main_disqus_thread_data";
 
         /*PhotoCRUD Specific IDs*/
         final static public String pc_photo_title = "pc_photo_title";

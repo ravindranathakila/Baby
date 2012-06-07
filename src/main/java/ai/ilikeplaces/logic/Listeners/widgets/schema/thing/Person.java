@@ -18,7 +18,8 @@ public class Person extends AbstractWidgetListener<PersonCriteria> {
 
     public enum PersonIds implements WidgetIds {
         personName,
-        personPhoto
+        personPhoto,
+        personData
     }
 
     /**
@@ -30,6 +31,7 @@ public class Person extends AbstractWidgetListener<PersonCriteria> {
 
         $$(PersonIds.personName).setTextContent(criteria.getPersonName());
         $$(PersonIds.personPhoto).setAttribute(MarkupTag.IMG.src(), criteria.getPersonPhoto());
+        $$(PersonIds.personData).setTextContent(criteria.getPersonData());
     }
 
     /**

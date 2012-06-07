@@ -10,6 +10,17 @@ public class PersonCriteria {
 
     private String personName;
     private String personPhoto;
+    private String personData;
+
+    public String getPersonData() {
+        return personData;
+    }
+
+    public PersonCriteria setPersonData(String personData) {
+        this.personData = personData;
+        return this;
+
+    }
 
     public String getPersonName() {
         return personName;

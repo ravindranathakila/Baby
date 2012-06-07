@@ -80,7 +80,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String WOEIDPAGE_TITLE = "woe" + POST_ID + "page.title";
     private static final String WOEIDPAGE_DESC = "woe" + POST_ID + "page.desc";
     private static final String COMMA = ",";
-    private static final String SIMPLE_LOCATION_NAME = "simpleLocationName";
     private static final ClientFactory YAHOO_GEO_PLANET_FACTORY = Modules.getModules().getYahooGeoPlanetFactory();
     private static final com.disqus.api.impl.ClientFactory DISQUS_API_FACTORY = Modules.getModules().getDisqusAPIFactory();
     private static final String HTTP_DISQUS_COM_API_3_0_THREADS = "http://disqus.com/api/3.0/threads/";
@@ -242,14 +241,11 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 if (url != null) {
                                     $(Main_profile_photo).setAttribute(MarkupTag.IMG.src(), url);
                                     //displayBlock($(Main_profile_photo));
-                                    //displayNone($(Main_location_photo));
                                 } else {
                                     //displayNone($(Main_profile_photo));
-                                    //displayBlock($(Main_location_photo));
                                 }
                             } else {
                                 //displayNone($(Main_profile_photo));
-                                //displayBlock($(Main_location_photo));
                             }
                         } catch (final Throwable t) {
                             sl.l(ERROR_IN_UC_SET_PROFILE_PHOTO_LINK, t);
@@ -270,10 +266,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 if (r.returnStatus() == 0 && r.returnValue() != null) {
                     final Location existingLocation_ = r.returnValue();
 
-                    doTextReplace:
-                    {
-                        $i18nize(SIMPLE_LOCATION_NAME, existingLocation_.getLocationName());
-                    }
                     GEO:
                     {
                         if (existingLocation_.getLocationGeo1() == null || existingLocation_.getLocationGeo2() == null) {
@@ -321,12 +313,12 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             try {
                                 final QueryResult result = TWITTER.search(QUERY.geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 10000, Query.MILES));
                                 for (Tweet tweet : result.getTweets()) {
-                                    final Element p = $(MarkupTag.P);
-                                    p.setTextContent(tweet.getText().replace(AT_SIGN, EMPTY));
-                                    $(Main_disqus_thread_data).appendChild(p);
                                     new ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Person(
                                             request__,
-                                            new PersonCriteria().setPersonName(tweet.getFromUser()).setPersonPhoto(tweet.getProfileImageUrl()),
+                                            new PersonCriteria()
+                                                    .setPersonName(tweet.getFromUser())
+                                                    .setPersonPhoto(tweet.getProfileImageUrl())
+                                                    .setPersonData(tweet.getText()),
                                             $(Main_center_main)
                                     );
                                 }
@@ -334,7 +326,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                     sl.l("No twitter results found");
                                 }
                             } catch (final Throwable t) {
-                                sl.l("An error occurred during twitter fetch:" + t.getMessage());
+                                sl.l("An error occurred during twitter fetch:" + t.getMessage(), t);
                             }
                         }
                     }
@@ -370,11 +362,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     {
                         try {
                             $(Main_center_main_location_title).setTextContent(THIS_IS + existingLocation_.getLocationName() + OF + existingLocation_.getLocationSuperSet());
-
-                            $(Main_location_backlink).appendChild($(P).appendChild(hTMLDocument__.createTextNode(BACK_TO + COLON + SPACE)));
-                            $(Main_location_backlink).appendChild(generateSimpleLocationLink(existingLocation_.getLocationSuperSet()));
-
-                            $(Main_location_list_header).appendChild(($(P).appendChild(hTMLDocument__.createTextNode(AT + existingLocation_.getLocationName() + YOU_CAN_VISIT + COLON + SPACE))));
+                            $(Main_center_content).appendChild(($(P).appendChild(hTMLDocument__.createTextNode(AT + existingLocation_.getLocationName() + YOU_CAN_VISIT + COLON + SPACE))));
 
                             for (final Element element : generateLocationLinks(DB.getHumanCRUDLocationLocal(true).doDirtyRLocationsBySuperLocation(existingLocation_))) {
                                 $(Main_location_list).appendChild(element);
@@ -387,36 +375,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                     }
 
-                    getAndDisplayAllThePhotos:
-                    {
-//                        List<PublicPhoto> listPublicPhoto = existingLocation_.getPublicPhotos();
-//                        sl.appendToLogMSG(NUMBER_OF_PHOTOS_FOR + existingLocation_.getLocationName() + COLON + listPublicPhoto.size());
-//
-//                        int i = 0;
-//                        for (final Iterator<PublicPhoto> it = listPublicPhoto.iterator(); it.hasNext(); i++) {
-//                            try {
-//                                final PublicPhoto publicPhoto = it.next();
-//
-//                                //old mode pasted end of class if needed
-//                                newMode:
-//                                {
-//                                    final Element image = $(IMG);
-//                                    image.setAttribute(IMG.src(), publicPhoto.getPublicPhotoURLPath());
-//                                    image.setAttribute(IMG.alt(), publicPhoto.getPublicPhotoDescription());
-//                                    image.setAttribute(IMG.style(), WIDTH + COLON + PX);
-//
-//                                    final Element link = $(A);
-//                                    link.setAttribute(A.href(), publicPhoto.getPublicPhotoURLPath());
-//
-//                                    link.appendChild(image);
-//
-//                                    $(Main_yox).appendChild(link);
-//                                }
-//                            } catch (final Throwable t) {
-//                                sl.l("Error in UC getAndDisplayAllThePhotos", t);
-//                            }
-//                        }
-                    }
 
                 } else {
                     noSupportForNewLocations:
