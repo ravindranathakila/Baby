@@ -7,9 +7,7 @@ import ai.ilikeplaces.entities.LongMsg;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOnCriteria;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
-import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Person;
-import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.PersonCriteria;
-import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.PlaceCriteria;
+import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.*;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.modules.Modules;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -169,7 +167,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                 sl.appendToLogMSG(RETURNING_LOCATION + location + TO_USER);
 
-                itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor + JSCodeToSend.FnLocationId + JSCodeToSend.FnLocationName + JSCodeToSend.FnSetTitle);
                 final ResourceBundle gUI = ResourceBundle.getBundle(AI_ILIKEPLACES_RBS_GUI);
 
 
@@ -288,14 +285,32 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     }
 
 
+                    final Location locationSuperSet = existingLocation_.getLocationSuperSet();
                     GEO_WIDGET:
                     {
-                        new ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place(request__,
-                                new PlaceCriteria()
-                                        .setPlaceName(existingLocation_.getLocationName())
-                                        .setPlaceLat(existingLocation_.getLocationGeo1())
-                                        .setPlaceLng(existingLocation_.getLocationGeo2()),
-                                $(Controller.Page.Main_center_content));
+
+                        new ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Comment(request__, new CommentCriteria(), $(Controller.Page.Main_right_column)) {
+
+                            @Override
+                            protected void init(CommentCriteria commentCriteria) {
+                                new ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place(request__,
+                                        new PlaceCriteria()
+                                                //This Place
+                                                .setPlaceName(existingLocation_.getLocationName())
+                                                .setPlaceLat(existingLocation_.getLocationGeo1())
+                                                .setPlaceLng(existingLocation_.getLocationGeo2())
+                                                        //Parent Place
+                                                .setPlaceSuperName(locationSuperSet.getLocationName())
+                                                .setPlaceSuperLat(locationSuperSet.getLocationGeo1())
+                                                .setPlaceSuperLng(locationSuperSet.getLocationGeo2())
+                                                        //Parent WOEID
+                                                .setPlaceSuperWOEID(locationSuperSet.getWOEID().toString())
+                                        ,
+                                        $$(CommentIds.commentPerson));
+                            }
+                        };
+
+
                     }
 
 
@@ -306,7 +321,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             $(Main_ICBM).setAttribute(MarkupTag.META.content(), existingLocation_.getLocationGeo1() + COMMA + existingLocation_.getLocationGeo2());
                             $(Main_geoposition).setAttribute(MarkupTag.META.content(), existingLocation_.getLocationGeo1() + COMMA + existingLocation_.getLocationGeo2());
                             $(Main_geoplacename).setAttribute(MarkupTag.META.content(), existingLocation_.getLocationName());
-                            $(Main_georegion).setAttribute(MarkupTag.META.content(), existingLocation_.getLocationSuperSet().getLocationName());
+                            $(Main_georegion).setAttribute(MarkupTag.META.content(), locationSuperSet.getLocationName());
                         }
                         setTwitterData:
                         {
@@ -319,7 +334,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                                     .setPersonName(tweet.getFromUser())
                                                     .setPersonPhoto(tweet.getProfileImageUrl())
                                                     .setPersonData(tweet.getText()),
-                                            $(Main_center_main)
+                                            $(Main_right_column)
                                     );
                                 }
                                 if (result.getTweets().size() == 0) {
@@ -339,6 +354,10 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             hiddenLocationIdInputTag.setAttribute(INPUT.id(), JSCodeToSend.LocationId);
                             hiddenLocationIdInputTag.setAttribute(INPUT.value(), existingLocation_.getLocationId().toString());
                             hTMLDocument__.getBody().appendChild(hiddenLocationIdInputTag);
+
+                            $(Main_location_name).setAttribute(INPUT.value(), existingLocation_.getLocationName() + "");
+                            $(Main_super_location_name).setAttribute(INPUT.value(), locationSuperSet.getLocationName() + "");
+
                         } catch (final Throwable t) {
                             sl.l(ERROR_IN_UC_SET_LOCATION_ID_FOR_JSREFERENCE, t);
                         }
@@ -350,7 +369,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             final Element hiddenLocationIdInputTag = $(INPUT);
                             hiddenLocationIdInputTag.setAttribute(INPUT.type(), INPUT.typeValueHidden());
                             hiddenLocationIdInputTag.setAttribute(INPUT.id(), JSCodeToSend.LocationName);
-                            hiddenLocationIdInputTag.setAttribute(INPUT.value(), existingLocation_.getLocationName() + OF + existingLocation_.getLocationSuperSet().getLocationName());
+                            hiddenLocationIdInputTag.setAttribute(INPUT.value(), existingLocation_.getLocationName() + OF + locationSuperSet.getLocationName());
                             hTMLDocument__.getBody().appendChild(hiddenLocationIdInputTag);
                         } catch (final Throwable t) {
                             sl.l(ERROR_IN_UC_SET_LOCATION_NAME_FOR_JSREFERENCE, t);
@@ -361,8 +380,9 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     setLocationAsPageTopic:
                     {
                         try {
-                            $(Main_center_main_location_title).setTextContent(THIS_IS + existingLocation_.getLocationName() + OF + existingLocation_.getLocationSuperSet());
+                            $(Main_center_main_location_title).setTextContent(THIS_IS + existingLocation_.getLocationName() + OF + locationSuperSet);
                             $(Main_center_content).appendChild(($(P).appendChild(hTMLDocument__.createTextNode(AT + existingLocation_.getLocationName() + YOU_CAN_VISIT + COLON + SPACE))));
+
 
                             for (final Element element : generateLocationLinks(DB.getHumanCRUDLocationLocal(true).doDirtyRLocationsBySuperLocation(existingLocation_))) {
                                 $(Main_location_list).appendChild(element);

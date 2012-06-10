@@ -1,9 +1,6 @@
 <!--
   ~ @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 -->
-<!--do not set class span width here with the div of id GenericButtonWidth because it is set programmeticaly.-->
-<!--Any other classes set here will also be conveniently overridden by the java code.-->
-<!--If you need stype, put it inside this div.-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -20,10 +17,28 @@
                 <div id="placeNamePost">
                 </div>
             </div>
-            <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+            <div itemprop="geo"  itemtype="http://schema.org/GeoCoordinates" itemscope>
                 <meta itemprop="latitude" id="placeLng" content="0.0"/>
                 <meta itemprop="longitude" id="placeLat" content="0.0"/>
             </div>
+
+            <div itemscope itemprop="containedIn" itemtype="http://schema.org/Place">
+                <div>
+                    <div>
+                        <a id="placeSuperLink" href="#">
+                            <span id="placeSuperNamePre">
+                            </span>
+                            <span id="placeSuperName" itemprop="name">Empire State Building
+                            </span>
+                            <span id="placeSuperNamePost">
+                            </span>
+                        </a>
+                    </div>
+                    <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+                        <meta itemprop="latitude" id="placeSuperLng" content="0.0"/>
+                        <meta itemprop="longitude" id="placeSuperLat" content="0.0"/>
+                    </div>
+                </div>
         </div>
     </div>
 </body>

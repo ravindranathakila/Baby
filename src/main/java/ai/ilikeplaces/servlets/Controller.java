@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.logic.Listeners.*;
 import ai.ilikeplaces.logic.Listeners.templates.TemplateGeneric;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
+import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Comment;
 import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Event;
 import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place;
 import ai.ilikeplaces.rbs.RBGet;
@@ -163,6 +164,7 @@ final public class
     final PageFace info = Page.Info;
 
     final PageFace place = Page.Place;
+    final PageFace comment= Page.Comment;
     final PageFace event = Page.Event;
     final PageFace person = Page.Person;
 
@@ -265,6 +267,20 @@ final public class
             @Override
             public String toString() {
                 return DocPlace;
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
+        Comment("ai/ilikeplaces/widgets/schema/thing/comment.xhtml",
+                ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Comment.CommentIds.values()
+        ) {
+            @Override
+            public String toString() {
+                return DocComment;
             }
 
             @Override
@@ -1053,7 +1069,9 @@ final public class
                 Controller.Page.Main_right_column,
                 Controller.Page.Main_sidebar,
                 Controller.Page.Main_login_widget,
-                Controller.Page.Main_location_list
+                Controller.Page.Main_location_list,
+                Controller.Page.Main_super_location_name,
+                Controller.Page.Main_location_name
         ) {
             @Override
             public String getURL() {
@@ -1302,6 +1320,9 @@ final public class
 
         /*Place Page*/
         final static public String DocPlace = "DocPlace";
+
+        /*Comment Page*/
+        final static public String DocComment = "DocComment";
 
         /*Event Page*/
         final static public String DocEvent = "DocEvent";
@@ -1617,7 +1638,8 @@ final public class
         final static public String Main_sidebar = "Main_sidebar";
         final static public String Main_login_widget = "Main_login_widget";
         final static public String Main_location_list = "Main_location_list";
-        final static public String Main_flickr = "Main_flickr";
+        final static public String Main_super_location_name = "Main_super_location_name";
+        final static public String Main_location_name = "Main_location_name";
 
         /*PhotoCRUD Specific IDs*/
         final static public String pc_photo_title = "pc_photo_title";
@@ -1870,6 +1892,8 @@ final public class
             inhs__.registerItsNatDocFragmentTemplate(forgotPasswordChange.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(forgotPasswordChange));
 
             inhs__.registerItsNatDocFragmentTemplate(profileWidget.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(profileWidget));
+
+            inhs__.registerItsNatDocFragmentTemplate(comment.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(comment));
 
             inhs__.registerItsNatDocFragmentTemplate(place.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(place));
 
