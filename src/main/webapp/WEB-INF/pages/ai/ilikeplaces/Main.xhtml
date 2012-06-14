@@ -272,7 +272,7 @@
 
     /* Set size of widget (2px less because of the border) */
     .size420x348A {
-    width: 418px;
+    width: 100%;
     height: 346px;
     font-size: 12px;
     }
@@ -351,10 +351,6 @@
         </div>
 
         <div class="use100">
-            <span class="locationName"></span> is a place in <span class="superLocationName"></span>
-        </div>
-
-        <div class="use100">
             <div class="use236" id="Main_othersidebar">
                 <div class="use5">
                     <div class="use5" style="display:none;">
@@ -370,220 +366,220 @@
                     </div>
                 </div>
             </div>
-        </div>
 
 
-        <div class="use528" id="Main_center">
 
-            <div class="use100 center">
-                <h1 id="Main_center_main_location_title">
-                    &nbsp;
-                </h1>
-            </div>
+            <div class="use528" id="Main_center">
 
-            <div class="use100" id="Main_center_main">
-                <div id="Main_notice_sh" class="use100" style="display:block;">
+                <div class="use100 center">
+                    <h1 id="Main_center_main_location_title" style="font-size:30px;">
+                        &nbsp;
+                    </h1>
                 </div>
-                <div class="use100" style="display:block;">
-                    <div class="use100">
-                        <p id="Main_location_list" class="yellow_fg bold large"></p>
 
-                        <p id="Main_notice" class="yellow_fg bold large"></p>
+                <div class="use100" id="Main_center_main">
+                    <div id="Main_notice_sh" class="use100" style="display:block;">
+                    </div>
+                    <div class="use100" style="display:block;">
+                        <div class="use100">
+                            <p id="Main_notice" class="yellow_fg bold large"></p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
 
-            <div class="use100" id="Main_center_content">
-                <div class="use50" id="Main_left_column">
+                <div class="use100" id="Main_center_content">
+                    <div class="use100" id="Main_left_column">
 
-                    <div class="use100 center">
+                        <div class="use100 center">
 
 
-                        <div class="search-widget size420x348A">
-                            <div class="search-widget-inner">
-                                <div class="predefined-destinations-block">
-                                    <label for="predefined-destinations">Where would you like to go?:</label>
-                                    <ul id="predefined-destinations">
-                                    </ul>
-                                </div>
-                                <div class="destination-block">
-                                    <label for="destination">Where would you like to go?:</label>
-                                    <input type="text" class="textbox longLocationName" id="destination" value=""/>
-                                    <input type="hidden" class="longLocationName" id="targetId " value=""/>
-
-                                    <input type="hidden" class="longLocationName" id="predefinedDestination" value=""/>
-                                    <input type="hidden" class="longLocationName" id="predefinedTargetId" value=""/>
-                                </div>
-                                <div class="check-in-block">
-                                    <label for="check-in">Check-in:</label>
-                                    <span class="calendar-icon" id="checkinIcon">&nbsp;</span>
-                                    <input type="text" class="textbox" id="check-in"/>
-                                    <div id="check-inDialogContainer" class="yui-skin-sam">
-                                        <!-- -->
+                            <div class="search-widget size420x348A">
+                                <div class="search-widget-inner">
+                                    <div class="predefined-destinations-block">
+                                        <label for="predefined-destinations">Where would you like to go?:</label>
+                                        <ul id="predefined-destinations">
+                                        </ul>
                                     </div>
-                                </div>
-                                <div class="check-out-block">
-                                    <label for="check-out">Check-out:</label>
-                                    <span class="calendar-icon" id="checkoutIcon">&nbsp;</span>
-                                    <input type="text" class="textbox" id="check-out"/>
-                                    <div id="check-outDialogContainer" class="yui-skin-sam">
-                                        <!-- -->
+                                    <div class="destination-block">
+                                        <label for="destination">Where would you like to go?:</label>
+                                        <input type="text" class="textbox longLocationName" id="destination" value=""/>
+                                        <input type="hidden" class="longLocationName" id="targetId" value=""/>
+
+                                        <input type="hidden" class="longLocationName" id="predefinedDestination" value=""/>
+                                        <input type="hidden" class="longLocationName" id="predefinedTargetId" value=""/>
                                     </div>
-                                </div>
-                                <div class="reset-dates-block">
-                                    <input type="checkbox" class="checkbox" id="reset-dates"/>
-                                    <label for="reset-dates">I don't have specific dates yet</label>
-                                </div>
-                                <div class="rooms-block">
-                                    <label for="rooms">Rooms:</label>
-                                    <select id="rooms">
-                                        <option value="1" selected>1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="maxcount">9+</option>
-                                    </select>
-                                </div>
-                                <div class="adults-block">
-                                    <label for="adults" id="adults_label">Adults (18+):</label>
-                                    <select id="adults">
-                                        <option value="1"
+                                    <div class="check-in-block">
+                                        <label for="check-in">Check-in:</label>
+                                        <span class="calendar-icon" id="checkinIcon">&nbsp;</span>
+                                        <input type="text" class="textbox" id="check-in"/>
+                                        <div id="check-inDialogContainer" class="yui-skin-sam">
+                                            <!-- -->
+                                        </div>
+                                    </div>
+                                    <div class="check-out-block">
+                                        <label for="check-out">Check-out:</label>
+                                        <span class="calendar-icon" id="checkoutIcon">&nbsp;</span>
+                                        <input type="text" class="textbox" id="check-out"/>
+                                        <div id="check-outDialogContainer" class="yui-skin-sam">
+                                            <!-- -->
+                                        </div>
+                                    </div>
+                                    <div class="reset-dates-block">
+                                        <input type="checkbox" class="checkbox" id="reset-dates"/>
+                                        <label for="reset-dates">I don't have specific dates yet</label>
+                                    </div>
+                                    <div class="rooms-block">
+                                        <label for="rooms">Rooms:</label>
+                                        <select id="rooms">
+                                            <option value="1" selected>1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="maxcount">9+</option>
+                                        </select>
+                                    </div>
+                                    <div class="adults-block">
+                                        <label for="adults" id="adults_label">Adults (18+):</label>
+                                        <select id="adults">
+                                            <option value="1"
 
-                                                >1</option>
-                                        <option value="2"
-                                                selected="selected"
-                                                >2</option>
-                                        <option value="3"
+                                                    >1</option>
+                                            <option value="2"
+                                                    selected="selected"
+                                                    >2</option>
+                                            <option value="3"
 
-                                                >3</option>
-                                        <option value="4"
+                                                    >3</option>
+                                            <option value="4"
 
-                                                >4</option>
-                                    </select>
-                                </div>
-                                <div class="children-block">
-                                    <label for="children" id="children_label">Children (0-17):</label>
-                                    <select id="children">
-                                        <option value="0"
-                                                selected="selected"
-                                                >0</option>
-                                        <option value="1"
+                                                    >4</option>
+                                        </select>
+                                    </div>
+                                    <div class="children-block">
+                                        <label for="children" id="children_label">Children (0-17):</label>
+                                        <select id="children">
+                                            <option value="0"
+                                                    selected="selected"
+                                                    >0</option>
+                                            <option value="1"
 
-                                                >1</option>
-                                        <option value="2"
+                                                    >1</option>
+                                            <option value="2"
 
-                                                >2</option>
-                                        <option value="3"
+                                                    >2</option>
+                                            <option value="3"
 
-                                                >3</option>
-                                    </select>
-                                </div>
-                                <div class="hotel-chains-block">
-                                    <label for="hotel-chains">Hotel Chain:</label>
-                                    <select id="hotel-chains">
-                                        <option selected="selected">Select hotel chain</option>
-                                        <option value="Hilton">Hilton</option>
-                                        <option value="Holiday Inn">Holiday Inn</option>
-                                        <option value="Marriott">Marriott</option>
-                                        <option value="Travelodge">Travelodge</option>
-                                        <option value="Ramada">Ramada</option>
-                                        <option value="Sheraton">Sheraton</option>
-                                        <option value="Best Western">Best Western</option>
-                                        <option value="Renaissance">Renaissance</option>
-                                        <option value="Westin">Westin</option>
-                                        <option value="Wyndham">Wyndham</option>
-                                        <option value="Courtyard">Courtyard</option>
-                                        <option value="Fairfield">Fairfield</option>
-                                        <option value="Clarion">Clarion</option>
-                                        <option value="Comfort Inn">Comfort Inn</option>
-                                        <option value="Super 8">Super 8</option>
-                                        <option value="Days Inn">Days Inn</option>
-                                        <option value="Hyatt Regency">Hyatt Regency</option>
-                                        <option value="Country Inn">Country Inn</option>
-                                        <option value="Grand Hyatt">Grand Hyatt</option>
-                                        <option value="Doubletree">Doubletree</option>
-                                        <option value="Embassy Suites">Embassy Suites</option>
-                                        <option value="Quality Inn">Quality Inn</option>
-                                        <option value="Residence Inn">Residence Inn</option>
-                                        <option value="Fairfield Inn">Fairfield Inn</option>
-                                        <option value="Hampton Inn">Hampton Inn</option>
-                                        <option value="Howard Johnson">Howard Johnson</option>
-                                        <option value="Omni">Omni</option>
-                                        <option value="Homewood Suites">Homewood Suites</option>
-                                        <option value="Homestead">Homestead</option>
-                                        <option value="Red Roof Inn">Red Roof Inn</option>
-                                        <option value="AmeriSuites">AmeriSuites</option>
-                                        <option value="Comfort Suites">Comfort Suites</option>
-                                        <option value="Wingate Inn">Wingate Inn</option>
-                                        <option value="Sleep Inn">Sleep Inn</option>
-                                        <option value="Springhill Suites">Springhill Suites</option>
-                                        <option value="Econo Lodge">Econo Lodge</option>
-                                        <option value="Hawthorn Suites">Hawthorn Suites</option>
-                                        <option value="Microtel Inn">Microtel Inn</option>
-                                        <option value="Extended Stay">Extended Stay</option>
-                                        <option value="TownePlace Suites">TownePlace Suites</option>
-                                        <option value="La Quinta Inn">La Quinta Inn</option>
-                                        <option value="Drury Inn">Drury Inn</option>
-                                        <option value="Masters Inn">Masters Inn</option>
-                                        <option value="Sierra Suites">Sierra Suites</option>
-                                        <option value="AmeriHost">AmeriHost</option>
-                                        <option value="Baymont Inns & Suites">Baymont Inns & Suites</option>
-                                        <option value="Ritz-Carlton">Ritz-Carlton</option>
-                                        <option value="America’s Best Inns">America’s Best Inns</option>
-                                        <option value="W Hotel">W Hotel</option>
-                                        <option value="Wellesley Inn">Wellesley Inn</option>
-                                        <option value="Studio 6">Studio 6</option>
-                                    </select>
-                                </div>
-                                <div class="star-rating-block">
-                                    <label for="star-rating">Star Rating:</label>
-                                    <select id="star-rating">
-                                        <option value="0"
-                                                selected="selected"
-                                                >
-                                            Don't limit search results</option>
-                                        <option value="1"
-                                                >
-                                            1 star</option>
-                                        <option value="2"
-                                                >
-                                            2 stars</option>
-                                        <option value="3"
-                                                >
-                                            3 stars</option>
-                                        <option value="4"
-                                                >
-                                            4 stars</option>
-                                        <option value="5"
-                                                >
-                                            5 stars</option>
-                                    </select>
-                                </div>
-                                <div class="button-block">
-                                    <button type="button" id="search-btn">Search</button>
+                                                    >3</option>
+                                        </select>
+                                    </div>
+                                    <div class="hotel-chains-block">
+                                        <label for="hotel-chains">Hotel Chain:</label>
+                                        <select id="hotel-chains">
+                                            <option selected="selected">Select hotel chain</option>
+                                            <option value="Hilton">Hilton</option>
+                                            <option value="Holiday Inn">Holiday Inn</option>
+                                            <option value="Marriott">Marriott</option>
+                                            <option value="Travelodge">Travelodge</option>
+                                            <option value="Ramada">Ramada</option>
+                                            <option value="Sheraton">Sheraton</option>
+                                            <option value="Best Western">Best Western</option>
+                                            <option value="Renaissance">Renaissance</option>
+                                            <option value="Westin">Westin</option>
+                                            <option value="Wyndham">Wyndham</option>
+                                            <option value="Courtyard">Courtyard</option>
+                                            <option value="Fairfield">Fairfield</option>
+                                            <option value="Clarion">Clarion</option>
+                                            <option value="Comfort Inn">Comfort Inn</option>
+                                            <option value="Super 8">Super 8</option>
+                                            <option value="Days Inn">Days Inn</option>
+                                            <option value="Hyatt Regency">Hyatt Regency</option>
+                                            <option value="Country Inn">Country Inn</option>
+                                            <option value="Grand Hyatt">Grand Hyatt</option>
+                                            <option value="Doubletree">Doubletree</option>
+                                            <option value="Embassy Suites">Embassy Suites</option>
+                                            <option value="Quality Inn">Quality Inn</option>
+                                            <option value="Residence Inn">Residence Inn</option>
+                                            <option value="Fairfield Inn">Fairfield Inn</option>
+                                            <option value="Hampton Inn">Hampton Inn</option>
+                                            <option value="Howard Johnson">Howard Johnson</option>
+                                            <option value="Omni">Omni</option>
+                                            <option value="Homewood Suites">Homewood Suites</option>
+                                            <option value="Homestead">Homestead</option>
+                                            <option value="Red Roof Inn">Red Roof Inn</option>
+                                            <option value="AmeriSuites">AmeriSuites</option>
+                                            <option value="Comfort Suites">Comfort Suites</option>
+                                            <option value="Wingate Inn">Wingate Inn</option>
+                                            <option value="Sleep Inn">Sleep Inn</option>
+                                            <option value="Springhill Suites">Springhill Suites</option>
+                                            <option value="Econo Lodge">Econo Lodge</option>
+                                            <option value="Hawthorn Suites">Hawthorn Suites</option>
+                                            <option value="Microtel Inn">Microtel Inn</option>
+                                            <option value="Extended Stay">Extended Stay</option>
+                                            <option value="TownePlace Suites">TownePlace Suites</option>
+                                            <option value="La Quinta Inn">La Quinta Inn</option>
+                                            <option value="Drury Inn">Drury Inn</option>
+                                            <option value="Masters Inn">Masters Inn</option>
+                                            <option value="Sierra Suites">Sierra Suites</option>
+                                            <option value="AmeriHost">AmeriHost</option>
+                                            <option value="Baymont Inns & Suites">Baymont Inns & Suites</option>
+                                            <option value="Ritz-Carlton">Ritz-Carlton</option>
+                                            <option value="America’s Best Inns">America’s Best Inns</option>
+                                            <option value="W Hotel">W Hotel</option>
+                                            <option value="Wellesley Inn">Wellesley Inn</option>
+                                            <option value="Studio 6">Studio 6</option>
+                                        </select>
+                                    </div>
+                                    <div class="star-rating-block">
+                                        <label for="star-rating">Star Rating:</label>
+                                        <select id="star-rating">
+                                            <option value="0"
+                                                    selected="selected"
+                                                    >
+                                                Don't limit search results</option>
+                                            <option value="1"
+                                                    >
+                                                1 star</option>
+                                            <option value="2"
+                                                    >
+                                                2 stars</option>
+                                            <option value="3"
+                                                    >
+                                                3 stars</option>
+                                            <option value="4"
+                                                    >
+                                                4 stars</option>
+                                            <option value="5"
+                                                    >
+                                                5 stars</option>
+                                        </select>
+                                    </div>
+                                    <div class="button-block">
+                                        <button type="button" id="search-btn">Search</button>
+                                    </div>
                                 </div>
                             </div>
+                            <input type="hidden" id="lang" value="en" />
+                            <input type="hidden" id="currency" value="USD" />
                         </div>
-                        <input type="hidden" id="lang" value="en" />
-                        <input type="hidden" id="currency" value="USD" />
+
+
                     </div>
-
-
+                    <div class="use100" id="Main_right_column">
+                        &nbsp;
+                    </div>
                 </div>
-                <div class="use50" id="Main_right_column">
-                    &nbsp;
-                </div>
+
             </div>
 
-        </div>
 
-
-        <div class="use236" id="Main_sidebar">
+            <div class="use236" id="Main_sidebar">
+                <p id="Main_location_list" class="yellow_fg bold large"></p>
+            </div>
         </div>
     </div>
 </div>
