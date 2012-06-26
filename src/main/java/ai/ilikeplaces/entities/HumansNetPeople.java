@@ -74,7 +74,7 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanI
 
     @Override
     @Transient
-    public boolean isFriend(final String friendsHumanId) {
+    public boolean ifFriend(final String friendsHumanId) {
         final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doDirtyIsHumansNetPeople(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId));
         if (r.returnStatus() != 0) {
             throw new DBException(r.returnError());
@@ -84,7 +84,7 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanI
 
     @Override
     public boolean notFriend(final String friendsHumanId) {
-        return !isFriend(friendsHumanId);
+        return !ifFriend(friendsHumanId);
     }
 
     @NOTE(note = "MANY IS THE OWNING SIDE, HENCE REFRESH. SINCE THIS IS SELF REFERENTIAL, A REFRESH WITH SELF SHOULD NOT HAPPEN.")

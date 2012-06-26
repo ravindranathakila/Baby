@@ -6,7 +6,6 @@ import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
@@ -71,7 +70,7 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
      */
     @Override
     @Transient
-    public boolean isFriend(final String friendsHumanId) {
+    public boolean ifFriend(final String friendsHumanId) {
         final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doDirtyIsHumansNetPeople(new HumanId(this.humanId), new HumanId(friendsHumanId));
         if (r.returnStatus() != 0) {
             throw new DBException(r.returnError());
@@ -88,7 +87,7 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
     @Override
     @Transient
     public boolean notFriend(final String friendsHumanId) {
-        return !isFriend(friendsHumanId);
+        return !ifFriend(friendsHumanId);
     }
 
 

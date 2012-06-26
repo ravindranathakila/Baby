@@ -326,7 +326,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         setTwitterData:
                         {
                             try {
-                                final QueryResult result = TWITTER.search(QUERY.geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 10000, Query.MILES));
+                                final QueryResult result = TWITTER.search(QUERY.geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 160, Query.MILES));
                                 for (Tweet tweet : result.getTweets()) {
                                     new ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Person(
                                             request__,
@@ -515,3 +515,4 @@ public class ListenerMain implements ItsNatServletRequestListener {
         return postJsonObject;
     }
 }
+

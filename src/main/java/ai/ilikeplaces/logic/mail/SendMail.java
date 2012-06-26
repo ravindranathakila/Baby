@@ -266,7 +266,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
 
                             @Override
                             public void run() {
-                                sendWithAttachmentAsSimpleText(recepientEmail.getEmail(), simpleTextSubject, simpleTextBody, files);
+                                sendWithAttachmentAsSimpleText(recepientEmail.email(), simpleTextSubject, simpleTextBody, files);
                             }
                         }).start();
             }

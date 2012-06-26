@@ -14,5 +14,5 @@ public interface GetMailAddress {
      *
      * @return Email Address
      */
-    public String getEmail();
+    public String email();
 }

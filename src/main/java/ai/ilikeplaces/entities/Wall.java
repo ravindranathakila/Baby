@@ -170,7 +170,7 @@ public class Wall implements Clearance, Refreshable<Wall>, Serializable {
     }
     
     @Transient
-    public String getMetadataValueFor(final WallMetadataKey keyEnum){
+    public String metadataValueFor(final WallMetadataKey keyEnum){
         final String key = keyEnum.toString();
         final String wallMetadata = this.getWallMetadata();
         final String returnVal;

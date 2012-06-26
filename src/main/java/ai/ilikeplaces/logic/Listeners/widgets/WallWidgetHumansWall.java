@@ -58,11 +58,12 @@ public class WallWidgetHumansWall extends WallWidget {
 
                 @Override
                 public Msg getValue(final String whosWall, final String visitor) {
-                    return DB.getHumanCrudWallLocal(false).readWallLastEntries(
+                    final List<Msg> msgs = DB.getHumanCrudWallLocal(false).readWallLastEntries(
                             new HumanId(whosWall),
                             new Obj<String>(visitor),
                             1,
-                            new RefreshSpec()).returnValue().get(0);//Guaranteed not to fail since wall has atleast one entry
+                            new RefreshSpec()).returnValue();
+                    return msgs.size() != 0 ? msgs.get(0) : null;//Well the comment that was here before was false!!! We all make mistakes!
                 }
             }
     );

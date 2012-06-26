@@ -100,15 +100,15 @@ public class AlbumManager extends AbstractWidgetListener {
 
         final List<Email> emails = new ArrayList<Email>(privateEvent.getPrivateEventOwners().size() + privateEvent.getPrivateEventViewers().size() + privateEvent.getPrivateEventInvites().size());
         for (final HumansPrivateEvent humansNetPeople : privateEvent.getPrivateEventOwners()) {
-            emails.add(new Email(humansNetPeople.getEmail()));
+            emails.add(new Email(humansNetPeople.email()));
         }
         for (final HumansPrivateEvent humansNetPeople : privateEvent.getPrivateEventViewers()) {
-            emails.add(new Email(humansNetPeople.getEmail()));
+            emails.add(new Email(humansNetPeople.email()));
         }
 
 
         for (@BUG("Adding invitees as prospects might cause privacy leakage") final HumansPrivateEvent humansNetPeople : privateEvent.getPrivateEventInvites()) {
-            emails.add(new Email(humansNetPeople.getEmail()));
+            emails.add(new Email(humansNetPeople.email()));
         }
 
         wallProspects = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansIdentitiesByEmails(emails);

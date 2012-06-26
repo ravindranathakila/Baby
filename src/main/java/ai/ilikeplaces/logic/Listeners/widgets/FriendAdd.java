@@ -8,9 +8,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.EventType;
-import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Return;
-import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
@@ -77,7 +75,7 @@ abstract public class FriendAdd extends AbstractWidgetListener {
                     $$displayNone($$(Controller.Page.friendAddAddButton));
                     final Human adder = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(mycaller.getObj());
                     final Human addee = DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(mycaller.getObj());
-                    if (!addee.isFriend(adder.getHumanId())) {
+                    if (!addee.ifFriend(adder.getHumanId())) {
                         SendMail.getSendMailLocal().sendAsHTMLAsynchronously(myaddee.getObj(),
                                 adder.getDisplayName(),
                                 UserProperty.getUserPropertyHtmlFor(

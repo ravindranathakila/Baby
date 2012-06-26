@@ -114,6 +114,7 @@ public class Mute extends HumanEquals implements Serializable {
      * @return getMuteContent() being optimistic that it contains the humanId
      */
     @Override
+    @Transient
     public String getHumanId() {
         return getMuteContent();
     }

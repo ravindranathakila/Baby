@@ -124,7 +124,7 @@ public class HumansNet implements HumanPkJoinFace, HumansFriend, Serializable {
 
     @Override
     @Transient
-    public boolean isFriend(final String friendsHumanId) {
+    public boolean ifFriend(final String friendsHumanId) {
         final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doDirtyIsHumansNetPeople(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId));
         if (r.returnStatus() != 0) {
             throw new DBException(r.returnError());
@@ -134,7 +134,7 @@ public class HumansNet implements HumanPkJoinFace, HumansFriend, Serializable {
 
     @Override
     public boolean notFriend(final String friendsHumanId) {
-        return !isFriend(friendsHumanId);
+        return !ifFriend(friendsHumanId);
     }
 
     public void setDisplayName(String displayName) {

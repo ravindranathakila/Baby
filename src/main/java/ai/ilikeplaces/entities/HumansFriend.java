@@ -20,7 +20,7 @@ public interface HumansFriend extends HumanIdFace {
     public String getDisplayName();
 
     @Transient
-    public boolean isFriend(final String friendsHumanId);
+    public boolean ifFriend(final String friendsHumanId);
 
     @Transient
     public boolean notFriend(final String friendsHumanId);

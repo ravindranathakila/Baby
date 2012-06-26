@@ -124,48 +124,50 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
 
                                 final Msg lastWallEntry = WallWidgetHumansWall.LAST_WALL_ENTRY.get(new String(friend.getHumanId()), new String(currentUser));
 
-                                final Element appendToElement__ = $$(UserPropertySidebarIds.user_property_sidebar_content);
+                                if (lastWallEntry != null) {
+                                    final Element appendToElement__ = $$(UserPropertySidebarIds.user_property_sidebar_content);
 
-                                new UserPropertySidebar(request, appendToElement__, new HumanId(lastWallEntry.getMsgMetadata())) {
-                                    final Msg mylastWallEntry = lastWallEntry;
-                                    private String href;
+                                    new UserPropertySidebar(request, appendToElement__, new HumanId(lastWallEntry.getMsgMetadata())) {
+                                        final Msg mylastWallEntry = lastWallEntry;
+                                        private String href;
 
-                                    protected void init(final Object... initArgs) {
+                                        protected void init(final Object... initArgs) {
 
-                                        $$displayBlock($$(UserPropertySidebarIds.user_property_sidebar_talk));
-                                        $$displayNone($$(UserPropertySidebarIds.user_property_sidebar_name_section));
+                                            $$displayBlock($$(UserPropertySidebarIds.user_property_sidebar_talk));
+                                            $$displayNone($$(UserPropertySidebarIds.user_property_sidebar_name_section));
 
-                                        href = ProfileRedirect.PROFILE_URL + HUMANS_IDENTITY_SIDEBAR_CACHE.get(friend.getHumanId(), "").getUrl().getUrl();
+                                            href = ProfileRedirect.PROFILE_URL + HUMANS_IDENTITY_SIDEBAR_CACHE.get(friend.getHumanId(), "").getUrl().getUrl();
 
-                                        String msgContent = lastWallEntry.getMsgContent();
+                                            String msgContent = lastWallEntry.getMsgContent();
 
-                                        TrimMessageContentForReadabilityOnSidebar:
-                                        {
-                                            final int length = msgContent.length();
-                                            if (40 < length) {
-                                                msgContent = msgContent.substring(0, 40) + RBGet.gui().getString(READ_MORE);
+                                            TrimMessageContentForReadabilityOnSidebar:
+                                            {
+                                                final int length = msgContent.length();
+                                                if (40 < length) {
+                                                    msgContent = msgContent.substring(0, 40) + RBGet.gui().getString(READ_MORE);
+                                                }
+                                            }
+
+                                            Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(msgContent).$ElementSetHref(href).get();
+                                            $$(UserPropertySidebarIds.user_property_sidebar_content).appendChild(commentHref);
+                                            if (notifiedWallLongs.contains(friendWallId)) {
+                                                new Notification(request, new NotificationCriteria("!!!"), commentHref);
                                             }
                                         }
 
-                                        Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(msgContent).$ElementSetHref(href).get();
-                                        $$(UserPropertySidebarIds.user_property_sidebar_content).appendChild(commentHref);
-                                        if (notifiedWallLongs.contains(friendWallId)) {
-                                            new Notification(request, new NotificationCriteria("!!!"), commentHref);
+                                        @Override
+                                        protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+
+                                            itsNatHTMLDocument_.addEventListener((EventTarget) $$(UserPropertySidebarIds.user_property_sidebar_engage), EventType.CLICK.toString(), new EventListener() {
+                                                @Override
+                                                public void handleEvent(final Event evt_) {
+
+                                                    $$sendJS(JSCodeToSend.redirectPageWithURL(href));
+                                                }
+                                            }, false);
                                         }
-                                    }
-
-                                    @Override
-                                    protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
-
-                                        itsNatHTMLDocument_.addEventListener((EventTarget) $$(UserPropertySidebarIds.user_property_sidebar_engage), EventType.CLICK.toString(), new EventListener() {
-                                            @Override
-                                            public void handleEvent(final Event evt_) {
-
-                                                $$sendJS(JSCodeToSend.redirectPageWithURL(href));
-                                            }
-                                        }, false);
-                                    }
-                                };
+                                    };
+                                }
                             }
                         };
                     }

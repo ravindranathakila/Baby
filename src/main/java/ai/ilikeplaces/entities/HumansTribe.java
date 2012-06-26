@@ -1,13 +1,10 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.BIDIRECTIONAL;
-import ai.ilikeplaces.doc.FIXME;
-import ai.ilikeplaces.doc.UNIDIRECTIONAL;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
@@ -33,13 +30,14 @@ public class HumansTribe implements HumansFriend, HumanIdFace, HumanEqualsFace ,
     }
 
     @Override
+    @Transient
     public String getDisplayName() {
         return UserProperty.HUMANS_IDENTITY_CACHE.get(getHumanId(), "").getHuman().getDisplayName();
     }
 
     @Override
     @Transient
-    public boolean isFriend(final String friendsHumanId) {
+    public boolean ifFriend(final String friendsHumanId) {
         final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doDirtyIsHumansNetPeople(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId));
         if (r.returnStatus() != 0) {
             throw new DBException(r.returnError());
@@ -49,7 +47,7 @@ public class HumansTribe implements HumansFriend, HumanIdFace, HumanEqualsFace ,
 
     @Override
     public boolean notFriend(final String friendsHumanId) {
-        return !isFriend(friendsHumanId);
+        return !ifFriend(friendsHumanId);
     }
 
     public void setHumanId(final String humanId) {
