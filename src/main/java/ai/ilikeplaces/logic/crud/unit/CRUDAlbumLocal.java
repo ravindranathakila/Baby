@@ -47,7 +47,6 @@ public interface CRUDAlbumLocal {
      * @return
      * @throws DBDishonourCheckedException
      */
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Album doRAlbumByPrivateEvent(final String humanId, final long privateEventId, final RefreshSpec refreshSpec) throws DBDishonourCheckedException, DBFetchDataException;
 
 
@@ -70,6 +69,5 @@ public interface CRUDAlbumLocal {
      * @return
      * @throws DBDishonourCheckedException
      */
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Album doRAlbumByTribe(final String humanId, final long tribeId, final RefreshSpec refreshSpec) throws DBDishonourCheckedException, DBFetchDataException;
 }
