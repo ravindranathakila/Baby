@@ -17,6 +17,7 @@ import java.io.Serializable;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
+@EntityListeners(NSHuman.class)
 public class Human extends HumanEquals implements HumanIdFace, Serializable, Clearance, HumansFriend {
 
     public String humanId;

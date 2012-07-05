@@ -9,7 +9,6 @@ import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.*;
 import ai.ilikeplaces.logic.validators.unit.Email;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;
 import ai.ilikeplaces.util.*;
@@ -377,7 +376,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
             r = new ReturnImpl<Boolean>(DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE, HumanCRUDHuman.ADD_USER_FAILED, true);
         } else {
 
-            if (ai.ilikeplaces.util.spam.mail.Email.isAddressValidTolerant(humanId.getObjectAsValid())) {
+            if (ai.ilikeplaces.util.email.Email.isAddressValidTolerant(humanId.getObjectAsValid())) {
 
                 final Human newUser = new Human();
                 newUser.setHumanId(humanId.getObjectAsValid());

@@ -1,6 +1,4 @@
-package ai.ilikeplaces.jpa;
-
-import ai.ilikeplaces.util.jpa.RefreshSpec;
+package ai.ilikeplaces.util.jpa;
 
 /**
  *

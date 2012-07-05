@@ -14,10 +14,12 @@
             <artifactId>ilikeplaces-doc</artifactId>
             <version>3.0</version>
         </dependency>
+        <!--Required for providing Datanucleus JTA locator plugin-->
         <dependency>
-            <groupId>ai</groupId>
-            <artifactId>ilikeplaces-util</artifactId>
-            <version>4.1</version>
+            <groupId>org.apache.openejb</groupId>
+            <artifactId>openejb-core</artifactId>
+            <version>3.1.4</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>Java</groupId>
@@ -333,50 +335,68 @@
         <!--provided with openejb tomee-->
         <!--we put this here to prevent other libraries inserting openjpa, namely ehcache-->
         <dependency>
-            <groupId>org.apache.openjpa</groupId>
-            <artifactId>openjpa</artifactId>
-            <version>LATEST</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-core</artifactId>
             <version>[3.0,)</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jdo</artifactId>
             <version>[3.0,)</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jpa</artifactId>
             <version>[3.0,)</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-rdbms</artifactId>
             <version>[3.0,)</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-enhancer</artifactId>
             <version>[3.0,)</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.jdo</groupId>
             <artifactId>jdo-api</artifactId>
             <version>[3.0,)</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-hbase</artifactId>
             <version>[3.0,)</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-jpa_2.0_spec</artifactId>
             <version>1.0</version>
+        </dependency>
+
+        <!--hazelcast-->
+
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast</artifactId>
+            <version>2.0.3</version>
+        </dependency>
+
+        <!--provided with openejb tomee-->
+        <!--we put this here to prevent other libraries inserting openjpa, namely ehcache-->
+        <dependency>
+            <groupId>org.apache.openjpa</groupId>
+            <artifactId>openjpa</artifactId>
+            <version>LATEST</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
@@ -505,6 +525,37 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.openjpa</groupId>
+                <artifactId>openjpa-maven-plugin</artifactId>
+                <version>2.2.0</version>
+                <configuration>
+                    <includes>**/entities/*.class</includes>
+                    <excludes>**/entities/XML*.class</excludes>
+                    <addDefaultConstructor>true</addDefaultConstructor>
+                    <enforcePropertyRestrictions>true</enforcePropertyRestrictions>
+                    <persistenceXmlFile>/home/ravindranathakila/ilikeplaces/www.ilikeplaces.com/src/main/resources/META-INF/openjpa/persistence.xml</persistenceXmlFile>
+                    <skip>true</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>enhancer</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>enhance</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.openjpa</groupId>
+                        <artifactId>openjpa</artifactId>
+                        <!-- set the version to be the same as the level in your runtime -->
+                        <version>1.2.1</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
         </plugins>

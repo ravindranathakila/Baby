@@ -1,6 +1,5 @@
-package ai.ilikeplaces.jpa;
+package ai.ilikeplaces.util.jpa;
 
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

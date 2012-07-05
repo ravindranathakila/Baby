@@ -1,4 +1,4 @@
-package ai.ilikeplaces.jpa;
+package ai.ilikeplaces.util.jpa;
 
 /**
  * Created by IntelliJ IDEA.

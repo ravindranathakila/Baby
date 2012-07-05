@@ -1,6 +1,6 @@
 package ai.ilikeplaces.mail;
 
-import ai.ilikeplaces.util.spam.mail.Email;
+import ai.ilikeplaces.util.email.Email;
 
 /**
  * Created by IntelliJ IDEA.

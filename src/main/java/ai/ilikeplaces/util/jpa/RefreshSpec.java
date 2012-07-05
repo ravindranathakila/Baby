@@ -1,4 +1,4 @@
-package ai.ilikeplaces.jpa;
+package ai.ilikeplaces.util.jpa;
 
 import java.io.Serializable;
 import java.util.Arrays;

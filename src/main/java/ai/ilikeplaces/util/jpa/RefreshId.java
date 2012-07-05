@@ -1,4 +1,4 @@
-package ai.ilikeplaces.jpa;
+package ai.ilikeplaces.util.jpa;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
