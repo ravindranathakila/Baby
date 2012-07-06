@@ -14,6 +14,7 @@
             <property name="openjpa.DataCache" value="net.sf.ehcache.openjpa.datacache.EhCacheDataCache"/>
             <property name="openjpa.RemoteCommitProvider" value="net.sf.ehcache.openjpa.datacache.NoOpRemoteCommitProvider"/>
             <property name="openjpa.DataCacheManager" value="net.sf.ehcache.openjpa.datacache.EhCacheDataCacheManager"/>
+            <property name="openjpa.FlushBeforeQueries" value="true"/>
         </properties>
     </persistence-unit>
 

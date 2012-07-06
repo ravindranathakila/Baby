@@ -510,10 +510,10 @@
             <plugin>
                 <groupId>org.datanucleus</groupId>
                 <artifactId>maven-datanucleus-plugin</artifactId>
-                <version>LATEST</version>
+                <version>3.0.1</version>
                 <configuration>
                     <log4jConfiguration>${basedir}/log4j.properties</log4jConfiguration>
-                    <verbose>true</verbose>
+                    <verbose>false</verbose>
                     <api>JPA</api>
                     <metadataIncludes>ai/ilikeplaces/entities/*.class</metadataIncludes>
                 </configuration>
@@ -536,8 +536,7 @@
                     <excludes>**/entities/XML*.class</excludes>
                     <addDefaultConstructor>true</addDefaultConstructor>
                     <enforcePropertyRestrictions>true</enforcePropertyRestrictions>
-                    <persistenceXmlFile>/home/ravindranathakila/ilikeplaces/www.ilikeplaces.com/src/main/resources/META-INF/openjpa/persistence.xml</persistenceXmlFile>
-                    <skip>true</skip>
+                    <skip>false</skip>
                 </configuration>
                 <executions>
                     <execution>

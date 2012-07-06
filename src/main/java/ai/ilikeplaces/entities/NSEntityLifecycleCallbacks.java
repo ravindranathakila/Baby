@@ -8,11 +8,11 @@ package ai.ilikeplaces.entities;
  */
 public interface NSEntityLifecycleCallbacks<ENTITY> {
 
-    public void postPersist(final ENTITY entity);
+    public void postPersist(final ENTITY entity) throws CloneNotSupportedException;
 
     public void postLoad(final ENTITY entity);
 
-    public void postUpdate(final ENTITY entity);
+    public void postUpdate(final ENTITY entity) throws CloneNotSupportedException;
 
     public void postRemove(final ENTITY entity);
 }

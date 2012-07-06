@@ -9,7 +9,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.io.*;
 
 /**
  * @author Ravindranath Akila
@@ -18,7 +18,7 @@ import java.io.Serializable;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @EntityListeners(NSHuman.class)
-public class Human extends HumanEquals implements HumanIdFace, Serializable, Clearance, HumansFriend {
+public class Human extends HumanEquals implements HumanIdFace, Serializable, Clearance, HumansFriend, Cloneable {
 
     public String humanId;
 
@@ -224,5 +224,24 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
                 ", clearance=" + clearance +
                 ", humanAlive=" + humanAlive +
                 '}';
+    }
+
+
+    @Override
+    @Transient
+    protected Object clone() throws CloneNotSupportedException {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(this);
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            return (Human) ois.readObject();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
