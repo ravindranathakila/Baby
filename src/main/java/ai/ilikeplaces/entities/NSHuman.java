@@ -4,6 +4,9 @@ import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.util.Loggers;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.IMap;
+import com.hazelcast.client.ClientConfig;
+import com.hazelcast.client.HazelcastClient;
+import com.hazelcast.core.HazelcastInstance;
 
 import javax.persistence.*;
 import java.util.logging.Logger;
@@ -20,9 +23,16 @@ public class NSHuman implements NSEntityLifecycleCallbacks<Human> {
 
     @Override
     @PrePersist
-    public void postPersist(final Human human) {
+    public void create(final Human human) {
         try {
-            final IMap<Object, Object> map = Hazelcast.getMap(Human.class.getName());
+
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.getGroupConfig().setName("dev").setPassword("dev-pass");
+            clientConfig.addAddress("127.0.0.1", "127.0.0.1:5702");
+
+            HazelcastInstance client = HazelcastClient.newHazelcastClient(clientConfig);
+
+            final IMap<Object, Object> map = client.getMap(Human.class.getName());
             map.put(human.getHumanId(), human);
         } catch (final Throwable t) {
             Loggers.error("HAZELCAST: ERROR PERSISTING DATA VIA HAZELCAST", t);
@@ -31,9 +41,14 @@ public class NSHuman implements NSEntityLifecycleCallbacks<Human> {
 
     @Override
     @PostLoad
-    public void postLoad(final Human human) {
+    public void read(final Human human) {
         try {
-            final IMap<String, Human> map = Hazelcast.getMap(Human.class.getName());
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.getGroupConfig().setName("dev").setPassword("dev-pass");
+            clientConfig.addAddress("127.0.0.1", "127.0.0.1:5702");
+
+            HazelcastInstance client = HazelcastClient.newHazelcastClient(clientConfig);
+            final IMap<String, Human> map = client.getMap(Human.class.getName());
             final Human nsHuman = map.get(human.getHumanId());
             //compare and update here
         } catch (final Throwable t) {
@@ -42,10 +57,15 @@ public class NSHuman implements NSEntityLifecycleCallbacks<Human> {
     }
 
     @Override
-    @PreUpdate
-    public void postUpdate(final Human human) {
+    @PostUpdate
+    public void update(final Human human) {
         try {
-            final IMap<Object, Object> map = Hazelcast.getMap(Human.class.getName());
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.getGroupConfig().setName("dev").setPassword("dev-pass");
+            clientConfig.addAddress("127.0.0.1", "127.0.0.1:5702");
+
+            HazelcastInstance client = HazelcastClient.newHazelcastClient(clientConfig);
+            final IMap<Object, Object> map = client.getMap(Human.class.getName());
             map.put(human.getHumanId(), human);
         } catch (final Throwable t) {
             Loggers.error("HAZELCAST: ERROR PERSISTING DATA VIA HAZELCAST", t);
@@ -54,9 +74,14 @@ public class NSHuman implements NSEntityLifecycleCallbacks<Human> {
 
     @Override
     @PostRemove
-    public void postRemove(final Human human) {
+    public void remove(final Human human) {
         try {
-            final IMap<Object, Object> map = Hazelcast.getMap(Human.class.getName());
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.getGroupConfig().setName("dev").setPassword("dev-pass");
+            clientConfig.addAddress("127.0.0.1", "127.0.0.1:5702");
+
+            HazelcastInstance client = HazelcastClient.newHazelcastClient(clientConfig);
+            final IMap<Object, Object> map = client.getMap(Human.class.getName());
             map.remove(human.getHumanId());
         } catch (final Throwable t) {
             Loggers.error("HAZELCAST: ERROR PERSISTING DATA VIA HAZELCAST", t);

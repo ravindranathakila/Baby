@@ -1,0 +1,145 @@
+When cloned and persisted Human, Datanuclues gave the following exceptions:
+
+javax.ejb.EJBException: The bean encountered a non-application exception; nested exception is:
+	javax.ejb.EJBTransactionRolledbackException: The transaction has been marked rollback only because the bean encountered a non-application exception :org.apache.openjpa.util.InvalidStateException : Detected reentrant flush.  Make sure your flush-time instance callback methods or event listeners do not invoke any operations that require the in-progress flush to complete.
+	at org.apache.openejb.core.ivm.BaseEjbProxyHandler.convertException(BaseEjbProxyHandler.java:359) [openejb-core-3.1.4.jar:3.1.4]
+	at org.apache.openejb.core.ivm.BaseEjbProxyHandler.invoke(BaseEjbProxyHandler.java:287) [openejb-core-3.1.4.jar:3.1.4]
+	at $Proxy118.doNTxCHuman(Unknown Source) [na:na]
+
+
+Caused by: org.apache.openjpa.util.InvalidStateException: Detected reentrant flush.  Make sure your flush-time instance callback methods or event listeners do not invoke any operations that require the in-progress flush to complete.
+	at org.apache.openjpa.kernel.BrokerImpl.flushSafe(BrokerImpl.java:1904) [openjpa-1.2.1.jar:1.2.1]
+	at org.apache.openjpa.kernel.BrokerImpl.flush(BrokerImpl.java:1679) [openjpa-1.2.1.jar:1.2.1]
+	at org.apache.openjpa.kernel.DetachManager.flushDirty(DetachManager.java:227) [openjpa-1.2.1.jar:1.2.1]
+	at org.apache.openjpa.kernel.DetachManager.preSerialize(DetachManager.java:88) [openjpa-1.2.1.jar:1.2.1]
+	at org.apache.openjpa.kernel.StateManagerImpl.serializing(StateManagerImpl.java:1353) [openjpa-1.2.1.jar:1.2.1]
+	at ai.ilikeplaces.entities.HumansPrivatePhoto.pcSerializing(HumansPrivatePhoto.java) [HumansPrivatePhoto.class:na]
+	at ai.ilikeplaces.entities.HumansPrivatePhoto.writeObject(HumansPrivatePhoto.java) [HumansPrivatePhoto.class:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) [na:1.6.0_24]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57) [na:1.6.0_24]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) [na:1.6.0_24]
+	at java.lang.reflect.Method.invoke(Method.java:616) [na:1.6.0_24]
+	at java.io.ObjectStreamClass.invokeWriteObject(ObjectStreamClass.java:959) [na:1.6.0_24]
+	at java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:1480) [na:1.6.0_24]
+	at java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:1416) [na:1.6.0_24]
+	at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1174) [na:1.6.0_24]
+	at java.io.ObjectOutputStream.defaultWriteFields(ObjectOutputStream.java:1528) [na:1.6.0_24]
+	at java.io.ObjectOutputStream.defaultWriteObject(ObjectOutputStream.java:438) [na:1.6.0_24]
+	at ai.ilikeplaces.entities.Human.writeObject(Human.java) [Human.class:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) [na:1.6.0_24]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57) [na:1.6.0_24]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) [na:1.6.0_24]
+	at java.lang.reflect.Method.invoke(Method.java:616) [na:1.6.0_24]
+	at java.io.ObjectStreamClass.invokeWriteObject(ObjectStreamClass.java:959) [na:1.6.0_24]
+	at java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:1480) [na:1.6.0_24]
+	at java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:1416) [na:1.6.0_24]
+	at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1174) [na:1.6.0_24]
+	at java.io.ObjectOutputStream.writeObject(ObjectOutputStream.java:346) [na:1.6.0_24]
+	at ai.ilikeplaces.entities.Human.clone(Human.java:236) [Human.class:na]
+	at ai.ilikeplaces.entities.NSHuman.postPersist(NSHuman.java:22) [NSHuman.class:na]
+
+
+////////////////////////////////////////////
+
+We need to make the map store available on main classpath. NOTHING APPEARED ON LOGS. NO LOG ERRORS.
+It is through the console that we found this.
+
+
+hazelcast[default] > ns ai.ilikeplaces.entities.Human
+namespace: ai.ilikeplaces.entities.Human
+hazelcast[ai.ilikeplaces.entities.Human] > m.size
+Jul 6, 2012 10:27:39 PM com.hazelcast.impl.CMap
+SEVERE: /127.0.0.1:5701 [dev] ai.ilikeplaces.util.cache.HazelcastHumanMapStore
+java.lang.ClassNotFoundException: ai.ilikeplaces.util.cache.HazelcastHumanMapStore
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:217)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:205)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:321)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:294)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:266)
+	at com.hazelcast.nio.AbstractSerializer.loadClass(AbstractSerializer.java:85)
+	at com.hazelcast.nio.Serializer.loadClass(Serializer.java:42)
+	at com.hazelcast.impl.CMap.<init>(CMap.java:203)
+	at com.hazelcast.impl.ConcurrentMapManager.getOrCreateMap(ConcurrentMapManager.java:2162)
+	at com.hazelcast.impl.FactoryImpl.createProxy(FactoryImpl.java:735)
+	at com.hazelcast.impl.FactoryImpl$7.process(FactoryImpl.java:809)
+	at com.hazelcast.cluster.ClusterService$1.process(ClusterService.java:126)
+	at com.hazelcast.cluster.ClusterService.processProcessable(ClusterService.java:190)
+	at com.hazelcast.cluster.ClusterService.dequeueProcessables(ClusterService.java:256)
+	at com.hazelcast.cluster.ClusterService.run(ClusterService.java:201)
+	at java.lang.Thread.run(Thread.java:679)
+
+
+
+
+################################################
+
+Data getting persisted on HBase upon exciting clister Hazelcast. Probably hanling until then due to port configuration issue:
+
+
+ls apache-tomcat-6.0.14/lib/
+activation-1.1.jar                    GooglePlacesAPI-Client-1.0.jar
+annotations-api.jar                   gson-1.7.2.jar
+aopalliance-1.0.jar                   guice-2.0.jar
+asm-commons-3.3.1.jar                 guice-assisted-inject-2.0.jar
+batik-dom.jar                         hadoop-core-1.0.0.jar
+batik-util.jar                        hazelcast-2.0.3.jar
+batik-xml.jar                         hazelcast-client-2.0.3.jar
+catalina-ant.jar                      hazelcast-mapstores.jar.bak
+catalina-ha.jar                       hazelcast.xml
+catalina.jar                          hbase-0.92.1.jar
+catalina-tribes.jar                   hbase-site.xml
+cloudfiles.properties                 ilikeplaces-doc-3.0.jar
+commons-cli-1.1.jar                   ilikeplaces-entities.jar
+commons-codec-1.2.jar                 ilikeplaces-util-4.0.jar
+commons-codec-1.3.jar                 ilikeplaces-util-4.1.jar
+commons-configuration-1.6.jar         ItsNat.jar
+commons-fileupload-1.2.1.jar          jasper-el.jar
+commons-httpclient-3.1.jar            jasper.jar
+commons-io-1.4.jar                    jasper-jdt.jar
+commons-lang-2.4.jar                  java-cloudfiles.jar
+commons-logging-1.1.1.jar             jaxb-api-2.1.jar
+datanucleus-api-jdo-3.0.2.jarb        jaxb-impl-2.1.9.jar
+datanucleus-api-jdo-3.0.8.jar         jdo-api-3.0.jar
+datanucleus-api-jdo-3.1.0-m2.jarb     jdo-api-3.1-SNAPSHOT-20120609.jar
+datanucleus-api-jpa-3.0.11.jar        json-20090211.jar
+datanucleus-api-jpa-3.0.2.jarb        jsp-api.jar
+datanucleus-api-jpa-3.1.0-m2.jarb     jta-1.0.1B.jar
+datanucleus-core-3.0.11.jar           jta-1.1.jar
+datanucleus-core-3.0.2.jarb           jta-1.1-sources.jar
+datanucleus-core-3.1.0-m4.jarb        log4j-1.2.15.jar
+datanucleus-enhancer-2.1.3.jarb       log4j.properties
+datanucleus-enhancer-3.1.0-m1.jar     logback-access-0.9.17.jar
+datanucleus-hbase-2.0.0-release.jarb  logback-classic-0.9.17.jar
+datanucleus-hbase-3.0.6.jar           logback-core-0.9.17.jar
+datanucleus-jpa-2.1.8.jarb            mail-1.4.1.jar
+datanucleus-rdbms-3.0.10.jar          nekohtml.jar
+datanucleus-rdbms-3.0.2.jarb          oval-1.40.jar
+datanucleus-rdbms-3.1.0-m4.jabr       runtime-0.4.1.5.jar
+derbyclient.jar                       serializer.jar
+DisqusAPI-Client-1.0.jar              servlet-api.jar
+dn-openejb.jar                        session-1.0.1.jar
+ehcache-core-2.5.2.jar                slf4j-api-1.5.8.jar
+ehcache-openjpa-0.2.0.jar             stax-api-1.0-2.jar
+ehcache.xml                           tomcat-coyote.jar
+el-api.jar                            tomcat-dbcp.jar
+facebook-java-api-3.0.4.jar           tomcat-i18n-es.jar
+facebook-java-api-schema-3.0.4.jar    tomcat-i18n-fr.jar
+gdata-client-1.0.jar                  tomcat-i18n-ja.jar
+gdata-contacts-3.0.jar                transaction-api-1.1.jar
+gdata-core-1.0.jar                    twitter4j-core-2.1.0.jar
+geronimo-jpa_2.0_spec-1.0.jar         xercesImpl-2.8.1.jar
+_GlobalConfig (copy).properties       xercesImpl.jar
+_GlobalConfig.properties              xml-apis.jar
+GlobalConfig.properties               YahooGeoPlanet-Client-1.0.jar
+google-collect-1.0-rc1.jar            zookeeper-3.4.3.jar
+
+
+java -cp openjpa-1.2.1.jar:ilikeplaces-classes.jar:slf4j-simple-1.4.2.jar:geronimo-jpa_2.0_spec-1.0.jar:asm-commons-3.3.1.jar:commons-fileupload-1.2.1.jar:datanucleus-enhancer-3.1.0-m1.jar:hazelcast.xml:serializer.jar:batik-dom.jar:commons-httpclient-3.1.jar:datanucleus-hbase-3.0.6.jar:hbase-0.92.1.jar:slf4j-api-1.5.8.jar:batik-util.jar:commons-io-1.4.jar:datanucleus-rdbms-3.0.10.jar:jdo-api-3.0.jar:transaction-api-1.1.jar:batik-xml.jar:commons-lang-2.4.jar:el-api.jar:jdo-api-3.1-SNAPSHOT-20120609.jar:xercesImpl-2.8.1.jar:commons-cli-1.1.jar:commons-logging-1.1.1.jar:hadoop-core-1.0.0.jar:jta-1.0.1B.jar:xercesImpl.jar:commons-codec-1.2.jar:datanucleus-api-jdo-3.0.8.jar:hazelcast-2.0.3.jar:jta-1.1.jar:xml-apis.jar:commons-codec-1.3.jar:datanucleus-api-jpa-3.0.11.jar:hazelcast-client-2.0.3.jar:log4j-1.2.15.jar:zookeeper-3.4.3.jar:commons-configuration-1.6.jar:datanucleus-core-3.0.11.jar:hazelcast-mapstores.jar:log4j.properties com.hazelcast.examples.TestApp
+
+
+
+
+
+
+
