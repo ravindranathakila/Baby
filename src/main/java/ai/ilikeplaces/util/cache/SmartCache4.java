@@ -1,6 +1,10 @@
 package ai.ilikeplaces.util.cache;
 
+
+import com.hazelcast.client.ClientConfig;
+import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
 
 import java.util.Map;
 
@@ -22,14 +26,34 @@ public class SmartCache4<K, V, R> {
 
     private static final IllegalAccessError ILLEGAL_ACCESS_ERROR = new IllegalAccessError("RECOVERY MECHANISM NOT SPECIFIED!");
     public static final String ATTEMPT_TO_RECOVER_VALUE_FOR_KEY_FAILED_THE_KEY_IN_CONCERN = "ATTEMPT TO RECOVER VALUE FOR KEY FAILED. THE KEY IN CONCERN:";
-    public Map<K, V> MAP = Hazelcast.getMap("SmartCache");
+
+    final public Map<K, V> MAP;
 
     private RecoverWith<K, V, R> recoverWith = null;
 
     public SmartCache4() {
+        INITIALIZE_HAZELCAST:
+        {
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.getGroupConfig().setName("dev").setPassword("dev-pass");
+            clientConfig.addAddress("127.0.0.1:5701");
+
+            HazelcastInstance client = HazelcastClient.newHazelcastClient(clientConfig);
+            MAP = Hazelcast.getMap("SmartCache");
+        }
     }
 
     public SmartCache4(final RecoverWith<K, V, R> recoverWith) {
+        INITIALIZE_HAZELCAST:
+        {
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.getGroupConfig().setName("dev").setPassword("dev-pass");
+            clientConfig.addAddress("127.0.0.1:5701");
+
+            HazelcastInstance client = HazelcastClient.newHazelcastClient(clientConfig);
+            MAP = Hazelcast.getMap("SmartCache");
+        }
+
         this.recoverWith = recoverWith;
     }
 

@@ -9,6 +9,8 @@ import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.core.HazelcastInstance;
 
 import javax.persistence.*;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.util.logging.Logger;
 
 /**
@@ -27,10 +29,26 @@ public class NSHuman implements NSEntityLifecycleCallbacks<Human> {
         try {
 
             ClientConfig clientConfig = new ClientConfig();
+
             clientConfig.getGroupConfig().setName("dev").setPassword("dev-pass");
-            clientConfig.addAddress("127.0.0.1", "127.0.0.1:5702");
+            clientConfig.addAddress("127.0.0.1:5701");
+
+            if (DEBUG_ENABLED) {
+                Loggers.debug("THESE ARE THE HAZELCAST ADDRESSES FYR:");
+                for (final InetSocketAddress inetSocketAddress : clientConfig.getAddressList()) {
+                    Loggers.debug("Host " + inetSocketAddress.getHostName() + " on Port " + inetSocketAddress.getPort());
+                }
+            }
 
             HazelcastInstance client = HazelcastClient.newHazelcastClient(clientConfig);
+
+            if (DEBUG_ENABLED) {
+                Loggers.debug("THESE ARE THE HAZELCAST CLIENT(ME) DETAILS FYR:");
+                Loggers.debug("clientConfig.getGroupConfig().getName():");
+                Loggers.debug(clientConfig.getGroupConfig().getName());
+                Loggers.debug("clientConfig.getGroupConfig().toString():");
+                Loggers.debug(clientConfig.getGroupConfig().toString());
+            }
 
             final IMap<Object, Object> map = client.getMap(Human.class.getName());
             map.put(human.getHumanId(), human);
@@ -45,7 +63,9 @@ public class NSHuman implements NSEntityLifecycleCallbacks<Human> {
         try {
             ClientConfig clientConfig = new ClientConfig();
             clientConfig.getGroupConfig().setName("dev").setPassword("dev-pass");
-            clientConfig.addAddress("127.0.0.1", "127.0.0.1:5702");
+
+            //Please gravely note that the address:port here is the one mentioned in the hazelcast.xml of the group
+            clientConfig.addAddress("127.0.0.1:5701");
 
             HazelcastInstance client = HazelcastClient.newHazelcastClient(clientConfig);
             final IMap<String, Human> map = client.getMap(Human.class.getName());
