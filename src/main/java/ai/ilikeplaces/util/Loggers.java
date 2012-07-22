@@ -52,6 +52,7 @@ final public class Loggers {
     final static public String CODE_GFG = "[GFG]";//Code for Generic File Grabber servlet
     final static public String CODE_MEMC = "[MEMC]";//Code for Memc
     final static public String CODE_MAIL = "[MDS]";//Code to indicate mail delivery system
+    final static public String CODE_HC = "[HC]";//Code to indicate Hazelcast
 
     public enum LEVEL {
         DEBUG,

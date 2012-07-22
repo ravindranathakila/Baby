@@ -466,5 +466,34 @@ clients connect as host:port of related nodes which are up.
 
 
 
+Next matter is how to properly store data.
+
+Right now the implementation stores Human and DN cascades any cascades on HBase.
+
+The problems include:
+
+HC maps send they key and value, but JPA needs key(ID), data type(.class for fetching by id) and value.
+
+One approach is where there are many maps on HC and same MapStore implementation.
+i.e. it is practical to enter new entries for entities on hazelcast.xml per entity, but not write a different map store for each.
+If MapStore implements a super class and NoSQL entity lifecycle listeners (e.g. NSHuman) this might be a bit easy.
+But still, too much of coding for a single new entity. Bean, NS<Bean>,Hazelcaset<Bean>MapStore.
+Why we cannot have a one big map is keys for say, Human and HumansAuthentication will be same, i.e. HumanId.
+
+We can also store Pair<Key,Classname> as key and Bean as value.
+This means a huge single HC Map with different value types.
+Generic, but a salad. No fine tuning of map sizes.
+See, while HBase stores data, HC will be caching a healthy amount.
+We will lose the granularity if we go for one generic map.
+
+
+
+Can try putting persistence.xml on classpath of HC and just bundling ilikeplaces-classes.jar since MapStore impl is in it anyway.
+i.e. get rid of mapstore jar.
+
+
+
+
+
 
 

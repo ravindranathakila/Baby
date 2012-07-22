@@ -2,16 +2,15 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.util.Loggers;
-import com.hazelcast.core.Hazelcast;
-import com.hazelcast.core.IMap;
 import com.hazelcast.client.ClientConfig;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
 
 import javax.persistence.*;
-import java.net.InetAddress;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
-import java.util.logging.Logger;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,14 +19,21 @@ import java.util.logging.Logger;
  * Time: 8:24 PM
  */
 @WARNING("EXCEPTIONS IN CALLBACK METHODS MIGHT NOT GET LOGGED UNLESS EXPLICITLY CAUGHT WITHIN AND LOGGED.")
-public class NSHuman implements NSEntityLifecycleCallbacks<Human> {
+public class NSHuman implements NSEntityLifecycleCallbacks<Object> {
     final Boolean DEBUG_ENABLED = Loggers.DEBUG.isDebugEnabled();
 
-    @Override
-    @PrePersist
-    public void create(final Human human) {
-        try {
+    /**
+     * Lazily initialized
+     */
+    @WARNING("Lazily initialized upon entity lifecycle callbacks")
+    private static HazelcastClient hazelcastClient;
 
+    public NSHuman() {
+        //Better not do anything here since this is also called during build time enhancement
+    }
+
+    private HazelcastClient getHCClient() {
+        if (hazelcastClient == null) {
             ClientConfig clientConfig = new ClientConfig();
 
             clientConfig.getGroupConfig().setName("dev").setPassword("dev-pass");
@@ -40,7 +46,7 @@ public class NSHuman implements NSEntityLifecycleCallbacks<Human> {
                 }
             }
 
-            HazelcastInstance client = HazelcastClient.newHazelcastClient(clientConfig);
+            hazelcastClient = HazelcastClient.newHazelcastClient(clientConfig);
 
             if (DEBUG_ENABLED) {
                 Loggers.debug("THESE ARE THE HAZELCAST CLIENT(ME) DETAILS FYR:");
@@ -49,9 +55,23 @@ public class NSHuman implements NSEntityLifecycleCallbacks<Human> {
                 Loggers.debug("clientConfig.getGroupConfig().toString():");
                 Loggers.debug(clientConfig.getGroupConfig().toString());
             }
+        } else {
+            if (!hazelcastClient.isActive()) {
+                Loggers.info(Loggers.CODE_HC + "Hazelcast client is shutdown. Restarting...");
+                hazelcastClient.restart();
+                Loggers.info(Loggers.CODE_HC + "Hazelcast client start state after attempted restart:" + hazelcastClient.isActive());
+            }
+        }
 
-            final IMap<Object, Object> map = client.getMap(Human.class.getName());
-            map.put(human.getHumanId(), human);
+        return hazelcastClient;
+    }
+
+    @Override
+    @PrePersist
+    public void create(final Object entity) {
+
+        try {
+            getHCMap(entity).put(getId(entity), entity);
         } catch (final Throwable t) {
             Loggers.error("HAZELCAST: ERROR PERSISTING DATA VIA HAZELCAST", t);
         }
@@ -59,17 +79,11 @@ public class NSHuman implements NSEntityLifecycleCallbacks<Human> {
 
     @Override
     @PostLoad
-    public void read(final Human human) {
+    public void read(final Object entity) {
+
+
         try {
-            ClientConfig clientConfig = new ClientConfig();
-            clientConfig.getGroupConfig().setName("dev").setPassword("dev-pass");
-
-            //Please gravely note that the address:port here is the one mentioned in the hazelcast.xml of the group
-            clientConfig.addAddress("127.0.0.1:5701");
-
-            HazelcastInstance client = HazelcastClient.newHazelcastClient(clientConfig);
-            final IMap<String, Human> map = client.getMap(Human.class.getName());
-            final Human nsHuman = map.get(human.getHumanId());
+            //final Human nsHuman = getHCMap(entity).get(object.getHumanId());
             //compare and update here
         } catch (final Throwable t) {
             Loggers.error("HAZELCAST: ERROR PERSISTING DATA VIA HAZELCAST", t);
@@ -78,15 +92,13 @@ public class NSHuman implements NSEntityLifecycleCallbacks<Human> {
 
     @Override
     @PostUpdate
-    public void update(final Human human) {
-        try {
-            ClientConfig clientConfig = new ClientConfig();
-            clientConfig.getGroupConfig().setName("dev").setPassword("dev-pass");
-            clientConfig.addAddress("127.0.0.1", "127.0.0.1:5702");
+    public void update(final Object entity) {
 
-            HazelcastInstance client = HazelcastClient.newHazelcastClient(clientConfig);
-            final IMap<Object, Object> map = client.getMap(Human.class.getName());
-            map.put(human.getHumanId(), human);
+        try {
+
+            Object key = getId(entity);
+
+            getHCMap(entity).put(key, entity);
         } catch (final Throwable t) {
             Loggers.error("HAZELCAST: ERROR PERSISTING DATA VIA HAZELCAST", t);
         }
@@ -94,17 +106,42 @@ public class NSHuman implements NSEntityLifecycleCallbacks<Human> {
 
     @Override
     @PostRemove
-    public void remove(final Human human) {
-        try {
-            ClientConfig clientConfig = new ClientConfig();
-            clientConfig.getGroupConfig().setName("dev").setPassword("dev-pass");
-            clientConfig.addAddress("127.0.0.1", "127.0.0.1:5702");
+    public void remove(final Object entity) {
 
-            HazelcastInstance client = HazelcastClient.newHazelcastClient(clientConfig);
-            final IMap<Object, Object> map = client.getMap(Human.class.getName());
-            map.remove(human.getHumanId());
+        try {
+            Object key = getId(entity);
+
+            getHCMap(entity).remove(key);
         } catch (final Throwable t) {
             Loggers.error("HAZELCAST: ERROR PERSISTING DATA VIA HAZELCAST", t);
         }
+    }
+
+
+    private Object getId(Object entity) throws IllegalAccessException, InvocationTargetException {
+        Object key = null;
+
+        final Method[] methods = entity.getClass().getMethods();
+
+        for (final Method method : methods) {
+            final Id annotation = method.getAnnotation(Id.class);
+            if (annotation != null) {
+                key = method.invoke(entity);
+            }
+        }
+
+        if (DEBUG_ENABLED) {
+            Loggers.debug(Loggers.CODE_HC + "Entity's @Id:" + key);
+        }
+
+        return key;
+    }
+
+    private IMap<Object, Object> getHCMap(final Object entity) {
+        final String mapName = entity.getClass().getName();
+        if (DEBUG_ENABLED) {
+            Loggers.debug(Loggers.CODE_HC + "Attempting to fetch map named from:" + mapName);
+        }
+        return getHCClient().getMap(mapName);
     }
 }
