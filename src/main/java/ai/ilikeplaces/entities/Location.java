@@ -30,6 +30,7 @@ import java.util.List;
                 query = "SELECT loc.locationName FROM Location loc WHERE UPPER(loc.locationName) LIKE :locationName"),
         @NamedQuery(name = "FindAllLocationsByLikeName",
                 query = "SELECT loc FROM Location loc WHERE UPPER(loc.locationName) LIKE :locationName")})
+@EntityListeners({EntityLifeCycleListener.class})
 public class Location implements Serializable, Clearance, Comparable<Location>,Refreshable<Location> {
 
     final static Logger logger = LoggerFactory.getLogger(Location.class.getName());
@@ -171,7 +172,7 @@ public class Location implements Serializable, Clearance, Comparable<Location>,R
 
     @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
     @OneToMany(mappedBy = PrivateEvent.locationCOL,
-            cascade = {CascadeType.REFRESH, CascadeType.REMOVE},
+            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     public List<PrivateEvent> getPrivateEvents() {
         return privateEvents;
@@ -182,7 +183,7 @@ public class Location implements Serializable, Clearance, Comparable<Location>,R
     }
 
     @UNIDIRECTIONAL
-    @OneToMany(cascade = {CascadeType.ALL},
+    @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     public List<LongMsg> getLongMsgs() {
         return longMsgs;

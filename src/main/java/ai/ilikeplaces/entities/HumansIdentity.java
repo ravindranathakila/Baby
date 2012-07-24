@@ -32,6 +32,8 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "FindPaginatedHumansByEmails",
                 query = "SELECT hi FROM HumansIdentity hi WHERE hi.humanId IN(:humansIdentityEmails)")})
+
+@EntityListeners({EntityLifeCycleListener.class})
 public class HumansIdentity extends HumanEquals implements HumanPkJoinFace, Serializable {
 
     final static public String FindPaginatedHumansByEmails = "FindPaginatedHumansByEmails";
@@ -86,7 +88,7 @@ public class HumansIdentity extends HumanEquals implements HumanPkJoinFace, Seri
     }
 
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = CascadeType.ALL)
     public Url getUrl() {
         return url;
     }

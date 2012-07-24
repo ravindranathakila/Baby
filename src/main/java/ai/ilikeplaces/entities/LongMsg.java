@@ -20,6 +20,7 @@ import java.io.Serializable;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
+@EntityListeners({EntityLifeCycleListener.class})
 public class LongMsg implements Serializable{
 
     public Long longMsgId;

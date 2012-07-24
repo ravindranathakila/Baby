@@ -6,6 +6,7 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
+@EntityListeners({EntityLifeCycleListener.class})
 public class HumansPrivatePhoto implements HumanIdFace, Serializable {
     private static final long serialVersionUID = 1L;
 

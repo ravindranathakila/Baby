@@ -1,26 +1,32 @@
 package ai.ilikeplaces.jpa;
 
-import ai.ilikeplaces.doc.CONVENTION;
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBDishonourException;
+import ai.ilikeplaces.exception.DBException;
+import ai.ilikeplaces.exception.DBHazelcastRuntimeException;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import ai.ilikeplaces.util.Loggers;
+import com.hazelcast.client.ClientConfig;
+import com.hazelcast.client.HazelcastClient;
+import com.hazelcast.core.IMap;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.*;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
 /**
- * @author Ravindranath Akila
  * @param <T>
+ * @author Ravindranath Akila
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
@@ -38,6 +44,75 @@ public class CrudService<T> extends AbstractSLBCallbacks implements CrudServiceL
     @PersistenceContext(unitName = "adimpression_ilikeplaces_war_1.6-SNAPSHOTPU", type = PersistenceContextType.TRANSACTION)
     public EntityManager entityManager;
 
+
+    /**
+     * Lazily initialized
+     */
+    @WARNING("Lazily initialized upon entity lifecycle callbacks")
+    private static HazelcastClient hazelcastClient;
+
+    private HazelcastClient getHCClient() {
+        if (hazelcastClient == null) {
+            ClientConfig clientConfig = new ClientConfig();
+
+            clientConfig.getGroupConfig().setName("dev").setPassword("dev-pass");
+            clientConfig.addAddress("127.0.0.1:5701");
+
+            if (DEBUG_ENABLED) {
+                Loggers.debug("THESE ARE THE HAZELCAST ADDRESSES FYR:");
+                for (final InetSocketAddress inetSocketAddress : clientConfig.getAddressList()) {
+                    Loggers.debug("Host " + inetSocketAddress.getHostName() + " on Port " + inetSocketAddress.getPort());
+                }
+            }
+
+            hazelcastClient = HazelcastClient.newHazelcastClient(clientConfig);
+
+            if (DEBUG_ENABLED) {
+                Loggers.debug("THESE ARE THE HAZELCAST CLIENT(ME) DETAILS FYR:");
+                Loggers.debug("clientConfig.getGroupConfig().getName():");
+                Loggers.debug(clientConfig.getGroupConfig().getName());
+                Loggers.debug("clientConfig.getGroupConfig().toString():");
+                Loggers.debug(clientConfig.getGroupConfig().toString());
+            }
+        } else {
+            if (!hazelcastClient.isActive()) {
+                Loggers.info(Loggers.CODE_HC + "Hazelcast client is shutdown. Restarting...");
+                hazelcastClient.restart();
+                Loggers.info(Loggers.CODE_HC + "Hazelcast client start state after attempted restart:" + hazelcastClient.isActive());
+            }
+        }
+
+        return hazelcastClient;
+    }
+
+
+    private Object getId(Object entity) throws IllegalAccessException, InvocationTargetException {
+        Object key = null;
+
+        final Method[] methods = entity.getClass().getMethods();
+
+        for (final Method method : methods) {
+            final Id annotation = method.getAnnotation(Id.class);
+            if (annotation != null) {
+                key = method.invoke(entity);
+            }
+        }
+
+        if (DEBUG_ENABLED) {
+            Loggers.debug(Loggers.CODE_HC + "Entity's @Id:" + key);
+        }
+
+        return key;
+    }
+
+    private IMap<Object, Object> getHCMap(final Object entity) {
+        final String mapName = entity.getClass().getName();
+        if (DEBUG_ENABLED) {
+            Loggers.debug(Loggers.CODE_HC + "Attempting to fetch map named from:" + mapName);
+        }
+        return getHCClient().getMap(mapName);
+    }
+
     /**
      * @param t
      * @return
@@ -48,6 +123,21 @@ public class CrudService<T> extends AbstractSLBCallbacks implements CrudServiceL
         entityManager.persist(t);
         entityManager.flush();
         entityManager.refresh(t);
+
+        {
+            try {
+                Object id = getId(t);
+
+                IMap<Object, Object> hcMap = getHCMap(t);
+
+                hcMap.lock(id);
+                hcMap.put(id, t);
+                hcMap.unlock(id);
+
+            } catch (final Throwable throwable) {
+                throw new DBHazelcastRuntimeException(Loggers.CODE_HC + "ERROR NEGOTIATING DATA VIA HAZELCAST", throwable);
+            }
+        }
         return t;
     }
 
@@ -76,7 +166,6 @@ public class CrudService<T> extends AbstractSLBCallbacks implements CrudServiceL
     }
 
     /**
-     *
      * @param typeOfEntity
      * @param idByWhichToLookup
      * @return
@@ -102,6 +191,21 @@ public class CrudService<T> extends AbstractSLBCallbacks implements CrudServiceL
     @TransactionAttribute(TransactionAttributeType.MANDATORY)
     public void delete(final Class type, final Object id) {
         entityManager.remove(this.entityManager.getReference(type, id));
+
+        {
+            try {
+                Object key = getId(id);
+
+                IMap<Object, Object> hcMap = getHCMap(id);
+
+                hcMap.lock(key);
+                hcMap.remove(key);
+                hcMap.unlock(key);
+
+            } catch (final Throwable t) {
+                throw new DBHazelcastRuntimeException(Loggers.CODE_HC + "ERROR NEGOTIATING DATA VIA HAZELCAST", t);
+            }
+        }
     }
 
     /**
@@ -111,7 +215,26 @@ public class CrudService<T> extends AbstractSLBCallbacks implements CrudServiceL
     @Override
     @TransactionAttribute(TransactionAttributeType.MANDATORY)
     public T update(final T t) {
-        return entityManager.merge(t);
+        final T mmanaged = entityManager.merge(t);
+
+        {
+            try {
+
+                Object key = getId(t);
+
+                IMap<Object, Object> hcMap = getHCMap(t);
+
+                hcMap.lock(key);
+                hcMap.put(key, t);
+                hcMap.unlock(key);
+
+            } catch (final Throwable throwable) {
+                throw new DBHazelcastRuntimeException(Loggers.CODE_HC + "ERROR NEGOTIATING DATA VIA HAZELCAST", throwable);
+
+            }
+        }
+
+        return mmanaged;
     }
 
     /**

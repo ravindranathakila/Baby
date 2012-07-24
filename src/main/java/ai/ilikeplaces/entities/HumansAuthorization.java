@@ -1,6 +1,9 @@
 package ai.ilikeplaces.entities;
 
+import ai.ilikeplaces.util.EntityLifeCycleListener;
+
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import java.io.Serializable;
 
@@ -9,6 +12,7 @@ import java.io.Serializable;
  * @author Ravindranath Akila
  */
 @Entity
+@EntityListeners({EntityLifeCycleListener.class})
 public class HumansAuthorization implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -1,6 +1,7 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.jpa.*;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
+@EntityListeners({EntityLifeCycleListener.class})
 public class Wall implements Clearance, Refreshable<Wall>, Serializable {
     public Long wallId = null;
     public static String wallIdCOL = "wallId";

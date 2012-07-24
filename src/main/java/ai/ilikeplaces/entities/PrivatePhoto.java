@@ -3,6 +3,7 @@ package ai.ilikeplaces.entities;
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.exception.PendingEqualsMethodException;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivatePhoto;
+import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.jpa.*;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +23,7 @@ import java.util.List;
         )
 )
 @Entity
+@EntityListeners({EntityLifeCycleListener.class})
 public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Refreshable<PrivatePhoto> {
 
     private static final long serialVersionUID = 1L;

@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ import java.util.Set;
  */
 @WARNING("THIS ENTITY IS NOT GUARANTEED TO 'BE' EVEN THOUGH A HUMAN IS SIGNED UP. SO CREATE IT IF NOT PRESENT!")
 @Entity
+@EntityListeners({EntityLifeCycleListener.class})
 public class HumansTribe implements HumansFriend, HumanIdFace, HumanEqualsFace , Serializable {
     public String humanId;
 

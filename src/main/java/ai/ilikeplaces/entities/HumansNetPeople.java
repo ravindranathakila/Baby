@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.UNIDIRECTIONAL;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
@@ -34,6 +35,7 @@ import java.util.List;
                 )
         }
 )
+@EntityListeners({EntityLifeCycleListener.class})
 public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanIdFace, Serializable {
     public String humanId;
     public final static String humanIdCOL = "humanId";

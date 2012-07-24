@@ -15,6 +15,7 @@ import java.util.UUID;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
 @OK
+@EntityListeners({EntityLifeCycleListener.class})
 public class PublicPhoto implements Serializable {
 
     @NOTE(note = "Pre persisted entities will have null ids. hence using pre persisted ids is not practical.")

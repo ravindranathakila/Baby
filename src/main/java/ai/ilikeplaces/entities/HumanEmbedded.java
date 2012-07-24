@@ -4,6 +4,7 @@
  */
 package ai.ilikeplaces.entities;
 
+import ai.ilikeplaces.util.EntityLifeCycleListener;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.lang.reflect.Field;
  * @author Ravindranath Akila
  */
 @Entity
+@EntityListeners({EntityLifeCycleListener.class})
 public class HumanEmbedded implements HumanPkJoinFace, Serializable {
 
     private String humanId;

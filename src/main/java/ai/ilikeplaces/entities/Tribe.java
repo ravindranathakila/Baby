@@ -2,6 +2,7 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.exception.DBFetchDataException;
+import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.ExceptionCache;
 import ai.ilikeplaces.util.jpa.Refresh;
 import ai.ilikeplaces.util.jpa.RefreshException;
@@ -65,6 +66,7 @@ import java.util.Set;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
 @Entity
+@EntityListeners({EntityLifeCycleListener.class})
 public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Tribe>, Comparable<Tribe> {
 // ------------------------------ FIELDS ------------------------------
 

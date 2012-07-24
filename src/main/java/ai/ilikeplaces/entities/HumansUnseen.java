@@ -3,6 +3,7 @@ package ai.ilikeplaces.entities;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.UNIDIRECTIONAL;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,6 +18,7 @@ import java.util.Set;
  */
 @WARNING("THIS ENTITY IS NOT GUARANTEED TO 'BE' EVEN THOUGH A HUMAN IS SIGNED UP. SO CREATE IT IF NOT PRESENT!")
 @Entity
+@EntityListeners({EntityLifeCycleListener.class})
 public class HumansUnseen implements Serializable {
     public String humanId;
     public List<Wall> unseenWalls;

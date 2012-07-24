@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.crud.DB;
+import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
@@ -84,6 +85,7 @@ import java.io.Serializable;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
+@EntityListeners({EntityLifeCycleListener.class})
 public class HumansNet implements HumanPkJoinFace, HumansFriend, Serializable {
 
     public String humanId;

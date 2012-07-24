@@ -23,6 +23,7 @@ import java.io.Serializable;
 @Entity
 @NamedQuery(name = "FindWallEntriesByWallIdOrderByIdDesc",
         query = "SELECT msg FROM Msg msg WHERE msg.msgId IN (SELECT wall.wallMsgs FROM Wall wall WHERE wall.wallId = :wallId) order by msg.msgId DESC")
+@EntityListeners({EntityLifeCycleListener.class})
 public class Msg implements Serializable{
 
     public Long msgId;

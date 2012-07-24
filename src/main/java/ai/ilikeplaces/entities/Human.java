@@ -6,6 +6,7 @@ import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ import java.io.*;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Entity
-@EntityListeners(NSHuman.class)
+@EntityListeners({EntityLifeCycleListener.class})
 public class Human extends HumanEquals implements HumanIdFace, Serializable, Clearance, HumansFriend, Cloneable {
 
     public String humanId;

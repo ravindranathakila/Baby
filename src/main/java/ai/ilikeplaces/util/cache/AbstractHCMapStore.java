@@ -22,20 +22,33 @@ public abstract class AbstractHCMapStore<T> implements MapStore<Object, Object> 
         System.out.println("Starting Hazelcast MapStore implementation:" + this.getClass().getSimpleName());
     }
 
-    @Override
-    public void store(Object key, Object value) {
+
+    public void store(Object key, Object value, Class type) {
         try {
-            System.out.println("Attempting to store data.");
+            System.out.println("Attempting to store data:" + value);
+
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("adimpression_ilikeplaces_war_1.6-SNAPSHOTPU_DN");
             System.out.println("Obtained EntityManagerFactory.");
+
             EntityManager em = emf.createEntityManager();
             System.out.println("Obtained EntityManager.");
+
             em.getTransaction().begin();
             System.out.println("Began Transaction.");
-            em.merge(value);
+
+            final Object existingValue = em.find(type, key);
+
+            if (existingValue == null) {
+                em.persist(value);
+            } else {
+                em.merge(value);
+            }
+
             System.out.println("Persisted data.");
+
             em.getTransaction().commit();
             System.out.println("Committed Transaction");
+
         } catch (final Throwable t) {
             t.printStackTrace(System.err);
         }
@@ -54,7 +67,7 @@ public abstract class AbstractHCMapStore<T> implements MapStore<Object, Object> 
 
     public void delete(Object key, Class type) {
         try {
-            System.out.println("Attempting to store data.");
+            System.out.println("Attempting to delete data:" + key);
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("adimpression_ilikeplaces_war_1.6-SNAPSHOTPU_DN");
             System.out.println("Obtained EntityManagerFactory.");
             EntityManager em = emf.createEntityManager();
@@ -90,7 +103,7 @@ public abstract class AbstractHCMapStore<T> implements MapStore<Object, Object> 
 
     public Object load(Object key, Class type) {
         try {
-            System.out.println("Attempting to store data.");
+            System.out.println("Attempting to load data:" + key);
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("adimpression_ilikeplaces_war_1.6-SNAPSHOTPU_DN");
             System.out.println("Obtained EntityManagerFactory.");
             EntityManager em = emf.createEntityManager();

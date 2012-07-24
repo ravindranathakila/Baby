@@ -5,6 +5,7 @@ import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.MethodParams;
 import ai.ilikeplaces.util.MethodTimer;
 import ai.ilikeplaces.ygp.impl.ClientFactory;
 
@@ -51,6 +52,13 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         System.out.println("6. Verify that derbyclient.lib is the same version of the derby you installed in the OS.");
         System.out.println("7. Verify that the first entry for location \"The Planet Earth\" was set");
         System.out.println("8. Configure tomcat from localhost to domain name, www.ilikeplaces.com");
+
+        EntityLifeCycleListener.POST_ACTIONS.setObj(Loggers.DEBUG.isDebugEnabled());
+        EntityLifeCycleListener.PRE_ACTIONS.setObj(Loggers.DEBUG.isDebugEnabled());
+        MethodTimer.DO_LOG.setObj(Loggers.DEBUG.isDebugEnabled());
+        MethodParams.DO_LOG.setObj(Loggers.DEBUG.isDebugEnabled());
+
+
 /*        System.out.println("Disabling entity lifecycle listener logging");
         EntityLifeCycleListener.POST_ACTIONS.setObj(false);
         EntityLifeCycleListener.PRE_ACTIONS.setObj(false);

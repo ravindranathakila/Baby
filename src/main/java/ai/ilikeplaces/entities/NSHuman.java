@@ -71,7 +71,14 @@ public class NSHuman implements NSEntityLifecycleCallbacks<Object> {
     public void create(final Object entity) {
 
         try {
-            getHCMap(entity).put(getId(entity), entity);
+            Object id = getId(entity);
+
+            IMap<Object, Object> hcMap = getHCMap(entity);
+
+            hcMap.lock(id);
+            hcMap.put(id, entity);
+            hcMap.unlock(id);
+
         } catch (final Throwable t) {
             Loggers.error("HAZELCAST: ERROR PERSISTING DATA VIA HAZELCAST", t);
         }
@@ -98,7 +105,12 @@ public class NSHuman implements NSEntityLifecycleCallbacks<Object> {
 
             Object key = getId(entity);
 
-            getHCMap(entity).put(key, entity);
+            IMap<Object, Object> hcMap = getHCMap(entity);
+
+            hcMap.lock(key);
+            hcMap.put(key, entity);
+            hcMap.unlock(key);
+
         } catch (final Throwable t) {
             Loggers.error("HAZELCAST: ERROR PERSISTING DATA VIA HAZELCAST", t);
         }
@@ -111,7 +123,12 @@ public class NSHuman implements NSEntityLifecycleCallbacks<Object> {
         try {
             Object key = getId(entity);
 
-            getHCMap(entity).remove(key);
+            IMap<Object, Object> hcMap = getHCMap(entity);
+
+            hcMap.lock(key);
+            hcMap.remove(key);
+            hcMap.unlock(key);
+
         } catch (final Throwable t) {
             Loggers.error("HAZELCAST: ERROR PERSISTING DATA VIA HAZELCAST", t);
         }
